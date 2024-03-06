@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-06T13:16:42.213Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="18ocdfFu1ioKjQGqUUyL" version="24.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-06T13:17:09.075Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="EbK4hXTYDLHk3KpkeZxF" version="24.0.2" type="github">
   <diagram name="Pagina-1" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="1105" dy="549" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1990" dy="1043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -543,6 +543,9 @@
         </mxCell>
         <mxCell id="BZ2euaz-JKJZfjKGDT9m-97" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="BZ2euaz-JKJZfjKGDT9m-88" target="BZ2euaz-JKJZfjKGDT9m-93">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OceY83fFdH0vZLWKnvRT-72" value="Use Case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2040" y="2156" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="BZ2euaz-JKJZfjKGDT9m-88" value="SocketClient" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="1140" y="380" width="160" height="86" as="geometry" />
