@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-12T12:56:44.310Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="tDmSF_p1CFV97Bu700jG" version="24.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-12T13:09:25.318Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="VJEKLyjDw9iSqqAzEpJ3" version="24.0.2" type="github">
   <diagram name="Pagina-1" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="1500" dy="4096" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1105" dy="3886" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -755,7 +755,7 @@
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-1" value="Player" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="450" y="-2900" width="280" height="230" as="geometry" />
         </mxCell>
-        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-2" value="- nickname: string&amp;nbsp;&lt;div&gt;&lt;font color=&quot;#ff9933&quot;&gt;- colorPlayer: Color/int&lt;br&gt;&lt;/font&gt;&lt;div&gt;- points: int&lt;/div&gt;&lt;div&gt;- countSeed: int[4]&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ff9933&quot;&gt;- board: int[100][100]&amp;nbsp; ??&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ffe53b&quot;&gt;-deck: PlayerDeck&lt;/font&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="KTb5hdUpj-QvQDwqx6Cj-1" vertex="1">
+        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-2" value="- nickname: string&amp;nbsp;&lt;div&gt;- colorPlayer: Color/int&lt;br&gt;&lt;div&gt;- points: int&lt;/div&gt;&lt;div&gt;- countSeed: int[4]&lt;/div&gt;&lt;div&gt;- board: int[100][100]&amp;nbsp; ??&lt;/div&gt;&lt;/div&gt;&lt;div&gt;-deck: PlayerDeck&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="KTb5hdUpj-QvQDwqx6Cj-1" vertex="1">
           <mxGeometry y="26" width="280" height="104" as="geometry" />
         </mxCell>
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="KTb5hdUpj-QvQDwqx6Cj-1" vertex="1">
@@ -765,16 +765,16 @@
           <mxGeometry y="138" width="280" height="92" as="geometry" />
         </mxCell>
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-5" value="Game" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="930" y="-2882" width="180" height="280" as="geometry" />
+          <mxGeometry x="930" y="-2882" width="180" height="298" as="geometry" />
         </mxCell>
-        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-6" value="&lt;div&gt;- idGame: int&lt;/div&gt;- field: type&lt;div&gt;- firstPlayer: Player&lt;/div&gt;&lt;div&gt;- winner&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#e6bf00&quot;&gt;-players: List&amp;lt;Player&amp;gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#e6bf00&quot;&gt;-boardD: BoardDeck&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#e6bf00&quot;&gt;-drawD:DrawableDeck&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#e6bf00&quot;&gt;-staticD:StaticDeck&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="KTb5hdUpj-QvQDwqx6Cj-5" vertex="1">
+        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-6" value="&lt;div&gt;- idGame: int&lt;/div&gt;- field: type&lt;div&gt;- firstPlayer: Player&lt;/div&gt;&lt;div&gt;- winner&lt;/div&gt;&lt;div&gt;-players: queue&amp;lt;Player&amp;gt;&lt;/div&gt;&lt;div&gt;-boardD: BoardDeck&lt;/div&gt;&lt;div&gt;-drawD:DrawableDeck&lt;/div&gt;&lt;div&gt;-staticD:StaticDeck&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="KTb5hdUpj-QvQDwqx6Cj-5" vertex="1">
           <mxGeometry y="26" width="180" height="154" as="geometry" />
         </mxCell>
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="KTb5hdUpj-QvQDwqx6Cj-5" vertex="1">
           <mxGeometry y="180" width="180" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-8" value="+" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="KTb5hdUpj-QvQDwqx6Cj-5" vertex="1">
-          <mxGeometry y="188" width="180" height="92" as="geometry" />
+        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-8" value="+addPlayer(Player):void&lt;div&gt;+inizializza(...):void&lt;/div&gt;&lt;div&gt;+nextPlayer():void&lt;/div&gt;&lt;div&gt;+checkPoints(Player):int&lt;/div&gt;&lt;div&gt;+lastRound()&lt;/div&gt;&lt;div&gt;+checkWinner():Player&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="KTb5hdUpj-QvQDwqx6Cj-5" vertex="1">
+          <mxGeometry y="188" width="180" height="110" as="geometry" />
         </mxCell>
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-9" value="HandPlayerDeck" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="350" y="-2310" width="240" height="150" as="geometry" />
@@ -998,9 +998,9 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-67" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=-0.003;exitY=0.582;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.996;entryY=0.662;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-67" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.996;entryY=0.662;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="950.1599999999999" y="-2820.242" as="sourcePoint" />
+            <mxPoint x="930" y="-2820" as="sourcePoint" />
             <mxPoint x="730" y="-2819.8820000000005" as="targetPoint" />
           </mxGeometry>
         </mxCell>
