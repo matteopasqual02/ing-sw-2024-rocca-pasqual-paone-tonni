@@ -14,7 +14,7 @@ public class Corner {
     }
 
     public void cover(int position) throws alreadyCoveredException {
-        if(isFree=true){
+        if(isFree){
             isFree=false;
         }
         else {
@@ -22,7 +22,7 @@ public class Corner {
         }
     }
     public boolean isCovered(int position){
-        if(isFree=true) return true;
+        if(isFree) return true;
         return false;
     }
 }
