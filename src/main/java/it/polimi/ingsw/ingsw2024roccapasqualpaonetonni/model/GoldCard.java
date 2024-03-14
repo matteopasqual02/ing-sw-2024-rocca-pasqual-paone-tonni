@@ -11,6 +11,14 @@ public class GoldCard extends PlayingCard{
         this.placeCondition= Arrays.copyOf(p,4);
     }
 
+    public boolean checkRequirements(int[] aviable_seeds) {
+        for (int i = 0; 0 < 4; i++) {
+            if (aviable_seeds[i] < placeCondition[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
     //public Boolean checkRequirements
     //public int countPoint()
 
