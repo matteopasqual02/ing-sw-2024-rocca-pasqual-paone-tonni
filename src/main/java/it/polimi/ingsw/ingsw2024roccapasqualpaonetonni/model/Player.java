@@ -29,7 +29,7 @@ public class Player {
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
     }
-    public void choose(int choice){
+    public void chooseGoal(int choice){
         if(choice==0){
             goal=firstGoals[0];
         }
@@ -39,6 +39,10 @@ public class Player {
     }
     public void drawStarting(DrawableDeck d){
         startingCard=d.drawFirstStarting();
+    }
+
+    public int[] getCountSeed() {
+        return countSeed;
     }
    //manca il mettere una carta nella board e poi ripescarla dai drawable deck per sostituire la carta mancante nella mano
 }
