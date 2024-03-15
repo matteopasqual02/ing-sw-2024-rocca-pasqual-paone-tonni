@@ -25,8 +25,9 @@ public class PlayingCard extends Card {
         else isFlipped = true;
     }
 
+    // since the convention we are using is that the corners start from one, the attribute need to be decremented
     public Corner getCorner(int pos) {
-        return corners[pos];
+        return corners[pos - 1];
     }
 
     public Seed getSeed() throws NoSeedException {
@@ -42,6 +43,10 @@ public class PlayingCard extends Card {
     public void setCoordinates(int x, int y) {
         coordinates[0] = x;
         coordinates[1] = y;
+    }
+
+    public boolean checkRequirements(int[] seedCount) {
+        return true;
     }
 
 }
