@@ -44,5 +44,6 @@ public class Player {
     public int[] getCountSeed() {
         return countSeed;
     }
+
    //manca il mettere una carta nella board e poi ripescarla dai drawable deck per sostituire la carta mancante nella mano
 }

@@ -93,7 +93,7 @@ public class PlayerBoard {
         // #############################################################################################
         // #############################################################################################
         // #############################################################################################
-        if (checkSpotAviable(card_to_add, place_coord) && card_to_add.checkPlaceCondition(seedCount)) {
+        if (checkSpotAviable(card_to_add, place_coord) && card_to_add.checkRequirements(seedCount)) {
             addCardToBoard(place_coord, card_to_add);
             return 1;
         }
@@ -129,22 +129,24 @@ public class PlayerBoard {
         else {
             return 0;
         }
+
+        // if add is successful, player must update corners and seed count
     }
 
     // checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
     private boolean checkSpotAviable(PlayingCard card, int[] coordinates) {
-        boolean result = false;
+        PlayingCard cardOnBoard;
         int x = coordinates[0];
         int y = coordinates[1];
         int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
         for (int[] i : postions) {
-            if (board[x + i[0]][y + i[1]] != null) {
-
+            cardOnBoard = board[x + i[0]][y + i[1]];
+            if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
+                return false;
             }
         }
-
-        return result;
+        return true;
     }
 
 }
