@@ -7,7 +7,7 @@ public class Corner {
     private Seed seed;
     Boolean isFree;
 
-    public Corner(int position,Seed seed){
+    public Corner(int position,Seed seed) {
         this.position=position;
         this.seed=seed;
         isFree=true;
@@ -21,8 +21,12 @@ public class Corner {
             throw new alreadyCoveredException("already covered");
         }
     }
-    public boolean isCovered(int position){
+    public boolean isCovered(int position) {
         if(isFree) return true;
         return false;
+    }
+
+    public Seed getSeed() {
+        return seed;
     }
 }
