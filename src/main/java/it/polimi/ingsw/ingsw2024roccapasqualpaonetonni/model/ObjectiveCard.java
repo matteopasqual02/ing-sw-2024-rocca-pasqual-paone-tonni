@@ -1,12 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 public class ObjectiveCard extends Card{
-    int points;
-    boolean isCount; //se è una carta obiettivo di tipo conteggio isCount=true, se è di tipo pattern isCount=false
-    Seed type;
-    String shape;
-    Seed primaryCard;
-    Seed secondaryCard;
+    private int points;
+    private boolean isCount; //se è una carta obiettivo di tipo conteggio isCount=true, se è di tipo pattern isCount=false
+    private Seed type;
+    private String shape;
+    private Seed primaryCard;
+    private Seed secondaryCard;
 
     public ObjectiveCard(int id, int points,boolean isCount,Seed type,Seed[] psCards,String shape){
         super(id);
@@ -29,22 +29,22 @@ public class ObjectiveCard extends Card{
 
     }
 
-    int getPoints(){
+    public int getPoints(){
         return points;
     }
-    boolean getisCount(){
+    public boolean getisCount(){
         return isCount;
     }
-    Seed getType(){
+    public Seed getType(){
         return type;
     }
-    String getShape(){
+    public String getShape(){
         return shape;
     }
-    Seed getPrimaryCard(){
+    public Seed getPrimaryCard(){
         return primaryCard;
     }
-    Seed getSecondaryCard(){
+    public Seed getSecondaryCard(){
         return secondaryCard;
     }
 

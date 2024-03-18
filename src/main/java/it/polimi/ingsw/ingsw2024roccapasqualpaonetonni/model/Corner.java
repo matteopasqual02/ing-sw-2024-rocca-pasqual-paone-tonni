@@ -5,7 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.alreadyCo
 public class Corner {
     private int position;
     private Seed seed;
-    Boolean isFree;
+    private Boolean isFree;
 
     public Corner(int position,Seed seed) {
         this.position=position;
