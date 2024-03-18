@@ -48,10 +48,12 @@ public class Game {
 
     }
 
-    public void nextPlayer(){
+    public Player nextPlayer(){
         Player temp;
         temp = players.poll();
         players.add(temp);
+
+        return players.peek();
     }
 
     public int checkPlayerTotalPoint(Player px) {
