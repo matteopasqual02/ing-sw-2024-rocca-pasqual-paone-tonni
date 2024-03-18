@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-18T12:20:09.131Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="5yDROaHvwyfCVZQtaXBQ" version="24.0.7" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-18T12:26:03.863Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="AEO54N2nFdBPWcQXS6zW" version="24.0.7" type="github">
   <diagram name="Pagina-1" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="2390" dy="4543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="none" math="0" shadow="0">
+    <mxGraphModel dx="2868" dy="4792" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1010,7 +1010,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-17" value="PlayerBoard" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="120" y="-2320" width="320" height="220" as="geometry" />
+          <mxGeometry x="160" y="-2320" width="320" height="220" as="geometry" />
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-18" value="- dim_x: final int&lt;div&gt;- dim_y: final int&lt;/div&gt;&lt;div&gt;- board: PlayngCard[][]&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="Xi2TOnUCr-bknbeWIHvj-17">
           <mxGeometry y="26" width="320" height="74" as="geometry" />
@@ -1114,6 +1114,22 @@
               <mxPoint x="1320" y="-1560" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="Xi2TOnUCr-bknbeWIHvj-49" value="dispatch" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="KTb5hdUpj-QvQDwqx6Cj-152" target="KTb5hdUpj-QvQDwqx6Cj-5">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="2350" y="-2200" as="sourcePoint" />
+            <mxPoint x="2430" y="-2200" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="3800" y="-3120" />
+              <mxPoint x="1060" y="-3120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Xi2TOnUCr-bknbeWIHvj-50" value="&amp;lt;&amp;lt;ENUM&amp;gt;&amp;gt;&lt;div&gt;Seed&lt;/div&gt;" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=34;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="-2840" width="140" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="Xi2TOnUCr-bknbeWIHvj-51" value="+ RED&lt;div&gt;+ GREEN&lt;/div&gt;&lt;div&gt;+ PURPLE&lt;/div&gt;&lt;div&gt;+ BLUE&lt;/div&gt;&lt;div&gt;+ EMPTY&lt;/div&gt;&lt;div&gt;+ FEATHER&lt;/div&gt;&lt;div&gt;+ POTION&lt;/div&gt;&lt;div&gt;+ SCROLL&lt;/div&gt;&lt;div&gt;+ MIXED&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="Xi2TOnUCr-bknbeWIHvj-50">
+          <mxGeometry y="34" width="140" height="154" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
