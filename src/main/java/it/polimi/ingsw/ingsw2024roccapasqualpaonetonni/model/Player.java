@@ -25,6 +25,17 @@ public class Player {
         this.startingCard=null;
 
     }
+
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+    public int getGoalPoints(){
+        return goalPoints;
+    }
+    public int getColorPlayer(){
+        return colorPlayer;
+    }
+
     public void drawGoals(DrawableDeck d){
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
@@ -45,5 +56,5 @@ public class Player {
         return countSeed;
     }
 
-   //manca il mettere una carta nella board e poi ripescarla dai drawable deck per sostituire la carta mancante nella mano
+   //manca il mettere una carta nella board e poi ripescarla dai drawable deck per sostituire la carta mancante nella mano + contare i punti
 }
