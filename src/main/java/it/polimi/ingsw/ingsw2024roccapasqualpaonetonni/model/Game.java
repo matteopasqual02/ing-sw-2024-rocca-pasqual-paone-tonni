@@ -13,6 +13,8 @@ public class Game {
     private Player firstPlayer;
     private boolean isLastRound;
 
+    private BoardDeck gameBoardDeck;
+    private DrawableDeck gameDrawableDeck;
 
     public Game(int idGame, Player p1, int numberOfPlayer ){
         this.idGame = idGame;
@@ -22,6 +24,18 @@ public class Game {
         firstPlayer = p1;
         isLastRound = false;
 
+        //constructor DrawableDeck how to use json?
+
+        ResourceCard[] rc = new ResourceCard[2];
+        rc[0]= gameDrawableDeck.drawFirstResource();
+        rc[1]= gameDrawableDeck.drawFirstResource();
+        GoldCard[] gc = new GoldCard[2];
+        gc[0]= gameDrawableDeck.drawFirstGold();
+        gc[1]= gameDrawableDeck.drawFirstGold();
+        ObjectiveCard[] oc = new ObjectiveCard[2];
+        oc[0]= gameDrawableDeck.drawFirstObjective();
+        oc[1]= gameDrawableDeck.drawFirstObjective();
+        gameBoardDeck = new BoardDeck(rc,gc,oc);
     }
 
     public void addPlayer (Player px) throws GameAlreadyFullException{
