@@ -44,7 +44,7 @@ public class PlayerBoard {
         board[x][y] = card;
         card.setCoordinates(x,y);
         player.updateSeedCount(calculateSeedUpdate(x, y));
-        player.increasePoints(calculatePoints(card, seedCount, x, y));
+        player.increasePoints(this.calculatePoints(card, seedCount, x, y));
     }
 
     // method used to resize the matrix, by creating a new one and copying the old elements
