@@ -6,38 +6,38 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Game {
-    private int idGame;
-    private Queue<Player> players=new LinkedList<>();
+    private Queue<Player> players;
     private int numberOfPlayer;
-    private Queue<Player> winner =  new LinkedList<>();
+    private Queue<Player> winner;
     private Player firstPlayer;
     private boolean isLastRound;
+
+    private GameStatus status;
 
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
 
-    public Game(int idGame, Player p1, int numberOfPlayer ){
-        this.idGame = idGame;
-        players.add(p1);
-        this.numberOfPlayer = numberOfPlayer;
-        winner = null;
-        firstPlayer = p1;
+    public Game(){
+        players = new LinkedList<>();
+        this.numberOfPlayer = 0;
+        winner = new LinkedList<>();
+        firstPlayer = null;
         isLastRound = false;
+        status = GameStatus.PREPARATION;
 
         gameDrawableDeck = new DrawableDeck();
-        createCard(gameDrawableDeck);
-
-        ResourceCard[] rc = new ResourceCard[2];
-        rc[0]= gameDrawableDeck.drawFirstResource();
-        rc[1]= gameDrawableDeck.drawFirstResource();
-        GoldCard[] gc = new GoldCard[2];
-        gc[0]= gameDrawableDeck.drawFirstGold();
-        gc[1]= gameDrawableDeck.drawFirstGold();
-        ObjectiveCard[] oc = new ObjectiveCard[2];
-        oc[0]= gameDrawableDeck.drawFirstObjective();
-        oc[1]= gameDrawableDeck.drawFirstObjective();
-        gameBoardDeck = new BoardDeck(rc,gc,oc);
     }
+
+//         ResourceCard[] rc = new ResourceCard[2];
+//        rc[0]= gameDrawableDeck.drawFirstResource();
+//        rc[1]= gameDrawableDeck.drawFirstResource();
+//        GoldCard[] gc = new GoldCard[2];
+//        gc[0]= gameDrawableDeck.drawFirstGold();
+//        gc[1]= gameDrawableDeck.drawFirstGold();
+//        ObjectiveCard[] oc = new ObjectiveCard[2];
+//        oc[0]= gameDrawableDeck.drawFirstObjective();
+//        oc[1]= gameDrawableDeck.drawFirstObjective();
+//        gameBoardDeck = new BoardDeck(rc,gc,oc);
 
     private void createCard(DrawableDeck gameDrawableDeck){
         //json...
@@ -61,12 +61,8 @@ public class Game {
         return players.peek();
     }
 
-    public int checkPlayerTotalPoint(Player px) {
-        return px.getGoalPoints() + px.getCurrentPoints();
-    }
-
-    public void checkWinner(){
-        int max=0;
+/*    public void checkWinner(){
+       int max=0;
         for (Player cplayer : players ){
             if(checkPlayerTotalPoint(cplayer) == max){
                 winner.add(cplayer);
@@ -78,6 +74,6 @@ public class Game {
             }
         }
     }
-
+*/
 
 }
