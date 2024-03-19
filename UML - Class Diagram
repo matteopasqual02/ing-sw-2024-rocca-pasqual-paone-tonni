@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-19T10:35:48.094Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="1hTo3VUwku1_kP_aH-Jg" version="24.0.7" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-19T10:38:05.504Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="DxLaYM4smKVMCNQPE4zy" version="24.0.7" type="github">
   <diagram name="Pagina-1" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="2726" dy="5089" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="3180" dy="5387" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1122,7 +1122,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-50" value="&amp;lt;&amp;lt;ENUM&amp;gt;&amp;gt;&lt;div&gt;Seed&lt;/div&gt;" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=34;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="240" y="-3120" width="140" height="188" as="geometry" />
+          <mxGeometry x="100" y="-3219" width="140" height="188" as="geometry" />
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-51" value="+ RED&lt;div&gt;+ GREEN&lt;/div&gt;&lt;div&gt;+ PURPLE&lt;/div&gt;&lt;div&gt;+ BLUE&lt;/div&gt;&lt;div&gt;+ EMPTY&lt;/div&gt;&lt;div&gt;+ FEATHER&lt;/div&gt;&lt;div&gt;+ POTION&lt;/div&gt;&lt;div&gt;+ SCROLL&lt;/div&gt;&lt;div&gt;+ MIXED&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="Xi2TOnUCr-bknbeWIHvj-50" vertex="1">
           <mxGeometry y="34" width="140" height="154" as="geometry" />
@@ -1172,6 +1172,14 @@
         <mxCell id="bccCV8aOHagrKURHwZSb-17" value="EXCEPTION" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
           <mxGeometry x="1320" y="-3170" width="160" height="80" as="geometry" />
         </mxCell>
+        <mxCell id="bccCV8aOHagrKURHwZSb-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF0000;" edge="1" parent="1" source="bccCV8aOHagrKURHwZSb-18" target="KTb5hdUpj-QvQDwqx6Cj-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2290.0000000000005" y="-2710" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2450" y="-2720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="bccCV8aOHagrKURHwZSb-18" value="GameController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="2360" y="-3122" width="180" height="160" as="geometry" />
         </mxCell>
@@ -1195,6 +1203,18 @@
         </mxCell>
         <mxCell id="bccCV8aOHagrKURHwZSb-25" value="+ MainController()&lt;div&gt;+ CreateGame(Player): GameController&lt;/div&gt;&lt;div&gt;+ joinFirstGameAvailable(Player): GameController&lt;/div&gt;&lt;div&gt;+ leaveGame(Player): void&lt;/div&gt;&lt;div&gt;+ joinGame(Player,Integer): GameController&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="bccCV8aOHagrKURHwZSb-22">
           <mxGeometry y="60" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="bccCV8aOHagrKURHwZSb-27" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="bccCV8aOHagrKURHwZSb-22" target="bccCV8aOHagrKURHwZSb-18">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="2460" y="-2790" as="sourcePoint" />
+            <mxPoint x="2620" y="-2790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bccCV8aOHagrKURHwZSb-29" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="bccCV8aOHagrKURHwZSb-18">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="2610" y="-3032" as="sourcePoint" />
+            <mxPoint x="2550" y="-3032" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
