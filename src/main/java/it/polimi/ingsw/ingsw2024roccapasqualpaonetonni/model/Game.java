@@ -24,7 +24,8 @@ public class Game {
         firstPlayer = p1;
         isLastRound = false;
 
-        //constructor DrawableDeck how to use json?
+        gameDrawableDeck = new DrawableDeck();
+        createCard(gameDrawableDeck);
 
         ResourceCard[] rc = new ResourceCard[2];
         rc[0]= gameDrawableDeck.drawFirstResource();
@@ -36,6 +37,10 @@ public class Game {
         oc[0]= gameDrawableDeck.drawFirstObjective();
         oc[1]= gameDrawableDeck.drawFirstObjective();
         gameBoardDeck = new BoardDeck(rc,gc,oc);
+    }
+
+    private void createCard(DrawableDeck gameDrawableDeck){
+        //json...
     }
 
     public void addPlayer (Player px) throws GameAlreadyFullException{

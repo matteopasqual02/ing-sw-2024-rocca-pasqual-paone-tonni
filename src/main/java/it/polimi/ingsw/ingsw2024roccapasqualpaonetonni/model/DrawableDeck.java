@@ -11,6 +11,12 @@ public class DrawableDeck {
     private Queue<ObjectiveCard> objectiveQueue=new LinkedList<>();
     private Queue<StartingCard> startingQueue=new LinkedList<>();
 
+    public DrawableDeck(){
+        this.goldQueue = null;
+        this.resourceQueue  = null;
+        this.objectiveQueue = null;
+        this.startingQueue  = null;
+    }
     public DrawableDeck(Collection<GoldCard>gc,Collection<ResourceCard>rc,Collection<ObjectiveCard>oc,Collection<StartingCard>sc){
         this.goldQueue.addAll(gc);
         this.resourceQueue.addAll(rc);
@@ -32,5 +38,18 @@ public class DrawableDeck {
     public StartingCard drawFirstStarting()
     {
         return startingQueue.poll();
+    }
+
+    public void setResourceCard(ResourceCard r){
+        resourceQueue.add(r);
+    }
+    public void setGoldCards(GoldCard g){
+        goldQueue.add(g);
+    }
+    public void setObjectiveCard(ObjectiveCard o){
+        objectiveQueue.add(o);
+    }
+    public void setStartingCard(StartingCard s){
+        startingQueue.add(s);
     }
 }
