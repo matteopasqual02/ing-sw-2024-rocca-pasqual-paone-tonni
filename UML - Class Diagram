@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-19T10:58:29.707Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="rtH8KauBAVguSg8oEpHM" version="24.0.7" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-19T11:13:13.774Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="EfW36vxbCf8VE447BZmo" version="24.0.7" type="github">
   <diagram name="Pagina-1" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="1590" dy="4343" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="1468" dy="4263" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -309,7 +309,7 @@
           <mxGeometry y="170" width="280" height="100" as="geometry" />
         </mxCell>
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-28" value="DrawableDeck" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1320" y="-2440" width="275" height="180" as="geometry" />
+          <mxGeometry x="1320" y="-2520" width="275" height="270" as="geometry" />
         </mxCell>
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-29" value="&lt;span&gt;- goldDrawableDeck: queue&amp;lt;Gold&amp;gt;&lt;/span&gt;&lt;div&gt;&lt;span&gt;- resourcesDrawableDeck: queue&amp;lt;resources&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;- objectiveDeck: queue&amp;lt;Gold&amp;gt;&lt;/span&gt;&lt;div&gt;&lt;span&gt;- startingDrawableDeck: queue&amp;lt;resources&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="KTb5hdUpj-QvQDwqx6Cj-28" vertex="1">
           <mxGeometry y="26" width="275" height="74" as="geometry" />
@@ -317,8 +317,8 @@
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-30" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontStyle=1" parent="KTb5hdUpj-QvQDwqx6Cj-28" vertex="1">
           <mxGeometry y="100" width="275" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-31" value="- drawFirstResources(): Resourcescard&lt;div&gt;- drawFirstGold(): goldcard&lt;br&gt;&lt;/div&gt;&lt;div&gt;- drawFirstStarting(): Startingcard&lt;br&gt;&lt;/div&gt;&lt;div&gt;- drawFirstObjective(): Objectivescard&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="KTb5hdUpj-QvQDwqx6Cj-28" vertex="1">
-          <mxGeometry y="108" width="275" height="72" as="geometry" />
+        <mxCell id="KTb5hdUpj-QvQDwqx6Cj-31" value="&lt;div&gt;+&amp;nbsp;&lt;span style=&quot;text-align: center; background-color: initial;&quot;&gt;DrawableDeck();&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ DrawableDeck(...all queue)&lt;/span&gt;&lt;span style=&quot;text-align: center; background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;+ drawFirstResources(): Resourcescard&lt;div&gt;+ drawFirstGold(): goldcard&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ drawFirstStarting(): Startingcard&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ drawFirstObjective(): Objectivescard&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ setResourceCard(): void&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ setGoldCard(): void&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ setObjectiveCard(): void&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ setStartingCard(): void&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="KTb5hdUpj-QvQDwqx6Cj-28" vertex="1">
+          <mxGeometry y="108" width="275" height="162" as="geometry" />
         </mxCell>
         <mxCell id="KTb5hdUpj-QvQDwqx6Cj-55" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;fillColor=none;strokeColor=none;resizable=0;perimeter=centerPerimeter;rotatable=0;allowArrows=0;points=[];outlineConnect=1;" parent="1" vertex="1">
           <mxGeometry x="1465" y="-2540" width="10" height="10" as="geometry" />
@@ -906,16 +906,16 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-1" value="BoardDeck" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="940" y="-2440" width="240" height="124" as="geometry" />
+          <mxGeometry x="930" y="-2440" width="260" height="150" as="geometry" />
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-2" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;-resourceCard: Resource[2]&lt;/span&gt;&lt;/div&gt;&lt;div&gt;-goldCard:Gold[2]&lt;br&gt;&lt;/div&gt;&lt;div&gt;-commonGoals:Objective[2]&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="Xi2TOnUCr-bknbeWIHvj-1" vertex="1">
-          <mxGeometry y="26" width="240" height="64" as="geometry" />
+          <mxGeometry y="26" width="260" height="64" as="geometry" />
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontStyle=1" parent="Xi2TOnUCr-bknbeWIHvj-1" vertex="1">
-          <mxGeometry y="90" width="240" height="8" as="geometry" />
+          <mxGeometry y="90" width="260" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="Xi2TOnUCr-bknbeWIHvj-4" value="+draw(int, Drawable deck):PlayingCard&lt;div&gt;&lt;br style=&quot;text-align: center;&quot;&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="Xi2TOnUCr-bknbeWIHvj-1" vertex="1">
-          <mxGeometry y="98" width="240" height="26" as="geometry" />
+        <mxCell id="Xi2TOnUCr-bknbeWIHvj-4" value="&lt;div&gt;+ BoardDeck(...all Card)&lt;/div&gt;+ draw(int, Drawable deck):PlayingCard&lt;div&gt;&lt;br style=&quot;text-align: center;&quot;&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="Xi2TOnUCr-bknbeWIHvj-1" vertex="1">
+          <mxGeometry y="98" width="260" height="52" as="geometry" />
         </mxCell>
         <mxCell id="Xi2TOnUCr-bknbeWIHvj-5" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" source="KTb5hdUpj-QvQDwqx6Cj-5" target="Xi2TOnUCr-bknbeWIHvj-1" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
