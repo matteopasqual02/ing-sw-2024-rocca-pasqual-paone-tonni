@@ -86,7 +86,7 @@ public class Game {
     }
 
     public void createTable(){
-        //create cards
+        //create cards in the game
         gameBoardDeck = new BoardDeck();
         gameDrawableDeck = new DrawableDeck();
     }
