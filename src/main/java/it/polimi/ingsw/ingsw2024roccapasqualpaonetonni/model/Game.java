@@ -6,51 +6,57 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Game {
+    private GameStatus status;
+    private int maxNumberOfPlayer;
     private Queue<Player> players;
-    private int numberOfPlayer;
     private Queue<Player> winner;
     private Player firstPlayer;
-    private boolean isLastRound;
-
-    private GameStatus status;
-
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
 
     public Game(){
         players = new LinkedList<>();
-        this.numberOfPlayer = 0;
         winner = new LinkedList<>();
         firstPlayer = null;
-        isLastRound = false;
         status = GameStatus.PREPARATION;
+        this.maxNumberOfPlayer=0;
 
-        gameDrawableDeck = new DrawableDeck();
+        gameBoardDeck = null;
+        gameDrawableDeck = null;
     }
-
-//         ResourceCard[] rc = new ResourceCard[2];
-//        rc[0]= gameDrawableDeck.drawFirstResource();
-//        rc[1]= gameDrawableDeck.drawFirstResource();
-//        GoldCard[] gc = new GoldCard[2];
-//        gc[0]= gameDrawableDeck.drawFirstGold();
-//        gc[1]= gameDrawableDeck.drawFirstGold();
-//        ObjectiveCard[] oc = new ObjectiveCard[2];
-//        oc[0]= gameDrawableDeck.drawFirstObjective();
-//        oc[1]= gameDrawableDeck.drawFirstObjective();
-//        gameBoardDeck = new BoardDeck(rc,gc,oc);
-
-    private void createCard(DrawableDeck gameDrawableDeck){
-        //json...
+    public void setNumberOfPlayer(int number){
+        this.maxNumberOfPlayer=number;
     }
-
     public void addPlayer (Player px) throws GameAlreadyFullException{
-        if(players.size() < numberOfPlayer){
+        if(players.size() < maxNumberOfPlayer){
             players.add(px);
         }
         else {
             throw new GameAlreadyFullException("The game is full");
         }
 
+    }
+
+    public void setFirstPlayer(Player fp){
+        this.firstPlayer=fp;
+    }
+
+    public Queue<Player> getPlayers() {
+        return players;
+    }
+
+    public Player getFirstPlayer() {
+        return firstPlayer;
+    }
+    public Player getCurrentPlayer(){
+        return players.peek();
+    }
+
+    public DrawableDeck getGameDrawableDeck(){
+        return gameDrawableDeck;
+    }
+    public BoardDeck getGameBoardDeck(){
+        return  gameBoardDeck;
     }
 
     public Player nextPlayer(){
@@ -61,7 +67,11 @@ public class Game {
         return players.peek();
     }
 
-/*    public void checkWinner(){
+    public int checkPlayerTotalPoint(Player p){
+
+        return p.getCurrentPoints(); // + funzione per i punti aggiuntivi
+    }
+    public void checkWinner(){
        int max=0;
         for (Player cplayer : players ){
             if(checkPlayerTotalPoint(cplayer) == max){
@@ -74,6 +84,12 @@ public class Game {
             }
         }
     }
-*/
+
+    public void createTable(){
+        //create cards
+        gameBoardDeck = new BoardDeck();
+        gameDrawableDeck = new DrawableDeck();
+    }
+
 
 }

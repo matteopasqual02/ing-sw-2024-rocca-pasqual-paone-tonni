@@ -8,6 +8,11 @@ public class BoardDeck {
     private ObjectiveCard[] commonGoals=new ObjectiveCard[2];
     private PlayingCard temp;
 
+    public BoardDeck(){
+        this.resourceCards= null;
+        this.goldCards= null;
+        this.commonGoals= null;
+    }
     public BoardDeck(ResourceCard[] rc,GoldCard[] gc, ObjectiveCard[] oc){
         this.resourceCards= Arrays.copyOf(rc,2);
         this.goldCards= Arrays.copyOf(gc,2);
@@ -15,7 +20,16 @@ public class BoardDeck {
     }
     //ci sara un metodo in game che estra 2 carte da ogni mazzo e le mette in un array che poi passa al costruttore della board
 
-    public PlayingCard draw(int position,DrawableDeck d){ //le 4 carte nella board sono chiamate 1,2,3,4, passando la position il client puo decidere quale carta vuole percare tra le 4, quindi indirettamente nache il suo tipo
+    public void setResourceCards(ResourceCard pc, int position){
+        resourceCards[position]=pc;
+    }
+    public void setGoldCardsCards(GoldCard pc, int position){
+        goldCards[position]=pc;
+    }public void setObjectiveCards(ObjectiveCard pc, int position){
+        commonGoals[position]=pc;
+    }
+
+    public PlayingCard draw(int position,DrawableDeck d){
         if(position==1 || position==2){
             temp=resourceCards[position-1];
             resourceCards[position-1]=d.drawFirstResource();
@@ -27,4 +41,5 @@ public class BoardDeck {
             return temp;
         }
     }
+    //le 4 carte nella board sono chiamate 1,2,3,4, passando la position il client puo decidere quale carta vuole percare tra le 4, quindi indirettamente nache il suo tipo
 }

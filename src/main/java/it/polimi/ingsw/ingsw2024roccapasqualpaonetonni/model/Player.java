@@ -1,7 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotInHandException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Player {
     private String nickname;
@@ -9,7 +14,7 @@ public class Player {
     private int currentPoints;
     private int[] countSeed =new int[7];
     private PlayerBoard board;
-    private PlayingCard[] hand =new PlayingCard[3];
+    private List<Card> hand;
     private ObjectiveCard goal;
     private ObjectiveCard[] firstGoals=new ObjectiveCard[2];
     private StartingCard startingCard;
@@ -20,7 +25,7 @@ public class Player {
         this.currentPoints=0;
         this.countSeed=null;
         //this.board= new PlayerBoard();
-        this.hand=null;
+        this.hand= new LinkedList<>();
         this.goal=null;
         this.firstGoals=null;
         this.startingCard=null;
@@ -50,11 +55,29 @@ public class Player {
         startingCard=d.drawFirstStarting();
     }
 
+    public void drawGoldfromDeck(DrawableDeck d){
+        hand.add(d.drawFirstGold());
+    }
+    public void drawResourcesfromDeck(DrawableDeck d){
+        hand.add(d.drawFirstResource());
+    }
+    public void drawfromBoard(int position, BoardDeck b, DrawableDeck d){
+        hand.add(b.draw(position,d));
+    }
+
     public int[] getCountSeed() {
         return countSeed;
     }
 
+
+
     public void addToBoard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
+        try {
+            removefromHand(cardToAdd);
+        }
+        catch(CardNotInHandException e) {
+            ;
+        }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
         }
@@ -62,9 +85,15 @@ public class Player {
             ;
         }
     }
-    public void addToBoard(GoldCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, int[] seedCount) {
+    public void addToBoard(GoldCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
-            board.addCard(cardToAdd, cardOnBoard, cornerToAttach, seedCount);
+            removefromHand(cardToAdd);
+        }
+        catch(CardNotInHandException e) {
+            ;
+        }
+        try {
+            board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
         }
         catch(InvalidPlaceException e) {
             ;
@@ -82,6 +111,13 @@ public class Player {
         for (int i = 0; i < 7; i++) {
             countSeed[i]+= change[i];
         }
+    }
+
+    private void removefromHand(PlayingCard p) throws CardNotInHandException{
+        if(hand.contains(p)){
+            hand.remove(p);
+        }
+        else {throw new CardNotInHandException("Card Doesn't existsin player hand");}
     }
 
    //manca il mettere una carta nella board e poi ripescarla dai drawable deck per sostituire la carta mancante nella mano + contare i punti
