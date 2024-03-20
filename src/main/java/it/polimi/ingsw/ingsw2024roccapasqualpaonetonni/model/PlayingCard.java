@@ -4,7 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoSeedExc
 
 import java.util.Arrays;
 
-public class PlayingCard extends Card {
+public abstract class PlayingCard extends Card {
     private Seed cardSeed;
     protected int points;
     private boolean isFlipped;

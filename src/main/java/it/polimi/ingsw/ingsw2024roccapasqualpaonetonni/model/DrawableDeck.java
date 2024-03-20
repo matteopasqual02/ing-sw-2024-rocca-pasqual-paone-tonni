@@ -40,9 +40,7 @@ public class DrawableDeck {
         return startingQueue.poll();
     }
 
-    public void setResourceCard(ResourceCard r){
-        resourceQueue.add(r);
-    }
+    public void setResourceCard(ResourceCard r){ resourceQueue.add(r); }
     public void setGoldCards(GoldCard g){
         goldQueue.add(g);
     }

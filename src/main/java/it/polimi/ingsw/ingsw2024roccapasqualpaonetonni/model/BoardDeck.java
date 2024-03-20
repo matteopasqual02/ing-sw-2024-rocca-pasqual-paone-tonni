@@ -4,21 +4,21 @@ import java.util.Arrays;
 
 public class BoardDeck {
     private ResourceCard[] resourceCards=new ResourceCard[2];
-    private GoldCard[] goldCards=new GoldCard[2];
+    private GoldCard[] goldCards;
     private ObjectiveCard[] commonGoals=new ObjectiveCard[2];
     private PlayingCard temp;
 
     public BoardDeck(){
-        this.resourceCards= null;
-        this.goldCards= null;
-        this.commonGoals= null;
+        this.resourceCards =new ResourceCard[2];
+        this.goldCards =new GoldCard[2];
+        this.commonGoals =new ObjectiveCard[2];
     }
     public BoardDeck(ResourceCard[] rc,GoldCard[] gc, ObjectiveCard[] oc){
         this.resourceCards= Arrays.copyOf(rc,2);
         this.goldCards= Arrays.copyOf(gc,2);
         this.commonGoals= Arrays.copyOf(oc,2);
     }
-    //ci sara un metodo in game che estra 2 carte da ogni mazzo e le mette in un array che poi passa al costruttore della board
+    //ci sara un metodo in game che estre 2 carte da ogni mazzo e le mette in un array che poi passa al costruttore della board
 
     public void setResourceCards(ResourceCard pc, int position){
         resourceCards[position]=pc;

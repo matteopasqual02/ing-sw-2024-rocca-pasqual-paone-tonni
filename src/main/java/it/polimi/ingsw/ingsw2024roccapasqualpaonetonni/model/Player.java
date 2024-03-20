@@ -12,7 +12,7 @@ public class Player {
     private String nickname;
     private int colorPlayer;
     private int currentPoints;
-    private int[] countSeed =new int[7];
+    private int[] countSeed;
     private PlayerBoard board;
     private List<Card> hand;
     private ObjectiveCard goal;
@@ -23,7 +23,7 @@ public class Player {
         this.nickname=name;
         this.colorPlayer=color;
         this.currentPoints=0;
-        this.countSeed=null;
+        this.countSeed = new int[7];
         //this.board= new PlayerBoard();
         this.hand= new LinkedList<>();
         this.goal=null;
