@@ -36,22 +36,21 @@ public class Game {
         }
 
     }
-
     public void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
     }
-
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
     public Queue<Player> getPlayers() {
         return players;
     }
-
     public Player getFirstPlayer() {
         return firstPlayer;
     }
     public Player getCurrentPlayer(){
         return players.peek();
     }
-
     public DrawableDeck getGameDrawableDeck(){
         return gameDrawableDeck;
     }
