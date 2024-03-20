@@ -54,7 +54,6 @@ public class Player {
     public void drawStarting(DrawableDeck d){
         startingCard=d.drawFirstStarting();
     }
-
     public void drawGoldfromDeck(DrawableDeck d){
         hand.add(d.drawFirstGold());
     }
@@ -75,8 +74,7 @@ public class Player {
         try {
             removefromHand(cardToAdd);
         }
-        catch(CardNotInHandException e) {
-            ;
+        catch(CardNotInHandException e) {;
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
