@@ -3,10 +3,9 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import java.util.Arrays;
 
 public class BoardDeck {
-    private ResourceCard[] resourceCards=new ResourceCard[2];
+    private ResourceCard[] resourceCards;
     private GoldCard[] goldCards;
-    private ObjectiveCard[] commonGoals=new ObjectiveCard[2];
-    private PlayingCard temp;
+    private ObjectiveCard[] commonGoals;
 
     public BoardDeck(){
         this.resourceCards =new ResourceCard[2];
@@ -23,13 +22,14 @@ public class BoardDeck {
     public void setResourceCards(ResourceCard pc, int position){
         resourceCards[position]=pc;
     }
-    public void setGoldCardsCards(GoldCard pc, int position){
-        goldCards[position]=pc;
-    }public void setObjectiveCards(ObjectiveCard pc, int position){
+    public void setGoldCardsCards(GoldCard pc, int position){ goldCards[position]=pc;}
+    public void setObjectiveCards(ObjectiveCard pc, int position){
         commonGoals[position]=pc;
     }
 
     public PlayingCard draw(int position,DrawableDeck d){
+        PlayingCard temp;
+
         if(position==1 || position==2){
             temp=resourceCards[position-1];
             resourceCards[position-1]=d.drawFirstResource();
@@ -41,5 +41,8 @@ public class BoardDeck {
             return temp;
         }
     }
+
+    public ObjectiveCard[]  getCommonObjective(){return commonGoals;}
+
     //le 4 carte nella board sono chiamate 1,2,3,4, passando la position il client puo decidere quale carta vuole percare tra le 4, quindi indirettamente nache il suo tipo
 }

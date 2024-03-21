@@ -19,9 +19,11 @@ public class MainController {
         return instance;
     }
 
-    public void addGame(){
-        runningGames.add(new GameController());
+    public GameController CreateGameController(){
+        GameController g=new GameController();
+        runningGames.add(g);
+        return g;
     }
 
-    //...
+
 }

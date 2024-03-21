@@ -7,8 +7,8 @@ import java.util.Arrays;
 public abstract class PlayingCard extends Card {
     private Seed cardSeed;
     protected int points;
-    private boolean isFlipped;
-    private Corner[] corners = new Corner[4];
+    protected boolean isFlipped;
+    private Corner[] corners;
     protected int[] coordinates;
 
     public PlayingCard(int id, Seed seed, Corner[] c,int points) {
@@ -48,5 +48,7 @@ public abstract class PlayingCard extends Card {
     public int getPoints() {
         return points;
     }
+
+
 
 }

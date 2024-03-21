@@ -16,10 +16,10 @@ public class Player {
     private PlayerBoard board;
     private List<Card> hand;
     private ObjectiveCard goal;
-    private ObjectiveCard[] firstGoals=new ObjectiveCard[2];
+    private ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
-    private boolean readyToStart = false;
-    private boolean connected = true;
+    private boolean readyToStart;
+    private boolean connected ;
     public Player(String name,int color){
 
         this.nickname=name;
@@ -29,8 +29,10 @@ public class Player {
         this.board= new PlayerBoard(this);
         this.hand= new LinkedList<>();
         this.goal=null;
-        this.firstGoals=null;
+        this.firstGoals=new ObjectiveCard[2];
         this.startingCard=null;
+        this.readyToStart = false;
+        this.connected=true;
 
     }
 

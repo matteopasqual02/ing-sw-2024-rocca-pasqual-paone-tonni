@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
@@ -8,13 +9,14 @@ import java.util.Queue;
 
 public class Game {
     private GameStatus status;
-
     private int maxNumberOfPlayer;
     private Queue<Player> players;
     private Queue<Player> winner;
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
+
+    private Chat chat;
 
     public Game(){
         players = new LinkedList<>();
@@ -25,6 +27,8 @@ public class Game {
 
         gameBoardDeck = null;
         gameDrawableDeck = null;
+
+        chat = new Chat();
     }
     public void setNumberOfPlayer(int number){
         this.maxNumberOfPlayer=number;

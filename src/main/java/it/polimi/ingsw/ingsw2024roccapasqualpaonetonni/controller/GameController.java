@@ -102,4 +102,10 @@ public class GameController implements Runnable{
         getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
     }
 
+    private void checkPoints20Points(){
+        if(getCurrentPlayer().getCurrentPoints() >= 20){
+            model.setStatus(GameStatus.LAST_TURN);
+        }
+    }
+
 }
