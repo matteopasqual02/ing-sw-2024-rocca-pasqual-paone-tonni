@@ -1,12 +1,14 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Game {
     private GameStatus status;
+
     private int maxNumberOfPlayer;
     private Queue<Player> players;
     private Queue<Player> winner;
@@ -27,14 +29,25 @@ public class Game {
     public void setNumberOfPlayer(int number){
         this.maxNumberOfPlayer=number;
     }
-    public void addPlayer (Player px) throws GameAlreadyFullException{
-        if(players.size() < maxNumberOfPlayer){
-            players.add(px);
+    public void addPlayer (Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
+        if(players.contains(px)){
+            if(players.size() < maxNumberOfPlayer){
+                players.add(px);
+            }
+            else {
+                throw new GameAlreadyFullException("The game is full");
+            }
         }
         else {
-            throw new GameAlreadyFullException("The game is full");
+            throw new PlayerAlreadyInException("The game is full");
         }
+    }
 
+    public void removePlayer(Player p){
+        players.remove(p);
+        if(status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_TURN)){
+            status = GameStatus.ENDING;
+        }
     }
     public void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
@@ -57,7 +70,6 @@ public class Game {
     public BoardDeck getGameBoardDeck(){
         return  gameBoardDeck;
     }
-
     public Player nextPlayer(){
         Player temp;
         temp = players.poll();
@@ -84,11 +96,11 @@ public class Game {
         }
     }
 
-    public void createTable(){
-        //create cards in the game
-        gameBoardDeck = new BoardDeck();
-        gameDrawableDeck = new DrawableDeck();
+    public void playerIsReadyToStart(Player p){
+        p.setReadyToStart();
     }
-
-
+    public Boolean arePlayerReady(){
+        return players.stream().filter(Player::getreadytostart).count() == players.size()
+                && players.size() == maxNumberOfPlayer;
+    }
 }

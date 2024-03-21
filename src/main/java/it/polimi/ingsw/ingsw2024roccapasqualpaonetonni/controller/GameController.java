@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.View;
 import javafx.scene.control.skin.TableHeaderRow;
 
@@ -30,7 +31,8 @@ public class GameController implements Runnable{
         try {
             model.addPlayer(px);
 
-        }catch (GameAlreadyFullException e){/**/};
+        }catch (GameAlreadyFullException ex1){/*_*/}
+        catch (PlayerAlreadyInException ex2){/**/};
     }
 
     public Queue<Player> getAllPlayer(){
@@ -49,8 +51,13 @@ public class GameController implements Runnable{
         return model.getPlayers().size();
     }
 
-    public void createTable(){
-        model.createTable();
+    public Boolean createTable(){
+        if(model.arePlayerReady()){
+            //create dalla factory
+            model.setStatus(GameStatus.RUNNING);
+            return true;
+        }
+        else return false;
     }
 
     public void randomFirstPlayer(){

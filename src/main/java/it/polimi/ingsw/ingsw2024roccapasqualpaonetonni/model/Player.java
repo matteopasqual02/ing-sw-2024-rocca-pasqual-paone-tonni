@@ -18,13 +18,15 @@ public class Player {
     private ObjectiveCard goal;
     private ObjectiveCard[] firstGoals=new ObjectiveCard[2];
     private StartingCard startingCard;
+    private boolean readyToStart = false;
+    private boolean connected = true;
     public Player(String name,int color){
 
         this.nickname=name;
         this.colorPlayer=color;
         this.currentPoints=0;
         this.countSeed = new int[7];
-        //this.board= new PlayerBoard();
+        this.board= new PlayerBoard(this);
         this.hand= new LinkedList<>();
         this.goal=null;
         this.firstGoals=null;
@@ -37,6 +39,22 @@ public class Player {
     }
     public int getColorPlayer(){
         return colorPlayer;
+    }
+
+    public Boolean getreadytostart(){
+        return readyToStart;
+    }
+    public void setReadyToStart(){
+        readyToStart=true;
+    }
+    public Boolean getisconnected(){
+        return connected;
+    }
+    public void setIsconnected(Boolean b){
+        connected = b;
+    }
+    public String getNickname() {
+        return nickname;
     }
 
     public void drawGoals(DrawableDeck d){
