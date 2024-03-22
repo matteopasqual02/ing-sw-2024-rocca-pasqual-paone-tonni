@@ -4,9 +4,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoSeedExc
 
 import java.util.Arrays;
 
-public class PlayingCard extends Card {
-    private Seed cardSeed;
-    private int points;
+public abstract class PlayingCard extends Card {
+    private final Seed cardSeed;
+    private final int points;
     private boolean isFlipped;
     private Corner[] corners = new Corner[4];
     private int[] coordinates;
