@@ -8,25 +8,14 @@ public class ObjectiveCard extends Card{
     private Seed primaryCard;
     private Seed secondaryCard;
 
-    public ObjectiveCard(int id, int points,boolean isCount,Seed type,Seed[] psCards,String shape){
+    public ObjectiveCard(int id, int points, boolean isCount, Seed type, Seed[] psCards, String shape){
         super(id);
-        this.points=points;
-        this.isCount=isCount;
-        if(isCount)
-        {
-            this.type=type;
-            this.primaryCard=null;
-            this.secondaryCard=null;
-            this.shape=null;
-        }
-        else
-        {
-            this.type=null;
-            this.primaryCard=psCards[0];
-            this.secondaryCard=psCards[1];
-            this.shape=shape;
-        }
-
+        this.points = points;
+        this.isCount = isCount;
+        this.type = type;
+        this.primaryCard = psCards[0];
+        this.secondaryCard = psCards[1];
+        this.shape = shape;
     }
 
     public int getPoints(){

@@ -5,10 +5,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoSeedExc
 import java.util.Arrays;
 
 public class StartingCard extends PlayingCard{
-    private Boolean[] center=new Boolean[4];
-    private Corner[] cornersBack=new Corner[4];
-    private Boolean isFlipped;
-    public StartingCard(int id,Boolean[] c,Corner[] cf,Corner[] cb){
+    private Boolean[] center;
+    private Corner[] cornersBack;
+    public StartingCard(int id, Boolean[] c, Corner[] cf, Corner[] cb){
         super(id,Seed.EMPTY,cf,0);
         this.center= Arrays.copyOf(c,4);
         this.cornersBack= Arrays.copyOf(cb,4);
@@ -19,4 +18,6 @@ public class StartingCard extends PlayingCard{
         if(!isFlipped) return center;
         else throw new NoSeedException("Wrong side");
     }
+
+    public Corner[] getBackCorner(){return  cornersBack;}
 }
