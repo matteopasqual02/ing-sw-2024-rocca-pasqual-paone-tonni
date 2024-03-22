@@ -6,10 +6,10 @@ import java.util.Arrays;
 
 public abstract class PlayingCard extends Card {
     private final Seed cardSeed;
-    private final int points;
+    protected final int points;
     private boolean isFlipped;
     private Corner[] corners = new Corner[4];
-    private int[] coordinates;
+    protected int[] coordinates;
 
     public PlayingCard(int id, Seed seed, Corner[] c,int points) {
         super(id);
@@ -49,5 +49,8 @@ public abstract class PlayingCard extends Card {
         return true;
     }
 
+    public int getPoints() {
+        return points;
+    }
 
 }

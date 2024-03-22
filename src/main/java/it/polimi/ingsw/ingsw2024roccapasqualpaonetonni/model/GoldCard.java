@@ -19,7 +19,11 @@ public class GoldCard extends PlayingCard{
         }
         return true;
     }
-    //public Boolean checkRequirements
-    //public int countPoint()
+
+    public int[] getRequirements() {return placeCondition;}
+
+    public String getPointCondition() {
+        return pointCondition;
+    }
 
 }
