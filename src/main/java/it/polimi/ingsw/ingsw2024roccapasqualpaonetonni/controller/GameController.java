@@ -80,7 +80,7 @@ public class GameController implements Runnable{
                 // Put the shuffled deck into the map
                 shuffledDecks.put(type, deck);
             }
-            DrawableDeck decks = new DrawableDeck(shuffledDecks);
+            //DrawableDeck decks = new DrawableDeck(shuffledDecks);
             model.setStatus(GameStatus.RUNNING);
             return true;
         }
@@ -145,4 +145,7 @@ public class GameController implements Runnable{
         return deck;
     }
 
+    public void checkWinner(){
+        model.checkWinner();
+    }
 }

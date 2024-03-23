@@ -59,6 +59,13 @@ public class Player {
         return nickname;
     }
 
+    public ObjectiveCard getGoal(){
+        return goal;
+    }
+    public PlayerBoard getBoard(){
+        return board;
+    }
+
     public void drawGoals(DrawableDeck d){
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();

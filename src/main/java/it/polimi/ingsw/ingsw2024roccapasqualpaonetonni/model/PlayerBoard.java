@@ -17,6 +17,10 @@ public class PlayerBoard {
         player = owner;
     }
 
+    public Player getPlayer(){
+        return player;
+    }
+
     // method that receives a card and the coordinates where to put it,
     // it then checks if the coordinates are inside the matrix, and if they aren't calls a method to resize the matrix
     private void addCardToBoard(int[] coordinates, PlayingCard card, int[] seedCount) {
@@ -44,7 +48,7 @@ public class PlayerBoard {
         board[x][y] = card;
         card.setCoordinates(x,y);
         player.updateSeedCount(calculateSeedUpdate(x, y));
-        player.increasePoints(this.calculatePoints(card, seedCount, x, y));
+        //player.increasePoints(this.calculatePoints(card, seedCount, x, y));
     }
 
     // method used to resize the matrix, by creating a new one and copying the old elements
