@@ -30,10 +30,8 @@ public abstract class PlayingCard extends Card {
         return corners[pos - 1];
     }
 
-    public Seed getSeed() throws NoSeedException {
-        if (!cardSeed.equals("EMPTY")) return cardSeed;
-        else throw new NoSeedException("No center seed");
-
+    public Seed getSeed(){
+        return cardSeed;
     }
 
     public int[] getCoordinates() {
@@ -47,6 +45,10 @@ public abstract class PlayingCard extends Card {
 
     public boolean checkRequirements(int[] seedCount) {
         return true;
+    }
+
+    public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y){
+        return points;
     }
 
     public int getPoints() {

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoSeedException;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,8 +69,53 @@ public class ObjectiveCard extends Card{
         return 0;
     }
     private int pointsPatternCard(PlayerBoard pb){
+        PlayingCard[][] board = pb.getBoard();
+        int totalpoints =0;
 
-        return 0;
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[i].length; j++){
+                PlayingCard currentCard = board[i][j];
+                if(currentCard!=null && primaryCard == currentCard.getSeed() ){
+                    switch (shape){
+                        case "up" -> {
+                            if( i+2 <board.length && j+2 < board[i].length &&
+                                board[i+1][j+1] != null &&
+                                board[i+1][j+1].getSeed() == primaryCard &&
+                                board[i+2][j+2] != null &&
+                                board[i+1][j+1].getSeed() == primaryCard
+                                ){
+                                totalpoints += points;
+                            }
+                        }
+                        case "down" -> {
+                            if( i-2 > 0 && j-2 > 0 &&
+                                board[i-1][j-1] != null &&
+                                board[i-1][j-1].getSeed() == primaryCard &&
+                                board[i-2][j-2] != null &&
+                                board[i-1][j-1].getSeed() == primaryCard
+                            ){
+                                totalpoints += points;
+                            }
+                        }
+                        case "ne" -> {
+
+
+                        }
+                        case "nw" -> {
+
+                        }
+                        case "se" -> {
+
+                        }
+                        case "sw" -> {
+
+                        }
+                    }
+
+                }
+            }
+        }
+        return totalpoints;
     }
 
 }

@@ -48,7 +48,7 @@ public class PlayerBoard {
         board[x][y] = card;
         card.setCoordinates(x,y);
         player.updateSeedCount(calculateSeedUpdate(x, y));
-        //player.increasePoints(this.calculatePoints(card, seedCount, x, y));
+        player.increasePoints(card.calculatePoints(board, seedCount, x, y));
     }
 
     // method used to resize the matrix, by creating a new one and copying the old elements
@@ -100,7 +100,7 @@ public class PlayerBoard {
             place_coord[1] = prev_coord[1] + 1;
         }
 
-        if (checkSpotAviable(card_to_add, place_coord)) {
+        if (checkSpotAvailable (card_to_add, place_coord)) {
             int tmp = checkRequirements(card_to_add)[0];
             if (tmp == 1) {
                 addCardToBoard(place_coord, card_to_add, seedCount);
@@ -113,7 +113,6 @@ public class PlayerBoard {
             throw new InvalidPlaceException("The card cannot be placed in the chosen position");
         }
     }
-
     public void addCard(ResourceCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException{
         int[] prev_coord = card_on_board.getCoordinates();
         int[] place_coord = new int[2];
@@ -134,7 +133,7 @@ public class PlayerBoard {
             place_coord[1] = prev_coord[1] + 1;
         }
 
-        if (checkSpotAviable(card_to_add, place_coord)) {
+        if (checkSpotAvailable(card_to_add, place_coord)) {
             addCardToBoard(place_coord, card_to_add, seedCount);
         }
         else {
@@ -146,7 +145,7 @@ public class PlayerBoard {
 
     // checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
-    private boolean checkSpotAviable(PlayingCard card, int[] coordinates) {
+    private boolean checkSpotAvailable(PlayingCard card, int[] coordinates) {
         PlayingCard cardOnBoard;
         int x = coordinates[0];
         int y = coordinates[1];
@@ -162,10 +161,9 @@ public class PlayerBoard {
         }
         return true;
     }
-
     private int[] checkRequirements(GoldCard card) {
         int[] result = new int[2];
-        int[] requirements = card.getRequirements();
+        int[] requirements = card.getPlaceCondition();
         for (int i = 0; i < requirements.length; i++) {
             if (requirements[i] > player.getCountSeed()[i]) {
                 result[0] = 0;
@@ -206,28 +204,7 @@ public class PlayerBoard {
         return seedUpdate;
     }
 
-    private int calculatePoints(GoldCard card, int[] seedCount, int x, int y) {
-        int points = 0;
-        PlayingCard cardOnBoard;
-        switch(card.getPointCondition()) {
-            case "corners":
-                int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
-                for (int[] i : postions) {
-                    cardOnBoard = board[x + i[0]][y + i[1]];
-                    if (cardOnBoard != null) {
-                        points += card.getPoints();
-                    }
-                };
-            case "feather", "potion", "scroll":
-                points += card.getPoints() * seedCount[Seed.getByName(card.getPointCondition()).getId()];
-            case null, default:
-                ;
-        }
-        return points;
+    public PlayingCard[][] getBoard() {
+        return board;
     }
-
-    private int calculatePoints(ResourceCard card, int[] seedCount, int x, int y) {
-        return card.getPoints();
-    }
-
 }
