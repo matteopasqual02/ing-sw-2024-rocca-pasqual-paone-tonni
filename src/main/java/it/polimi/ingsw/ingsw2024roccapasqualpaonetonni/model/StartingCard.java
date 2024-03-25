@@ -1,12 +1,11 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoSeedException;
-
 import java.util.Arrays;
 
 public class StartingCard extends PlayingCard{
     private Boolean[] center;
     private Corner[] cornersBack;
+
     public StartingCard(int id, Boolean[] c, Corner[] cf, Corner[] cb){
         super(id,Seed.EMPTY,cf,0);
         this.center= Arrays.copyOf(c,4);
@@ -14,10 +13,7 @@ public class StartingCard extends PlayingCard{
         this.isFlipped=false;
 
     }
-    public Boolean[] getCenter() throws NoSeedException {
-        if(!isFlipped) return center;
-        else throw new NoSeedException("Wrong side");
-    }
 
+    public Boolean[] getCenter() { return center; }
     public Corner[] getBackCorner(){return  cornersBack;}
 }

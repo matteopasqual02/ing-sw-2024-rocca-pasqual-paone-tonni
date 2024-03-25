@@ -38,9 +38,13 @@ public class GoldCard extends PlayingCard{
         }
         return points;
     }
-    public String getPointCondition() {
-        return pointCondition;
-    }
+
     public int[] getPlaceCondition(){return placeCondition;};
 
 }
+
+/*  not used -- if needed for testing use it
+    public String getPointCondition() {
+        return pointCondition;
+    }
+ */

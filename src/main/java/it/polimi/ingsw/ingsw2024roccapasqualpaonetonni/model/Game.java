@@ -1,11 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Game {
     private GameStatus status;
@@ -15,7 +13,6 @@ public class Game {
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
-
     private Chat chat;
 
     public Game(){

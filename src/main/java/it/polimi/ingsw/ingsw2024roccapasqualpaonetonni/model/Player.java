@@ -90,12 +90,9 @@ public class Player {
     public void drawfromBoard(int position, BoardDeck b, DrawableDeck d){
         hand.add(b.draw(position,d));
     }
-
     public int[] getCountSeed() {
         return countSeed;
     }
-
-
 
     public void addToBoard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {

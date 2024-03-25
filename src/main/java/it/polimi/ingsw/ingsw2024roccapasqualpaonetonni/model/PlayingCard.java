@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoSeedException;
-
 import java.util.Arrays;
 
 public abstract class PlayingCard extends Card {
@@ -47,9 +45,7 @@ public abstract class PlayingCard extends Card {
         return true;
     }
 
-    public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y){
-        return points;
-    }
+    public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y){return 0;};
 
     public int getPoints() {
         return points;
