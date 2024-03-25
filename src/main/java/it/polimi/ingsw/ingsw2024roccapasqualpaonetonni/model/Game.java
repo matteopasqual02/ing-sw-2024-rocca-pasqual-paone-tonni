@@ -3,6 +3,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
+
 import java.util.*;
 
 public class Game {
