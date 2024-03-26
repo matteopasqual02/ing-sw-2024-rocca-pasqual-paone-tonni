@@ -4,50 +4,60 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Map;
 
 public class DrawableDeck {
-    private Queue<GoldCard> goldQueue=new LinkedList<>();
-    private Queue<ResourceCard> resourceQueue=new LinkedList<>();
-    private Queue<ObjectiveCard> objectiveQueue=new LinkedList<>();
-    private Queue<StartingCard> startingQueue=new LinkedList<>();
+    private Map<String, Queue<Card>> decks;
 
-    public DrawableDeck(){
-        this.goldQueue = null;
-        this.resourceQueue  = null;
-        this.objectiveQueue = null;
-        this.startingQueue  = null;
-    }
-    public DrawableDeck(Collection<GoldCard>gc,Collection<ResourceCard>rc,Collection<ObjectiveCard>oc,Collection<StartingCard>sc){
-        this.goldQueue.addAll(gc);
-        this.resourceQueue.addAll(rc);
-        this.objectiveQueue.addAll(oc);
-        this.startingQueue.addAll(sc);
+    public DrawableDeck(Map<String, Queue<Card>> decks){
+        this.decks = decks;
     }
     public ResourceCard drawFirstResource()
     {
-        return resourceQueue.poll();
+        Queue<Card> cards = decks.get("resources");
+        // Check if the resource queue is not null and not empty
+        if (cards != null && !cards.isEmpty()) {
+            // Draw and return the first resource card
+            return (ResourceCard) cards.poll();
+        } else {
+            // If the resource queue is null or empty, return null
+            return null;
+        }
     }
     public GoldCard drawFirstGold()
     {
-        return goldQueue.poll();
+        Queue<Card> cards = decks.get("gold");
+        // Check if the resource queue is not null and not empty
+        if (cards != null && !cards.isEmpty()) {
+            // Draw and return the first resource card
+            return (GoldCard) cards.poll();
+        } else {
+            // If the resource queue is null or empty, return null
+            return null;
+        }
     }
     public ObjectiveCard drawFirstObjective()
     {
-        return objectiveQueue.poll();
+        Queue<Card> cards = decks.get("objective");
+        // Check if the resource queue is not null and not empty
+        if (cards != null && !cards.isEmpty()) {
+            // Draw and return the first resource card
+            return (ObjectiveCard) cards.poll();
+        } else {
+            // If the resource queue is null or empty, return null
+            return null;
+        }
     }
     public StartingCard drawFirstStarting()
     {
-        return startingQueue.poll();
-    }
-
-    public void setResourceCard(ResourceCard r){ resourceQueue.add(r); }
-    public void setGoldCards(GoldCard g){
-        goldQueue.add(g);
-    }
-    public void setObjectiveCard(ObjectiveCard o){
-        objectiveQueue.add(o);
-    }
-    public void setStartingCard(StartingCard s){
-        startingQueue.add(s);
+        Queue<Card> cards = decks.get("starting");
+        // Check if the resource queue is not null and not empty
+        if (cards != null && !cards.isEmpty()) {
+            // Draw and return the first resource card
+            return (StartingCard) cards.poll();
+        } else {
+            // If the resource queue is null or empty, return null
+            return null;
+        }
     }
 }

@@ -1,11 +1,11 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
+
+import java.util.*;
 
 public class Game {
     private GameStatus status;
@@ -15,7 +15,6 @@ public class Game {
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
-
     private Chat chat;
 
     public Game(){
@@ -43,7 +42,7 @@ public class Game {
             }
         }
         else {
-            throw new PlayerAlreadyInException("The game is full");
+            throw new PlayerAlreadyInException("The player is alrady in");
         }
     }
 
@@ -68,6 +67,9 @@ public class Game {
     public Player getCurrentPlayer(){
         return players.peek();
     }
+    public void setGameDrawableDeck(DrawableDeck decks) {
+        gameDrawableDeck = decks;
+    }
     public DrawableDeck getGameDrawableDeck(){
         return gameDrawableDeck;
     }
@@ -84,18 +86,25 @@ public class Game {
 
     public int checkPlayerTotalPoint(Player p){
 
-        return p.getCurrentPoints(); // + funzione per i punti aggiuntivi
+        return p.getCurrentPoints()
+                + p.getGoal().pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective()[0].pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective()[1].pointCard(p.getBoard())
+                ;
     }
     public void checkWinner(){
        int max=0;
         for (Player cplayer : players ){
-            if(checkPlayerTotalPoint(cplayer) == max){
+            int p_point = checkPlayerTotalPoint(cplayer);
+            //2 players with equal point
+            if(p_point == max){
                 winner.add(cplayer);
             }
-            else if(checkPlayerTotalPoint(cplayer) > max) {
+            //winner
+            else if(p_point > max) {
                 winner.clear();
                 winner.add(cplayer);
-                max= checkPlayerTotalPoint(cplayer);
+                max= p_point;
             }
         }
     }

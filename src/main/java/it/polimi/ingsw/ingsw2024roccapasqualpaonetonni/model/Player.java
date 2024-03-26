@@ -59,6 +59,13 @@ public class Player {
         return nickname;
     }
 
+    public ObjectiveCard getGoal(){
+        return goal;
+    }
+    public PlayerBoard getBoard(){
+        return board;
+    }
+
     public void drawGoals(DrawableDeck d){
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
@@ -83,16 +90,13 @@ public class Player {
     public void drawfromBoard(int position, BoardDeck b, DrawableDeck d){
         hand.add(b.draw(position,d));
     }
-
     public int[] getCountSeed() {
         return countSeed;
     }
 
-
-
     public void addToBoard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
-            removefromHand(cardToAdd);
+            removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {;
         }
@@ -105,7 +109,7 @@ public class Player {
     }
     public void addToBoard(GoldCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
-            removefromHand(cardToAdd);
+            removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
             ;
@@ -131,7 +135,7 @@ public class Player {
         }
     }
 
-    private void removefromHand(PlayingCard p) throws CardNotInHandException{
+    private void removeFromHand(PlayingCard p) throws CardNotInHandException{
         if(hand.contains(p)){
             hand.remove(p);
         }

@@ -3,7 +3,12 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.View;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import javafx.scene.control.skin.TableHeaderRow;
 
 import java.util.*;
@@ -12,6 +17,7 @@ public class GameController implements Runnable{
     private Game model;
     private View view;
     private final Random random = new Random();
+    private final String path = "it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/JSONUtils.java";
 
     public GameController() {
         model = new Game();
@@ -52,8 +58,29 @@ public class GameController implements Runnable{
     }
 
     public Boolean createTable(){
-        if(model.arePlayerReady()){
-            //create dalla factory
+        if(model.arePlayerReady()) {
+            Map<String, List<Card>> cardsMap = null;
+            try {
+                cardsMap = JSONUtils.createCardsFromJson(path);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
+            for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
+                String type = entry.getKey(); // Get the card type
+                List<Card> cards = entry.getValue(); // Get the list of cards for this type
+
+                // Shuffle the list of cards
+                Collections.shuffle(cards);
+
+                // Create a new deck as a Queue
+                Queue<Card> deck = new LinkedList<>(cards);
+
+                // Put the shuffled deck into the map
+                shuffledDecks.put(type, deck);
+            }
+            //DrawableDeck decks = new DrawableDeck(shuffledDecks);
             model.setStatus(GameStatus.RUNNING);
             return true;
         }
@@ -108,4 +135,17 @@ public class GameController implements Runnable{
         }
     }
 
+    private static Queue<Card> createShuffledDeck(List<Card> cards) {
+        // Shuffle the list of cards
+        Collections.shuffle(cards);
+
+        // Create a new deck as a Queue
+        Queue<Card> deck = new LinkedList<>(cards);
+
+        return deck;
+    }
+
+    public void checkWinner(){
+        model.checkWinner();
+    }
 }
