@@ -1,17 +1,29 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
+
 public class PlayerBoard {
-    private final int dim_x = 40;
-    private final int dim_y = 40;
+    private int dim_x;
+    private int dim_y;
     private PlayingCard[][] board;
 
-    public PlayerBoard() {
+    private Player player;
+
+    public PlayerBoard(Player owner) {
+        dim_x = 40;
+        dim_y = 40;
         board = new PlayingCard[dim_x][dim_y];
+        player = owner;
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     // method that receives a card and the coordinates where to put it,
     // it then checks if the coordinates are inside the matrix, and if they aren't calls a method to resize the matrix
-    private void addCardToBoard(int[] coordinates, PlayingCard card) {
+    private void addCardToBoard(int[] coordinates, PlayingCard card, int[] seedCount) {
         int x = coordinates[0];
         int y = coordinates[1];
         int x_increase = 0;
@@ -35,6 +47,8 @@ public class PlayerBoard {
 
         board[x][y] = card;
         card.setCoordinates(x,y);
+        player.updateSeedCount(calculateSeedUpdate(x, y));
+        player.increasePoints(card.calculatePoints(board, seedCount, x, y));
     }
 
     // method used to resize the matrix, by creating a new one and copying the old elements
@@ -66,7 +80,7 @@ public class PlayerBoard {
 
     // public method used to add a new card to the board
     // the position where to add the card is given by indicating the card and the corner where to attach it
-    public int addCard(PlayingCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) {
+    public void addCard(GoldCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException, ConditionsNotMetException{
         int[] prev_coord = card_on_board.getCoordinates();
         int[] place_coord = new int[2];
         if (corner == 1) {
@@ -86,23 +100,20 @@ public class PlayerBoard {
             place_coord[1] = prev_coord[1] + 1;
         }
 
-        // #############################################################################################
-        // #############################################################################################
-        // #############################################################################################
-        // need to use exceptions
-        // #############################################################################################
-        // #############################################################################################
-        // #############################################################################################
-        if (checkSpotAviable(card_to_add, place_coord) && card_to_add.checkRequirements(seedCount)) {
-            addCardToBoard(place_coord, card_to_add);
-            return 1;
+        if (checkSpotAvailable (card_to_add, place_coord)) {
+            int tmp = checkRequirements(card_to_add)[0];
+            if (tmp == 1) {
+                addCardToBoard(place_coord, card_to_add, seedCount);
+            }
+            else {
+                throw new ConditionsNotMetException("Not enough seed type" + Seed.getById(tmp).getName());
+            }
         }
         else {
-            return 0;
+            throw new InvalidPlaceException("The card cannot be placed in the chosen position");
         }
     }
-
-    public int addCard(PlayingCard card_to_add, PlayingCard card_on_board, int corner) {
+    public void addCard(ResourceCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException{
         int[] prev_coord = card_on_board.getCoordinates();
         int[] place_coord = new int[2];
         if (corner == 1) {
@@ -122,12 +133,11 @@ public class PlayerBoard {
             place_coord[1] = prev_coord[1] + 1;
         }
 
-        if (checkSpotAviable(card_to_add, place_coord)) {
-            addCardToBoard(place_coord, card_to_add);
-            return 1;
+        if (checkSpotAvailable(card_to_add, place_coord)) {
+            addCardToBoard(place_coord, card_to_add, seedCount);
         }
         else {
-            return 0;
+            throw new InvalidPlaceException("The card cannot be placed in the chosen position");
         }
 
         // if add is successful, player must update corners and seed count
@@ -135,11 +145,14 @@ public class PlayerBoard {
 
     // checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
-    private boolean checkSpotAviable(PlayingCard card, int[] coordinates) {
+    private boolean checkSpotAvailable(PlayingCard card, int[] coordinates) {
         PlayingCard cardOnBoard;
         int x = coordinates[0];
         int y = coordinates[1];
         int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
+        if (board[x][y] != null) {
+            return false;
+        }
         for (int[] i : postions) {
             cardOnBoard = board[x + i[0]][y + i[1]];
             if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
@@ -148,5 +161,50 @@ public class PlayerBoard {
         }
         return true;
     }
+    private int[] checkRequirements(GoldCard card) {
+        int[] result = new int[2];
+        int[] requirements = card.getPlaceCondition();
+        for (int i = 0; i < requirements.length; i++) {
+            if (requirements[i] > player.getCountSeed()[i]) {
+                result[0] = 0;
+                result[1] = i + 1;
+                return result;
+            }
+        }
+        result[0] = 1;
+        return result;
+    }
 
+    private int[] calculateSeedUpdate(int xNewCard, int yNewCard) {
+        PlayingCard card;
+        int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
+        int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
+        Corner c;
+        int j;
+        for (int[] i : postions) {
+            card = board[xNewCard][yNewCard];
+            c = card.getCorner(i[2]);
+            if (c != null) {
+                j = c.getSeed().getId();
+                if (j < 7) {
+                    seedUpdate[j] += 1;
+                }
+            }
+            card = board[xNewCard + i[0]][yNewCard + i[1]];
+            if (card != null) {
+                c = card.getCorner((i[2] + 2) % 4);
+                if (c != null) {
+                    j = c.getSeed().getId();
+                    if (j < 7) {
+                        seedUpdate[j] -= 1;
+                    }
+                }
+            }
+        }
+        return seedUpdate;
+    }
+
+    public PlayingCard[][] getBoard() {
+        return board;
+    }
 }

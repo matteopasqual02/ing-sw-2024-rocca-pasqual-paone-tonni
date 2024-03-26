@@ -1,58 +1,81 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
+
+import java.util.*;
 
 public class Game {
-    private int idGame;
-    private Queue<Player> players=new LinkedList<>();
-    private int numberOfPlayer;
-    private Queue<Player> winner =  new LinkedList<>();
+    private GameStatus status;
+    private int maxNumberOfPlayer;
+    private Queue<Player> players;
+    private Queue<Player> winner;
     private Player firstPlayer;
-    private boolean isLastRound;
-
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
+    private Chat chat;
 
-    public Game(int idGame, Player p1, int numberOfPlayer ){
-        this.idGame = idGame;
-        players.add(p1);
-        this.numberOfPlayer = numberOfPlayer;
-        winner = null;
-        firstPlayer = p1;
-        isLastRound = false;
+    public Game(){
+        players = new LinkedList<>();
+        winner = new LinkedList<>();
+        firstPlayer = null;
+        status = GameStatus.PREPARATION;
+        this.maxNumberOfPlayer=0;
 
-        gameDrawableDeck = new DrawableDeck();
-        createCard(gameDrawableDeck);
+        gameBoardDeck = null;
+        gameDrawableDeck = null;
 
-        ResourceCard[] rc = new ResourceCard[2];
-        rc[0]= gameDrawableDeck.drawFirstResource();
-        rc[1]= gameDrawableDeck.drawFirstResource();
-        GoldCard[] gc = new GoldCard[2];
-        gc[0]= gameDrawableDeck.drawFirstGold();
-        gc[1]= gameDrawableDeck.drawFirstGold();
-        ObjectiveCard[] oc = new ObjectiveCard[2];
-        oc[0]= gameDrawableDeck.drawFirstObjective();
-        oc[1]= gameDrawableDeck.drawFirstObjective();
-        gameBoardDeck = new BoardDeck(rc,gc,oc);
+        chat = new Chat();
     }
-
-    private void createCard(DrawableDeck gameDrawableDeck){
-        //json...
+    public void setNumberOfPlayer(int number){
+        this.maxNumberOfPlayer=number;
     }
-
-    public void addPlayer (Player px) throws GameAlreadyFullException{
-        if(players.size() < numberOfPlayer){
-            players.add(px);
+    public void addPlayer (Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
+        if(!players.contains(px)){
+            if(players.size() < maxNumberOfPlayer){
+                players.add(px);
+            }
+            else {
+                throw new GameAlreadyFullException("The game is full");
+            }
         }
         else {
-            throw new GameAlreadyFullException("The game is full");
+            throw new PlayerAlreadyInException("The player is alrady in");
         }
-
     }
 
+    public void removePlayer(Player p){
+        players.remove(p);
+        if(status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_TURN)){
+            status = GameStatus.ENDING;
+        }
+    }
+    public void setFirstPlayer(Player fp){
+        this.firstPlayer=fp;
+    }
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
+    public Queue<Player> getPlayers() {
+        return players;
+    }
+    public Player getFirstPlayer() {
+        return firstPlayer;
+    }
+    public Player getCurrentPlayer(){
+        return players.peek();
+    }
+    public void setGameDrawableDeck(DrawableDeck decks) {
+        gameDrawableDeck = decks;
+    }
+    public DrawableDeck getGameDrawableDeck(){
+        return gameDrawableDeck;
+    }
+    public BoardDeck getGameBoardDeck(){
+        return  gameBoardDeck;
+    }
     public Player nextPlayer(){
         Player temp;
         temp = players.poll();
@@ -61,23 +84,36 @@ public class Game {
         return players.peek();
     }
 
-    public int checkPlayerTotalPoint(Player px) {
-        return px.getGoalPoints() + px.getCurrentPoints();
-    }
+    public int checkPlayerTotalPoint(Player p){
 
+        return p.getCurrentPoints()
+                + p.getGoal().pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective()[0].pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective()[1].pointCard(p.getBoard())
+                ;
+    }
     public void checkWinner(){
-        int max=0;
+       int max=0;
         for (Player cplayer : players ){
-            if(checkPlayerTotalPoint(cplayer) == max){
+            int p_point = checkPlayerTotalPoint(cplayer);
+            //2 players with equal point
+            if(p_point == max){
                 winner.add(cplayer);
             }
-            else if(checkPlayerTotalPoint(cplayer) > max) {
+            //winner
+            else if(p_point > max) {
                 winner.clear();
                 winner.add(cplayer);
-                max= checkPlayerTotalPoint(cplayer);
+                max= p_point;
             }
         }
     }
 
-
+    public void playerIsReadyToStart(Player p){
+        p.setReadyToStart();
+    }
+    public Boolean arePlayerReady(){
+        return players.stream().filter(Player::getreadytostart).count() == players.size()
+                && players.size() == maxNumberOfPlayer;
+    }
 }

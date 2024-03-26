@@ -1,15 +1,13 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoSeedException;
-
 import java.util.Arrays;
 
-public class PlayingCard extends Card {
-    private Seed cardSeed;
-    private int points;
-    private boolean isFlipped;
+public abstract class PlayingCard extends Card {
+    private final Seed cardSeed;
+    protected final int points;
+    protected boolean isFlipped;
     private Corner[] corners = new Corner[4];
-    private int[] coordinates;
+    protected int[] coordinates;
 
     public PlayingCard(int id, Seed seed, Corner[] c,int points) {
         super(id);
@@ -30,10 +28,8 @@ public class PlayingCard extends Card {
         return corners[pos - 1];
     }
 
-    public Seed getSeed() throws NoSeedException {
-        if (!cardSeed.equals("EMPTY")) return cardSeed;
-        else throw new NoSeedException("No center seed");
-
+    public Seed getSeed(){
+        return cardSeed;
     }
 
     public int[] getCoordinates() {
@@ -49,5 +45,10 @@ public class PlayingCard extends Card {
         return true;
     }
 
+    public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y){return 0;};
+
+    public int getPoints() {
+        return points;
+    }
 
 }
