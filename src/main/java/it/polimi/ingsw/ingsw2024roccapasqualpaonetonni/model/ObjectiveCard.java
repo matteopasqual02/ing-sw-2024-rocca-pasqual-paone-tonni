@@ -24,9 +24,11 @@ public class ObjectiveCard extends Card{
 
     public int pointCard(PlayerBoard pb){
         if(isCount){
+            //card that count the number of seed or potion,....,mixed
             return pointsCountCard(pb);
         }
         else {
+            //card that have a pattern
             return pointsPatternCard(pb);
         }
     }
@@ -58,6 +60,8 @@ public class ObjectiveCard extends Card{
                 PlayingCard currentCard = board[i][j];
                 if(currentCard!=null && primaryCard == currentCard.getSeed()
                     && !usedByObjectiveCard.contains(currentCard)){
+                    //if the position is not null, the esed off the card we're looking at is the same as the primary
+                    //and the card not used
                     switch (shape){
                         case "down" -> {
                             if( i+2 <board.length && j+2 < board[i].length &&

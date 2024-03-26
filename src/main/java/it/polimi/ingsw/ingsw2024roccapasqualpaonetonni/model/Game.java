@@ -95,13 +95,16 @@ public class Game {
     public void checkWinner(){
        int max=0;
         for (Player cplayer : players ){
-            if(checkPlayerTotalPoint(cplayer) == max){
+            int p_point = checkPlayerTotalPoint(cplayer);
+            //2 players with equal point
+            if(p_point == max){
                 winner.add(cplayer);
             }
-            else if(checkPlayerTotalPoint(cplayer) > max) {
+            //winner
+            else if(p_point > max) {
                 winner.clear();
                 winner.add(cplayer);
-                max= checkPlayerTotalPoint(cplayer);
+                max= p_point;
             }
         }
     }

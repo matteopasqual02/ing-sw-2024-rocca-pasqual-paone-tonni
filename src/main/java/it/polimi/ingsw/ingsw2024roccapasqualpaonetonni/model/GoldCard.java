@@ -20,31 +20,28 @@ public class GoldCard extends PlayingCard{
         return true;
     }
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y) {
-        int points = 0;
+        int curr_points = 0;
         PlayingCard cardOnBoard;
         switch(pointCondition) {
             case "corners":
+                //count the number of corner covered by (4 corner) the current card
                 int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
                 for (int[] i : postions) {
                     cardOnBoard = board[x + i[0]][y + i[1]];
                     if (cardOnBoard != null) {
-                        points += points;
+                        curr_points += points;
                     }
                 };
             case "feather", "potion", "scroll":
-                points += points * seedCount[Seed.getByName(pointCondition).getId()];
+                curr_points += points * seedCount[Seed.getByName(pointCondition).getId()];
             case null, default:
                 ;
         }
-        return points;
+        return curr_points;
     }
 
     public int[] getPlaceCondition(){return placeCondition;};
-
+    public String getPointCondition() { return pointCondition; }
 }
 
-/*  not used -- if needed for testing use it
-    public String getPointCondition() {
-        return pointCondition;
-    }
- */
+
