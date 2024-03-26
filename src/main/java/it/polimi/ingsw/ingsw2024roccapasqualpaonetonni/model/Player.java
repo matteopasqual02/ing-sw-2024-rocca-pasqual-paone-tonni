@@ -96,7 +96,7 @@ public class Player {
 
     public void addToBoard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
-            removefromHand(cardToAdd);
+            removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {;
         }
@@ -109,7 +109,7 @@ public class Player {
     }
     public void addToBoard(GoldCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
-            removefromHand(cardToAdd);
+            removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
             ;
@@ -135,7 +135,7 @@ public class Player {
         }
     }
 
-    private void removefromHand(PlayingCard p) throws CardNotInHandException{
+    private void removeFromHand(PlayingCard p) throws CardNotInHandException{
         if(hand.contains(p)){
             hand.remove(p);
         }

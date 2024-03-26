@@ -42,7 +42,7 @@ public class Game {
             }
         }
         else {
-            throw new PlayerAlreadyInException("The game is full");
+            throw new PlayerAlreadyInException("The player is alrady in");
         }
     }
 
