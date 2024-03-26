@@ -480,80 +480,98 @@
         87: {
             "points": 2,
             "is_count": 0,
-            "type": null,
             "pattern_cards": ["red", null],
             "shape": "up"
         },
         88: {
             "points": 2,
             "is_count": 0,
-            "type": null,
             "pattern_cards": ["green", null],
             "shape": "down"
         },
         89: {
             "points": 2,
             "is_count": 0,
-            "type": null,
             "color": ["blue", null]
             "shape": "up"
         },
         90: {
             "points": 2,
-            "shape": "down",
-            "color": ["purple", null]
+            "is_count": 0,
+            "color": ["purple", null],
+            "shape": "down"
         },
         91: {
             "points": 3,
-            "shape": "se",
-            "color": ["green", "red"]
+            "is_count": 0,
+            "color": ["green", "red"],
+            "shape": "se"
         },
         92: {
             "points":3,
-            "shape": "sw",
-            "color": ["purple", "green"]
+            "is_count": 0,
+            "color": ["purple", "green"],
+            "shape": "sw"
         },
         93: {
             "points": 3,
-            "shape": "ne",
-            "color": ["red", "blue"]
+            "is_count": 0,
+            "color": ["red", "blue"],
+            "shape": "ne"
         },
         94: {
             "points": 3,
-            "shape": "nw",
-            "color": ["blue", "purple"]
+            "is_count": 0,
+            "color": ["blue", "purple"],
+            "shape": "nw"
         },
         95: {
-            "type": "red",
-            "points": 2
+            "points": 2,
+            "is_count": 1,
+            "color": ["red", null],
+            "shape": null
         },
         96: {
-            "type": "green",
-            "points": 2
+            "points": 2,
+            "is_count": 1,
+            "color": ["green", null],
+            "shape": null
         },
         97: {
-            "type": "blue",
-            "points": 2
+            "points": 2,
+            "is_count": 1,
+            "color": ["blue", null],
+            "shape": null
         },
         98: {
-            "type": "purple",
-            "points": 2
+            "points": 2,
+            "is_count": 1,
+            "color": ["purple", null],
+            "shape": null
         },
         99: {
-            "type": "mixed",
-            "points": 3
+            "points": 3,
+            "is_count": 1,
+            "color": ["mixed", null],
+            "shape": null
         },
         100: {
-            "type": "scroll",
-            "points": 2
+            "points": 2,
+            "is_count": 1,
+            "color": ["scroll", null],
+            "shape": null
         },
         101: {
-            "type": "potion",
-            "points": 2
+            "points": 2,
+            "is_count": 1,
+            "color": ["potion", null],
+            "shape": null
         },
         102: {
-            "type": "feather",
-            "points": 2
+            "points": 2,
+            "is_count": 1,
+            "color": ["feather", null],
+            "shape": null
         }
     }
 }
