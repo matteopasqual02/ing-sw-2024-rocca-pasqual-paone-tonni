@@ -33,7 +33,7 @@ public class Game {
         this.maxNumberOfPlayer=number;
     }
     public void addPlayer (Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
-        if(players.contains(px)){
+        if(!players.contains(px)){
             if(players.size() < maxNumberOfPlayer){
                 players.add(px);
             }
