@@ -143,6 +143,29 @@ public class PlayerBoard {
         // if add is successful, player must update corners and seed count
     }
 
+    public void addStartingCard(StartingCard firstCard, int[] seedCount){
+        int x = 20;
+        int y = 20;
+        board[20][20] = firstCard;
+        firstCard.setCoordinates(x,y);
+        player.updateSeedCount(calculateCenterUpdate(x,y, firstCard));
+    }
+
+    private int[] calculateCenterUpdate(int x, int y, StartingCard c) {
+        int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
+        for(int i=0; i<4; i++){
+            if(c.isflipped()){
+                seedUpdate[i]=1;
+            }
+            else {
+                if(c.getCenter()[i]){
+                    seedUpdate[i]=1;
+                }
+            }
+        }
+        return seedUpdate;
+    }
+
     // checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
     private boolean checkSpotAvailable(PlayingCard card, int[] coordinates) {
