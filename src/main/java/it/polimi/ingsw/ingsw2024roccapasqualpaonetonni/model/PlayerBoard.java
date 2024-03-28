@@ -48,7 +48,9 @@ public class PlayerBoard {
         board[x][y] = card;
         card.setCoordinates(x,y);
         player.updateSeedCount(calculateSeedUpdate(x, y));
-        player.increasePoints(card.calculatePoints(board, seedCount, x, y));
+        if(!card.isflipped()) {
+            player.increasePoints(card.calculatePoints(board, seedCount, x, y));
+        }
     }
 
     // method used to resize the matrix, by creating a new one and copying the old elements
@@ -206,11 +208,13 @@ public class PlayerBoard {
         int j;
         for (int[] i : postions) {
             card = board[xNewCard][yNewCard];
-            c = card.getCorner(i[2]);
-            if (c != null) {
-                j = c.getSeed().getId();
-                if (j < 7) {
-                    seedUpdate[j] += 1;
+            if(!card.isflipped()){
+                c = card.getCorner(i[2]);
+                if (c != null) {
+                    j = c.getSeed().getId();
+                    if (j < 7) {
+                        seedUpdate[j] += 1;
+                    }
                 }
             }
             card = board[xNewCard + i[0]][yNewCard + i[1]];

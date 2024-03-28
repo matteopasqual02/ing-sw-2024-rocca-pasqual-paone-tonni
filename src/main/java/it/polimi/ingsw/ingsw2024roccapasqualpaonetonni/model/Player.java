@@ -94,6 +94,11 @@ public class Player {
         return countSeed;
     }
 
+    public void addStarting(){
+        board.addStartingCard(startingCard,countSeed);
+    }
+    public StartingCard getStartingCard(){return startingCard;}
+
     public void addToBoard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
             removeFromHand(cardToAdd);
