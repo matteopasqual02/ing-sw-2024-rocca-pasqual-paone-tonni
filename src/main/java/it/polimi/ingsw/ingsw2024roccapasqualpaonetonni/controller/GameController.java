@@ -44,8 +44,11 @@ public class GameController implements Runnable{
     public Queue<Player> getAllPlayer(){
         return model.getPlayers();
     }
-    public Player getCurrentPlayer(){
+    private Player getCurrentPlayer(){
         return model.getCurrentPlayer();
+    }
+    public Boolean isCurrentPlaying(Player p){
+        return p.equals(getCurrentPlayer());
     }
     public Player nextTurn(){
         return model.nextPlayer();
@@ -160,13 +163,29 @@ public class GameController implements Runnable{
 
 //---------------------------------DRAW SECTION
     public void drawResourceFromDeck(){
-        getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
+        if(!model.getGameDrawableDeck().getDecks().get("resource").isEmpty()){
+            getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
+        }
+        else {
+            model.setStatus(GameStatus.LAST_TURN);
+        }
+
     }
     public void drawGoldFromDeck(){
-        getCurrentPlayer().drawGoldfromDeck(model.getGameDrawableDeck());
+        if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
+            getCurrentPlayer().drawGoldfromDeck(model.getGameDrawableDeck());
+        }
+        else {
+            model.setStatus(GameStatus.LAST_TURN);
+        }
     }
-    public void drawfromBoard(int position){
-        getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
+    public void drawFromBoard(int position){
+        if(
+           (position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null)||
+           (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)
+        ){
+            getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
+        }
     }
 
 
@@ -182,6 +201,6 @@ public class GameController implements Runnable{
         model.checkWinner();
     }
 
-//---------------------------------GET SECTION
+//---------------------------------GET SECTION TO DISPLAY IT
     public Game getGame(){return model;}
 }
