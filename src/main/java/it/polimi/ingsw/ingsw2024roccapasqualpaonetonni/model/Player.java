@@ -42,7 +42,6 @@ public class Player {
     public int getColorPlayer(){
         return colorPlayer;
     }
-
     public Boolean getreadytostart(){
         return readyToStart;
     }
@@ -58,7 +57,6 @@ public class Player {
     public String getNickname() {
         return nickname;
     }
-
     public ObjectiveCard getGoal(){
         return goal;
     }
@@ -93,6 +91,11 @@ public class Player {
     public int[] getCountSeed() {
         return countSeed;
     }
+
+    public void addStarting(){
+        board.addStartingCard(startingCard,countSeed);
+    }
+    public StartingCard getStartingCard(){return startingCard;}
 
     public void addToBoard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
@@ -142,5 +145,4 @@ public class Player {
         else {throw new CardNotInHandException("Card Doesn't existsin player hand");}
     }
 
-   //manca il mettere una carta nella board e poi ripescarla dai drawable deck per sostituire la carta mancante nella mano + contare i punti
 }

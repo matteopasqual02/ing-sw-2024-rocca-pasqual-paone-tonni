@@ -13,16 +13,15 @@ public class BoardDeck {
         this.commonGoals =new ObjectiveCard[2];
     }
     public BoardDeck(ResourceCard[] rc,GoldCard[] gc, ObjectiveCard[] oc){
-        this.resourceCards= Arrays.copyOf(rc,2);
-        this.goldCards= Arrays.copyOf(gc,2);
-        this.commonGoals= Arrays.copyOf(oc,2);
+        this.resourceCards= rc;
+        this.goldCards= gc;
+        this.commonGoals= oc;
     }
-    //ci sara un metodo in game che estre 2 carte da ogni mazzo e le mette in un array che poi passa al costruttore della board
 
     public void setResourceCards(ResourceCard pc, int position){
         resourceCards[position]=pc;
     }
-    public void setGoldCardsCards(GoldCard pc, int position){ goldCards[position]=pc;}
+    public void setGoldCards(GoldCard pc, int position){ goldCards[position]=pc;}
     public void setObjectiveCards(ObjectiveCard pc, int position){
         commonGoals[position]=pc;
     }

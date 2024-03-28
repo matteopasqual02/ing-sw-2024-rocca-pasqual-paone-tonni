@@ -23,6 +23,10 @@ public abstract class PlayingCard extends Card {
         else isFlipped = true;
     }
 
+    public Boolean isflipped(){
+        return isFlipped;
+    }
+
     // since the convention we are using is that the corners start from one, the attribute need to be decremented
     public Corner getCorner(int pos) {
         return corners[pos - 1];
