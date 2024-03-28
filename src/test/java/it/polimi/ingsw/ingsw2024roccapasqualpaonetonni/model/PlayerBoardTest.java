@@ -13,7 +13,7 @@ class PlayerBoardTest {
         assertEquals(owner,board1.getPlayer());
     }
     @Test
-    void addStartingCardTest(){
+    void addStartingCoordinatesCardTest(){
         Boolean[] c = {true,true,false,false};
         Corner cf1 = new Corner(1,EMPTY);
         Corner cf2 = new Corner(2,GREEN);
@@ -30,7 +30,10 @@ class PlayerBoardTest {
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
 
-        //board1.addStartingCard(cardToAdd);
+        board1.addStartingCard(cardToAdd);
+        int[] coordinates = cardToAdd.getCoordinates();
+        int[] twenty={20,20};
+        assertArrayEquals(twenty,coordinates);
 
     }
 
