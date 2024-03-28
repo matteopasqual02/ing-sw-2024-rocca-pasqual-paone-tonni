@@ -93,7 +93,7 @@ public class Player {
     }
 
     public void addStarting(){
-        board.addStartingCard(startingCard,countSeed);
+        board.addStartingCard(startingCard);
     }
     public StartingCard getStartingCard(){return startingCard;}
 
