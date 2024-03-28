@@ -1,10 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Map;
+import java.util.*;
 
 public class DrawableDeck {
     private Map<String, Queue<Card>> decks;
