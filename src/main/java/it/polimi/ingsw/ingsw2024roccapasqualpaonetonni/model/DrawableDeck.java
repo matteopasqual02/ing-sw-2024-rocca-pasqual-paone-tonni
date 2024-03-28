@@ -12,6 +12,9 @@ public class DrawableDeck {
     public DrawableDeck(Map<String, Queue<Card>> decks){
         this.decks = decks;
     }
+    public Map<String, Queue<Card>>  getDecks(){
+        return decks;
+    }
     public ResourceCard drawFirstResource()
     {
         Queue<Card> cards = decks.get("resources");

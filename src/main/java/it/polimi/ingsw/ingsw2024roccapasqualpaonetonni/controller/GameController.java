@@ -58,6 +58,13 @@ public class GameController implements Runnable{
     public void setNumberOfPlayer(int num){model.setNumberOfPlayer(num);}
     public void removePlayer(Player player){model.removePlayer(player);}
     public GameStatus getGameStatus(){return model.getStatus();}
+    public int[] getAllPoints(){
+        int[] points = new int[model.getPlayers().size()];
+        for(Player p : getAllPlayer()){
+            points[p.getColorPlayer()] = p.getCurrentPoints();
+        }
+        return points;
+    }
 
 
 //---------------------------------TABLE AND INIT SECTION
@@ -96,6 +103,9 @@ public class GameController implements Runnable{
             boardDeck.setGoldCards(decks.drawFirstGold(),0);
             boardDeck.setGoldCards(decks.drawFirstGold(),1);
 
+            //random first player
+            randomFirstPlayer();
+
             //run TurnZero
             turnZero();
 
@@ -104,7 +114,7 @@ public class GameController implements Runnable{
         }
         else return false;
     }
-    public void randomFirstPlayer(){
+    private void randomFirstPlayer(){
         Queue<Player> players = model.getPlayers();
         Player temp;
         int first = random.nextInt(4);
@@ -124,9 +134,7 @@ public class GameController implements Runnable{
             player.drawGoldfromDeck(model.getGameDrawableDeck());
         }
     }
-    public void choosePlayerGoal(int choice){
-        getCurrentPlayer().chooseGoal(choice);
-    }
+
 
 //---------------------------------ADD CARD SECTION
     public void addCard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
@@ -146,6 +154,9 @@ public class GameController implements Runnable{
             getCurrentPlayer().getStartingCard().flip();
         }
         getCurrentPlayer().addStarting();
+    }
+    public void choosePlayerGoal(int choice){
+        getCurrentPlayer().chooseGoal(choice);
     }
 
 
@@ -168,7 +179,6 @@ public class GameController implements Runnable{
                 model.setStatus(GameStatus.LAST_TURN);
             }
         }
-
     }
     public void checkWinner(){
         model.checkWinner();
