@@ -145,7 +145,7 @@ public class PlayerBoard {
         // if add is successful, player must update corners and seed count
     }
 
-    public void addStartingCard(StartingCard firstCard, int[] seedCount){
+    public void addStartingCard(StartingCard firstCard){
         int x = 20;
         int y = 20;
         board[20][20] = firstCard;
