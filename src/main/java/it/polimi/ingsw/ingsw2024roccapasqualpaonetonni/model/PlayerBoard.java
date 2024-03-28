@@ -180,7 +180,8 @@ public class PlayerBoard {
         }
         for (int[] i : postions) {
             cardOnBoard = board[x + i[0]][y + i[1]];
-            if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
+            //if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
+            if (cardOnBoard != null && cardOnBoard.getCorner(i[2]) == null) {
                 return false;
             }
         }
@@ -219,7 +220,8 @@ public class PlayerBoard {
             }
             card = board[xNewCard + i[0]][yNewCard + i[1]];
             if (card != null) {
-                c = card.getCorner((i[2] + 2) % 4);
+                //c = card.getCorner((i[2] + 2) % 4);
+                c = card.getCorner(i[2]);
                 if (c != null) {
                     j = c.getSeed().getId();
                     if (j < 7) {
