@@ -59,13 +59,6 @@ public class GameController implements Runnable{
     public void setNumberOfPlayer(int num){model.setNumberOfPlayer(num);}
     public void removePlayer(Player player){model.removePlayer(player);}
     public GameStatus getGameStatus(){return model.getStatus();}
-    public int[] getAllPoints(){
-        int[] points = new int[model.getPlayers().size()];
-        for(Player p : getAllPlayer()){
-            points[p.getColorPlayer()] = p.getCurrentPoints();
-        }
-        return points;
-    }
 
 
 //---------------------------------TABLE AND INIT SECTION
@@ -201,6 +194,22 @@ public class GameController implements Runnable{
         model.checkWinner();
     }
 
-//---------------------------------GET SECTION TO DISPLAY IT
+//---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
     public Game getGame(){return model;}
+    public int[] getAllPoints(){
+        int[] points = new int[model.getPlayers().size()];
+        for(Player p : getAllPlayer()){
+            points[p.getColorPlayer()] = p.getCurrentPoints();
+        }
+        return points;
+    }
+    public BoardDeck getBoardDeck(){return model.getGameBoardDeck();}
+    public Card[] getSeedUpDrawableDeck(){
+        Card[] up2Deck = new PlayingCard[2];
+        up2Deck[0]= model.getGameDrawableDeck().getDecks().get("resources").peek();
+        up2Deck[1]= model.getGameDrawableDeck().getDecks().get("gold").peek();
+
+        return  up2Deck;
+    }
+
 }

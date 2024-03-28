@@ -174,11 +174,11 @@ public class PlayerBoard {
         PlayingCard cardOnBoard;
         int x = coordinates[0];
         int y = coordinates[1];
-        int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
+        int[][] positions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
         if (board[x][y] != null) {
             return false;
         }
-        for (int[] i : postions) {
+        for (int[] i : positions) {
             cardOnBoard = board[x + i[0]][y + i[1]];
             if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
                 return false;
