@@ -7,9 +7,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.View;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import javafx.scene.control.skin.TableHeaderRow;
+import java.util.*;
 
 import java.util.*;
 
