@@ -4,13 +4,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotIn
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Player {
-    private String nickname;
-    private int colorPlayer;
+    private final String nickname;
+    private final int colorPlayer;
     private int currentPoints;
     private int[] countSeed;
     private PlayerBoard board;

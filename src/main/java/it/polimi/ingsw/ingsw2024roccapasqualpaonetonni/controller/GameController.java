@@ -7,9 +7,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.View;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import javafx.scene.control.skin.TableHeaderRow;
+import java.util.*;
 
 import java.util.*;
 
@@ -46,8 +44,11 @@ public class GameController implements Runnable{
     public Queue<Player> getAllPlayer(){
         return model.getPlayers();
     }
-    public Player getCurrentPlayer(){
+    private Player getCurrentPlayer(){
         return model.getCurrentPlayer();
+    }
+    public Boolean isCurrentPlaying(Player p){
+        return p.equals(getCurrentPlayer());
     }
     public Player nextTurn(){
         return model.nextPlayer();
@@ -96,6 +97,9 @@ public class GameController implements Runnable{
             boardDeck.setGoldCards(decks.drawFirstGold(),0);
             boardDeck.setGoldCards(decks.drawFirstGold(),1);
 
+            //random first player
+            randomFirstPlayer();
+
             //run TurnZero
             turnZero();
 
@@ -104,7 +108,7 @@ public class GameController implements Runnable{
         }
         else return false;
     }
-    public void randomFirstPlayer(){
+    private void randomFirstPlayer(){
         Queue<Player> players = model.getPlayers();
         Player temp;
         int first = random.nextInt(4);
@@ -124,9 +128,7 @@ public class GameController implements Runnable{
             player.drawGoldfromDeck(model.getGameDrawableDeck());
         }
     }
-    public void choosePlayerGoal(int choice){
-        getCurrentPlayer().chooseGoal(choice);
-    }
+
 
 //---------------------------------ADD CARD SECTION
     public void addCard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
@@ -147,17 +149,36 @@ public class GameController implements Runnable{
         }
         getCurrentPlayer().addStarting();
     }
+    public void choosePlayerGoal(int choice){
+        getCurrentPlayer().chooseGoal(choice);
+    }
 
 
 //---------------------------------DRAW SECTION
     public void drawResourceFromDeck(){
-        getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
+        if(!model.getGameDrawableDeck().getDecks().get("resource").isEmpty()){
+            getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
+        }
+        else {
+            model.setStatus(GameStatus.LAST_TURN);
+        }
+
     }
     public void drawGoldFromDeck(){
-        getCurrentPlayer().drawGoldfromDeck(model.getGameDrawableDeck());
+        if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
+            getCurrentPlayer().drawGoldfromDeck(model.getGameDrawableDeck());
+        }
+        else {
+            model.setStatus(GameStatus.LAST_TURN);
+        }
     }
-    public void drawfromBoard(int position){
-        getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
+    public void drawFromBoard(int position){
+        if(
+           (position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null)||
+           (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)
+        ){
+            getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
+        }
     }
 
 
@@ -168,12 +189,27 @@ public class GameController implements Runnable{
                 model.setStatus(GameStatus.LAST_TURN);
             }
         }
-
     }
     public void checkWinner(){
         model.checkWinner();
     }
 
-//---------------------------------GET SECTION
+//---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
     public Game getGame(){return model;}
+    public int[] getAllPoints(){
+        int[] points = new int[model.getPlayers().size()];
+        for(Player p : getAllPlayer()){
+            points[p.getColorPlayer()] = p.getCurrentPoints();
+        }
+        return points;
+    }
+    public BoardDeck getBoardDeck(){return model.getGameBoardDeck();}
+    public Card[] getSeedUpDrawableDeck(){
+        Card[] up2Deck = new PlayingCard[2];
+        up2Deck[0]= model.getGameDrawableDeck().getDecks().get("resources").peek();
+        up2Deck[1]= model.getGameDrawableDeck().getDecks().get("gold").peek();
+
+        return  up2Deck;
+    }
+
 }

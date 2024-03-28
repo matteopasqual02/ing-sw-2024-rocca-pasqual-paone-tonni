@@ -1,16 +1,15 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Map;
+import java.util.*;
 
 public class DrawableDeck {
     private Map<String, Queue<Card>> decks;
 
     public DrawableDeck(Map<String, Queue<Card>> decks){
         this.decks = decks;
+    }
+    public Map<String, Queue<Card>>  getDecks(){
+        return decks;
     }
     public ResourceCard drawFirstResource()
     {

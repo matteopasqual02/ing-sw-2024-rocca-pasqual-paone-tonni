@@ -174,14 +174,13 @@ public class PlayerBoard {
         PlayingCard cardOnBoard;
         int x = coordinates[0];
         int y = coordinates[1];
-        int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
+        int[][] positions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
         if (board[x][y] != null) {
             return false;
         }
-        for (int[] i : postions) {
+        for (int[] i : positions) {
             cardOnBoard = board[x + i[0]][y + i[1]];
-            //if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
-            if (cardOnBoard != null && cardOnBoard.getCorner(i[2]) == null) {
+            if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
                 return false;
             }
         }
@@ -202,26 +201,38 @@ public class PlayerBoard {
     }
 
     private int[] calculateSeedUpdate(int xNewCard, int yNewCard) {
-        PlayingCard card;
+        PlayingCard card, cardAttached;
         int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
-        int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
+        int[][] positions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
         Corner c;
         int j;
-        for (int[] i : postions) {
+
+        //forall corners
+        for (int[] i : positions) {
+            //card is the card placed then increase seed into seedCount
             card = board[xNewCard][yNewCard];
             if(!card.isflipped()){
                 c = card.getCorner(i[2]);
-                if (c != null) {
+                if (c != null ) {
                     j = c.getSeed().getId();
                     if (j < 7) {
                         seedUpdate[j] += 1;
                     }
                 }
             }
-            card = board[xNewCard + i[0]][yNewCard + i[1]];
-            if (card != null) {
-                //c = card.getCorner((i[2] + 2) % 4);
-                c = card.getCorner(i[2]);
+
+
+            if(xNewCard + i[0] == 20 && yNewCard + i[1] ==20 && player.getStartingCard().isflipped()){
+                j = player.getStartingCard().getBackCorner()[(i[2] + 2) % 4].getSeed().getId();
+                if (j < 7) {
+                    seedUpdate[j] -= 1;
+                }
+                return seedUpdate;
+            }
+
+            cardAttached = board[xNewCard + i[0]][yNewCard + i[1]];
+            if (cardAttached != null ) {
+                c = cardAttached.getCorner((i[2]+2)%4);
                 if (c != null) {
                     j = c.getSeed().getId();
                     if (j < 7) {
