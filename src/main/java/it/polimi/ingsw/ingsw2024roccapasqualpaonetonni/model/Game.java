@@ -44,8 +44,8 @@ public class Game {
         else {
             throw new PlayerAlreadyInException("The player is alrady in");
         }
-    }
 
+    }
     public void removePlayer(Player p){
         players.remove(p);
         if(status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_TURN)){
@@ -58,6 +58,9 @@ public class Game {
     public void setStatus(GameStatus status) {
         this.status = status;
     }
+    public GameStatus getStatus(){
+        return status;
+    }
     public Queue<Player> getPlayers() {
         return players;
     }
@@ -66,9 +69,6 @@ public class Game {
     }
     public Player getCurrentPlayer(){
         return players.peek();
-    }
-    public void setGameDrawableDeck(DrawableDeck decks) {
-        gameDrawableDeck = decks;
     }
     public DrawableDeck getGameDrawableDeck(){
         return gameDrawableDeck;
@@ -84,6 +84,7 @@ public class Game {
         return players.peek();
     }
 
+//---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
 
         return p.getCurrentPoints()
@@ -109,6 +110,7 @@ public class Game {
         }
     }
 
+//---------------------------------READY SECTION
     public void playerIsReadyToStart(Player p){
         p.setReadyToStart();
     }

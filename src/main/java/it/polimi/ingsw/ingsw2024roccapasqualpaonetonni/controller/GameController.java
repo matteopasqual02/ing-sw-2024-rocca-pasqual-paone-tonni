@@ -40,6 +40,8 @@ public class GameController implements Runnable{
 
         }catch (GameAlreadyFullException ex1){/*_*/}
         catch (PlayerAlreadyInException ex2){/**/};
+
+        model.playerIsReadyToStart(px);
     }
     public Queue<Player> getAllPlayer(){
         return model.getPlayers();
@@ -53,6 +55,9 @@ public class GameController implements Runnable{
     public int getNumberOfPlayer(){
         return model.getPlayers().size();
     }
+    public void setNumberOfPlayer(int num){model.setNumberOfPlayer(num);}
+    public void removePlayer(Player player){model.removePlayer(player);}
+    public GameStatus getGameStatus(){return model.getStatus();}
 
 
 //---------------------------------TABLE AND INIT SECTION
@@ -90,6 +95,10 @@ public class GameController implements Runnable{
             boardDeck.setResourceCards(decks.drawFirstResource(),1);
             boardDeck.setGoldCards(decks.drawFirstGold(),0);
             boardDeck.setGoldCards(decks.drawFirstGold(),1);
+
+            //run TurnZero
+            turnZero();
+
             model.setStatus(GameStatus.RUNNING);
             return true;
         }
@@ -106,16 +115,18 @@ public class GameController implements Runnable{
 
         model.setFirstPlayer(model.getCurrentPlayer());
     }
-    private static Queue<Card> createShuffledDeck(List<Card> cards) {
-        // Shuffle the list of cards
-        Collections.shuffle(cards);
-
-        // Create a new deck as a Queue
-        Queue<Card> deck = new LinkedList<>(cards);
-
-        return deck;
+    private void turnZero() {
+        for(Player player : getAllPlayer()){
+            player.drawStarting(model.getGameDrawableDeck());
+            player.drawGoals(model.getGameDrawableDeck());
+            player.drawResourcesfromDeck(model.getGameDrawableDeck());
+            player.drawResourcesfromDeck(model.getGameDrawableDeck());
+            player.drawGoldfromDeck(model.getGameDrawableDeck());
+        }
     }
-
+    public void choosePlayerGoal(int choice){
+        getCurrentPlayer().chooseGoal(choice);
+    }
 
 //---------------------------------ADD CARD SECTION
     public void addCard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
@@ -139,12 +150,6 @@ public class GameController implements Runnable{
 
 
 //---------------------------------DRAW SECTION
-    public void drawObjectCard(){
-        getCurrentPlayer().drawGoals(model.getGameDrawableDeck());
-    }
-    public void drawStartingCard(){
-        getCurrentPlayer().drawStarting(model.getGameDrawableDeck());
-    }
     public void drawResourceFromDeck(){
         getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
     }
@@ -158,11 +163,17 @@ public class GameController implements Runnable{
 
 //---------------------------------END SECTION
     private void checkPoints20Points(){
-        if(getCurrentPlayer().getCurrentPoints() >= 20){
-            model.setStatus(GameStatus.LAST_TURN);
+        for(Player player: getAllPlayer()){
+            if(player.getCurrentPoints() >= 20 && getCurrentPlayer() == model.getFirstPlayer()){
+                model.setStatus(GameStatus.LAST_TURN);
+            }
         }
+
     }
     public void checkWinner(){
         model.checkWinner();
     }
+
+//---------------------------------GET SECTION
+    public Game getGame(){return model;}
 }
