@@ -150,6 +150,7 @@ public class PlayerBoard {
         int y = 20;
         board[20][20] = firstCard;
         firstCard.setCoordinates(x,y);
+        player.setStartingCard(firstCard);
         player.updateSeedCount(calculateCenterUpdate(x,y, firstCard));
     }
 
@@ -180,7 +181,8 @@ public class PlayerBoard {
         }
         for (int[] i : positions) {
             cardOnBoard = board[x + i[0]][y + i[1]];
-            if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
+            //if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
+            if (cardOnBoard != null && cardOnBoard.getCorner(1+(4-i[2])) == null) {
                 return false;
             }
         }
@@ -223,7 +225,8 @@ public class PlayerBoard {
 
 
             if(xNewCard + i[0] == 20 && yNewCard + i[1] ==20 && player.getStartingCard().isflipped()){
-                j = player.getStartingCard().getBackCorner()[(i[2] + 2) % 4].getSeed().getId();
+                //j = player.getStartingCard().getBackCorner()[(i[2] + 2) % 4].getSeed().getId();
+                j = player.getStartingCard().getBackCorner()[1+(4-i[2])].getSeed().getId();
                 if (j < 7) {
                     seedUpdate[j] -= 1;
                 }
@@ -232,7 +235,8 @@ public class PlayerBoard {
 
             cardAttached = board[xNewCard + i[0]][yNewCard + i[1]];
             if (cardAttached != null ) {
-                c = cardAttached.getCorner((i[2]+2)%4);
+                //c = cardAttached.getCorner((i[2]+2)%4);
+                c = cardAttached.getCorner(1+(4-i[2]));
                 if (c != null) {
                     j = c.getSeed().getId();
                     if (j < 7) {
