@@ -281,7 +281,7 @@ class PlayerBoardTest {
         Corner[] c2c ={c1,c2,c3,c4};
         ResourceCard card_to_add2 = new ResourceCard(11,BLUE,c2c,0);
 
-        //third resource card to be added on it
+        //third resource card to be added on previous 2
         Corner c31 = new Corner(1,EMPTY);
         Corner c32 = new Corner(2,GREEN);
         Corner c33 = new Corner(3,GREEN);
