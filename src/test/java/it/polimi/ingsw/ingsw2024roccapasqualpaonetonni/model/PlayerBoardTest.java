@@ -211,6 +211,7 @@ class PlayerBoardTest {
 
     }
     @Test
+    //test che non funziona, da modificare i corner
     void addResourceCardOnNullCornerTest() throws InvalidPlaceException {
 
         //starting card placed in the middle
