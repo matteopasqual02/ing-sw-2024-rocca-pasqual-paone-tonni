@@ -224,7 +224,7 @@ class PlayerBoardTest {
         Corner cf1 = new Corner(1,EMPTY);
         Corner cf2 = new Corner(2,GREEN);
         Corner cf3 = null;
-        Corner cf4 = new Corner(4,EMPTY);
+        Corner cf4 = null;//new Corner(4,EMPTY);
         Corner cb1 = new Corner(1,EMPTY);
         Corner cb2 = new Corner(2,EMPTY);
         Corner cb3 = new Corner(3,EMPTY);
@@ -309,6 +309,63 @@ class PlayerBoardTest {
 
     }
 
+    @Test
+    //non funziona se sto piazzando una carta su 2 punti, e quello che non ho indicato è null non lancia l'eccezione.
+    void addResourceCardOn2CornersWhere1isNullTest() throws InvalidPlaceException {
+
+        //starting card placed in the middle
+        Boolean[] c = {true,true,false,false};
+        Corner cf1 = new Corner(1,EMPTY);
+        Corner cf2 = new Corner(2,GREEN);
+        Corner cf3 = new Corner(3,EMPTY);
+        Corner cf4 = new Corner(4,EMPTY);
+        Corner cb1 = new Corner(1,EMPTY);
+        Corner cb2 = new Corner(2,EMPTY);
+        Corner cb3 = new Corner(3,EMPTY);
+        Corner cb4 = new Corner(4,EMPTY);
+        Corner[] cf ={cf1,cf2,cf3,cf4};
+        Corner[] cb ={cb1,cb2,cb3,cb4};
+        StartingCard start=new StartingCard(1,c,cf,cb);
+
+        //resource card to be added on it
+        Corner c1 = new Corner(1,EMPTY);
+        Corner c2 = new Corner(2,GREEN);
+        Corner c3 = new Corner(3,GREEN);
+        Corner c4 = new Corner(4,EMPTY);
+        Corner[] cc ={c1,c2,c3,c4};
+        ResourceCard card_to_add1 = new ResourceCard(10,GREEN,cc,1);
+
+        //second resource card to be added on it
+        Corner c21 =null;// new Corner(1,EMPTY);
+        Corner c22 =null;// new Corner(2,GREEN);
+        Corner c23 = null;//new Corner(3,GREEN);
+        Corner c24 = null;//new Corner(4,EMPTY);
+        Corner[] c2c ={c1,c2,c3,c4};
+        ResourceCard card_to_add2 = new ResourceCard(11,BLUE,c2c,0);
+
+        //third resource card to be added on previous 2
+        Corner c31 = new Corner(1,EMPTY);
+        Corner c32 = new Corner(2,GREEN);
+        Corner c33 = new Corner(3,GREEN);
+        Corner c34 = new Corner(4,EMPTY);
+        Corner[] c3c ={c1,c2,c3,c4};
+        ResourceCard card_to_add3 = new ResourceCard(12,BLUE,c3c,1);
+
+        //putting starting card in the middle
+        Player owner=new Player("a",1);
+        PlayerBoard board1 = new PlayerBoard(owner);
+        board1.addStartingCard(start);
+        board1.addCard(card_to_add1,start,3,owner.getCountSeed());
+        board1.addCard(card_to_add2,start,4,owner.getCountSeed());
+
+
+        assertThrows(InvalidPlaceException.class,
+                ()->{
+                    board1.addCard(card_to_add3,card_to_add1,3,owner.getCountSeed());
+                });
+
+
+    }
     @Test
     void AddingCardCloseToTheBorderTest() throws InvalidPlaceException {
         //this test evaluates adding a card on the position 39, in which the checks cover the border and have to go through the condition of checking an out of bounds index
