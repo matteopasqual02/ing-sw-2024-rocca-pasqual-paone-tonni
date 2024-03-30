@@ -358,10 +358,14 @@ class PlayerBoardTest {
         board1.addCard(card_to_add1,start,3,owner.getCountSeed());
         board1.addCard(card_to_add2,start,4,owner.getCountSeed());
 
+        /*board1.addCard(card_to_add3,card_to_add1,4,owner.getCountSeed());
+        int[] coordinates = card_to_add3.getCoordinates();
+        int[] twenty={22,20};
+        assertArrayEquals(twenty,coordinates);*/
 
         assertThrows(InvalidPlaceException.class,
                 ()->{
-                    board1.addCard(card_to_add3,card_to_add1,3,owner.getCountSeed());
+                    board1.addCard(card_to_add3,card_to_add1,4,owner.getCountSeed());
                 });
 
 
