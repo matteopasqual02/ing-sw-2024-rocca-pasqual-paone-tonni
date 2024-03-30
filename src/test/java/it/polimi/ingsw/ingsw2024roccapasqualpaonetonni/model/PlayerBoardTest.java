@@ -217,14 +217,13 @@ class PlayerBoardTest {
 
     }
     @Test
-    //test che non funziona, da modificare i corner
     void addResourceCardOnNullCornerTest() throws InvalidPlaceException {
 
         //starting card placed in the middle
         Boolean[] c = {true,true,false,false};
         Corner cf1 = new Corner(1,EMPTY);
         Corner cf2 = new Corner(2,GREEN);
-        Corner cf3 = new Corner(3,null);
+        Corner cf3 = null;
         Corner cf4 = new Corner(4,EMPTY);
         Corner cb1 = new Corner(1,EMPTY);
         Corner cb2 = new Corner(2,EMPTY);
