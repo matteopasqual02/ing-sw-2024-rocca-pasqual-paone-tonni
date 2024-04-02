@@ -136,9 +136,9 @@ public class PlayerBoard {
             place_coord[1] = prev_coord[1] + 1;
         }
 
-        if (checkSpotAvailable (card_to_add, place_coord)) {
+        if ( checkSpotAvailable (card_to_add, place_coord)) {
             int tmp = checkRequirements(card_to_add)[0];
-            if (tmp == 1) {
+            if (card_to_add.isflipped() || tmp == 1) {
                 addCardToBoard(place_coord, card_to_add, seedCount);
             }
             else {
