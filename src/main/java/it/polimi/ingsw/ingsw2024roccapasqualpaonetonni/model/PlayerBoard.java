@@ -29,20 +29,14 @@ public class PlayerBoard {
         int x_increase = 0;
         int y_increase = 0;
 
-        /*if (x >= dim_x) {
-            x_increase = x - dim_x;
-        }*/
-        if(x==dim_x){
-            x_increase=1;
+        if (x >= dim_x) {
+            x_increase = x - dim_x + 1;
         }
         else if (x < 0) {
             x_increase = x;
         }
-        /*if (y >= dim_y) {
-            y_increase = y - dim_y;
-        }*/
-        if(y==dim_y){
-            y_increase=1;
+        if (y >= dim_y) {
+            y_increase = y - dim_y + 1;
         }
         else if (y < 0) {
             y_increase = y;
@@ -50,7 +44,12 @@ public class PlayerBoard {
         if (x_increase != 0 || y_increase != 0) {
             board = increaseBoard(x_increase, y_increase);
         }
-
+        if (x < 0) {
+            x -= x_increase;
+        }
+        if (y < 0) {
+            y -= y_increase;
+        }
         board[x][y] = card;
         card.setCoordinates(x,y);
         player.updateSeedCount(calculateSeedUpdate(x, y));
@@ -64,22 +63,13 @@ public class PlayerBoard {
         int row_offset = 0;
         int col_offset = 0;
         PlayingCard[][] tmp_board = board;
-        /*
-        potrebbe essere una soluzione alternativa (se il problema sta nell'incremento della dim) fare:*/
-        dim_x=dim_x+x_increase;
-        dim_y=dim_y+y_increase;
-        board = new PlayingCard[dim_x][dim_y];
-        /*prima era cosi
-        board = new PlayingCard[dim_x + x_increase][dim_y + y_increase];
-         */
+        board = new PlayingCard[dim_x + Math.abs(x_increase)][dim_y + Math.abs(y_increase)];
 
-        /*
-        prima era fatta cosi
         if (x_increase < 0) {
-            row_offset = -x_increase;
+            row_offset = - x_increase;
         }
         if (y_increase < 0) {
-            col_offset = -y_increase;
+            col_offset = - y_increase;
         }
         PlayingCard card;
         for (int row = 0; row < dim_x; row++) {
@@ -88,26 +78,6 @@ public class PlayerBoard {
                 card = board[row_offset + row][col_offset + col];
                 if (card != null) {
                     card.setCoordinates(row_offset + row, col_offset + col);
-                }
-            }
-        }
-*/
-        //la rifaccio facendo si che la matric evenga spostata solo quando l'offset è negativo, perchè quando l'offset è positivo non c'è da spostare nulla, solo da aggiungere riga o colonna vuota
-        if(x_increase<0 || y_increase<0){
-            if (x_increase < 0) {
-                row_offset = -x_increase;
-            }
-            if (y_increase < 0) {
-                col_offset = -y_increase;
-            }
-            PlayingCard card;
-            for (int row = 0; row < dim_x; row++) {
-                for (int col = 0; col < dim_y; col++) {
-                    board[row_offset + row][col_offset + col] = tmp_board[row][col];
-                    card = board[row_offset + row][col_offset + col];
-                    if (card != null) {
-                        card.setCoordinates(row_offset + row, col_offset + col);
-                    }
                 }
             }
         }
@@ -129,14 +99,14 @@ public class PlayerBoard {
         }
         else if (corner == 3) {
             place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] - 1;
+            place_coord[1] = prev_coord[1] + 1;
         }
         else if (corner == 4) {
             place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] + 1;
+            place_coord[1] = prev_coord[1] - 1;
         }
 
-        if ( checkSpotAvailable (card_to_add, place_coord)) {
+        if (checkSpotAvailable (card_to_add, place_coord)) {
             int tmp = checkRequirements(card_to_add)[0];
             if (card_to_add.isflipped() || tmp == 1) {
                 addCardToBoard(place_coord, card_to_add, seedCount);
@@ -162,11 +132,11 @@ public class PlayerBoard {
         }
         else if (corner == 3) {
             place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] - 1;
+            place_coord[1] = prev_coord[1] + 1;
         }
         else if (corner == 4) {
             place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] + 1;
+            place_coord[1] = prev_coord[1] - 1;
         }
 
         if (checkSpotAvailable(card_to_add, place_coord)) {
@@ -211,7 +181,7 @@ public class PlayerBoard {
         int y = coordinates[1];
         int[][] positions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
         //If we're adding a card that goes on the border we cannot check its corners because it would be an OutOfBoundsException, and there is no need to do so because we know that after the borders we have nothing
-        if(x!=0 && x!=dim_x && y!=0 && y!=dim_y){
+        if(x >= 0 && x < dim_x && y >= 0 && y < dim_y){
             if (board[x][y] != null) {
                 return false;
             }
@@ -221,14 +191,10 @@ public class PlayerBoard {
             //If we're adding a card that goes on the border we cannot check its corners because it would be an OutOfBoundsException,
             //so we check if we are looking at a border, and if we are we know that there is no card there so there's no need to check if the corner is okay
             //The condition >= might be wrong when adding multiple cards over the border, for now this is the only way to make the test work but we will have to look into it more
-            if((x+i[0])<=0||(x+i[0])>=dim_x||(y+i[1])<=0||(y+i[1])>=dim_y){
-                return true;
-            }
-            else
-            {
+            if((x+i[0]) >= 0 && (x+i[0]) < dim_x && (y+i[1]) >= 0 && (y+i[1]) < dim_y){
                 cardOnBoard = board[x + i[0]][y + i[1]];
-                //if (cardOnBoard != null && cardOnBoard.getCorner((i[2] + 2) % 4) == null) {
-                if (cardOnBoard != null && cardOnBoard.getCorner(1+(4-i[2])) == null) {
+                int cornerToCheck = (i[2] == 1 || i[2] == 2) ? i[2] + 2 : i[2] - 2;
+                if (cardOnBoard != null && cardOnBoard.getCorner(cornerToCheck) == null) {
                     return false;
                 }
             }
@@ -270,9 +236,13 @@ public class PlayerBoard {
                     }
                 }
             }
+            else {
+                j = card.getSeed().getId();
+                seedUpdate[j] += 1;
+            }
 
 
-            if(xNewCard + i[0] == 20 && yNewCard + i[1] ==20 && player.getStartingCard().isflipped()){
+            if(xNewCard + i[0] == 20 && yNewCard + i[1] == 20 && player.getStartingCard().isflipped()){
                 //j = player.getStartingCard().getBackCorner()[(i[2] + 2) % 4].getSeed().getId();
                 j = player.getStartingCard().getBackCorner()[1+(4-i[2])].getSeed().getId();
                 if (j < 7) {
@@ -280,17 +250,12 @@ public class PlayerBoard {
                 }
                 return seedUpdate;
             }
-            //here we also have to check that we're not looking over the borders or else it gives an OutOfBoundsException
-            //con >= funziona ma non sono sicura che sia una buona soluzione fare in questo modo
-            if((xNewCard+i[0])==0||(xNewCard+i[0])>=dim_x||(yNewCard+i[1])==0||(yNewCard+i[1])>=dim_y){
-                return seedUpdate;
-            }
-            else
-            {
+
+            if((xNewCard + i[0]) >= 0 && (xNewCard + i[0]) < dim_x && (yNewCard + i[1]) >= 0 && (yNewCard + i[1]) < dim_y) {
                 cardAttached = board[xNewCard + i[0]][yNewCard + i[1]];
                 if (cardAttached != null ) {
-                    //c = cardAttached.getCorner((i[2]+2)%4);
-                    c = cardAttached.getCorner(1+(4-i[2]));
+                    int cornerToCheck = (i[2] == 1 || i[2] == 2) ? i[2] + 2 : i[2] - 2;
+                    c = cardAttached.getCorner(cornerToCheck);
                     if (c != null) {
                         j = c.getSeed().getId();
                         if (j < 7) {

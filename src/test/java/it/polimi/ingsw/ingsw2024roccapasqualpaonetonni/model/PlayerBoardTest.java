@@ -99,7 +99,7 @@ class PlayerBoardTest {
 
         board1.addCard(card_to_add,cardToAdd,4,owner.getCountSeed());
         int[] coordinates = card_to_add.getCoordinates();
-        int[] twenty={21,21};
+        int[] twenty={21,19};
         assertArrayEquals(twenty,coordinates);
 
 
@@ -211,7 +211,7 @@ class PlayerBoardTest {
 
         board1.addCard(card_to_add,cardToAdd,3,owner.getCountSeed());
         int[] coordinates = card_to_add.getCoordinates();
-        int[] twenty={21,19};
+        int[] twenty={21,21};
         assertArrayEquals(twenty,coordinates);
 
 
@@ -340,7 +340,7 @@ class PlayerBoardTest {
         Corner c22 =null;// new Corner(2,GREEN);
         Corner c23 = null;//new Corner(3,GREEN);
         Corner c24 = null;//new Corner(4,EMPTY);
-        Corner[] c2c ={c1,c2,c3,c4};
+        Corner[] c2c ={c21,c22,c23,c24};
         ResourceCard card_to_add2 = new ResourceCard(11,BLUE,c2c,0);
 
         //third resource card to be added on previous 2
@@ -404,13 +404,13 @@ class PlayerBoardTest {
 
         //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
         cardOnBoard=start;
-        for(int i=0;i<19;i++){
+        for(int i=0;i<20;i++){
             card= (ResourceCard) CardFactory.createPlayingCard("Resources",i,attributes);
             board1.addCard(card,cardOnBoard,4,owner.getCountSeed());
             cardOnBoard=card;
         }
         int[] coordinates = cardOnBoard.getCoordinates();
-        int[] twenty={39,39};
+        int[] twenty={40,0};
         assertArrayEquals(twenty,coordinates);
 
     }
@@ -450,19 +450,19 @@ class PlayerBoardTest {
         attributes.put("corners",cs);
 
         //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
-        cardOnBoard=start;
-        for(int i=0;i<22;i++){
-            card= (ResourceCard) CardFactory.createPlayingCard("Resources",i,attributes);
-            board1.addCard(card,cardOnBoard,4,owner.getCountSeed());
-            cardOnBoard=card;
+        cardOnBoard = start;
+        for(int i=0; i<30; i++){
+            card = (ResourceCard) CardFactory.createPlayingCard("Resources",i,attributes);
+            board1.addCard(card,cardOnBoard,3, owner.getCountSeed());
+            cardOnBoard = card;
         }
         //this part puts a card not in diagonal to check different kinds of cards over the 40 border, it can be removed
-        card= (ResourceCard) CardFactory.createPlayingCard("Resources",40,attributes);
+        /*card = (ResourceCard) CardFactory.createPlayingCard("Resources",40,attributes);
         board1.addCard(card,cardOnBoard,1,owner.getCountSeed());
-        cardOnBoard=card;
+        cardOnBoard=card;*/
 
         int[] coordinates = cardOnBoard.getCoordinates();
-        int[] twenty={41,41};
+        int[] twenty={50,50};
         assertArrayEquals(twenty,coordinates);
 
     }
@@ -470,7 +470,52 @@ class PlayerBoardTest {
     //bisogna fare il test sull'increase negativo
     @Test
     void AddingCardOverTheBorderWithANegativeIncreaseTest() throws InvalidPlaceException {
+        //ho cambiato tante cose per fare questo test perchè la posizione non veniva aggiornata bene
+        //non funziona ancora bene perche devo tenere il >= della posizione
+        //era un caso limite dell'aggiunta solo in diagonale, se aggiungessi un'altra alla stessa dim non so se andrebbe bene
+        Boolean[] c = {true,true,false,false};
+        Corner cf1 = new Corner(1,EMPTY);
+        Corner cf2 = new Corner(2,GREEN);
+        Corner cf3 = new Corner(3,EMPTY);
+        Corner cf4 = new Corner(4,EMPTY);
+        Corner cb1 = new Corner(1,EMPTY);
+        Corner cb2 = new Corner(2,EMPTY);
+        Corner cb3 = new Corner(3,EMPTY);
+        Corner cb4 = new Corner(4,EMPTY);
+        Corner[] cf ={cf1,cf2,cf3,cf4};
+        Corner[] cb ={cb1,cb2,cb3,cb4};
+        StartingCard start=new StartingCard(1,c,cf,cb);
 
+        // factory;
+        HashMap<String,Object> attributes =new HashMap<String, Object>();
+        String[] cs={"green","empty","blue","red"};
+        ResourceCard card;
+        PlayingCard cardOnBoard;
+
+        Player owner=new Player("a",1);
+        PlayerBoard board1 = new PlayerBoard(owner);
+        board1.addStartingCard(start);
+
+        //attributes that will be the same for every card because I want to test the basic version
+        attributes.put("color","green");
+        attributes.put("points",1);
+        attributes.put("corners",cs);
+
+        //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
+        cardOnBoard = start;
+        for(int i=0; i<100; i++){
+            card = (ResourceCard) CardFactory.createPlayingCard("Resources",i,attributes);
+            board1.addCard(card,cardOnBoard,1, owner.getCountSeed());
+            cardOnBoard = card;
+        }
+        //this part puts a card not in diagonal to check different kinds of cards over the 40 border, it can be removed
+        /*card = (ResourceCard) CardFactory.createPlayingCard("Resources",40,attributes);
+        board1.addCard(card,cardOnBoard,1,owner.getCountSeed());
+        cardOnBoard=card;*/
+
+        int[] coordinates = cardOnBoard.getCoordinates();
+        int[] twenty={0,0};
+        assertArrayEquals(twenty,coordinates);
     }
 
 }
