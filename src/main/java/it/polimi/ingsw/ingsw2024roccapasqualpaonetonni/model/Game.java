@@ -74,7 +74,7 @@ public class Game {
         return gameDrawableDeck;
     }
     public BoardDeck getGameBoardDeck(){
-        return  gameBoardDeck;
+        return gameBoardDeck;
     }
     public Player nextPlayer(){
         Player temp;

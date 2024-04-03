@@ -103,12 +103,12 @@ public class PlayerBoard {
         }
 
         if (checkSpotAvailable (card_to_add, place_coord)) {
-            int tmp = checkRequirements(card_to_add)[0];
-            if (tmp == 1) {
+            int[] tmp = card_to_add.checkRequirements(seedCount);
+            if (tmp[0] == 1) {
                 addCardToBoard(place_coord, card_to_add, seedCount);
             }
             else {
-                throw new ConditionsNotMetException("Not enough seed type" + Seed.getById(tmp).getName());
+                throw new ConditionsNotMetException("Not enough seed type" + Seed.getById(tmp[1]).getName());
             }
         }
         else {
@@ -146,9 +146,9 @@ public class PlayerBoard {
     }
 
     public void addStartingCard(StartingCard firstCard){
-        int x = 20;
-        int y = 20;
-        board[20][20] = firstCard;
+        int x = dim_x/2;
+        int y = dim_y/2;
+        board[x][y] = firstCard;
         firstCard.setCoordinates(x,y);
         player.setStartingCard(firstCard);
         player.updateSeedCount(calculateCenterUpdate(x,y, firstCard));

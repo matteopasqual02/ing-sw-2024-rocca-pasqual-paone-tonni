@@ -159,7 +159,7 @@ public class GameController implements Runnable{
         if(!model.getGameDrawableDeck().getDecks().get("resource").isEmpty()){
             getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
         }
-        else {
+        else if (getCurrentPlayer() == model.getFirstPlayer()){
             model.setStatus(GameStatus.LAST_TURN);
         }
 
@@ -168,7 +168,7 @@ public class GameController implements Runnable{
         if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
             getCurrentPlayer().drawGoldfromDeck(model.getGameDrawableDeck());
         }
-        else {
+        else if (getCurrentPlayer() == model.getFirstPlayer()){
             model.setStatus(GameStatus.LAST_TURN);
         }
     }
@@ -178,6 +178,9 @@ public class GameController implements Runnable{
            (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)
         ){
             getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
+        }
+        else if (getCurrentPlayer() == model.getFirstPlayer()){
+            model.setStatus(GameStatus.LAST_TURN);
         }
     }
 

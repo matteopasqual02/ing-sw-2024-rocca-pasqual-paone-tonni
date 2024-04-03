@@ -45,8 +45,8 @@ public abstract class PlayingCard extends Card {
         coordinates[1] = y;
     }
 
-    public boolean checkRequirements(int[] seedCount) {
-        return true;
+    public int[] checkRequirements(int[] seedCount) {
+        return new int[] {1,0};
     }
 
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y){return 0;};

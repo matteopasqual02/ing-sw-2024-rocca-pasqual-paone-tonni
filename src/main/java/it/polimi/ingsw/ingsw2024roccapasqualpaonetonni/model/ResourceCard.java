@@ -8,7 +8,6 @@ public class ResourceCard extends PlayingCard{
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y) {
         return points;
     }
-    public boolean checkRequirements(int[] seedCount) {return true;}
 }
 
 // Resurce Card is actually a PlayingCard Without beeing an abstract class

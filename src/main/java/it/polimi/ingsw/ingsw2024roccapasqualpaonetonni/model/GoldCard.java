@@ -11,22 +11,27 @@ public class GoldCard extends PlayingCard{
         this.placeCondition= Arrays.copyOf(p,4);
     }
 
-    public boolean checkRequirements(int[] available_seeds) {
-        for (int i = 0; i < 4; i++) {
-            if (available_seeds[i] < placeCondition[i]) {
-                return false;
+    public int[] checkRequirements(int[] available_seeds) {
+        int[] result = new int[2];
+        for (int i = 0; i < placeCondition.length; i++) {
+            if (placeCondition[i] > available_seeds[i]) {
+                result[0] = 0;
+                result[1] = i + 1;
+                return result;
             }
         }
-        return true;
+        result[0] = 1;
+        return result;
     }
+
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y) {
         int curr_points = 0;
         PlayingCard cardOnBoard;
         switch(pointCondition) {
             case "corners":
                 //count the number of corner covered by (4 corner) the current card
-                int[][] postions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
-                for (int[] i : postions) {
+                int[][] positons = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
+                for (int[] i : positons) {
                     cardOnBoard = board[x + i[0]][y + i[1]];
                     if (cardOnBoard != null) {
                         curr_points += points;

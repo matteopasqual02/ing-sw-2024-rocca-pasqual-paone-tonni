@@ -60,7 +60,7 @@ public class ObjectiveCard extends Card{
                 PlayingCard currentCard = board[i][j];
                 if(currentCard!=null && primaryCard == currentCard.getSeed()
                     && !usedByObjectiveCard.contains(currentCard)){
-                    //if the position is not null, the esed off the card we're looking at is the same as the primary
+                    //if the position is not null, the seed of the card we're looking at is the same as the primary
                     //and the card not used
                     switch (shape){
                         case "down" -> {
@@ -166,7 +166,7 @@ public class ObjectiveCard extends Card{
     public int getPoints(){
         return points;
     }
-    public boolean getisCount(){
+    public boolean getIsCount(){
         return isCount;
     }
     public Seed getType(){
