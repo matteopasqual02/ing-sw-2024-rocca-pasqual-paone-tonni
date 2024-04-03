@@ -82,7 +82,7 @@ public class PlayerBoard {
 
     // public method used to add a new card to the board
     // the position where to add the card is given by indicating the card and the corner where to attach it
-    public void addCard(GoldCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException, ConditionsNotMetException{
+    public void addCard(PlayingCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException, ConditionsNotMetException{
         int[] prev_coord = card_on_board.getCoordinates();
         int[] place_coord = new int[2];
         if (corner == 1) {
@@ -114,35 +114,6 @@ public class PlayerBoard {
         else {
             throw new InvalidPlaceException("The card cannot be placed in the chosen position");
         }
-    }
-    public void addCard(ResourceCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException{
-        int[] prev_coord = card_on_board.getCoordinates();
-        int[] place_coord = new int[2];
-        if (corner == 1) {
-            place_coord[0] = prev_coord[0] - 1;
-            place_coord[1] = prev_coord[1] - 1;
-        }
-        else if (corner == 2) {
-            place_coord[0] = prev_coord[0] - 1;
-            place_coord[1] = prev_coord[1] + 1;
-        }
-        else if (corner == 3) {
-            place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] - 1;
-        }
-        else if (corner == 4) {
-            place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] + 1;
-        }
-
-        if (checkSpotAvailable(card_to_add, place_coord)) {
-            addCardToBoard(place_coord, card_to_add, seedCount);
-        }
-        else {
-            throw new InvalidPlaceException("The card cannot be placed in the chosen position");
-        }
-
-        // if add is successful, player must update corners and seed count
     }
 
     public void addStartingCard(StartingCard firstCard){
@@ -187,19 +158,6 @@ public class PlayerBoard {
             }
         }
         return true;
-    }
-    private int[] checkRequirements(GoldCard card) {
-        int[] result = new int[2];
-        int[] requirements = card.getPlaceCondition();
-        for (int i = 0; i < requirements.length; i++) {
-            if (requirements[i] > player.getCountSeed()[i]) {
-                result[0] = 0;
-                result[1] = i + 1;
-                return result;
-            }
-        }
-        result[0] = 1;
-        return result;
     }
 
     private int[] calculateSeedUpdate(int xNewCard, int yNewCard) {

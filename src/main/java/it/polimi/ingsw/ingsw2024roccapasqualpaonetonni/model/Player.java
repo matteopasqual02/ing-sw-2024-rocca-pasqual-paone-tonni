@@ -96,20 +96,7 @@ public class Player {
     public StartingCard getStartingCard(){return startingCard;}
     public void setStartingCard(StartingCard card){this.startingCard=card;}
 
-    public void addToBoard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
-        try {
-            removeFromHand(cardToAdd);
-        }
-        catch(CardNotInHandException e) {;
-        }
-        try {
-            board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
-        }
-        catch(InvalidPlaceException e) {
-            ;
-        }
-    }
-    public void addToBoard(GoldCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
+    public void addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
             removeFromHand(cardToAdd);
         }

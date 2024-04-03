@@ -131,13 +131,7 @@ public class GameController implements Runnable{
 
 
 //---------------------------------ADD CARD SECTION
-    public void addCard(ResourceCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
-        if(flip){
-            cardToAdd.flip();
-        }
-        getCurrentPlayer().addToBoard(cardToAdd,cardOnBoard,cornerToAttach);
-    }
-    public void addCard(GoldCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
+    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
         if(flip){
             cardToAdd.flip();
         }
