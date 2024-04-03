@@ -93,6 +93,7 @@ public class Player {
     public void addStarting(){
         board.addStartingCard(startingCard);
     }
+    public void setStartingCard(StartingCard card){ this.startingCard=card;}
     public StartingCard getStartingCard(){return startingCard;}
     public void setStartingCard(StartingCard card){this.startingCard=card;}
 

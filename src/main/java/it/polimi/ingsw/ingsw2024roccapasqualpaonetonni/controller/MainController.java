@@ -25,5 +25,7 @@ public class MainController {
         return g;
     }
 
+    public List<GameController> getRunningGames(){return runningGames;}
+
 
 }
