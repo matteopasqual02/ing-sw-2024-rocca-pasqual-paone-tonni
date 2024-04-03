@@ -95,7 +95,6 @@ public class Player {
     }
     public void setStartingCard(StartingCard card){ this.startingCard=card;}
     public StartingCard getStartingCard(){return startingCard;}
-    public void setStartingCard(StartingCard card){this.startingCard=card;}
 
     public void addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {

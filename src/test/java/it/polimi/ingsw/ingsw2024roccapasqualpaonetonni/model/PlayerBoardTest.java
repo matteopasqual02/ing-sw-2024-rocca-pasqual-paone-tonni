@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,7 @@ class PlayerBoardTest {
 
     }
     @Test
-    void addResourceCardCorner4Test() throws InvalidPlaceException {
+    void addResourceCardCorner4Test() throws InvalidPlaceException, ConditionsNotMetException {
 
         //starting card placed in the middle
         Boolean[] c = {true,true,false,false};
@@ -105,7 +106,7 @@ class PlayerBoardTest {
 
     }
     @Test
-    void addResourceCardCorner2Test() throws InvalidPlaceException {
+    void addResourceCardCorner2Test() throws InvalidPlaceException, ConditionsNotMetException {
 
         //starting card placed in the middle
         Boolean[] c = {true,true,false,false};
@@ -143,7 +144,7 @@ class PlayerBoardTest {
     }
 
     @Test
-    void addResourceCardCorner1Test() throws InvalidPlaceException {
+    void addResourceCardCorner1Test() throws InvalidPlaceException, ConditionsNotMetException {
 
         //starting card placed in the middle
         Boolean[] c = {true,true,false,false};
@@ -180,7 +181,7 @@ class PlayerBoardTest {
 
     }
     @Test
-    void addResourceCardCorner3Test() throws InvalidPlaceException {
+    void addResourceCardCorner3Test() throws InvalidPlaceException, ConditionsNotMetException {
 
         //starting card placed in the middle
         Boolean[] c = {true,true,false,false};
@@ -255,7 +256,7 @@ class PlayerBoardTest {
     }
 
     @Test
-    void addResourceCardOn2CornersTest() throws InvalidPlaceException {
+    void addResourceCardOn2CornersTest() throws InvalidPlaceException, ConditionsNotMetException {
 
         //starting card placed in the middle
         Boolean[] c = {true,true,false,false};
@@ -311,7 +312,7 @@ class PlayerBoardTest {
 
     @Test
     //non funziona se sto piazzando una carta su 2 punti, e quello che non ho indicato è null non lancia l'eccezione.
-    void addResourceCardOn2CornersWhere1isNullTest() throws InvalidPlaceException {
+    void addResourceCardOn2CornersWhere1isNullTest() throws InvalidPlaceException, ConditionsNotMetException {
 
         //starting card placed in the middle
         Boolean[] c = {true,true,false,false};
@@ -371,7 +372,7 @@ class PlayerBoardTest {
 
     }
     @Test
-    void AddingCardCloseToTheBorderTest() throws InvalidPlaceException {
+    void AddingCardCloseToTheBorderTest() throws InvalidPlaceException, ConditionsNotMetException {
         //this test evaluates adding a card on the position 39, in which the checks cover the border and have to go through the condition of checking an out of bounds index
 
         Boolean[] c = {true,true,false,false};
@@ -416,7 +417,7 @@ class PlayerBoardTest {
     }
 
     @Test
-    void AddingCardOverTheBorderWithAPositiveIncreaseTest() throws InvalidPlaceException {
+    void AddingCardOverTheBorderWithAPositiveIncreaseTest() throws InvalidPlaceException, ConditionsNotMetException {
 
         //ho cambiato tante cose per fare questo test perchè la posizione non veniva aggiornata bene
         //non funziona ancora bene perche devo tenere il >= della posizione
@@ -469,7 +470,7 @@ class PlayerBoardTest {
 
     //bisogna fare il test sull'increase negativo
     @Test
-    void AddingCardOverTheBorderWithANegativeIncreaseTest() throws InvalidPlaceException {
+    void AddingCardOverTheBorderWithANegativeIncreaseTest() throws InvalidPlaceException, ConditionsNotMetException {
         //ho cambiato tante cose per fare questo test perchè la posizione non veniva aggiornata bene
         //non funziona ancora bene perche devo tenere il >= della posizione
         //era un caso limite dell'aggiunta solo in diagonale, se aggiungessi un'altra alla stessa dim non so se andrebbe bene
