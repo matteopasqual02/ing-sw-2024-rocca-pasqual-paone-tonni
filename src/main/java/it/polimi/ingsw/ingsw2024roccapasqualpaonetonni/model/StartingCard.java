@@ -13,7 +13,13 @@ public class StartingCard extends PlayingCard{
         this.isFlipped=false;
 
     }
-
     public Boolean[] getCenter() { return center; }
-    public Corner[] getBackCorner(){return  cornersBack;}
+    public Corner getCorner(int pos){
+        if (isFlipped) {
+            return cornersBack[pos - 1];
+        }
+        else {
+            return corners[pos - 1];
+        }
+    }
 }

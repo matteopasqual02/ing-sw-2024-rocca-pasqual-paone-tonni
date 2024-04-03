@@ -53,7 +53,7 @@ public class PlayerBoard {
         board[x][y] = card;
         card.setCoordinates(x,y);
         player.updateSeedCount(calculateSeedUpdate(x, y));
-        if(!card.isflipped()) {
+        if(!card.isFlipped()) {
             player.increasePoints(card.calculatePoints(board, seedCount, x, y));
         }
     }
@@ -108,7 +108,7 @@ public class PlayerBoard {
 
         if (checkSpotAvailable (card_to_add, place_coord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
-            if (card_to_add.isflipped() || tmp[0] == 1) {
+            if (card_to_add.isFlipped() || tmp[0] == 1) {
                 addCardToBoard(place_coord, card_to_add, seedCount);
             }
             else {
@@ -132,7 +132,7 @@ public class PlayerBoard {
     private int[] calculateCenterUpdate(int x, int y, StartingCard c) {
         int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
         for(int i=0; i<4; i++){
-            if(c.isflipped()){
+            if(c.isFlipped()){
                 seedUpdate[i]=1;
             }
             else {
@@ -184,7 +184,7 @@ public class PlayerBoard {
         for (int[] i : positions) {
             //card is the card placed then increase seed into seedCount
             card = board[xNewCard][yNewCard];
-            if(!card.isflipped()){
+            if(!card.isFlipped()){
                 c = card.getCorner(i[2]);
                 if (c != null ) {
                     j = c.getSeed().getId();
@@ -196,16 +196,6 @@ public class PlayerBoard {
             else {
                 j = card.getSeed().getId();
                 seedUpdate[j] += 1;
-            }
-
-
-            if(xNewCard + i[0] == 20 && yNewCard + i[1] == 20 && player.getStartingCard().isflipped()){
-                //j = player.getStartingCard().getBackCorner()[(i[2] + 2) % 4].getSeed().getId();
-                j = player.getStartingCard().getBackCorner()[1+(4-i[2])].getSeed().getId();
-                if (j < 7) {
-                    seedUpdate[j] -= 1;
-                }
-                return seedUpdate;
             }
 
             if((xNewCard + i[0]) >= 0 && (xNewCard + i[0]) < dim_x && (yNewCard + i[1]) >= 0 && (yNewCard + i[1]) < dim_y) {

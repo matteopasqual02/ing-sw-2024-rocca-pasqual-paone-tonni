@@ -6,7 +6,7 @@ public abstract class PlayingCard extends Card {
     private final Seed cardSeed;
     protected final int points;
     protected boolean isFlipped;
-    private Corner[] corners = new Corner[4];
+    protected Corner[] corners;
     protected int[] coordinates;
 
     public PlayingCard(int id, Seed seed, Corner[] c,int points) {
@@ -23,7 +23,7 @@ public abstract class PlayingCard extends Card {
         else isFlipped = true;
     }
 
-    public Boolean isflipped(){
+    public Boolean isFlipped(){
         return isFlipped;
     }
 

@@ -80,8 +80,11 @@ public class Game {
         Player temp;
         temp = players.poll();
         players.add(temp);
-
-        return players.peek();
+        Player newCurrent = players.peek();
+        if (newCurrent.equals(firstPlayer) && status.equals(GameStatus.WAITING_LAST_TURN)) {
+            status = GameStatus.LAST_TURN;
+        }
+        return newCurrent;
     }
 
 //---------------------------------POINT SECTION

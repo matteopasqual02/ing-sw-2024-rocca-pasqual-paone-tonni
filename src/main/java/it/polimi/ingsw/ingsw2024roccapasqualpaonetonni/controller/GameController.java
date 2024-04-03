@@ -149,32 +149,50 @@ public class GameController implements Runnable{
 
 
 //---------------------------------DRAW SECTION
+    private boolean decksAreNotAllEmpty() {
+        return !model.getGameDrawableDeck().getDecks().get("resource").isEmpty()
+                && !model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
+                && !(model.getGameBoardDeck().getResourceCards()[0]==null)
+                && !(model.getGameBoardDeck().getResourceCards()[1]==null)
+                && !(model.getGameBoardDeck().getGoldCards()[0]==null)
+                && !(model.getGameBoardDeck().getGoldCards()[1]==null);
+    }
     public void drawResourceFromDeck(){
-        if(!model.getGameDrawableDeck().getDecks().get("resource").isEmpty()){
+        if (!decksAreNotAllEmpty()) {
+            model.setStatus(GameStatus.WAITING_LAST_TURN);
+
+        }
+        else if(!model.getGameDrawableDeck().getDecks().get("resource").isEmpty()){
             getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
         }
-        else if (getCurrentPlayer() == model.getFirstPlayer()){
-            model.setStatus(GameStatus.LAST_TURN);
+        else {
+            // avviso di cambiare mazzo
         }
 
     }
     public void drawGoldFromDeck(){
-        if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
+        if (!decksAreNotAllEmpty()) {
+            model.setStatus(GameStatus.WAITING_LAST_TURN);
+
+        }
+        else if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
             getCurrentPlayer().drawGoldfromDeck(model.getGameDrawableDeck());
         }
-        else if (getCurrentPlayer() == model.getFirstPlayer()){
-            model.setStatus(GameStatus.LAST_TURN);
+        else {
+            // avviso
         }
     }
     public void drawFromBoard(int position){
-        if(
-           (position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null)||
-           (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)
-        ){
+        if (!decksAreNotAllEmpty()) {
+            model.setStatus(GameStatus.WAITING_LAST_TURN);
+
+        }
+        else if((position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null) ||
+                (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)) {
             getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
         }
-        else if (getCurrentPlayer() == model.getFirstPlayer()){
-            model.setStatus(GameStatus.LAST_TURN);
+        else {
+            // avviso
         }
     }
 
@@ -182,8 +200,9 @@ public class GameController implements Runnable{
 //---------------------------------END SECTION
     private void checkPoints20Points(){
         for(Player player: getAllPlayer()){
-            if(player.getCurrentPoints() >= 20 && getCurrentPlayer() == model.getFirstPlayer()){
-                model.setStatus(GameStatus.LAST_TURN);
+            // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione
+            if(player.getCurrentPoints() >= 20){
+                model.setStatus(GameStatus.WAITING_LAST_TURN);
             }
         }
     }
