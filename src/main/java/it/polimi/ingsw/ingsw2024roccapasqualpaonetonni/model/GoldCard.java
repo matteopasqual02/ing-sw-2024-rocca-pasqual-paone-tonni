@@ -16,7 +16,7 @@ public class GoldCard extends PlayingCard{
         for (int i = 0; i < placeCondition.length; i++) {
             if (placeCondition[i] > available_seeds[i]) {
                 result[0] = 0;
-                result[1] = i + 1;
+                result[1] = i;
                 return result;
             }
         }
