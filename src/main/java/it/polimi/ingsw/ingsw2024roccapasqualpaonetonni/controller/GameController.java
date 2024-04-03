@@ -9,8 +9,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.View;
 import java.io.IOException;
 import java.util.*;
 
-import java.util.*;
-
 public class GameController implements Runnable{
     private Game model;
     private View view;
@@ -149,16 +147,16 @@ public class GameController implements Runnable{
 
 
 //---------------------------------DRAW SECTION
-    private boolean decksAreNotAllEmpty() {
-        return !model.getGameDrawableDeck().getDecks().get("resource").isEmpty()
-                && !model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
-                && !(model.getGameBoardDeck().getResourceCards()[0]==null)
-                && !(model.getGameBoardDeck().getResourceCards()[1]==null)
-                && !(model.getGameBoardDeck().getGoldCards()[0]==null)
-                && !(model.getGameBoardDeck().getGoldCards()[1]==null);
+    private boolean decksAreAllEmpty() {
+        return model.getGameDrawableDeck().getDecks().get("resource").isEmpty()
+                && model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
+                && model.getGameBoardDeck().getResourceCards()[0] == null
+                && model.getGameBoardDeck().getResourceCards()[1] == null
+                && model.getGameBoardDeck().getGoldCards()[0] == null
+                && model.getGameBoardDeck().getGoldCards()[1] == null;
     }
     public void drawResourceFromDeck(){
-        if (!decksAreNotAllEmpty()) {
+        if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
         }
@@ -171,7 +169,7 @@ public class GameController implements Runnable{
 
     }
     public void drawGoldFromDeck(){
-        if (!decksAreNotAllEmpty()) {
+        if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
         }
@@ -183,7 +181,7 @@ public class GameController implements Runnable{
         }
     }
     public void drawFromBoard(int position){
-        if (!decksAreNotAllEmpty()) {
+        if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
         }
