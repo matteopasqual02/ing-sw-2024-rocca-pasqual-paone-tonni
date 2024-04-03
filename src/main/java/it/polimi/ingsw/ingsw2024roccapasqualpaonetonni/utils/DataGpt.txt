@@ -1,0 +1,616 @@
+{
+    "resources": {
+        "1": {
+            "color":"red",
+            "corners": ["red", "empty", null, "red"],
+            "points": 0
+        },
+        "2": {
+            "color": "red",
+            "corners": ["red", "red", "empty", null],
+            "points": 0
+        },
+        "3": {
+            "color": "red",
+            "corners": ["empty", null, "red", "red"],
+            "points": 0
+        },
+        "4": {
+            "color": "red",
+            "corners": [null, "red", "red", "empty"],
+            "points": 0
+        },
+        "5": {
+            "color": "red",
+            "corners": [null, "feather", "red", "green"],
+            "points": 0
+        },
+        "6": {
+            "color": "red",
+            "corners": ["potion", "red", "blue", null],
+            "points": 0
+        },
+        "7": {
+            "color": "red",
+            "corners": ["red", "purple", "empty", "scroll"],
+            "points": 0
+        },
+        "8": {
+            "color": "red",
+            "corners": ["empty", "red", null, "empty"],
+            "points": 1
+        },
+        "9": {
+            "color": "red",
+            "corners": ["red", null, "empty", "empty"],
+            "points": 1
+        },
+        "10": {
+            "color": "red",
+            "corners": [null, "empty", "empty", "red"],
+            "points": 1
+        },
+        "11": {
+            "color": "green",
+            "corners": ["green", "empty", null, "green"],
+            "points": 0
+        },
+        "12": {
+            "color": "green",
+            "corners": ["green","green", "empty", null],
+            "points": 0
+        },
+        "13": {
+            "color": "green",
+            "corners": ["empty", null, "green", "green"],
+            "points": 0
+        },
+        "14": {
+            "color": "green",
+            "corners": [null, "green", "green", "empty"],
+            "points": 0
+        },
+        "15": {
+            "color": "green",
+            "corners": [null, "purple", "green", "feather"],
+            "points": 0
+        },
+        "16": {
+            "color": "green",
+            "corners": ["red", "green", "potion", null],
+            "points": 0
+        },
+        "17": {
+            "color": "green",
+            "corners": ["scroll", null, "blue", "green"],
+            "points": 0
+        },
+        "18": {
+            "color": "green",
+            "corners": ["empty", "empty", null, "green"],
+            "points": 1
+        },
+        "19": {
+            "color": "green",
+            "corners": ["empty", "empty", "green", null],
+            "points": 1
+        },
+        "20": {
+            "color": "green",
+            "corners": [null, "green", "empty", "empty"],
+            "points": 1
+        },
+        "21": {
+            "color": "blue",
+            "corners": ["blue", "blue", null, "empty"],
+            "points": 0
+        },
+        "22": {
+            "color": "blue",
+            "corners": [null, "empty", "blue", "blue"],
+            "points": 0
+        },
+        "23": {
+            "color": "blue",
+            "corners": ["blue", null, "empty", "blue"],
+            "points": 0
+        },
+        "24": {
+            "color": "blue",
+            "corners": ["empty", "blue", "blue", null],
+            "points": 0
+        },
+        "25": {
+            "color": "blue",
+            "corners": [null, "purple", "blue", "potion"],
+            "points": 0
+        },
+        "26": {
+            "color": "blue",
+            "corners": ["green", "blue", "scroll", null],
+            "points": 0
+        },
+        "27": {
+            "color": "blue",
+            "corners": ["feather", null, "red", "blue"],
+            "points": 0
+        },
+        "28": {
+            "color": "blue",
+            "corners": [null, "empty", "empty", "blue"],
+            "points": 1
+        },
+        "29": {
+            "color": "blue",
+            "corners": ["empty", null, "blue", "empty"],
+            "points": 1
+        },
+        "30": {
+            "color": "blue",
+            "corners": ["empty", "blue", null, "empty"],
+            "points": 1
+        },
+        "31": {
+            "color": "purple",
+            "corners": ["purple", "purple", null, "empty"],
+            "points": 0
+        },
+        "32": {
+            "color": "purple",
+            "corners": [null, "empty", "purple", "purple"],
+            "points": 0
+        },
+        "33": {
+            "color": "purple",
+            "corners": ["purple", null, "empty", "purple"],
+            "points": 0
+        },
+        "34": {
+            "color": "purple",
+            "corners": ["empty", "purple", "purple", null],
+            "points": 0
+        },
+        "35": {
+            "color": "purple",
+            "corners": [null, "feather", "purple", "blue"],
+            "points": 0
+        },
+        "36": {
+            "color": "purple",
+            "corners": ["scroll", "purple", "red", null],
+            "points": 0
+        },
+        "37": {
+            "color": "purple",
+            "corners": ["purple", "green", null, "potion"],
+            "points": 0
+        },
+        "38": {
+            "color": "purple",
+            "corners": ["purple", null, "empty", "empty"],
+            "points": 1
+        },
+        "39": {
+            "color": "purple",
+            "corners": ["empty", "empty", "purple", null],
+            "points": 1
+        },
+        "40": {
+            "color": "purple",
+            "corners": [null, "purple", "empty", "empty"],
+            "points": 1
+        }
+    },
+    "gold": {
+        "41": {
+            "color": "red",
+            "corners": [null, "empty", "feather", "empty"],
+            "points": 1,
+            "point_condition": "feather",
+            "place_condition": [0, 1, 2, 0]
+        },
+        "42": {
+            "color": "red",
+            "corners": ["empty", "potion", "empty", null],
+            "points": 1,
+            "point_condition": "potion",
+            "place_condition": [1, 0, 2, 0]
+        },
+        "43": {
+            "color": "red",
+            "corners": ["scroll", "empty", null, "empty"],
+            "points": 1,
+            "point_condition": "scroll",
+            "place_condition": [0, 0, 2, 1]
+        },
+        "44": {
+            "color": "red",
+            "corners": ["empty", "empty", "empty", null],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [0, 1, 3, 0]
+        },
+        "45": {
+            "color": "red",
+            "corners": ["empty", "empty", null, "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [1, 0, 3, 0]
+        },
+        "46": {
+            "color": "red",
+            "corners": ["empty", null, "empty", "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [0, 0, 3, 1]
+        },
+        "47": {
+            "color": "red",
+            "corners": ["empty", null, null, "potion"],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 0, 3, 0]
+        },
+        "48": {
+            "color": "red",
+            "corners": ["feather", "empty", null, null],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 0, 3, 0]
+        },
+        "49": {
+            "color": "red",
+            "corners": [null, "scroll", "empty", null],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 0, 3, 0]
+        },
+        "50": {
+            "color": "red",
+            "corners": ["empty", null, null, "empty"],
+            "points": 5,
+            "point_condition": null,
+            "place_condition": [0, 0, 5, 0]
+        },
+        "51": {
+            "color": "green",
+            "corners": ["feather", "empty", null, "empty"],
+            "points": 1,
+            "point_condition": "feather",
+            "place_condition": [2, 0, 0, 1]
+        },
+        "52": {
+            "color": "green",
+            "corners": ["empty", "scroll", "empty", null],
+            "points": 1,
+            "point_condition": "scroll",
+            "place_condition": [2, 0, 1, 0]
+        },
+        "53": {
+            "color": "green",
+            "corners": ["empty", null, "empty", "potion"],
+            "points": 1,
+            "point_condition": "potion",
+            "place_condition": [2, 1, 0, 0]
+        },
+        "54": {
+            "color": "green",
+            "corners": [null, "empty", "empty", "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [3, 0, 0, 1]
+        },
+        "55": {
+            "color": "green",
+            "corners": ["empty", "empty", null, "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [3, 1, 0, 0]
+        },
+        "56": {
+            "color": "green",
+            "corners": ["empty", null, "empty", "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [3, 0, 1, 0]
+        },
+        "57": {
+            "color": "green",
+            "corners": ["empty", null, null, "feather"],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [3, 0, 0, 0]
+        },
+        "58": {
+            "color": "green",
+            "corners": ["scroll", "empty", null, null],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [3, 0, 0, 0]
+        },
+        "59": {
+            "color": "green",
+            "corners": [null, "potion", "empty", null],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [3, 0, 0, 0]
+        },
+        "60": {
+            "color": "green",
+            "corners": ["empty", "empty", null, null],
+            "points": 5,
+            "point_condition": null,
+            "place_condition": [5, 0, 0, 0]
+        },
+        "61": {
+            "color": "blue",
+            "corners": ["potion", "empty", null, "empty"],
+            "points": 1,
+            "point_condition": "potion",
+            "place_condition": [0, 2, 0, 1]
+        },
+        "62": {
+            "color": "blue",
+            "corners": [null, "empty", "scroll", "empty"],
+            "points": 1,
+            "point_condition": "scroll",
+            "place_condition": [1, 2, 0, 0]
+        },
+        "63": {
+            "color": "blue",
+            "corners": ["empty", null, "empty", "feather"],
+            "points": 1,
+            "point_condition": "feather",
+            "place_condition": [0, 2, 1, 0]
+        },
+        "64": {
+            "color": "blue",
+            "corners": ["empty", "empty", "empty", null],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [0, 3, 0, 1]
+        },
+        "65": {
+            "color": "blue",
+            "corners": ["empty", null, "empty", "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [0, 3, 1, 0]
+        },
+        "66": {
+            "color": "blue",
+            "corners": [null, "empty", "empty", "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [1, 3, 0, 0]
+        },
+        "67": {
+            "color": "blue",
+            "corners": ["empty", null, null, "scroll"],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 3, 0, 0]
+        },
+        "68": {
+            "color": "blue",
+            "corners": ["empty", "potion", null, null],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 3, 0, 0]
+        },
+        "69": {
+            "color": "blue",
+            "corners": [null, "empty", "feather", null],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 3, 0, 0]
+        },
+        "70": {
+            "color": "blue",
+            "corners": [null, "empty", "empty", null],
+            "points": 5,
+            "point_condition": null,
+            "place_condition": [0, 5, 0, 0]
+        },
+        "71": {
+            "color": "purple",
+            "corners": ["empty", "feather", "empty", null],
+            "points": 1,
+            "point_condition": "feather",
+            "place_condition": [1, 0, 0, 2]
+        },
+        "72": {
+            "color": "purple",
+            "corners": ["empty", null, "empty", "scroll"],
+            "points": 1,
+            "point_condition": "scroll",
+            "place_condition": [0, 1, 0, 2]
+        },
+        "73": {
+            "color": "purple",
+            "corners": [null, "empty", "potion", "empty"],
+            "points": 1,
+            "point_condition": "potion",
+            "place_condition": [0, 0, 1, 2]
+        },
+        "74": {
+            "color": "purple",
+            "corners": ["empty", "empty", "empty", null],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [0, 1, 0, 3]
+        },
+        "75": {
+            "color": "purple",
+            "corners": ["empty", "empty", null, "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [1, 0, 0, 3]
+        },
+        "76": {
+            "color": "purple",
+            "corners": ["empty", null, "empty", "empty"],
+            "points": 2,
+            "point_condition": "corners",
+            "place_condition": [0, 0, 1, 3]
+        },
+        "77": {
+            "color": "purple",
+            "corners": ["potion", null, null, "empty"],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 0, 0, 3]
+        },
+        "78": {
+            "color": "purple",
+            "corners": ["empty", "scroll", null, null],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 0, 0, 3]
+        },
+        "79": {
+            "color": "purple",
+            "corners": [null, null, "empty", "feather"],
+            "points": 3,
+            "point_condition": null,
+            "place_condition": [0, 0, 0, 3]
+        },
+        "80": {
+            "color": "purple",
+            "corners": ["empty", "empty", null, null],
+            "points": 5,
+            "point_condition": null,
+            "place_condition": [0, 0, 0, 5]
+        },
+    },
+    "starting": {
+        "81": {
+            "center": [0, 0, 0, 1],
+            "corners_front": ["empty", "green", "empty", "purple"],
+            "corners_back": ["red", "green", "blue", "purple"]
+        },
+        "82": {
+            "center": [0, 0, 1, 0],
+            "corners_front": ["blue", "empty", "red", "empty"],
+            "corners_back": ["green", "blue", "purple", "red"]
+        },
+        "83": {
+            "center": [1, 0, 1, 0],
+            "corners_front": ["empty", "empty", "empty", "empty"],
+            "corners_back": ["purple", "blue", "green", "red"]
+        },
+        "84": {
+            "center": [0, 1, 0, 1],
+            "corners_front": ["empty", "empty", "empty", "empty"],
+            "corners_back": ["green", "purple", "red", "blue"]
+        },
+        "85": {
+            "center": [1, 1, 0, 1],
+            "corners_front": ["empty", "empty", null, null],
+            "corners_back": ["purple", "red", "blue", "green"]
+        },
+        "86": {
+            "center": [1, 1, 1, 0],
+            "corners_front": ["empty", "empty", null, null],
+            "corners_back": ["red", "blue", "purple", "green"]
+        }
+    },
+    "objective": {
+        "87": {
+            "points": 2,
+            "is_count": 0,
+            "pattern_cards": ["red", null],
+            "shape": "up"
+        },
+        "88": {
+            "points": 2,
+            "is_count": 0,
+            "pattern_cards": ["green", null],
+            "shape": "down"
+        },
+        "89": {
+            "points": 2,
+            "is_count": 0,
+            "color": ["blue", null],
+            "shape": "up"
+        },
+        "90": {
+            "points": 2,
+            "is_count": 0,
+            "color": ["purple", null],
+            "shape": "down"
+        },
+        "91": {
+            "points": 3,
+            "is_count": 0,
+            "color": ["red", "green"],
+            "shape": "up"
+        },
+        "92": {
+            "points": 3,
+            "is_count": 0,
+            "color": ["green", "blue"],
+            "shape": "down"
+        },
+        "93": {
+            "points": 3,
+            "is_count": 0,
+            "color": ["blue", "purple"],
+            "shape": "up"
+        },
+        "94": {
+            "points": 3,
+            "is_count": 0,
+            "color": ["purple", "red"],
+            "shape": "down"
+        },
+        "95": {
+            "points": 3,
+            "is_count": 0,
+            "pattern_cards": [null, "feather"],
+            "shape": "up"
+        },
+        "96": {
+            "points": 3,
+            "is_count": 0,
+            "pattern_cards": [null, "scroll"],
+            "shape": "down"
+        },
+        "97": {
+            "points": 4,
+            "is_count": 0,
+            "pattern_cards": [null, "potion"],
+            "shape": "up"
+        },
+        "98": {
+            "points": 4,
+            "is_count": 0,
+            "pattern_cards": [null, "red"],
+            "shape": "down"
+        },
+        "99": {
+            "points": 4,
+            "is_count": 0,
+            "pattern_cards": [null, "green"],
+            "shape": "up"
+        },
+        "100": {
+            "points": 4,
+            "is_count": 0,
+            "pattern_cards": [null, "blue"],
+            "shape": "down"
+        },
+        "101": {
+            "points": 4,
+            "is_count": 0,
+            "pattern_cards": [null, "purple"],
+            "shape": "up"
+        },
+        "102": {
+            "points": 5,
+            "is_count": 0,
+            "pattern_cards": ["scroll", "potion"],
+            "shape": "down"
+        }
+    }
+}
