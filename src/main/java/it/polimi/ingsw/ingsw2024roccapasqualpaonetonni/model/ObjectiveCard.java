@@ -94,66 +94,67 @@ public class ObjectiveCard extends Card{
                             }
                         }
                         case "ne" -> {
-                            if( i-1 >= 0 && j+3 <= board[i].length &&
-                                board[i-1][j+1] != null &&
-                                board[i-1][j+1].getSeed() == secondaryCard &&
-                                board[i-1][j+3]!=null &&
-                                board[i-1][j+3].getSeed() == secondaryCard &&
-                                !usedByObjectiveCard.contains(board[i-1][j+1]) &&
-                                !usedByObjectiveCard.contains(board[i-1][j+3])
-                            ){
-                                totalpoints += points;
-                                usedByObjectiveCard.add(currentCard);
-                                usedByObjectiveCard.add(board[i-1][j+1]);
-                                usedByObjectiveCard.add(board[i-1][j+3]);
-                            }
-
-                        }
-                        case "nw" -> {
-                            if( i+1 <= board.length && j+3 <= board[i].length &&
-                                board[i+1][j+1] != null &&
-                                board[i+1][j+1].getSeed() == secondaryCard &&
-                                board[i+1][j+3]!=null &&
-                                board[i+1][j+3].getSeed() == secondaryCard &&
-                                !usedByObjectiveCard.contains(board[i+1][j+1]) &&
-                                !usedByObjectiveCard.contains(board[i+1][j+3])
-                            ){
-                                totalpoints += points;
-                                usedByObjectiveCard.add(currentCard);
-                                usedByObjectiveCard.add(board[i+1][j+1]);
-                                usedByObjectiveCard.add(board[i+1][j+3]);
-                            }
-                        }
-                        case "se" -> {
-                            if( i-1 >= 0 && j-3 >= 0 &&
-                                board[i-1][j-1] != null &&
-                                board[i-1][j-1].getSeed() == secondaryCard &&
-                                board[i-1][j-3]!=null &&
-                                board[i-1][j-3].getSeed() == secondaryCard &&
-                                !usedByObjectiveCard.contains(board[i-1][j-1]) &&
-                                !usedByObjectiveCard.contains(board[i-1][j-3])
-                            ){
-                                totalpoints += points;
-                                usedByObjectiveCard.add(currentCard);
-                                usedByObjectiveCard.add(board[i-1][j-1]);
-                                usedByObjectiveCard.add(board[i-1][j-3]);
-                            }
-                        }
-                        case "sw" -> {
-                            if( i+1 <= board.length && j-3 >= 0 &&
+                            if( i+3 <= board.length && j-1 > 0 &&
                                 board[i+1][j-1] != null &&
                                 board[i+1][j-1].getSeed() == secondaryCard &&
-                                board[i+1][j-3]!=null &&
-                                board[i+1][j-3].getSeed() == secondaryCard &&
+                                board[i+3][j-1]!=null &&
+                                board[i+3][j-1].getSeed() == secondaryCard &&
                                 !usedByObjectiveCard.contains(board[i+1][j-1]) &&
-                                !usedByObjectiveCard.contains(board[i+1][j-3])
+                                !usedByObjectiveCard.contains(board[i+3][j-1])
                             ){
                                 totalpoints += points;
                                 usedByObjectiveCard.add(currentCard);
                                 usedByObjectiveCard.add(board[i+1][j-1]);
-                                usedByObjectiveCard.add(board[i+1][j-3]);
+                                usedByObjectiveCard.add(board[i+3][j-1]);
+                            }
+
+                        }
+                        case "nw" -> {
+                            if( i+3 <= board.length && j+1 <= board[i].length &&
+                                board[i+1][j+1] != null &&
+                                board[i+1][j+1].getSeed() == secondaryCard &&
+                                board[i+3][j+1]!=null &&
+                                board[i+3][j+1].getSeed() == secondaryCard &&
+                                !usedByObjectiveCard.contains(board[i+1][j+1]) &&
+                                !usedByObjectiveCard.contains(board[i+3][j+1])
+                            ){
+                                totalpoints += points;
+                                usedByObjectiveCard.add(currentCard);
+                                usedByObjectiveCard.add(board[i+1][j+1]);
+                                usedByObjectiveCard.add(board[i+3][j+1]);
                             }
                         }
+                        case "se" -> {
+                            if( i-3 >= 0 && j-1 >= 0 &&
+                                board[i-1][j-1] != null &&
+                                board[i-1][j-1].getSeed() == secondaryCard &&
+                                board[i-3][j-1]!=null &&
+                                board[i-3][j-1].getSeed() == secondaryCard &&
+                                !usedByObjectiveCard.contains(board[i-1][j-1]) &&
+                                !usedByObjectiveCard.contains(board[i-3][j-1])
+                            ){
+                                totalpoints += points;
+                                usedByObjectiveCard.add(currentCard);
+                                usedByObjectiveCard.add(board[i-1][j-1]);
+                                usedByObjectiveCard.add(board[i-3][j-1]);
+                            }
+                        }
+                        case "sw" -> {
+                            if(i-3 >= 0 && j+1 < board[i].length &&
+                               board[i-1][j+1] != null &&
+                               board[i-1][j+1].getSeed() == secondaryCard &&
+                               board[i-3][j+1]!=null &&
+                               board[i-3][j+1].getSeed() == secondaryCard &&
+                               !usedByObjectiveCard.contains(board[i-1][j+1]) &&
+                               !usedByObjectiveCard.contains(board[i-3][j+1])
+                            ){
+                                totalpoints += points;
+                                usedByObjectiveCard.add(currentCard);
+                                usedByObjectiveCard.add(board[i-1][j+1]);
+                                usedByObjectiveCard.add(board[i-3][j+1]);
+                            }
+                        }
+
                     }
 
                 }
