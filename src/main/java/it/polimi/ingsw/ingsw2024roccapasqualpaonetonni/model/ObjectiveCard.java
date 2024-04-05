@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ObjectiveCard extends Card{
-    private int points;
-    private boolean isCount; //se è una carta obiettivo di tipo conteggio isCount=true, se è di tipo pattern isCount=false
-    private Seed type;
-    private String shape;
-    private Seed primaryCard;
-    private Seed secondaryCard;
+    private final int points;
+    private final  boolean isCount; //se è una carta obiettivo di tipo conteggio isCount=true, se è di tipo pattern isCount=false
+    private final Seed type;
+    private final String shape;
+    private final Seed primaryCard;
+    private final Seed secondaryCard;
 
     public ObjectiveCard(int id, int points, boolean isCount, Seed type, Seed[] psCards, String shape){
         super(id);
