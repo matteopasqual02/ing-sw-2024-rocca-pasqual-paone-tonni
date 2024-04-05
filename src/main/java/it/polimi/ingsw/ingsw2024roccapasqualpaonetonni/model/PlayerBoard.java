@@ -126,18 +126,26 @@ public class PlayerBoard {
         board[x][y] = firstCard;
         firstCard.setCoordinates(x,y);
         player.setStartingCard(firstCard);
-        player.updateSeedCount(calculateCenterUpdate(x,y, firstCard));
+        player.updateSeedCount(calculateCenterUpdate(firstCard));
     }
 
-    private int[] calculateCenterUpdate(int x, int y, StartingCard c) {
+    private int[] calculateCenterUpdate(StartingCard c) {
         int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
+        Corner current_corner;
+        Seed current_seed;
         for(int i=0; i<4; i++){
-            if(c.isFlipped()){
-                seedUpdate[i]=1;
+            current_corner = c.getCorner(i+1);
+            if(current_corner!=null){
+                current_seed=current_corner.getSeed();
+                if(current_seed != Seed.EMPTY){
+                    seedUpdate[current_seed.getId()]++;
+                }
             }
-            else {
-                if(c.getCenter()[i]){
-                    seedUpdate[i]=1;
+        }
+        if(!c.isFlipped()){
+            for (int i=0; i<4; i++){
+                if(c.getCenter()[i]) {
+                    seedUpdate[i] += 1;
                 }
             }
         }
