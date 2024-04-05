@@ -3,8 +3,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import java.util.Arrays;
 
 public class StartingCard extends PlayingCard{
-    private Boolean[] center;
-    private Corner[] cornersBack;
+    private final Boolean[] center;
+    private final Corner[] cornersBack;
 
     public StartingCard(int id, Boolean[] c, Corner[] cf, Corner[] cb){
         super(id,Seed.EMPTY,cf,0);

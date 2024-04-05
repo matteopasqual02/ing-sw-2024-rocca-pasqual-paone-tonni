@@ -49,7 +49,7 @@ public abstract class PlayingCard extends Card {
         return new int[] {1,0};
     }
 
-    public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y){return 0;};
+    public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y){return 0;}
 
     public int getPoints() {
         return points;

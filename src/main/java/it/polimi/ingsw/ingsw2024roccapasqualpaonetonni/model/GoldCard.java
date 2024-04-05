@@ -36,13 +36,13 @@ public class GoldCard extends PlayingCard{
                     if (cardOnBoard != null) {
                         curr_points += points;
                     }
-                };
+                }
+                return curr_points;
             case "feather", "potion", "scroll":
-                curr_points += points * seedCount[Seed.getByName(pointCondition).getId()];
+                return points * seedCount[Seed.getByName(pointCondition).getId()];
             case null, default:
-                ;
+                return points;
         }
-        return curr_points;
     }
 
     public int[] getPlaceCondition(){return placeCondition;};
