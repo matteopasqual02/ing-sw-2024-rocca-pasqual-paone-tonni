@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FactoryTest {
     @Test
-    void FactoryTest() throws InvalidPlaceException {
+    void FactoryResourceTest() throws InvalidPlaceException {
 
         HashMap<String, JsonElement> attributes =new HashMap<>();
         ResourceCard card;

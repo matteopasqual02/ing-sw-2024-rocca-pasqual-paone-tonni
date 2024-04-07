@@ -54,6 +54,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
+    @Test
     void createDeckListsGold() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -102,6 +103,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
+    @Test
     void createDeckListsStarting() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -153,6 +155,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
+    @Test
     void createDeckListsObjective() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -198,6 +201,7 @@ class JSONUtilsTest {
         }
         assertTrue(flag);
     }
+
 
     private boolean checkCardsEqual(Card c1, Card c2) {
         if (c1 instanceof ResourceCard && c2 instanceof ResourceCard) {
