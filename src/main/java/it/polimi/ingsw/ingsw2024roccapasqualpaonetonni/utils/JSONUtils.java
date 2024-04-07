@@ -43,7 +43,7 @@ public class JSONUtils {
                 JsonObject cardData = cardEntry.getValue().getAsJsonObject();
 
                 // Create a map to store attributes of the card
-                Map<String, Object> attributes = new HashMap<>();
+                Map<String, JsonElement> attributes = new HashMap<>();
                 // Iterate over each attribute of the card and add it to the attributes map
                 for (Map.Entry<String, JsonElement> attributeEntry : cardData.entrySet()) {
                     attributes.put(attributeEntry.getKey(), attributeEntry.getValue());

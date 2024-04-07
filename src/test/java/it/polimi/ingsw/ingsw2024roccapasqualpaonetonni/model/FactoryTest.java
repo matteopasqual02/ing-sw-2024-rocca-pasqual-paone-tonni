@@ -1,5 +1,8 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import org.junit.jupiter.api.Test;
 
@@ -13,15 +16,26 @@ public class FactoryTest {
     @Test
     void FactoryTest() throws InvalidPlaceException {
 
-        HashMap<String,Object> attributes =new HashMap<String, Object>();
-        String[] cs={"green","empty","blue","red"};
+        HashMap<String, JsonElement> attributes =new HashMap<>();
         ResourceCard card;
 
-        attributes.put("color","green");
-        attributes.put("points",1);
-        attributes.put("corners",cs);
+        String color = "green";
+        attributes.put("color", new JsonPrimitive(color));
+        int points = 1;
+        attributes.put("points", new JsonPrimitive(points));
+        String[] cs={"green","empty","blue","red"};
+        JsonArray jArray = new JsonArray();
+        for (String s: cs) {
+            if (s == null) {
+                jArray.add(new JsonPrimitive((String) null));
+            }
+            else {
+                jArray.add(new JsonPrimitive(s));
+            }
+        }
+        attributes.put("corners", jArray);
 
-        card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
+        card = (ResourceCard) CardFactory.createPlayingCard("Resources",1, attributes);
         assertEquals(GREEN,card.getSeed());
         assertEquals(1,card.getPoints());
 

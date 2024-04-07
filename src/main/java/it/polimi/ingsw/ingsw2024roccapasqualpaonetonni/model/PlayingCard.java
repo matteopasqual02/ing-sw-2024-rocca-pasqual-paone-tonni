@@ -19,8 +19,7 @@ public abstract class PlayingCard extends Card {
     }
 
     public void flip() {
-        if(isFlipped) isFlipped=false;
-        else isFlipped = true;
+        isFlipped= !isFlipped;
     }
 
     public Boolean isFlipped(){

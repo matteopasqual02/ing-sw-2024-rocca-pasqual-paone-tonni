@@ -3,6 +3,9 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
@@ -389,8 +392,7 @@ class PlayerBoardTest {
         StartingCard start=new StartingCard(1,c,cf,cb);
 
         // factory;
-        HashMap<String,Object> attributes =new HashMap<String, Object>();
-        String[] cs={"green","empty","blue","red"};
+        HashMap<String, JsonElement> attributes =new HashMap<>();
         ResourceCard card;
         PlayingCard cardOnBoard;
 
@@ -399,14 +401,26 @@ class PlayerBoardTest {
         board1.addStartingCard(start);
 
         //attributes that will be the same for every card because I want to test the basic version
-        attributes.put("color","green");
-        attributes.put("points",1);
-        attributes.put("corners",cs);
+        String color = "green";
+        attributes.put("color", new JsonPrimitive(color));
+        int points = 1;
+        attributes.put("points", new JsonPrimitive(points));
+        String[] cs={"green","empty","blue","red"};
+        JsonArray jArray = new JsonArray();
+        for (String s: cs) {
+            if (s == null) {
+                jArray.add(new JsonPrimitive((String) null));
+            }
+            else {
+                jArray.add(new JsonPrimitive(s));
+            }
+        }
+        attributes.put("corners", jArray);
 
         //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
         cardOnBoard=start;
         for(int i=0;i<20;i++){
-            card= (ResourceCard) CardFactory.createPlayingCard("Resources",i,attributes);
+            card= (ResourceCard) CardFactory.createPlayingCard("Resources",i, attributes);
             board1.addCard(card,cardOnBoard,4,owner.getCountSeed());
             cardOnBoard=card;
         }
@@ -436,8 +450,7 @@ class PlayerBoardTest {
         StartingCard start=new StartingCard(1,c,cf,cb);
 
         // factory;
-        HashMap<String,Object> attributes =new HashMap<String, Object>();
-        String[] cs={"green","empty","blue","red"};
+        HashMap<String, JsonElement> attributes =new HashMap<>();
         ResourceCard card;
         PlayingCard cardOnBoard;
 
@@ -446,14 +459,26 @@ class PlayerBoardTest {
         board1.addStartingCard(start);
 
         //attributes that will be the same for every card because I want to test the basic version
-        attributes.put("color","green");
-        attributes.put("points",1);
-        attributes.put("corners",cs);
+        String color = "green";
+        attributes.put("color", new JsonPrimitive(color));
+        int points = 1;
+        attributes.put("points", new JsonPrimitive(points));
+        String[] cs={"green","empty","blue","red"};
+        JsonArray jArray = new JsonArray();
+        for (String s: cs) {
+            if (s == null) {
+                jArray.add(new JsonPrimitive((String) null));
+            }
+            else {
+                jArray.add(new JsonPrimitive(s));
+            }
+        }
+        attributes.put("corners", jArray);
 
         //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
         cardOnBoard = start;
         for(int i=0; i<30; i++){
-            card = (ResourceCard) CardFactory.createPlayingCard("Resources",i,attributes);
+            card = (ResourceCard) CardFactory.createPlayingCard("Resources", i, attributes);
             board1.addCard(card,cardOnBoard,3, owner.getCountSeed());
             cardOnBoard = card;
         }
@@ -488,8 +513,7 @@ class PlayerBoardTest {
         StartingCard start=new StartingCard(1,c,cf,cb);
 
         // factory;
-        HashMap<String,Object> attributes =new HashMap<String, Object>();
-        String[] cs={"green","empty","blue","red"};
+        HashMap<String, JsonElement> attributes =new HashMap<>();
         ResourceCard card;
         PlayingCard cardOnBoard;
 
@@ -498,14 +522,26 @@ class PlayerBoardTest {
         board1.addStartingCard(start);
 
         //attributes that will be the same for every card because I want to test the basic version
-        attributes.put("color","green");
-        attributes.put("points",1);
-        attributes.put("corners",cs);
+        String color = "green";
+        attributes.put("color", new JsonPrimitive(color));
+        int points = 1;
+        attributes.put("points", new JsonPrimitive(points));
+        String[] cs={"green","empty","blue","red"};
+        JsonArray jArray = new JsonArray();
+        for (String s: cs) {
+            if (s == null) {
+                jArray.add(new JsonPrimitive((String) null));
+            }
+            else {
+                jArray.add(new JsonPrimitive(s));
+            }
+        }
+        attributes.put("corners", jArray);
 
         //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
         cardOnBoard = start;
         for(int i=0; i<100; i++){
-            card = (ResourceCard) CardFactory.createPlayingCard("Resources",i,attributes);
+            card = (ResourceCard) CardFactory.createPlayingCard("Resources",i, attributes);
             board1.addCard(card,cardOnBoard,1, owner.getCountSeed());
             cardOnBoard = card;
         }
