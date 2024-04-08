@@ -203,10 +203,6 @@ public class PlayerBoard {
                     }
                 }
             }
-            else {
-                j = card.getSeed().getId();
-                seedUpdate[j] += 1;
-            }
 
             if((xNewCard + i[0]) >= 0 && (xNewCard + i[0]) < dim_x && (yNewCard + i[1]) >= 0 && (yNewCard + i[1]) < dim_y) {
                 cardAttached = board[xNewCard + i[0]][yNewCard + i[1]];
@@ -221,6 +217,11 @@ public class PlayerBoard {
                     }
                 }
             }
+        }
+        card = board[xNewCard][yNewCard];
+        if(card.isFlipped()){
+            j = card.getSeed().getId();
+            seedUpdate[j] += 1;
         }
         return seedUpdate;
     }
