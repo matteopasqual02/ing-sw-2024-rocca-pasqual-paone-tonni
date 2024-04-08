@@ -54,6 +54,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
+    @ Test
     void createDeckListsGold() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -89,7 +90,7 @@ class JSONUtilsTest {
         for (int i: placeConditions) {
             jArray.add(new JsonPrimitive(i));
         }
-        attributes.put("Place_condition", jArray);
+        attributes.put("place_condition", jArray);
 
         GoldCard card = (GoldCard) CardFactory.createPlayingCard("Gold", id, attributes);
 
@@ -102,6 +103,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
+    @ Test
     void createDeckListsStarting() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -128,7 +130,7 @@ class JSONUtilsTest {
                 jArray.add(new JsonPrimitive(s));
             }
         }
-        attributes.put("corners", jArray);
+        attributes.put("corners_front", jArray);
         // corners back
         String[] cornersB = {"red", "green", "blue", "purple"};
         jArray = new JsonArray();
@@ -140,7 +142,7 @@ class JSONUtilsTest {
                 jArray.add(new JsonPrimitive(s));
             }
         }
-        attributes.put("corners", jArray);
+        attributes.put("corners_back", jArray);
 
         StartingCard card = (StartingCard) CardFactory.createPlayingCard("Starting", id, attributes);
 
@@ -153,6 +155,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
+    @ Test
     void createDeckListsObjective() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -253,16 +256,16 @@ class JSONUtilsTest {
                     && card1.getCenter()[3] == card2.getCenter()[3]
                     && ((card1.getCorner(1) == null && card2.getCorner(1) == null)
                         || ((card1.getCorner(1) != null && card2.getCorner(1) != null)
-                        && card1.getCorner(1).equals(card2.getCorner(1))))
+                        && card1.getCorner(1).getSeed().equals(card2.getCorner(1).getSeed())))
                     && ((card1.getCorner(2) == null && card2.getCorner(2) == null)
                         || ((card1.getCorner(2) != null && card2.getCorner(2) != null)
-                        && card1.getCorner(2).equals(card2.getCorner(2))))
+                        && card1.getCorner(2).getSeed().equals(card2.getCorner(2).getSeed())))
                     && ((card1.getCorner(3) == null && card2.getCorner(3) == null)
                         || ((card1.getCorner(3) != null && card2.getCorner(3) != null)
-                        && card1.getCorner(3).equals(card2.getCorner(3))))
+                        && card1.getCorner(3).getSeed().equals(card2.getCorner(3).getSeed())))
                     && ((card1.getCorner(4) == null && card2.getCorner(4) == null)
                         || ((card1.getCorner(4) != null && card2.getCorner(4) != null)
-                        && card1.getCorner(4).equals(card2.getCorner(41))));
+                        && card1.getCorner(4).getSeed().equals(card2.getCorner(4).getSeed())));
 
         }
         else if (c1 instanceof ObjectiveCard && c2 instanceof ObjectiveCard) {
