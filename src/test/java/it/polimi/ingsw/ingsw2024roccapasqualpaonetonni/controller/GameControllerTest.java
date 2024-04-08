@@ -77,8 +77,7 @@ class GameControllerTest {
     }
 
     /*It controls:
-    the number of player and if they are ready to start
-    then the creation of the table and if the player have all the needed cards */
+    a complete turn */
     @Test
     void turnGameTest() {
         GameController gameController = new GameController();
@@ -91,11 +90,40 @@ class GameControllerTest {
 
         gameController.createTable();
 
+        gameController.getAllPlayer().peek().chooseGoal(1);
         gameController.addStartingCard(false);
+
         List<PlayingCard> hand = gameController.getAllPlayer().peek().getHand();
         StartingCard startingCard = gameController.getAllPlayer().peek().getStartingCard();
-        gameController.addCard(hand.get(0),startingCard,1,true);
+        PlayingCard cardToAdd = hand.get(0);
+        gameController.addCard(cardToAdd,startingCard,1,true);
         gameController.drawGoldFromDeck();
 
+        //series of assert
+        //to check goal chosen
+        ObjectiveCard goal = gameController.getAllPlayer().peek().getGoal();
+        ObjectiveCard goalVector = gameController.getAllPlayer().peek().getObjectiveBeforeChoice()[1];
+        assertEquals(goalVector,goal);
+
+        //assert starting card
+        StartingCard cardPlaced = gameController.getAllPlayer().peek().getStartingCard();
+        PlayingCard cardOnBoard = gameController.getAllPlayer().peek().getBoard().getBoard()[20][20];
+        assertEquals(cardPlaced,cardOnBoard);
+
+        //assert correct second placing
+
+        PlayingCard cardOnBoard2 = gameController.getAllPlayer().peek().getBoard().getBoard()[19][19];
+        assertEquals(cardToAdd,cardOnBoard2);
+
+        //to check the correct draw
+        for (Player player: gameController.getAllPlayer()){
+            assertNotNull(player.getStartingCard());
+            assertNotNull(player.getObjectiveBeforeChoice()[0]);
+            assertNotNull(player.getObjectiveBeforeChoice()[1]);
+
+            for(PlayingCard playingCard: player.getHand()){
+                assertNotNull(playingCard);
+            }
+        }
     }
 }

@@ -56,8 +56,8 @@ public class GameController implements Runnable{
     public Boolean isCurrentPlaying(Player p){
         return p.equals(getCurrentPlayer());
     }
-    public Player nextTurn(){
-        return model.nextPlayer();
+    public void nextTurn(){
+        model.nextPlayer();
     }
     public int getNumberOfPlayer(){
         return model.getPlayers().size();
@@ -147,6 +147,7 @@ public class GameController implements Runnable{
             cardToAdd.flip();
         }
         getCurrentPlayer().addToBoard(cardToAdd,cardOnBoard,cornerToAttach);
+        checkPoints20Points();
     }
     public void addStartingCard(Boolean flip){
         if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getStatus().equals(GameStatus.LAST_TURN))){
@@ -169,7 +170,7 @@ public class GameController implements Runnable{
 
 //---------------------------------DRAW SECTION
     private boolean decksAreAllEmpty() {
-        return model.getGameDrawableDeck().getDecks().get("resource").isEmpty()
+        return model.getGameDrawableDeck().getDecks().get("resources").isEmpty()
                 && model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
                 && model.getGameBoardDeck().getResourceCards()[0] == null
                 && model.getGameBoardDeck().getResourceCards()[1] == null
