@@ -54,8 +54,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
-    @Test
-
+    @ Test
     void createDeckListsGold() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -91,7 +90,7 @@ class JSONUtilsTest {
         for (int i: placeConditions) {
             jArray.add(new JsonPrimitive(i));
         }
-        attributes.put("Place_condition", jArray);
+        attributes.put("place_condition", jArray);
 
         GoldCard card = (GoldCard) CardFactory.createPlayingCard("Gold", id, attributes);
 
@@ -104,7 +103,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
-    @Test
+    @ Test
     void createDeckListsStarting() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
@@ -156,7 +155,7 @@ class JSONUtilsTest {
         assertTrue(flag);
     }
 
-    @Test
+    @ Test
     void createDeckListsObjective() throws IOException {
         String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
