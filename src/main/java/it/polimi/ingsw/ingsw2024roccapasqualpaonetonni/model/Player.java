@@ -40,16 +40,16 @@ public class Player {
     public int getColorPlayer(){
         return colorPlayer;
     }
-    public Boolean getreadytostart(){
+    public Boolean getReadyToStart(){
         return readyToStart;
     }
     public void setReadyToStart(){
         readyToStart=true;
     }
-    public Boolean getisconnected(){
+    public Boolean getIsConnected(){
         return connected;
     }
-    public void setIsconnected(Boolean b){
+    public void setIsConnected(Boolean b){
         connected = b;
     }
     public String getNickname() {
@@ -77,13 +77,13 @@ public class Player {
     public void drawStarting(DrawableDeck d){
         startingCard=d.drawFirstStarting();
     }
-    public void drawGoldfromDeck(DrawableDeck d){
+    public void drawGoldFromDeck(DrawableDeck d){
         hand.add(d.drawFirstGold());
     }
-    public void drawResourcesfromDeck(DrawableDeck d){
+    public void drawResourcesFromDeck(DrawableDeck d){
         hand.add(d.drawFirstResource());
     }
-    public void drawfromBoard(int position, BoardDeck b, DrawableDeck d){
+    public void drawFromBoard(int position, BoardDeck b, DrawableDeck d){
         hand.add(b.draw(position,d));
     }
     public int[] getCountSeed() {
@@ -128,7 +128,7 @@ public class Player {
         if(hand.contains(p)){
             hand.remove(p);
         }
-        else {throw new CardNotInHandException("Card Doesn't existsin player hand");}
+        else {throw new CardNotInHandException("Card Doesn't exists in player hand");}
     }
 
 }

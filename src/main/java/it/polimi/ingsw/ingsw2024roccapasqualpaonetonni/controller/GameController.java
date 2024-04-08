@@ -12,13 +12,14 @@ import java.util.*;
 public class GameController implements Runnable{
     private final Game model;
     private View view;
-    private final Random random = new Random();
+    private final Random random;
     private final String path;
 
     public GameController() {
         model = new Game();
-        new Thread(this).start();
-        path = "it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/JSONUtils.java";
+        random = new Random();
+        //new Thread(this).start();
+        path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
     }
 
     public void run() {
@@ -30,7 +31,7 @@ public class GameController implements Runnable{
 //---------------------------------PLAYER SECTION
     public void addPlayer(String nickname){
         Player px;
-        int player_number = model.getPlayers().size()-1;
+        int player_number = model.getPlayers().size()+1;
         px = new Player(nickname,player_number);
         try {
             model.addPlayer(px);
@@ -122,9 +123,9 @@ public class GameController implements Runnable{
         for(Player player : getAllPlayer()){
             player.drawStarting(model.getGameDrawableDeck());
             player.drawGoals(model.getGameDrawableDeck());
-            player.drawResourcesfromDeck(model.getGameDrawableDeck());
-            player.drawResourcesfromDeck(model.getGameDrawableDeck());
-            player.drawGoldfromDeck(model.getGameDrawableDeck());
+            player.drawResourcesFromDeck(model.getGameDrawableDeck());
+            player.drawResourcesFromDeck(model.getGameDrawableDeck());
+            player.drawGoldFromDeck(model.getGameDrawableDeck());
         }
     }
 
@@ -162,7 +163,7 @@ public class GameController implements Runnable{
 
         }
         else if(!model.getGameDrawableDeck().getDecks().get("resource").isEmpty()){
-            getCurrentPlayer().drawResourcesfromDeck(model.getGameDrawableDeck());
+            getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
         }
         else {
             // avviso di cambiare mazzo
@@ -175,7 +176,7 @@ public class GameController implements Runnable{
 
         }
         else if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
-            getCurrentPlayer().drawGoldfromDeck(model.getGameDrawableDeck());
+            getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
         }
         else {
             // avviso
@@ -188,7 +189,7 @@ public class GameController implements Runnable{
         }
         else if((position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null) ||
                 (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)) {
-            getCurrentPlayer().drawfromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
+            getCurrentPlayer().drawFromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
         }
         else {
             // avviso

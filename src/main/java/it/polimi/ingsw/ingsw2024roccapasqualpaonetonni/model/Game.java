@@ -118,7 +118,7 @@ public class Game {
         p.setReadyToStart();
     }
     public Boolean arePlayerReady(){
-        return players.stream().filter(Player::getreadytostart).count() == players.size()
+        return players.stream().filter(Player::getReadyToStart).count() == players.size()
                 && players.size() == maxNumberOfPlayer;
     }
 }
