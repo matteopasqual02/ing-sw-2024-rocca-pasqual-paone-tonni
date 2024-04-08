@@ -171,7 +171,7 @@ public class PlayerBoard {
         for (int[] i : positions) {
             //If we're adding a card that goes on the border we cannot check its corners because it would be an OutOfBoundsException,
             //so we check if we are looking at a border, and if we are we know that there is no card there so there's no need to check if the corner is okay
-            //The condition >= might be wrong when adding multiple cards over the border, for now this is the only way to make the test work but we will have to look into it more
+            //The condition >= might be wrong when adding multiple cards over the border, for now this is the only way to make the test work, but we will have to look into it more
             if((x+i[0]) >= 0 && (x+i[0]) < dim_x && (y+i[1]) >= 0 && (y+i[1]) < dim_y){
                 cardOnBoard = board[x + i[0]][y + i[1]];
                 int cornerToCheck = (i[2] == 1 || i[2] == 2) ? i[2] + 2 : i[2] - 2;
@@ -203,10 +203,6 @@ public class PlayerBoard {
                     }
                 }
             }
-            else {
-                j = card.getSeed().getId();
-                seedUpdate[j] += 1;
-            }
 
             if((xNewCard + i[0]) >= 0 && (xNewCard + i[0]) < dim_x && (yNewCard + i[1]) >= 0 && (yNewCard + i[1]) < dim_y) {
                 cardAttached = board[xNewCard + i[0]][yNewCard + i[1]];
@@ -221,6 +217,11 @@ public class PlayerBoard {
                     }
                 }
             }
+        }
+        card = board[xNewCard][yNewCard];
+        if(card.isFlipped()){
+            j = card.getSeed().getId();
+            seedUpdate[j] += 1;
         }
         return seedUpdate;
     }
