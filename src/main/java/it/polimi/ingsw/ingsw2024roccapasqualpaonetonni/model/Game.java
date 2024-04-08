@@ -121,4 +121,12 @@ public class Game {
         return players.stream().filter(Player::getReadyToStart).count() == players.size()
                 && players.size() == maxNumberOfPlayer;
     }
+
+    public void setGameDrawableDeck(DrawableDeck deck) {
+        this.gameDrawableDeck = deck;
+    }
+
+    public void setGameBoardDeck(BoardDeck deck) {
+        this.gameBoardDeck = deck;
+    }
 }

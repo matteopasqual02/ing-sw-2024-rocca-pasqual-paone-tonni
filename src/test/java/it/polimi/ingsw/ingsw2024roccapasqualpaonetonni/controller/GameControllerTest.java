@@ -25,6 +25,6 @@ class GameControllerTest {
 
         gameController.createTable();
 
-        assertEquals(40,gameController.getGame().getGameDrawableDeck().getDecks().get("resources").size());
+        assertEquals(30,gameController.getGame().getGameDrawableDeck().getDecks().get("resources").size());
     }
 }

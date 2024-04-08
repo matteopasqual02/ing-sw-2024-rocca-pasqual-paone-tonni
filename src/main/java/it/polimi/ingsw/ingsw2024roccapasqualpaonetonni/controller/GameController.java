@@ -97,6 +97,9 @@ public class GameController implements Runnable{
             boardDeck.setGoldCards(decks.drawFirstGold(),0);
             boardDeck.setGoldCards(decks.drawFirstGold(),1);
 
+            model.setGameDrawableDeck(decks);
+            model.setGameBoardDeck(boardDeck);
+
             //random first player
             randomFirstPlayer();
 
