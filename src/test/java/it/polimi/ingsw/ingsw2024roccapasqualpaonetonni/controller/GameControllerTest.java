@@ -1,12 +1,11 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.ObjectiveCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,10 +13,10 @@ class GameControllerTest {
 
     /*It controls:
     the number of player and if they are ready to start
-    then the creation of the table and if the player have all the needed cards*/
+    then the creation of the table and if the player have all the needed cards */
     @Test
     void initialGameTest() {
-         GameController gameController = new GameController();
+        GameController gameController = new GameController();
 
         //set the max number of player and
         gameController.setNumberOfPlayer(4);
@@ -75,5 +74,28 @@ class GameControllerTest {
 
         //assert the game is set in the running state
         assertEquals(GameStatus.RUNNING,gameController.getGameStatus());
+    }
+
+    /*It controls:
+    the number of player and if they are ready to start
+    then the creation of the table and if the player have all the needed cards */
+    @Test
+    void turnGameTest() {
+        GameController gameController = new GameController();
+
+        gameController.setNumberOfPlayer(4);
+        gameController.addPlayer("a");
+        gameController.addPlayer("b");
+        gameController.addPlayer("c");
+        gameController.addPlayer("d");
+
+        gameController.createTable();
+
+        gameController.addStartingCard(false);
+        List<PlayingCard> hand = gameController.getAllPlayer().peek().getHand();
+        StartingCard startingCard = gameController.getAllPlayer().peek().getStartingCard();
+        gameController.addCard(hand.get(0),startingCard,1,true);
+        gameController.drawGoldFromDeck();
+
     }
 }
