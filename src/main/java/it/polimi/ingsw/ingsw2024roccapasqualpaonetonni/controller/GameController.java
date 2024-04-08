@@ -10,14 +10,15 @@ import java.io.IOException;
 import java.util.*;
 
 public class GameController implements Runnable{
-    private Game model;
+    private final Game model;
     private View view;
     private final Random random = new Random();
-    private final String path = "it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/JSONUtils.java";
+    private final String path;
 
     public GameController() {
         model = new Game();
         new Thread(this).start();
+        path = "it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/JSONUtils.java";
     }
 
     public void run() {
