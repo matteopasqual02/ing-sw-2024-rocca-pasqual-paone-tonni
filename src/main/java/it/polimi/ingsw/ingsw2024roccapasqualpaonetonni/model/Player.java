@@ -10,11 +10,11 @@ public class Player {
     private final String nickname;
     private final int colorPlayer;
     private int currentPoints;
-    private int[] countSeed;
-    private PlayerBoard board;
-    private List<Card> hand;
+    private final int[] countSeed;
+    private final PlayerBoard board;
+    private final List<PlayingCard> hand;
     private ObjectiveCard goal;
-    private ObjectiveCard[] firstGoals;
+    private final ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
     private boolean readyToStart;
     private boolean connected ;
@@ -129,6 +129,15 @@ public class Player {
             hand.remove(p);
         }
         else {throw new CardNotInHandException("Card Doesn't exists in player hand");}
+    }
+
+
+    //needed for testing
+    public List<PlayingCard> getHand(){
+        return hand;
+    }
+    public ObjectiveCard[] getObjectiveBeforeChoice(){
+        return firstGoals;
     }
 
 }
