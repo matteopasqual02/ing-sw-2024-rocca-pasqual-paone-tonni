@@ -10,4 +10,4 @@ public class ResourceCard extends PlayingCard{
     }
 }
 
-// Resurce Card is actually a PlayingCard Without beeing an abstract class
+// Resource Card is actually a PlayingCard Without being an abstract class

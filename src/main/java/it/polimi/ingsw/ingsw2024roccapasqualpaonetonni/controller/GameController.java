@@ -22,9 +22,15 @@ public class GameController implements Runnable{
         path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
     }
 
+    @SuppressWarnings("BusyWait")
     public void run() {
         while (!Thread.interrupted()) {
-
+            //some code here
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -37,7 +43,7 @@ public class GameController implements Runnable{
             model.addPlayer(px);
 
         }catch (GameAlreadyFullException ex1){/*_*/}
-        catch (PlayerAlreadyInException ex2){/**/};
+        catch (PlayerAlreadyInException ex2){/**/}
 
         model.playerIsReadyToStart(px);
     }
@@ -112,8 +118,6 @@ public class GameController implements Runnable{
         else return false;
     }
     private void randomFirstPlayer(){
-        Queue<Player> players = model.getPlayers();
-        Player temp;
         int first = random.nextInt(4);
 
         for(int i=0; i<first; i++){
@@ -135,18 +139,30 @@ public class GameController implements Runnable{
 
 //---------------------------------ADD CARD SECTION
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
+        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getStatus().equals(GameStatus.LAST_TURN))){
+            // listener you cannot draw in this phase
+            return;
+        }
         if(flip){
             cardToAdd.flip();
         }
         getCurrentPlayer().addToBoard(cardToAdd,cardOnBoard,cornerToAttach);
     }
     public void addStartingCard(Boolean flip){
+        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getStatus().equals(GameStatus.LAST_TURN))){
+            // listener you cannot draw in this phase
+            return;
+        }
         if(flip){
             getCurrentPlayer().getStartingCard().flip();
         }
         getCurrentPlayer().addStarting();
     }
     public void choosePlayerGoal(int choice){
+        if(!(model.getStatus().equals(GameStatus.RUNNING))){
+            // listener you cannot draw in this phase
+            return;
+        }
         getCurrentPlayer().chooseGoal(choice);
     }
 
@@ -161,6 +177,10 @@ public class GameController implements Runnable{
                 && model.getGameBoardDeck().getGoldCards()[1] == null;
     }
     public void drawResourceFromDeck(){
+        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+            // listener you cannot draw in this phase
+            return;
+        }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
@@ -169,11 +189,16 @@ public class GameController implements Runnable{
             getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
         }
         else {
-            // avviso di cambiare mazzo
+            // listener change deck
+            return;
         }
 
     }
     public void drawGoldFromDeck(){
+        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+            // listener you cannot draw in this phase
+            return;
+        }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
@@ -182,10 +207,15 @@ public class GameController implements Runnable{
             getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
         }
         else {
-            // avviso
+            // listener change deck
+            return;
         }
     }
     public void drawFromBoard(int position){
+        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+            // listener you cannot draw in this phase
+            return;
+        }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
@@ -195,7 +225,8 @@ public class GameController implements Runnable{
             getCurrentPlayer().drawFromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
         }
         else {
-            // avviso
+            // listener change deck
+            return;
         }
     }
 
@@ -211,6 +242,7 @@ public class GameController implements Runnable{
     }
     public void checkWinner(){
         model.checkWinner();
+        model.setStatus(GameStatus.ENDED);
     }
 
 //---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART

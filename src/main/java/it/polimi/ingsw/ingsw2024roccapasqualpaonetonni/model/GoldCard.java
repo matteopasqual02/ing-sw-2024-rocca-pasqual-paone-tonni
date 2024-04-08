@@ -3,8 +3,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import java.util.Arrays;
 
 public class GoldCard extends PlayingCard{
-    private String pointCondition;
-    private int[] placeCondition;
+    private final String pointCondition;
+    private final int[] placeCondition;
     public GoldCard(int id, Seed seed, Corner[] c, int points, String cond, int[] p){
         super(id,seed,c,points);
         pointCondition=cond;
@@ -15,7 +15,6 @@ public class GoldCard extends PlayingCard{
         int[] result = new int[2];
         for (int i = 0; i < placeCondition.length; i++) {
             if (placeCondition[i] > available_seeds[i]) {
-                result[0] = 0;
                 result[1] = i;
                 return result;
             }
@@ -45,7 +44,7 @@ public class GoldCard extends PlayingCard{
         }
     }
 
-    public int[] getPlaceCondition(){return placeCondition;};
+    public int[] getPlaceCondition(){return placeCondition;}
     public String getPointCondition() { return pointCondition; }
 }
 

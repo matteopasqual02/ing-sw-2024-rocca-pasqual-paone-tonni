@@ -1,11 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonArray;
 import com.google.gson.Gson;
 
 public class CardFactory {

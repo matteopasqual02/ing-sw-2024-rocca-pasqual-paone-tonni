@@ -1,11 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import java.util.Arrays;
-
 public class BoardDeck {
-    private ResourceCard[] resourceCards;
-    private GoldCard[] goldCards;
-    private ObjectiveCard[] commonGoals;
+    private final ResourceCard[] resourceCards;
+    private final GoldCard[] goldCards;
+    private final ObjectiveCard[] commonGoals;
 
     public BoardDeck(){
         this.resourceCards =new ResourceCard[2];
@@ -32,13 +30,12 @@ public class BoardDeck {
         if(position==1 || position==2){
             temp=resourceCards[position-1];
             resourceCards[position-1]=d.drawFirstResource();
-            return temp;
         }
         else {
             temp=goldCards[position-3];
             goldCards[position-1]=d.drawFirstGold();
-            return temp;
         }
+        return temp;
     }
 
     public ObjectiveCard[]  getCommonObjective(){return commonGoals;}

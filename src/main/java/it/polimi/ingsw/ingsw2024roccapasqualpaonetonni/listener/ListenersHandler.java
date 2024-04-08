@@ -3,7 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import java.util.*;
 
 public class ListenersHandler {
-    private List<GameListener> listeners;
+    private final List<GameListener> listeners;
 
     public ListenersHandler(){
         listeners = new ArrayList<>();

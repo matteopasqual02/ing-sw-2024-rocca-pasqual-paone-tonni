@@ -101,16 +101,16 @@ public class Player {
             removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
-            ;
+
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
         }
         catch(InvalidPlaceException e) {
-            ;
+
         }
         catch(ConditionsNotMetException e) {
-            ;
+
         }
     }
 

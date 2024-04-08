@@ -10,8 +10,8 @@ import java.util.*;
 public class Game {
     private GameStatus status;
     private int maxNumberOfPlayer;
-    private Queue<Player> players;
-    private Queue<Player> winner;
+    private final Queue<Player> players;
+    private final Queue<Player> winner;
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
@@ -49,7 +49,7 @@ public class Game {
     public void removePlayer(Player p){
         players.remove(p);
         if(status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_TURN)){
-            status = GameStatus.ENDING;
+            status = GameStatus.ENDED;
         }
     }
     public void setFirstPlayer(Player fp){
@@ -111,6 +111,10 @@ public class Game {
                 max= p_point;
             }
         }
+    }
+
+    public Queue<Player> getWinners(){
+        return winner;
     }
 
 //---------------------------------READY SECTION

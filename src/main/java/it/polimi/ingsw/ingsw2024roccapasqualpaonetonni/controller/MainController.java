@@ -5,7 +5,7 @@ import java.util.*;
 public class MainController {
     private static MainController instance = null;
 
-    private List<GameController> runningGames;
+    private final List<GameController> runningGames;
 
     private MainController() {
         runningGames = new ArrayList<>();

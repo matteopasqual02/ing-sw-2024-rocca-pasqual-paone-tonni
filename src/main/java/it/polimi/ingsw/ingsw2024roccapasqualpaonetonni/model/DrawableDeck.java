@@ -3,7 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import java.util.*;
 
 public class DrawableDeck {
-    private Map<String, Queue<Card>> decks;
+    private final Map<String, Queue<Card>> decks;
 
     public DrawableDeck(Map<String, Queue<Card>> decks){
         this.decks = decks;

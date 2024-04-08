@@ -8,7 +8,7 @@ public class PlayerBoard {
     private int dim_y;
     private PlayingCard[][] board;
 
-    private Player player;
+    private final Player player;
 
     public PlayerBoard(Player owner) {
         dim_x = 40;

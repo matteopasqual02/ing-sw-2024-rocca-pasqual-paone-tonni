@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chat {
-    private List<Message> messagesList;
+    private final List<Message> messagesList;
     public Chat(){
         messagesList=new ArrayList<>();
     }
