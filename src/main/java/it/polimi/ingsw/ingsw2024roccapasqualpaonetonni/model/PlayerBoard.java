@@ -63,9 +63,7 @@ public class PlayerBoard {
         int row_offset = 0;
         int col_offset = 0;
         PlayingCard[][] tmp_board = board;
-        dim_x = dim_x + Math.abs(x_increase);
-        dim_y = dim_y + Math.abs(y_increase);
-        board = new PlayingCard[dim_x][dim_y];
+        board = new PlayingCard[dim_x+ Math.abs(x_increase)][dim_y+ Math.abs(y_increase)];
 
         if (x_increase < 0) {
             row_offset = - x_increase;
@@ -83,6 +81,8 @@ public class PlayerBoard {
                 }
             }
         }
+        dim_x = dim_x + Math.abs(x_increase);
+        dim_y = dim_y + Math.abs(y_increase);
         return board;
     }
 
