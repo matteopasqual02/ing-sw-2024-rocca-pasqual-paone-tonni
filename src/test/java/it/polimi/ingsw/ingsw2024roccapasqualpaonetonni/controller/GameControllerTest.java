@@ -29,6 +29,7 @@ class GameControllerTest {
 
         //assert all the player are well initialized
         assertEquals(4,gameController.getAllPlayer().size());
+        assertEquals(4,gameController.getNumberOfPlayer());
         assertTrue(gameController.getGame().arePlayerReady());
         for(Player player: gameController.getAllPlayer()){
             for(Player player1: gameController.getAllPlayer()){
@@ -74,10 +75,14 @@ class GameControllerTest {
 
         //assert the game is set in the running state
         assertEquals(GameStatus.RUNNING,gameController.getGameStatus());
+
+        //assert all points at 0
+        for(int points=0; points< gameController.getNumberOfPlayer(); points++){
+            assertEquals(0,gameController.getAllPoints()[points]);
+        }
     }
 
-    /*It controls:
-    a complete turn */
+    /*It controls a complete turn */
     @Test
     void turnGameTest() {
         GameController gameController = new GameController();
@@ -90,13 +95,14 @@ class GameControllerTest {
 
         gameController.createTable();
 
-        gameController.getAllPlayer().peek().chooseGoal(1);
+        gameController.choosePlayerGoal(1);
         gameController.addStartingCard(false);
 
         List<PlayingCard> hand = gameController.getAllPlayer().peek().getHand();
         StartingCard startingCard = gameController.getAllPlayer().peek().getStartingCard();
         PlayingCard cardToAdd = hand.get(0);
-        gameController.addCard(cardToAdd,startingCard,1,true);
+        int pointsReceived = cardToAdd.getPoints();
+        gameController.addCard(cardToAdd,startingCard,1,false);
         gameController.drawGoldFromDeck();
 
         //series of assert
@@ -125,5 +131,42 @@ class GameControllerTest {
                 assertNotNull(playingCard);
             }
         }
+
+        //check points increase
+        int[] pointsOnBoard = gameController.getAllPoints();
+        int pointsOnBoardCurrentPlayer = pointsOnBoard[gameController.getAllPlayer().peek().getColorPlayer()-1];
+        assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
+    }
+
+    /*It controls that set status is correctly updated*/
+    @Test
+    void gameStatusTest(){
+        GameController gameController = new GameController();
+
+        gameController.getGame().setStatus(GameStatus.PREPARATION);
+        assertEquals(GameStatus.PREPARATION, gameController.getGameStatus() );
+    }
+
+    /*It controls the end of the turn*/
+    @Test
+    void endGameTest(){
+        GameController gameController = new GameController();
+
+        gameController.setNumberOfPlayer(4);
+        gameController.addPlayer("a");
+        gameController.addPlayer("b");
+        gameController.addPlayer("c");
+        gameController.addPlayer("d");
+
+        gameController.createTable();
+
+        //All players choose their goals and adding the first card
+        for (int i=0; i< gameController.getNumberOfPlayer(); i++) {
+            gameController.choosePlayerGoal(1);
+            gameController.addStartingCard(false);
+            gameController.nextTurn();
+        }
+
+        //continue
     }
 }

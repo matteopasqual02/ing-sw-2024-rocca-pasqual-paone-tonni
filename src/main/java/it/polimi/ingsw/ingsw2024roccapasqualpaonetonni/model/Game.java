@@ -76,20 +76,18 @@ public class Game {
     public BoardDeck getGameBoardDeck(){
         return gameBoardDeck;
     }
-    public Player nextPlayer(){
+    public void nextPlayer(){
         Player temp;
         temp = players.poll();
         players.add(temp);
         Player newCurrent = players.peek();
-        if (newCurrent.equals(firstPlayer) && status.equals(GameStatus.WAITING_LAST_TURN)) {
+        if (firstPlayer != null && newCurrent.equals(firstPlayer) && status.equals(GameStatus.WAITING_LAST_TURN)) {
             status = GameStatus.LAST_TURN;
         }
-        return newCurrent;
     }
 
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
-
         return p.getCurrentPoints()
                 + p.getGoal().pointCard(p.getBoard())
                 + gameBoardDeck.getCommonObjective()[0].pointCard(p.getBoard())

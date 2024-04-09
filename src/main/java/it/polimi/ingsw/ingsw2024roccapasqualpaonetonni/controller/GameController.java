@@ -251,7 +251,7 @@ public class GameController implements Runnable{
     public int[] getAllPoints(){
         int[] points = new int[model.getPlayers().size()];
         for(Player p : getAllPlayer()){
-            points[p.getColorPlayer()] = p.getCurrentPoints();
+            points[p.getColorPlayer()-1] = p.getCurrentPoints();
         }
         return points;
     }
