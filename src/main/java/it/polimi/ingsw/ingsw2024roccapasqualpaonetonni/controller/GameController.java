@@ -50,7 +50,7 @@ public class GameController implements Runnable{
     public Queue<Player> getAllPlayer(){
         return model.getPlayers();
     }
-    private Player getCurrentPlayer(){
+    public Player getCurrentPlayer(){
         return model.getCurrentPlayer();
     }
     public Boolean isCurrentPlaying(Player p){
@@ -186,7 +186,7 @@ public class GameController implements Runnable{
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
         }
-        else if(!model.getGameDrawableDeck().getDecks().get("resource").isEmpty()){
+        else if(!model.getGameDrawableDeck().getDecks().get("resources").isEmpty()){
             getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
         }
         else {

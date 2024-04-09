@@ -68,6 +68,8 @@ class GameControllerTest {
             assertNotNull(player.getObjectiveBeforeChoice()[0]);
             assertNotNull(player.getObjectiveBeforeChoice()[1]);
 
+            assertEquals(3,player.getHand().size());
+
             for(PlayingCard playingCard: player.getHand()){
                 assertNotNull(playingCard);
             }
@@ -159,14 +161,27 @@ class GameControllerTest {
         gameController.addPlayer("d");
 
         gameController.createTable();
+        PlayingCard playedBefore;
+        PlayingCard playedNow;
 
         //All players choose their goals and adding the first card
         for (int i=0; i< gameController.getNumberOfPlayer(); i++) {
             gameController.choosePlayerGoal(1);
             gameController.addStartingCard(false);
+            playedBefore = gameController.getCurrentPlayer().getHand().get(0);
+            gameController.addCard(playedBefore,gameController.getCurrentPlayer().getStartingCard(),1,true);
+            gameController.drawResourceFromDeck();
+
+            for(int j=0; j<5; j++){
+                playedNow = gameController.getCurrentPlayer().getHand().get(0);
+                gameController.addCard(playedNow,playedBefore,1,true);
+                gameController.drawResourceFromDeck();
+                playedBefore=playedNow;
+            }
+
             gameController.nextTurn();
         }
 
-        //continue
+
     }
 }
