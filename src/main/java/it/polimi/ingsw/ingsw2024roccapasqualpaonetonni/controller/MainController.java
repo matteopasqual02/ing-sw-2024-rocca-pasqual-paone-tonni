@@ -42,6 +42,9 @@ public class MainController {
         return (GameControllerInterface) createGameController(nickname);
     }
 
+    //public synchronized GameControllerInterface reconnect(String nickname);
+    //public synchronized GameControllerInterface leaveGame(String nickname);
+
 
 
 }

@@ -4,14 +4,12 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.View;
 
 import java.io.IOException;
 import java.util.*;
 
 public class GameController implements Runnable{
     private final Game model;
-    private View view;
     private final Random random;
     private final String path;
 
