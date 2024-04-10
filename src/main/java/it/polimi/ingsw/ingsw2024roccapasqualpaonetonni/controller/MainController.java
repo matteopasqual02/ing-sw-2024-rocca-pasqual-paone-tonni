@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
+
 import java.util.*;
 
 public class MainController {
@@ -19,13 +21,27 @@ public class MainController {
         return instance;
     }
 
-    public GameController CreateGameController(){
+    public synchronized GameControllerInterface createGameController(String nickname){
         GameController g=new GameController();
+        g.addPlayer(nickname);
         runningGames.add(g);
-        return g;
+        return (GameControllerInterface) g;
     }
 
-    public List<GameController> getRunningGames(){return runningGames;}
+    private synchronized List<GameController> getRunningGames(){return runningGames;}
+    public synchronized GameControllerInterface joinFirstAvailableGame(String nickname){
+        List<GameController> gameList = getRunningGames();
+
+        for (GameController i : gameList){
+            if(i.getAllPlayer().size()<i.getNumberOfPlayer()){
+                i.addPlayer(nickname);
+                return (GameControllerInterface) i;
+            }
+        }
+
+        return (GameControllerInterface) createGameController(nickname);
+    }
+
 
 
 }
