@@ -4,6 +4,7 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
 
     requires org.controlsfx.controls;
     requires com.google.gson;
+    requires java.rmi;
 
     opens it.polimi.ingsw.ingsw2024roccapasqualpaonetonni to javafx.fxml;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni;
