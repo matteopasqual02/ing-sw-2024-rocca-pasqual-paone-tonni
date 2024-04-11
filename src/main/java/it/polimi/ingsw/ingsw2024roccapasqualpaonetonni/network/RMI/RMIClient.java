@@ -35,7 +35,7 @@ public class RMIClient implements VirtualViewInterface {
 
         do{
             try{
-                registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_port_RMI);
+                registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
                 requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
 
                 printAsync("Client RMI ready");
@@ -45,7 +45,7 @@ public class RMIClient implements VirtualViewInterface {
                 if (!retry) {
                     printAsync("[ERROR] CONNECTING TO RMI SERVER: \n\tClient RMI exception: " + e + "\n");
                 }
-                printAsyncNoLine("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + DefaultNetworkValues.Default_port_RMI + "' with name: '" + DefaultNetworkValues.Default_servername_RMI + "'");
+                printAsyncNoLine("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + DefaultNetworkValues.Default_RMI_port + "' with name: '" + DefaultNetworkValues.Default_servername_RMI + "'");
 
                 i = 0;
                 while (i < DefaultNetworkValues.seconds_reconnection) {

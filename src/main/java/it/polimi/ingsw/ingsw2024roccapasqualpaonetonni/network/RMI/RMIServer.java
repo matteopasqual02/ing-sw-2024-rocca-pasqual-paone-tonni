@@ -23,7 +23,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         try{
             server = new RMIServer();
             //bind stub in registry
-            registry = LocateRegistry.createRegistry(DefaultNetworkValues.Default_port_RMI);
+            registry = LocateRegistry.createRegistry(DefaultNetworkValues.Default_RMI_port);
             getRegistry().rebind(DefaultNetworkValues.Default_servername_RMI,server);
             printAsync("[READY] RMI SERVER");
 
