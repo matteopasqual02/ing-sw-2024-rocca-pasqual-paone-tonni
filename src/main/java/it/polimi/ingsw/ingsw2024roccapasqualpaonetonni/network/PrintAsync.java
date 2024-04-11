@@ -1,9 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
-//import static org.fusesource.jansi.Ansi.*;
+import  org.fusesource.jansi.Ansi;
 public class PrintAsync {
-    /*public static void printAsync(Ansi msg){
+    public static void printAsync(Ansi msg){
         new Thread(()->{System.out.println(msg);}).start();
-    }*/
+    }
     public static void printAsync(String msg){
         new Thread(()->{System.out.println(msg);}).start();
     }

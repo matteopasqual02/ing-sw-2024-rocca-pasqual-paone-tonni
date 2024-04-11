@@ -1,10 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
 
+import java.rmi.RemoteException;
 import java.util.*;
 
-public class MainController {
+public class MainController implements MainControllerInterface {
     private static MainController instance = null;
 
     private final List<GameController> runningGames;
@@ -21,7 +23,8 @@ public class MainController {
         return instance;
     }
 
-    public synchronized GameControllerInterface createGameController(String nickname){
+    @Override
+    public synchronized GameControllerInterface createGameController(String nickname) {
         GameController g=new GameController();
         g.addPlayer(nickname);
         runningGames.add(g);
@@ -29,6 +32,9 @@ public class MainController {
     }
 
     private synchronized List<GameController> getRunningGames(){return runningGames;}
+
+
+
     public synchronized GameControllerInterface joinFirstAvailableGame(String nickname){
         List<GameController> gameList = getRunningGames();
 
@@ -40,6 +46,16 @@ public class MainController {
         }
 
         return (GameControllerInterface) createGameController(nickname);
+    }
+
+    @Override
+    public GameControllerInterface reconnect(String nickname) {
+        return null;
+    }
+
+    @Override
+    public GameControllerInterface leaveGame(String nickname) {
+        return null;
     }
 
     //public synchronized GameControllerInterface reconnect(String nickname);
