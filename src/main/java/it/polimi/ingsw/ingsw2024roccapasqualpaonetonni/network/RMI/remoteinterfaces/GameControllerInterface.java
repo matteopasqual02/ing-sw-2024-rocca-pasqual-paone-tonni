@@ -3,7 +3,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 
-public interface GameControllerInterface {
+public interface GameControllerInterface extends Remote{
     void addPlayer(String nickname) throws RemoteException;
     void isCurrentPlaying(Player p) throws RemoteException;
     void setNumberOfPlayers(int num) throws RemoteException;

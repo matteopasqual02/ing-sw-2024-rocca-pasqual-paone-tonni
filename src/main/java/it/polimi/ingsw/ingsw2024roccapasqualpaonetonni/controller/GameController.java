@@ -13,8 +13,8 @@ public class GameController implements Runnable{
     private final Random random;
     private final String path;
 
-    public GameController() {
-        model = new Game();
+    public GameController(int id) {
+        model = new Game(id);
         random = new Random();
         //new Thread(this).start();
         path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
@@ -33,6 +33,9 @@ public class GameController implements Runnable{
     }
 
 //---------------------------------PLAYER SECTION
+    public int getID(){
+        return model.getGameId();
+    }
     public void addPlayer(String nickname){
         Player px;
         int player_number = model.getPlayers().size()+1;
@@ -61,6 +64,12 @@ public class GameController implements Runnable{
         return model.getPlayers().size();
     }
     public void setNumberOfPlayer(int num){model.setNumberOfPlayer(num);}
+    public void reconnectPlayer(String nickname) {
+        model.reconnectPlayer(nickname);
+    }
+    public void disconnectPlayer(String nickname) {
+        model.reconnectPlayer(nickname);
+    }
     public void removePlayer(Player player){model.removePlayer(player);}
     public GameStatus getGameStatus(){return model.getStatus();}
 
@@ -261,5 +270,6 @@ public class GameController implements Runnable{
 
         return  up2Deck;
     }
+
 
 }

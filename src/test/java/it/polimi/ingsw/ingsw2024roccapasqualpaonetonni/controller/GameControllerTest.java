@@ -16,7 +16,7 @@ class GameControllerTest {
     then the creation of the table and if the player have all the needed cards */
     @Test
     void initialGameTest() {
-        GameController gameController = new GameController();
+        GameController gameController = new GameController(0);
 
         //set the max number of player and
         gameController.setNumberOfPlayer(4);
@@ -87,7 +87,7 @@ class GameControllerTest {
     /*It controls a complete turn */
     @Test
     void turnGameTest() {
-        GameController gameController = new GameController();
+        GameController gameController = new GameController(0);
 
         gameController.setNumberOfPlayer(4);
         gameController.addPlayer("a");
@@ -143,7 +143,7 @@ class GameControllerTest {
     /*It controls that set status is correctly updated*/
     @Test
     void gameStatusTest(){
-        GameController gameController = new GameController();
+        GameController gameController = new GameController(0);
 
         gameController.getGame().setStatus(GameStatus.PREPARATION);
         assertEquals(GameStatus.PREPARATION, gameController.getGameStatus() );
@@ -152,7 +152,7 @@ class GameControllerTest {
     /*It controls the end of the turn*/
     @Test
     void endGameTest(){
-        GameController gameController = new GameController();
+        GameController gameController = new GameController(0);
 
         gameController.setNumberOfPlayer(4);
         gameController.addPlayer("a");

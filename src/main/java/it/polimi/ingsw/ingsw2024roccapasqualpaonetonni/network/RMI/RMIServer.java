@@ -55,21 +55,53 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     //override section
     @Override
     public GameControllerInterface createGameController(String nickname) {
-        return null;
+        GameControllerInterface result = server.mainController.createGameController(nickname);
+
+        try{
+            UnicastRemoteObject.exportObject(result,0);
+        }catch (RemoteException e){
+            e.printStackTrace();
+        }
+        printAsync("[RMI] " + nickname + " has created and joined a new game");
+        return result;
     }
 
     @Override
     public GameControllerInterface joinFirstAvailableGame(String nickname) {
-        return null;
+        GameControllerInterface result = server.mainController.joinFirstAvailableGame(nickname);
+
+        try{
+            UnicastRemoteObject.exportObject(result,0);
+        }catch (RemoteException e){
+            e.printStackTrace();
+        }
+        printAsync("[RMI] " + nickname + " has joined the game");
+        return result;
     }
 
     @Override
-    public GameControllerInterface reconnect(String nickname) {
-        return null;
+    public GameControllerInterface reconnect(String nickname, int idToReconnect) {
+        GameControllerInterface result = server.mainController.reconnect(nickname,idToReconnect);
+
+        try{
+            UnicastRemoteObject.exportObject(result,0);
+        }catch (RemoteException e){
+            e.printStackTrace();
+        }
+        printAsync("[RMI] " + nickname + " has re-joined the game" + idToReconnect);
+        return result;
     }
 
     @Override
-    public GameControllerInterface leaveGame(String nickname) {
-        return null;
+    public GameControllerInterface leaveGame(String nickname, int idToDisconnect) {
+        GameControllerInterface result = server.mainController.leaveGame(nickname,idToDisconnect);
+
+        try{
+            UnicastRemoteObject.exportObject(result,0);
+        }catch (RemoteException e){
+            e.printStackTrace();
+        }
+        printAsync("[RMI] " + nickname + " has leaved the game");
+        return result;
     }
 }

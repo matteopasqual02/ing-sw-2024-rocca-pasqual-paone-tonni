@@ -8,6 +8,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
 import java.util.*;
 
 public class Game {
+    private final int gameId;
     private GameStatus status;
     private int maxNumberOfPlayer;
     private final Queue<Player> players;
@@ -17,18 +18,21 @@ public class Game {
     private DrawableDeck gameDrawableDeck;
     private Chat chat;
 
-    public Game(){
+    public Game(int id){
         players = new LinkedList<>();
         winner = new LinkedList<>();
         firstPlayer = null;
         status = GameStatus.PREPARATION;
         this.maxNumberOfPlayer=0;
+        this.gameId = id;
 
         gameBoardDeck = null;
         gameDrawableDeck = null;
 
         chat = new Chat();
     }
+
+    public int getGameId(){return  gameId;}
     public void setNumberOfPlayer(int number){
         this.maxNumberOfPlayer=number;
     }
@@ -50,6 +54,18 @@ public class Game {
         players.remove(p);
         if(status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_TURN)){
             status = GameStatus.ENDED;
+        }
+    }
+    public void reconnectPlayer(String nickname) {
+        Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
+        if(p!=null){
+            p.setIsConnected(true);
+        }
+    }
+    public void disconnectPlayer(String nickname) {
+        Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
+        if(p!=null){
+            p.setIsConnected(false);
         }
     }
     public void setFirstPlayer(Player fp){
@@ -131,4 +147,6 @@ public class Game {
     public void setGameBoardDeck(BoardDeck deck) {
         this.gameBoardDeck = deck;
     }
+
+
 }

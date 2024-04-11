@@ -10,7 +10,7 @@ class addPlayerTest {
 
     @Test
     void addPlayerDimension0() { //test che valuta l'aggiunta con dimensione 0 iniziale
-        Game game= new Game();
+        Game game= new Game(0);
         Player p=new Player("giocatore",1);
         assertThrows(GameAlreadyFullException.class,
                 ()->{
@@ -20,7 +20,7 @@ class addPlayerTest {
     @Test
     //valuta che non si puo aggiungere 2 volte lo stesso player
     void addSamePlayer() throws GameAlreadyFullException, PlayerAlreadyInException {
-        Game game=new Game();
+        Game game=new Game(0);
         Player p1= new Player("p",1);
         game.setNumberOfPlayer(2);
         game.addPlayer(p1);
@@ -32,7 +32,7 @@ class addPlayerTest {
     }
     @Test
     void addTooManyPlayers() throws GameAlreadyFullException, PlayerAlreadyInException {
-        Game game=new Game();
+        Game game=new Game(0);
         Player p1= new Player("p",1);
         Player p2= new Player("p2",2);
         game.setNumberOfPlayer(1);
