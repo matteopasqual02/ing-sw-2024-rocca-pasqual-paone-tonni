@@ -5,8 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServer;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultValues;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.PrintAsync.printAsync;
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -23,9 +22,9 @@ public class MainServer {
 
         //create Remote
         if (inputRemoteIP.isEmpty())
-            System.setProperty("java.rmi.server.hostname", DefaultValues.Remote_ip_address);
+            System.setProperty("java.rmi.server.hostname", DefaultNetworkValues.Remote_ip_address);
         else{
-            DefaultValues.Server_Ip_address = inputRemoteIP;
+            DefaultNetworkValues.Server_Ip_address = inputRemoteIP;
             System.setProperty("java.rmi.server.hostname", inputRemoteIP);
         }
 

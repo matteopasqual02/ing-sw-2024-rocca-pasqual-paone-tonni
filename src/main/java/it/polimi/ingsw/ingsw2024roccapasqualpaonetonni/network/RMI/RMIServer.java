@@ -3,7 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultValues;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,8 +23,8 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         try{
             server = new RMIServer();
             //bind stub in registry
-            registry = LocateRegistry.createRegistry(DefaultValues.Default_port_RMI);
-            getRegistry().rebind(DefaultValues.Default_servername_RMI,server);
+            registry = LocateRegistry.createRegistry(DefaultNetworkValues.Default_port_RMI);
+            getRegistry().rebind(DefaultNetworkValues.Default_servername_RMI,server);
             printAsync("[READY] RMI SERVER");
 
         }catch (RemoteException e){
