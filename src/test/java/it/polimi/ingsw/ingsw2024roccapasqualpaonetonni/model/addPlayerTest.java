@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class addPlayerTest {
 
     @Test
-    void addPlayerDimention0() { //test che valuta l'aggiunta con dimensione 0 iniziale
+    void addPlayerDimension0() { //test che valuta l'aggiunta con dimensione 0 iniziale
         Game game= new Game();
         Player p=new Player("giocatore",1);
         assertThrows(GameAlreadyFullException.class,

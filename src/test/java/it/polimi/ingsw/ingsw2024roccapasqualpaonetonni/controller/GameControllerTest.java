@@ -180,6 +180,7 @@ class GameControllerTest {
             }
 
             gameController.nextTurn();
+            //continue
         }
 
 
