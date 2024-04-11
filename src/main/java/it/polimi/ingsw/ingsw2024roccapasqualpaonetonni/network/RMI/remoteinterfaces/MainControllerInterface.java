@@ -3,9 +3,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 public interface MainControllerInterface extends Remote{
-    public GameControllerInterface CreateGameController(String nickname);
-    public GameControllerInterface joinFirstAvailableGame(String nickname);
-    public GameControllerInterface reconnect(String nickname);
-    public GameControllerInterface leaveGame(String nickname);
+    GameControllerInterface CreateGameController(String nickname);
+    GameControllerInterface joinFirstAvailableGame(String nickname);
+    GameControllerInterface reconnect(String nickname);
+     GameControllerInterface leaveGame(String nickname);
 
 }

@@ -3,18 +3,18 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 
-public interface GameControllerInterface extends Remote{
-    public void addPlayer(String nickname) throws RemoteException;
-    public void isCurrentPlaying(Player p) throws RemoteException;
-    public void setNumberOfPlayers(int num) throws RemoteException;
-    public void removePlayer(Player p) throws RemoteException;
-    public void createTable() throws RemoteException;
-    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
-    public void addStartingCard(Boolean flip) throws RemoteException;
-    public void choosePlayerGoal(int choice) throws RemoteException;
-    public void drawResourceFromDeck() throws RemoteException;
-    public void drawGoldFromDeck() throws RemoteException;
-    public void drawFromBoard(int position) throws RemoteException;
-    public void checkWinner() throws RemoteException;
+public interface GameControllerInterface {
+    void addPlayer(String nickname) throws RemoteException;
+    void isCurrentPlaying(Player p) throws RemoteException;
+    void setNumberOfPlayers(int num) throws RemoteException;
+    void removePlayer(Player p) throws RemoteException;
+    void createTable() throws RemoteException;
+    void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
+    void addStartingCard(Boolean flip) throws RemoteException;
+    void choosePlayerGoal(int choice) throws RemoteException;
+    void drawResourceFromDeck() throws RemoteException;
+    void drawGoldFromDeck() throws RemoteException;
+    void drawFromBoard(int position) throws RemoteException;
+    void checkWinner() throws RemoteException;
 
 }
