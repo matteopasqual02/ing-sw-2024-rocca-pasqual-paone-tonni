@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-26T12:13:54.566Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="gNsWiUPtSOt1yW7W_mZn" version="24.0.7" type="github">
-  <diagram name="Pagina-1" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="4770" dy="7808" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
+<mxfile host="app.diagrams.net" modified="2024-04-12T09:30:40.438Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="QOLXDiUc_pfJRVN2uzmQ" version="24.2.3" type="github" pages="3">
+  <diagram name="Model and Controller" id="ekSnajkk3Y4iF-fPzKWO">
+    <mxGraphModel dx="1600" dy="5536" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1411,12 +1411,28 @@
         <mxCell id="CvzT4SXDRmEt0VmlUiYc-10" value="Utils" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="790" y="-2620" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="cKYTbypCg9TdU54kYcG8-1" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="Gf5kYE7P7JRBp3RcAxZ6-1" target="CvzT4SXDRmEt0VmlUiYc-1">
+        <mxCell id="cKYTbypCg9TdU54kYcG8-1" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" source="Gf5kYE7P7JRBp3RcAxZ6-1" target="CvzT4SXDRmEt0VmlUiYc-1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1230" y="-2710" as="sourcePoint" />
             <mxPoint x="1280" y="-2760" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="IIzopRqG8tLTp1UP7jA9" name="RMI metodo 1">
+    <mxGraphModel dx="880" dy="472" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="I-EuxmASO5UjdRi4yAi8" name="RMI metodo 2">
+    <mxGraphModel dx="880" dy="472" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
       </root>
     </mxGraphModel>
   </diagram>
