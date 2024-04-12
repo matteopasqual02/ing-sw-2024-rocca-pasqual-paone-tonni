@@ -46,7 +46,7 @@ public class MainController implements MainControllerInterface {
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
             int playersSize = i.getAllPlayer().size();
             int maxSize = i.getMaxNumberOfPlayer();
-            if(playersSize <= maxSize && playersEqualIn==0){
+            if(playersSize < maxSize && playersEqualIn==0){
                 i.addPlayer(nickname);
                 return  i;
             }
