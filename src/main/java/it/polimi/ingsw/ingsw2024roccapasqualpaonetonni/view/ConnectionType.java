@@ -1,4 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
-public class View {
+public enum ConnectionType {
+    RMI, SOCKET
 }

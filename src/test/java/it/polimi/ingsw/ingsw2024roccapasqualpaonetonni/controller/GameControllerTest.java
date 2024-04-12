@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlrea
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,11 +16,11 @@ class GameControllerTest {
     the number of player and if they are ready to start
     then the creation of the table and if the player have all the needed cards */
     @Test
-    void initialGameTest() {
-        GameController gameController = new GameController();
+    void initialGameTest() throws RemoteException {
+        GameController gameController = new GameController(0);
 
         //set the max number of player and
-        gameController.setNumberOfPlayer(4);
+        gameController.setNumberOfPlayers(4);
 
         //set the players
         gameController.addPlayer("a");
@@ -30,7 +31,7 @@ class GameControllerTest {
         //assert all the player are well initialized
         assertEquals(4,gameController.getAllPlayer().size());
         assertEquals(4,gameController.getNumberOfPlayer());
-        assertTrue(gameController.getGame().arePlayerReady());
+        assertTrue(gameController.playersAreReady());
         for(Player player: gameController.getAllPlayer()){
             for(Player player1: gameController.getAllPlayer()){
                 if(player.equals(player1)){
@@ -86,10 +87,10 @@ class GameControllerTest {
 
     /*It controls a complete turn */
     @Test
-    void turnGameTest() {
-        GameController gameController = new GameController();
+    void turnGameTest() throws RemoteException{
+        GameController gameController = new GameController(0);
 
-        gameController.setNumberOfPlayer(4);
+        gameController.setNumberOfPlayers(4);
         gameController.addPlayer("a");
         gameController.addPlayer("b");
         gameController.addPlayer("c");
@@ -142,8 +143,8 @@ class GameControllerTest {
 
     /*It controls that set status is correctly updated*/
     @Test
-    void gameStatusTest(){
-        GameController gameController = new GameController();
+    void gameStatusTest() throws RemoteException{
+        GameController gameController = new GameController(0);
 
         gameController.getGame().setStatus(GameStatus.PREPARATION);
         assertEquals(GameStatus.PREPARATION, gameController.getGameStatus() );
@@ -151,10 +152,10 @@ class GameControllerTest {
 
     /*It controls the end of the turn*/
     @Test
-    void endGameTest(){
-        GameController gameController = new GameController();
+    void endGameTest() throws RemoteException{
+        GameController gameController = new GameController(0);
 
-        gameController.setNumberOfPlayer(4);
+        gameController.setNumberOfPlayers(4);
         gameController.addPlayer("a");
         gameController.addPlayer("b");
         gameController.addPlayer("c");
@@ -180,8 +181,8 @@ class GameControllerTest {
             }
 
             gameController.nextTurn();
-            //continue
         }
+
 
 
     }

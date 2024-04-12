@@ -3,20 +3,20 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.View;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.*;
 
-public class GameController implements Runnable{
+public class GameController implements GameControllerInterface,Runnable{
     private final Game model;
-    private View view;
     private final Random random;
     private final String path;
 
-    public GameController() {
-        model = new Game();
+    public GameController(int id) {
+        model = new Game(id);
         random = new Random();
         //new Thread(this).start();
         path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
@@ -35,6 +35,10 @@ public class GameController implements Runnable{
     }
 
 //---------------------------------PLAYER SECTION
+    public int getID(){
+        return model.getGameId();
+    }
+    @Override
     public void addPlayer(String nickname){
         Player px;
         int player_number = model.getPlayers().size()+1;
@@ -53,9 +57,16 @@ public class GameController implements Runnable{
     public Player getCurrentPlayer(){
         return model.getCurrentPlayer();
     }
+    @Override
     public Boolean isCurrentPlaying(Player p){
         return p.equals(getCurrentPlayer());
     }
+
+    @Override
+    public void setNumberOfPlayers(int num) throws RemoteException {
+        model.setNumberOfPlayer(num);
+    }
+
     public void nextTurn(){
         model.nextPlayer();
     }
@@ -63,11 +74,20 @@ public class GameController implements Runnable{
         return model.getPlayers().size();
     }
     public void setNumberOfPlayer(int num){model.setNumberOfPlayer(num);}
+    public void reconnectPlayer(String nickname) {
+        model.reconnectPlayer(nickname);
+    }
+    public void disconnectPlayer(String nickname) {
+        model.reconnectPlayer(nickname);
+    }
+    @Override
     public void removePlayer(Player player){model.removePlayer(player);}
     public GameStatus getGameStatus(){return model.getStatus();}
+    public Boolean playersAreReady(){return model.arePlayerReady();}
 
 
 //---------------------------------TABLE AND INIT SECTION
+    @Override
     public Boolean createTable(){
         if(model.arePlayerReady()) {
             Map<String, List<Card>> cardsMap = null;
@@ -263,5 +283,6 @@ public class GameController implements Runnable{
 
         return  up2Deck;
     }
+
 
 }
