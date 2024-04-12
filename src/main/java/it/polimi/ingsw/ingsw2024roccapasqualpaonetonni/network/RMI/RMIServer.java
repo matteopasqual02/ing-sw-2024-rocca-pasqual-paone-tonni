@@ -35,6 +35,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }
         return getInstance();
     }
+    //the constructor of the RMI server associates the MainController to the server, because we only have 1 main controller
     public RMIServer() throws RemoteException {
         super(0);
         mainController = MainController.getInstance();
@@ -65,6 +66,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         GameControllerInterface result = server.mainController.createGameController(nickname,numMaxOfPlayer);
 
         try{
+            //result needs to be an exportable object
             UnicastRemoteObject.exportObject(result,0);
         }catch (RemoteException e){
             e.printStackTrace();

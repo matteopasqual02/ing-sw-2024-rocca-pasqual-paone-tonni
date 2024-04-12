@@ -16,5 +16,4 @@ public interface GameControllerInterface extends Remote{
     void drawGoldFromDeck() throws RemoteException;
     void drawFromBoard(int position) throws RemoteException;
     void checkWinner() throws RemoteException;
-
 }

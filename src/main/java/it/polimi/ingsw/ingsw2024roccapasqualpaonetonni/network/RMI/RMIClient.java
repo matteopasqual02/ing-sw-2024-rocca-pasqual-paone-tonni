@@ -28,6 +28,7 @@ public class RMIClient implements VirtualViewInterface {
         connect();
     }
 
+    //the client main calls this to connect to a server
     public void connect(){
         boolean retry = false;
         int attempt =1;
@@ -75,6 +76,7 @@ public class RMIClient implements VirtualViewInterface {
         }while(retry);
     }
 
+    //from here on the methods should be to show the update directly to the client, or the methods that the client can call it depends on what we choose
     @Override
     public boolean isCurrentPlaying() throws RemoteException {
         return false;
