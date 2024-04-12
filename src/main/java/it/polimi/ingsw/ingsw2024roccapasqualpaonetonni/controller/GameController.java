@@ -64,16 +64,16 @@ public class GameController implements GameControllerInterface,Runnable{
 
     @Override
     public void setNumberOfPlayers(int num) throws RemoteException {
-        model.setNumberOfPlayer(num);
+        model.setMaxNumberOfPlayer(num);
     }
 
     public void nextTurn(){
         model.nextPlayer();
     }
-    public int getNumberOfPlayer(){
-        return model.getPlayers().size();
+    public int getMaxNumberOfPlayer(){
+        return model.getMaxNumberOfPlayer();
     }
-    public void setNumberOfPlayer(int num){model.setNumberOfPlayer(num);}
+    public void setMaxNumberOfPlayer(int num){model.setMaxNumberOfPlayer(num);}
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
     }

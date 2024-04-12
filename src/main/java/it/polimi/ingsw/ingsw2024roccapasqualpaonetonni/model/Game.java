@@ -33,8 +33,11 @@ public class Game {
     }
 
     public int getGameId(){return  gameId;}
-    public void setNumberOfPlayer(int number){
+    public void setMaxNumberOfPlayer(int number){
         this.maxNumberOfPlayer=number;
+    }
+    public int getMaxNumberOfPlayer(){
+        return maxNumberOfPlayer;
     }
     public void addPlayer (Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
         if(!players.contains(px)){

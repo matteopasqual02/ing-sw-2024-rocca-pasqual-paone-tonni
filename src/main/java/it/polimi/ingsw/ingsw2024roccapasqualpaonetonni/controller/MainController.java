@@ -32,8 +32,8 @@ public class MainController implements MainControllerInterface {
     @Override
     public synchronized GameControllerInterface createGameController(String nickname, int numMaxOfPlayer)throws RemoteException {
         GameController g=new GameController(getRunningGames().size()+1);
-        g.addPlayer(nickname);
         g.setNumberOfPlayers(numMaxOfPlayer);
+        g.addPlayer(nickname);
         runningGames.add(g);
         return g;
     }
@@ -44,7 +44,9 @@ public class MainController implements MainControllerInterface {
 
         for (GameController i : gameList){
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
-            if(i.getAllPlayer().size()<i.getNumberOfPlayer() && playersEqualIn==0){
+            int playersSize = i.getAllPlayer().size();
+            int maxSize = i.getMaxNumberOfPlayer();
+            if(playersSize <= maxSize && playersEqualIn==0){
                 i.addPlayer(nickname);
                 return  i;
             }

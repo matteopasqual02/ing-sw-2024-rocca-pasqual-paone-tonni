@@ -30,7 +30,7 @@ class GameControllerTest {
 
         //assert all the player are well initialized
         assertEquals(4,gameController.getAllPlayer().size());
-        assertEquals(4,gameController.getNumberOfPlayer());
+        assertEquals(4,gameController.getMaxNumberOfPlayer());
         assertTrue(gameController.playersAreReady());
         for(Player player: gameController.getAllPlayer()){
             for(Player player1: gameController.getAllPlayer()){
@@ -80,7 +80,7 @@ class GameControllerTest {
         assertEquals(GameStatus.RUNNING,gameController.getGameStatus());
 
         //assert all points at 0
-        for(int points=0; points< gameController.getNumberOfPlayer(); points++){
+        for(int points=0; points< gameController.getMaxNumberOfPlayer(); points++){
             assertEquals(0,gameController.getAllPoints()[points]);
         }
     }
@@ -166,7 +166,7 @@ class GameControllerTest {
         PlayingCard playedNow;
 
         //All players choose their goals and adding the first card
-        for (int i=0; i< gameController.getNumberOfPlayer(); i++) {
+        for (int i=0; i< gameController.getMaxNumberOfPlayer(); i++) {
             gameController.choosePlayerGoal(1);
             gameController.addStartingCard(false);
             playedBefore = gameController.getCurrentPlayer().getHand().get(0);

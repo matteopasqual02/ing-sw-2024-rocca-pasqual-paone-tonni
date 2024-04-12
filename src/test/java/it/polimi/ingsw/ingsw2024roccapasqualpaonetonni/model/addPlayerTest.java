@@ -22,7 +22,7 @@ class addPlayerTest {
     void addSamePlayer() throws GameAlreadyFullException, PlayerAlreadyInException {
         Game game=new Game(0);
         Player p1= new Player("p",1);
-        game.setNumberOfPlayer(2);
+        game.setMaxNumberOfPlayer(2);
         game.addPlayer(p1);
         assertThrows(PlayerAlreadyInException.class,
                 ()->{
@@ -35,7 +35,7 @@ class addPlayerTest {
         Game game=new Game(0);
         Player p1= new Player("p",1);
         Player p2= new Player("p2",2);
-        game.setNumberOfPlayer(1);
+        game.setMaxNumberOfPlayer(1);
         game.addPlayer(p1);
         assertThrows(GameAlreadyFullException.class,
                 ()->{
