@@ -6,7 +6,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfa
 
 import java.rmi.RemoteException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MainController implements MainControllerInterface {
     private static MainController instance = null;
@@ -25,33 +24,37 @@ public class MainController implements MainControllerInterface {
         return instance;
     }
 
-    private synchronized List<GameController> getRunningGames(){return runningGames;}
-
     @Override
-    public synchronized GameControllerInterface createGameController(String nickname) {
-        GameController g=new GameController(getRunningGames().size()+1);
-        g.addPlayer(nickname);
-        runningGames.add(g);
-        return (GameControllerInterface) g;
+    public synchronized List<GameController> getRunningGames(){
+        return runningGames;
     }
 
     @Override
-    public synchronized GameControllerInterface joinFirstAvailableGame(String nickname){
+    public synchronized GameControllerInterface createGameController(String nickname, int numMaxOfPlayer)throws RemoteException {
+        GameController g=new GameController(getRunningGames().size()+1);
+        g.addPlayer(nickname);
+        g.setNumberOfPlayers(numMaxOfPlayer);
+        runningGames.add(g);
+        return g;
+    }
+
+    @Override
+    public synchronized GameControllerInterface joinFirstAvailableGame(String nickname)throws RemoteException{
         List<GameController> gameList = getRunningGames();
 
         for (GameController i : gameList){
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
             if(i.getAllPlayer().size()<i.getNumberOfPlayer() && playersEqualIn==0){
                 i.addPlayer(nickname);
-                return (GameControllerInterface) i;
+                return  i;
             }
         }
 
-        return (GameControllerInterface) createGameController(nickname);
+        return null;
     }
 
     @Override
-    public GameControllerInterface reconnect(String nickname, int idToReconnect) {
+    public GameControllerInterface reconnect(String nickname, int idToReconnect) throws RemoteException{
         Player p;
         List<GameController> ris = runningGames.stream().filter(x -> (x.getID() == idToReconnect)).toList();
         if(!ris.isEmpty()){
@@ -61,13 +64,14 @@ public class MainController implements MainControllerInterface {
             }
             else {
                 ris.getFirst().reconnectPlayer(nickname);
+                return ris.getFirst();
             }
         }
         return null;
     }
 
     @Override
-    public GameControllerInterface leaveGame(String nickname, int idToDisconnect) {
+    public GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException {
         Player p;
         List<GameController> ris = runningGames.stream().filter(x -> (x.getID() == idToDisconnect)).toList();
         if(!ris.isEmpty()){
@@ -77,14 +81,10 @@ public class MainController implements MainControllerInterface {
             }
             else {
                 ris.getFirst().disconnectPlayer(nickname);
+                return ris.getFirst();
             }
         }
         return null;
     }
-
-    //public synchronized GameControllerInterface reconnect(String nickname);
-    //public synchronized GameControllerInterface leaveGame(String nickname);
-
-
 
 }

@@ -103,12 +103,12 @@ public class MainClient {
     }
 
     private static void killLoggers(){
-        com.sun.javafx.util.Logging.getJavaFXLogger().disableLogging();
+        /*com.sun.javafx.util.Logging.getJavaFXLogger().disableLogging();
         com.sun.javafx.util.Logging.getCSSLogger().disableLogging();
         com.sun.javafx.util.Logging.getAccessibilityLogger().disableLogging();
         com.sun.javafx.util.Logging.getFocusLogger().disableLogging();
         com.sun.javafx.util.Logging.getInputLogger().disableLogging();
-        com.sun.javafx.util.Logging.getLayoutLogger().disableLogging();
+        com.sun.javafx.util.Logging.getLayoutLogger().disableLogging();*/
     }
 
 }
