@@ -18,7 +18,7 @@ public class GameController implements GameControllerInterface,Runnable{
     private final String path;
 
     //we have to decide weather to make it transient
-    private ListenersHandler listenersHandler;
+    private final ListenersHandler listenersHandler;
     public GameController(int id) {
         model = new Game(id);
         random = new Random();
@@ -123,6 +123,7 @@ public class GameController implements GameControllerInterface,Runnable{
                 e.printStackTrace();
             }
             Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
+
             for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
                 String type = entry.getKey(); // Get the card type
                 List<Card> cards = entry.getValue(); // Get the list of cards for this type
@@ -300,7 +301,7 @@ public class GameController implements GameControllerInterface,Runnable{
 //---------------------------------END SECTION
     private void checkPoints20Points(){
         for(Player player: getAllPlayer()){
-            // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione
+            // WARNINGS: update the currentPlayer at phase end (before this function)
             if(player.getCurrentPoints() >= 20){
                 model.setStatus(GameStatus.WAITING_LAST_TURN);
             }
@@ -311,20 +312,6 @@ public class GameController implements GameControllerInterface,Runnable{
         model.setStatus(GameStatus.ENDED);
     }
 
-//---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
-    public Game getGame(){
-        return model;
-    }
-    public int[] getAllPoints(){
-        int[] points = new int[model.getPlayers().size()];
-        for(Player p : getAllPlayer()){
-            points[p.getColorPlayer()-1] = p.getCurrentPoints();
-        }
-        return points;
-    }
-    public BoardDeck getBoardDeck() {
-        return model.getGameBoardDeck();
-    }
 //---------------------------------GET SECTION TO TEST
     public GameImmutable getImmutableGame(){
         return new GameImmutable(model);
