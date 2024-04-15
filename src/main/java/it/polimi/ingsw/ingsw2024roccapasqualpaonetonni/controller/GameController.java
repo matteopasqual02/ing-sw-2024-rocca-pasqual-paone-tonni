@@ -18,7 +18,7 @@ public class GameController implements GameControllerInterface,Runnable{
     private final String path;
 
     //we have to decide weather to make it transient
-    private ListenersHandler listenersHandler;
+    private final ListenersHandler listenersHandler;
     public GameController(int id) {
         model = new Game(id);
         random = new Random();
@@ -50,13 +50,13 @@ public class GameController implements GameControllerInterface,Runnable{
         px = new Player(nickname,player_number);
         try {
             model.addPlayer(px);
-            listenersHandler.notify_addedPlayer(this.model);
+            listenersHandler.notify_addedPlayer(this.getImmutableGame());
 
         }catch (GameAlreadyFullException ex1){
-            listenersHandler.notify_fullGame(this.model);
+            listenersHandler.notify_fullGame(this.getImmutableGame());
         }
         catch (PlayerAlreadyInException ex2){
-            listenersHandler.notify_nameAlreadyInGame(this.model);}
+            listenersHandler.notify_nameAlreadyInGame(this.getImmutableGame());}
 
         model.playerIsReadyToStart(px);
     }
@@ -73,24 +73,24 @@ public class GameController implements GameControllerInterface,Runnable{
     @Override
     public void setMaxNumberOfPlayer(int num) throws RemoteException {
         model.setMaxNumberOfPlayer(num);
-        listenersHandler.notify_maxPlayers(this.model);
+        listenersHandler.notify_maxPlayers(this.getImmutableGame());
     }
     public int getMaxNumberOfPlayer(){
         return model.getMaxNumberOfPlayer();
     }
     public void nextTurn(){
         model.nextPlayer();
-        listenersHandler.notify_nextTurn(this.model);
+        listenersHandler.notify_nextTurn(this.getImmutableGame());
     }
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
-        listenersHandler.notify_reconnectedPlayer(this.model);
+        listenersHandler.notify_reconnectedPlayer(this.getImmutableGame());
         model.setStatus(model.getLastStatus());
         model.resetLastStatus();
     }
     public void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
-        listenersHandler.notify_disconnectedPlayer(this.model);
+        listenersHandler.notify_disconnectedPlayer(this.getImmutableGame());
         model.setLastStatus();
         model.setStatus(GameStatus.WAITING_RECONNECTION);
     }
@@ -98,7 +98,7 @@ public class GameController implements GameControllerInterface,Runnable{
     public void removePlayer(Player player){
 
         model.removePlayer(player);
-        listenersHandler.notify_removedPlayer(this.model);
+        listenersHandler.notify_removedPlayer(this.getImmutableGame());
     }
     public GameStatus getGameStatus(){
         return model.getGameStatus();
@@ -123,6 +123,7 @@ public class GameController implements GameControllerInterface,Runnable{
                 e.printStackTrace();
             }
             Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
+
             for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
                 String type = entry.getKey(); // Get the card type
                 List<Card> cards = entry.getValue(); // Get the list of cards for this type
@@ -158,11 +159,11 @@ public class GameController implements GameControllerInterface,Runnable{
             turnZero();
 
             model.setStatus(GameStatus.RUNNING);
-            listenersHandler.notify_tableCreated(this.model);
+            listenersHandler.notify_tableCreated(this.getImmutableGame());
             return true;
         }
         else {
-            listenersHandler.notify_playersNotReady(this.model);
+            listenersHandler.notify_playersNotReady(this.getImmutableGame());
             return false;
         }
     }
@@ -174,7 +175,7 @@ public class GameController implements GameControllerInterface,Runnable{
         }
 
         model.setFirstPlayer(model.getCurrentPlayer());
-        listenersHandler.notify_firstPlayerSet(this.model);
+        listenersHandler.notify_firstPlayerSet(this.getImmutableGame());
     }
     private void turnZero() {
         for(Player player : getAllPlayer()){
@@ -198,7 +199,7 @@ public class GameController implements GameControllerInterface,Runnable{
         }
         getCurrentPlayer().addToBoard(cardToAdd,cardOnBoard,cornerToAttach);
         checkPoints20Points();
-        listenersHandler.notify_cardAdded(this.model);
+        listenersHandler.notify_cardAdded(this.getImmutableGame());
     }
     public void addStartingCard(Boolean flip){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))){
@@ -209,7 +210,7 @@ public class GameController implements GameControllerInterface,Runnable{
             getCurrentPlayer().getStartingCard().flip();
         }
         getCurrentPlayer().addStarting();
-        listenersHandler.notify_startingCardAdded(this.model);
+        listenersHandler.notify_startingCardAdded(this.getImmutableGame());
     }
     public void choosePlayerGoal(int choice){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING))){
@@ -217,7 +218,7 @@ public class GameController implements GameControllerInterface,Runnable{
             return;
         }
         getCurrentPlayer().chooseGoal(choice);
-        listenersHandler.notify_goalChosen(this.model);
+        listenersHandler.notify_goalChosen(this.getImmutableGame());
     }
 
 
@@ -233,66 +234,60 @@ public class GameController implements GameControllerInterface,Runnable{
     public void drawResourceFromDeck(){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
-            listenersHandler.notify_cannotDrawHere(this.model);
+            listenersHandler.notify_cannotDrawHere(this.getImmutableGame());
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-            listenersHandler.notify_decksAllEmpty(this.model);
+            listenersHandler.notify_decksAllEmpty(this.getImmutableGame());
 
         }
         else if(!model.getGameDrawableDeck().getDecks().get("resources").isEmpty()){
             getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
-            listenersHandler.notify_resourceDrawn(this.model);
+            listenersHandler.notify_resourceDrawn(this.getImmutableGame());
         }
         else {
-            // listener change deck
-            listenersHandler.notify_changeResourceDeck(this.model);
-            return;
+            listenersHandler.notify_changeResourceDeck(this.getImmutableGame());
         }
 
     }
     public void drawGoldFromDeck(){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
-            listenersHandler.notify_cannotDrawHere(this.model);
+            listenersHandler.notify_cannotDrawHere(this.getImmutableGame());
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-            listenersHandler.notify_decksAllEmpty(this.model);
+            listenersHandler.notify_decksAllEmpty(this.getImmutableGame());
 
         }
         else if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
             getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
-            listenersHandler.notify_goldDrawn(this.model);
+            listenersHandler.notify_goldDrawn(this.getImmutableGame());
         }
         else {
-            // listener change deck
-            listenersHandler.notify_changeGoldDeck(this.model);
-            return;
+            listenersHandler.notify_changeGoldDeck(this.getImmutableGame());
         }
     }
     public void drawFromBoard(int position){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
-            listenersHandler.notify_cannotDrawHere(this.model);
+            listenersHandler.notify_cannotDrawHere(this.getImmutableGame());
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-            listenersHandler.notify_decksAllEmpty(this.model);
+            listenersHandler.notify_decksAllEmpty(this.getImmutableGame());
 
         }
         else if((position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null) ||
                 (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)) {
             getCurrentPlayer().drawFromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
-            listenersHandler.notify_drewFromBoard(this.model);
+            listenersHandler.notify_drewFromBoard(this.getImmutableGame());
         }
         else {
-            // listener change deck
-            listenersHandler.notify_changeBoardDeck(this.model);
-            return;
+            listenersHandler.notify_changeBoardDeck(this.getImmutableGame());
         }
     }
 
@@ -300,7 +295,7 @@ public class GameController implements GameControllerInterface,Runnable{
 //---------------------------------END SECTION
     private void checkPoints20Points(){
         for(Player player: getAllPlayer()){
-            // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione
+            // WARNINGS: update the currentPlayer at phase end (before this function)
             if(player.getCurrentPoints() >= 20){
                 model.setStatus(GameStatus.WAITING_LAST_TURN);
             }
@@ -311,24 +306,6 @@ public class GameController implements GameControllerInterface,Runnable{
         model.setStatus(GameStatus.ENDED);
     }
 
-//---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
-    public Game getGame(){
-
-        listenersHandler.notify_gotGame(this.model);
-        return model;
-    }
-    public int[] getAllPoints(){
-        int[] points = new int[model.getPlayers().size()];
-        for(Player p : getAllPlayer()){
-            points[p.getColorPlayer()-1] = p.getCurrentPoints();
-        }
-        listenersHandler.notify_gotPoints(this.model);
-        return points;
-    }
-    public BoardDeck getBoardDeck(){
-
-        listenersHandler.notify_gotBoardDeck(this.model);
-        return model.getGameBoardDeck();
 //---------------------------------GET SECTION TO TEST
     public GameImmutable getImmutableGame(){
         return new GameImmutable(model);

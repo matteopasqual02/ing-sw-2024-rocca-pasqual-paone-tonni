@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 import java.util.*;
 
@@ -25,78 +26,71 @@ public class ListenersHandler {
         return listeners;
     }
 
-    public void notify_addedPlayer(Game model) {
+    public void notify_addedPlayer(GameImmutable model) {
     }
 
-    public void notify_fullGame(Game model) {
+    public void notify_fullGame(GameImmutable model) {
     }
 
-    public void notify_nameAlreadyInGame(Game model) {
+    public void notify_nameAlreadyInGame(GameImmutable model) {
     }
 
-    public void notify_maxPlayers(Game model) {
+    public void notify_maxPlayers(GameImmutable model) {
     }
 
-    public void notify_nextTurn(Game model) {
+    public void notify_nextTurn(GameImmutable model) {
     }
 
-    public void notify_reconnectedPlayer(Game model) {
+    public void notify_reconnectedPlayer(GameImmutable model) {
     }
 
-    public void notify_disconnectedPlayer(Game model) {
+    public void notify_disconnectedPlayer(GameImmutable model) {
     }
 
-    public void notify_removedPlayer(Game model) {
+    public void notify_removedPlayer(GameImmutable model) {
     }
 
-    public void notify_tableCreated(Game model) {
+    public void notify_tableCreated(GameImmutable model) {
     }
 
-    public void notify_playersNotReady(Game model) {
+    public void notify_playersNotReady(GameImmutable model) {
     }
 
-    public void notify_firstPlayerSet(Game model) {
+    public void notify_firstPlayerSet(GameImmutable model) {
     }
 
-    public void notify_cardAdded(Game model) {
+    public void notify_cardAdded(GameImmutable model) {
     }
 
-    public void notify_startingCardAdded(Game model) {
+    public void notify_startingCardAdded(GameImmutable model) {
     }
 
-    public void notify_goalChosen(Game model) {
+    public void notify_goalChosen(GameImmutable model) {
     }
 
-    public void notify_cannotDrawHere(Game model) {
+    public void notify_cannotDrawHere(GameImmutable model) {
     }
 
-    public void notify_decksAllEmpty(Game model) {
+    public void notify_decksAllEmpty(GameImmutable model) {
     }
 
-    public void notify_resourceDrawn(Game model) {
+    public void notify_resourceDrawn(GameImmutable model) {
     }
 
-    public void notify_changeResourceDeck(Game model) {
+    public void notify_changeResourceDeck(GameImmutable model) {
     }
 
-    public void notify_goldDrawn(Game model) {
+    public void notify_goldDrawn(GameImmutable model) {
     }
 
-    public void notify_changeGoldDeck(Game model) {
+    public void notify_changeGoldDeck(GameImmutable model) {
     }
 
-    public void notify_drewFromBoard(Game model) {
+    public void notify_drewFromBoard(GameImmutable model) {
     }
 
-    public void notify_changeBoardDeck(Game model) {
+    public void notify_changeBoardDeck(GameImmutable model) {
     }
 
-    public void notify_gotGame(Game model) {
-    }
 
-    public void notify_gotPoints(Game model) {
-    }
-
-    public void notify_gotBoardDeck(Game model) {
-    }
 }
