@@ -50,17 +50,17 @@ class GameControllerTest {
         assertTrue(tableCreated);
 
         //assertion on decks
-        assertEquals(30,gameController.getGame().getGameDrawableDeck().getDecks().get("resources").size());
-        assertEquals(34,gameController.getGame().getGameDrawableDeck().getDecks().get("gold").size());
-        assertEquals(2,gameController.getGame().getGameDrawableDeck().getDecks().get("starting").size());
-        assertEquals(6,gameController.getGame().getGameDrawableDeck().getDecks().get("objective").size());
+        assertEquals(30,gameController.getImmutableGame().getDrawableDeck().getDecks().get("resources").size());
+        assertEquals(34,gameController.getImmutableGame().getDrawableDeck().getDecks().get("gold").size());
+        assertEquals(2,gameController.getImmutableGame().getDrawableDeck().getDecks().get("starting").size());
+        assertEquals(6,gameController.getImmutableGame().getDrawableDeck().getDecks().get("objective").size());
 
-        assertNotNull(gameController.getBoardDeck().getCommonObjective()[0]);
-        assertNotNull(gameController.getBoardDeck().getCommonObjective()[1]);
-        assertNotNull(gameController.getBoardDeck().getGoldCards()[0]);
-        assertNotNull(gameController.getBoardDeck().getGoldCards()[1]);
-        assertNotNull(gameController.getBoardDeck().getResourceCards()[0]);
-        assertNotNull(gameController.getBoardDeck().getResourceCards()[1]);
+        assertNotNull(gameController.getImmutableGame().getBoardDeck().getCommonObjective()[0]);
+        assertNotNull(gameController.getImmutableGame().getBoardDeck().getCommonObjective()[1]);
+        assertNotNull(gameController.getImmutableGame().getBoardDeck().getGoldCards()[0]);
+        assertNotNull(gameController.getImmutableGame().getBoardDeck().getGoldCards()[1]);
+        assertNotNull(gameController.getImmutableGame().getBoardDeck().getResourceCards()[0]);
+        assertNotNull(gameController.getImmutableGame().getBoardDeck().getResourceCards()[1]);
 
         //assert on player hand
         for (Player player: gameController.getAllPlayer()){
@@ -80,7 +80,7 @@ class GameControllerTest {
 
         //assert all points at 0
         for(int points=0; points< gameController.getMaxNumberOfPlayer(); points++){
-            assertEquals(0,gameController.getAllPoints()[points]);
+            assertEquals(0,gameController.getImmutableGame().getAllPoints()[points]);
         }
     }
 
@@ -135,7 +135,7 @@ class GameControllerTest {
         }
 
         //check points increase
-        int[] pointsOnBoard = gameController.getAllPoints();
+        int[] pointsOnBoard = gameController.getImmutableGame().getAllPoints();
         int pointsOnBoardCurrentPlayer = pointsOnBoard[Objects.requireNonNull(gameController.getAllPlayer().peek()).getColorPlayer()-1];
         assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
     }
@@ -145,7 +145,7 @@ class GameControllerTest {
     void gameStatusTest(){
         GameController gameController = new GameController(0);
 
-        gameController.getGame().setStatus(GameStatus.PREPARATION);
+        //gameController.getImmutableGame().setStatus(GameStatus.PREPARATION);
         assertEquals(GameStatus.PREPARATION, gameController.getGameStatus() );
     }
 
@@ -183,7 +183,7 @@ class GameControllerTest {
         }
 
         for(int points=0; points< gameController.getMaxNumberOfPlayer(); points++){
-            assertEquals(0,gameController.getAllPoints()[points]);
+            assertEquals(0,gameController.getImmutableGame().getAllPoints()[points]);
         }
 
 

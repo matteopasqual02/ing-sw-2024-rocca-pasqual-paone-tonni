@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 
@@ -276,27 +277,9 @@ public class GameController implements GameControllerInterface,Runnable{
         model.setStatus(GameStatus.ENDED);
     }
 
-//---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
-    public Game getGame(){
-        return model;
+//---------------------------------GET SECTION TO TEST
+    public GameImmutable getImmutableGame(){
+        return new GameImmutable(model);
     }
-    public int[] getAllPoints(){
-        int[] points = new int[model.getPlayers().size()];
-        for(Player p : getAllPlayer()){
-            points[p.getColorPlayer()-1] = p.getCurrentPoints();
-        }
-        return points;
-    }
-    public BoardDeck getBoardDeck(){
-        return model.getGameBoardDeck();
-    }
-    public Card[] getSeedUpDrawableDeck(){
-        Card[] up2Deck = new PlayingCard[2];
-        up2Deck[0]= model.getGameDrawableDeck().getDecks().get("resources").peek();
-        up2Deck[1]= model.getGameDrawableDeck().getDecks().get("gold").peek();
-
-        return  up2Deck;
-    }
-
 
 }
