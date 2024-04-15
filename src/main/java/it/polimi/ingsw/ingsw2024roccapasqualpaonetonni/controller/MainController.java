@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
@@ -32,7 +33,7 @@ public class MainController implements MainControllerInterface {
     @Override
     public synchronized GameControllerInterface createGameController(String nickname, int numMaxOfPlayer)throws RemoteException {
         GameController g=new GameController(getRunningGames().size()+1);
-        g.setNumberOfPlayers(numMaxOfPlayer);
+        g.setMaxNumberOfPlayer(numMaxOfPlayer);
         g.addPlayer(nickname);
         runningGames.add(g);
         return g;
@@ -57,14 +58,12 @@ public class MainController implements MainControllerInterface {
 
     @Override
     public GameControllerInterface reconnect(String nickname, int idToReconnect) throws RemoteException{
-        Player p;
-        List<GameController> ris = runningGames.stream().filter(x -> (x.getID() == idToReconnect)).toList();
-        if(!ris.isEmpty()){
-            p = ris.getFirst().getAllPlayer().stream().filter(pp -> pp.getNickname().equals(nickname)).findFirst().orElse(null);
-            if(p==null){
-                //cannot reconnect
-            }
-            else {
+        Player player;
+        List<GameController> ris = runningGames.stream().filter(gc -> (gc.getID() == idToReconnect)).toList();
+        boolean gameWaiting = ris.getFirst().getGameStatus().equals(GameStatus.WAITING_RECONNECTION);
+        if(!ris.isEmpty() && gameWaiting){
+            player = ris.getFirst().getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null);
+            if(player!=null){
                 ris.getFirst().reconnectPlayer(nickname);
                 return ris.getFirst();
             }
@@ -78,10 +77,7 @@ public class MainController implements MainControllerInterface {
         List<GameController> ris = runningGames.stream().filter(x -> (x.getID() == idToDisconnect)).toList();
         if(!ris.isEmpty()){
             p = ris.getFirst().getAllPlayer().stream().filter(pp -> pp.getNickname().equals(nickname)).findFirst().orElse(null);
-            if(p==null){
-                //cannot reconnect
-            }
-            else {
+            if(p!=null){
                 ris.getFirst().disconnectPlayer(nickname);
                 return ris.getFirst();
             }

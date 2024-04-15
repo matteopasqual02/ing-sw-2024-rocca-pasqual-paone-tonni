@@ -6,7 +6,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 public interface GameControllerInterface extends Remote{
     void addPlayer(String nickname) throws RemoteException;
     Boolean isCurrentPlaying(Player p) throws RemoteException;
-    void setNumberOfPlayers(int num) throws RemoteException;
+    void setMaxNumberOfPlayer(int num) throws RemoteException;
     void removePlayer(Player p) throws RemoteException;
     Boolean createTable() throws RemoteException;
     void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;

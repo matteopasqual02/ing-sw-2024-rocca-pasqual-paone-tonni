@@ -59,31 +59,41 @@ public class GameController implements GameControllerInterface,Runnable{
     }
     @Override
     public Boolean isCurrentPlaying(Player p){
-        return p.equals(getCurrentPlayer());
+        return getCurrentPlayer().equals(p);
     }
-
     @Override
-    public void setNumberOfPlayers(int num) throws RemoteException {
+    public void setMaxNumberOfPlayer(int num) throws RemoteException {
         model.setMaxNumberOfPlayer(num);
-    }
-
-    public void nextTurn(){
-        model.nextPlayer();
     }
     public int getMaxNumberOfPlayer(){
         return model.getMaxNumberOfPlayer();
     }
-    public void setMaxNumberOfPlayer(int num){model.setMaxNumberOfPlayer(num);}
+    public void nextTurn(){
+        model.nextPlayer();
+    }
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
+        model.setStatus(model.getLastStatus());
+        model.resetLastStatus();
     }
     public void disconnectPlayer(String nickname) {
-        model.reconnectPlayer(nickname);
+        model.disconnectPlayer(nickname);
+        model.setLastStatus();
+        model.setStatus(GameStatus.WAITING_RECONNECTION);
     }
     @Override
-    public void removePlayer(Player player){model.removePlayer(player);}
-    public GameStatus getGameStatus(){return model.getStatus();}
-    public Boolean playersAreReady(){return model.arePlayerReady();}
+    public void removePlayer(Player player){
+        model.removePlayer(player);
+    }
+    public GameStatus getGameStatus(){
+        return model.getGameStatus();
+    }
+    public GameStatus getLastStatus(){
+        return  model.getLastStatus();
+    }
+    public Boolean playersAreReady(){
+        return model.arePlayerReady();
+    }
 
 
 //---------------------------------TABLE AND INIT SECTION
@@ -159,7 +169,7 @@ public class GameController implements GameControllerInterface,Runnable{
 
 //---------------------------------ADD CARD SECTION
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip){
-        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getStatus().equals(GameStatus.LAST_TURN))){
+        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))){
             // listener you cannot draw in this phase
             return;
         }
@@ -170,7 +180,7 @@ public class GameController implements GameControllerInterface,Runnable{
         checkPoints20Points();
     }
     public void addStartingCard(Boolean flip){
-        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getStatus().equals(GameStatus.LAST_TURN))){
+        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))){
             // listener you cannot draw in this phase
             return;
         }
@@ -180,7 +190,7 @@ public class GameController implements GameControllerInterface,Runnable{
         getCurrentPlayer().addStarting();
     }
     public void choosePlayerGoal(int choice){
-        if(!(model.getStatus().equals(GameStatus.RUNNING))){
+        if(!(model.getGameStatus().equals(GameStatus.RUNNING))){
             // listener you cannot draw in this phase
             return;
         }
@@ -198,7 +208,7 @@ public class GameController implements GameControllerInterface,Runnable{
                 && model.getGameBoardDeck().getGoldCards()[1] == null;
     }
     public void drawResourceFromDeck(){
-        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
             return;
         }
@@ -216,7 +226,7 @@ public class GameController implements GameControllerInterface,Runnable{
 
     }
     public void drawGoldFromDeck(){
-        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
             return;
         }
@@ -233,7 +243,7 @@ public class GameController implements GameControllerInterface,Runnable{
         }
     }
     public void drawFromBoard(int position){
-        if(!(model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
             return;
         }
@@ -267,7 +277,9 @@ public class GameController implements GameControllerInterface,Runnable{
     }
 
 //---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
-    public Game getGame(){return model;}
+    public Game getGame(){
+        return model;
+    }
     public int[] getAllPoints(){
         int[] points = new int[model.getPlayers().size()];
         for(Player p : getAllPlayer()){
@@ -275,7 +287,9 @@ public class GameController implements GameControllerInterface,Runnable{
         }
         return points;
     }
-    public BoardDeck getBoardDeck(){return model.getGameBoardDeck();}
+    public BoardDeck getBoardDeck(){
+        return model.getGameBoardDeck();
+    }
     public Card[] getSeedUpDrawableDeck(){
         Card[] up2Deck = new PlayingCard[2];
         up2Deck[0]= model.getGameDrawableDeck().getDecks().get("resources").peek();

@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
@@ -12,8 +13,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.PrintAsync.printAsync;
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.PrintAsync.printAsyncNoLine;
+import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
+import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinterNoLine;
 
 
 public class RMIClient implements VirtualViewInterface {
@@ -39,14 +40,14 @@ public class RMIClient implements VirtualViewInterface {
                 registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
                 requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
 
-                printAsync("Client RMI ready");
+                ConsolePrinter.consolePrinter("Client RMI ready");
                 retry = false;
 
             }catch (Exception e){
                 if (!retry) {
-                    printAsync("[ERROR] CONNECTING TO RMI SERVER: \n\tClient RMI exception: " + e + "\n");
+                    ConsolePrinter.consolePrinter("[ERROR] CONNECTING TO RMI SERVER: \n\tClient RMI exception: " + e + "\n");
                 }
-                printAsyncNoLine("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + DefaultNetworkValues.Default_RMI_port + "' with name: '" + DefaultNetworkValues.Default_servername_RMI + "'");
+                consolePrinterNoLine("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + DefaultNetworkValues.Default_RMI_port + "' with name: '" + DefaultNetworkValues.Default_servername_RMI + "'");
 
                 i = 0;
                 while (i < DefaultNetworkValues.seconds_reconnection) {
@@ -55,13 +56,13 @@ public class RMIClient implements VirtualViewInterface {
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
-                    printAsyncNoLine(".");
+                    consolePrinterNoLine(".");
                     i++;
                 }
-                printAsyncNoLine("\n");
+                consolePrinterNoLine("\n");
 
                 if (attempt >= DefaultNetworkValues.num_of_attempt) {
-                    printAsyncNoLine("Give up!");
+                    consolePrinterNoLine("Give up!");
                     try {
                         System.in.read();
                     } catch (IOException ex) {
