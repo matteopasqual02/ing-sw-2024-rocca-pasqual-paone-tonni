@@ -30,12 +30,17 @@ public class ListenersHandler {
     }
 
     public void notify_addedPlayer(Game model) {
+        //ho scritto 2 modi diversi per farlo, bisogna scegliere quale è meglio
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+        /*
         Iterator<GameListener> i = listeners.iterator();
         while (i.hasNext()){
             GameListener listener = i.next();
             listener.playerJoined(new GameImmutable(model));
             //ci sara da gestire qui il caso della disconnessione durante la notifica
-        }
+        }*/
     }
 
     public void notify_fullGame(Game model) {
