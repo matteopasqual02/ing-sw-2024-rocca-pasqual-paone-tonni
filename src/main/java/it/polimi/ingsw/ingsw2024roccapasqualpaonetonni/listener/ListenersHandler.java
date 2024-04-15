@@ -11,7 +11,7 @@ occurs in the model (the controller does something) one of these methods gets ca
 change to each of the clients. These methods call other methods on the actual single listener giving it an immutable model
 to show the change
 
-these are not hte methods that directly nptify the clients, the are the ones that call those methods on all of the client. We could have done that in the controller
+these are not hte methods that directly notify the clients, they are the ones that call those methods on all of the clients. We could have done that in the controller
 but this way it's less confusing, or else everything would be in the controller
  */
 public class ListenersHandler {
