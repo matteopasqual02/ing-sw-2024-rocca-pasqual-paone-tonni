@@ -313,8 +313,6 @@ public class GameController implements GameControllerInterface,Runnable{
 
 //---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
     public Game getGame(){
-
-        listenersHandler.notify_gotGame(this.model);
         return model;
     }
     public int[] getAllPoints(){
@@ -322,13 +320,11 @@ public class GameController implements GameControllerInterface,Runnable{
         for(Player p : getAllPlayer()){
             points[p.getColorPlayer()-1] = p.getCurrentPoints();
         }
-        listenersHandler.notify_gotPoints(this.model);
         return points;
     }
-    public BoardDeck getBoardDeck(){
-
-        listenersHandler.notify_gotBoardDeck(this.model);
+    public BoardDeck getBoardDeck() {
         return model.getGameBoardDeck();
+    }
 //---------------------------------GET SECTION TO TEST
     public GameImmutable getImmutableGame(){
         return new GameImmutable(model);
