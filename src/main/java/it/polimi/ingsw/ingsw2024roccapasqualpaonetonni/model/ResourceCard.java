@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-
-//import static org.fusesource.jansi.Ansi.ansi;
+import org.fusesource.jansi.Ansi;
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class ResourceCard extends PlayingCard{
     public ResourceCard(int id, Seed seed, Corner[] c,int points){
@@ -12,7 +12,13 @@ public class ResourceCard extends PlayingCard{
         return points;
     }
 
+    public String toString(){
+        StringBuilder resultString = new StringBuilder();
 
+        resultString.append(ansi().cursor(0,0).fg(Ansi.Color.WHITE).bg(Ansi.Color.YELLOW));
+
+        return resultString.toString();
+    }
 }
 
 // Resource Card is actually a PlayingCard Without being an abstract class
