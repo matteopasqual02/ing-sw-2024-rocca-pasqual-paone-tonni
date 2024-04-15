@@ -124,8 +124,8 @@ public class Game {
     public int checkPlayerTotalPoint(Player p){
         return p.getCurrentPoints()
                 + p.getGoal().pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective()[0].pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective()[1].pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective(0).pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard())
                 ;
     }
     public void checkWinner(){

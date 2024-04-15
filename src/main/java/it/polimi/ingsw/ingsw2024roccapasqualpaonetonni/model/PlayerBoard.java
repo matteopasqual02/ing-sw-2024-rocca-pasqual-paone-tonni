@@ -108,7 +108,7 @@ public class PlayerBoard {
             place_coord[1] = prev_coord[1] - 1;
         }
 
-        if (checkSpotAvailable (card_to_add, place_coord)) {
+        if (checkSpotAvailable(place_coord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
             if (card_to_add.isFlipped() || tmp[0] == 1) {
                 addCardToBoard(place_coord, card_to_add, seedCount);
@@ -156,7 +156,7 @@ public class PlayerBoard {
 
     // checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
-    private boolean checkSpotAvailable(PlayingCard card, int[] coordinates) {
+    private boolean checkSpotAvailable(int[] coordinates) {
         PlayingCard cardOnBoard;
         int x = coordinates[0];
         int y = coordinates[1];

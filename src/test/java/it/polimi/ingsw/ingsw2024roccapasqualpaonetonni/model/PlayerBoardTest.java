@@ -247,9 +247,7 @@ class PlayerBoardTest {
         board1.addStartingCard(cardToAdd);
 
         assertThrows(InvalidPlaceException.class,
-                ()->{
-                    board1.addCard(card_to_add,cardToAdd,3,owner.getCountSeed());
-                });
+                ()-> board1.addCard(card_to_add,cardToAdd,3,owner.getCountSeed()));
 
 
     }

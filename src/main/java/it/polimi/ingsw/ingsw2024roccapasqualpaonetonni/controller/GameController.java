@@ -1,7 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.DeckEmptyException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoCardException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
@@ -98,7 +100,7 @@ public class GameController implements GameControllerInterface,Runnable{
 
 //---------------------------------TABLE AND INIT SECTION
     @Override
-    public Boolean createTable(){
+    public Boolean createTable() {
         if(model.arePlayerReady()) {
             Map<String, List<Card>> cardsMap = null;
             try {
@@ -123,15 +125,45 @@ public class GameController implements GameControllerInterface,Runnable{
             }
             //create decks
             DrawableDeck decks = new DrawableDeck(shuffledDecks);
-            BoardDeck boardDeck = new BoardDeck();
+            BoardDeck boardDeck = new BoardDeck(model);
 
             //set the BoardDeck
-            boardDeck.setObjectiveCards(decks.drawFirstObjective(),0);
-            boardDeck.setObjectiveCards(decks.drawFirstObjective(),1);
-            boardDeck.setResourceCards(decks.drawFirstResource(),0);
-            boardDeck.setResourceCards(decks.drawFirstResource(),1);
-            boardDeck.setGoldCards(decks.drawFirstGold(),0);
-            boardDeck.setGoldCards(decks.drawFirstGold(),1);
+            try {
+                boardDeck.setObjectiveCards(decks.drawFirstObjective(),0);
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                boardDeck.setObjectiveCards(decks.drawFirstObjective(),1);
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                boardDeck.setResourceCards(decks.drawFirstResource(),0);
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                boardDeck.setResourceCards(decks.drawFirstResource(),1);
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                boardDeck.setGoldCards(decks.drawFirstGold(),0);
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                boardDeck.setGoldCards(decks.drawFirstGold(),1);
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
 
             model.setGameDrawableDeck(decks);
             model.setGameBoardDeck(boardDeck);
@@ -158,11 +190,36 @@ public class GameController implements GameControllerInterface,Runnable{
     }
     private void turnZero() {
         for(Player player : getAllPlayer()){
-            player.drawStarting(model.getGameDrawableDeck());
-            player.drawGoals(model.getGameDrawableDeck());
-            player.drawResourcesFromDeck(model.getGameDrawableDeck());
-            player.drawResourcesFromDeck(model.getGameDrawableDeck());
-            player.drawGoldFromDeck(model.getGameDrawableDeck());
+            try {
+                player.drawStarting(model.getGameDrawableDeck());
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                player.drawGoals(model.getGameDrawableDeck());
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                player.drawResourcesFromDeck(model.getGameDrawableDeck());
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                player.drawResourcesFromDeck(model.getGameDrawableDeck());
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
+            try {
+                player.drawGoldFromDeck(model.getGameDrawableDeck());
+            }
+            catch (DeckEmptyException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -202,29 +259,27 @@ public class GameController implements GameControllerInterface,Runnable{
     private boolean decksAreAllEmpty() {
         return model.getGameDrawableDeck().getDecks().get("resources").isEmpty()
                 && model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
-                && model.getGameBoardDeck().getResourceCards()[0] == null
-                && model.getGameBoardDeck().getResourceCards()[1] == null
-                && model.getGameBoardDeck().getGoldCards()[0] == null
-                && model.getGameBoardDeck().getGoldCards()[1] == null;
+                && model.getGameBoardDeck().isEmpty();
     }
     public void drawResourceFromDeck(){
-        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-
-        }
-        else if(!model.getGameDrawableDeck().getDecks().get("resources").isEmpty()){
-            getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
         }
         else {
-            // listener change deck
-            return;
+            try {
+                getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
+            }
+            catch (DeckEmptyException e) {
+                // listener change deck
+                e.printStackTrace();
+            }
         }
-
     }
+
     public void drawGoldFromDeck(){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
@@ -234,12 +289,14 @@ public class GameController implements GameControllerInterface,Runnable{
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
         }
-        else if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
-            getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
-        }
         else {
-            // listener change deck
-            return;
+            try {
+                getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
+            }
+            catch (DeckEmptyException e) {
+                // listener change deck
+                e.printStackTrace();
+            }
         }
     }
     public void drawFromBoard(int position){
@@ -251,13 +308,14 @@ public class GameController implements GameControllerInterface,Runnable{
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
         }
-        else if((position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null) ||
-                (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)) {
-            getCurrentPlayer().drawFromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
-        }
         else {
-            // listener change deck
-            return;
+            try {
+                getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
+            }
+            catch (NoCardException e) {
+                // listener change deck
+                return;
+            }
         }
     }
 

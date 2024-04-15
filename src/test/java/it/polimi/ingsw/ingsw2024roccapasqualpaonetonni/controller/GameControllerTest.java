@@ -55,12 +55,12 @@ class GameControllerTest {
         assertEquals(2,gameController.getGame().getGameDrawableDeck().getDecks().get("starting").size());
         assertEquals(6,gameController.getGame().getGameDrawableDeck().getDecks().get("objective").size());
 
-        assertNotNull(gameController.getBoardDeck().getCommonObjective()[0]);
-        assertNotNull(gameController.getBoardDeck().getCommonObjective()[1]);
-        assertNotNull(gameController.getBoardDeck().getGoldCards()[0]);
-        assertNotNull(gameController.getBoardDeck().getGoldCards()[1]);
-        assertNotNull(gameController.getBoardDeck().getResourceCards()[0]);
-        assertNotNull(gameController.getBoardDeck().getResourceCards()[1]);
+        assertNotNull(gameController.getBoardDeck().getCommonObjective(0));
+        assertNotNull(gameController.getBoardDeck().getCommonObjective(1));
+        assertNotNull(gameController.getBoardDeck().getCard(1));
+        assertNotNull(gameController.getBoardDeck().getCard(2));
+        assertNotNull(gameController.getBoardDeck().getCard(3));
+        assertNotNull(gameController.getBoardDeck().getCard(4));
 
         //assert on player hand
         for (Player player: gameController.getAllPlayer()){
