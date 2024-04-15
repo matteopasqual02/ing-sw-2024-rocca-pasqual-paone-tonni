@@ -5,8 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.PrintAsync.printAsync;
+import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainServer {
@@ -16,7 +17,7 @@ public class MainServer {
         //insert IP
         do{
             clearCMD();
-            printAsync(ansi().cursor(1, 0).a("Insert the remote IP (leave empty and press enter for localhost);"));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert the remote IP (leave empty and press enter for localhost);"));
             inputRemoteIP = new Scanner(System.in).nextLine();
         }while (!inputRemoteIP.isEmpty() && !isValidIP(inputRemoteIP)) ;
 
@@ -51,7 +52,7 @@ public class MainServer {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (IOException | InterruptedException e) {
-            printAsync("\033\143");   //for Mac
+            ConsolePrinter.consolePrinter("\033\143");   //for Mac
         }
     }
 }

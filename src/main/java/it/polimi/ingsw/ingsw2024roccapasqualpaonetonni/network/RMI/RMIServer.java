@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
@@ -12,7 +13,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.PrintAsync.printAsync;
+import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
 public class RMIServer extends UnicastRemoteObject implements MainControllerInterface {
 
@@ -27,7 +28,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
             //bind stub in registry
             registry = LocateRegistry.createRegistry(DefaultNetworkValues.Default_RMI_port);
             getRegistry().rebind(DefaultNetworkValues.Default_servername_RMI,server);
-            printAsync("[READY] RMI SERVER");
+            ConsolePrinter.consolePrinter("[READY] RMI SERVER");
 
         }catch (RemoteException e){
             e.printStackTrace();
@@ -71,7 +72,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }catch (RemoteException e){
             e.printStackTrace();
         }
-        printAsync("[RMI] " + nickname + " has created and joined a new game");
+        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has created and joined a new game");
         return result;
     }
 
@@ -84,7 +85,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }catch (RemoteException e){
             e.printStackTrace();
         }
-        printAsync("[RMI] " + nickname + " has joined the game");
+        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game");
         return result;
     }
 
@@ -97,7 +98,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }catch (RemoteException e){
             e.printStackTrace();
         }
-        printAsync("[RMI] " + nickname + " has re-joined the game" + idToReconnect);
+        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has re-joined the game" + idToReconnect);
         return result;
     }
 
@@ -110,7 +111,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }catch (RemoteException e){
             e.printStackTrace();
         }
-        printAsync("[RMI] " + nickname + " has leaved the game");
+        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has leaved the game");
         return result;
     }
 }

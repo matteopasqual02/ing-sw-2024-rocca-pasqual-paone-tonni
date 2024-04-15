@@ -8,4 +8,5 @@ public class DefaultNetworkValues {
     public final static String Default_servername_RMI = "Codex";
     public final static int seconds_reconnection = 5;
     public final static int num_of_attempt= 5;
+
 }

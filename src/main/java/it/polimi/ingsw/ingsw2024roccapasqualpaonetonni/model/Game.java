@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Game {
     private final int gameId;
-    private GameStatus status;
+    private final GameStatus[] status; //current and previous status needed for reconnection
     private int maxNumberOfPlayer;
     private final Queue<Player> players;
     private final Queue<Player> winner;
@@ -22,7 +22,9 @@ public class Game {
         players = new LinkedList<>();
         winner = new LinkedList<>();
         firstPlayer = null;
-        status = GameStatus.PREPARATION;
+        status = new GameStatus[2];
+        status[0] = GameStatus.PREPARATION;
+        status[1] = GameStatus.PREPARATION;
         this.maxNumberOfPlayer=0;
         this.gameId = id;
 
@@ -32,9 +34,13 @@ public class Game {
         chat = new Chat();
     }
 
+//---------------------------------PLAYER SECTION
     public int getGameId(){return  gameId;}
-    public void setNumberOfPlayer(int number){
+    public void setMaxNumberOfPlayer(int number){
         this.maxNumberOfPlayer=number;
+    }
+    public int getMaxNumberOfPlayer(){
+        return maxNumberOfPlayer;
     }
     public void addPlayer (Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
         if(!players.contains(px)){
@@ -52,8 +58,8 @@ public class Game {
     }
     public void removePlayer(Player p){
         players.remove(p);
-        if(status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_TURN)){
-            status = GameStatus.ENDED;
+        if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
+            status[0] = GameStatus.ENDED;
         }
     }
     public void reconnectPlayer(String nickname) {
@@ -61,27 +67,39 @@ public class Game {
         if(p!=null){
             p.setIsConnected(true);
         }
+        else {
+
+        }
     }
     public void disconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(false);
         }
+        else {
+
+        }
     }
     public void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
     }
     public void setStatus(GameStatus status) {
-        this.status = status;
+        this.status[0] = status;
     }
-    public GameStatus getStatus(){
-        return status;
+    public void setLastStatus() {
+        status[1] =status[0];
+    }
+    public void resetLastStatus() {
+        status[1] = null;
+    }
+    public GameStatus getGameStatus(){
+        return status[0];
+    }
+    public GameStatus getLastStatus(){
+        return status[1];
     }
     public Queue<Player> getPlayers() {
         return players;
-    }
-    public Player getFirstPlayer() {
-        return firstPlayer;
     }
     public Player getCurrentPlayer(){
         return players.peek();
@@ -97,8 +115,8 @@ public class Game {
         temp = players.poll();
         players.add(temp);
         Player newCurrent = players.peek();
-        if (firstPlayer != null && newCurrent.equals(firstPlayer) && status.equals(GameStatus.WAITING_LAST_TURN)) {
-            status = GameStatus.LAST_TURN;
+        if (newCurrent != null && newCurrent.equals(firstPlayer) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
+            status[0] = GameStatus.LAST_TURN;
         }
     }
 
@@ -147,6 +165,7 @@ public class Game {
     public void setGameBoardDeck(BoardDeck deck) {
         this.gameBoardDeck = deck;
     }
+
 
 
 }

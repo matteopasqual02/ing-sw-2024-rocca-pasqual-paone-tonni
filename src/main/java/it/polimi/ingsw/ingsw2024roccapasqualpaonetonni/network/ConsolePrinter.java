@@ -1,16 +1,14 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
 import  org.fusesource.jansi.Ansi;
-public class PrintAsync {
-    public static void printAsync(Ansi msg){
+public class ConsolePrinter {
+    public static void consolePrinter(Ansi msg){
         new Thread(()->{System.out.println(msg);}).start();
     }
-    public static void printAsync(String msg){
+    public static void consolePrinter(String msg){
         new Thread(()->{System.out.println(msg);}).start();
     }
-    public static void printAsync(StringBuilder msg){
+    public static void consolePrinter(StringBuilder msg){
         new Thread(()->{System.out.println(msg);}).start();
     }
-    public static void printAsyncNoLine(String msg){
-        new Thread(()->{System.out.print(msg);}).start();
-    }
+
 }

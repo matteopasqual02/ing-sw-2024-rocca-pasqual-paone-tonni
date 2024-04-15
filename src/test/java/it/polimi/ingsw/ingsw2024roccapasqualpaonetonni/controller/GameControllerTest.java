@@ -1,12 +1,11 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +19,7 @@ class GameControllerTest {
         GameController gameController = new GameController(0);
 
         //set the max number of player and
-        gameController.setNumberOfPlayers(4);
+        gameController.setMaxNumberOfPlayer(4);
 
         //set the players
         gameController.addPlayer("a");
@@ -30,7 +29,7 @@ class GameControllerTest {
 
         //assert all the player are well initialized
         assertEquals(4,gameController.getAllPlayer().size());
-        assertEquals(4,gameController.getNumberOfPlayer());
+        assertEquals(4,gameController.getMaxNumberOfPlayer());
         assertTrue(gameController.playersAreReady());
         for(Player player: gameController.getAllPlayer()){
             for(Player player1: gameController.getAllPlayer()){
@@ -80,7 +79,7 @@ class GameControllerTest {
         assertEquals(GameStatus.RUNNING,gameController.getGameStatus());
 
         //assert all points at 0
-        for(int points=0; points< gameController.getNumberOfPlayer(); points++){
+        for(int points=0; points< gameController.getMaxNumberOfPlayer(); points++){
             assertEquals(0,gameController.getAllPoints()[points]);
         }
     }
@@ -90,7 +89,7 @@ class GameControllerTest {
     void turnGameTest() throws RemoteException{
         GameController gameController = new GameController(0);
 
-        gameController.setNumberOfPlayers(4);
+        gameController.setMaxNumberOfPlayer(4);
         gameController.addPlayer("a");
         gameController.addPlayer("b");
         gameController.addPlayer("c");
@@ -101,27 +100,27 @@ class GameControllerTest {
         gameController.choosePlayerGoal(1);
         gameController.addStartingCard(false);
 
-        List<PlayingCard> hand = gameController.getAllPlayer().peek().getHand();
-        StartingCard startingCard = gameController.getAllPlayer().peek().getStartingCard();
-        PlayingCard cardToAdd = hand.get(0);
+        List<PlayingCard> hand = Objects.requireNonNull(gameController.getAllPlayer().peek()).getHand();
+        StartingCard startingCard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getStartingCard();
+        PlayingCard cardToAdd = hand.getFirst();
         int pointsReceived = cardToAdd.getPoints();
         gameController.addCard(cardToAdd,startingCard,1,false);
         gameController.drawGoldFromDeck();
 
         //series of assert
         //to check goal chosen
-        ObjectiveCard goal = gameController.getAllPlayer().peek().getGoal();
-        ObjectiveCard goalVector = gameController.getAllPlayer().peek().getObjectiveBeforeChoice()[1];
+        ObjectiveCard goal = Objects.requireNonNull(gameController.getAllPlayer().peek()).getGoal();
+        ObjectiveCard goalVector = Objects.requireNonNull(gameController.getAllPlayer().peek()).getObjectiveBeforeChoice()[1];
         assertEquals(goalVector,goal);
 
         //assert starting card
-        StartingCard cardPlaced = gameController.getAllPlayer().peek().getStartingCard();
-        PlayingCard cardOnBoard = gameController.getAllPlayer().peek().getBoard().getBoard()[20][20];
+        StartingCard cardPlaced = Objects.requireNonNull(gameController.getAllPlayer().peek()).getStartingCard();
+        PlayingCard cardOnBoard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[20][20];
         assertEquals(cardPlaced,cardOnBoard);
 
         //assert correct second placing
 
-        PlayingCard cardOnBoard2 = gameController.getAllPlayer().peek().getBoard().getBoard()[19][19];
+        PlayingCard cardOnBoard2 = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[19][19];
         assertEquals(cardToAdd,cardOnBoard2);
 
         //to check the correct draw
@@ -137,25 +136,25 @@ class GameControllerTest {
 
         //check points increase
         int[] pointsOnBoard = gameController.getAllPoints();
-        int pointsOnBoardCurrentPlayer = pointsOnBoard[gameController.getAllPlayer().peek().getColorPlayer()-1];
+        int pointsOnBoardCurrentPlayer = pointsOnBoard[Objects.requireNonNull(gameController.getAllPlayer().peek()).getColorPlayer()-1];
         assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
     }
 
     /*It controls that set status is correctly updated*/
     @Test
-    void gameStatusTest() throws RemoteException{
+    void gameStatusTest(){
         GameController gameController = new GameController(0);
 
         gameController.getGame().setStatus(GameStatus.PREPARATION);
         assertEquals(GameStatus.PREPARATION, gameController.getGameStatus() );
     }
 
-    /*It controls the end of the turn*/
+    /*It controls multiple turns */
     @Test
     void endGameTest() throws RemoteException{
         GameController gameController = new GameController(0);
 
-        gameController.setNumberOfPlayers(4);
+        gameController.setMaxNumberOfPlayer(4);
         gameController.addPlayer("a");
         gameController.addPlayer("b");
         gameController.addPlayer("c");
@@ -166,21 +165,25 @@ class GameControllerTest {
         PlayingCard playedNow;
 
         //All players choose their goals and adding the first card
-        for (int i=0; i< gameController.getNumberOfPlayer(); i++) {
+        for (int i=0; i< gameController.getMaxNumberOfPlayer(); i++) {
             gameController.choosePlayerGoal(1);
             gameController.addStartingCard(false);
-            playedBefore = gameController.getCurrentPlayer().getHand().get(0);
+            playedBefore = gameController.getCurrentPlayer().getHand().getFirst();
             gameController.addCard(playedBefore,gameController.getCurrentPlayer().getStartingCard(),1,true);
             gameController.drawResourceFromDeck();
 
             for(int j=0; j<5; j++){
-                playedNow = gameController.getCurrentPlayer().getHand().get(0);
+                playedNow = gameController.getCurrentPlayer().getHand().getFirst();
                 gameController.addCard(playedNow,playedBefore,1,true);
                 gameController.drawResourceFromDeck();
                 playedBefore=playedNow;
             }
 
             gameController.nextTurn();
+        }
+
+        for(int points=0; points< gameController.getMaxNumberOfPlayer(); points++){
+            assertEquals(0,gameController.getAllPoints()[points]);
         }
 
 

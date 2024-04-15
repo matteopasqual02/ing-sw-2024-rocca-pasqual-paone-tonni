@@ -1,4 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 
@@ -7,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.PrintAsync.printAsync;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
@@ -19,11 +19,11 @@ public class MainClient {
         killLoggers();
 
         do {
-            printAsync(ansi().cursor(1, 0).a("Insert remote IP (leave empty for localhost)"));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert remote IP (leave empty for localhost)"));
             input = new Scanner(System.in).nextLine();
             if(!input.isEmpty() && !isValidIP(input)){
                 clearCMD();
-                printAsync("Not valid");
+                ConsolePrinter.consolePrinter("Not valid");
             }
         } while (!input.isEmpty() && !isValidIP(input));
 
@@ -33,11 +33,11 @@ public class MainClient {
 
         clearCMD();
         do {
-            printAsync(ansi().cursor(1, 0).a("Insert your IP (leave empty for localhost)"));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert your IP (leave empty for localhost)"));
             input = new Scanner(System.in).nextLine();
             if(!input.isEmpty() && !isValidIP(input)){
                 clearCMD();
-                printAsync("Not valid");
+                ConsolePrinter.consolePrinter("Not valid");
             }
         } while (!input.isEmpty() && !isValidIP(input));
         if (!input.isEmpty()){System.setProperty("java.rmi.server.hostname", input);}
@@ -45,13 +45,13 @@ public class MainClient {
 
         clearCMD();
         do {
-            printAsync(ansi().cursor(1, 0).a("Select option: \n (1) TUI + Socket \n (2) TUI + RMI \n (3) GUI + Socket \n (4) GUI + RMI "));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Select option: \n (1) TUI + Socket \n (2) TUI + RMI \n (3) GUI + Socket \n (4) GUI + RMI "));
             input = new Scanner(System.in).nextLine();
             try {
                 selection = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 selection = -1;
-                printAsync("Nan");
+                ConsolePrinter.consolePrinter("Nan");
             }
         } while (selection != 1 && selection != 2 && selection != 3 && selection != 4);
 
@@ -65,7 +65,7 @@ public class MainClient {
             conSel = ConnectionType.RMI;
         }
 
-        printAsync("Starting the game!");
+        ConsolePrinter.consolePrinter("Starting the game!");
 
         //Starts the UI wanted
         if (selection == 1 || selection == 2) {
@@ -82,7 +82,7 @@ public class MainClient {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (IOException | InterruptedException e) {
-            printAsync("\033\143");   //for Mac
+            ConsolePrinter.consolePrinter("\033\143");   //for Mac
         }
     }
 
