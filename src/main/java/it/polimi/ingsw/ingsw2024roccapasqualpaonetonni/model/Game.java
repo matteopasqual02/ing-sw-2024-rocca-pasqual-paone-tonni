@@ -16,7 +16,7 @@ public class Game {
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
-    private Chat chat;
+    private final Chat chat;
 
     public Game(int id){
         players = new LinkedList<>();
@@ -166,6 +166,9 @@ public class Game {
         this.gameBoardDeck = deck;
     }
 
+//---------------------------------CHAT SECTION
 
-
+    public Chat getChat() {
+        return chat;
+    }
 }

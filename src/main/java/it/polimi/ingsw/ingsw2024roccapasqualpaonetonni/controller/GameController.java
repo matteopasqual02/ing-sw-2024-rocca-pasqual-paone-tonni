@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 
@@ -328,14 +329,9 @@ public class GameController implements GameControllerInterface,Runnable{
 
         listenersHandler.notify_gotBoardDeck(this.model);
         return model.getGameBoardDeck();
+//---------------------------------GET SECTION TO TEST
+    public GameImmutable getImmutableGame(){
+        return new GameImmutable(model);
     }
-    public Card[] getSeedUpDrawableDeck(){
-        Card[] up2Deck = new PlayingCard[2];
-        up2Deck[0]= model.getGameDrawableDeck().getDecks().get("resources").peek();
-        up2Deck[1]= model.getGameDrawableDeck().getDecks().get("gold").peek();
-
-        return  up2Deck;
-    }
-
 
 }
