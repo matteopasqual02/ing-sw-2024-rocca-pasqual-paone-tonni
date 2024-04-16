@@ -24,7 +24,7 @@ public class ResourceCard extends PlayingCard {
             if (corners[0] == null || corners[0].getSeed() == null) {
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
             } else {
-                sb.append(ansi().cursor(0, 0).fg(corners[0].getSeed().getByAnsi()).bg(background).a(corners[0].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(0, 0).fg(corners[0].getSeed().getByAnsi()).bg(Ansi.Color.BLACK).a(corners[0].getSeed().name().substring(0, 1)));
             }
 
             if (points == 0) {
@@ -36,7 +36,7 @@ public class ResourceCard extends PlayingCard {
             if (corners[1] == null || corners[1].getSeed() == null) {
                 sb.append(ansi().cursor(4, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
             } else {
-                sb.append(ansi().cursor(4, 0).fg(corners[1].getSeed().getByAnsi()).bg(background).a(corners[1].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(4, 0).fg(corners[1].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[1].getSeed().name().substring(0, 1)));
             }
         } else {
             // Retro della carta

@@ -9,7 +9,7 @@ class ResourceCardTest {
     @Test
     void TestResource () {
         Corner c1 = new Corner(1,null);
-        Corner c2 = new Corner(2,GREEN);
+        Corner c2 = new Corner(2,RED);
         Corner c3 = new Corner(3,GREEN);
         Corner c4 = new Corner(4,EMPTY);
         Corner[] cc ={c1,c2,c3,c4};
