@@ -295,11 +295,6 @@ public class GameController implements GameControllerInterface,Runnable{
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
             listenersHandler.notify_decksAllEmpty(this.model);
-
-        }
-        else if(!model.getGameDrawableDeck().getDecks().get("resources").isEmpty()){
-            getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
-            listenersHandler.notify_resourceDrawn(this.model);
         }
         else {
             try {
@@ -323,10 +318,6 @@ public class GameController implements GameControllerInterface,Runnable{
             model.setStatus(GameStatus.WAITING_LAST_TURN);
             listenersHandler.notify_decksAllEmpty(this.model);
 
-        }
-        else if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
-            getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
-            listenersHandler.notify_goldDrawn(this.model);
         }
         else {
             try {
