@@ -13,7 +13,7 @@ public abstract class ObjectiveCard extends Card {
     }
 
     public int pointCard(Player player){
-        return objectivePointsStrategy.count(player,this);
+        return 0;
     }
 
     public int getPoints(){
@@ -21,29 +21,7 @@ public abstract class ObjectiveCard extends Card {
     }
 }
 
-/*public int pointCard(PlayerBoard pb){
-        return pointsCountCard(pb);
-    }
-
-    private int pointsCountCard(PlayerBoard pb){
-        switch (type){
-            case RED,BLUE,PURPLE,GREEN ->{
-                return points * (pb.getPlayer().getCountSeed()[type.getId()] / 3);
-            }
-            case POTION,SCROLL,FEATHER ->{
-                return points * (pb.getPlayer().getCountSeed()[type.getId()] / 2);
-            }
-            case MIXED -> {
-                int[] seed ={pb.getPlayer().getCountSeed()[Seed.SCROLL.getId()],
-                            pb.getPlayer().getCountSeed()[Seed.FEATHER.getId()],
-                            pb.getPlayer().getCountSeed()[Seed.POTION.getId()]};
-                return points * Arrays.stream(seed).min().orElse(0);
-            }
-
-        }
-        return 0;
-    }
-    private int pointsPatternCard(PlayerBoard pb){
+/*private int pointsPatternCard(PlayerBoard pb){
         PlayingCard[][] board = pb.getBoard();
         int totalpoints =0;
         List<PlayingCard> usedByObjectiveCard = new ArrayList<>();
