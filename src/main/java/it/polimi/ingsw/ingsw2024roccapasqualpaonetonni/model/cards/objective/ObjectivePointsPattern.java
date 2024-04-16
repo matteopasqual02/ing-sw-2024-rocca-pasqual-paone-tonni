@@ -28,7 +28,7 @@ public class ObjectivePointsPattern implements ObjectivePointsStrategy{
 
     private void add(PlayingCard[][] board,int i,int j, Seed[][] pattern,List<PlayingCard> used){
         for(int k=0; k< pattern.length;k++){
-            for(int w=0; w < pattern[i].length; w++){
+            for(int w=0; w < pattern[k].length; w++){
                 if(pattern[k][w]!=null &&
                    board[i+k][j+w]!=null &&
                    pattern[k][w].equals(board[i+k][j+w].getSeed())
@@ -40,13 +40,11 @@ public class ObjectivePointsPattern implements ObjectivePointsStrategy{
     }
     private Boolean match(PlayingCard[][] board,int i,int j, Seed[][] pattern,List<PlayingCard> used){
         for(int k=0; k< pattern.length;k++){
-            for(int w=0; w < pattern[i].length; w++){
-                if(pattern[k][w]!=null &&
-                    board[i+k][j+w]!=null &&
-                    !pattern[k][w].equals(board[i+k][j+w].getSeed()) &&
-                    used.contains(board[i+k][j+w])
-                ){
-                    return false;
+            for(int w=0; w < pattern[k].length; w++){
+                if(pattern[k][w]!=null){
+                    if( board[i+k][j+w]==null ) return false;
+                    if( !pattern[k][w].equals(board[i+k][j+w].getSeed()) ) return false;
+                    if( used.contains(board[i+k][j+w]) ) return false;
                 }
             }
         }

@@ -11,7 +11,9 @@ public class ObjectivePointsCount implements ObjectivePointsStrategy{
         List<Integer> currentCount = new LinkedList<>();
 
         for(int position: countTypes){
-            currentCount.add(player.getCountSeed()[position]/countTypes[position]);
+            if (countTypes[position] != 0) {
+                currentCount.add(player.getCountSeed()[position]/countTypes[position]);
+            }
         }
 
         return  currentCount.stream().min(Integer::compareTo).orElse(0);
