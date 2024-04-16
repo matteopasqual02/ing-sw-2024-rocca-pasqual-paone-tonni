@@ -9,32 +9,17 @@ import java.util.List;
 
 public abstract class ObjectiveCard extends Card {
     private final int points;
-    private final  boolean isCount; //se è una carta obiettivo di tipo conteggio isCount=true, se è di tipo pattern isCount=false
-    private final Seed type;
-    private final String shape;
-    private final Seed primaryCard;
-    private final Seed secondaryCard;
 
-    public ObjectiveCard(int id, int points, boolean isCount, Seed type, Seed[] psCards, String shape){
+    public ObjectiveCard(int id, int points){
         super(id);
         this.points = points;
-        this.isCount = isCount;
-        this.type = type;
-        this.primaryCard = psCards[0];
-        this.secondaryCard = psCards[1];
-        this.shape = shape;
     }
 
+    /*
     public int pointCard(PlayerBoard pb){
-        if(isCount){
-            //card that count the number of seed or potion,....,mixed
-            return pointsCountCard(pb);
-        }
-        else {
-            //card that have a pattern
-            return pointsPatternCard(pb);
-        }
+        return pointsCountCard(pb);
     }
+
     private int pointsCountCard(PlayerBoard pb){
         switch (type){
             case RED,BLUE,PURPLE,GREEN ->{
@@ -165,25 +150,10 @@ public abstract class ObjectiveCard extends Card {
         }
         return totalpoints;
     }
+    */
 
 /* not used -- if needed for testing use it*/
     public int getPoints(){
         return points;
     }
-    public boolean getIsCount(){
-        return isCount;
-    }
-    public Seed getType(){
-        return type;
-    }
-    public String getShape(){
-        return shape;
-    }
-    public Seed getPrimaryCard(){
-        return primaryCard;
-    }
-    public Seed getSecondaryCard(){
-        return secondaryCard;
-    }
-
 }

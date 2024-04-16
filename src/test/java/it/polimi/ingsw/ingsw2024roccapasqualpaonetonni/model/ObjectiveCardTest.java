@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ObjectiveCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import org.junit.jupiter.api.Test;
@@ -38,8 +36,8 @@ class ObjectiveCardTest {
         Corner c4 = new Corner(4,RED);
         Corner[] cc ={c1,c2,c3,c4};
         ResourceCard card_to_add1 = new ResourceCard(10,GREEN,cc,1);
-        Seed[] psCard ={null,null};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,2,true,RED,psCard,null);
+        int[] types ={0, 0, 3, 0, 0, 0, 0};
+        ObjectiveCard objectiveCard = new ObjectiveCountCard(110,2, types);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -63,8 +61,8 @@ class ObjectiveCardTest {
         Corner c4 = new Corner(4,SCROLL);
         Corner[] cc ={c1,c2,c3,c4};
         ResourceCard card_to_add1 = new ResourceCard(10,GREEN,cc,1);
-        Seed[] psCard ={null,null};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,2,true,SCROLL,psCard,null);
+        int[] types ={0, 0, 0, 0, 0, 0, 2};
+        ObjectiveCard objectiveCard = new ObjectiveCountCard(110,2, types);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -87,8 +85,8 @@ class ObjectiveCardTest {
         Corner c4 = new Corner(4,POTION);
         Corner[] cc ={c1,c2,c3,c4};
         ResourceCard card_to_add1 = new ResourceCard(10,GREEN,cc,1);
-        Seed[] psCard ={null,null};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,3,true,MIXED,psCard,null);
+        int[] types ={0, 0, 0, 0, 1, 1, 1};
+        ObjectiveCard objectiveCard = new ObjectiveCountCard(110,3, types);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -112,8 +110,10 @@ class ObjectiveCardTest {
         ResourceCard card_to_add2 = new ResourceCard(11,GREEN,cf,1);
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
-        Seed[] psCard ={GREEN,null};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,2,false,null,psCard,"down");
+        Seed[][] pattern = {{GREEN, null, null},
+                {null, GREEN, null},
+                {null, null, GREEN}};
+        ObjectiveCard objectiveCard = new ObjectivePatternCard(110,2,pattern);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -142,8 +142,10 @@ class ObjectiveCardTest {
         ResourceCard card_to_add5 = new ResourceCard(12,GREEN,cf,1);
         ResourceCard card_to_add6 = new ResourceCard(12,GREEN,cf,1);
 
-        Seed[] psCard ={GREEN,null};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,2,false,null,psCard,"down");
+        Seed[][] pattern = {{GREEN, null, null},
+                {null, GREEN, null},
+                {null, null, GREEN}};
+        ObjectiveCard objectiveCard = new ObjectivePatternCard(110,2,pattern);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -172,8 +174,10 @@ class ObjectiveCardTest {
         ResourceCard card_to_add2 = new ResourceCard(11,GREEN,cf,1);
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
-        Seed[] psCard ={GREEN,null};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,2,false,null,psCard,"up");
+        Seed[][] pattern = {{null, null, GREEN},
+                {null, GREEN, null},
+                {GREEN, null, null}};
+        ObjectiveCard objectiveCard = new ObjectivePatternCard(110,2,pattern);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -199,8 +203,10 @@ class ObjectiveCardTest {
         ResourceCard card_to_add2 = new ResourceCard(11,RED,cf,1);
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
-        Seed[] psCard ={GREEN,RED};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,3,false,null,psCard,"se");
+        Seed[][] pattern ={{RED, null},
+                {RED, null},
+                {null, GREEN}};
+        ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -226,8 +232,10 @@ class ObjectiveCardTest {
         ResourceCard card_to_add2 = new ResourceCard(11,RED,cf,1);
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
-        Seed[] psCard ={GREEN,RED};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,3,false,null,psCard,"sw");
+        Seed[][] pattern ={{null, RED},
+                {null, RED},
+                {GREEN, null}};
+        ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -253,8 +261,10 @@ class ObjectiveCardTest {
         ResourceCard card_to_add2 = new ResourceCard(11,RED,cf,1);
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
-        Seed[] psCard ={GREEN,RED};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,3,false,null,psCard,"nw");
+        Seed[][] pattern ={{GREEN,null},
+                {null, RED},
+                {null, RED}};
+        ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
@@ -280,8 +290,10 @@ class ObjectiveCardTest {
         ResourceCard card_to_add2 = new ResourceCard(11,RED,cf,1);
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
-        Seed[] psCard ={GREEN,RED};
-        ObjectiveCard objectiveCard = new ObjectiveCard(110,3,false,null,psCard,"ne");
+        Seed[][] pattern ={{null,GREEN},
+                {RED, null},
+                {RED, null}};
+        ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
 
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);

@@ -192,7 +192,7 @@ class JSONUtilsTest {
             attributes.put("shape", JsonNull.INSTANCE);
         }
 
-        ObjectiveCard card = (ObjectiveCard) CardFactory.createObjectiveCard("Objective", id, attributes);
+        ObjectiveCard card = (ObjectiveCard) CardFactory.createObjectiveCard("Objective_Pattern", id, attributes);
 
         boolean flag = false;
         List<Card> cardList = cardMap.get("objective");
@@ -270,12 +270,31 @@ class JSONUtilsTest {
                         && card1.getCorner(4).getSeed().equals(card2.getCorner(4).getSeed())));
 
         }
-        else if (c1 instanceof ObjectiveCard && c2 instanceof ObjectiveCard) {
-            ObjectiveCard card1 = (ObjectiveCard) c1;
-            ObjectiveCard card2 = (ObjectiveCard) c2;
+        else if (c1 instanceof ObjectiveCountCard && c2 instanceof ObjectiveCountCard) {
+            ObjectiveCountCard card1 = (ObjectiveCountCard) c1;
+            ObjectiveCountCard card2 = (ObjectiveCountCard) c2;
+            boolean flag = true;
+            for (int i = 0; i < card1.getCountTypes().length && flag; i++) {
+                if (card1.getCountTypes()[i] != card2.getCountTypes()[i]) {
+                    flag = false;
+                }
+            }
             return card1.getPoints() == card2.getPoints()
-                    && card1.getIsCount() == card2.getIsCount();
-
+                    && flag;
+        }
+        else if (c1 instanceof ObjectivePatternCard && c2 instanceof ObjectivePatternCard) {
+            ObjectivePatternCard card1 = (ObjectivePatternCard) c1;
+            ObjectivePatternCard card2 = (ObjectivePatternCard) c2;
+            boolean flag = true;
+            for (int i = 0; i < card1.getPattern().length && flag; i++) {
+                for (int j = 0; j < card2.getPattern()[i].length && flag; j++) {
+                    if (card1.getPattern()[i][j] != card2.getPattern()[i][j]) {
+                        flag = false;
+                    }
+                }
+            }
+            return card1.getPoints() == card2.getPoints()
+                    && flag;
         }
         else {
             return false;

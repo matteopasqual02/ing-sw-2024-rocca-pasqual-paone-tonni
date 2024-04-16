@@ -11,9 +11,11 @@ public class DrawableDeck {
     public DrawableDeck(Map<String, Queue<Card>> decks){
         this.decks = decks;
     }
+
     public Map<String, Queue<Card>>  getDecks(){
         return decks;
     }
+
     public ResourceCard drawFirstResource() throws DeckEmptyException {
         Queue<Card> cards = decks.get("resources");
         // Check if the resource queue is not null and not empty
@@ -25,6 +27,7 @@ public class DrawableDeck {
             throw new DeckEmptyException("The deck is empty");
         }
     }
+
     public GoldCard drawFirstGold() throws DeckEmptyException {
         Queue<Card> cards = decks.get("gold");
         // Check if the resource queue is not null and not empty
@@ -36,6 +39,7 @@ public class DrawableDeck {
             throw new DeckEmptyException("The deck is empty");
         }
     }
+
     public ObjectiveCard drawFirstObjective() throws DeckEmptyException {
         Queue<Card> cards = decks.get("objective");
         // Check if the resource queue is not null and not empty

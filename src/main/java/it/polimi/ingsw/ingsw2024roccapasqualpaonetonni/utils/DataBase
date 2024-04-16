@@ -475,102 +475,88 @@
             "corners_back": ["red", "blue", "purple", "green"]
         }
     },
-    "objective": {
+    "objective_pattern": {
         "87": {
             "points": 2,
-            "is_count": 0,
-            "pattern_cards": ["red", null],
-            "shape": "up"
+            "pattern": [[null, null, "red"],
+                        [null, "red", null],
+                        ["red", null, null]]
         },
         "88": {
             "points": 2,
-            "is_count": 0,
-            "pattern_cards": ["green", null],
-            "shape": "down"
+            "pattern": [["green", null, null],
+                        [null, "green", null],
+                        [null, null, "green"]]
         },
         "89": {
             "points": 2,
-            "is_count": 0,
-            "pattern_cards": ["blue", null],
-            "shape": "up"
+            "pattern": [[null, null, "blue"],
+                        [null, "blue", null],
+                        ["blue", null, null]]
         },
         "90": {
             "points": 2,
-            "is_count": 0,
-            "pattern_cards": ["purple", null],
-            "shape": "down"
+            "pattern": [["purple", null, null],
+                        [null, "purple", null],
+                        [null, null, "purple"]]
         },
         "91": {
             "points": 3,
-            "is_count": 0,
-            "pattern_cards": ["green", "red"],
-            "shape": "se"
+            "pattern": [["red", null],
+                        ["red", null],
+                        [null, "green"]]
         },
         "92": {
-            "points":3,
-            "is_count": 0,
-            "pattern_cards": ["purple", "green"],
-            "shape": "sw"
+            "points": 3,
+            "pattern": [[null, "green"],
+                        [null, "green"],
+                        ["purple", null]]
         },
         "93": {
             "points": 3,
-            "is_count": 0,
-            "pattern_cards": ["red", "blue"],
-            "shape": "ne"
+            "pattern": [[null, "red"],
+                        ["blue", null],
+                        ["blue", null]]
         },
         "94": {
             "points": 3,
-            "is_count": 0,
-            "pattern_cards": ["blue", "purple"],
-            "shape": "nw"
-        },
+            "pattern": [["blue", null],
+                        [null, "purple"],
+                        [null, "purple"]]
+        }
+    },
+    "objective_count": {
         "95": {
             "points": 2,
-            "is_count": 1,
-            "pattern_cards": ["red", null],
-            "shape": null
+            "types": [0, 0, 3, 0, 0, 0, 0]
         },
         "96": {
             "points": 2,
-            "is_count": 1,
-            "pattern_cards": ["green", null],
-            "shape": null
+            "types": [3, 0, 0, 0, 0, 0, 0]
         },
         "97": {
             "points": 2,
-            "is_count": 1,
-            "pattern_cards": ["blue", null],
-            "shape": null
+            "types": [0, 3, 0, 0, 0, 0, 0]
         },
         "98": {
             "points": 2,
-            "is_count": 1,
-            "pattern_cards": ["purple", null],
-            "shape": null
+            "types": [0, 0, 0, 3, 0, 0, 0]
         },
         "99": {
             "points": 3,
-            "is_count": 1,
-            "pattern_cards": ["mixed", null],
-            "shape": null
+            "types": [0, 0, 0, 0, 1, 1, 1]
         },
         "100": {
             "points": 2,
-            "is_count": 1,
-            "pattern_cards": ["scroll", null],
-            "shape": null
+            "types": [0, 0, 0, 0, 0, 0, 1]
         },
         "101": {
             "points": 2,
-            "is_count": 1,
-            "pattern_cards": ["potion", null],
-            "shape": null
+            "types": [0, 0, 0, 0, 0, 1, 0]
         },
         "102": {
             "points": 2,
-            "is_count": 1,
-            "pattern_cards": ["feather", null],
-            "shape": null
+            "types": [0, 0, 0, 0, 1, 0, 0]
         }
     }
 }
