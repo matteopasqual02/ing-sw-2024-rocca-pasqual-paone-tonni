@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterf
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
 public interface GameControllerInterface extends Remote{
     void addPlayer(String nickname) throws RemoteException;

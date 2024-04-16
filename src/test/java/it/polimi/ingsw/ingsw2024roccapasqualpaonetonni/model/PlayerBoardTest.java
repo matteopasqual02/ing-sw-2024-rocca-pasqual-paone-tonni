@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import org.junit.jupiter.api.Test;
@@ -278,18 +281,10 @@ class PlayerBoardTest {
         ResourceCard card_to_add1 = new ResourceCard(10,GREEN,cc,1);
 
         //second resource card to be added on it
-        Corner c21 = new Corner(1,EMPTY);
-        Corner c22 = new Corner(2,GREEN);
-        Corner c23 = new Corner(3,GREEN);
-        Corner c24 = new Corner(4,EMPTY);
         Corner[] c2c ={c1,c2,c3,c4};
         ResourceCard card_to_add2 = new ResourceCard(11,BLUE,c2c,0);
 
         //third resource card to be added on previous 2
-        Corner c31 = new Corner(1,EMPTY);
-        Corner c32 = new Corner(2,GREEN);
-        Corner c33 = new Corner(3,GREEN);
-        Corner c34 = new Corner(4,EMPTY);
         Corner[] c3c ={c1,c2,c3,c4};
         ResourceCard card_to_add3 = new ResourceCard(12,BLUE,c3c,1);
 
@@ -342,10 +337,6 @@ class PlayerBoardTest {
         ResourceCard card_to_add2 = new ResourceCard(11,BLUE,c2c,0);
 
         //third resource card to be added on previous 2
-        Corner c31 = new Corner(1,EMPTY);
-        Corner c32 = new Corner(2,GREEN);
-        Corner c33 = new Corner(3,GREEN);
-        Corner c34 = new Corner(4,EMPTY);
         Corner[] c3c ={c1,c2,c3,c4};
         ResourceCard card_to_add3 = new ResourceCard(12,BLUE,c3c,1);
 

@@ -1,5 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoCardException;
 
 public class BoardDeck {
@@ -15,7 +19,7 @@ public class BoardDeck {
         this.model = model;
     }
 
-    public BoardDeck(ResourceCard[] rc,GoldCard[] gc, ObjectiveCard[] oc, Game model){
+    public BoardDeck(ResourceCard[] rc, GoldCard[] gc, ObjectiveCard[] oc, Game model){
         this.cards1 = rc;
         this.cards2 = gc;
         this.commonGoals = oc;

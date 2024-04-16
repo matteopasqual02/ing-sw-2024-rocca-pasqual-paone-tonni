@@ -1,8 +1,11 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
+
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 
 import java.util.Arrays;
 
-public class GoldCard extends PlayingCard{
+public class GoldCard extends PlayingCard {
     private final String pointCondition;
     private final int[] placeCondition;
     public GoldCard(int id, Seed seed, Corner[] c, int points, String cond, int[] p){
