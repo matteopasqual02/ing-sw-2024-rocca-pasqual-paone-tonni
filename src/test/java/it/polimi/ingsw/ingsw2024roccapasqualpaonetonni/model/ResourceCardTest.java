@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.EMPTY;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.GREEN;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ResourceCardTest {
 

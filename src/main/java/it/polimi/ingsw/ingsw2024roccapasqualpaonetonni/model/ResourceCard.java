@@ -13,7 +13,7 @@ public class ResourceCard extends PlayingCard {
     }
 
 
-    public String toString(boolean flipped) {
+    /*public String toString(boolean flipped) {
 
         int spacer;
 
@@ -33,7 +33,9 @@ public class ResourceCard extends PlayingCard {
                 // carta retro
             }
         }
-    }
+    }*/
+
+
     public String toString ( boolean flipped, String color, String[]corners,int points){
         StringBuilder sb = new StringBuilder();
 
