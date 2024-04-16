@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class ObjectiveCard extends Card{
     private final int points;
     private final  boolean isCount; //se è una carta obiettivo di tipo conteggio isCount=true, se è di tipo pattern isCount=false
@@ -183,4 +185,23 @@ public class ObjectiveCard extends Card{
         return secondaryCard;
     }
 
+/*
+    public String toString (boolean flipped) {
+
+        StringBuilder ris = new StringBuilder();
+
+        //Creazione di tutte le carte Obiettivo, da notare il fatto che non hanno retro, creazione test e controllo
+
+        if (!flipped) {
+            // stampa carta fronte
+            if () {
+                ris.append(ansi().cursor())
+            }
+
+        }
+        else {
+            // carta retro
+        }
+    }
+*/
 }

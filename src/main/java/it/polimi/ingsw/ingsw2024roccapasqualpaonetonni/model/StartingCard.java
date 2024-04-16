@@ -2,6 +2,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import java.util.Arrays;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class StartingCard extends PlayingCard{
     private final Boolean[] center;
     private final Corner[] cornersBack;
@@ -22,4 +24,24 @@ public class StartingCard extends PlayingCard{
             return corners[pos - 1];
         }
     }
+
+/*
+    public String toString (boolean flipped) {
+
+        StringBuilder ris = new StringBuilder();
+
+        //creazione di tutte le carte Starting, creazione e controllo con TEST
+
+        if (!flipped) {
+            // stampa carta fronte
+            if (){
+                ris.append(ansi().cursor())
+            }
+
+        }
+        else {
+            // carta retro
+        }
+    }
+   */
 }

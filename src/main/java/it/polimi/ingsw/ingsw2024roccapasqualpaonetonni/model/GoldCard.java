@@ -2,6 +2,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import java.util.Arrays;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class GoldCard extends PlayingCard{
     private final String pointCondition;
     private final int[] placeCondition;
@@ -46,6 +48,29 @@ public class GoldCard extends PlayingCard{
 
     public int[] getPlaceCondition(){return placeCondition;}
     public String getPointCondition() { return pointCondition; }
+
+
+    /*
+    public String toString (boolean flipped) {
+
+        StringBuilder ris = new StringBuilder();
+
+        //Creazione di tutte le carte Gold, creare e controllare con TEST
+
+        if (!flipped) {
+            // stampa carta fronte
+            if (pointCondition == null) {
+                ris.append(ansi().cursor());
+            }
+
+        }
+        else {
+            // carta retro
+        }
+    }
+
+     */
+
 }
 
 
