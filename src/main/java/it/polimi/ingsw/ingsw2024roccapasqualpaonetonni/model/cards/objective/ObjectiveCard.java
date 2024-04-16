@@ -1,22 +1,27 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 
 public abstract class ObjectiveCard extends Card {
-    private final int points;
+    protected final int points;
+    protected ObjectivePointsStrategy objectivePointsStrategy;
 
     public ObjectiveCard(int id, int points){
         super(id);
         this.points = points;
     }
 
-    /*
-    public int pointCard(PlayerBoard pb){
+    public int pointCard(Player player){
+        return objectivePointsStrategy.count(player,this);
+    }
+
+    public int getPoints(){
+        return points;
+    }
+}
+
+/*public int pointCard(PlayerBoard pb){
         return pointsCountCard(pb);
     }
 
@@ -151,9 +156,3 @@ public abstract class ObjectiveCard extends Card {
         return totalpoints;
     }
     */
-
-/* not used -- if needed for testing use it*/
-    public int getPoints(){
-        return points;
-    }
-}

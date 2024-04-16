@@ -16,7 +16,7 @@ public class Game {
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
-    private Chat chat;
+    private final Chat chat;
 
     public Game(int id){
         players = new LinkedList<>();
@@ -123,9 +123,9 @@ public class Game {
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
         return p.getCurrentPoints()
-                + p.getGoal().pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective(0).pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard())
+                + p.getGoal().pointCard(p)
+                + gameBoardDeck.getCommonObjective(0).pointCard(p)
+                + gameBoardDeck.getCommonObjective(1).pointCard(p)
                 ;
     }
     public void checkWinner(){
