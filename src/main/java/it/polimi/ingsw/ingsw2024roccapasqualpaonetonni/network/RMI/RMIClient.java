@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;

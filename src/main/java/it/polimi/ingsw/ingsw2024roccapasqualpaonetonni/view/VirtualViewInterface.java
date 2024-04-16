@@ -1,8 +1,8 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
+
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
 public interface VirtualViewInterface extends Remote{
 

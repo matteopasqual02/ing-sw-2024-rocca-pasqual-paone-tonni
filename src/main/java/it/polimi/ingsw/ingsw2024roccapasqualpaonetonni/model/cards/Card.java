@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
 public abstract class Card {
     private final int idCard;

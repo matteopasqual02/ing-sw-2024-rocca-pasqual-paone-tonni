@@ -3,12 +3,12 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.EMPTY;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.GREEN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
