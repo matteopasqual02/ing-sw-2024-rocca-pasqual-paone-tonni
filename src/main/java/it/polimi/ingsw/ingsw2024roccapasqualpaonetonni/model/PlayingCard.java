@@ -3,7 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 import java.util.Arrays;
 
 public abstract class PlayingCard extends Card {
-    private final Seed cardSeed;
+    protected final Seed cardSeed;
     protected final int points;
     protected boolean isFlipped;
     protected Corner[] corners;
