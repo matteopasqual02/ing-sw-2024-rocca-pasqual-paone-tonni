@@ -71,6 +71,7 @@ public class MainClient {
         if (selection == 1 || selection == 2) {
             //Starts the game with TUI
 
+
         } else {
             //Starts the game with GUI
 

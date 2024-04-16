@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServer;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -29,7 +30,9 @@ public class MainServer {
             System.setProperty("java.rmi.server.hostname", inputRemoteIP);
         }
 
-        //RMIServer.bind()
+        //the server will open both of them
+        RMIServer.bind();
+        //Server serverSocket = new Server();
 
     }
 
