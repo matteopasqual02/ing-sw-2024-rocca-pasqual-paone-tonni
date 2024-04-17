@@ -63,7 +63,7 @@ public class GoldCard extends PlayingCard{
                 sb.append(ansi().cursor(0, 0).fg(corners[0].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[0].getSeed().name().substring(0, 1)));
             }
 
-            if (points == 0) {
+            if () {
                 sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("   "));
             } else {
                 sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" ").a(points).a(" "));
