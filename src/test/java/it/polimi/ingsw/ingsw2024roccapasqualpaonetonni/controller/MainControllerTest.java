@@ -9,13 +9,18 @@ import java.rmi.RemoteException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+
 class MainControllerTest {
     //Don't run the entire class (Singleton pattern is able to create only one instance.I have created one forall test function)
+
+
 
     @Test
     void createGameTest() throws RemoteException {
         MainControllerInterface mainController;
         mainController = MainController.getInstance();
+        mainController.clearSingleton();
 
         GameControllerInterface p1 = mainController.createGameController("p1",4);
 
@@ -24,9 +29,9 @@ class MainControllerTest {
         assertNotNull(mainController.getRunningGames().getFirst().getAllPlayer().stream().filter(p -> p.getNickname().equals("p1")));
         assertEquals(1,mainController.getRunningGames().getFirst().getAllPlayer().size());
 
-        GameControllerInterface p2= mainController.joinFirstAvailableGame("p2");
-        GameControllerInterface p3= mainController.joinFirstAvailableGame("p3");
-        GameControllerInterface p4= mainController.joinFirstAvailableGame("p4");
+        GameControllerInterface p2 = mainController.joinFirstAvailableGame("p2");
+        GameControllerInterface p3 = mainController.joinFirstAvailableGame("p3");
+        GameControllerInterface p4 = mainController.joinFirstAvailableGame("p4");
 
         assertEquals(4,mainController.getRunningGames().getFirst().getAllPlayer().size());
 
@@ -45,6 +50,7 @@ class MainControllerTest {
     void multipleGameTest() throws RemoteException {
         MainControllerInterface mainController;
         mainController = MainController.getInstance();
+        mainController.clearSingleton();
 
         GameControllerInterface p1 = mainController.createGameController("p1",4);
         GameControllerInterface p2= mainController.joinFirstAvailableGame("p2");
@@ -52,12 +58,13 @@ class MainControllerTest {
         GameControllerInterface p4= mainController.joinFirstAvailableGame("p4");
 
         GameControllerInterface p5 = mainController.createGameController("p5",2);
-        GameControllerInterface p6= mainController.joinFirstAvailableGame("p6");
+        GameControllerInterface p6 = mainController.joinFirstAvailableGame("p6");
 
         assertEquals(2,mainController.getRunningGames().size());
         assertEquals(p1,p2);
         assertEquals(p1,p3);
         assertEquals(p1,p4);
+
         assertEquals(p5,p6);
 
         assertNotEquals(p1,p5);
@@ -77,12 +84,14 @@ class MainControllerTest {
     void leaveGameTest() throws RemoteException{
         MainControllerInterface mainController;
         mainController = MainController.getInstance();
+        mainController.clearSingleton();
 
         mainController.createGameController("p1",4);
-        int idGame = mainController.getRunningGames().getFirst().getID();
         mainController.joinFirstAvailableGame("p2");
         mainController.joinFirstAvailableGame("p3");
         mainController.joinFirstAvailableGame("p4");
+
+        int idGame = mainController.getRunningGames().getFirst().getID();
 
         assertEquals(GameStatus.PREPARATION,mainController.getRunningGames().getFirst().getGameStatus());
         mainController.getRunningGames().getFirst().createTable();
@@ -100,6 +109,7 @@ class MainControllerTest {
     void reconnectTest() throws RemoteException{
         MainControllerInterface mainController;
         mainController = MainController.getInstance();
+        mainController.clearSingleton();
 
         mainController.createGameController("p1",4);
         int idGame = mainController.getRunningGames().getFirst().getID();
