@@ -274,101 +274,93 @@ public class GameController implements GameControllerInterface,Runnable{
                 && model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
                 && model.getGameBoardDeck().isEmpty();
     }
-    public void drawResourceFromDeck(){
-        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
+    public void drawResourceFromDeck() {
+        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
 
-        }
-        else if(!model.getGameDrawableDeck().getDecks().get("resources").isEmpty()){
+        } else if (!model.getGameDrawableDeck().getDecks().get("resources").isEmpty()) {
             getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
-        }
-        else {
+        } else {
             // listener change deck
             return;
-        else {
-            try {
-                getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
-            }
-            catch (DeckEmptyException e) {
-                // listener change deck
-                e.printStackTrace();
+        else{
+                try {
+                    getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
+                } catch (DeckEmptyException e) {
+                    // listener change deck
+                    e.printStackTrace();
+                }
             }
         }
-    }
 
-    public void drawGoldFromDeck(){
-        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
-            // listener you cannot draw in this phase
-            return;
-        }
-        if (decksAreAllEmpty()) {
-            model.setStatus(GameStatus.WAITING_LAST_TURN);
-
-        }
-        else if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
-            getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
-        }
-        else {
-            // listener change deck
-            return;
-        else {
-            try {
-                getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
-            }
-            catch (DeckEmptyException e) {
-                // listener change deck
-                e.printStackTrace();
-            }
-        }
-    }
-    public void drawFromBoard(int position){
-        if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
-            // listener you cannot draw in this phase
-            return;
-        }
-        if (decksAreAllEmpty()) {
-            model.setStatus(GameStatus.WAITING_LAST_TURN);
-
-        }
-        else if((position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null) ||
-                (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)) {
-            getCurrentPlayer().drawFromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
-        }
-        else {
-            // listener change deck
-            return;
-            try {
-                getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
-            }
-            catch (NoCardException e) {
-                // listener change deck
+        public void drawGoldFromDeck () {
+            if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
+                // listener you cannot draw in this phase
                 return;
             }
-        }
-    }
+            if (decksAreAllEmpty()) {
+                model.setStatus(GameStatus.WAITING_LAST_TURN);
+
+            } else if (!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
+                getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
+            } else {
+                // listener change deck
+                return;
+        else{
+                    try {
+                        getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
+                    } catch (DeckEmptyException e) {
+                        // listener change deck
+                        e.printStackTrace();
+                    }
+                }
+            }
+            public void drawFromBoard ( int position){
+                if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
+                    // listener you cannot draw in this phase
+                    return;
+                }
+                if (decksAreAllEmpty()) {
+                    model.setStatus(GameStatus.WAITING_LAST_TURN);
+
+                } else if ((position <= 2 && model.getGameBoardDeck().getResourceCards()[position - 1] != null) ||
+                        (position > 2 && model.getGameBoardDeck().getGoldCards()[position - 3] != null)) {
+                    getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck(), model.getGameDrawableDeck());
+                } else {
+                    // listener change deck
+                    return;
+                    try {
+                        getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
+                    } catch (NoCardException e) {
+                        // listener change deck
+                        return;
+                    }
+                }
+            }
 
 
 //---------------------------------END SECTION
-    private void checkPoints20Points(){
-        for(Player player: getAllPlayer()){
-            // WARNINGS: update the currentPlayer at phase end (before this function)
-            if(player.getCurrentPoints() >= 20){
-                model.setStatus(GameStatus.WAITING_LAST_TURN);
+            private void checkPoints20Points () {
+                for (Player player : getAllPlayer()) {
+                    // WARNINGS: update the currentPlayer at phase end (before this function)
+                    if (player.getCurrentPoints() >= 20) {
+                        model.setStatus(GameStatus.WAITING_LAST_TURN);
+                    }
+                }
             }
-        }
-    }
-    public void checkWinner(){
-        model.checkWinner();
-        model.setStatus(GameStatus.ENDED);
-    }
+            public void checkWinner () {
+                model.checkWinner();
+                model.setStatus(GameStatus.ENDED);
+            }
 
 //---------------------------------GET SECTION TO TEST
-    public GameImmutable getImmutableGame(){
-        return new GameImmutable(model);
-    }
+            public GameImmutable getImmutableGame () {
+                return new GameImmutable(model);
+            }
 
-}
+        }
+    }}
