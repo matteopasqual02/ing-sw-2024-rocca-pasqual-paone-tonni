@@ -1,5 +1,8 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotInHandException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
@@ -18,6 +21,8 @@ public class Player {
     private StartingCard startingCard;
     private boolean readyToStart;
     private boolean connected ;
+
+    private PlayerListenersHandler playerListenersHandler;
     public Player(String name,int color){
 
         this.nickname=name;
@@ -31,9 +36,13 @@ public class Player {
         this.startingCard=null;
         this.readyToStart = false;
         this.connected=true;
+        playerListenersHandler = new PlayerListenersHandler();
 
     }
 
+    public void setPlayerListeners(List<GameListener> currentGameListeners){
+        playerListenersHandler.resetPlayerListeners(currentGameListeners);
+    }
     public int getCurrentPoints() {
         return currentPoints;
     }
@@ -44,13 +53,17 @@ public class Player {
         return readyToStart;
     }
     public void setReadyToStart(){
+
         readyToStart=true;
+        playerListenersHandler.notify_setReadyToStart(this);
     }
     public Boolean getIsConnected(){
         return connected;
     }
     public void setIsConnected(Boolean b){
+
         connected = b;
+        //playerListenersHandler.notify_setIsConnected(this);
     }
     public String getNickname() {
         return nickname;

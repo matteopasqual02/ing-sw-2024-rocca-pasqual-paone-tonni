@@ -1,5 +1,8 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListenersHandler;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
@@ -18,6 +21,7 @@ public class Game {
     private DrawableDeck gameDrawableDeck;
     private final Chat chat;
 
+    private GameListenersHandler gameListenersHandler;
     public Game(int id){
         players = new LinkedList<>();
         winner = new LinkedList<>();
@@ -34,10 +38,15 @@ public class Game {
         chat = new Chat();
     }
 
+    public void addListeners(GameListener me){
+        gameListenersHandler.addListener(me);
+    }
 //---------------------------------PLAYER SECTION
     public int getGameId(){return  gameId;}
     public void setMaxNumberOfPlayer(int number){
+
         this.maxNumberOfPlayer=number;
+        gameListenersHandler.notify_setMaxNumPlayers(this);
     }
     public int getMaxNumberOfPlayer(){
         return maxNumberOfPlayer;
@@ -46,12 +55,18 @@ public class Game {
         if(!players.contains(px)){
             if(players.size() < maxNumberOfPlayer){
                 players.add(px);
+                for(Player p: players){
+                    p.setPlayerListeners((List<GameListener>) gameListenersHandler);
+                }
+                gameListenersHandler.notify_addPlayer(this);
             }
             else {
+                gameListenersHandler.notify_gameFull(this);
                 throw new GameAlreadyFullException("The game is full");
             }
         }
         else {
+            gameListenersHandler.notify_playerAlredyIn(this);
             throw new PlayerAlreadyInException("The player is alrady in");
         }
 
@@ -61,38 +76,50 @@ public class Game {
         if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
             status[0] = GameStatus.ENDED;
         }
+        gameListenersHandler.notify_removePlayer(this);
     }
     public void reconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(true);
+            gameListenersHandler.notify_reconnectPlayer(this);
         }
         else {
-
+            gameListenersHandler.notify_reconnectionImpossible(this);
         }
     }
     public void disconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(false);
+            gameListenersHandler.notify_disconnectedPlayer(this);
         }
         else {
-
+            gameListenersHandler.notify_disconnectionImpossible(this);
         }
     }
     public void setFirstPlayer(Player fp){
+
         this.firstPlayer=fp;
+        gameListenersHandler.notify_setFirstPlayer(this);
     }
     public void setStatus(GameStatus status) {
+
         this.status[0] = status;
+        gameListenersHandler.notify_setStatus(this);
     }
     public void setLastStatus() {
+
         status[1] =status[0];
+        gameListenersHandler.notify_setLastStatus(this);
     }
     public void resetLastStatus() {
+
         status[1] = null;
+        gameListenersHandler.notify_resetLastStatus(this);
     }
     public GameStatus getGameStatus(){
+
         return status[0];
     }
     public GameStatus getLastStatus(){
@@ -117,7 +144,9 @@ public class Game {
         Player newCurrent = players.peek();
         if (newCurrent != null && newCurrent.equals(firstPlayer) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
             status[0] = GameStatus.LAST_TURN;
+            gameListenersHandler.notify_lastTurn(this);
         }
+        gameListenersHandler.notify_nextPlayer(this);
     }
 
 //---------------------------------POINT SECTION
@@ -151,7 +180,9 @@ public class Game {
 
 //---------------------------------READY SECTION
     public void playerIsReadyToStart(Player p){
+
         p.setReadyToStart();
+        gameListenersHandler.notify_playerIsReadyToStart(this);
     }
     public Boolean arePlayerReady(){
         return players.stream().filter(Player::getReadyToStart).count() == players.size()
@@ -159,11 +190,15 @@ public class Game {
     }
 
     public void setGameDrawableDeck(DrawableDeck deck) {
+
         this.gameDrawableDeck = deck;
+        gameListenersHandler.notify_setGameDrawableDeck(this);
     }
 
     public void setGameBoardDeck(BoardDeck deck) {
+
         this.gameBoardDeck = deck;
+        gameListenersHandler.notify_setGameBoardDeck(this);
     }
 
 //---------------------------------CHAT SECTION

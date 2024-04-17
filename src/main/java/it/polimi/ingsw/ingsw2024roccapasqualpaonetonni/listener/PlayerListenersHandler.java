@@ -1,0 +1,91 @@
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
+
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayerListenersHandler extends ListenersHandler{
+
+    public PlayerListenersHandler(){
+        super();
+    }
+    public void resetPlayerListeners(List<GameListener> gameListeners){
+        listeners=null;
+        for(GameListener lis : gameListeners){
+            addListener(lis);
+        }
+    }
+    public void notify_setReadyToStart(Player p) {
+        for(GameListener listener : listeners){
+            listener.playerReady(p);
+        }
+    }
+    public void notify_setIsConnected(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_drawGoals(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_chooseGoal(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_drawStarting(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_drawGoldFromDeck(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_drawResourceFromDeck(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_drawFromBoard(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_addStarting(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_setStartingCard(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_addToBoard(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_increasePoints(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_updateSeedCount(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+    public void notify_removeFromHand(Game model) {
+        for(GameListener listener : listeners){
+            listener.playerJoined(new GameImmutable(model));
+        }
+    }
+}

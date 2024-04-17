@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
@@ -17,14 +17,11 @@ public class GameController implements GameControllerInterface,Runnable{
     private final Random random;
     private final String path;
 
-    //we have to decide weather to make it transient
-    private final ListenersHandler listenersHandler;
     public GameController(int id) {
         model = new Game(id);
         random = new Random();
         //new Thread(this).start();
         path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
-        listenersHandler = new ListenersHandler();
     }
 
     @SuppressWarnings("BusyWait")
@@ -43,6 +40,10 @@ public class GameController implements GameControllerInterface,Runnable{
     public int getID(){
         return model.getGameId();
     }
+
+    public void addMyselfAsListener(GameListener me){
+        model.addListeners(me);
+    }
     @Override
     public void addPlayer(String nickname){
         Player px;
@@ -50,13 +51,10 @@ public class GameController implements GameControllerInterface,Runnable{
         px = new Player(nickname,player_number);
         try {
             model.addPlayer(px);
-            listenersHandler.notify_addedPlayer(this.model);
 
         }catch (GameAlreadyFullException ex1){
-            listenersHandler.notify_fullGame(this.model);
         }
-        catch (PlayerAlreadyInException ex2){
-            listenersHandler.notify_nameAlreadyInGame(this.model);}
+        catch (PlayerAlreadyInException ex2){}
 
         model.playerIsReadyToStart(px);
     }
@@ -73,24 +71,20 @@ public class GameController implements GameControllerInterface,Runnable{
     @Override
     public void setMaxNumberOfPlayer(int num) throws RemoteException {
         model.setMaxNumberOfPlayer(num);
-        listenersHandler.notify_maxPlayers(this.model);
     }
     public int getMaxNumberOfPlayer(){
         return model.getMaxNumberOfPlayer();
     }
     public void nextTurn(){
         model.nextPlayer();
-        listenersHandler.notify_nextTurn(this.model);
     }
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
-        listenersHandler.notify_reconnectedPlayer(this.model);
         model.setStatus(model.getLastStatus());
         model.resetLastStatus();
     }
     public void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
-        listenersHandler.notify_disconnectedPlayer(this.model);
         model.setLastStatus();
         model.setStatus(GameStatus.WAITING_RECONNECTION);
     }
@@ -98,7 +92,6 @@ public class GameController implements GameControllerInterface,Runnable{
     public void removePlayer(Player player){
 
         model.removePlayer(player);
-        listenersHandler.notify_removedPlayer(this.model);
     }
     public GameStatus getGameStatus(){
         return model.getGameStatus();
@@ -159,11 +152,9 @@ public class GameController implements GameControllerInterface,Runnable{
             turnZero();
 
             model.setStatus(GameStatus.RUNNING);
-            listenersHandler.notify_tableCreated(this.model);
             return true;
         }
         else {
-            listenersHandler.notify_playersNotReady(this.model);
             return false;
         }
     }
@@ -175,7 +166,6 @@ public class GameController implements GameControllerInterface,Runnable{
         }
 
         model.setFirstPlayer(model.getCurrentPlayer());
-        listenersHandler.notify_firstPlayerSet(this.model);
     }
     private void turnZero() {
         for(Player player : getAllPlayer()){
@@ -199,7 +189,6 @@ public class GameController implements GameControllerInterface,Runnable{
         }
         getCurrentPlayer().addToBoard(cardToAdd,cardOnBoard,cornerToAttach);
         checkPoints20Points();
-        listenersHandler.notify_cardAdded(this.model);
     }
     public void addStartingCard(Boolean flip){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))){
@@ -210,7 +199,6 @@ public class GameController implements GameControllerInterface,Runnable{
             getCurrentPlayer().getStartingCard().flip();
         }
         getCurrentPlayer().addStarting();
-        listenersHandler.notify_startingCardAdded(this.model);
     }
     public void choosePlayerGoal(int choice){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING))){
@@ -218,7 +206,6 @@ public class GameController implements GameControllerInterface,Runnable{
             return;
         }
         getCurrentPlayer().chooseGoal(choice);
-        listenersHandler.notify_goalChosen(this.model);
     }
 
 
@@ -234,21 +221,17 @@ public class GameController implements GameControllerInterface,Runnable{
     public void drawResourceFromDeck(){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
-            listenersHandler.notify_cannotDrawHere(this.model);
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-            listenersHandler.notify_decksAllEmpty(this.model);
 
         }
         else if(!model.getGameDrawableDeck().getDecks().get("resources").isEmpty()){
             getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
-            listenersHandler.notify_resourceDrawn(this.model);
         }
         else {
             // listener change deck
-            listenersHandler.notify_changeResourceDeck(this.model);
             return;
         }
 
@@ -256,43 +239,35 @@ public class GameController implements GameControllerInterface,Runnable{
     public void drawGoldFromDeck(){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
-            listenersHandler.notify_cannotDrawHere(this.model);
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-            listenersHandler.notify_decksAllEmpty(this.model);
 
         }
         else if(!model.getGameDrawableDeck().getDecks().get("gold").isEmpty()) {
             getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
-            listenersHandler.notify_goldDrawn(this.model);
         }
         else {
             // listener change deck
-            listenersHandler.notify_changeGoldDeck(this.model);
             return;
         }
     }
     public void drawFromBoard(int position){
         if(!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) )){
             // listener you cannot draw in this phase
-            listenersHandler.notify_cannotDrawHere(this.model);
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-            listenersHandler.notify_decksAllEmpty(this.model);
 
         }
         else if((position <= 2 && model.getGameBoardDeck().getResourceCards()[position-1]!=null) ||
                 (position >  2 && model.getGameBoardDeck().getGoldCards()[position-3] !=null)) {
             getCurrentPlayer().drawFromBoard(position,model.getGameBoardDeck(),model.getGameDrawableDeck());
-            listenersHandler.notify_drewFromBoard(this.model);
         }
         else {
             // listener change deck
-            listenersHandler.notify_changeBoardDeck(this.model);
             return;
         }
     }

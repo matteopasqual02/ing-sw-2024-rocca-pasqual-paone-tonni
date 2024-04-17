@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 /*
@@ -8,7 +9,7 @@ GameListener is an interface with all the methods that are used to comunicare wi
 The methods here are only the ones that set somethings, not those who get something, because we only want to notify the client if something has actually changed
  */
 public interface GameListener{
-    void playerJoined(GameImmutable model);
+    void playerReady(Player p);
     void fullGame(GameImmutable model);
 
     void nameAlreadyInGame(GameImmutable model);
@@ -50,4 +51,6 @@ public interface GameListener{
     void drewFromBoard(GameImmutable model);
 
     void changeBoardDeck(GameImmutable model);
+
+    void playerJoined(GameImmutable gameImmutable);
 }
