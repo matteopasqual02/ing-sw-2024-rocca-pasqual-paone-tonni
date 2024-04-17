@@ -17,7 +17,7 @@ public class ObjectivePointsPattern implements ObjectivePointsStrategy{
         for(int i=0; i< board.length-2; i++){
             for (int j=0; j< board[i].length-2; j++){
                 if(match(board,i,j,pattern,usedByObjectiveCard)){
-                    totalPoints++;
+                    totalPoints ++;
                     add(board, i, j, pattern, usedByObjectiveCard);
                 }
             }
@@ -42,9 +42,12 @@ public class ObjectivePointsPattern implements ObjectivePointsStrategy{
         for(int k=0; k< pattern.length;k++){
             for(int w=0; w < pattern[k].length; w++){
                 if(pattern[k][w]!=null){
-                    if( board[i+k][j+w]==null ) return false;
-                    if( !pattern[k][w].equals(board[i+k][j+w].getSeed()) ) return false;
-                    if( used.contains(board[i+k][j+w]) ) return false;
+                    if( board[i+k][j+w]==null )
+                        return false;
+                    if( !pattern[k][w].equals(board[i+k][j+w].getSeed()) )
+                        return false;
+                    if( used.contains(board[i+k][j+w]) )
+                        return false;
                 }
             }
         }

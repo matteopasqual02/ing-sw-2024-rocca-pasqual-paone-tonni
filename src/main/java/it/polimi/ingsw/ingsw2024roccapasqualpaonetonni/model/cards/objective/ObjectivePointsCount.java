@@ -10,7 +10,7 @@ public class ObjectivePointsCount implements ObjectivePointsStrategy{
     public int count(Player player, int[] countTypes, Seed[][] pattern) {
         List<Integer> currentCount = new LinkedList<>();
 
-        for(int position: countTypes){
+        for(int position=0; position<countTypes.length; position++){
             if (countTypes[position] != 0) {
                 currentCount.add(player.getCountSeed()[position]/countTypes[position]);
             }
