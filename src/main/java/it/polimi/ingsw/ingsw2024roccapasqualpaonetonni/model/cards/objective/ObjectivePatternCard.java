@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 
 public class ObjectivePatternCard extends ObjectiveCard {
@@ -12,8 +12,8 @@ public class ObjectivePatternCard extends ObjectiveCard {
         objectivePointsStrategy = new ObjectivePointsPattern();
     }
     @Override
-    public int pointCard(Player player){
-        return points * objectivePointsStrategy.count(player,null,pattern);
+    public int pointCard(PlayerBoard playerBoard){
+        return points * objectivePointsStrategy.count(playerBoard,null,pattern);
     }
 
     public Seed[][] getPattern() {

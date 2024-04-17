@@ -46,7 +46,7 @@ class ObjectiveCardTest {
         PlayerBoard board1 = new PlayerBoard(owner);
         board1.addStartingCard(start);
         board1.addCard(card_to_add1,start,3,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(4,pointsReached);
     }
@@ -71,7 +71,7 @@ class ObjectiveCardTest {
         PlayerBoard board1 = new PlayerBoard(owner);
         board1.addStartingCard(start);
         board1.addCard(card_to_add1,start,3,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(4,pointsReached);
     }
@@ -95,7 +95,7 @@ class ObjectiveCardTest {
         PlayerBoard board1 = new PlayerBoard(owner);
         board1.addStartingCard(start);
         board1.addCard(card_to_add1,start,3,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(3,pointsReached);
     }
@@ -121,10 +121,17 @@ class ObjectiveCardTest {
         Player owner=new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
         board1.addStartingCard(start);
-        board1.addCard(card_to_add1,start,3,owner.getCountSeed());
-        board1.addCard(card_to_add2,card_to_add1,3,owner.getCountSeed());
-        board1.addCard(card_to_add3,card_to_add2,3,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        board1.addCard(card_to_add1,start,1,owner.getCountSeed());
+        board1.addCard(card_to_add2,card_to_add1,1,owner.getCountSeed());
+        board1.addCard(card_to_add3,card_to_add2,1,owner.getCountSeed());
+
+        assertEquals(start,board1.getBoard()[20][20]);
+        assertEquals(card_to_add1,board1.getBoard()[19][19]);
+        assertEquals(card_to_add2,board1.getBoard()[18][18]);
+        assertEquals(card_to_add3,board1.getBoard()[17][17]);
+
+        PlayingCard[][] pb = board1.getBoard();
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(2,pointsReached);
     }
@@ -159,7 +166,7 @@ class ObjectiveCardTest {
         board1.addCard(card_to_add4,card_to_add3,3,owner.getCountSeed());
         board1.addCard(card_to_add5,card_to_add4,3,owner.getCountSeed());
         board1.addCard(card_to_add6,card_to_add5,3,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(4,pointsReached);
     }
@@ -188,7 +195,7 @@ class ObjectiveCardTest {
         board1.addCard(card_to_add1,start,2,owner.getCountSeed());
         board1.addCard(card_to_add2,card_to_add1,2,owner.getCountSeed());
         board1.addCard(card_to_add3,card_to_add2,2,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(2,pointsReached);
     }
@@ -207,6 +214,7 @@ class ObjectiveCardTest {
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
         Seed[][] pattern ={{RED, null},
+                {null, null},
                 {RED, null},
                 {null, GREEN}};
         ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
@@ -217,7 +225,7 @@ class ObjectiveCardTest {
         board1.addCard(card_to_add1,start,2,owner.getCountSeed());
         board1.addCard(card_to_add2,start,3,owner.getCountSeed());
         board1.addCard(card_to_add3,card_to_add2,3,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(3,pointsReached);
     }
@@ -236,6 +244,7 @@ class ObjectiveCardTest {
         ResourceCard card_to_add3 = new ResourceCard(12,GREEN,cf,1);
 
         Seed[][] pattern ={{null, RED},
+                {null, null},
                 {null, RED},
                 {GREEN, null}};
         ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
@@ -246,7 +255,7 @@ class ObjectiveCardTest {
         board1.addCard(card_to_add1,start,2,owner.getCountSeed());
         board1.addCard(card_to_add2,start,3,owner.getCountSeed());
         board1.addCard(card_to_add3,card_to_add2,4,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(3,pointsReached);
     }
@@ -266,6 +275,7 @@ class ObjectiveCardTest {
 
         Seed[][] pattern ={{GREEN,null},
                 {null, RED},
+                {null, null},
                 {null, RED}};
         ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
 
@@ -275,7 +285,7 @@ class ObjectiveCardTest {
         board1.addCard(card_to_add1,start,2,owner.getCountSeed());
         board1.addCard(card_to_add2,start,3,owner.getCountSeed());
         board1.addCard(card_to_add3,card_to_add1,1,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(3,pointsReached);
     }
@@ -295,6 +305,7 @@ class ObjectiveCardTest {
 
         Seed[][] pattern ={{null,GREEN},
                 {RED, null},
+                {null, null},
                 {RED, null}};
         ObjectiveCard objectiveCard = new ObjectivePatternCard(110,3, pattern);
 
@@ -304,7 +315,7 @@ class ObjectiveCardTest {
         board1.addCard(card_to_add1,start,2,owner.getCountSeed());
         board1.addCard(card_to_add2,start,3,owner.getCountSeed());
         board1.addCard(card_to_add3,card_to_add1,2,owner.getCountSeed());
-        int pointsReached = objectiveCard.pointCard(owner);
+        int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(3,pointsReached);
     }

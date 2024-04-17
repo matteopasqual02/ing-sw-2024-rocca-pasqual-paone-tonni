@@ -503,12 +503,14 @@
         "91": {
             "points": 3,
             "pattern": [["red", null],
+                        [null,null],
                         ["red", null],
                         [null, "green"]]
         },
         "92": {
             "points": 3,
             "pattern": [[null, "green"],
+                        [null,null],
                         [null, "green"],
                         ["purple", null]]
         },
@@ -516,12 +518,14 @@
             "points": 3,
             "pattern": [[null, "red"],
                         ["blue", null],
+                        [null,null],
                         ["blue", null]]
         },
         "94": {
             "points": 3,
             "pattern": [["blue", null],
                         [null, "purple"],
+                        [null,null],
                         [null, "purple"]]
         }
     },

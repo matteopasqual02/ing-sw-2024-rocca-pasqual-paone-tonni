@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 
 public class ObjectiveCountCard extends ObjectiveCard {
     private final int[] countTypes;
@@ -12,8 +12,8 @@ public class ObjectiveCountCard extends ObjectiveCard {
     }
 
     @Override
-    public int pointCard(Player player){
-        return points * objectivePointsStrategy.count(player,countTypes,null);
+    public int pointCard(PlayerBoard playerBoard){
+        return points * objectivePointsStrategy.count(playerBoard,countTypes,null);
     }
 
     public int[] getCountTypes() {

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 
 public abstract class ObjectiveCard extends Card {
@@ -12,7 +12,7 @@ public abstract class ObjectiveCard extends Card {
         this.points = points;
     }
 
-    public int pointCard(Player player){
+    public int pointCard(PlayerBoard playerBoard){
         return 0;
     }
 

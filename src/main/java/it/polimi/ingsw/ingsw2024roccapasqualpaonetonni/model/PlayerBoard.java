@@ -13,8 +13,8 @@ public class PlayerBoard {
     private final Player player;
 
     public PlayerBoard(Player owner) {
-        dim_x = 7;
-        dim_y = 7;
+        dim_x = 40;
+        dim_y = 40;
         board = new PlayingCard[dim_x][dim_y];
         player = owner;
     }
