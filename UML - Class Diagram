@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-04-17T12:46:33.972Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="gtL-e_w-mL1vQFmsrYcI" version="24.2.5" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2024-04-17T12:47:00.777Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="U_NIVLMGqjM6VXD_5mFI" version="24.2.5" type="github" pages="3">
   <diagram name="Model and Controller" id="ekSnajkk3Y4iF-fPzKWO">
     <mxGraphModel dx="2345" dy="5691" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
       <root>
@@ -634,7 +634,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="I-EuxmASO5UjdRi4yAi8" name="RMI metodo 2">
-    <mxGraphModel dx="1303" dy="1388" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
+    <mxGraphModel dx="2345" dy="1013" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -755,10 +755,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-36" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;fontStyle=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="0drFsqiLNnYPsEIgpVca-1" target="wkABOk67igqmLh48TM6N-1" edge="1">
+        <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-36" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;fontStyle=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="0drFsqiLNnYPsEIgpVca-1" target="wkABOk67igqmLh48TM6N-7" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="1090" y="550" as="sourcePoint" />
-            <mxPoint x="1250" y="550" as="targetPoint" />
+            <mxPoint x="1384.9999999999995" y="720.090909090909" as="targetPoint" />
             <Array as="points">
               <mxPoint x="260" y="1040" />
               <mxPoint x="260" y="720" />
@@ -800,24 +800,6 @@
             <Array as="points">
               <mxPoint x="1490" y="340" />
             </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="wkABOk67igqmLh48TM6N-1" value="ListenersHandler" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1385" y="680" width="160" height="130" as="geometry" />
-        </mxCell>
-        <mxCell id="wkABOk67igqmLh48TM6N-2" value="-List: GameListener" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="wkABOk67igqmLh48TM6N-1" vertex="1">
-          <mxGeometry y="26" width="160" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="wkABOk67igqmLh48TM6N-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="wkABOk67igqmLh48TM6N-1" vertex="1">
-          <mxGeometry y="52" width="160" height="8" as="geometry" />
-        </mxCell>
-        <mxCell id="wkABOk67igqmLh48TM6N-4" value="+metodi per chiamare i metodi del gameListener su ogni listener" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="wkABOk67igqmLh48TM6N-1" vertex="1">
-          <mxGeometry y="60" width="160" height="70" as="geometry" />
-        </mxCell>
-        <mxCell id="wkABOk67igqmLh48TM6N-5" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="wkABOk67igqmLh48TM6N-2" edge="1">
-          <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="1410" y="690" as="sourcePoint" />
-            <mxPoint x="1680" y="719" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="wkABOk67igqmLh48TM6N-7" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;GameListener&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ metodi implementati da flow che mostrano le modifiche al singolo client&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
