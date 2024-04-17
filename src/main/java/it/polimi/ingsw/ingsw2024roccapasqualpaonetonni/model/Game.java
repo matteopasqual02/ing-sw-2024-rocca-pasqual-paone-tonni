@@ -16,7 +16,7 @@ public class Game {
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
-    private Chat chat;
+    private final Chat chat;
 
     public Game(int id){
         players = new LinkedList<>();

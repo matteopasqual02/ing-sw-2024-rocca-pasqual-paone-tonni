@@ -111,6 +111,7 @@ public class GameController implements GameControllerInterface,Runnable{
             catch (IOException e) {
                 e.printStackTrace();
             }
+
             Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
             for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
                 String type = entry.getKey(); // Get the card type
