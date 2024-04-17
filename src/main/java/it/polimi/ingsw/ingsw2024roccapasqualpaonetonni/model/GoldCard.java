@@ -104,8 +104,21 @@ public class GoldCard extends PlayingCard{
             }
 
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
-            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("daFare"));
-            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+
+            int i,j,k=0;
+            for(i=0; i<placeCondition.length; i++) {
+                for (j=0; j<placeCondition[i]; j++) {
+                    sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                    k++;
+                }
+
+            }
+
+            for(j=k; k<5; k++) {
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+            }
+
+            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a("  "));
 
             if (corners[2] == null || corners[2].getSeed() == null) {
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));

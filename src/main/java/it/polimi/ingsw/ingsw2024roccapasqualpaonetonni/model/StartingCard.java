@@ -66,7 +66,11 @@ public class StartingCard extends PlayingCard{
             sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
 
             //Third Line
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("_____________"));
+            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("_____"));
+            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(getSeed().name().substring(0,1)));
+            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("_____"));
             sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
 
             //Fourth Line
