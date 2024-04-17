@@ -21,10 +21,12 @@ public class ResourceCard extends PlayingCard {
         Ansi.Color background = cardSeed.getByAnsi();
 
         if (!flipped) {
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).a("_______\n"));
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).a("|"));
             if (corners[0] == null || corners[0].getSeed() == null) {
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
             } else {
-                sb.append(ansi().cursor(0, 0).fg(corners[0].getSeed().getByAnsi()).bg(Ansi.Color.BLACK).a(corners[0].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(0, 0).fg(corners[0].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[0].getSeed().name().substring(0, 1)));
             }
 
             if (points == 0) {
@@ -38,9 +40,34 @@ public class ResourceCard extends PlayingCard {
             } else {
                 sb.append(ansi().cursor(4, 0).fg(corners[1].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[1].getSeed().name().substring(0, 1)));
             }
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).a("|\n"));
+
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).a("|"));
+            if (corners[3] == null || corners[3].getSeed() == null) {
+                sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
+            } else {
+                sb.append(ansi().cursor(0, 0).fg(corners[3].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[3].getSeed().name().substring(0, 1)));
+            }
+
+            sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("   "));
+
+            if (corners[2] == null || corners[2].getSeed() == null) {
+                sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
+            } else {
+                sb.append(ansi().cursor(0, 0).fg(corners[2].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[2].getSeed().name().substring(0, 1)));
+            }
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).a("|\n"));
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).a("-------"));
+
+
         } else {
             // Retro della carta
-            sb.append("Retro della carta\n");
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("E"));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("   "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("E").a("\n"));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("E"));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("   "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("E"));
         }
 
         return sb.toString();

@@ -51,10 +51,10 @@ public enum Seed {
                 return Ansi.Color.RED;
             }
             case PURPLE -> {
-                return Ansi.Color.valueOf("\u001B[35m");
+                return Ansi.Color.MAGENTA;
             }
             case FEATHER, POTION, SCROLL -> {
-                return Ansi.Color.valueOf("\\u001B[33m");
+                return Ansi.Color.WHITE;
             }
 
         }
