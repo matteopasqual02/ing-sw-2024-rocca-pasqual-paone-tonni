@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonPrimitive;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

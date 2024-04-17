@@ -1,10 +1,13 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
+
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ObjectiveCard extends Card{
+public class ObjectiveCard extends Card {
     private final int points;
     private final  boolean isCount; //se è una carta obiettivo di tipo conteggio isCount=true, se è di tipo pattern isCount=false
     private final Seed type;

@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.Gson;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 
 public class CardFactory {
     public static PlayingCard createPlayingCard(String type, int id, Map<String, JsonElement> attributes) {

@@ -3,7 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Card;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.CardFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;

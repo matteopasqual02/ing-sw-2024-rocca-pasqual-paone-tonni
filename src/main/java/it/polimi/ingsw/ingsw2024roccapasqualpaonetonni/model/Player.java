@@ -1,5 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersHandler;
@@ -75,7 +79,7 @@ public class Player {
         return board;
     }
 
-    public void drawGoals(DrawableDeck d){
+    public void drawGoals(DrawableDeck d) throws DeckEmptyException{
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
     }
@@ -87,17 +91,17 @@ public class Player {
             goal=firstGoals[1];
         }
     }
-    public void drawStarting(DrawableDeck d){
+    public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
     }
-    public void drawGoldFromDeck(DrawableDeck d){
+    public void drawGoldFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstGold());
     }
-    public void drawResourcesFromDeck(DrawableDeck d){
+    public void drawResourcesFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstResource());
     }
-    public void drawFromBoard(int position, BoardDeck b, DrawableDeck d){
-        hand.add(b.draw(position,d));
+    public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
+        hand.add(b.draw(position));
     }
     public int[] getCountSeed() {
         return countSeed;
