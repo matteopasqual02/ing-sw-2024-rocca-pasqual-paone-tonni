@@ -171,29 +171,25 @@ class JSONUtilsTest {
         // points
         int points = 2;
         attributes.put("points", new JsonPrimitive(points));
-        // in count
-        int isCount = 0;
-        attributes.put("is_count", new JsonPrimitive(isCount));
         // pattern cards
-        String[] patternC = {"red", null};
+        Seed[][] pattern = {{null, null, Seed.RED},
+                {null, Seed.RED, null},
+                {Seed.RED, null, null}};
         JsonArray jArray = new JsonArray();
-        for (String s: patternC) {
-            if (s == null) {
-                jArray.add(JsonNull.INSTANCE);
+        JsonArray jArray1;
+        for (int i = 0; i < pattern.length; i++) {
+            jArray1 = new JsonArray();
+            for (int j = 0; j < pattern[i].length; j++) {
+                if (pattern[i][j] == null) {
+                    jArray1.add(JsonNull.INSTANCE);
+                }
+                else {
+                    jArray1.add(new JsonPrimitive(pattern[i][j].getName()));
+                }
             }
-            else {
-                jArray.add(new JsonPrimitive(s));
-            }
+            jArray.add(jArray1);
         }
-        attributes.put("pattern_cards", jArray);
-        // shape
-        String shape = "up";
-        if (shape != null) {
-            attributes.put("shape", new JsonPrimitive(shape));
-        }
-        else {
-            attributes.put("shape", JsonNull.INSTANCE);
-        }
+        attributes.put("pattern", jArray);
 
         ObjectiveCard card = (ObjectiveCard) CardFactory.createObjectiveCard("Objective_Pattern", id, attributes);
 

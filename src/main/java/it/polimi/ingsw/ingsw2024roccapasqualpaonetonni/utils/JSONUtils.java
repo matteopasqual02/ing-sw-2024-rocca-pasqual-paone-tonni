@@ -51,7 +51,7 @@ public class JSONUtils {
 
                 // Create a card using the CardFactory based on the extracted type, id, and attributes
                 Card card;
-                if (type.equalsIgnoreCase("objective")) {
+                if (type.equalsIgnoreCase("objective_pattern") || type.equalsIgnoreCase("objective_count")) {
                     card = CardFactory.createObjectiveCard(type, id, attributes);
                 }
                 else {
@@ -63,6 +63,14 @@ public class JSONUtils {
                 }
             }
         }
+
+
+        // put together the different types of objectives in a single objectives list
+        List<Card> objectives = new ArrayList<>(cardMap.get("objective_pattern"));
+        cardMap.remove("objective_pattern");
+        objectives.addAll(cardMap.get("objective_count"));
+        cardMap.remove("objective_count");
+        cardMap.put("objective", objectives);
 
         // Return the map containing lists of cards for each card type
         return cardMap;

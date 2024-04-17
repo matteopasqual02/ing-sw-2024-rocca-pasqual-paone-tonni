@@ -112,13 +112,6 @@ public class GameController implements GameControllerInterface,Runnable{
                 e.printStackTrace();
             }
 
-            // put together the different types of objectives in a single objectives list
-            List<Card> objectives = new ArrayList<>(cardsMap.get("objective_pattern"));
-            cardsMap.remove("objective_pattern");
-            objectives.addAll(cardsMap.get("objective_count"));
-            cardsMap.remove("objective_count");
-            cardsMap.put("objective", objectives);
-
             Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
             for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
                 String type = entry.getKey(); // Get the card type

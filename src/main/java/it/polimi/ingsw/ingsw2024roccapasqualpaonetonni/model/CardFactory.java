@@ -204,16 +204,24 @@ public class CardFactory {
                 patternMatrixString[i] = patternString;
             }
         }
-        Seed[][] pattern = {{null, null},
-                            {null, null},
-                            {null, null}};
+        Seed[][] pattern = new Seed[patternMatrixString.length][];
         for (int i = 0; i < pattern.length; i++) {
-            for (int j = 0; j < pattern[i].length; j++) {
-                Seed s;
-                if (patternMatrixString[i] != null && patternMatrixString[i][j] != null) {
-                    s = Seed.getByName(patternMatrixString[i][j]);
-                    pattern[i][j] = s;
+            if (patternMatrixString[i] != null) {
+                pattern[i] = new Seed[patternMatrixString[i].length];
+
+                for (int j = 0; j < pattern[i].length; j++) {
+                    Seed s;
+                    if (patternMatrixString[i][j] != null) {
+                        s = Seed.getByName(patternMatrixString[i][j]);
+                        pattern[i][j] = s;
+                    }
+                    else {
+                        pattern[i][j] = null;
+                    }
                 }
+            }
+            else {
+                pattern[i] = null;
             }
         }
 
