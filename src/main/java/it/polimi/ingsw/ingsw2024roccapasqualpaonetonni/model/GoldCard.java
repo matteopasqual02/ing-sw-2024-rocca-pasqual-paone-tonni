@@ -61,19 +61,22 @@ public class GoldCard extends PlayingCard{
 
 
             //First Line
-            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+
             if (corners[0] == null || corners[0].getSeed() == null) {
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
             } else {
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
                 sb.append(ansi().cursor(0, 0).fg(corners[0].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[0].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
             }
 
-            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
 
             if (pointCondition == null) {
-                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("    ").a(points).a("    "));
+                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.BLACK).bg(background).a("    ").a(points).a("    "));
             } else {
-                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("   ").a(points).a(" ").a(pointCondition.substring(0,1)).a("   "));
+                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.BLACK).bg(background).a("   ").a(points).a(" ").a(pointCondition.substring(0,1).toUpperCase()).a("   "));
             }
 
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
@@ -114,7 +117,7 @@ public class GoldCard extends PlayingCard{
                     int i,j,k=0;
                     for(i=0; i<placeCondition.length; i++) {
                         for (j=0; j<placeCondition[i]; j++) {
-                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.BLACK).bg(background).a(Seed.getById(i).name().substring(0,1)));
                             k++;
                         }
 
@@ -130,7 +133,7 @@ public class GoldCard extends PlayingCard{
                     int count=0;
                     for(i=0; i<placeCondition.length; i++) {
                         for (j=0; j<placeCondition[i]; j++) {
-                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.BLACK).bg(background).a(Seed.getById(i).name().substring(0,1)));
                             k++;
                             if(count==1) {
                                 sb.append(ansi().cursor(0,0).bg(background).a(" "));
@@ -149,7 +152,7 @@ public class GoldCard extends PlayingCard{
 
                     for(i=0; i<placeCondition.length; i++) {
                         for (j=0; j<placeCondition[i]; j++) {
-                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.BLACK).bg(background).a(Seed.getById(i).name().substring(0,1)));
                             k++;
                         }
 
