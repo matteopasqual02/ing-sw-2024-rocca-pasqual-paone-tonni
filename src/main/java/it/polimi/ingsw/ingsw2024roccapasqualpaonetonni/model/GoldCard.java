@@ -59,12 +59,8 @@ public class GoldCard extends PlayingCard{
 
         if (!flipped) {
 
-            //First Line
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("______________"));
-            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
 
-            //Second Line
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("|"));
+            //First Line
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
             if (corners[0] == null || corners[0].getSeed() == null) {
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
@@ -75,9 +71,9 @@ public class GoldCard extends PlayingCard{
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
 
             if (pointCondition == null) {
-                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("vamos"));
+                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("    ").a(points).a("    "));
             } else {
-                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("  ").a(points).a(pointCondition.substring(0,1)).a("  "));
+                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.DEFAULT).bg(background).a("   ").a(points).a(" ").a(pointCondition.substring(0,1)).a("   "));
             }
 
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
@@ -87,15 +83,13 @@ public class GoldCard extends PlayingCard{
                 sb.append(ansi().cursor(4, 0).fg(corners[1].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[1].getSeed().name().substring(0, 1)));
             }
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("|"));
+            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
+
+            //Second Line
+            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("_______________"));
             sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
 
             //Third Line
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("______________"));
-            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
-
-            //Fourth Line
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("|"));
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
             if (corners[3] == null || corners[3].getSeed() == null) {
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
@@ -104,21 +98,75 @@ public class GoldCard extends PlayingCard{
             }
 
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("  "));
 
-            int i,j,k=0;
-            for(i=0; i<placeCondition.length; i++) {
-                for (j=0; j<placeCondition[i]; j++) {
-                    sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
-                    k++;
+            //PlaceCondition centered
+            int l = 0;
+            for(int i=0;i<4;i++){
+                l=l+placeCondition[i];
+            }
+
+
+            switch (l){
+                case 3 ->{
+                    sb.append(ansi().cursor(1,0).fg(background).bg(background).a(" "));
+
+                    int i,j,k=0;
+                    for(i=0; i<placeCondition.length; i++) {
+                        for (j=0; j<placeCondition[i]; j++) {
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            k++;
+                        }
+
+                    }
+
+                    for(j=k; k<6; k++) {
+                        sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                    }
+
                 }
+                case 4 ->{
+                    int i,j,k=0;
+                    int count=0;
+                    for(i=0; i<placeCondition.length; i++) {
+                        for (j=0; j<placeCondition[i]; j++) {
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            k++;
+                            if(count==1) {
+                                sb.append(ansi().cursor(0,0).bg(background).a(" "));
+                            }
+                            count++;
+                        }
+                    }
 
+                    for(j=k; k<6; k++) {
+                        sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                    }
+
+                }
+                case 5 ->{
+                    int i,j,k=0;
+
+                    for(i=0; i<placeCondition.length; i++) {
+                        for (j=0; j<placeCondition[i]; j++) {
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            k++;
+                        }
+
+                    }
+
+                    for(j=k; k<6; k++) {
+                        sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                    }
+
+                    sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                }
             }
 
-            for(j=k; k<5; k++) {
-                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
-            }
 
-            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a("  "));
+
+
+            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
 
             if (corners[2] == null || corners[2].getSeed() == null) {
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
@@ -126,32 +174,29 @@ public class GoldCard extends PlayingCard{
                 sb.append(ansi().cursor(0, 0).fg(corners[2].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[2].getSeed().name().substring(0, 1)));
             }
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("|"));
             sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
 
-            //Fifth Line
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("______________"));
-            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
 
 
         } else {
             // Retro della carta
             //First Line
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
-            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("       "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E ").a("\n"));
             //Second Line
-            sb.append(ansi().cursor(0, 0).fg(background).bg(background).a("_____"));
+            sb.append(ansi().cursor(0, 0).fg(background).bg(background).a("______"));
             sb.append(ansi().cursor(0, 0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
             sb.append(ansi().cursor(0, 0).fg(background).bg(Ansi.Color.DEFAULT).a(cardSeed.name().substring(0,1)));
             sb.append(ansi().cursor(0, 0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
-            sb.append(ansi().cursor(0, 0).fg(background).bg(background).a("_____"));
+            sb.append(ansi().cursor(0, 0).fg(background).bg(background).a("______"));
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
             //Third Line
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
-            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("       "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
+            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
         }
 
         return sb.toString();

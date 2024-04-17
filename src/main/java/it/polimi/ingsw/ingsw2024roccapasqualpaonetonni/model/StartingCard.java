@@ -101,7 +101,7 @@ public class StartingCard extends PlayingCard{
         } else {
             // Retro della carta
             //First Line
-            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(corners[5].getSeed().name().substring(0,1)));
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("       "));
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E ").a("\n"));
             //Second Line
