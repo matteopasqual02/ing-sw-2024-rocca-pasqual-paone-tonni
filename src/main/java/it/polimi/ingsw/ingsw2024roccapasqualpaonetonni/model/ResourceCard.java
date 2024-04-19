@@ -24,6 +24,7 @@ public class ResourceCard extends PlayingCard {
 
             //First Line
             sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+
             if (corners[0] == null || corners[0].getSeed() == null) {
                 sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
             } else {
