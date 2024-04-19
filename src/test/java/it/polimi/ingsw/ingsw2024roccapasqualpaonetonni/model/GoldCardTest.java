@@ -11,9 +11,9 @@ class GoldCardTest {
     @Test
     void TestGold3 () {
         Corner c1 = new Corner(1,null);
-        Corner c2 = new Corner(2,GREEN);
-        Corner c3 = new Corner(3,RED);
-        Corner c4 = new Corner(4,RED);
+        Corner c2 = new Corner(2,null);
+        Corner c3 = new Corner(3,null);
+        Corner c4 = new Corner(4,null);
         Corner[] cc ={c1,c2,c3,c4};
         int[] placeCond = {2,1,0,0};
         GoldCard card_to_add1 = new GoldCard(50,GREEN,cc,1,"feather",placeCond);
