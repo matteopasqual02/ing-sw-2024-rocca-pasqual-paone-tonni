@@ -31,6 +31,9 @@ public class GameFlow implements GameListener {
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
                 String nickname = new Scanner(System.in).nextLine();
                 client.createGame(nickname,num,this);
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set new max number of players: "));
+                int max = Integer.parseInt(new Scanner(System.in).nextLine());
+                client.setNumberOfPlayers(max);
             }
             //case SOCKET ->
         }
@@ -40,6 +43,11 @@ public class GameFlow implements GameListener {
     //cambiare il modo in cui faccio vedere gli update alla tui
     @Override
     public void maxNumPlayersSet(int gameId, int max) {
+        //ConsolePrinter.consolePrinter("New max number from game");
+        // Definizione della stringa con i parametri
+        String message = String.format("New max number from game: %d,%d", gameId,max);
+        // Stampare il messaggio utilizzando il metodo consolePrinter
+        ConsolePrinter.consolePrinter(message);
 
     }
 
