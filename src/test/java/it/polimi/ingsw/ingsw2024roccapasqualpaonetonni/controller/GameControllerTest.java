@@ -118,12 +118,12 @@ class GameControllerTest {
 
         //assert starting card
         StartingCard cardPlaced = Objects.requireNonNull(gameController.getAllPlayer().peek()).getStartingCard();
-        PlayingCard cardOnBoard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[20][20];
+        PlayingCard cardOnBoard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[5][5];
         assertEquals(cardPlaced,cardOnBoard);
 
         //assert correct second placing
 
-        PlayingCard cardOnBoard2 = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[19][19];
+        PlayingCard cardOnBoard2 = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[4][4];
         assertEquals(cardToAdd,cardOnBoard2);
 
         //to check the correct draw

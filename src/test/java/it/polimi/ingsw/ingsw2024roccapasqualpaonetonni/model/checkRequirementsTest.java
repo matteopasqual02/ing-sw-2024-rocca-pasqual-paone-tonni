@@ -51,7 +51,7 @@ class checkRequirementsTest {
         board1.addCard(gold,start,4,owner.getCountSeed());
 
         int[] coordinates = gold.getCoordinates();
-        int[] trueCoord={21,19};
+        int[] trueCoord={6,4};
         assertArrayEquals(trueCoord,coordinates);
     }
 
@@ -183,7 +183,7 @@ class checkRequirementsTest {
         gold.flip();
         board1.addCard(gold,start,4,owner.getCountSeed());
         int[] coordinates = gold.getCoordinates();
-        int[] trueCoord={21,19};
+        int[] trueCoord={6,4};
         assertArrayEquals(trueCoord,coordinates);
     }
 
