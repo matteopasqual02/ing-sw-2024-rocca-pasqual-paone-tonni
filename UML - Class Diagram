@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-04-20T15:27:47.622Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="GFezLmcvWbSP2dWp4CCg" version="24.2.7" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2024-04-20T15:33:50.183Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="z0t4VKkAV0obq8e2X9E4" version="24.2.7" type="github" pages="3">
   <diagram name="1 PEER REVIEW" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="954" dy="5304" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="987" dy="5304" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -626,7 +626,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="IIzopRqG8tLTp1UP7jA9" name="2 PEER REVIEW">
-    <mxGraphModel dx="3948" dy="9104" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
+    <mxGraphModel dx="3290" dy="8687" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -645,7 +645,7 @@
         <mxCell id="diX9BCjeIwKFMc5kx-_t-1" value="" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=80;tabHeight=26;tabPosition=left;html=1;whiteSpace=wrap;fillColor=#B266FF;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="970" y="-4080" width="610" height="216" as="geometry" />
         </mxCell>
-        <mxCell id="diX9BCjeIwKFMc5kx-_t-2" value="" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=120;tabHeight=30;tabPosition=left;html=1;whiteSpace=wrap;fillColor=#E6E6E6;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+        <mxCell id="diX9BCjeIwKFMc5kx-_t-2" value="" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=120;tabHeight=30;tabPosition=left;html=1;whiteSpace=wrap;fillColor=#B3B3B3;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
           <mxGeometry x="2820" y="-6478" width="770" height="624" as="geometry" />
         </mxCell>
         <mxCell id="diX9BCjeIwKFMc5kx-_t-4" value="" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fillColor=#FFB366;strokeColor=#d79b00;" parent="1" vertex="1">
@@ -1241,7 +1241,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="I-EuxmASO5UjdRi4yAi8" name="RMI metodo 2">
-    <mxGraphModel dx="3816" dy="2504" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
+    <mxGraphModel dx="1518" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
