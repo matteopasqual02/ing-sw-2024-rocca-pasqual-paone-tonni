@@ -130,7 +130,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     }
 
     @Override
-    public void clearSingleton() {
+    public void clearSingleton() throws RemoteException{
         server.mainController.clearSingleton();
     }
 

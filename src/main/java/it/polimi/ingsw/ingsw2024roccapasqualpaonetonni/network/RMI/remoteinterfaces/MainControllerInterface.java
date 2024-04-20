@@ -6,10 +6,10 @@ import java.util.List;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 public interface MainControllerInterface extends Remote{
-    List<GameController> getRunningGames() ;
+    List<GameController> getRunningGames() throws RemoteException;
     GameControllerInterface createGameController(String nickname, int numMaxOfPlayer)throws RemoteException;
     GameControllerInterface joinFirstAvailableGame(String nickname) throws RemoteException;
     GameControllerInterface reconnect(String nickname, int idToReconnect) throws RemoteException;
     GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException;
-    void clearSingleton();
+    void clearSingleton() throws RemoteException;
 }
