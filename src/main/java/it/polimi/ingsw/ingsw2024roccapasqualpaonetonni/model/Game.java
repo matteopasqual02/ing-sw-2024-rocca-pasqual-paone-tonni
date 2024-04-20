@@ -2,7 +2,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListenersHandler;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
@@ -45,7 +44,7 @@ public class Game {
     public void removeListener(GameListener me){
         gameListenersHandler.removeListener(me);
         for(Player p: players){
-            p.setPlayerListeners((List<GameListener>) gameListenersHandler);
+            p.setPlayerListeners(gameListenersHandler.getListener());
         }
     }
 //---------------------------------PLAYER SECTION
@@ -63,7 +62,7 @@ public class Game {
             if(players.size() < maxNumberOfPlayer){
                 players.add(px);
                 for(Player p: players){
-                    p.setPlayerListeners((List<GameListener>) gameListenersHandler);
+                    p.setPlayerListeners(gameListenersHandler.getListener());
                 }
                 gameListenersHandler.notify_addPlayer(px);
             }
@@ -74,7 +73,7 @@ public class Game {
         }
         else {
             gameListenersHandler.notify_playerAlredyIn();
-            throw new PlayerAlreadyInException("The player is alrady in");
+            throw new PlayerAlreadyInException("The player is already in");
         }
 
     }
