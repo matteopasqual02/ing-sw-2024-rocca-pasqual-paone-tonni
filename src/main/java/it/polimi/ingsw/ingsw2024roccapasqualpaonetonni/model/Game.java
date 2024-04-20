@@ -36,17 +36,24 @@ public class Game {
         gameDrawableDeck = null;
 
         chat = new Chat();
+        gameListenersHandler = null;
     }
 
     public void addListeners(GameListener me){
         gameListenersHandler.addListener(me);
+    }
+    public void removeListener(GameListener me){
+        gameListenersHandler.removeListener(me);
+        for(Player p: players){
+            p.setPlayerListeners((List<GameListener>) gameListenersHandler);
+        }
     }
 //---------------------------------PLAYER SECTION
     public int getGameId(){return  gameId;}
     public void setMaxNumberOfPlayer(int number){
 
         this.maxNumberOfPlayer=number;
-        gameListenersHandler.notify_setMaxNumPlayers(this);
+        gameListenersHandler.notify_setMaxNumPlayers(gameId,maxNumberOfPlayer);
     }
     public int getMaxNumberOfPlayer(){
         return maxNumberOfPlayer;
@@ -58,15 +65,15 @@ public class Game {
                 for(Player p: players){
                     p.setPlayerListeners((List<GameListener>) gameListenersHandler);
                 }
-                gameListenersHandler.notify_addPlayer(this);
+                gameListenersHandler.notify_addPlayer(px);
             }
             else {
-                gameListenersHandler.notify_gameFull(this);
+                gameListenersHandler.notify_gameFull();
                 throw new GameAlreadyFullException("The game is full");
             }
         }
         else {
-            gameListenersHandler.notify_playerAlredyIn(this);
+            gameListenersHandler.notify_playerAlredyIn();
             throw new PlayerAlreadyInException("The player is alrady in");
         }
 
@@ -76,47 +83,48 @@ public class Game {
         if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
             status[0] = GameStatus.ENDED;
         }
-        gameListenersHandler.notify_removePlayer(this);
+        //here before calling this method the client should call removeListener to remove itself from the listeners list, or the server should
+        gameListenersHandler.notify_removePlayer(p);
     }
     public void reconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(true);
-            gameListenersHandler.notify_reconnectPlayer(this);
+            gameListenersHandler.notify_reconnectPlayer(nickname);
         }
         else {
-            gameListenersHandler.notify_reconnectionImpossible(this);
+            gameListenersHandler.notify_reconnectionImpossible(nickname);
         }
     }
     public void disconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(false);
-            gameListenersHandler.notify_disconnectedPlayer(this);
+            gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {
-            gameListenersHandler.notify_disconnectionImpossible(this);
+            gameListenersHandler.notify_disconnectionImpossible(nickname);
         }
     }
     public void setFirstPlayer(Player fp){
 
         this.firstPlayer=fp;
-        gameListenersHandler.notify_setFirstPlayer(this);
+        gameListenersHandler.notify_setFirstPlayer(fp);
     }
     public void setStatus(GameStatus status) {
 
         this.status[0] = status;
-        gameListenersHandler.notify_setStatus(this);
+        gameListenersHandler.notify_setStatus(status);
     }
     public void setLastStatus() {
 
         status[1] =status[0];
-        gameListenersHandler.notify_setLastStatus(this);
+        gameListenersHandler.notify_setLastStatus(status[0]);
     }
     public void resetLastStatus() {
 
         status[1] = null;
-        gameListenersHandler.notify_resetLastStatus(this);
+        gameListenersHandler.notify_resetLastStatus();
     }
     public GameStatus getGameStatus(){
 
@@ -144,9 +152,9 @@ public class Game {
         Player newCurrent = players.peek();
         if (newCurrent != null && newCurrent.equals(firstPlayer) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
             status[0] = GameStatus.LAST_TURN;
-            gameListenersHandler.notify_lastTurn(this);
+            gameListenersHandler.notify_lastTurn();
         }
-        gameListenersHandler.notify_nextPlayer(this);
+        gameListenersHandler.notify_nextPlayer(newCurrent);
     }
 
 //---------------------------------POINT SECTION
@@ -182,7 +190,7 @@ public class Game {
     public void playerIsReadyToStart(Player p){
 
         p.setReadyToStart();
-        gameListenersHandler.notify_playerIsReadyToStart(this);
+        gameListenersHandler.notify_playerIsReadyToStart(p);
     }
     public Boolean arePlayerReady(){
         return players.stream().filter(Player::getReadyToStart).count() == players.size()
@@ -192,13 +200,13 @@ public class Game {
     public void setGameDrawableDeck(DrawableDeck deck) {
 
         this.gameDrawableDeck = deck;
-        gameListenersHandler.notify_setGameDrawableDeck(this);
+        gameListenersHandler.notify_setGameDrawableDeck(deck);
     }
 
     public void setGameBoardDeck(BoardDeck deck) {
 
         this.gameBoardDeck = deck;
-        gameListenersHandler.notify_setGameBoardDeck(this);
+        gameListenersHandler.notify_setGameBoardDeck(deck);
     }
 
 //---------------------------------CHAT SECTION

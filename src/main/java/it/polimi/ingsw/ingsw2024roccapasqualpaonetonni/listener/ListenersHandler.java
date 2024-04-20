@@ -18,6 +18,9 @@ public abstract class ListenersHandler {
     public synchronized void addListener(GameListener g){
         listeners.add(g);
     }
+    public synchronized void removeListener(GameListener g){
+        listeners.remove(g);
+    }
 
     public synchronized List<GameListener> getListener(){
         return listeners;

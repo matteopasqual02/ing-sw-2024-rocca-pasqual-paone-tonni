@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 import java.util.List;
@@ -15,94 +15,94 @@ public class GameListenersHandler extends ListenersHandler{
     public GameListenersHandler(){
         super();
     }
-    public void notify_setMaxNumPlayers(Game model) {
+    public void notify_setMaxNumPlayers(int gameId,int max) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.maxNumPlayersSet(gameId,max);
         }
     }
-    public void notify_addPlayer(Game model) {
+    public void notify_addPlayer(Player newPlayer) {
         for(GameListener listener : listeners){
-            listener.fullGame(new GameImmutable(model));
+            listener.addedPlayer(newPlayer);
         }
     }
-    public void notify_gameFull(Game model) {
+    public void notify_gameFull() {
         for(GameListener listener : listeners){
-            listener.fullGame(new GameImmutable(model));
+            listener.fullGame();
         }
     }
-    public void notify_playerAlredyIn(Game model) {
+    public void notify_playerAlredyIn() {
         for(GameListener listener : listeners){
-            listener.nameAlreadyInGame(new GameImmutable(model));
+            listener.nameAlreadyInGame();
         }
     }
-    public void notify_removePlayer(Game model) {
+    public void notify_removePlayer(Player p) {
         for(GameListener listener : listeners){
-            listener.removedPlayer(new GameImmutable(model));
+            listener.playerRemoved(p);
         }
     }
-    public void notify_reconnectPlayer(Game model) {
+    public void notify_reconnectPlayer(String nickname) {
         for(GameListener listener : listeners){
-            listener.reconnectedPlayer(new GameImmutable(model));
+            listener.reconnectedPlayer(nickname);
         }
     }
-    public void notify_reconnectionImpossible(Game model) {
+    public void notify_reconnectionImpossible(String nickname) {
         for(GameListener listener : listeners){
-            //listener.reconnectionImpossible(new GameImmutable(model));
+            listener.reconnectionImpossible(nickname);
         }
     }
-    public void notify_disconnectedPlayer(Game model) {
+    public void notify_disconnectedPlayer(String nickname) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.disconnectedPlayer(nickname);
         }
     }
-    public void notify_disconnectionImpossible(Game model) {
+    public void notify_disconnectionImpossible(String nickname) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.disconnectionImpossible(nickname);
         }
     }
-    public void notify_setFirstPlayer(Game model) {
+    public void notify_setFirstPlayer(Player first) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.firstPlayerSet(first);
         }
     }
-    public void notify_setStatus(Game model) {
+    public void notify_setStatus(GameStatus status) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.statusSet(status);
         }
     }
-    public void notify_setLastStatus(Game model) {
+    public void notify_setLastStatus(GameStatus status) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.statusSetToLastStatus(status);
         }
     }
-    public void notify_resetLastStatus(Game model) {
+    public void notify_resetLastStatus() {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.lastStatusReset();
         }
     }
-    public void notify_nextPlayer(Game model) {
+    public void notify_nextPlayer(Player p) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.nextTurn(p);
         }
     }
-    public void notify_lastTurn(Game model) {
+    public void notify_lastTurn() {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.lastTurn();
         }
     }
-    public void notify_playerIsReadyToStart(Game model) {
+    public void notify_playerIsReadyToStart(Player p) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.playerIsReady(p);
         }
     }
-    public void notify_setGameDrawableDeck(Game model) {
+    public void notify_setGameDrawableDeck(DrawableDeck d) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.drawableDeckSet(d);
         }
     }
-    public void notify_setGameBoardDeck(Game model) {
+    public void notify_setGameBoardDeck(BoardDeck bd) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.boardDeckSet(bd);
         }
     }
 
