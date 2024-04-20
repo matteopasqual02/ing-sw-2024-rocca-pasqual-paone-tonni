@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameFlow;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -70,11 +71,11 @@ public class MainClient {
         //Starts the UI wanted
         if (selection == 1 || selection == 2) {
             //Starts the game with TUI
-
+            new GameFlow(conSel);
 
         } else {
             //Starts the game with GUI
-
+            new GameFlow(conSel);
         }
 
     }
