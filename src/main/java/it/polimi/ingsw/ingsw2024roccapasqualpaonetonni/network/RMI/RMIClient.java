@@ -77,14 +77,16 @@ public class RMIClient implements VirtualViewInterface {
         }while(retry);
     }
 
+    @Override
     public void createGame(String name,int maxNumPlayers,GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.createGameController(name,maxNumPlayers);
         gameController.addMyselfAsListener(me);
+        gameController.setMaxNumberOfPlayer(maxNumPlayers);
         nickname = name;
     }
-
+    @Override
     public void joinFirstAvailable(String name,GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
@@ -102,6 +104,7 @@ public class RMIClient implements VirtualViewInterface {
         nickname = name;
 
     }*/
+   @Override
     public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
@@ -110,6 +113,7 @@ public class RMIClient implements VirtualViewInterface {
         nickname = nick;
 
     }
+    @Override
     public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
 
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
@@ -128,7 +132,7 @@ public class RMIClient implements VirtualViewInterface {
 
     @Override
     public void setNumberOfPlayers(int num) throws RemoteException {
-
+        gameController.setMaxNumberOfPlayer(num);
     }
 
     @Override
@@ -171,23 +175,4 @@ public class RMIClient implements VirtualViewInterface {
 
     }
 
-    @Override
-    public void CreateGameController(String nickname) throws RemoteException {
-
-    }
-
-    @Override
-    public void joinFirstAvailableGame(String nickname) throws RemoteException {
-
-    }
-
-    @Override
-    public void reconnect(String nickname) throws RemoteException {
-
-    }
-
-    @Override
-    public void leaveGame(String nickname) throws RemoteException {
-
-    }
 }

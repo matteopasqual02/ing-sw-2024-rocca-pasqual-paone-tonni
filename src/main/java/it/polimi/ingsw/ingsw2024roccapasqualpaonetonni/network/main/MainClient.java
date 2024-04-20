@@ -4,6 +4,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValue
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +15,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException, NotBoundException {
         clearCMD();
         int selection;
         String input;

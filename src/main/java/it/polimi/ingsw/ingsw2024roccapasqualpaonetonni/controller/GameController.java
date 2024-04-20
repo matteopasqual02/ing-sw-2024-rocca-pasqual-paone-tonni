@@ -13,9 +13,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfa
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
-public class GameController implements GameControllerInterface,Runnable{
+public class GameController implements GameControllerInterface,Runnable, Serializable {
     private final Game model;
     private final Random random;
     private final String path;

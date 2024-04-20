@@ -7,9 +7,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlr
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Game {
+public class Game implements Serializable {
     private final int gameId;
     private final GameStatus[] status; //current and previous status needed for reconnection
     private int maxNumberOfPlayer;

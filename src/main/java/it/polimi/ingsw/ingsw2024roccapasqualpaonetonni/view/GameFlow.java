@@ -4,15 +4,34 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIClient;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.Scanner;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class GameFlow implements GameListener {
     VirtualViewInterface client;
-    public GameFlow(ConnectionType conSel){
+    //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
+    public GameFlow(ConnectionType conSel) throws RemoteException, NotBoundException {
         switch (conSel){
             /*devo in base al caso far si che le azioni fattibili siano quelle di client o di socket
             cosi ho un solo oggetto di azioni che possono essere azioni socket o azioni rmi a seconda della scelta di connessione*/
-            case RMI -> client = new RMIClient();
+            case RMI -> {
+                client = new RMIClient();
+
+                //versione rudimentale senza nulla (tui,gui,thread ecc..) solo per vedere se funziona la base
+
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
+                int num = Integer.parseInt(new Scanner(System.in).nextLine());
+
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
+                String nickname = new Scanner(System.in).nextLine();
+                client.createGame(nickname,num,this);
+            }
             //case SOCKET ->
         }
     }

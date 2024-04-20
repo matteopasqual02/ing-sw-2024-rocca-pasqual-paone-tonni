@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 
+import java.io.Serializable;
 import java.util.List;
 /*
 this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
@@ -12,7 +13,7 @@ change to each of the clients. These methods call other methods on the actual si
 
 these are not hte methods that directly notify the clients, they are the ones that call those methods on all of the clients.
  */
-public class PlayerListenersHandler extends ListenersHandler{
+public class PlayerListenersHandler extends ListenersHandler implements Serializable {
 
     public PlayerListenersHandler(){
         super();
@@ -25,7 +26,7 @@ public class PlayerListenersHandler extends ListenersHandler{
     }
     public void notify_setReadyToStart(Player p) {
         for(GameListener listener : listeners){
-            listener.playerReady(p);
+                listener.playerReady(p);
         }
     }
     public void notify_setIsConnected(Player p) {

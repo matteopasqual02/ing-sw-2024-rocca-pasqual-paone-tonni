@@ -11,9 +11,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotIn
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Player {
+public class Player implements Serializable {
     private final String nickname;
     private final int colorPlayer;
     private int currentPoints;
@@ -59,7 +60,7 @@ public class Player {
     public void setReadyToStart(){
 
         readyToStart=true;
-        playerListenersHandler.notify_setReadyToStart(this);
+        //playerListenersHandler.notify_setReadyToStart(this);
     }
     public Boolean getIsConnected(){
         return connected;

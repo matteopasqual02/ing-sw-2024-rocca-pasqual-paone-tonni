@@ -6,7 +6,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.Condition
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 
-public class PlayerBoard {
+import java.io.Serializable;
+
+public class PlayerBoard implements Serializable {
     private int dim_x;
     private int dim_y;
     private PlayingCard[][] board;
