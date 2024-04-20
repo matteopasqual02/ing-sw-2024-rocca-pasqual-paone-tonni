@@ -9,6 +9,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValue
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.VirtualViewInterface;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -19,7 +20,7 @@ import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePri
 public class RMIClient implements VirtualViewInterface {
     private static MainControllerInterface requests;
     private GameControllerInterface gameController = null;
-    private static GameListener modelInvokedEvents;
+    //private static GameListener modelInvokedEvents;
     private String nickname;
     private Registry registry;
 
@@ -76,6 +77,49 @@ public class RMIClient implements VirtualViewInterface {
         }while(retry);
     }
 
+    public void createGame(String name,int maxNumPlayers,GameListener me) throws RemoteException, NotBoundException {
+        registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
+        requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
+        gameController = requests.createGameController(name,maxNumPlayers);
+        gameController.addMyselfAsListener(me);
+        nickname = name;
+    }
+
+    public void joinFirstAvailable(String name,GameListener me) throws RemoteException, NotBoundException {
+        registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
+        requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
+        gameController = requests.joinFirstAvailableGame(name);
+        gameController.addMyselfAsListener(me);
+        nickname = name;
+    }
+
+   /* public void joinGame(String name, int color,int idGame, GameListener me) throws RemoteException, NotBoundException {
+
+        registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
+        requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
+        gameController = requests.joinGame(name, color, idGame, me);
+        //gameController.addMyselfAsListener(me); lo fa dentro la join
+        nickname = name;
+
+    }*/
+    public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
+        registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
+        requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
+        gameController = requests.reconnect(nick, idGame);
+
+        nickname = nick;
+
+    }
+    public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
+
+        registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
+        requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
+
+        requests.leaveGame(nick, idGame);
+        gameController.removeMyselfAsListener(me);
+        gameController = null;
+        nickname = null;
+    }
     //from here on the methods should be to show the update directly to the client, or the methods that the client can call it depends on what we choose
     @Override
     public boolean isCurrentPlaying() throws RemoteException {

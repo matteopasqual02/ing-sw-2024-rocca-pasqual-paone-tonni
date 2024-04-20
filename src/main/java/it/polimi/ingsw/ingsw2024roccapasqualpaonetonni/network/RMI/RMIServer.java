@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
@@ -88,7 +89,22 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game");
         return result;
     }
+    /*@Override
+    public GameControllerInterface joinGame(String nickname, int idGame, GameListener me) throws RemoteException {
 
+        //Return the GameController already existed => not necessary to re-Export Object
+        GameControllerInterface ris = server.mainController.joinGame(nickname, idGame);
+        if (ris != null) {
+            try {
+                UnicastRemoteObject.exportObject(ris, 0);
+            }catch (RemoteException e){
+                //Already exported, due to another RMI Client running on the same machine
+            }
+            //ris.setPlayerIdentity((PlayerInterface) UnicastRemoteObject.exportObject(ris.getPlayerIdentity(),0));
+            ConsolePrinter.consolePrinter("[RMI] " + nickname + " joined to specific game with id: " + idGame);
+        }
+        return ris;
+    }*/
     @Override
     public GameControllerInterface reconnect(String nickname, int idToReconnect)throws RemoteException {
         GameControllerInterface result = server.mainController.reconnect(nickname,idToReconnect);

@@ -42,6 +42,9 @@ public class GameController implements GameControllerInterface,Runnable{
     public void addMyselfAsListener(GameListener me){
         model.addListeners(me);
     }
+    public void removeMyselfAsListener(GameListener me){
+        model.removeListener(me);
+    }
     //---------------------------------PLAYER SECTION
     public int getID(){
         return model.getGameId();

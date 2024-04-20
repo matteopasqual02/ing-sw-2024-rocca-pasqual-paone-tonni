@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
@@ -17,4 +19,8 @@ public interface GameControllerInterface extends Remote{
     void drawGoldFromDeck() throws RemoteException;
     void drawFromBoard(int position) throws RemoteException;
     void checkWinner() throws RemoteException;
+
+    void addMyselfAsListener(GameListener me);
+
+    void removeMyselfAsListener(GameListener me);
 }

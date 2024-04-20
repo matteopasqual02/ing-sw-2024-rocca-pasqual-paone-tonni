@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
 
@@ -55,6 +58,31 @@ public class MainController implements MainControllerInterface {
 
         return null;
     }
+
+    /*probabilmente questa è sbagliata e da rifare
+    @Override
+    public synchronized GameControllerInterface joinGame(String nickname, int color, int gameId, GameListener me)throws RemoteException{
+        List<GameController> gameList = getRunningGames().stream().filter(x -> (x.getID() == gameId)).toList();
+        Player p = new Player(nickname,color);
+
+        if (gameList.size() == 1) {
+            if(!gameList.get(0).getGameStatus().equals(GameStatus.ENDED) && gameList.get(0).getAllPlayer().stream().filter(x->x.getNickname().equals(nickname)).toList().size()==1) {
+                try {
+                    gameList.get(0).addMyselfAsListener(me);
+                    gameList.get(0).addPlayer(nickname);
+                    return gameList.get(0);
+                } catch (GameAlreadyFullException | PlayerAlreadyInException e) {
+                    gameList.get(0).removeMyselfAsListener(me);
+                }
+            }else{
+                //lis.gameIdNotExists(idGame);
+            }
+        } else {
+            //This is the only call not inside the model
+            //lis.gameIdNotExists(idGame);
+        }
+        return null;
+    }*/
 
     @Override
     public GameControllerInterface reconnect(String nickname, int idToReconnect) throws RemoteException{
