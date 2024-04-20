@@ -21,7 +21,7 @@ public class Game {
     private DrawableDeck gameDrawableDeck;
     private final Chat chat;
 
-    private GameListenersHandler gameListenersHandler;
+    private final GameListenersHandler gameListenersHandler;
     public Game(int id){
         players = new LinkedList<>();
         winner = new LinkedList<>();
@@ -36,7 +36,7 @@ public class Game {
         gameDrawableDeck = null;
 
         chat = new Chat();
-        gameListenersHandler = null;
+        gameListenersHandler = new GameListenersHandler();
     }
 
     public void addListeners(GameListener me){
