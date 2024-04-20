@@ -11,5 +11,5 @@ public interface MainControllerInterface extends Remote{
     GameControllerInterface joinFirstAvailableGame(String nickname) throws RemoteException;
     GameControllerInterface reconnect(String nickname, int idToReconnect) throws RemoteException;
     GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException;
-
+    void clearSingleton();
 }

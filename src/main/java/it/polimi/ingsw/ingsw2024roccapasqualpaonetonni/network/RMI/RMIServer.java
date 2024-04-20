@@ -129,5 +129,10 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         return result;
     }
 
+    @Override
+    public void clearSingleton() {
+        server.mainController.clearSingleton();
+    }
+
 
 }
