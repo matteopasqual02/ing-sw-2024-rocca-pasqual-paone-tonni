@@ -4,7 +4,13 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 import java.util.List;
+/*
+this class handles the listeners of the game class in the model: the listeners are elements related to each client, when a change
+occurs in the model (the controller does something) one of these methods gets called in order to show the
+change to each of the clients. These methods call other methods on the actual single listener giving it the change that has occurred
 
+these are not hte methods that directly notify the clients, they are the ones that call those methods on all of the clients.
+ */
 public class GameListenersHandler extends ListenersHandler{
     public GameListenersHandler(){
         super();
