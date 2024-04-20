@@ -94,11 +94,22 @@ class MainControllerTest {
         mainController.getRunningGames().getFirst().createTable();
         assertEquals(GameStatus.RUNNING,mainController.getRunningGames().getFirst().getGameStatus());
 
+        mainController.leaveGame("p1",idGame);
+        assertEquals(1,mainController.getRunningGames().getFirst().getGame().numberDisconnectedPlayers());
+        assertEquals(GameStatus.RUNNING,mainController.getRunningGames().getFirst().getGameStatus());
+
+        mainController.leaveGame("p3",idGame);
         mainController.leaveGame("p2",idGame);
+
+        assertEquals(3,mainController.getRunningGames().getFirst().getGame().numberDisconnectedPlayers());
         assertEquals(GameStatus.WAITING_RECONNECTION,mainController.getRunningGames().getFirst().getGameStatus());
         assertEquals(GameStatus.RUNNING,mainController.getRunningGames().getFirst().getLastStatus());
 
-        Boolean connected= mainController.getRunningGames().getFirst().getAllPlayer().stream().filter(p->p.getNickname().equals("p2")).toList().getFirst().getIsConnected();
+        Boolean connected= mainController.getRunningGames().getFirst().getAllPlayer().stream().filter(p->p.getNickname().equals("p1")).toList().getFirst().getIsConnected();
+        assertFalse(connected);
+        connected= mainController.getRunningGames().getFirst().getAllPlayer().stream().filter(p->p.getNickname().equals("p2")).toList().getFirst().getIsConnected();
+        assertFalse(connected);
+        connected= mainController.getRunningGames().getFirst().getAllPlayer().stream().filter(p->p.getNickname().equals("p3")).toList().getFirst().getIsConnected();
         assertFalse(connected);
     }
 

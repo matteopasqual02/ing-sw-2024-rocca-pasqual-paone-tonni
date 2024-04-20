@@ -77,13 +77,17 @@ public class GameController implements GameControllerInterface,Runnable{
     }
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
-        model.setStatus(model.getLastStatus());
-        model.resetLastStatus();
+        if(model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1){
+            model.setStatus(model.getLastStatus());
+            model.resetLastStatus();
+        }
     }
     public void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
-        model.setLastStatus();
-        model.setStatus(GameStatus.WAITING_RECONNECTION);
+        if(model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1){
+            model.setLastStatus();
+            model.setStatus(GameStatus.WAITING_RECONNECTION);
+        }
     }
     @Override
     public void removePlayer(Player player){
