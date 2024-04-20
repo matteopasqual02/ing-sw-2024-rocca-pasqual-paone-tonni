@@ -103,5 +103,4 @@ public class BoardDeck {
                 && cards2[1] == null;
     }
 
-    //le 4 carte nella board sono chiamate 1,2,3,4, passando la position il client puo decidere quale carta vuole percare tra le 4, quindi indirettamente nache il suo tipo
 }

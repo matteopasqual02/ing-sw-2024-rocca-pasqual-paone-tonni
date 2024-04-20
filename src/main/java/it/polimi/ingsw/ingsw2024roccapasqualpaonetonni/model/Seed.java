@@ -6,7 +6,7 @@ public enum Seed {
     POTION("potion", 5), SCROLL("scroll", 6), EMPTY("empty", 7);
     private final String name;
     private final int index;
-    private Seed(String name, int index) {
+    Seed(String name, int index) {
         this.name = name;
         this.index = index;
     }

@@ -1,12 +1,8 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ObjectiveCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 
 /*
 GameListener is an interface with all the methods that are used to comunicare with the RMIClient in order to show update of changes.

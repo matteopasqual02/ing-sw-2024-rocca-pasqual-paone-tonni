@@ -26,7 +26,7 @@ public class Player {
     private boolean readyToStart;
     private boolean connected ;
 
-    private PlayerListenersHandler playerListenersHandler;
+    private final PlayerListenersHandler playerListenersHandler;
     public Player(String name,int color){
 
         this.nickname=name;

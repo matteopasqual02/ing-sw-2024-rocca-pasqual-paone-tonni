@@ -32,8 +32,8 @@ public class GoldCard extends PlayingCard {
         switch(pointCondition) {
             case "corners":
                 //count the number of corner covered by (4 corner) the current card
-                int[][] positons = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
-                for (int[] i : positons) {
+                int[][] positions = {{-1, -1, 1}, {-1, 1, 2}, {1, 1, 3}, {1, -1, 4}};
+                for (int[] i : positions) {
                     cardOnBoard = board[x + i[0]][y + i[1]];
                     if (cardOnBoard != null) {
                         curr_points += points;

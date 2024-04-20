@@ -1,15 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ObjectiveCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 
-import java.util.ArrayList;
 import java.util.List;
 /*
 this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change

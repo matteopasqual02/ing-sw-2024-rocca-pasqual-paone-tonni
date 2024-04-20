@@ -2,7 +2,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
@@ -14,7 +13,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
 public class RMIServer extends UnicastRemoteObject implements MainControllerInterface {
 
@@ -131,6 +129,5 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         return result;
     }
 
-    @Override
-    public void clearSingleton() {}
+
 }
