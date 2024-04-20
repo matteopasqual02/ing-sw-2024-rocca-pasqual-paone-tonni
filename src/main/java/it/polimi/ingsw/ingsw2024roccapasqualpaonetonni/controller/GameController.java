@@ -333,7 +333,7 @@ public class GameController implements GameControllerInterface,Runnable{
         }
     }
     public void checkWinner(){
-        model.checkWinner();
+        //model.checkWinner();
         model.setStatus(GameStatus.ENDED);
     }
 

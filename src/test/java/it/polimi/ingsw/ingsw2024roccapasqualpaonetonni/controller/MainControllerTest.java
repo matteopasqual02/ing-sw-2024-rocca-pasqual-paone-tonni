@@ -12,9 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class MainControllerTest {
-    //Don't run the entire class (Singleton pattern is able to create only one instance.I have created one forall test function)
-
-
 
     @Test
     void createGameTest() throws RemoteException {
