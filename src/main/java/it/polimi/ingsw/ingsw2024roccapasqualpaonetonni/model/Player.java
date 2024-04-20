@@ -67,7 +67,7 @@ public class Player {
     public void setIsConnected(Boolean b){
 
         connected = b;
-        //playerListenersHandler.notify_setIsConnected(this);
+        playerListenersHandler.notify_setIsConnected(this);
     }
     public String getNickname() {
         return nickname;
@@ -82,6 +82,7 @@ public class Player {
     public void drawGoals(DrawableDeck d) throws DeckEmptyException{
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
+        playerListenersHandler.notify_drawPersonalGoals(firstGoals,this);
     }
     public void chooseGoal(int choice){
         if(choice==0){
@@ -90,18 +91,25 @@ public class Player {
         else {
             goal=firstGoals[1];
         }
+        playerListenersHandler.notify_chooseGoal(goal,this);
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
+        playerListenersHandler.notify_drawStarting(startingCard,this);
     }
     public void drawGoldFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstGold());
+        playerListenersHandler.notify_drawGoldFromDeck(hand.getLast(),this);
     }
     public void drawResourcesFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstResource());
+        playerListenersHandler.notify_drawResourceFromDeck(hand.getLast(),this);
+
     }
     public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
         hand.add(b.draw(position));
+        playerListenersHandler.notify_drawFromBoard(hand.getLast(),this);
+
     }
     public int[] getCountSeed() {
         return countSeed;
@@ -109,8 +117,11 @@ public class Player {
 
     public void addStarting(){
         board.addStartingCard(startingCard);
+        playerListenersHandler.notify_addStarting(board,this);
     }
-    public void setStartingCard(StartingCard card){ this.startingCard=card;}
+    public void setStartingCard(StartingCard card){
+        this.startingCard=card;
+    }
     public StartingCard getStartingCard(){return startingCard;}
 
     public void addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
@@ -118,34 +129,40 @@ public class Player {
             removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
-
+            playerListenersHandler.notify_cardNotInHand(cardToAdd,this);
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
+            playerListenersHandler.notify_addToBoard(board,this);
         }
         catch(InvalidPlaceException e) {
-
+            playerListenersHandler.notify_invalidPlace(this);
         }
         catch(ConditionsNotMetException e) {
-
+            playerListenersHandler.notify_conditionsNotMet(this);
         }
     }
 
     public void increasePoints(int newPoints) {
+
         currentPoints = currentPoints + newPoints;
+        playerListenersHandler.notify_increasePoints(currentPoints,this);
     }
 
     public void updateSeedCount(int[] change) {
         for (int i = 0; i < 7; i++) {
             countSeed[i]+= change[i];
         }
+        playerListenersHandler.notify_updateSeedCount(countSeed,this);
     }
 
     private void removeFromHand(PlayingCard p) throws CardNotInHandException{
         if(hand.contains(p)){
             hand.remove(p);
+            playerListenersHandler.notify_removeFromHand(p,this);
         }
         else {throw new CardNotInHandException("Card Doesn't exists in player hand");}
+        playerListenersHandler.notify_cardNotInHand(p,this);
     }
 
 

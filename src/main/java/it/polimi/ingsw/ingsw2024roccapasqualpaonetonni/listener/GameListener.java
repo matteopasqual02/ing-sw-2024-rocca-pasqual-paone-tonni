@@ -1,6 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 
@@ -13,53 +17,37 @@ public interface GameListener{
     void addedPlayer(Player newPlayer);
     void playerReady(Player p);
     void fullGame();
-
     void nameAlreadyInGame();
     void playerRemoved(Player p);
-
-    void playersAreMaxGame(GameImmutable model);
-
     void nextTurn(Player p);
     void lastTurn();
-
     void reconnectedPlayer(String nickname);
     void reconnectionImpossible(String nickname);
-
     void disconnectedPlayer(String nickname);
     void disconnectionImpossible(String nickname);
     void statusSet(GameStatus status);
     void statusSetToLastStatus(GameStatus status);
     void lastStatusReset();
     void playerIsReady(Player p);
-    void tableCreated(GameImmutable model);
-
-    void playersNotReady(GameImmutable model);
-
+    //void tableCreated(GameImmutable model);
+    //void playersNotReady(GameImmutable model);
     void firstPlayerSet(Player first);
     void drawableDeckSet(DrawableDeck d);
     void boardDeckSet(BoardDeck bd);
 
-    void cardAdded(GameImmutable model);
-
-    void startingCardAdded(GameImmutable model);
-
-    void goalChosen(GameImmutable model);
-
-    void cannotDrawHere(GameImmutable model);
-
-    void decksAllEmpty(GameImmutable model);
-
-    void resourceDrawn(GameImmutable model);
-
-    void changeResourceDeck(GameImmutable model);
-
-    void goldDrawn(GameImmutable model);
-
-    void changeGoldDeck(GameImmutable model);
-
-    void drewFromBoard(GameImmutable model);
-
-    void changeBoardDeck(GameImmutable model);
-
-    void playerJoined(GameImmutable gameImmutable);
+    void startAdded(PlayerBoard board, Player p);
+    void cardAdded(PlayerBoard board, Player p);
+    void choseInvalidPlace(Player p);
+    void conditionsNotMet(Player p);
+    void startingCardDrew(StartingCard start, Player p);
+    void drewPersonalGoals(ObjectiveCard[] goals, Player p);
+    void personalGoalChosen(ObjectiveCard goal, Player p);
+    void cardNotInHand(PlayingCard card,Player p);
+    void resourceDrawn(PlayingCard card, Player p);
+    void goldDrawn(PlayingCard card, Player p);
+    void drewFromBoard(PlayingCard card, Player p);
+    void playerIsConnected(Player p);
+    void pointsIncreased(int points,Player p);
+    void seedCountUpdated(int[] seedCount,Player p);
+    void cardRemovedFromHand(PlayingCard card, Player p);
 }

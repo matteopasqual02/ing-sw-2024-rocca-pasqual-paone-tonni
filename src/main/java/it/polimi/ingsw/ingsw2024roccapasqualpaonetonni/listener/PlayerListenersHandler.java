@@ -2,6 +2,11 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 import java.util.ArrayList;
@@ -29,69 +34,84 @@ public class PlayerListenersHandler extends ListenersHandler{
             listener.playerReady(p);
         }
     }
-    public void notify_setIsConnected(Game model) {
+    public void notify_setIsConnected(Player p) {
+        for(GameListener listener : listeners){
+            listener.playerIsConnected(p);
+        }
+    }
+    public void notify_drawPersonalGoals(ObjectiveCard[] goals, Player p) {
+        for(GameListener listener : listeners){
+            listener.drewPersonalGoals(goals,p);
+        }
+    }
+    public void notify_chooseGoal(ObjectiveCard goal, Player p) {
+        for(GameListener listener : listeners){
+            listener.personalGoalChosen(goal, p);
+        }
+    }
+    public void notify_drawStarting(StartingCard card, Player p) {
+        for(GameListener listener : listeners){
+            listener.startingCardDrew(card,p);
+        }
+    }
+    public void notify_drawGoldFromDeck(PlayingCard card, Player p) {
+        for(GameListener listener : listeners){
+            listener.goldDrawn(card,p);
+        }
+    }
+    public void notify_drawResourceFromDeck(PlayingCard card, Player p) {
+        for(GameListener listener : listeners){
+            listener.resourceDrawn(card,p);
+        }
+    }
+    public void notify_drawFromBoard(PlayingCard card, Player p) {
+        for(GameListener listener : listeners){
+            listener.drewFromBoard(card, p);
+        }
+    }
+    public void notify_addStarting(PlayerBoard board, Player p) {
+        for(GameListener listener : listeners){
+            listener.startAdded(board,p);
+        }
+    }
+    /*public void notify_setStartingCard(Game model) {
         for(GameListener listener : listeners){
             listener.playerJoined(new GameImmutable(model));
         }
-    }
-    public void notify_drawGoals(Game model) {
+    }*/
+    public void notify_cardNotInHand(PlayingCard card, Player p) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.cardNotInHand(card,p);
         }
     }
-    public void notify_chooseGoal(Game model) {
+    public void notify_addToBoard(PlayerBoard board, Player p) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.cardAdded(board,p);
         }
     }
-    public void notify_drawStarting(Game model) {
+    public void notify_invalidPlace(Player p){
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.choseInvalidPlace(p);
         }
     }
-    public void notify_drawGoldFromDeck(Game model) {
+    public void notify_conditionsNotMet(Player p){
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.conditionsNotMet(p);
         }
     }
-    public void notify_drawResourceFromDeck(Game model) {
+    public void notify_increasePoints(int points,Player p) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.pointsIncreased(points,p);
         }
     }
-    public void notify_drawFromBoard(Game model) {
+    public void notify_updateSeedCount(int[] countSeed,Player p) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.seedCountUpdated(countSeed,p);
         }
     }
-    public void notify_addStarting(Game model) {
+    public void notify_removeFromHand(PlayingCard card,Player p) {
         for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
-        }
-    }
-    public void notify_setStartingCard(Game model) {
-        for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
-        }
-    }
-    public void notify_addToBoard(Game model) {
-        for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
-        }
-    }
-    public void notify_increasePoints(Game model) {
-        for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
-        }
-    }
-    public void notify_updateSeedCount(Game model) {
-        for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
-        }
-    }
-    public void notify_removeFromHand(Game model) {
-        for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
+            listener.cardRemovedFromHand(card,p);
         }
     }
 }
