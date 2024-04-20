@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-04-20T10:36:43.485Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="iir6k8nFqilyRQvrXkIv" version="24.2.5" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2024-04-20T10:37:52.037Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="0BZtv54mXZ2vdc345Bxp" version="24.2.5" type="github" pages="3">
   <diagram name="Model and Controller" id="ekSnajkk3Y4iF-fPzKWO">
     <mxGraphModel dx="3225" dy="6071" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
       <root>
@@ -695,7 +695,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-16" value="RMIserver" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1360" y="160" width="210" height="140" as="geometry" />
+          <mxGeometry x="1360" y="90" width="210" height="200" as="geometry" />
         </mxCell>
         <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-17" value="&lt;div&gt;-mainController&lt;/div&gt;&lt;div&gt;-server&lt;/div&gt;&lt;div&gt;-registry&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="Ivbd-PT-ktjFDJ3ZyYq9-16" vertex="1">
           <mxGeometry y="26" width="210" height="54" as="geometry" />
@@ -703,8 +703,8 @@
         <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-18" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontStyle=1" parent="Ivbd-PT-ktjFDJ3ZyYq9-16" vertex="1">
           <mxGeometry y="80" width="210" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-19" value="+metodi del mainController chiamati dal client per aggiungersi a partita..." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="Ivbd-PT-ktjFDJ3ZyYq9-16" vertex="1">
-          <mxGeometry y="88" width="210" height="52" as="geometry" />
+        <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-19" value="+bind()&lt;div&gt;+getInstance()&lt;/div&gt;&lt;div&gt;+getRegistry()&lt;/div&gt;&lt;div&gt;+getRunningGames()&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontStyle=1" parent="Ivbd-PT-ktjFDJ3ZyYq9-16" vertex="1">
+          <mxGeometry y="88" width="210" height="112" as="geometry" />
         </mxCell>
         <mxCell id="Ivbd-PT-ktjFDJ3ZyYq9-20" value="RMIclient" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1360" y="400" width="240" height="210" as="geometry" />
