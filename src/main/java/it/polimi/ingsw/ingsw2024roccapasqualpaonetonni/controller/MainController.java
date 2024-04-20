@@ -113,4 +113,9 @@ public class MainController implements MainControllerInterface {
         return null;
     }
 
+    public void clearSingleton() {
+        runningGames.clear();
+
+    }
+
 }

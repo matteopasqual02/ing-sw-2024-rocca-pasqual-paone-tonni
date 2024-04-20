@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 
 public class PlayerBoard {
     private int dim_x;
@@ -13,14 +14,10 @@ public class PlayerBoard {
     private final Player player;
 
     public PlayerBoard(Player owner) {
-        dim_x = 40;
-        dim_y = 40;
+        dim_x = DefaultModelValues.Default_Board_Dim_X;
+        dim_y = DefaultModelValues.Default_Board_Dim_Y;
         board = new PlayingCard[dim_x][dim_y];
         player = owner;
-    }
-
-    public Player getPlayer(){
-        return player;
     }
 
     // method that receives a card and the coordinates where to put it,
@@ -230,5 +227,14 @@ public class PlayerBoard {
 
     public PlayingCard[][] getBoard() {
         return board;
+    }
+    public int getDim_x() {
+        return dim_x;
+    }
+    public int getDim_y() {
+        return dim_y;
+    }
+    public Player getPlayer(){
+        return player;
     }
 }

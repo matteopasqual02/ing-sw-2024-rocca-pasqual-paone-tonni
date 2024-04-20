@@ -84,13 +84,17 @@ public class GameController implements GameControllerInterface,Runnable{
     }
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
-        model.setStatus(model.getLastStatus());
-        model.resetLastStatus();
+        if(model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1){
+            model.setStatus(model.getLastStatus());
+            model.resetLastStatus();
+        }
     }
     public void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
-        model.setLastStatus();
-        model.setStatus(GameStatus.WAITING_RECONNECTION);
+        if(model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1){
+            model.setLastStatus();
+            model.setStatus(GameStatus.WAITING_RECONNECTION);
+        }
     }
     @Override
     public void removePlayer(Player player){
@@ -118,6 +122,7 @@ public class GameController implements GameControllerInterface,Runnable{
             catch (IOException e) {
                 e.printStackTrace();
             }
+
             Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
             for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
                 String type = entry.getKey(); // Get the card type
@@ -339,7 +344,7 @@ public class GameController implements GameControllerInterface,Runnable{
         }
     }
     public void checkWinner(){
-        model.checkWinner();
+        //model.checkWinner();
         model.setStatus(GameStatus.ENDED);
     }
 
