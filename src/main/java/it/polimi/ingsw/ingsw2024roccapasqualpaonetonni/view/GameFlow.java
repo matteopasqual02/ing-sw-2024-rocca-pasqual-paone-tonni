@@ -4,15 +4,16 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIClient;
 
 public class GameFlow implements GameListener {
+    VirtualViewInterface client;
     public GameFlow(ConnectionType conSel){
         switch (conSel){
             /*devo in base al caso far si che le azioni fattibili siano quelle di client o di socket
-            cosi ho un solo oggetto di azioni che possono essere azioni socket o azioni rmi a seconda della scelta di connessione
-            case RMI ->
-              case SOCKET ->
-             */
+            cosi ho un solo oggetto di azioni che possono essere azioni socket o azioni rmi a seconda della scelta di connessione*/
+            case RMI -> client = new RMIClient();
+            //case SOCKET ->
         }
     }
 
