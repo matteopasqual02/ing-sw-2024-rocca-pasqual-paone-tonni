@@ -352,23 +352,7 @@ public class GameController implements GameControllerInterface,Runnable{
     public Game getGame(){
         return model;
     }
-    public int[] getAllPoints(){
-        int[] points = new int[model.getPlayers().size()];
-        for(Player p : getAllPlayer()){
-            points[p.getColorPlayer()-1] = p.getCurrentPoints();
-        }
-        return points;
-    }
-    public BoardDeck getBoardDeck(){
-        return model.getGameBoardDeck();
-    }
-    public Card[] getSeedUpDrawableDeck(){
-        Card[] up2Deck = new PlayingCard[2];
-        up2Deck[0]= model.getGameDrawableDeck().getDecks().get("resources").peek();
-        up2Deck[1]= model.getGameDrawableDeck().getDecks().get("gold").peek();
 
-        return  up2Deck;
-    }
     public GameImmutable getImmutableGame () {
         return new GameImmutable(model);
     }
