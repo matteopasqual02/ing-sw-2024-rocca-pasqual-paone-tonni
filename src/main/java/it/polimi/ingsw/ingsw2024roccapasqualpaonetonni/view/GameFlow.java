@@ -13,10 +13,10 @@ import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-public class GameFlow implements GameListener {
+public class GameFlow implements GameListener, Runnable {
     VirtualViewInterface client;
     //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
-    public GameFlow(ConnectionType conSel) throws RemoteException, NotBoundException {
+    public GameFlow(ConnectionType conSel) {
         switch (conSel){
             /*devo in base al caso far si che le azioni fattibili siano quelle di client o di socket
             cosi ho un solo oggetto di azioni che possono essere azioni socket o azioni rmi a seconda della scelta di connessione*/
@@ -25,20 +25,35 @@ public class GameFlow implements GameListener {
 
                 //versione rudimentale senza nulla (tui,gui,thread ecc..) solo per vedere se funziona la base
 
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
-                int num = Integer.parseInt(new Scanner(System.in).nextLine());
-
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
-                String nickname = new Scanner(System.in).nextLine();
-                client.createGame(nickname,num,this);
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set new max number of players: "));
-                int max = Integer.parseInt(new Scanner(System.in).nextLine());
-                client.setNumberOfPlayers(max);
+                new Thread(this).start();
             }
             //case SOCKET ->
         }
     }
 
+    @Override
+    public void run() {
+
+        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
+        int num = Integer.parseInt(new Scanner(System.in).nextLine());
+
+        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
+        String nickname = new Scanner(System.in).nextLine();
+        try {
+            client.createGame(nickname,num,this);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set new max number of players: "));
+        int max = Integer.parseInt(new Scanner(System.in).nextLine());
+        try {
+            client.setNumberOfPlayers(max);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
     //in questi metodi che arrivano del listener a seconda di se sono in rmi o socket (controllo da fare li dentro) dovro
     //cambiare il modo in cui faccio vedere gli update alla tui
     @Override
@@ -215,4 +230,6 @@ public class GameFlow implements GameListener {
     public void cardRemovedFromHand(PlayingCard card, Player p) {
 
     }
+
+
 }

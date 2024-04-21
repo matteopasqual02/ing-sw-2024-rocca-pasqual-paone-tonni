@@ -125,14 +125,16 @@ public class RMIClient implements VirtualViewInterface {
         nickname = null;
     }
     //from here on the methods should be to show the update directly to the client, or the methods that the client can call it depends on what we choose
-    @Override
-    public boolean isCurrentPlaying() throws RemoteException {
-        return false;
-    }
+
 
     @Override
     public void setNumberOfPlayers(int num) throws RemoteException {
         gameController.setMaxNumberOfPlayer(num);
+    }
+
+    @Override
+    public void nextTurn() {
+
     }
 
     @Override
@@ -167,11 +169,6 @@ public class RMIClient implements VirtualViewInterface {
 
     @Override
     public void drawFromBoard(int position) throws RemoteException {
-
-    }
-
-    @Override
-    public void checkWinner() throws RemoteException {
 
     }
 
