@@ -88,30 +88,31 @@ public class RMIClient implements VirtualViewInterface {
         nickname = name;
     }
     @Override
-    public void joinFirstAvailable(String name,GameListener me) throws RemoteException, NotBoundException {
+    public Boolean joinFirstAvailable(String name, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinFirstAvailableGame(name);
         if(gameController==null){
             ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("No games available, you need to create a new game"));
-            return;
+            return false;
         }
         gameController.addMyselfAsListener(me);
         nickname = name;
+        return true;
     }
 
-    public void joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
+    public Boolean joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
 
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinGameByID(name, idGame);
         if(gameController==null){
             ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("This game is not available"));
-            return;
+            return false;
         }
         gameController.addMyselfAsListener(me);
         nickname = name;
-
+        return true;
     }
    @Override
     public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
@@ -139,6 +140,11 @@ public class RMIClient implements VirtualViewInterface {
     @Override
     public void setNumberOfPlayers(int num) throws RemoteException {
         gameController.setMaxNumberOfPlayer(num);
+    }
+
+    @Override
+    public int getID() throws RemoteException {
+        return gameController.getID();
     }
 
     @Override
