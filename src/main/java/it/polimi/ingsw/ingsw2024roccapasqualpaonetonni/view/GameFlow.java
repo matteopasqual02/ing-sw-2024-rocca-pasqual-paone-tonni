@@ -40,7 +40,8 @@ public class GameFlow implements GameListener, Runnable {
         ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
         String nickname = new Scanner(System.in).nextLine();
         try {
-            client.createGame(nickname,num,this);
+            //client.createGame(nickname,num,this);
+            client.joinFirstAvailable(nickname,this);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         } catch (NotBoundException e) {

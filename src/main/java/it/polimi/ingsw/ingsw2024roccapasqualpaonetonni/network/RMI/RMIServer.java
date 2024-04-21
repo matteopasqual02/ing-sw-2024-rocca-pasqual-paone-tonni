@@ -79,26 +79,39 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     public GameControllerInterface joinFirstAvailableGame(String nickname)throws RemoteException {
         GameControllerInterface result = server.mainController.joinFirstAvailableGame(nickname);
 
-        try{
-            UnicastRemoteObject.exportObject(result,0);
-        }catch (RemoteException e){
-            e.printStackTrace();
+        if(result!=null){
+            try{
+                UnicastRemoteObject.exportObject(result,0);
+            }catch (RemoteException e){
+                e.printStackTrace();
+            }
+            ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game");
+            return result;
         }
-        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game");
-        return result;
+        else {
+            //this is the case in which there are no previous games, I return null so that the client knows it has to create a game
+            return null;
+        }
     }
 
     @Override
     public GameControllerInterface joinGameByID(String nickname, int idToConnect) throws RemoteException {
         GameControllerInterface result = server.mainController.joinGameByID(nickname,idToConnect);
 
-        try{
-            UnicastRemoteObject.exportObject(result,0);
-        }catch (RemoteException e){
-            e.printStackTrace();
+        if(result!=null){
+            try{
+                UnicastRemoteObject.exportObject(result,0);
+            }catch (RemoteException e){
+                e.printStackTrace();
+            }
+            ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game chosen");
+            return result;
+
         }
-        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game chosen");
-        return result;
+        else
+        {
+            return null;
+        }
     }
 
     @Override

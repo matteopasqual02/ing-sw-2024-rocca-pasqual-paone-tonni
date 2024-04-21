@@ -15,6 +15,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
+import static org.fusesource.jansi.Ansi.ansi;
 
 
 public class RMIClient implements VirtualViewInterface {
@@ -91,19 +92,27 @@ public class RMIClient implements VirtualViewInterface {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinFirstAvailableGame(name);
+        if(gameController==null){
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("No games available, you need to create a new game"));
+            return;
+        }
         gameController.addMyselfAsListener(me);
         nickname = name;
     }
 
-   /* public void joinGame(String name, int color,int idGame, GameListener me) throws RemoteException, NotBoundException {
+    public void joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
 
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.joinGame(name, color, idGame, me);
-        //gameController.addMyselfAsListener(me); lo fa dentro la join
+        gameController = requests.joinGameByID(name, idGame);
+        if(gameController==null){
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("This game is not available"));
+            return;
+        }
+        gameController.addMyselfAsListener(me);
         nickname = name;
 
-    }*/
+    }
    @Override
     public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
