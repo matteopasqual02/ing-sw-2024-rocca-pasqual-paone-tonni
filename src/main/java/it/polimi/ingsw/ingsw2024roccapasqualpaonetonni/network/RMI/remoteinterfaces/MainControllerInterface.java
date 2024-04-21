@@ -9,6 +9,7 @@ public interface MainControllerInterface extends Remote{
     List<GameController> getRunningGames() throws RemoteException;
     GameControllerInterface createGameController(String nickname, int numMaxOfPlayer)throws RemoteException;
     GameControllerInterface joinFirstAvailableGame(String nickname) throws RemoteException;
+    GameControllerInterface joinGameByID(String nickname, int idToConnect) throws RemoteException;
     GameControllerInterface reconnect(String nickname, int idToReconnect) throws RemoteException;
     GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException;
     void clearSingleton() throws RemoteException;

@@ -59,30 +59,24 @@ public class MainController implements MainControllerInterface {
         return null;
     }
 
-    /*probabilmente questa è sbagliata e da rifare
     @Override
-    public synchronized GameControllerInterface joinGame(String nickname, int color, int gameId, GameListener me)throws RemoteException{
-        List<GameController> gameList = getRunningGames().stream().filter(x -> (x.getID() == gameId)).toList();
-        Player p = new Player(nickname,color);
+    public GameControllerInterface joinGameByID(String nickname, int idToConnect){
+        List<GameController> gameList = getRunningGames();
 
-        if (gameList.size() == 1) {
-            if(!gameList.get(0).getGameStatus().equals(GameStatus.ENDED) && gameList.get(0).getAllPlayer().stream().filter(x->x.getNickname().equals(nickname)).toList().size()==1) {
-                try {
-                    gameList.get(0).addMyselfAsListener(me);
-                    gameList.get(0).addPlayer(nickname);
-                    return gameList.get(0);
-                } catch (GameAlreadyFullException | PlayerAlreadyInException e) {
-                    gameList.get(0).removeMyselfAsListener(me);
-                }
-            }else{
-                //lis.gameIdNotExists(idGame);
+        for (GameController i : gameList){
+            int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
+            int playersSize = i.getAllPlayer().size();
+            int maxSize = i.getMaxNumberOfPlayer();
+            boolean gameIdEqual = (i.getID() == idToConnect);
+            if(playersSize < maxSize && playersEqualIn==0 && gameIdEqual){
+                i.addPlayer(nickname);
+                return  i;
             }
-        } else {
-            //This is the only call not inside the model
-            //lis.gameIdNotExists(idGame);
         }
+
         return null;
-    }*/
+    }
+
 
     @Override
     public GameControllerInterface reconnect(String nickname, int idToReconnect) throws RemoteException{
