@@ -90,7 +90,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
 
     @Override
     public GameControllerInterface joinGameByID(String nickname, int idToConnect) throws RemoteException {
-        GameControllerInterface result = server.mainController.joinFirstAvailableGame(nickname);
+        GameControllerInterface result = server.mainController.joinGameByID(nickname,idToConnect);
 
         try{
             UnicastRemoteObject.exportObject(result,0);
