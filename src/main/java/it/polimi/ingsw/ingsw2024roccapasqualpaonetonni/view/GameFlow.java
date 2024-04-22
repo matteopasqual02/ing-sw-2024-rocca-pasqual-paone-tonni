@@ -15,6 +15,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class GameFlow implements GameListener, Runnable {
     VirtualViewInterface client;
+    Scanner scanner = new Scanner(System.in);
     //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
     public GameFlow(ConnectionType conSel) {
         switch (conSel){
@@ -30,15 +31,18 @@ public class GameFlow implements GameListener, Runnable {
             //case SOCKET ->
         }
     }
-
+/*
     @Override
     public void run() {
 
-        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
-        int num = Integer.parseInt(new Scanner(System.in).nextLine());
-
-        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
-        String nickname = new Scanner(System.in).nextLine();
+        //ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
+        //int num = Integer.parseInt(new Scanner(System.in).nextLine());
+        System.out.println("Set max number of players: ");
+        String num = scanner.nextLine();
+        //ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
+        //String nickname = new Scanner(System.in).nextLine();
+        System.out.println("Welcome! Please, insert your username: ");
+        String nickname = scanner.nextLine();
         try {
             //client.createGame(nickname,num,this);
             client.joinFirstAvailable(nickname,this);
@@ -55,6 +59,86 @@ public class GameFlow implements GameListener, Runnable {
             throw new RuntimeException(e);
         }
     }
+*/
+    @Override
+    public void run(){
+        joinLobby();
+        try {
+            System.out.println("Game joined, your gameID is: "+client.getID());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void joinLobby(){
+
+        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID "));
+        int selection = Integer.parseInt(new Scanner(System.in).nextLine());
+        //System.out.println("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID ");
+        //int selection = scanner.nextInt();
+        switch (selection ){
+            case 1: {
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
+                int num = Integer.parseInt(new Scanner(System.in).nextLine());
+                //System.out.println("Set max number of players: ");
+                //int num = scanner.nextInt();
+                //scanner.nextLine();
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
+                String nickname = new Scanner(System.in).nextLine();
+                //System.out.println("Insert your username: ");
+                //String nickname = scanner.nextLine();
+                try {
+                    client.createGame(nickname, num, this);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
+            case 2:{
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
+                String nickname = new Scanner(System.in).nextLine();
+                //System.out.println("Insert your username: ");
+                //String nickname = scanner.nextLine();
+                try {
+                    Boolean possible = client.joinFirstAvailable(nickname, this);
+                    if(possible==false){
+                        joinLobby();
+                    }
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
+            case 3:{
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
+                String nickname = new Scanner(System.in).nextLine();
+                //System.out.println("Insert your username: ");
+                //String nickname = scanner.nextLine();
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set gameID: "));
+                int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
+                //System.out.println("Insert gameID: ");
+                //int gameID = scanner.nextInt();
+                //scanner.nextLine();
+                try {
+                    Boolean possible = client.joinGameByID(nickname,gameID, this);
+                    if(possible==false){
+                        joinLobby();
+                    }
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+        }
+
+        }
+    }
+
+
     //in questi metodi che arrivano del listener a seconda di se sono in rmi o socket (controllo da fare li dentro) dovro
     //cambiare il modo in cui faccio vedere gli update alla tui
     @Override
