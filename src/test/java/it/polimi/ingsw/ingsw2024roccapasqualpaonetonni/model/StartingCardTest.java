@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class StartingCardTest {
 
     @Test
-    void TestResource () {
+    void TestStarting () {
         Boolean[] c = {true,true,false,false};
-        Corner cf1 = new Corner(1,RED);
+        Corner cf1 = new Corner(1,GREEN);
         Corner cf2 = new Corner(2,EMPTY);
         Corner cf3 = new Corner(3,EMPTY);
         Corner cf4 = new Corner(4,EMPTY);
