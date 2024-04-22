@@ -31,8 +31,8 @@ public class GameFlow implements GameListener, Runnable {
             //case SOCKET ->
         }
     }
-
-    /*@Override
+/*
+    @Override
     public void run() {
 
         //ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
@@ -58,8 +58,8 @@ public class GameFlow implements GameListener, Runnable {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-    }*/
-
+    }
+*/
     @Override
     public void run(){
         joinLobby();
@@ -71,7 +71,7 @@ public class GameFlow implements GameListener, Runnable {
     }
     public void joinLobby(){
 
-        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\\n1) Create a new game\\n2) Join the first available game\\n3) Join a game by game ID "));
+        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID "));
         int selection = Integer.parseInt(new Scanner(System.in).nextLine());
         //System.out.println("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID ");
         //int selection = scanner.nextInt();
