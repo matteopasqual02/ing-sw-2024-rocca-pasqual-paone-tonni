@@ -44,23 +44,29 @@ public class Game implements Serializable {
     public void addListeners(GameListener me){
         gameListenersHandler.addListener(me);
     }
+
     public void removeListener(GameListener me){
         gameListenersHandler.removeListener(me);
         for(Player p: players){
             p.setPlayerListeners(gameListenersHandler.getListener());
         }
     }
-//---------------------------------PLAYER SECTION
-    public int getGameId(){return  gameId;}
-    public void setMaxNumberOfPlayer(int number){
 
-        this.maxNumberOfPlayer=number;
+//---------------------------------PLAYER SECTION
+    public int getGameId(){
+        return gameId;
+    }
+
+    public void setMaxNumberOfPlayer(int number){
+        this.maxNumberOfPlayer = number;
         gameListenersHandler.notify_setMaxNumPlayers(gameId,maxNumberOfPlayer);
     }
+
     public int getMaxNumberOfPlayer(){
         return maxNumberOfPlayer;
     }
-    public void addPlayer (Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
+
+    public void addPlayer(Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
         if(!players.contains(px)){
             if(players.size() < maxNumberOfPlayer){
                 players.add(px);
@@ -80,6 +86,7 @@ public class Game implements Serializable {
         }
 
     }
+
     public void removePlayer(Player p){
         players.remove(p);
         if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){

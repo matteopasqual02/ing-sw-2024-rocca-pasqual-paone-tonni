@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class GoldCard extends PlayingCard {
     private final String pointCondition;
     private final int[] placeCondition;
+
     public GoldCard(int id, Seed seed, Corner[] c, int points, String cond, int[] p){
         super(id,seed,c,points);
         pointCondition=cond;

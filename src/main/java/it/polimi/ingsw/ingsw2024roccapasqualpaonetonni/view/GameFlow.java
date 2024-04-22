@@ -28,7 +28,9 @@ public class GameFlow implements GameListener, Runnable {
 
                 new Thread(this).start();
             }
-            //case SOCKET ->
+            case SOCKET -> {
+                ;
+            }
         }
     }
 /*

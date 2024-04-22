@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
-public class GameController implements GameControllerInterface,Runnable, Serializable {
+public class GameController implements GameControllerInterface, Runnable, Serializable {
     private final Game model;
     private final Random random;
     private final String path;
@@ -43,13 +43,16 @@ public class GameController implements GameControllerInterface,Runnable, Seriali
     public void addMyselfAsListener(GameListener me){
         model.addListeners(me);
     }
+
     public void removeMyselfAsListener(GameListener me){
         model.removeListener(me);
     }
+
     //---------------------------------PLAYER SECTION
     public int getID(){
         return model.getGameId();
     }
+
     @Override
     public void addPlayer(String nickname){
         Player px;
@@ -57,8 +60,8 @@ public class GameController implements GameControllerInterface,Runnable, Seriali
         px = new Player(nickname,player_number);
         try {
             model.addPlayer(px);
-
-        }catch (GameAlreadyFullException ex1){/*_*/}
+        }
+        catch (GameAlreadyFullException ex1){/*_*/}
         catch (PlayerAlreadyInException ex2){/**/}
 
         model.playerIsReadyToStart(px);
@@ -66,23 +69,29 @@ public class GameController implements GameControllerInterface,Runnable, Seriali
     public Queue<Player> getAllPlayer(){
         return model.getPlayers();
     }
+
     public Player getCurrentPlayer(){
         return model.getCurrentPlayer();
     }
+
     @Override
     public Boolean isCurrentPlaying(Player p){
         return getCurrentPlayer().equals(p);
     }
+
     @Override
     public void setMaxNumberOfPlayer(int num) throws RemoteException {
         model.setMaxNumberOfPlayer(num);
     }
+
     public int getMaxNumberOfPlayer(){
         return model.getMaxNumberOfPlayer();
     }
+
     public void nextTurn(){
         model.nextPlayer();
     }
+
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
         if(model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1){
@@ -90,6 +99,7 @@ public class GameController implements GameControllerInterface,Runnable, Seriali
             model.resetLastStatus();
         }
     }
+
     public void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
         if(model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1){
@@ -97,6 +107,7 @@ public class GameController implements GameControllerInterface,Runnable, Seriali
             model.setStatus(GameStatus.WAITING_RECONNECTION);
         }
     }
+
     @Override
     public void removePlayer(Player player){
         model.removePlayer(player);

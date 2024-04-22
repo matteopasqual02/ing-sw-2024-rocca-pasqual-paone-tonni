@@ -17,21 +17,25 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     public GameListenersHandler(){
         super();
     }
+
     public void notify_setMaxNumPlayers(int gameId,int max) {
         for(GameListener listener : listeners){
             listener.maxNumPlayersSet(gameId,max);
         }
     }
+
     public void notify_addPlayer(Player newPlayer) {
         for(GameListener listener : listeners){
             listener.addedPlayer(newPlayer);
         }
     }
+
     public void notify_gameFull() {
         for(GameListener listener : listeners){
             listener.fullGame();
         }
     }
+
     public void notify_playerAlredyIn() {
         for(GameListener listener : listeners){
             listener.nameAlreadyInGame();

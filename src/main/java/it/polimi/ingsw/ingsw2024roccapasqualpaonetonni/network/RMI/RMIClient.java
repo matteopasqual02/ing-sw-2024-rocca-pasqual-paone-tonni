@@ -33,7 +33,7 @@ public class RMIClient implements VirtualViewInterface {
     //the client main calls this to connect to a server
     private void connect(){
         boolean retry = false;
-        int attempt =1;
+        int attempt = 1;
         int i;
 
         do{
