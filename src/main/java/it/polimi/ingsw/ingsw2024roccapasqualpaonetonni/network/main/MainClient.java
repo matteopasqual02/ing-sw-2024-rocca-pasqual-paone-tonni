@@ -22,7 +22,7 @@ public class MainClient {
         killLoggers();
 
         do {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert remote IP (leave empty for localhost)"));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert Sever IP (leave empty for localhost)"));
             input = new Scanner(System.in).nextLine();
             if(!input.isEmpty() && !isValidIP(input)){
                 clearCMD();
@@ -36,7 +36,7 @@ public class MainClient {
 
         clearCMD();
         do {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert your IP (leave empty for localhost)"));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert Your IP (leave empty for localhost)"));
             input = new Scanner(System.in).nextLine();
             if(!input.isEmpty() && !isValidIP(input)){
                 clearCMD();
