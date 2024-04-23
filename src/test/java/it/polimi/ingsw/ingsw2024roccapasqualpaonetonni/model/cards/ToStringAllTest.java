@@ -48,6 +48,8 @@ public class ToStringAllTest {
 
         gameController.createTable();
 
+        System.out.println("Central Board\n");
+
         PlayingCard playingCard1 = gameController.getGame().getGameBoardDeck().getCard(1);
         System.out.println(playingCard1.toString());
 

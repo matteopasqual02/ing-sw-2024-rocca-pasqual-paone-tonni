@@ -189,7 +189,7 @@ public class GoldCard extends PlayingCard {
                 sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
             }
 
-            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
 
 
@@ -211,7 +211,7 @@ public class GoldCard extends PlayingCard {
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
-            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
         }
 
         return sb.toString();
