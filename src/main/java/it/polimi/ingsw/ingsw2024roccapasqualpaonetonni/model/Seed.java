@@ -57,6 +57,7 @@ public enum Seed {
                 return Ansi.Color.WHITE;
             }
 
+
         }
 
         return Ansi.Color.DEFAULT;
