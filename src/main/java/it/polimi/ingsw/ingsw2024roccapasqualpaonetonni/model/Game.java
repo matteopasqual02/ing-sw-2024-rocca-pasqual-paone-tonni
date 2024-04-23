@@ -21,8 +21,8 @@ public class Game implements Serializable {
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
     private final Chat chat;
-
     private final GameListenersHandler gameListenersHandler;
+
     public Game(int id){
         players = new LinkedList<>();
         winner = new LinkedList<>();
@@ -46,9 +46,11 @@ public class Game implements Serializable {
     }
 
     public void removeListener(GameListener me){
-        gameListenersHandler.removeListener(me);
-        for(Player p: players){
-            p.setPlayerListeners(gameListenersHandler.getListener());
+        synchronized (gameListenersHandler) {
+            gameListenersHandler.removeListener(me);
+            for(Player p: players){
+                p.setPlayerListeners(gameListenersHandler.getListener());
+            }
         }
     }
 
@@ -66,9 +68,9 @@ public class Game implements Serializable {
         return maxNumberOfPlayer;
     }
 
-    public void addPlayer(Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
-        if(!players.contains(px)){
-            if(players.size() < maxNumberOfPlayer){
+    public synchronized void addPlayer(Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
+        if (!players.contains(px)) {
+            if (players.size() < maxNumberOfPlayer) {
                 players.add(px);
                 for(Player p: players){
                     p.setPlayerListeners(gameListenersHandler.getListener());
@@ -82,12 +84,11 @@ public class Game implements Serializable {
         }
         else {
             gameListenersHandler.notify_playerAlredyIn();
-            throw new PlayerAlreadyInException("The player is already in");
+            throw new PlayerAlreadyInException("The player is already in the game");
         }
-
     }
 
-    public void removePlayer(Player p){
+    public synchronized void removePlayer(Player p){
         players.remove(p);
         if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
             status[0] = GameStatus.ENDED;
@@ -95,18 +96,39 @@ public class Game implements Serializable {
         //here before calling this method the client should call removeListener to remove itself from the listeners list, or the server should
         gameListenersHandler.notify_removePlayer(p);
     }
-    public void reconnectPlayer(String nickname) {
+
+    /*
+    public synchronized void reconnectPlayer(String nickname) {
+        Modifica modifica = new Modifica(codice_modifica, Object)
+        madifiche.append(
+        return
+     }
+     */
+
+    public synchronized void reconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(true);
             playersDisconnected.remove(p);
+            List<Player> copy = new ArrayList<>(players);
+            int first = copy.getFirst().getColorPlayer();
+            int[] indx = new int[maxNumberOfPlayer];
+            for(int i = 0; i < maxNumberOfPlayer; i++) {
+                indx[(first + i) % maxNumberOfPlayer - 1] = i;
+            }
+            copy.add(indx[p.getColorPlayer() - 1], p);
+            players.clear();
+            players.addAll(copy);
+
+
             gameListenersHandler.notify_reconnectPlayer(nickname);
         }
         else {
             gameListenersHandler.notify_reconnectionImpossible(nickname);
         }
     }
-    public void disconnectPlayer(String nickname) {
+
+    public synchronized void disconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(false);
@@ -117,31 +139,32 @@ public class Game implements Serializable {
             gameListenersHandler.notify_disconnectionImpossible(nickname);
         }
     }
-    public int numberDisconnectedPlayers() {
+
+    public synchronized int numberDisconnectedPlayers() {
         return playersDisconnected.size();
     }
-    public void setFirstPlayer(Player fp){
 
+    public synchronized void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
         gameListenersHandler.notify_setFirstPlayer(fp);
     }
-    public void setStatus(GameStatus status) {
 
+    public void setStatus(GameStatus status) {
         this.status[0] = status;
         gameListenersHandler.notify_setStatus(status);
     }
-    public void setLastStatus() {
 
+    public void setLastStatus() {
         status[1] =status[0];
         gameListenersHandler.notify_setLastStatus(status[0]);
     }
-    public void resetLastStatus() {
 
+    public void resetLastStatus() {
         status[1] = null;
         gameListenersHandler.notify_resetLastStatus();
     }
-    public GameStatus getGameStatus(){
 
+    public GameStatus getGameStatus(){
         return status[0];
     }
     public GameStatus getLastStatus(){
@@ -202,10 +225,10 @@ public class Game implements Serializable {
 
 //---------------------------------READY SECTION
     public void playerIsReadyToStart(Player p){
-
         p.setReadyToStart();
         gameListenersHandler.notify_playerIsReadyToStart(p);
     }
+
     public Boolean arePlayerReady(){
         return players.stream().filter(Player::getReadyToStart).count() == players.size()
                 && players.size() == maxNumberOfPlayer;

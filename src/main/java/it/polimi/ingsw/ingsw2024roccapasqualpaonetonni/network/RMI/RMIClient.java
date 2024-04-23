@@ -87,6 +87,7 @@ public class RMIClient implements VirtualViewInterface {
         gameController.setMaxNumberOfPlayer(maxNumPlayers);
         nickname = name;
     }
+
     @Override
     public Boolean joinFirstAvailable(String name, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);

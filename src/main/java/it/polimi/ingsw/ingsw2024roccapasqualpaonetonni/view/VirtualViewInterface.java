@@ -11,7 +11,7 @@ public interface VirtualViewInterface extends Remote{
 
     //public boolean isCurrentPlaying() throws RemoteException;
     public void setNumberOfPlayers(int num) throws RemoteException;
-    public int getID()  throws RemoteException;
+    public int getID() throws RemoteException;
     public void nextTurn();
     public void createTable() throws RemoteException;
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;

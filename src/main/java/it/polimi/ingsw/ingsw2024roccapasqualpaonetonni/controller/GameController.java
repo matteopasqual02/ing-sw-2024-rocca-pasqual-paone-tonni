@@ -66,6 +66,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
         model.playerIsReadyToStart(px);
     }
+
     public Queue<Player> getAllPlayer(){
         return model.getPlayers();
     }

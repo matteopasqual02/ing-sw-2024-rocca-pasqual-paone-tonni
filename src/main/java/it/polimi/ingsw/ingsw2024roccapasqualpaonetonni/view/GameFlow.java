@@ -66,7 +66,7 @@ public class GameFlow implements GameListener, Runnable {
     public void run(){
         joinLobby();
         try {
-            System.out.println("Game joined, your gameID is: "+client.getID());
+            System.out.println("Game joined, your gameID is: " + client.getID());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -77,7 +77,7 @@ public class GameFlow implements GameListener, Runnable {
         int selection = Integer.parseInt(new Scanner(System.in).nextLine());
         //System.out.println("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID ");
         //int selection = scanner.nextInt();
-        switch (selection ){
+        switch(selection) {
             case 1: {
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
                 int num = Integer.parseInt(new Scanner(System.in).nextLine());
