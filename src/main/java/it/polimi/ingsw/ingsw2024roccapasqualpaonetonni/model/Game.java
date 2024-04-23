@@ -93,6 +93,16 @@ public class Game implements Serializable {
         if(p!=null){
             p.setIsConnected(true);
             playersDisconnected.remove(p);
+            ArrayList<Player> copiedList= new ArrayList<>(players);
+            int first = copiedList.getFirst().getColorPlayer();
+            int[] indx = new int[maxNumberOfPlayer];
+            for(int i=0; i<maxNumberOfPlayer; i++){
+                indx[(first+i) % maxNumberOfPlayer -1] = i;
+            }
+            copiedList.add(indx[p.getColorPlayer()-1],p);
+            players.clear();
+            players.addAll(copiedList);
+
             gameListenersHandler.notify_reconnectPlayer(nickname);
         }
         else {
@@ -104,6 +114,7 @@ public class Game implements Serializable {
         if(p!=null){
             p.setIsConnected(false);
             playersDisconnected.add(p);
+            players.remove(p);
             gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {
