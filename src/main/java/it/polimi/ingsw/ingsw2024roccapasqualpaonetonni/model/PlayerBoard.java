@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 
 public class PlayerBoard {
     private int dim_x;
@@ -11,14 +14,10 @@ public class PlayerBoard {
     private final Player player;
 
     public PlayerBoard(Player owner) {
-        dim_x = 40;
-        dim_y = 40;
+        dim_x = DefaultModelValues.Default_Board_Dim_X;
+        dim_y = DefaultModelValues.Default_Board_Dim_Y;
         board = new PlayingCard[dim_x][dim_y];
         player = owner;
-    }
-
-    public Player getPlayer(){
-        return player;
     }
 
     // method that receives a card and the coordinates where to put it,
@@ -108,7 +107,7 @@ public class PlayerBoard {
             place_coord[1] = prev_coord[1] - 1;
         }
 
-        if (checkSpotAvailable (card_to_add, place_coord)) {
+        if (checkSpotAvailable(place_coord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
             if (card_to_add.isFlipped() || tmp[0] == 1) {
                 addCardToBoard(place_coord, card_to_add, seedCount);
@@ -156,7 +155,7 @@ public class PlayerBoard {
 
     // checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
-    private boolean checkSpotAvailable(PlayingCard card, int[] coordinates) {
+    private boolean checkSpotAvailable(int[] coordinates) {
         PlayingCard cardOnBoard;
         int x = coordinates[0];
         int y = coordinates[1];
@@ -228,5 +227,14 @@ public class PlayerBoard {
 
     public PlayingCard[][] getBoard() {
         return board;
+    }
+    public int getDim_x() {
+        return dim_x;
+    }
+    public int getDim_y() {
+        return dim_y;
+    }
+    public Player getPlayer(){
+        return player;
     }
 }

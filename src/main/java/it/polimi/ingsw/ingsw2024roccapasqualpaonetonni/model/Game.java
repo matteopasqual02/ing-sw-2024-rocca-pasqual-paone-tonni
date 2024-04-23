@@ -12,19 +12,21 @@ public class Game {
     private final GameStatus[] status; //current and previous status needed for reconnection
     private int maxNumberOfPlayer;
     private final Queue<Player> players;
+    private final List<Player> playersDisconnected;
     private final Queue<Player> winner;
     private Player firstPlayer;
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
-    private Chat chat;
+    private final Chat chat;
 
     public Game(int id){
         players = new LinkedList<>();
         winner = new LinkedList<>();
+        playersDisconnected = new LinkedList<>();
         firstPlayer = null;
         status = new GameStatus[2];
         status[0] = GameStatus.PREPARATION;
-        status[1] = GameStatus.PREPARATION;
+        status[1] = null;
         this.maxNumberOfPlayer=0;
         this.gameId = id;
 
@@ -66,6 +68,7 @@ public class Game {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(true);
+            playersDisconnected.remove(p);
         }
         else {
 
@@ -75,10 +78,14 @@ public class Game {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(false);
+            playersDisconnected.add(p);
         }
         else {
 
         }
+    }
+    public int numberDisconnectedPlayers() {
+        return playersDisconnected.size();
     }
     public void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
@@ -124,8 +131,8 @@ public class Game {
     public int checkPlayerTotalPoint(Player p){
         return p.getCurrentPoints()
                 + p.getGoal().pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective()[0].pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective()[1].pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective(0).pointCard(p.getBoard())
+                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard())
                 ;
     }
     public void checkWinner(){

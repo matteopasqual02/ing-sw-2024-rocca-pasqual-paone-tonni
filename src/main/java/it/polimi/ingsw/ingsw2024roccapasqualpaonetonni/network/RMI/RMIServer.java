@@ -114,4 +114,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         ConsolePrinter.consolePrinter("[RMI] " + nickname + " has leaved the game");
         return result;
     }
+
+    @Override
+    public void clearSingleton() {}
 }

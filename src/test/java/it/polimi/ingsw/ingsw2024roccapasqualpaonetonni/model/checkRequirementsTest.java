@@ -1,5 +1,8 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import org.junit.jupiter.api.Test;
@@ -48,7 +51,7 @@ class checkRequirementsTest {
         board1.addCard(gold,start,4,owner.getCountSeed());
 
         int[] coordinates = gold.getCoordinates();
-        int[] trueCoord={21,19};
+        int[] trueCoord={6,4};
         assertArrayEquals(trueCoord,coordinates);
     }
 
@@ -180,7 +183,7 @@ class checkRequirementsTest {
         gold.flip();
         board1.addCard(gold,start,4,owner.getCountSeed());
         int[] coordinates = gold.getCoordinates();
-        int[] trueCoord={21,19};
+        int[] trueCoord={6,4};
         assertArrayEquals(trueCoord,coordinates);
     }
 

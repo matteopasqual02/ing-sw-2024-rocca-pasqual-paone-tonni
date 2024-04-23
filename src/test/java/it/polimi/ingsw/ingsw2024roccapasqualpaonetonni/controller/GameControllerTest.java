@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.RemoteException;
@@ -55,12 +58,12 @@ class GameControllerTest {
         assertEquals(2,gameController.getGame().getGameDrawableDeck().getDecks().get("starting").size());
         assertEquals(6,gameController.getGame().getGameDrawableDeck().getDecks().get("objective").size());
 
-        assertNotNull(gameController.getBoardDeck().getCommonObjective()[0]);
-        assertNotNull(gameController.getBoardDeck().getCommonObjective()[1]);
-        assertNotNull(gameController.getBoardDeck().getGoldCards()[0]);
-        assertNotNull(gameController.getBoardDeck().getGoldCards()[1]);
-        assertNotNull(gameController.getBoardDeck().getResourceCards()[0]);
-        assertNotNull(gameController.getBoardDeck().getResourceCards()[1]);
+        assertNotNull(gameController.getBoardDeck().getCommonObjective(0));
+        assertNotNull(gameController.getBoardDeck().getCommonObjective(1));
+        assertNotNull(gameController.getBoardDeck().getCard(1));
+        assertNotNull(gameController.getBoardDeck().getCard(2));
+        assertNotNull(gameController.getBoardDeck().getCard(3));
+        assertNotNull(gameController.getBoardDeck().getCard(4));
 
         //assert on player hand
         for (Player player: gameController.getAllPlayer()){
@@ -115,12 +118,12 @@ class GameControllerTest {
 
         //assert starting card
         StartingCard cardPlaced = Objects.requireNonNull(gameController.getAllPlayer().peek()).getStartingCard();
-        PlayingCard cardOnBoard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[20][20];
+        PlayingCard cardOnBoard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[5][5];
         assertEquals(cardPlaced,cardOnBoard);
 
         //assert correct second placing
 
-        PlayingCard cardOnBoard2 = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[19][19];
+        PlayingCard cardOnBoard2 = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[4][4];
         assertEquals(cardToAdd,cardOnBoard2);
 
         //to check the correct draw

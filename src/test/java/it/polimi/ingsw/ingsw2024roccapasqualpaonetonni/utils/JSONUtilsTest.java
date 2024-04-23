@@ -5,6 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonPrimitive;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCountCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectivePatternCard;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -167,31 +171,27 @@ class JSONUtilsTest {
         // points
         int points = 2;
         attributes.put("points", new JsonPrimitive(points));
-        // in count
-        int isCount = 0;
-        attributes.put("is_count", new JsonPrimitive(isCount));
         // pattern cards
-        String[] patternC = {"red", null};
+        Seed[][] pattern = {{null, null, Seed.RED},
+                {null, Seed.RED, null},
+                {Seed.RED, null, null}};
         JsonArray jArray = new JsonArray();
-        for (String s: patternC) {
-            if (s == null) {
-                jArray.add(JsonNull.INSTANCE);
+        JsonArray jArray1;
+        for (int i = 0; i < pattern.length; i++) {
+            jArray1 = new JsonArray();
+            for (int j = 0; j < pattern[i].length; j++) {
+                if (pattern[i][j] == null) {
+                    jArray1.add(JsonNull.INSTANCE);
+                }
+                else {
+                    jArray1.add(new JsonPrimitive(pattern[i][j].getName()));
+                }
             }
-            else {
-                jArray.add(new JsonPrimitive(s));
-            }
+            jArray.add(jArray1);
         }
-        attributes.put("pattern_cards", jArray);
-        // shape
-        String shape = "up";
-        if (shape != null) {
-            attributes.put("shape", new JsonPrimitive(shape));
-        }
-        else {
-            attributes.put("shape", JsonNull.INSTANCE);
-        }
+        attributes.put("pattern", jArray);
 
-        ObjectiveCard card = (ObjectiveCard) CardFactory.createObjectiveCard("Objective", id, attributes);
+        ObjectiveCard card = (ObjectiveCard) CardFactory.createObjectiveCard("Objective_Pattern", id, attributes);
 
         boolean flag = false;
         List<Card> cardList = cardMap.get("objective");
@@ -269,12 +269,31 @@ class JSONUtilsTest {
                         && card1.getCorner(4).getSeed().equals(card2.getCorner(4).getSeed())));
 
         }
-        else if (c1 instanceof ObjectiveCard && c2 instanceof ObjectiveCard) {
-            ObjectiveCard card1 = (ObjectiveCard) c1;
-            ObjectiveCard card2 = (ObjectiveCard) c2;
+        else if (c1 instanceof ObjectiveCountCard && c2 instanceof ObjectiveCountCard) {
+            ObjectiveCountCard card1 = (ObjectiveCountCard) c1;
+            ObjectiveCountCard card2 = (ObjectiveCountCard) c2;
+            boolean flag = true;
+            for (int i = 0; i < card1.getCountTypes().length && flag; i++) {
+                if (card1.getCountTypes()[i] != card2.getCountTypes()[i]) {
+                    flag = false;
+                }
+            }
             return card1.getPoints() == card2.getPoints()
-                    && card1.getIsCount() == card2.getIsCount();
-
+                    && flag;
+        }
+        else if (c1 instanceof ObjectivePatternCard && c2 instanceof ObjectivePatternCard) {
+            ObjectivePatternCard card1 = (ObjectivePatternCard) c1;
+            ObjectivePatternCard card2 = (ObjectivePatternCard) c2;
+            boolean flag = true;
+            for (int i = 0; i < card1.getPattern().length && flag; i++) {
+                for (int j = 0; j < card2.getPattern()[i].length && flag; j++) {
+                    if (card1.getPattern()[i][j] != card2.getPattern()[i][j]) {
+                        flag = false;
+                    }
+                }
+            }
+            return card1.getPoints() == card2.getPoints()
+                    && flag;
         }
         else {
             return false;
