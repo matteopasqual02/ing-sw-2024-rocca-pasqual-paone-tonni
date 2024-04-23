@@ -6,7 +6,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.VirtualViewInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -18,14 +18,14 @@ import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePri
 import static org.fusesource.jansi.Ansi.ansi;
 
 
-public class RMIClient implements VirtualViewInterface {
+public class RMIServerStub implements ServerInterface {
     private static MainControllerInterface requests;
     private GameControllerInterface gameController = null;
     //private static GameListener modelInvokedEvents;
     private String nickname;
     private Registry registry;
 
-    public RMIClient(){
+    public RMIServerStub(){
         super();
         connect();
     }
