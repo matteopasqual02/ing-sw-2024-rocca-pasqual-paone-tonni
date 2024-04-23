@@ -40,6 +40,8 @@ public class Game implements Serializable {
 
         chat = new Chat();
         gameListenersHandler = new GameListenersHandler();
+
+
     }
 
     public void addListeners(GameListener me){

@@ -14,7 +14,7 @@ import java.util.Scanner;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Client implements GameListener, Runnable {
-    ServerInterface client;
+    ServerInterface serverStub;
     ConnectionType connection;
     Scanner scanner = new Scanner(System.in);
     //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
@@ -24,7 +24,7 @@ public class Client implements GameListener, Runnable {
             /*devo in base al caso far si che le azioni fattibili siano quelle di client o di socket
             cosi ho un solo oggetto di azioni che possono essere azioni socket o azioni rmi a seconda della scelta di connessione*/
             case RMI -> {
-                client = new RMIServerStub();
+                serverStub = new RMIServerStub();
 
                 //versione rudimentale senza nulla (tui,gui,thread ecc..) solo per vedere se funziona la base
 
@@ -69,7 +69,7 @@ public class Client implements GameListener, Runnable {
     public void run(){
         joinLobby();
         try {
-            System.out.println("Game joined, your gameID is: " + client.getID());
+            System.out.println("Game joined, your gameID is: " + serverStub.getID());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +92,7 @@ public class Client implements GameListener, Runnable {
                 //System.out.println("Insert your username: ");
                 //String nickname = scanner.nextLine();
                 try {
-                    client.createGame(nickname, num, this);
+                    serverStub.createGame(nickname, num, this);
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 } catch (NotBoundException e) {
@@ -106,7 +106,7 @@ public class Client implements GameListener, Runnable {
                 //System.out.println("Insert your username: ");
                 //String nickname = scanner.nextLine();
                 try {
-                    Boolean possible = client.joinFirstAvailable(nickname, this);
+                    Boolean possible = serverStub.joinFirstAvailable(nickname, this);
                     if(possible==false){
                         joinLobby();
                     }
@@ -128,7 +128,7 @@ public class Client implements GameListener, Runnable {
                 //int gameID = scanner.nextInt();
                 //scanner.nextLine();
                 try {
-                    Boolean possible = client.joinGameByID(nickname,gameID, this);
+                    Boolean possible = serverStub.joinGameByID(nickname,gameID, this);
                     if(possible==false){
                         joinLobby();
                     }
