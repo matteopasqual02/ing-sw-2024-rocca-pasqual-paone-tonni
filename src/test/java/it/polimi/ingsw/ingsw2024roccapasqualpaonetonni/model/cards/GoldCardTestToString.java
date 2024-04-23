@@ -1,12 +1,11 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
-import impl.org.controlsfx.collections.NonIterableChange;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-class GoldCardTest {
+class GoldCardTestToString {
 
     @Test
     void TestGold3 () {

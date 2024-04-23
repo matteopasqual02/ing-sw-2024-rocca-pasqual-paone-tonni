@@ -1,13 +1,11 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
-import org.fusesource.jansi.Ansi;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.text.BadLocationException;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.*;
 
-class ResourceCardTest {
+class ResourceCardTestToString {
 
     @Test
     void TestResource () {
