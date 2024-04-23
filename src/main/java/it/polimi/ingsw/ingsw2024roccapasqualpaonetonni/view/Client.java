@@ -15,9 +15,11 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class Client implements GameListener, Runnable {
     ServerInterface client;
+    ConnectionType connection;
     Scanner scanner = new Scanner(System.in);
     //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
     public Client(ConnectionType conSel) {
+        connection = conSel;
         switch (conSel){
             /*devo in base al caso far si che le azioni fattibili siano quelle di client o di socket
             cosi ho un solo oggetto di azioni che possono essere azioni socket o azioni rmi a seconda della scelta di connessione*/
@@ -28,7 +30,10 @@ public class Client implements GameListener, Runnable {
 
                 new Thread(this).start();
             }
-            //case SOCKET ->
+            case SOCKET -> {
+                //client = new SocketClient();
+                new Thread(this).start();
+            }
         }
     }
 /*
@@ -139,8 +144,11 @@ public class Client implements GameListener, Runnable {
     }
 
 
-    //in questi metodi che arrivano del listener a seconda di se sono in rmi o socket (controllo da fare li dentro) dovro
-    //cambiare il modo in cui faccio vedere gli update alla tui
+    @Override
+    public ConnectionType getConnectionType() {
+        return connection;
+    }
+
     @Override
     public void maxNumPlayersSet(int gameId, int max) {
         //ConsolePrinter.consolePrinter("New max number from game");
