@@ -21,6 +21,7 @@ public class Game implements Serializable {
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
     private final Chat chat;
+
     private final GameListenersHandler gameListenersHandler;
 
     public Game(int id){
@@ -86,6 +87,7 @@ public class Game implements Serializable {
             gameListenersHandler.notify_playerAlredyIn();
             throw new PlayerAlreadyInException("The player is already in the game");
         }
+
     }
 
     public synchronized void removePlayer(Player p){
@@ -110,16 +112,15 @@ public class Game implements Serializable {
         if(p!=null){
             p.setIsConnected(true);
             playersDisconnected.remove(p);
-            List<Player> copy = new ArrayList<>(players);
-            int first = copy.getFirst().getColorPlayer();
+            ArrayList<Player> copiedList = new ArrayList<>(players);
+            int first = copiedList.getFirst().getColorPlayer();
             int[] indx = new int[maxNumberOfPlayer];
             for(int i = 0; i < maxNumberOfPlayer; i++) {
                 indx[(first + i) % maxNumberOfPlayer - 1] = i;
             }
-            copy.add(indx[p.getColorPlayer() - 1], p);
+            copiedList.add(indx[p.getColorPlayer() - 1], p);
             players.clear();
-            players.addAll(copy);
-
+            players.addAll(copiedList);
 
             gameListenersHandler.notify_reconnectPlayer(nickname);
         }
@@ -133,6 +134,7 @@ public class Game implements Serializable {
         if(p!=null){
             p.setIsConnected(false);
             playersDisconnected.add(p);
+            players.remove(p);
             gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {

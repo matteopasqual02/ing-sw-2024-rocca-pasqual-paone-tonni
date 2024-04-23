@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,7 +21,14 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
     public void notify_setMaxNumPlayers(int gameId,int max) {
         for(GameListener listener : listeners){
-            listener.maxNumPlayersSet(gameId,max);
+            if(listener.getConnectionType()== ConnectionType.SOCKET){
+                //create serializable object int max
+                //put message on outputstream
+                //call socketWrapper function that will read from stream
+            }
+            else {
+                listener.maxNumPlayersSet(gameId,max);
+            }
         }
     }
 

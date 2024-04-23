@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
-public interface VirtualViewInterface extends Remote{
+public interface ServerInterface extends Remote{
 
     //public boolean isCurrentPlaying() throws RemoteException;
     public void setNumberOfPlayers(int num) throws RemoteException;
