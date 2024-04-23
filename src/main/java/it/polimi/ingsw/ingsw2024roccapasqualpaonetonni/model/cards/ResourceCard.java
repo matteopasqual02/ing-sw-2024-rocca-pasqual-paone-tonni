@@ -20,7 +20,8 @@ public class ResourceCard extends PlayingCard {
 
 
 
-    public String toString(boolean flipped) {
+    public String toString() {
+        boolean flipped = isFlipped;
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = cardSeed.getByAnsi();
 

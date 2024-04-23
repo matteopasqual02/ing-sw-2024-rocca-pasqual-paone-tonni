@@ -30,7 +30,8 @@ public class StartingCard extends PlayingCard {
     }
 
 
-    public String toString(boolean flipped) {
+    public String toString() {
+        boolean flipped = isFlipped;
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = Ansi.Color.WHITE;
 

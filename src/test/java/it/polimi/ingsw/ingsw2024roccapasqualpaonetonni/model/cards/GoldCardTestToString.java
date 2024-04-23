@@ -17,7 +17,7 @@ class GoldCardTestToString {
         int[] placeCond = {2,1,0,0};
         GoldCard card_to_add1 = new GoldCard(50,GREEN,cc,1,"feather",placeCond);
 
-        String carta= card_to_add1.toString(false);
+        String carta= card_to_add1.toString();
         System.out.println(carta);
     }
 
@@ -31,7 +31,7 @@ class GoldCardTestToString {
         int[] placeCond = {3,1,0,0};
         GoldCard card_to_add1 = new GoldCard(50,GREEN,cc,3,null,placeCond);
 
-        String carta= card_to_add1.toString(false);
+        String carta= card_to_add1.toString();
         System.out.println(carta);
     }
 
@@ -45,7 +45,7 @@ class GoldCardTestToString {
         int[] placeCond = {5,0,0,0};
         GoldCard card_to_add1 = new GoldCard(50,GREEN,cc,3,null,placeCond);
 
-        String carta= card_to_add1.toString(false);
+        String carta= card_to_add1.toString();
         System.out.println(carta);
     }
 
@@ -59,7 +59,7 @@ class GoldCardTestToString {
         int[] placeCond = {2,1,0,0};
         GoldCard card_to_add1 = new GoldCard(50,GREEN,cc,3,null,placeCond);
 
-        String carta= card_to_add1.toString(true);
+        String carta= card_to_add1.toString();
         System.out.println(carta);
     }
 
@@ -73,7 +73,7 @@ class GoldCardTestToString {
         int[] placeCond = {3,1,0,0};
         GoldCard card_to_add1 = new GoldCard(50,GREEN,cc,3,null,placeCond);
 
-        String carta= card_to_add1.toString(true);
+        String carta= card_to_add1.toString();
         System.out.println(carta);
     }
 
@@ -87,7 +87,7 @@ class GoldCardTestToString {
         int[] placeCond = {5,0,0,0};
         GoldCard card_to_add1 = new GoldCard(50,GREEN,cc,3,null,placeCond);
 
-        String carta= card_to_add1.toString(true);
+        String carta= card_to_add1.toString();
         System.out.println(carta);
     }
 

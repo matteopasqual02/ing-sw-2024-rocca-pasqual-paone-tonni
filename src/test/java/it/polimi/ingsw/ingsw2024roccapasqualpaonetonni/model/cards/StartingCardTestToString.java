@@ -22,7 +22,7 @@ class StartingCardTestToString {
         Corner[] cb ={cb1,cb2,cb3,cb4};
         StartingCard start = new StartingCard(1,c,cf,cb);
 
-        String carta= start.toString(false);
+        String carta= start.toString();
         System.out.println(carta);
     }
 
@@ -41,7 +41,7 @@ class StartingCardTestToString {
         Corner[] cb ={cb1,cb2,cb3,cb4};
         StartingCard start = new StartingCard(1,c,cf,cb);
 
-        String carta= start.toString(false);
+        String carta= start.toString();
         System.out.println(carta);
     }
 
@@ -60,7 +60,7 @@ class StartingCardTestToString {
         Corner[] cb ={cb1,cb2,cb3,cb4};
         StartingCard start = new StartingCard(1,c,cf,cb);
 
-        String carta= start.toString(false);
+        String carta= start.toString();
         System.out.println(carta);
     }
 
@@ -79,7 +79,7 @@ class StartingCardTestToString {
         Corner[] cb ={cb1,cb2,cb3,cb4};
         StartingCard start = new StartingCard(1,c,cf,cb);
 
-        String carta= start.toString(true);
+        String carta= start.toString();
         System.out.println(carta);
     }
 

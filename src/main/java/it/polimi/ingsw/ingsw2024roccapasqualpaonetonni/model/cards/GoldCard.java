@@ -56,7 +56,8 @@ public class GoldCard extends PlayingCard {
     public String getPointCondition() { return pointCondition; }
 
 
-    public String toString(boolean flipped) {
+    public String toString() {
+        boolean flipped = isFlipped;
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = cardSeed.getByAnsi();
 

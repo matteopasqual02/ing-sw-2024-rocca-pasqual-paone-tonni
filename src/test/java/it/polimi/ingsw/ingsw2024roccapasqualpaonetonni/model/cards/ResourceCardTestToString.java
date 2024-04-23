@@ -16,7 +16,7 @@ class ResourceCardTestToString {
         Corner[] cc ={c1,c2,c3,c4};
         ResourceCard card_to_add = new ResourceCard(10,GREEN,cc,1);
 
-        String carta= card_to_add.toString(false);
+        String carta= card_to_add.toString();
         System.out.println(carta);
     }
 
@@ -29,7 +29,7 @@ class ResourceCardTestToString {
         Corner[] cc ={c1,c2,c3,c4};
         ResourceCard card_to_add = new ResourceCard(10,GREEN,cc,1);
 
-        String carta= card_to_add.toString(false);
+        String carta= card_to_add.toString();
         System.out.println(carta);
     }
 
