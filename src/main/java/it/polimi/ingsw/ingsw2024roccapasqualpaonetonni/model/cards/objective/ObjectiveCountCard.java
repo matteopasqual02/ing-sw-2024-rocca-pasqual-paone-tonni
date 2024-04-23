@@ -29,7 +29,9 @@ public class ObjectiveCountCard extends ObjectiveCard {
 
         //First Line
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
+        sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
         sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(points));
+        sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
         sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
@@ -39,7 +41,11 @@ public class ObjectiveCountCard extends ObjectiveCard {
 
         //Third Line
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
-        sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(""));
+
+        for(int i=0; i<4; i++) {
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes));
+        }
+
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
         sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
