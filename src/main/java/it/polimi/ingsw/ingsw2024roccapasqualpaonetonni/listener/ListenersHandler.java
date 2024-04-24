@@ -48,8 +48,8 @@ public abstract class ListenersHandler {
         //listeners.remove(g);
     }
 
-    /*public synchronized List<GameListener> getListener(){
-        return listenersMap.
+    public synchronized List<GameListener> getListener(){
+        return (List<GameListener>) listenersMap.keySet();
         //return listeners;
-    }*/
+    }
 }

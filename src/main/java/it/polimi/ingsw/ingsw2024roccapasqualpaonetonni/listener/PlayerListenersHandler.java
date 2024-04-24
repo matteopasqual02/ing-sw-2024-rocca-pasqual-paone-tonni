@@ -19,54 +19,54 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         super();
     }
     public void resetPlayerListeners(List<GameListener> gameListeners){
-        listeners=null;
+        listenersMap=null;
         for(GameListener lis : gameListeners){
             addListener(lis);
         }
     }
     public void notify_setReadyToStart(Player p) {
-        for(GameListener listener : listeners){
-                listener.playerReady(p);
+        for(GameListener listener : listenersMap.keySet()){
+                listenersMap.get(listener).sendPlayerReady(p);
         }
     }
     public void notify_setIsConnected(Player p) {
-        for(GameListener listener : listeners){
-            listener.playerIsConnected(p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendPlayerIsConnected(p);
         }
     }
     public void notify_drawPersonalGoals(ObjectiveCard[] goals, Player p) {
-        for(GameListener listener : listeners){
-            listener.drewPersonalGoals(goals,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendDrewPersonalGoals(goals,p);
         }
     }
     public void notify_chooseGoal(ObjectiveCard goal, Player p) {
-        for(GameListener listener : listeners){
-            listener.personalGoalChosen(goal, p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendPersonalGoalChosen(goal, p);
         }
     }
     public void notify_drawStarting(StartingCard card, Player p) {
-        for(GameListener listener : listeners){
-            listener.startingCardDrew(card,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendStartingCardDrew(card,p);
         }
     }
     public void notify_drawGoldFromDeck(PlayingCard card, Player p) {
-        for(GameListener listener : listeners){
-            listener.goldDrawn(card,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendGoldDrawn(card,p);
         }
     }
     public void notify_drawResourceFromDeck(PlayingCard card, Player p) {
-        for(GameListener listener : listeners){
-            listener.resourceDrawn(card,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendResourceDrawn(card,p);
         }
     }
     public void notify_drawFromBoard(PlayingCard card, Player p) {
-        for(GameListener listener : listeners){
-            listener.drewFromBoard(card, p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendDrewFromBoard(card, p);
         }
     }
     public void notify_addStarting(PlayerBoard board, Player p) {
-        for(GameListener listener : listeners){
-            listener.startAdded(board,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendStartAdded(board,p);
         }
     }
     /*public void notify_setStartingCard(Game model) {
@@ -75,38 +75,38 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         }
     }*/
     public void notify_cardNotInHand(PlayingCard card, Player p) {
-        for(GameListener listener : listeners){
-            listener.cardNotInHand(card,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendCardNotInHand(card,p);
         }
     }
     public void notify_addToBoard(PlayerBoard board, Player p) {
-        for(GameListener listener : listeners){
-            listener.cardAdded(board,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendCardAdded(board,p);
         }
     }
     public void notify_invalidPlace(Player p){
-        for(GameListener listener : listeners){
-            listener.choseInvalidPlace(p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendChoseInvalidPlace(p);
         }
     }
     public void notify_conditionsNotMet(Player p){
-        for(GameListener listener : listeners){
-            listener.conditionsNotMet(p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendConditionsNotMet(p);
         }
     }
     public void notify_increasePoints(int points,Player p) {
-        for(GameListener listener : listeners){
-            listener.pointsIncreased(points,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendPointsIncreased(points,p);
         }
     }
     public void notify_updateSeedCount(int[] countSeed,Player p) {
-        for(GameListener listener : listeners){
-            listener.seedCountUpdated(countSeed,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendSeedCountUpdated(countSeed,p);
         }
     }
     public void notify_removeFromHand(PlayingCard card,Player p) {
-        for(GameListener listener : listeners){
-            listener.cardRemovedFromHand(card,p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendCardRemovedFromHand(card,p);
         }
     }
 }
