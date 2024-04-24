@@ -20,103 +20,106 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     }
 
     public void notify_setMaxNumPlayers(int gameId,int max) {
-        for(GameListener listener : listeners){
-            if(listener.getConnectionType()== ConnectionType.SOCKET){
+        for(GameListener listener: listenersMap.keySet()){
+            listenersMap.get(listener).sendMaxNumPlayersSet(gameId,max);
+
+
+            /*if(listener.getConnectionType()== ConnectionType.SOCKET){
                 //create serializable object int max
                 //put message on outputstream
                 //call socketWrapper function that will read from stream
             }
             else {
                 listener.maxNumPlayersSet(gameId,max);
-            }
+            }*/
         }
     }
 
     public void notify_addPlayer(Player newPlayer) {
-        for(GameListener listener : listeners){
-            listener.addedPlayer(newPlayer);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendAddedPlayer(newPlayer);
         }
     }
 
     public void notify_gameFull() {
-        for(GameListener listener : listeners){
-            listener.fullGame();
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendFullGame();
         }
     }
 
     public void notify_playerAlredyIn() {
-        for(GameListener listener : listeners){
-            listener.nameAlreadyInGame();
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendNameAlreadyInGame();
         }
     }
     public void notify_removePlayer(Player p) {
-        for(GameListener listener : listeners){
-            listener.playerRemoved(p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendPlayerRemoved(p);
         }
     }
     public void notify_reconnectPlayer(String nickname) {
-        for(GameListener listener : listeners){
-            listener.reconnectedPlayer(nickname);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendReconnectedPlayer(nickname);
         }
     }
     public void notify_reconnectionImpossible(String nickname) {
-        for(GameListener listener : listeners){
-            listener.reconnectionImpossible(nickname);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendReconnectionImpossible(nickname);
         }
     }
     public void notify_disconnectedPlayer(String nickname) {
-        for(GameListener listener : listeners){
-            listener.disconnectedPlayer(nickname);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendDisconnectedPlayer(nickname);
         }
     }
     public void notify_disconnectionImpossible(String nickname) {
-        for(GameListener listener : listeners){
-            listener.disconnectionImpossible(nickname);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendDisconnectedPlayer(nickname);
         }
     }
     public void notify_setFirstPlayer(Player first) {
-        for(GameListener listener : listeners){
-            listener.firstPlayerSet(first);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendFirstPlayerSet(first);
         }
     }
     public void notify_setStatus(GameStatus status) {
-        for(GameListener listener : listeners){
-            listener.statusSet(status);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendStatusSet(status);
         }
     }
     public void notify_setLastStatus(GameStatus status) {
-        for(GameListener listener : listeners){
-            listener.statusSetToLastStatus(status);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendStatusSetToLastStatus(status);
         }
     }
     public void notify_resetLastStatus() {
-        for(GameListener listener : listeners){
-            listener.lastStatusReset();
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendLastStatusReset();
         }
     }
     public void notify_nextPlayer(Player p) {
-        for(GameListener listener : listeners){
-            listener.nextTurn(p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendNextTurn(p);
         }
     }
     public void notify_lastTurn() {
-        for(GameListener listener : listeners){
-            listener.lastTurn();
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendLastTurn();
         }
     }
     public void notify_playerIsReadyToStart(Player p) {
-        for(GameListener listener : listeners){
-            listener.playerIsReady(p);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendPlayerIsReady(p);
         }
     }
     public void notify_setGameDrawableDeck(DrawableDeck d) {
-        for(GameListener listener : listeners){
-            listener.drawableDeckSet(d);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendDrawableDeckSet(d);
         }
     }
     public void notify_setGameBoardDeck(BoardDeck bd) {
-        for(GameListener listener : listeners){
-            listener.boardDeckSet(bd);
+        for(GameListener listener : listenersMap.keySet()){
+            listenersMap.get(listener).sendBoardDeckSet(bd);
         }
     }
 
