@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-04-24T16:15:15.558Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="wrCub9pWwM8WpqUPaDyx" version="24.2.8" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2024-04-24T16:24:56.949Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="Ma0Oeg3OZuyXXJjLswKX" version="24.2.8" type="github" pages="4">
   <diagram name="1 PEER REVIEW" id="ekSnajkk3Y4iF-fPzKWO">
-    <mxGraphModel dx="1290" dy="5235" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="6910" dy="7463" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -626,7 +626,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="IIzopRqG8tLTp1UP7jA9" name="2 PEER REVIEW">
-    <mxGraphModel dx="1290" dy="7157" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
+    <mxGraphModel dx="3949" dy="8191" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1241,7 +1241,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="I-EuxmASO5UjdRi4yAi8" name="RMI metodo 2">
-    <mxGraphModel dx="2345" dy="1013" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
+    <mxGraphModel dx="3949" dy="1591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1579,7 +1579,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="4-rsGon6Vg-NO48jF-nA" name="RMI+Socket">
-    <mxGraphModel dx="3949" dy="1591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
+    <mxGraphModel dx="6910" dy="2785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1710,12 +1710,6 @@
         </mxCell>
         <mxCell id="SjnJneokuRxPE-mNd4yD-32" value="Ha all&#39;interno i metodi per modificare il model" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="770" y="180" width="180" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="SjnJneokuRxPE-mNd4yD-33" value="è come se fosse un remote server che gestisce la singola partita, perche RMIServer gestiste piu partite quindi implementa il mainController, invece qui fa le chiamate al gameController su cui il client sta giocando attraverso l&#39;oggetto RMIClient&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="2820" y="614" width="350" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="SjnJneokuRxPE-mNd4yD-35" value="flow riceve gli aggiornamenti dal listener perchè implementa gameListener e li mostra al client chiamando le funzioni di RMIclient che mostrano gli aggiornamtni&lt;div&gt;(potrebbe farlo anche direttamente il listener, ma avendola fatta come un interfaccia implementata dal flow fa tutto il flow)&amp;nbsp;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="2870" y="786" width="270" height="140" as="geometry" />
         </mxCell>
         <mxCell id="SjnJneokuRxPE-mNd4yD-36" value="contine i metodi che il client chiama&amp;nbsp;&lt;div&gt;dal flow per fare le modifiche,&amp;nbsp;&lt;/div&gt;&lt;div&gt;perchè è lui ad avere il gameController&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="1910" y="850" width="240" height="42" as="geometry" />
@@ -2000,6 +1994,9 @@
             <mxPoint x="1420" y="1290" as="sourcePoint" />
             <mxPoint x="1580" y="1290" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="6HBSMEj28R27nGuZxkn1-1" value="I notifier mandano al singolo listener il&lt;div&gt;cambiamento con il tipo di connessione&lt;/div&gt;&lt;div&gt;giursto: RMi o Socket.&lt;/div&gt;&lt;div&gt;RMI manda direttamente al listener&lt;/div&gt;&lt;div&gt;Socket prima lo mette nello stream e poi lo tira&amp;nbsp;&lt;/div&gt;&lt;div&gt;giu dallo stream nel wrapper&lt;/div&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="1240" width="80" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
