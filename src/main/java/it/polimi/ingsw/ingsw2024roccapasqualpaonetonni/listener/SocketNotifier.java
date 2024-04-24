@@ -4,16 +4,25 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.SocketWrapper;
 
 public class SocketNotifier implements NotifierInterface{
     private GameListener listener;
+    private SocketWrapper reciever;
 
     public SocketNotifier(GameListener g){
+
         listener = g;
+        reciever = new SocketWrapper(g);
     }
 
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {
+        /*make a serializable object to put in the method
+        SerializableInt changes;
+        serialize the object to send
+         */
+        reciever.recieveMaxNumPlayersSet();
 
     }
 
