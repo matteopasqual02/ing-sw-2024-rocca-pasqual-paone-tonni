@@ -21,8 +21,6 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class RMIServerStub implements ServerInterface {
     private static MainControllerInterface requests;
     private GameControllerInterface gameController = null;
-    //private static GameListener modelInvokedEvents;
-    private String nickname;
     private Registry registry;
 
     public RMIServerStub(){
@@ -46,7 +44,7 @@ public class RMIServerStub implements ServerInterface {
 
             }catch (Exception e){
                 if (!retry) {
-                    ConsolePrinter.consolePrinter("[ERROR] CONNECTING TO RMI SERVER: \n\tClient RMI exception: " + e + "\n");
+                    ConsolePrinter.consolePrinter("[ERROR] CONNECTING TO RMI SERVER");
                 }
                 consolePrinter("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + DefaultNetworkValues.Default_RMI_port + "' with name: '" + DefaultNetworkValues.Default_servername_RMI + "'");
 
@@ -63,12 +61,7 @@ public class RMIServerStub implements ServerInterface {
                 consolePrinter("\n");
 
                 if (attempt >= DefaultNetworkValues.num_of_attempt) {
-                    consolePrinter("Give up!");
-                    try {
-                        System.in.read();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    consolePrinter("[RMI] Give up!");
                     System.exit(-1);
                 }
                 retry = true;
@@ -85,7 +78,6 @@ public class RMIServerStub implements ServerInterface {
         gameController = requests.createGameController(name,maxNumPlayers);
         gameController.addMyselfAsListener(me);
         gameController.setMaxNumberOfPlayer(maxNumPlayers);
-        nickname = name;
     }
 
     @Override
@@ -98,7 +90,6 @@ public class RMIServerStub implements ServerInterface {
             return false;
         }
         gameController.addMyselfAsListener(me);
-        nickname = name;
         return true;
     }
 
@@ -112,7 +103,6 @@ public class RMIServerStub implements ServerInterface {
             return false;
         }
         gameController.addMyselfAsListener(me);
-        nickname = name;
         return true;
     }
    @Override
@@ -121,9 +111,7 @@ public class RMIServerStub implements ServerInterface {
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.reconnect(nick, idGame);
 
-        nickname = nick;
-
-    }
+   }
     @Override
     public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
 
@@ -133,7 +121,6 @@ public class RMIServerStub implements ServerInterface {
         requests.leaveGame(nick, idGame);
         gameController.removeMyselfAsListener(me);
         gameController = null;
-        nickname = null;
     }
     //from here on the methods should be to show the update directly to the client, or the methods that the client can call it depends on what we choose
 
