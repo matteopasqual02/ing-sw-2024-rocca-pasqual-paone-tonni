@@ -1,4 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -13,9 +14,8 @@ public interface GameControllerInterface extends Remote{
     void removeMyselfAsListener(GameListener me);
 
     //---------------------------------PLAYER SECTION
-    int getID() throws RemoteException;
     void addPlayer(String nickname) throws RemoteException;
-    Boolean isCurrentPlaying(Player p) throws RemoteException;
+    // Boolean isCurrentPlaying(Player p) throws RemoteException;
     void setMaxNumberOfPlayer(int num) throws RemoteException;
     void removePlayer(Player p) throws RemoteException;
 

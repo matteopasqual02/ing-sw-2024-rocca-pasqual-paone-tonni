@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -30,7 +31,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
     // attributes needed to implement the executor
     private final Queue<Runnable> methodsQueue;
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
     public GameController(int id) {
         this.model = new Game(id);
@@ -38,30 +39,13 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         this.path = DefaultControllerValues.jsonPath;
         this.methodsQueue = new LinkedBlockingQueue<>();
         this.executorService = Executors.newSingleThreadExecutor();
-        startExecutor();
     }
 
     //---------------------------------EXECUTOR SECTION
-    // the executor is a thread that can be fed a queue of Runnable, such as lambda expressions, and that executes
-    // them in order
+    // the executor is a thread that can be fed a queue of Runnable or Callable, such as lambda expressions or
+    // method-like expressions, and that executes them in order
     // it is used to de-synchronize the RMI calls, that now don't wait for the return at the end of the method
     // execution, but return after submitting the Runnable to the executor
-    private void startExecutor() {
-        executorService.submit(() -> {
-            while (true) {
-                try {
-                    Runnable runnable = methodsQueue.poll();
-                    if (runnable != null) {
-                        runnable.run();
-                    }
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     private void stopExecutor() {
         executorService.shutdown();
     }
@@ -80,6 +64,14 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         }
     }
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //****************************************************UNKNOWN****************************************************
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    //---------------------------------SERVER SECTION
+    public int getGameID() {
+        return model.getGameId();
+    }
 
     //---------------------------------LISTENERS SECTION
     public void addMyselfAsListener(GameListener me) {
@@ -97,13 +89,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     }
 
     //---------------------------------PLAYER SECTION
-    public int getID() {
-        Runnable runnable = () -> {
-            return model.getGameId();
-        };
-        executorService.submit(runnable);
-    }
-
     @Override
     public void addPlayer(String nickname) {
         Runnable runnable = () -> {
@@ -115,7 +100,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             } catch (GameAlreadyFullException | PlayerAlreadyInException e) {
                 e.printStackTrace();
             }
-
             model.playerIsReadyToStart(px);
         };
         executorService.submit(runnable);
@@ -129,13 +113,15 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return model.getCurrentPlayer();
     }
 
+    /*
     @Override
-    public Boolean isCurrentPlaying(Player p) {
+    public void isCurrentPlaying(Player p) {
         Runnable runnable = () -> {
             return getCurrentPlayer().equals(p);
         };
         executorService.submit(runnable);
     }
+    */
 
     @Override
     public void setMaxNumberOfPlayer(int num) throws RemoteException {
@@ -188,7 +174,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     public Boolean playersAreReady() {
         return model.arePlayerReady();
     }
-
 
     //---------------------------------TABLE AND INIT SECTION
     @Override

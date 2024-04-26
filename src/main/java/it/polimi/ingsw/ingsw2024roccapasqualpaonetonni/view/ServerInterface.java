@@ -9,9 +9,13 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
 public interface ServerInterface extends Remote{
 
+    //--------------------------GAME CREATION PHASE
+    public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException;
+    public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
+    public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
+
+
     //public boolean isCurrentPlaying() throws RemoteException;
-    public void setNumberOfPlayers(int num) throws RemoteException;
-    public int getID() throws RemoteException;
     public void nextTurn();
     public void createTable() throws RemoteException;
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
@@ -21,9 +25,6 @@ public interface ServerInterface extends Remote{
     public void drawGoldFromDeck() throws RemoteException;
     public void drawFromBoard(int position) throws RemoteException;
     //public void checkWinner() throws RemoteException;
-    public Boolean createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException;
-    public Boolean joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
-    public Boolean joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
     public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException;
     public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException;
 

@@ -11,7 +11,13 @@ The methods here are only the ones that set somethings, not those who get someth
  */
 public interface GameListener{
     ConnectionType getConnectionType();
+
+    //--------------------------GAME CREATION PHASE
     void maxNumPlayersSet(int gameId,int max);
+    void createdGame(int gameId);
+    void joinedGame(int gameId);
+    void noGameAviableToJoin();
+
     void addedPlayer(Player newPlayer);
     void playerReady(Player p);
     void fullGame();

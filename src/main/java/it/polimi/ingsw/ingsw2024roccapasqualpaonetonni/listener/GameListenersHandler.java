@@ -35,6 +35,18 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    public void notify_createdGame(int gameId) {
+        for(GameListener listener: listenersMap.keySet()){
+            listenersMap.get(listener).sendCreatedGame(gameId);
+        }
+    }
+
+    public void notify_joinedGame(int gameId) {
+        for(GameListener listener: listenersMap.keySet()){
+            listenersMap.get(listener).sendJoinedGame(gameId);
+        }
+    }
+
     public void notify_addPlayer(Player newPlayer) {
         for(GameListener listener : listenersMap.keySet()){
             listenersMap.get(listener).sendAddedPlayer(newPlayer);

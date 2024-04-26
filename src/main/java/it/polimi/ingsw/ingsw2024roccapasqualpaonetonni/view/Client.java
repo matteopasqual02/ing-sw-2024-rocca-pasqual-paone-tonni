@@ -18,7 +18,8 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class Client implements GameListener, Runnable {
     ServerInterface serverStub;
     ConnectionType connection;
-    Scanner scanner = new Scanner(System.in);
+    private int myGameId = 0;
+
     //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
     public Client(ConnectionType conSel) {
         connection = conSel;
@@ -68,72 +69,50 @@ public class Client implements GameListener, Runnable {
     }
 */
     @Override
-    public void run(){
+    public void run() {
         joinLobby();
-        try {
-            System.out.println("Game joined, your gameID is: " + serverStub.getID());
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
     }
-    public void joinLobby(){
 
+    public void joinLobby(){
         ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID "));
         int selection = Integer.parseInt(new Scanner(System.in).nextLine());
 
         switch(selection) {
             case 1: {
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
-                int num = Integer.parseInt(new Scanner(System.in).nextLine());
+                int maxNumPlayers = Integer.parseInt(new Scanner(System.in).nextLine());
+
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
                 String nickname = new Scanner(System.in).nextLine();
 
                 try {
-                    serverStub.createGame(nickname, num, this);
+                    serverStub.createGame(nickname, maxNumPlayers, this);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
-                return;
             }
             case 2:{
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
                 String nickname = new Scanner(System.in).nextLine();
-                //System.out.println("Insert your username: ");
-                //String nickname = scanner.nextLine();
                 try {
-                    Boolean possible = serverStub.joinFirstAvailable(nickname, this);
-                    if(!possible){
-                        joinLobby();
-                    }
+                    serverStub.joinFirstAvailable(nickname, this);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
-                return;
             }
             case 3:{
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
                 String nickname = new Scanner(System.in).nextLine();
-                //System.out.println("Insert your username: ");
-                //String nickname = scanner.nextLine();
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set gameID: "));
                 int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
-                //System.out.println("Insert gameID: ");
-                //int gameID = scanner.nextInt();
-                //scanner.nextLine();
                 try {
-                    Boolean possible = serverStub.joinGameByID(nickname,gameID, this);
-                    if(possible==false){
-                        joinLobby();
-                    }
+                    serverStub.joinGameByID(nickname, gameID, this);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
-                return;
-        }
-
+            }
         }
     }
-
 
     @Override
     public ConnectionType getConnectionType() {
@@ -142,12 +121,29 @@ public class Client implements GameListener, Runnable {
 
     @Override
     public void maxNumPlayersSet(int gameId, int max) {
-        //ConsolePrinter.consolePrinter("New max number from game");
-        // Definizione della stringa con i parametri
-        String message = String.format("New max number from game: %d,%d", gameId,max);
-        // Stampare il messaggio utilizzando il metodo consolePrinter
+        String message = String.format("New max number for game %d: %d players maximum", gameId, max);
         ConsolePrinter.consolePrinter(message);
+    }
 
+    @Override
+    public void createdGame(int gameId) {
+        myGameId = gameId;
+        String message = String.format("Game joined, your gameID is: " + myGameId);
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void joinedGame(int gameId) {
+        myGameId = gameId;
+        String message = String.format("Game joined, your gameID is: " + myGameId);
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void noGameAviableToJoin() {
+        String message = "No game available, try creating a new game";
+        ConsolePrinter.consolePrinter(message);
+        joinLobby();
     }
 
     @Override

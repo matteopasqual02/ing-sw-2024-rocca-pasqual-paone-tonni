@@ -11,9 +11,25 @@ public class RMINotifier implements NotifierInterface{
     public RMINotifier(GameListener g){
         listener = g;
     }
+
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {
         listener.maxNumPlayersSet(gameId,max);
+    }
+
+    @Override
+    public void sendCreatedGame(int gameId) {
+        listener.createdGame(gameId);
+    }
+
+    @Override
+    public void sendJoinedGame(int gameId) {
+        listener.joinedGame(gameId);
+    }
+
+    @Override
+    public void sendNoGameAviableToJoin() {
+        listener.noGameAviableToJoin();
     }
 
     @Override

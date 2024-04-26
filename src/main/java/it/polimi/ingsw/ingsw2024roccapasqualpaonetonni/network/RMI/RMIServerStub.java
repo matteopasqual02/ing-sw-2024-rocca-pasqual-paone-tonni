@@ -72,40 +72,34 @@ public class RMIServerStub implements ServerInterface {
     }
 
     @Override
-    public Boolean createGame(String name, int maxNumPlayers, GameListener me) throws RemoteException, NotBoundException {
+    public void createGame(String name, int maxNumPlayers, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.createGameController(name,maxNumPlayers);
+        gameController = requests.createGameController(name, maxNumPlayers);
         gameController.addMyselfAsListener(me);
-        gameController.setMaxNumberOfPlayer(maxNumPlayers);
-        return true;
     }
 
     @Override
-    public Boolean joinFirstAvailable(String name, GameListener me) throws RemoteException, NotBoundException {
+    public void joinFirstAvailable(String name, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinFirstAvailableGame(name);
-        if(gameController==null){
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("No games available, you need to create a new game"));
-            return false;
+        if(gameController != null){
+            gameController.addMyselfAsListener(me);
         }
-        gameController.addMyselfAsListener(me);
-        return true;
     }
 
-    public Boolean joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
+    @Override
+    public void joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
 
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinGameByID(name, idGame);
-        if(gameController==null){
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("This game is not available"));
-            return false;
+        if(gameController != null){
+            gameController.addMyselfAsListener(me);
         }
-        gameController.addMyselfAsListener(me);
-        return true;
     }
+
    @Override
     public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
@@ -123,19 +117,9 @@ public class RMIServerStub implements ServerInterface {
         gameController.removeMyselfAsListener(me);
         gameController = null;
     }
-    //from here on the methods should be to show the update directly to the client, or the methods that the client can call it depends on what we choose
 
-
-    @Override
-    public void setNumberOfPlayers(int num) throws RemoteException {
-        gameController.setMaxNumberOfPlayer(num);
-    }
-
-    @Override
-    public int getID() throws RemoteException {
-        return gameController.getID();
-    }
-
+    //from here on the methods should be to show the update directly to the client, or the methods that
+    // the client can call it depends on what we choose
     @Override
     public void nextTurn() {
 

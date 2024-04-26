@@ -100,23 +100,21 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public Boolean createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
+    public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers));
         messageDone();
-        return true;
     }
 
     @Override
-    public Boolean joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
+    public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageJoinFirstAvailable(name));
         messageDone();
-        return true;
     }
 
     @Override
-    public Boolean joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
+    public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageJoinGameById(name,idGame));
-        return true;
+        messageDone();
     }
 
     @Override
@@ -127,16 +125,6 @@ public class SocketClient extends Thread implements ServerInterface {
     @Override
     public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
 
-    }
-
-    @Override
-    public void setNumberOfPlayers(int num) throws RemoteException {
-
-    }
-
-    @Override
-    public int getID() throws RemoteException {
-        return 0;
     }
 
     @Override
