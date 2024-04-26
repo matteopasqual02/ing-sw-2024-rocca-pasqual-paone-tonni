@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

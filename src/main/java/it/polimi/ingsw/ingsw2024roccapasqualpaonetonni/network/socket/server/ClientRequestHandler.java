@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 
 import java.io.IOException;
