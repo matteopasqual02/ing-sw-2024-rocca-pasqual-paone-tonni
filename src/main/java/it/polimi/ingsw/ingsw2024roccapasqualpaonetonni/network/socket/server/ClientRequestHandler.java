@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -71,6 +72,10 @@ public class ClientRequestHandler extends Thread {
                 }
             }
         }
-        catch (InterruptedException ignored){}
+        catch (InterruptedException ignored){
+
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

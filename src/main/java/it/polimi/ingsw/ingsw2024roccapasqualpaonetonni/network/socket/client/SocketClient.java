@@ -2,7 +2,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -97,8 +98,9 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void createGame(String name, int maxNumPlayers, GameListener me) throws RemoteException, NotBoundException {
-
+    public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers));
+        messageDone();
     }
 
     @Override
