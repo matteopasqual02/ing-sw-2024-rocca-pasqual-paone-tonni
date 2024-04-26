@@ -14,11 +14,14 @@ import java.io.ObjectOutputStream;
 public class SocketNotifier implements NotifierInterface{
     private GameListener listener;
     private SocketWrapper reciever;
+    ObjectOutputStream outputStream;
 
     public SocketNotifier(GameListener g){
 
         listener = g;
         reciever = new SocketWrapper(g);
+        SocketClient socketClient = (SocketClient) listener.getServerStub();
+        outputStream = socketClient.getOutputStream();
     }
 
     @Override
@@ -27,8 +30,6 @@ public class SocketNotifier implements NotifierInterface{
         SerializableInt changes;
         serialize the object to send
          */
-        SocketClient socketClient = (SocketClient) listener.getServerStub();
-        ObjectOutputStream outputStream = socketClient.getOutputStream();
         outputStream.writeObject(new SerializableMaxNumPlayers(max));
         reciever.recieveMaxNumPlayersSet();
 

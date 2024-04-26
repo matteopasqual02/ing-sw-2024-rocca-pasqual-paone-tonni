@@ -13,14 +13,16 @@ public class SocketWrapper {
     che richiama per essere coerente con RMI
      */
     private GameListener listener;
+    ObjectInputStream inputStream;
+
     public SocketWrapper(GameListener lis){
         listener = lis;
+        SocketClient socketClient = (SocketClient) listener.getServerStub();
+        inputStream = socketClient.getInputStream();
     }
 
     public void recieveMaxNumPlayersSet() throws IOException, ClassNotFoundException {
         //prendi il dato dallo stream
-        SocketClient socketClient = (SocketClient) listener.getServerStub();
-        ObjectInputStream inputStream = socketClient.getInputStream();
         SerializableMaxNumPlayers maxSerialized = (SerializableMaxNumPlayers) inputStream.readObject();
         listener.maxNumPlayersSet(maxSerialized.getInt());
     }
