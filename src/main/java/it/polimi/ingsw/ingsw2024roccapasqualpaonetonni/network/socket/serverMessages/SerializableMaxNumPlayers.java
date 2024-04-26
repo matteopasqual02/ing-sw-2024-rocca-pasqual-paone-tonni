@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages;
 
 import java.io.Serializable;
 

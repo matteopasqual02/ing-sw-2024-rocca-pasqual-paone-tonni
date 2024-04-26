@@ -1,13 +1,11 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.SerializableMaxNumPlayers;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.SerializableMaxNumPlayers;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class SocketWrapper {
     /*viene chiamata da listenersHandler quando la connessione è di tipo socket. Prende

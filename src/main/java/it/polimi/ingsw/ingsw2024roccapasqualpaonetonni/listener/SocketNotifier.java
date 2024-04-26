@@ -5,8 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.SerializableMaxNumPlayers;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.SerializableMaxNumPlayers;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.SocketWrapper;
 
 import java.io.IOException;
