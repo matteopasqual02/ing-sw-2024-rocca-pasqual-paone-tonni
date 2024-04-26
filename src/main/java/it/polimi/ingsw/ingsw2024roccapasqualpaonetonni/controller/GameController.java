@@ -88,40 +88,24 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         executorService.submit(runnable);
     }
 
-    //---------------------------------PLAYER SECTION
+    //---------------------------------GAME CREATION PHASE
     @Override
     public void addPlayer(String nickname) {
         Runnable runnable = () -> {
             Player px;
-            int player_number = model.getPlayers().size() + 1;
+            int player_number = model.getPlayerNum() + 1;
             px = new Player(nickname, player_number);
             try {
                 model.addPlayer(px);
             } catch (GameAlreadyFullException | PlayerAlreadyInException e) {
                 e.printStackTrace();
             }
-            model.playerIsReadyToStart(px);
+            if (model.getPlayerNum() == model.getMaxNumberOfPlayer()) {
+                model.askPlayersReady();
+            }
         };
         executorService.submit(runnable);
     }
-
-    public Queue<Player> getAllPlayer() {
-        return model.getPlayers();
-    }
-
-    public Player getCurrentPlayer() {
-        return model.getCurrentPlayer();
-    }
-
-    /*
-    @Override
-    public void isCurrentPlaying(Player p) {
-        Runnable runnable = () -> {
-            return getCurrentPlayer().equals(p);
-        };
-        executorService.submit(runnable);
-    }
-    */
 
     @Override
     public void setMaxNumberOfPlayer(int num) throws RemoteException {
@@ -129,6 +113,33 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             model.setMaxNumberOfPlayer(num);
         };
         executorService.submit(runnable);
+    }
+
+    @Override
+    public void noAvailableGame(Player player) {
+        model.noAvailableGame(player);
+    }
+
+    @Override
+    public void ready(String nickname) {
+        model.setPlayerReady(nickname);
+        if (model.getReadyPlayersNum() == model.getPlayerNum()) {
+            createTable();
+
+            //run TurnZero
+            turnZero();
+
+            model.setStatus(GameStatus.RUNNING);
+        }
+    }
+
+    //---------------------------------PLAYER SECTION
+    public Queue<Player> getAllPlayer() {
+        return model.getPlayers();
+    }
+
+    public Player getCurrentPlayer() {
+        return model.getCurrentPlayer();
     }
 
     public int getMaxNumberOfPlayer() {
@@ -171,86 +182,73 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return model.getLastStatus();
     }
 
-    public Boolean playersAreReady() {
-        return model.arePlayerReady();
-    }
-
     //---------------------------------TABLE AND INIT SECTION
     @Override
     public Boolean createTable() {
-        Runnable runnable = () -> {
-            if (model.arePlayerReady()) {
-                Map<String, List<Card>> cardsMap = null;
-                try {
-                    cardsMap = JSONUtils.createCardsFromJson(path);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        Map<String, List<Card>> cardsMap = null;
+        try {
+            cardsMap = JSONUtils.createCardsFromJson(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-                Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
-                for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
-                    String type = entry.getKey(); // Get the card type
-                    List<Card> cards = entry.getValue(); // Get the list of cards for this type
+        Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
+        for (Map.Entry<String, List<Card>> entry : cardsMap.entrySet()) {
+            String type = entry.getKey(); // Get the card type
+            List<Card> cards = entry.getValue(); // Get the list of cards for this type
 
-                    // Shuffle the list of cards
-                    Collections.shuffle(cards);
+            // Shuffle the list of cards
+            Collections.shuffle(cards);
 
-                    // Create a new deck as a Queue
-                    Queue<Card> deck = new LinkedList<>(cards);
+            // Create a new deck as a Queue
+            Queue<Card> deck = new LinkedList<>(cards);
 
-                    // Put the shuffled deck into the map
-                    shuffledDecks.put(type, deck);
-                }
-                //create decks
-                DrawableDeck decks = new DrawableDeck(shuffledDecks);
-                BoardDeck boardDeck = new BoardDeck(model);
+            // Put the shuffled deck into the map
+            shuffledDecks.put(type, deck);
+        }
+        //create decks
+        DrawableDeck decks = new DrawableDeck(shuffledDecks);
+        BoardDeck boardDeck = new BoardDeck(model);
 
-                //set the BoardDeck
-                try {
-                    boardDeck.setObjectiveCards(decks.drawFirstObjective(), 0);
-                } catch (DeckEmptyException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    boardDeck.setObjectiveCards(decks.drawFirstObjective(), 1);
-                } catch (DeckEmptyException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    boardDeck.setResourceCards(decks.drawFirstResource(), 0);
-                } catch (DeckEmptyException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    boardDeck.setResourceCards(decks.drawFirstResource(), 1);
-                } catch (DeckEmptyException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    boardDeck.setGoldCards(decks.drawFirstGold(), 0);
-                } catch (DeckEmptyException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    boardDeck.setGoldCards(decks.drawFirstGold(), 1);
-                } catch (DeckEmptyException e) {
-                    e.printStackTrace();
-                }
+        //set the BoardDeck
+        try {
+            boardDeck.setObjectiveCards(decks.drawFirstObjective(), 0);
+        } catch (DeckEmptyException e) {
+            e.printStackTrace();
+        }
+        try {
+            boardDeck.setObjectiveCards(decks.drawFirstObjective(), 1);
+        } catch (DeckEmptyException e) {
+            e.printStackTrace();
+        }
+        try {
+            boardDeck.setResourceCards(decks.drawFirstResource(), 0);
+        } catch (DeckEmptyException e) {
+            e.printStackTrace();
+        }
+        try {
+            boardDeck.setResourceCards(decks.drawFirstResource(), 1);
+        } catch (DeckEmptyException e) {
+            e.printStackTrace();
+        }
+        try {
+            boardDeck.setGoldCards(decks.drawFirstGold(), 0);
+        } catch (DeckEmptyException e) {
+            e.printStackTrace();
+        }
+        try {
+            boardDeck.setGoldCards(decks.drawFirstGold(), 1);
+        } catch (DeckEmptyException e) {
+            e.printStackTrace();
+        }
 
-                model.setGameDrawableDeck(decks);
-                model.setGameBoardDeck(boardDeck);
+        model.setGameDrawableDeck(decks);
+        model.setGameBoardDeck(boardDeck);
 
-                //random first player
-                randomFirstPlayer();
+        //random first player
+        randomFirstPlayer();
 
-                //run TurnZero
-                turnZero();
-
-                model.setStatus(GameStatus.RUNNING);
-                return true;
-            } else return false;
-        };
-        executorService.submit(runnable);
+        return true;
     }
 
     private void randomFirstPlayer() {

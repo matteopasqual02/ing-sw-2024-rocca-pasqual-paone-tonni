@@ -13,6 +13,7 @@ public interface ServerInterface extends Remote{
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException;
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
+    public void ready(String nickname) throws IOException, NotBoundException;
 
 
     //public boolean isCurrentPlaying() throws RemoteException;

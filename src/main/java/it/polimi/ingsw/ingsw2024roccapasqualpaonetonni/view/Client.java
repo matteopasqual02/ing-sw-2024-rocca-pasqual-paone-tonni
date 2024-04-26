@@ -19,6 +19,7 @@ public class Client implements GameListener, Runnable {
     ServerInterface serverStub;
     ConnectionType connection;
     private int myGameId = 0;
+    private String myNickname = null;
 
     //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
     public Client(ConnectionType conSel) {
@@ -128,27 +129,49 @@ public class Client implements GameListener, Runnable {
     @Override
     public void createdGame(int gameId) {
         myGameId = gameId;
-        String message = String.format("Game joined, your gameID is: " + myGameId);
+        String message = String.format("Game created, with GameID: %d", myGameId);
         ConsolePrinter.consolePrinter(message);
     }
 
     @Override
-    public void joinedGame(int gameId) {
+    public void youJoinedGame(int gameId, String pNickname) {
         myGameId = gameId;
-        String message = String.format("Game joined, your gameID is: " + myGameId);
+        myNickname = pNickname;
+        String message = String.format("You joined game %d, with nickname %d", myGameId, myNickname);
         ConsolePrinter.consolePrinter(message);
     }
 
     @Override
-    public void noGameAviableToJoin() {
-        String message = "No game available, try creating a new game";
+    public void noAvailableGame() {
+        String message = String.format("No game available, try again");
         ConsolePrinter.consolePrinter(message);
         joinLobby();
     }
 
     @Override
-    public void addedPlayer(Player newPlayer) {
+    public void addedNewPlayer(String pNickname) {
+        String message = String.format("Player \"%s\" joined the game", pNickname);
+        ConsolePrinter.consolePrinter(message);
+    }
 
+    @Override
+    public void areYouReady() {
+        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Press the key (Y) when you are ready to start the game!"));
+        String selection = new Scanner(System.in).nextLine();
+
+        if (selection.equals("Y")) {
+            try {
+                serverStub.ready(myNickname);
+            }
+            catch (NotBoundException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            String message = String.format("You pressed an invalid key, try again!");
+            ConsolePrinter.consolePrinter(message);
+            areYouReady();
+        }
     }
 
     @Override

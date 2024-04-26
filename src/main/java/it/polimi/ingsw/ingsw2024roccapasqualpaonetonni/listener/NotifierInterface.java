@@ -10,12 +10,10 @@ public interface NotifierInterface {
     //--------------------------GAME CREATION PHASE
     void sendMaxNumPlayersSet(int gameId,int max);
     void sendCreatedGame(int gameId);
-    void sendJoinedGame(int gameId);
-    void sendNoGameAviableToJoin();
-    void sendAddedPlayer(Player newPlayer);
-
-
-    void sendPlayerReady(Player p);
+    void sendYouJoinedGame(int gameId, String pNickname);
+    void sendAddedNewPlayer(String pNickname);
+    void sendNoAvailableGame();
+    void sendAskPlayersReady();
 
     void sendFullGame();
 

@@ -21,6 +21,7 @@ public class Game implements Serializable {
     private BoardDeck gameBoardDeck;
     private DrawableDeck gameDrawableDeck;
     private final Chat chat;
+    private final List<String> ready;
 
     private final GameListenersHandler gameListenersHandler;
 
@@ -34,6 +35,7 @@ public class Game implements Serializable {
         status[1] = null;
         this.maxNumberOfPlayer=0;
         this.gameId = id;
+        ready = new ArrayList<>();
 
         gameBoardDeck = null;
         gameDrawableDeck = null;
@@ -77,18 +79,22 @@ public class Game implements Serializable {
                 for(Player p: players){
                     p.setPlayerListeners(gameListenersHandler.getListener());
                 }
-                gameListenersHandler.notify_addPlayer(px);
+                gameListenersHandler.notify_addPlayer(px, px.getNickname(), gameId);
             }
             else {
-                gameListenersHandler.notify_gameFull();
+                gameListenersHandler.notify_gameFull(px);
                 throw new GameAlreadyFullException("The game is full");
             }
         }
         else {
-            gameListenersHandler.notify_playerAlredyIn();
+            gameListenersHandler.notify_playerAlredyIn(px);
             throw new PlayerAlreadyInException("The player is already in the game");
         }
 
+    }
+
+    public void noAvailableGame(Player px) {
+        gameListenersHandler.notify_noAvailableGame(px);
     }
 
     public synchronized void removePlayer(Player p){
@@ -99,14 +105,6 @@ public class Game implements Serializable {
         //here before calling this method the client should call removeListener to remove itself from the listeners list, or the server should
         gameListenersHandler.notify_removePlayer(p);
     }
-
-    /*
-    public synchronized void reconnectPlayer(String nickname) {
-        Modifica modifica = new Modifica(codice_modifica, Object)
-        madifiche.append(
-        return
-     }
-     */
 
     public synchronized void reconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
@@ -170,21 +168,31 @@ public class Game implements Serializable {
     public GameStatus getGameStatus(){
         return status[0];
     }
+
     public GameStatus getLastStatus(){
         return status[1];
     }
+
     public Queue<Player> getPlayers() {
-        return players;
+        return new LinkedList<>(players);
     }
+
+    public int getPlayerNum() {
+        return players.size();
+    }
+
     public Player getCurrentPlayer(){
         return players.peek();
     }
+
     public DrawableDeck getGameDrawableDeck(){
         return gameDrawableDeck;
     }
+
     public BoardDeck getGameBoardDeck(){
         return gameBoardDeck;
     }
+
     public void nextPlayer(){
         Player temp;
         temp = players.poll();
@@ -227,6 +235,7 @@ public class Game implements Serializable {
     }
 
 //---------------------------------READY SECTION
+    /*
     public void playerIsReadyToStart(Player p){
         p.setReadyToStart();
         gameListenersHandler.notify_playerIsReadyToStart(p);
@@ -236,15 +245,35 @@ public class Game implements Serializable {
         return players.stream().filter(Player::getReadyToStart).count() == players.size()
                 && players.size() == maxNumberOfPlayer;
     }
+    */
+    public void setPlayerReady(String nickname){
+        boolean flag = false;
+        for(String nn : ready){
+            if (nickname.equals(nn)) {
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            ready.add(nickname);
+        }
+    }
 
+    public int getReadyPlayersNum() {
+        return ready.size();
+    }
+
+    public void askPlayersReady() {
+        gameListenersHandler.notify_askPlayersReady();
+    }
+
+//---------------------------------DECK SECTION
     public void setGameDrawableDeck(DrawableDeck deck) {
-
         this.gameDrawableDeck = deck;
         gameListenersHandler.notify_setGameDrawableDeck(deck);
     }
 
     public void setGameBoardDeck(BoardDeck deck) {
-
         this.gameBoardDeck = deck;
         gameListenersHandler.notify_setGameBoardDeck(deck);
     }

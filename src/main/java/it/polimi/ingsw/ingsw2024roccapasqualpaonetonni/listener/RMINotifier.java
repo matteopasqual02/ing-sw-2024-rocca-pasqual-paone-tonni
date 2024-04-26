@@ -12,6 +12,7 @@ public class RMINotifier implements NotifierInterface{
         listener = g;
     }
 
+    //--------------------------GAME CREATION PHASE
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {
         listener.maxNumPlayersSet(gameId,max);
@@ -23,24 +24,23 @@ public class RMINotifier implements NotifierInterface{
     }
 
     @Override
-    public void sendJoinedGame(int gameId) {
-        listener.joinedGame(gameId);
+    public void sendYouJoinedGame(int gameId, String pNickname) {
+        listener.youJoinedGame(gameId, pNickname);
     }
 
     @Override
-    public void sendNoGameAviableToJoin() {
-        listener.noGameAviableToJoin();
+    public void sendAddedNewPlayer(String pNickname) {
+        listener.addedNewPlayer(pNickname);
     }
 
     @Override
-    public void sendAddedPlayer(Player newPlayer) {
-        listener.addedPlayer(newPlayer);
-
+    public void sendNoAvailableGame() {
+        listener.noAvailableGame();
     }
 
     @Override
-    public void sendPlayerReady(Player p) {
-        listener.playerReady(p);
+    public void sendAskPlayersReady() {
+        listener.areYouReady();
     }
 
     @Override

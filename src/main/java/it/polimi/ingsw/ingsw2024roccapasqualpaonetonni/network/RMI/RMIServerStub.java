@@ -84,8 +84,11 @@ public class RMIServerStub implements ServerInterface {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinFirstAvailableGame(name);
-        if(gameController != null){
+        if (gameController != null) {
             gameController.addMyselfAsListener(me);
+        }
+        else {
+            gameController.noAvailableGame(me);
         }
     }
 
@@ -98,6 +101,11 @@ public class RMIServerStub implements ServerInterface {
         if(gameController != null){
             gameController.addMyselfAsListener(me);
         }
+    }
+
+    @Override
+    public void ready(String nickname) throws RemoteException, NotBoundException {
+        gameController.ready(nickname);
     }
 
    @Override

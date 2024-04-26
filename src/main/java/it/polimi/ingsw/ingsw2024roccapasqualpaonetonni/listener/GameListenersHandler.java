@@ -19,19 +19,9 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         super();
     }
 
-    public void notify_setMaxNumPlayers(int gameId,int max) {
+    public void notify_setMaxNumPlayers(int gameId, int max) {
         for(GameListener listener: listenersMap.keySet()){
             listenersMap.get(listener).sendMaxNumPlayersSet(gameId,max);
-
-
-            /*if(listener.getConnectionType()== ConnectionType.SOCKET){
-                //create serializable object int max
-                //put message on outputstream
-                //call socketWrapper function that will read from stream
-            }
-            else {
-                listener.maxNumPlayersSet(gameId,max);
-            }*/
         }
     }
 
@@ -41,29 +31,47 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
-    public void notify_joinedGame(int gameId) {
-        for(GameListener listener: listenersMap.keySet()){
-            listenersMap.get(listener).sendJoinedGame(gameId);
+    public void notify_addPlayer(Player newPlayer, String pNickname, int gameId) {
+        for(GameListener listener : listenersMap.keySet()) {
+            if (listener.equals(newPlayer)) {
+                listenersMap.get(listener).sendYouJoinedGame(gameId, pNickname);
+            }
+            else {
+                listenersMap.get(listener).sendAddedNewPlayer(pNickname);
+            }
         }
     }
 
-    public void notify_addPlayer(Player newPlayer) {
-        for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendAddedPlayer(newPlayer);
+    public void notify_noAvailableGame(Player player) {
+        for(GameListener listener : listenersMap.keySet()) {
+            if (listener.equals(player)) {
+                listenersMap.get(listener).sendNoAvailableGame();
+            }
         }
     }
 
-    public void notify_gameFull() {
-        for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendFullGame();
+    public void notify_gameFull(Player player) {
+        for(GameListener listener : listenersMap.keySet()) {
+            if (listener.equals(player)) {
+                listenersMap.get(listener).sendFullGame();
+            }
         }
     }
 
-    public void notify_playerAlredyIn() {
-        for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendNameAlreadyInGame();
+    public void notify_playerAlredyIn(Player player) {
+        for(GameListener listener : listenersMap.keySet()) {
+            if (listener.equals(player)) {
+                listenersMap.get(listener).sendNameAlreadyInGame();
+            }
         }
     }
+
+    public void notify_askPlayersReady() {
+        for(GameListener listener : listenersMap.keySet()) {
+            listenersMap.get(listener).sendAskPlayersReady();
+        }
+    }
+
     public void notify_removePlayer(Player p) {
         for(GameListener listener : listenersMap.keySet()){
             listenersMap.get(listener).sendPlayerRemoved(p);

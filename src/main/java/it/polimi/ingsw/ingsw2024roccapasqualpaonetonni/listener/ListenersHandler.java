@@ -17,7 +17,7 @@ public abstract class ListenersHandler {
 
     public ListenersHandler(){
 
-        listenersMap = new HashMap<GameListener,NotifierInterface>();
+        listenersMap = new HashMap<GameListener, NotifierInterface>();
         //listeners = new ArrayList<>();
         //notifiers = new ArrayList<>();
         connection = null;

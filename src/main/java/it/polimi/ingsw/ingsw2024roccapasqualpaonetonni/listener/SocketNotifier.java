@@ -23,18 +23,35 @@ public class SocketNotifier implements NotifierInterface{
         serialize the object to send
          */
         reciever.recieveMaxNumPlayersSet();
+    }
+
+    @Override
+    public void sendCreatedGame(int gameId) {
+        listener.createdGame(gameId);
+    }
+
+    @Override
+    public void sendYouJoinedGame(int gameId, String pNickname) {
+        listener.youJoinedGame(gameId, pNickname);
+    }
+
+    @Override
+    public void sendAddedNewPlayer(String pNickname) {
+        listener.addedNewPlayer(pNickname);
+    }
+
+    @Override
+    public void sendNoAvailableGame() {
 
     }
 
     @Override
-    public void sendAddedPlayer(Player newPlayer) {
+    public void sendAskPlayersReady() {
 
     }
 
-    @Override
-    public void sendPlayerReady(Player p) {
 
-    }
+
 
     @Override
     public void sendFullGame() {

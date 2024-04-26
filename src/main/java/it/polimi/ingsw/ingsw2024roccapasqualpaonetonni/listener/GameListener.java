@@ -13,12 +13,14 @@ public interface GameListener{
     ConnectionType getConnectionType();
 
     //--------------------------GAME CREATION PHASE
-    void maxNumPlayersSet(int gameId,int max);
+    void maxNumPlayersSet(int gameId, int max);
     void createdGame(int gameId);
-    void joinedGame(int gameId);
-    void noGameAviableToJoin();
+    void youJoinedGame(int gameId, String pNickname);
+    void addedNewPlayer(String pNickname);
+    void noAvailableGame();
+    void areYouReady();
 
-    void addedPlayer(Player newPlayer);
+
     void playerReady(Player p);
     void fullGame();
     void nameAlreadyInGame();

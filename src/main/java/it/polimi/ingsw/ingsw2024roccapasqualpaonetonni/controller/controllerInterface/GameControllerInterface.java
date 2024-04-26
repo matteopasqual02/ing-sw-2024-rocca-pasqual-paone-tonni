@@ -13,14 +13,16 @@ public interface GameControllerInterface extends Remote{
     void addMyselfAsListener(GameListener me);
     void removeMyselfAsListener(GameListener me);
 
-    //---------------------------------PLAYER SECTION
+    //---------------------------------GAME CREATION SECTION
     void addPlayer(String nickname) throws RemoteException;
-    // Boolean isCurrentPlaying(Player p) throws RemoteException;
     void setMaxNumberOfPlayer(int num) throws RemoteException;
+    void noAvailableGame(Player p) throws RemoteException;
+    void ready(String nickname) throws RemoteException;
+
+    //---------------------------------PLAYER SECTION
     void removePlayer(Player p) throws RemoteException;
 
     //---------------------------------TABLE AND INIT SECTION
-    Boolean createTable() throws RemoteException;
     void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
     void addStartingCard(Boolean flip) throws RemoteException;
     void choosePlayerGoal(int choice) throws RemoteException;
