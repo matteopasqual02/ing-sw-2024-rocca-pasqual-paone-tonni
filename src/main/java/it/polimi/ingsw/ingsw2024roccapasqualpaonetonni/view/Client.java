@@ -6,6 +6,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -31,7 +32,7 @@ public class Client implements GameListener, Runnable {
                 new Thread(this).start();
             }
             case SOCKET -> {
-                //client = new SocketClient();
+                serverStub = new SocketClient(this);
                 new Thread(this).start();
             }
         }

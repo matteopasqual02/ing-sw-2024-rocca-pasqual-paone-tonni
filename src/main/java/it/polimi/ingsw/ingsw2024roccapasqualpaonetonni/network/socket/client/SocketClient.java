@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.MainControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
@@ -23,6 +24,8 @@ public class SocketClient extends Thread implements ServerInterface {
     private String nickname;
     private Client client;
 
+    //private final SocketNotifier socketNotifier;
+
     public SocketClient(Client client){
         this.client=client;
         connect();
@@ -30,7 +33,16 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     public void run(){
-        try
+        while (true){
+            try{
+                ServerGenericMessage serverGenericMessage = (ServerGenericMessage) inputStream.readObject();
+                //serverGenericMessage.launchMessage();
+            } catch (IOException | ClassNotFoundException e) {
+                consolePrinter("[SOCKET] Connection Lost!");
+                System.exit(-1);
+            }
+        }
+
     }
 
     private void connect(){
@@ -78,6 +90,10 @@ public class SocketClient extends Thread implements ServerInterface {
         inputStream.close();
         outputStream.close();
         clientSocket.close();
+    }
+    private void messageDone() throws IOException {
+        outputStream.flush();
+        outputStream.reset();
     }
 
     @Override

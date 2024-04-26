@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServer;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server.SocketServer;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -33,7 +34,7 @@ public class MainServer {
 
         //the server will open both of them
         RMIServer.bind();
-        //Server serverSocket = new Server();
+        new SocketServer();
 
     }
 

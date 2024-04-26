@@ -5,7 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfa
 
 import java.io.Serializable;
 
-public abstract class GenericMessageToServer implements Serializable {
+public abstract class ClientGenericMessage implements Serializable {
     protected String nickname;
     protected boolean isForMainController;
 

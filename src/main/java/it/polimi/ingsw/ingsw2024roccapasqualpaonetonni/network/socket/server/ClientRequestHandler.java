@@ -2,7 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.GameControllerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.GenericMessageToServer;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,7 +18,7 @@ public class ClientRequestHandler extends Thread {
     private final ObjectOutputStream outputStream;
 
     private GameControllerInterface gameControllerInterface;
-    private final BlockingQueue<GenericMessageToServer> processingQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<ClientGenericMessage> processingQueue = new LinkedBlockingQueue<>();
 
 
     public ClientRequestHandler(Socket socket) throws IOException {
@@ -38,10 +38,10 @@ public class ClientRequestHandler extends Thread {
         messageThread.start();
 
         try{
-            GenericMessageToServer message;
+            ClientGenericMessage message;
             while(!this.isInterrupted()){
                 try{
-                    message = (GenericMessageToServer) inputStream.readObject();
+                    message = (ClientGenericMessage) inputStream.readObject();
                     processingQueue.add(message);
 
                 }catch (IOException | ClassNotFoundException e) {
@@ -57,7 +57,7 @@ public class ClientRequestHandler extends Thread {
     }
 
     private void takeExecute(){
-        GenericMessageToServer message;
+        ClientGenericMessage message;
 
         try{
             while(!this.isInterrupted()){
