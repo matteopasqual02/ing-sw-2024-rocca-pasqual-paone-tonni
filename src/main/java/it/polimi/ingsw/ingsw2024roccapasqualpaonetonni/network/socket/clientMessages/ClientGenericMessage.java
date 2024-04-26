@@ -11,7 +11,7 @@ public abstract class ClientGenericMessage implements Serializable {
     protected boolean isForMainController;
 
     public abstract GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface) throws RemoteException;
-    public abstract void launchMessage(GameControllerInterface gameControllerInterface);
+    public abstract void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException;
 
 
     public boolean isForMainController() {

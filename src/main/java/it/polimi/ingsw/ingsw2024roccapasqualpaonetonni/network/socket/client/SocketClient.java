@@ -3,9 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageJoinFirstAvailable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageJoinGameById;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -120,13 +118,15 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
-
+    public Boolean reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageReconnect(name,idGame));
+        return true;
     }
 
     @Override
-    public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
-
+    public Boolean leave(String name, int idGame, GameListener me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageReconnect(name,idGame));
+        return true;
     }
 
     @Override
@@ -140,23 +140,14 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void nextTurn() {
-
-    }
-
-    @Override
-    public void createTable() throws RemoteException {
-
-    }
-
-    @Override
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {
 
     }
 
     @Override
-    public void addStartingCard(Boolean flip) throws RemoteException {
-
+    public void addStartingCard(Boolean flip) throws IOException {
+        outputStream.writeObject(new MessageAddStarting(flip));
+        messageDone();
     }
 
     @Override
