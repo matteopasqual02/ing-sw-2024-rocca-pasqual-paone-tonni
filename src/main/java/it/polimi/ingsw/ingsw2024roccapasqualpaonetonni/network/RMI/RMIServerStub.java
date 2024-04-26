@@ -107,21 +107,23 @@ public class RMIServerStub implements ServerInterface {
         return true;
     }
    @Override
-    public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
+    public Boolean reconnect(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.reconnect(nick, idGame);
-
+        gameController = requests.reconnect(name, idGame);
+        gameController.addMyselfAsListener(me);
+        return true;
    }
     @Override
-    public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
+    public Boolean leave(String name, int idGame, GameListener me) throws IOException, NotBoundException {
 
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
 
-        requests.leaveGame(nick, idGame);
+        requests.leaveGame(name, idGame);
         gameController.removeMyselfAsListener(me);
         gameController = null;
+        return true;
     }
     //from here on the methods should be to show the update directly to the client, or the methods that the client can call it depends on what we choose
 
@@ -136,15 +138,6 @@ public class RMIServerStub implements ServerInterface {
         return gameController.getID();
     }
 
-    @Override
-    public void nextTurn() {
-
-    }
-
-    @Override
-    public void createTable() throws RemoteException {
-
-    }
 
     @Override
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {
