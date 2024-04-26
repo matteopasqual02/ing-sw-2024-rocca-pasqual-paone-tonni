@@ -9,6 +9,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -136,15 +137,20 @@ public class Client implements GameListener, Runnable {
 
 
     @Override
+    public ServerInterface getServerStub(){
+        return this.serverStub;
+    }
+
+    @Override
     public ConnectionType getConnectionType() {
         return connection;
     }
 
     @Override
-    public void maxNumPlayersSet(int gameId, int max) {
+    public void maxNumPlayersSet(int max) {
         //ConsolePrinter.consolePrinter("New max number from game");
         // Definizione della stringa con i parametri
-        String message = String.format("New max number from game: %d,%d", gameId,max);
+        String message = String.format("New max number from game: %d",max);
         // Stampare il messaggio utilizzando il metodo consolePrinter
         ConsolePrinter.consolePrinter(message);
 

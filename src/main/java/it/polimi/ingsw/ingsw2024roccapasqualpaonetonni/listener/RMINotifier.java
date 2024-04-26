@@ -13,7 +13,8 @@ public class RMINotifier implements NotifierInterface{
     }
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {
-        listener.maxNumPlayersSet(gameId,max);
+        //decidere se metterci gameID o no
+        listener.maxNumPlayersSet(max);
     }
 
     @Override

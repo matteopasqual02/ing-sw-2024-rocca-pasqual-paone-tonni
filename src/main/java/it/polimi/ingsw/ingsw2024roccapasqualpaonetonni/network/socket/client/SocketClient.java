@@ -99,6 +99,12 @@ public class SocketClient extends Thread implements ServerInterface {
         outputStream.reset();
     }
 
+    public ObjectOutputStream getOutputStream(){
+        return this.outputStream;
+    }
+    public ObjectInputStream getInputStream(){
+        return this.inputStream;
+    }
     @Override
     public Boolean createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers));

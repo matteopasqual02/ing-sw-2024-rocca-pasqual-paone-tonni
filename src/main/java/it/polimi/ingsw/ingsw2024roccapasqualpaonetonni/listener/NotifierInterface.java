@@ -5,8 +5,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 
+import java.io.IOException;
+
 public interface NotifierInterface {
-    void sendMaxNumPlayersSet(int gameId,int max);
+    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException;
     void sendAddedPlayer(Player newPlayer);
     void sendPlayerReady(Player p);
     void sendFullGame();
