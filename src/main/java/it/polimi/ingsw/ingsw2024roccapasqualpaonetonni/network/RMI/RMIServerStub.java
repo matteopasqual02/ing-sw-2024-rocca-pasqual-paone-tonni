@@ -72,12 +72,13 @@ public class RMIServerStub implements ServerInterface {
     }
 
     @Override
-    public void createGame(String name,int maxNumPlayers,GameListener me) throws RemoteException, NotBoundException {
+    public Boolean createGame(String name, int maxNumPlayers, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.createGameController(name,maxNumPlayers);
         gameController.addMyselfAsListener(me);
         gameController.setMaxNumberOfPlayer(maxNumPlayers);
+        return true;
     }
 
     @Override

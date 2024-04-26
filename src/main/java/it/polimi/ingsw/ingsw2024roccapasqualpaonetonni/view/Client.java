@@ -8,6 +8,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -79,24 +80,17 @@ public class Client implements GameListener, Runnable {
 
         ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID "));
         int selection = Integer.parseInt(new Scanner(System.in).nextLine());
-        //System.out.println("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID ");
-        //int selection = scanner.nextInt();
+
         switch(selection) {
             case 1: {
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
                 int num = Integer.parseInt(new Scanner(System.in).nextLine());
-                //System.out.println("Set max number of players: ");
-                //int num = scanner.nextInt();
-                //scanner.nextLine();
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
                 String nickname = new Scanner(System.in).nextLine();
-                //System.out.println("Insert your username: ");
-                //String nickname = scanner.nextLine();
+
                 try {
                     serverStub.createGame(nickname, num, this);
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                } catch (NotBoundException e) {
+                } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
                 return;
@@ -108,12 +102,10 @@ public class Client implements GameListener, Runnable {
                 //String nickname = scanner.nextLine();
                 try {
                     Boolean possible = serverStub.joinFirstAvailable(nickname, this);
-                    if(possible==false){
+                    if(!possible){
                         joinLobby();
                     }
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                } catch (NotBoundException e) {
+                } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
                 return;
@@ -133,9 +125,7 @@ public class Client implements GameListener, Runnable {
                     if(possible==false){
                         joinLobby();
                     }
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                } catch (NotBoundException e) {
+                } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
                 return;

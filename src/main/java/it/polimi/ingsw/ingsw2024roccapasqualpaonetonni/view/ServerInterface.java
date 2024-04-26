@@ -21,9 +21,9 @@ public interface ServerInterface extends Remote{
     public void drawGoldFromDeck() throws RemoteException;
     public void drawFromBoard(int position) throws RemoteException;
     //public void checkWinner() throws RemoteException;
-    public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException;
-    public Boolean joinFirstAvailable(String name, GameListener me) throws RemoteException, NotBoundException;
-    public Boolean joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException;
+    public Boolean createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException;
+    public Boolean joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
+    public Boolean joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
     public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException;
     public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException;
 

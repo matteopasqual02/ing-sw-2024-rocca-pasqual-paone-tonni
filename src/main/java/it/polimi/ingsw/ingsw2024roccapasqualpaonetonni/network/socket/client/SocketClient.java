@@ -4,6 +4,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageJoinFirstAvailable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageJoinGameById;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -98,19 +100,23 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
+    public Boolean createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers));
         messageDone();
+        return true;
     }
 
     @Override
-    public Boolean joinFirstAvailable(String name, GameListener me) throws RemoteException, NotBoundException {
-        return null;
+    public Boolean joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageJoinFirstAvailable(name));
+        messageDone();
+        return true;
     }
 
     @Override
-    public Boolean joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
-        return null;
+    public Boolean joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageJoinGameById(name,idGame));
+        return true;
     }
 
     @Override
