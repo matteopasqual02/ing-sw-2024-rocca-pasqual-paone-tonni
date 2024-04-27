@@ -139,38 +139,38 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException {
-        outputStream.writeObject(new MessageAddCard(cardToAdd,cardOnBoard,cornerToAttach,flip));
+    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException {
+        outputStream.writeObject(new MessageAddCard(nickname,cardToAdd,cardOnBoard,cornerToAttach,flip));
         messageDone();
     }
 
     @Override
-    public void addStartingCard(Boolean flip) throws IOException {
-        outputStream.writeObject(new MessageAddStarting(flip));
+    public void addStartingCard(String nickname, Boolean flip) throws IOException {
+        outputStream.writeObject(new MessageAddStarting(nickname, flip));
         messageDone();
     }
 
     @Override
-    public void choosePlayerGoal(int choice) throws IOException {
-        outputStream.writeObject(new MessageObjectiveChosen(choice));
+    public void choosePlayerGoal(String nickname, int choice) throws IOException {
+        outputStream.writeObject(new MessageObjectiveChosen(nickname,choice));
         messageDone();
     }
 
     @Override
-    public void drawResourceFromDeck() throws IOException {
-        outputStream.writeObject(new MessageDrawResources());
+    public void drawResourceFromDeck(String nickname) throws IOException {
+        outputStream.writeObject(new MessageDrawResources(nickname));
         messageDone();
     }
 
     @Override
-    public void drawGoldFromDeck() throws IOException {
-        outputStream.writeObject(new MessageDrawGold());
+    public void drawGoldFromDeck(String nickname) throws IOException {
+        outputStream.writeObject(new MessageDrawGold(nickname));
         messageDone();
     }
 
     @Override
-    public void drawFromBoard(int position) throws IOException {
-        outputStream.writeObject(new MessageDrawFromBoard(position));
+    public void drawFromBoard(String nickname, int position) throws IOException {
+        outputStream.writeObject(new MessageDrawFromBoard(nickname, position));
         messageDone();
     }
 

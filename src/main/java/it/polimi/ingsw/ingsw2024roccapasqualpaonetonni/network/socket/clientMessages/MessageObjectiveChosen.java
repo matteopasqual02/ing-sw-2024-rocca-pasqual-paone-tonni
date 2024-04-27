@@ -7,9 +7,10 @@ import java.rmi.RemoteException;
 
 public class MessageObjectiveChosen extends ClientGenericMessage{
     private final int choice;
-    public MessageObjectiveChosen(int choice){
+    public MessageObjectiveChosen(String nickname, int choice){
         this.isForMainController = false;
         this.choice=choice;
+        this.nickname = nickname;
     }
 
 
@@ -20,6 +21,6 @@ public class MessageObjectiveChosen extends ClientGenericMessage{
 
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.choosePlayerGoal(choice);
+        gameControllerInterface.choosePlayerGoal(nickname, choice);
     }
 }

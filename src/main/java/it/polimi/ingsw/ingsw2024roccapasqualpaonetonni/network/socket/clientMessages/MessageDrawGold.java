@@ -7,8 +7,9 @@ import java.rmi.RemoteException;
 
 public class MessageDrawGold extends ClientGenericMessage{
 
-    public MessageDrawGold(){
+    public MessageDrawGold(String nickname){
         this.isForMainController = false;
+        this.nickname=nickname;
     }
 
 
@@ -19,6 +20,6 @@ public class MessageDrawGold extends ClientGenericMessage{
 
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.drawGoldFromDeck();
+        gameControllerInterface.drawGoldFromDeck(nickname);
     }
 }

@@ -12,12 +12,13 @@ public class MessageAddCard extends ClientGenericMessage{
     private final PlayingCard cardOnBoard;
     private final int corner;
 
-    public MessageAddCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int corner, Boolean flip){
+    public MessageAddCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int corner, Boolean flip){
         this.flip=flip;
         this.cardOnBoard=cardOnBoard;
         this.cardToAdd=cardToAdd;
         this.corner=corner;
         this.isForMainController = false;
+        this.nickname = nickname;
     }
 
 
@@ -28,6 +29,6 @@ public class MessageAddCard extends ClientGenericMessage{
 
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.addCard(cardToAdd,cardOnBoard,corner,flip);
+        gameControllerInterface.addCard(nickname,cardToAdd,cardOnBoard,corner,flip);
     }
 }

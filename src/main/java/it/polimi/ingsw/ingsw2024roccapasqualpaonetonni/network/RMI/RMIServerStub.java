@@ -129,33 +129,33 @@ public class RMIServerStub implements ServerInterface {
     // the client can call it depends on what we choose
 
     @Override
-    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {
-        gameController.addCard(cardToAdd,cardOnBoard,cornerToAttach,flip);
+    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {
+        gameController.addCard(nickname,cardToAdd,cardOnBoard,cornerToAttach,flip);
     }
 
     @Override
-    public void addStartingCard(Boolean flip) throws RemoteException {
-        gameController.addStartingCard(flip);
+    public void addStartingCard(String nickname, Boolean flip) throws RemoteException {
+        gameController.addStartingCard(nickname,flip);
     }
 
     @Override
-    public void choosePlayerGoal(int choice) throws RemoteException {
-        gameController.choosePlayerGoal(choice);
+    public void choosePlayerGoal(String nickname, int choice) throws RemoteException {
+        gameController.choosePlayerGoal(nickname, choice);
     }
 
     @Override
-    public void drawResourceFromDeck() throws RemoteException {
-        gameController.drawResourceFromDeck();
+    public void drawResourceFromDeck(String nickname) throws RemoteException {
+        gameController.drawResourceFromDeck(nickname);
     }
 
     @Override
-    public void drawGoldFromDeck() throws RemoteException {
-        gameController.drawGoldFromDeck();
+    public void drawGoldFromDeck(String nickname) throws RemoteException {
+        gameController.drawGoldFromDeck(nickname);
     }
 
     @Override
-    public void drawFromBoard(int position) throws RemoteException {
-        gameController.drawFromBoard(position);
+    public void drawFromBoard(String nickname, int position) throws RemoteException {
+        gameController.drawFromBoard(nickname, position);
     }
 
 }

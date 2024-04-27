@@ -291,7 +291,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
 
     //---------------------------------ADD CARD SECTION
-    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
+    @Override
+    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -303,7 +308,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         checkPoints20Points();
     }
 
-    public void addStartingCard(Boolean flip) {
+    @Override
+    public void addStartingCard(String nickname, Boolean flip) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -314,7 +324,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         getCurrentPlayer().addStarting();
     }
 
-    public void choosePlayerGoal(int choice) {
+    @Override
+    public void choosePlayerGoal(String nickname, int choice) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING))) {
             // listener you cannot draw in this phase
             return;
@@ -330,7 +345,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 && model.getGameBoardDeck().isEmpty();
     }
 
-    public void drawResourceFromDeck() {
+    @Override
+    public void drawResourceFromDeck(String nickname) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -347,7 +367,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-    public void drawGoldFromDeck() {
+    @Override
+    public void drawGoldFromDeck(String nickname) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -365,7 +390,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-    public void drawFromBoard(int position) {
+    @Override
+    public void drawFromBoard(String nickname, int position) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
