@@ -82,4 +82,6 @@ public interface NotifierInterface {
     void sendSeedCountUpdated(int[] seedCount,Player p);
 
     void sendCardRemovedFromHand(PlayingCard card, Player p);
+
+    void sendPlayerReady(Player p);
 }

@@ -148,4 +148,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    public void notify_gameStarted(GameListener listener) {
+    }
 }

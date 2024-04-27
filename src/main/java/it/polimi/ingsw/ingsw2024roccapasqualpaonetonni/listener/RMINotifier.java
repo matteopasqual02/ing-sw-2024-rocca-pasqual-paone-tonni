@@ -225,4 +225,9 @@ public class RMINotifier implements NotifierInterface{
     public void sendCardRemovedFromHand(PlayingCard card, Player p) {
 
     }
+
+    @Override
+    public void sendPlayerReady(Player p) {
+
+    }
 }

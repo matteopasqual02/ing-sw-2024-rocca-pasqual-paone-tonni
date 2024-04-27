@@ -11,7 +11,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server.Soc
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 import static org.fusesource.jansi.Ansi.ansi;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.*;
+//import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.*;
 
 public class MainServer {
     public static void main( String[] args) throws IOException{
