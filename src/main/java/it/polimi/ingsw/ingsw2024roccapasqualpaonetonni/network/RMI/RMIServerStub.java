@@ -127,15 +127,6 @@ public class RMIServerStub implements ServerInterface {
 
     //from here on the methods should be to show the update directly to the client, or the methods that
     // the client can call it depends on what we choose
-    @Override
-    public void nextTurn() {
-
-    }
-
-    @Override
-    public void createTable() throws RemoteException {
-
-    }
 
     @Override
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {

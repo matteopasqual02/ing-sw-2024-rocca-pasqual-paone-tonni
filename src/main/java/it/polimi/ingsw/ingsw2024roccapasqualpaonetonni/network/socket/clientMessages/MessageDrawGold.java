@@ -5,11 +5,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInte
 
 import java.rmi.RemoteException;
 
-public class MessageAddStarting extends ClientGenericMessage{
-    private final Boolean flip;
+public class MessageDrawGold extends ClientGenericMessage{
 
-    public MessageAddStarting(Boolean flip){
-        this.flip=flip;
+    public MessageDrawGold(){
         this.isForMainController = false;
     }
 
@@ -21,6 +19,6 @@ public class MessageAddStarting extends ClientGenericMessage{
 
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.addStartingCard(flip);
+        gameControllerInterface.drawGoldFromDeck();
     }
 }

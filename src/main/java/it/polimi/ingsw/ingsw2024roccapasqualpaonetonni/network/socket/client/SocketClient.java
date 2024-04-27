@@ -86,7 +86,6 @@ public class SocketClient extends Thread implements ServerInterface {
 
         }while(retry);
     }
-
     private void disconnect() throws IOException {
         inputStream.close();
         outputStream.close();
@@ -139,18 +138,9 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void nextTurn() {
-
-    }
-
-    @Override
-    public void createTable() throws RemoteException {
-
-    }
-
-    @Override
-    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {
-
+    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException {
+        outputStream.writeObject(new MessageAddCard(cardToAdd,cardOnBoard,cornerToAttach,flip));
+        messageDone();
     }
 
     @Override
@@ -165,18 +155,21 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void drawResourceFromDeck() throws RemoteException {
-
+    public void drawResourceFromDeck() throws IOException {
+        outputStream.writeObject(new MessageDrawResources());
+        messageDone();
     }
 
     @Override
-    public void drawGoldFromDeck() throws RemoteException {
-
+    public void drawGoldFromDeck() throws IOException {
+        outputStream.writeObject(new MessageDrawGold());
+        messageDone();
     }
 
     @Override
-    public void drawFromBoard(int position) throws RemoteException {
-
+    public void drawFromBoard(int position) throws IOException {
+        outputStream.writeObject(new MessageDrawFromBoard(position));
+        messageDone();
     }
 
 }

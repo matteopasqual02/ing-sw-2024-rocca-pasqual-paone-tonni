@@ -2,14 +2,21 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
 import java.rmi.RemoteException;
 
-public class MessageAddStarting extends ClientGenericMessage{
+public class MessageAddCard extends ClientGenericMessage{
     private final Boolean flip;
+    private final PlayingCard cardToAdd;
+    private final PlayingCard cardOnBoard;
+    private final int corner;
 
-    public MessageAddStarting(Boolean flip){
+    public MessageAddCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int corner, Boolean flip){
         this.flip=flip;
+        this.cardOnBoard=cardOnBoard;
+        this.cardToAdd=cardToAdd;
+        this.corner=corner;
         this.isForMainController = false;
     }
 
@@ -21,6 +28,6 @@ public class MessageAddStarting extends ClientGenericMessage{
 
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.addStartingCard(flip);
+        gameControllerInterface.addCard(cardToAdd,cardOnBoard,corner,flip);
     }
 }
