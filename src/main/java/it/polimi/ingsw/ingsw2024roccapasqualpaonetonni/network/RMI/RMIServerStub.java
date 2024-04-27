@@ -130,32 +130,32 @@ public class RMIServerStub implements ServerInterface {
 
     @Override
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {
-
+        gameController.addCard(cardToAdd,cardOnBoard,cornerToAttach,flip);
     }
 
     @Override
     public void addStartingCard(Boolean flip) throws RemoteException {
-
+        gameController.addStartingCard(flip);
     }
 
     @Override
     public void choosePlayerGoal(int choice) throws RemoteException {
-
+        gameController.choosePlayerGoal(choice);
     }
 
     @Override
     public void drawResourceFromDeck() throws RemoteException {
-
+        gameController.drawResourceFromDeck();
     }
 
     @Override
     public void drawGoldFromDeck() throws RemoteException {
-
+        gameController.drawGoldFromDeck();
     }
 
     @Override
     public void drawFromBoard(int position) throws RemoteException {
-
+        gameController.drawFromBoard(position);
     }
 
 }
