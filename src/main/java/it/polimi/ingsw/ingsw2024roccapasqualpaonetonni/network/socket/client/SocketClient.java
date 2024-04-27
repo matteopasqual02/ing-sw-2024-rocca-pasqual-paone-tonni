@@ -62,7 +62,7 @@ public class SocketClient extends Thread implements ServerInterface {
                 if (!retry) {
                     ConsolePrinter.consolePrinter("[ERROR] CONNECTING TO SOCKET SERVER" );
                 }
-                consolePrinter("[#" + attempt + "]Waiting to reconnect to SOCKET Server on port: '" + DefaultNetworkValues.Default_RMI_port + "' with name: '" + DefaultNetworkValues.Default_servername_RMI + "'");
+                consolePrinter("[#" + attempt + "]Waiting to reconnect to SOCKET Server on port: '" + DefaultNetworkValues.Default_SOCKET_port + "' with name: '" + DefaultNetworkValues.Default_servername_RMI + "'");
 
                 i = 0;
                 while (i < DefaultNetworkValues.seconds_reconnection) {

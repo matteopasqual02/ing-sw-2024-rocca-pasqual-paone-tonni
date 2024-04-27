@@ -13,6 +13,9 @@ public class SocketServer extends Thread {
     private ServerSocket serverSocket;
     private List<ClientRequestHandler> clientRequestHandlerList;
 
+    public SocketServer(){
+        this.start(4320);
+    }
     public void start(int socketPort){
         try{
             serverSocket = new ServerSocket(socketPort);
