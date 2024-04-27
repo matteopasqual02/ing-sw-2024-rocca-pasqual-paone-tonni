@@ -3,9 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageJoinFirstAvailable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageJoinGameById;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -99,6 +97,12 @@ public class SocketClient extends Thread implements ServerInterface {
         outputStream.reset();
     }
 
+    public ObjectOutputStream getOutputStream(){
+        return this.outputStream;
+    }
+    public ObjectInputStream getInputStream(){
+        return this.inputStream;
+    }
     @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers));
@@ -118,13 +122,15 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
-
+    public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageReconnect(name,idGame));
+        messageDone();
     }
 
     @Override
-    public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
-
+    public void leave(String name, int idGame, GameListener me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageReconnect(name,idGame));
+        messageDone();
     }
 
     @Override
@@ -143,8 +149,9 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void addStartingCard(Boolean flip) throws RemoteException {
-
+    public void addStartingCard(Boolean flip) throws IOException {
+        outputStream.writeObject(new MessageAddStarting(flip));
+        messageDone();
     }
 
     @Override

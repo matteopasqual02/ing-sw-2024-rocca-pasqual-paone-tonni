@@ -4,24 +4,33 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.SerializableMaxNumPlayers;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.SocketWrapper;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class SocketNotifier implements NotifierInterface{
     private GameListener listener;
     private SocketWrapper reciever;
+    ObjectOutputStream outputStream;
 
     public SocketNotifier(GameListener g){
 
         listener = g;
         reciever = new SocketWrapper(g);
+        SocketClient socketClient = (SocketClient) listener.getServerStub();
+        outputStream = socketClient.getOutputStream();
     }
 
     @Override
-    public void sendMaxNumPlayersSet(int gameId, int max) {
+    public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
         /*make a serializable object to put in the method
         SerializableInt changes;
         serialize the object to send
          */
+        outputStream.writeObject(new SerializableMaxNumPlayers(max));
         reciever.recieveMaxNumPlayersSet();
     }
 

@@ -92,9 +92,9 @@ public class RMIServerStub implements ServerInterface {
         }
     }
 
+    public Boolean joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
     @Override
     public void joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
-
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinGameByID(name, idGame);
@@ -109,19 +109,19 @@ public class RMIServerStub implements ServerInterface {
     }
 
    @Override
-    public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException {
+    public void reconnect(String nickname, int idGame) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.reconnect(nick, idGame);
+        gameController = requests.reconnect(nickname, idGame);
+        gameController.addMyselfAsListener(me);
 
    }
     @Override
-    public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException {
-
+    public void leave(String nickname, int idGame, GameListener me) throws IOException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
 
-        requests.leaveGame(nick, idGame);
+        requests.leaveGame(nickname, idGame);
         gameController.removeMyselfAsListener(me);
         gameController = null;
     }

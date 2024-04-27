@@ -20,7 +20,7 @@ public interface ServerInterface extends Remote{
     public void nextTurn();
     public void createTable() throws RemoteException;
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
-    public void addStartingCard(Boolean flip) throws RemoteException;
+    public void addStartingCard(Boolean flip) throws IOException;
     public void choosePlayerGoal(int choice) throws RemoteException;
     public void drawResourceFromDeck() throws RemoteException;
     public void drawGoldFromDeck() throws RemoteException;

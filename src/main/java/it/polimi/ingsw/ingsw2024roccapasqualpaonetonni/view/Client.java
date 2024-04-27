@@ -9,6 +9,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -113,6 +114,11 @@ public class Client implements GameListener, Runnable {
                 }
             }
         }
+    }
+
+    @Override
+    public ServerInterface getServerStub(){
+        return this.serverStub;
     }
 
     @Override
