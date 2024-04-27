@@ -88,11 +88,10 @@ public class RMIServerStub implements ServerInterface {
             gameController.addMyselfAsListener(me);
         }
         else {
-            gameController.noAvailableGame(me);
+            me.noAvailableGame();
         }
     }
 
-    public Boolean joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
     @Override
     public void joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
@@ -109,10 +108,10 @@ public class RMIServerStub implements ServerInterface {
     }
 
    @Override
-    public void reconnect(String nickname, int idGame) throws RemoteException, NotBoundException {
+   public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.reconnect(nickname, idGame);
+        gameController = requests.reconnect(name, idGame);
         gameController.addMyselfAsListener(me);
 
    }

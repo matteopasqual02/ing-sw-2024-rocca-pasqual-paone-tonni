@@ -122,6 +122,11 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
+    public void ready(String nickname) throws IOException, NotBoundException {
+
+    }
+
+    @Override
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageReconnect(name,idGame));
         messageDone();

@@ -15,17 +15,17 @@ public interface GameListener{
     ConnectionType getConnectionType();
 
     //--------------------------GAME CREATION PHASE
-    void maxNumPlayersSet(int gameId, int max);
+    void maxNumPlayersSet(int max);
     void createdGame(int gameId);
     void youJoinedGame(int gameId, String pNickname);
     void addedNewPlayer(String pNickname);
     void noAvailableGame();
+    void fullGame();
+    void nameAlreadyInGame();
     void areYouReady();
 
 
     void playerReady(Player p);
-    void fullGame();
-    void nameAlreadyInGame();
     void playerRemoved(Player p);
     void nextTurn(Player p);
     void lastTurn();

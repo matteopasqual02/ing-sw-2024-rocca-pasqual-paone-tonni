@@ -25,11 +25,12 @@ public class Player implements Serializable {
     private final ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
     private boolean readyToStart;
-    private boolean connected ;
+    private boolean connected;
 
+    private GameListener myListener;
     private final PlayerListenersHandler playerListenersHandler;
-    public Player(String name,int color){
 
+    public Player(String name, int color){
         this.nickname=name;
         this.colorPlayer=color;
         this.currentPoints=0;
@@ -45,37 +46,43 @@ public class Player implements Serializable {
 
     }
 
-    public void setPlayerListeners(List<GameListener> currentGameListeners){
+    public void setPlayerListeners(List<GameListener> currentGameListeners) {
         playerListenersHandler.resetPlayerListeners(currentGameListeners);
     }
+
+    public void getListener() {
+        return myListener;
+    }
+
     public int getCurrentPoints() {
         return currentPoints;
     }
+
     public int getColorPlayer(){
         return colorPlayer;
     }
+
     public Boolean getReadyToStart(){
         return readyToStart;
     }
-    public void setReadyToStart(){
 
-        readyToStart=true;
-        //playerListenersHandler.notify_setReadyToStart(this);
-    }
     public Boolean getIsConnected(){
         return connected;
     }
-    public void setIsConnected(Boolean b){
 
+    public void setIsConnected(Boolean b){
         connected = b;
         playerListenersHandler.notify_setIsConnected(this);
     }
+
     public String getNickname() {
         return nickname;
     }
+
     public ObjectiveCard getGoal(){
         return goal;
     }
+
     public PlayerBoard getBoard(){
         return board;
     }

@@ -26,7 +26,7 @@ public interface ServerInterface extends Remote{
     public void drawGoldFromDeck() throws RemoteException;
     public void drawFromBoard(int position) throws RemoteException;
     //public void checkWinner() throws RemoteException;
-    public void reconnect(String nick, int idGame) throws RemoteException, NotBoundException;
+    public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException;
     public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException;
 
 }

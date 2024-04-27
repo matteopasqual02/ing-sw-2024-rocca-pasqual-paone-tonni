@@ -10,7 +10,7 @@ import java.io.IOException;
 public interface NotifierInterface {
 
     //--------------------------GAME CREATION PHASE
-    void sendMaxNumPlayersSet(int gameId,int max);
+    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException;
     void sendCreatedGame(int gameId);
     void sendYouJoinedGame(int gameId, String pNickname);
     void sendAddedNewPlayer(String pNickname);

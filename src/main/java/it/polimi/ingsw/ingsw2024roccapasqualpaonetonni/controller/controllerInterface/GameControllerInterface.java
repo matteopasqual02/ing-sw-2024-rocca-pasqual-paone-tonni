@@ -16,7 +16,6 @@ public interface GameControllerInterface extends Remote{
     //---------------------------------GAME CREATION SECTION
     void addPlayer(String nickname) throws RemoteException;
     void setMaxNumberOfPlayer(int num) throws RemoteException;
-    void noAvailableGame(Player p) throws RemoteException;
     void ready(String nickname) throws RemoteException;
 
     //---------------------------------PLAYER SECTION

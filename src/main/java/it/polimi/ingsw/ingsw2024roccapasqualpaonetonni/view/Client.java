@@ -127,8 +127,8 @@ public class Client implements GameListener, Runnable {
     }
 
     @Override
-    public void maxNumPlayersSet(int gameId, int max) {
-        String message = String.format("New max number for game %d: %d players maximum", gameId, max);
+    public void maxNumPlayersSet(int max) {
+        String message = String.format("New max number of players for game: %d players maximum", max);
         ConsolePrinter.consolePrinter(message);
     }
 

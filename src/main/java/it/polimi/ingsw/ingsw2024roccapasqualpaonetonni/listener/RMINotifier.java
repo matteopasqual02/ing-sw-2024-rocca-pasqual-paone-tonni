@@ -15,7 +15,6 @@ public class RMINotifier implements NotifierInterface{
     //--------------------------GAME CREATION PHASE
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {
-        //decidere se metterci gameID o no
         listener.maxNumPlayersSet(max);
     }
 

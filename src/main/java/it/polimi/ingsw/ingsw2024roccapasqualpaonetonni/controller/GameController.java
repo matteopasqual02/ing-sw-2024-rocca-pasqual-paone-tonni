@@ -116,20 +116,17 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     }
 
     @Override
-    public void noAvailableGame(Player player) {
-        model.noAvailableGame(player);
-    }
-
-    @Override
     public void ready(String nickname) {
-        model.setPlayerReady(nickname);
-        if (model.getReadyPlayersNum() == model.getPlayerNum()) {
-            createTable();
+        synchronized (model) {
+            model.setPlayerReady(nickname);
+            if (model.getReadyPlayersNum() == model.getPlayerNum()) {
+                createTable();
 
-            //run TurnZero
-            turnZero();
+                //run TurnZero
+                turnZero();
 
-            model.setStatus(GameStatus.RUNNING);
+                model.setStatus(GameStatus.RUNNING);
+            }
         }
     }
 
@@ -183,8 +180,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     }
 
     //---------------------------------TABLE AND INIT SECTION
-    @Override
-    public Boolean createTable() {
+    public boolean createTable() {
         Map<String, List<Card>> cardsMap = null;
         try {
             cardsMap = JSONUtils.createCardsFromJson(path);
@@ -289,6 +285,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 e.printStackTrace();
             }
         }
+
+        model.startGame();
     }
 
 
