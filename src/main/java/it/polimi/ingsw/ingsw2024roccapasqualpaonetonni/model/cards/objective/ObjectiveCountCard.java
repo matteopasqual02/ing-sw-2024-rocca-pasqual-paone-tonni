@@ -43,7 +43,7 @@ public class ObjectiveCountCard extends ObjectiveCard {
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
 
         for(int i=0; i<4; i++) {
-            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes));
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes.length).a(" "));
         }
 
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
