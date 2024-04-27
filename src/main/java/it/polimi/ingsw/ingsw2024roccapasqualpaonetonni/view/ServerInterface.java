@@ -22,7 +22,7 @@ public interface ServerInterface extends Remote{
     //--------------------------GAME FLOW PHASE
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException;
     public void addStartingCard(Boolean flip) throws IOException;
-    public void choosePlayerGoal(int choice) throws RemoteException;
+    public void choosePlayerGoal(int choice) throws IOException;
     public void drawResourceFromDeck() throws IOException;
     public void drawGoldFromDeck() throws IOException;
     public void drawFromBoard(int position) throws IOException;

@@ -121,11 +121,6 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void ready(String nickname) throws IOException, NotBoundException {
-
-    }
-
-    @Override
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageReconnect(name,idGame));
         messageDone();
@@ -134,6 +129,12 @@ public class SocketClient extends Thread implements ServerInterface {
     @Override
     public void leave(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageReconnect(name,idGame));
+        messageDone();
+    }
+
+    @Override
+    public void ready(String nickname) throws IOException, NotBoundException {
+        outputStream.writeObject(new MessagePlayerReady(nickname));
         messageDone();
     }
 
@@ -150,8 +151,9 @@ public class SocketClient extends Thread implements ServerInterface {
     }
 
     @Override
-    public void choosePlayerGoal(int choice) throws RemoteException {
-
+    public void choosePlayerGoal(int choice) throws IOException {
+        outputStream.writeObject(new MessageObjectiveChosen(choice));
+        messageDone();
     }
 
     @Override
