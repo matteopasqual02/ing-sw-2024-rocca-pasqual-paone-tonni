@@ -92,6 +92,7 @@ public class Client implements GameListener, Runnable {
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             }
             case 2:{
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
@@ -101,6 +102,7 @@ public class Client implements GameListener, Runnable {
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             }
             case 3:{
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
@@ -112,6 +114,7 @@ public class Client implements GameListener, Runnable {
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             }
         }
     }
