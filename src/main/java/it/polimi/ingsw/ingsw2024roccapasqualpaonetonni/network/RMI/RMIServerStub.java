@@ -158,4 +158,9 @@ public class RMIServerStub implements ServerInterface {
         gameController.drawFromBoard(position);
     }
 
+    @Override
+    public void setMaxNUm(int num) throws IOException {
+        gameController.setMaxNumberOfPlayer(num);
+    }
+
 }

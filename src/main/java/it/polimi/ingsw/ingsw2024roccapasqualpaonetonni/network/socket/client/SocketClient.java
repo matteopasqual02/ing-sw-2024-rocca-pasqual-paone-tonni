@@ -173,5 +173,9 @@ public class SocketClient extends Thread implements ServerInterface {
         outputStream.writeObject(new MessageDrawFromBoard(position));
         messageDone();
     }
+    @Override
+    public void setMaxNUm(int num) throws IOException {
+        outputStream.writeObject(new MessageMaxNum(num));
+    }
 
 }

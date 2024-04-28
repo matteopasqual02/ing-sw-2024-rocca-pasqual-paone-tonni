@@ -89,6 +89,7 @@ public class Client implements GameListener, Runnable {
 
                 try {
                     serverStub.createGame(nickname, maxNumPlayers, this);
+                    serverStub.setMaxNUm(maxNumPlayers);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }

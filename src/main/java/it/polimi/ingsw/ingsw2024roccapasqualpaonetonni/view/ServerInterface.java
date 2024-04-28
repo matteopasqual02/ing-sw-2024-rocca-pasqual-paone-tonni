@@ -26,5 +26,6 @@ public interface ServerInterface extends Remote{
     public void drawResourceFromDeck() throws IOException;
     public void drawGoldFromDeck() throws IOException;
     public void drawFromBoard(int position) throws IOException;
+    public void setMaxNUm(int num) throws IOException;
 
 }

@@ -94,7 +94,7 @@ public class Game implements Serializable {
     }
 
     public void noAvailableGame(Player px) {
-        gameListenersHandler.notify_noAvailableGame(px);
+        gameListenersHandler.notify_noAvailableGame(px.getNickname(),px);
     }
 
     public synchronized void removePlayer(Player p){

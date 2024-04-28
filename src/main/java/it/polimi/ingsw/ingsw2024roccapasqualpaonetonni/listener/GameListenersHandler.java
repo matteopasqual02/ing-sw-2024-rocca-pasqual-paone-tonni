@@ -1,12 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 
 import java.io.Serializable;
-import java.util.List;
+
 /*
 this class handles the listeners of the game class in the model: the listeners are elements related to each client, when a change
 occurs in the model (the controller does something) one of these methods gets called in order to show the
@@ -47,9 +44,9 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
-    public void notify_noAvailableGame(Player player) {
+    public void notify_noAvailableGame(String nickname, Player player) {
         for(GameListener listener : listenersMap.keySet()) {
-            if (listener.equals(player)) {
+            if (player.getNickname().equals(nickname)) {
                 listenersMap.get(listener).sendNoAvailableGame();
             }
         }
