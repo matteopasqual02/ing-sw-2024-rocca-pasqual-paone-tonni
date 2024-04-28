@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server.ClientRequestHandler;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
@@ -13,12 +14,10 @@ public class SocketServer extends Thread {
     private ServerSocket serverSocket;
     private List<ClientRequestHandler> clientRequestHandlerList;
 
-    public SocketServer(){
-        this.start(4320);
-    }
-    public void start(int socketPort){
+
+    public void start(int port){
         try{
-            serverSocket = new ServerSocket(socketPort);
+            serverSocket = new ServerSocket(port);
             clientRequestHandlerList = new ArrayList<>();
             this.start();
             consolePrinter("[SOCKET] Server Ready");

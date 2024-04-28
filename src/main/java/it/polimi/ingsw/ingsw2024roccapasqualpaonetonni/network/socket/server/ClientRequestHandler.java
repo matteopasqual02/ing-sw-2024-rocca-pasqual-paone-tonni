@@ -19,12 +19,13 @@ public class ClientRequestHandler extends Thread {
     private final ObjectOutputStream outputStream;
 
     private GameControllerInterface gameControllerInterface;
-    private final BlockingQueue<ClientGenericMessage> processingQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<ClientGenericMessage> processingQueue;
 
 
     public ClientRequestHandler(Socket socket) throws IOException {
         inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
+        processingQueue = new LinkedBlockingQueue<>();
 
         //link the server's output to client
     }

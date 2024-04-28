@@ -34,7 +34,8 @@ public class MainServer {
 
         //the server will open both of them
         RMIServer.bind();
-        new SocketServer();
+        SocketServer server = new SocketServer();
+        server.start(DefaultNetworkValues.Default_SOCKET_port);
 
     }
 
