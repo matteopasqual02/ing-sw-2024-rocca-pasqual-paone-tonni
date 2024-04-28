@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.lang.Thread.sleep;
 
-public class GameController implements GameControllerInterface, Runnable, Serializable {
+public class GameController implements GameControllerInterface, Serializable {
     private final Game model;
     private final Random random;
     private final String path;
@@ -50,30 +50,13 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         executorService.shutdown();
     }
 
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    //****************************************************UNKNOWN****************************************************
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    @SuppressWarnings("BusyWait")
-    public void run() {
-        while (!Thread.interrupted()) {
-            //some code here
-            try {
-                sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    //****************************************************UNKNOWN****************************************************
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
     //---------------------------------SERVER SECTION
     public int getGameID() {
         return model.getGameId();
     }
 
     //---------------------------------LISTENERS SECTION
+    @Override
     public void addMyselfAsListener(GameListener me) {
         Runnable runnable = () -> {
             model.addListeners(me);
@@ -81,6 +64,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         executorService.submit(runnable);
     }
 
+    @Override
     public void removeMyselfAsListener(GameListener me) {
         Runnable runnable = () -> {
             model.removeListener(me);
@@ -163,7 +147,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-    @Override
     public void removePlayer(Player player) {
         Runnable runnable = () -> {
             model.removePlayer(player);
@@ -291,6 +274,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
 
     //---------------------------------ADD CARD SECTION
+    @Override
     public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
@@ -303,6 +287,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         checkPoints20Points();
     }
 
+    @Override
     public void addStartingCard(Boolean flip) {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
@@ -314,6 +299,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         getCurrentPlayer().addStarting();
     }
 
+    @Override
     public void choosePlayerGoal(int choice) {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING))) {
             // listener you cannot draw in this phase
@@ -330,6 +316,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 && model.getGameBoardDeck().isEmpty();
     }
 
+    @Override
     public void drawResourceFromDeck() {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
@@ -347,6 +334,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+    @Override
     public void drawGoldFromDeck() {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
@@ -365,6 +353,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+    @Override
     public void drawFromBoard(int position) {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase

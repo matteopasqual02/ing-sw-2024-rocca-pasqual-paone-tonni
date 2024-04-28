@@ -18,9 +18,6 @@ public interface GameControllerInterface extends Remote{
     void setMaxNumberOfPlayer(int num) throws RemoteException;
     void ready(String nickname) throws RemoteException;
 
-    //---------------------------------PLAYER SECTION
-    void removePlayer(Player p) throws RemoteException;
-
     //---------------------------------TABLE AND INIT SECTION
     void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
     void addStartingCard(Boolean flip) throws RemoteException;
@@ -28,6 +25,4 @@ public interface GameControllerInterface extends Remote{
     void drawResourceFromDeck() throws RemoteException;
     void drawGoldFromDeck() throws RemoteException;
     void drawFromBoard(int position) throws RemoteException;
-    void checkWinner() throws RemoteException;
-
 }
