@@ -8,9 +8,10 @@ import java.rmi.RemoteException;
 public class MessageDrawFromBoard extends ClientGenericMessage{
     private final int position;
 
-    public MessageDrawFromBoard(int position){
+    public MessageDrawFromBoard(String nickname, int position){
         this.isForMainController = false;
         this.position= position;
+        this.nickname = nickname;
     }
 
 
@@ -21,6 +22,6 @@ public class MessageDrawFromBoard extends ClientGenericMessage{
 
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.drawFromBoard(position);
+        gameControllerInterface.drawFromBoard(nickname,position);
     }
 }

@@ -9,9 +9,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
@@ -79,10 +77,10 @@ public class Client implements GameListener, Runnable {
                 int maxNumPlayers = Integer.parseInt(new Scanner(System.in).nextLine());
 
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
-                String nickname = new Scanner(System.in).nextLine();
+                myNickname = new Scanner(System.in).nextLine();
 
                 try {
-                    serverStub.createGame(nickname, maxNumPlayers, this);
+                    serverStub.createGame(myNickname, maxNumPlayers, this);
                     serverStub.setMaxNUm(maxNumPlayers);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
@@ -91,9 +89,9 @@ public class Client implements GameListener, Runnable {
             }
             case 2:{
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
-                String nickname = new Scanner(System.in).nextLine();
+                myNickname = new Scanner(System.in).nextLine();
                 try {
-                    serverStub.joinFirstAvailable(nickname, this);
+                    serverStub.joinFirstAvailable(myNickname, this);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -101,11 +99,11 @@ public class Client implements GameListener, Runnable {
             }
             case 3:{
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
-                String nickname = new Scanner(System.in).nextLine();
+                myNickname = new Scanner(System.in).nextLine();
                 ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set gameID: "));
                 int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
                 try {
-                    serverStub.joinGameByID(nickname, gameID, this);
+                    serverStub.joinGameByID(myNickname, gameID, this);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -122,6 +120,11 @@ public class Client implements GameListener, Runnable {
     @Override
     public ConnectionType getConnectionType() {
         return connection;
+    }
+
+    @Override
+    public String getNickname() {
+        return myNickname;
     }
 
     @Override
@@ -194,7 +197,7 @@ public class Client implements GameListener, Runnable {
     }
 
     @Override
-    public void playerRemoved(Player p) {
+    public void playerRemoved(String p) {
 
     }
 

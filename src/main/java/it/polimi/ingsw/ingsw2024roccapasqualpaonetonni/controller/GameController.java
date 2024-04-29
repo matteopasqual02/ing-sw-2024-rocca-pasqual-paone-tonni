@@ -275,7 +275,11 @@ public class GameController implements GameControllerInterface, Serializable {
 
     //---------------------------------ADD CARD SECTION
     @Override
-    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
+    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -288,7 +292,11 @@ public class GameController implements GameControllerInterface, Serializable {
     }
 
     @Override
-    public void addStartingCard(Boolean flip) {
+    public void addStartingCard(String nickname, Boolean flip) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -300,7 +308,11 @@ public class GameController implements GameControllerInterface, Serializable {
     }
 
     @Override
-    public void choosePlayerGoal(int choice) {
+    public void choosePlayerGoal(String nickname, int choice) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING))) {
             // listener you cannot draw in this phase
             return;
@@ -317,7 +329,11 @@ public class GameController implements GameControllerInterface, Serializable {
     }
 
     @Override
-    public void drawResourceFromDeck() {
+    public void drawResourceFromDeck(String nickname) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -335,7 +351,11 @@ public class GameController implements GameControllerInterface, Serializable {
     }
 
     @Override
-    public void drawGoldFromDeck() {
+    public void drawGoldFromDeck(String nickname) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             return;
@@ -354,7 +374,11 @@ public class GameController implements GameControllerInterface, Serializable {
     }
 
     @Override
-    public void drawFromBoard(int position) {
+    public void drawFromBoard(String nickname, int position) {
+        if (!getCurrentPlayer().getNickname().equals(nickname)){
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             return;

@@ -8,9 +8,10 @@ import java.rmi.RemoteException;
 public class MessageAddStarting extends ClientGenericMessage{
     private final Boolean flip;
 
-    public MessageAddStarting(Boolean flip){
+    public MessageAddStarting(String nickname, Boolean flip){
         this.flip=flip;
         this.isForMainController = false;
+        this.nickname = nickname;
     }
 
 
@@ -21,6 +22,6 @@ public class MessageAddStarting extends ClientGenericMessage{
 
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.addStartingCard(flip);
+        gameControllerInterface.addStartingCard(nickname,flip);
     }
 }

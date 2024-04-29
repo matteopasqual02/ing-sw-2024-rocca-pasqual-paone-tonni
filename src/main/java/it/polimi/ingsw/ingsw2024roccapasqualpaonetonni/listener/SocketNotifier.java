@@ -73,7 +73,7 @@ public class SocketNotifier implements NotifierInterface{
     }
 
     @Override
-    public void sendPlayerRemoved(Player p) {
+    public void sendPlayerRemoved(String p) {
 
     }
 
@@ -219,6 +219,26 @@ public class SocketNotifier implements NotifierInterface{
 
     @Override
     public void sendPlayerReady(Player p) {
+
+    }
+
+    @Override
+    public void sendYouWereRemoved(String pNickname) {
+
+    }
+
+    @Override
+    public void youWereReconnected() {
+
+    }
+
+    @Override
+    public void sendYouAreFirst() {
+
+    }
+
+    @Override
+    public void sendItsYourTurn() {
 
     }
 }

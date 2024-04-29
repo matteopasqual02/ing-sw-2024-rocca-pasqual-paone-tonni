@@ -19,10 +19,12 @@ public interface GameControllerInterface extends Remote{
     void ready(String nickname) throws RemoteException;
 
     //---------------------------------TABLE AND INIT SECTION
-    void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
-    void addStartingCard(Boolean flip) throws RemoteException;
-    void choosePlayerGoal(int choice) throws RemoteException;
-    void drawResourceFromDeck() throws RemoteException;
-    void drawGoldFromDeck() throws RemoteException;
-    void drawFromBoard(int position) throws RemoteException;
+    void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
+    void addStartingCard(String nickname, Boolean flip) throws RemoteException;
+    void choosePlayerGoal(String nickname, int choice) throws RemoteException;
+    void drawResourceFromDeck(String nickname) throws RemoteException;
+    void drawGoldFromDeck(String nickname) throws RemoteException;
+    void drawFromBoard(String nickname, int position) throws RemoteException;
+
+
 }

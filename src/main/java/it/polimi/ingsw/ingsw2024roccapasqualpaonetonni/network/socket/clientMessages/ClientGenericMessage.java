@@ -17,10 +17,6 @@ public abstract class ClientGenericMessage implements Serializable {
     public boolean isForMainController() {
         return isForMainController;
     }
-    public void setForMainController(boolean isForMainController) {
-        this.isForMainController = isForMainController;
-    }
-
     public String getNickname(){
         return nickname;
     }

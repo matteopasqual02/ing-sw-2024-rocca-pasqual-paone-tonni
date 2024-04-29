@@ -56,8 +56,8 @@ public class RMINotifier implements NotifierInterface{
     }
 
     @Override
-    public void sendPlayerRemoved(Player p) {
-        listener.playerRemoved(p);
+    public void sendPlayerRemoved(String pNickname) {
+        listener.playerRemoved(pNickname);
 
 
     }
@@ -228,6 +228,26 @@ public class RMINotifier implements NotifierInterface{
 
     @Override
     public void sendPlayerReady(Player p) {
+
+    }
+
+    @Override
+    public void sendYouWereRemoved(String pNickname) {
+
+    }
+
+    @Override
+    public void youWereReconnected() {
+
+    }
+
+    @Override
+    public void sendYouAreFirst() {
+
+    }
+
+    @Override
+    public void sendItsYourTurn() {
 
     }
 }

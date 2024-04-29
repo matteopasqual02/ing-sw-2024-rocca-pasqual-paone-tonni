@@ -21,7 +21,7 @@ public interface NotifierInterface {
 
     void sendNameAlreadyInGame();
 
-    void sendPlayerRemoved(Player p);
+    void sendPlayerRemoved(String pNickname);
 
     void sendNextTurn(Player p);
 
@@ -84,4 +84,12 @@ public interface NotifierInterface {
     void sendCardRemovedFromHand(PlayingCard card, Player p);
 
     void sendPlayerReady(Player p);
+
+    void sendYouWereRemoved(String pNickname);
+
+    void youWereReconnected();
+
+    void sendYouAreFirst();
+
+    void sendItsYourTurn();
 }

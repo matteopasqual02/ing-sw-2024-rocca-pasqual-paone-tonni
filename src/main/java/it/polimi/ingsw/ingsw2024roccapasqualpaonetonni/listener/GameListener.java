@@ -13,6 +13,7 @@ The methods here are only the ones that set somethings, not those who get someth
 public interface GameListener{
     ServerInterface getServerStub();
     ConnectionType getConnectionType();
+    String getNickname();
 
     //--------------------------GAME CREATION PHASE
     void maxNumPlayersSet(int max);
@@ -26,7 +27,7 @@ public interface GameListener{
 
 
     void playerReady(Player p);
-    void playerRemoved(Player p);
+    void playerRemoved(String p);
     void nextTurn(Player p);
     void lastTurn();
     void reconnectedPlayer(String nickname);

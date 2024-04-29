@@ -79,7 +79,7 @@ public class Game implements Serializable {
                 for(Player p: players){
                     p.setPlayerListeners(gameListenersHandler.getListener());
                 }
-                gameListenersHandler.notify_addPlayer(px, px.getNickname(), gameId);
+                gameListenersHandler.notify_addPlayer(px.getNickname(), gameId);
             }
             else {
                 gameListenersHandler.notify_gameFull(px);
@@ -94,7 +94,7 @@ public class Game implements Serializable {
     }
 
     public void noAvailableGame(Player px) {
-        gameListenersHandler.notify_noAvailableGame(px.getNickname(),px);
+        gameListenersHandler.notify_noAvailableGame(px.getNickname());
     }
 
     public synchronized void removePlayer(Player p){
@@ -103,7 +103,7 @@ public class Game implements Serializable {
             status[0] = GameStatus.ENDED;
         }
         //here before calling this method the client should call removeListener to remove itself from the listeners list, or the server should
-        gameListenersHandler.notify_removePlayer(p);
+        gameListenersHandler.notify_removePlayer(p.getNickname());
     }
 
     public synchronized void reconnectPlayer(String nickname) {

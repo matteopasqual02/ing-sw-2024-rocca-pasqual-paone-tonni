@@ -20,12 +20,12 @@ public interface ServerInterface extends Remote{
     public void ready(String nickname) throws IOException, NotBoundException;
 
     //--------------------------GAME FLOW PHASE
-    public void addCard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException;
-    public void addStartingCard(Boolean flip) throws IOException;
-    public void choosePlayerGoal(int choice) throws IOException;
-    public void drawResourceFromDeck() throws IOException;
-    public void drawGoldFromDeck() throws IOException;
-    public void drawFromBoard(int position) throws IOException;
     public void setMaxNUm(int num) throws IOException;
+    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException;
+    public void addStartingCard(String nickname, Boolean flip) throws IOException;
+    public void choosePlayerGoal(String nickname, int choice) throws IOException;
+    public void drawResourceFromDeck(String nickname) throws IOException;
+    public void drawGoldFromDeck(String nickname) throws IOException;
+    public void drawFromBoard(String nickname, int position) throws IOException;
 
 }
