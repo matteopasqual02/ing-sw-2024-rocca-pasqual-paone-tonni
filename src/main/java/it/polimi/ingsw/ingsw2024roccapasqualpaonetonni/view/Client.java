@@ -22,17 +22,11 @@ public class Client implements GameListener, Runnable {
     private int myGameId = 0;
     private String myNickname = null;
 
-    //non dovrea fare la throw remoteexception, l'ho messa li solo per far andare questa prima prova
     public Client(ConnectionType conSel) {
         connection = conSel;
         switch (conSel){
-            /*devo in base al caso far si che le azioni fattibili siano quelle di client o di socket
-            cosi ho un solo oggetto di azioni che possono essere azioni socket o azioni rmi a seconda della scelta di connessione*/
             case RMI -> {
                 serverStub = new RMIServerStub();
-
-                //versione rudimentale senza nulla (tui,gui,thread ecc..) solo per vedere se funziona la base
-
                 new Thread(this).start();
             }
             case SOCKET -> {
