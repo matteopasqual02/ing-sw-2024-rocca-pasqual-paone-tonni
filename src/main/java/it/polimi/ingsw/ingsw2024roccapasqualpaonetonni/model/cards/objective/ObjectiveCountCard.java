@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import org.fusesource.jansi.Ansi;
 
 import static org.fusesource.jansi.Ansi.ansi;
@@ -40,10 +41,17 @@ public class ObjectiveCountCard extends ObjectiveCard {
         sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
 
         //Third Line
-        sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
+        sb.append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
 
-        for(int i=0; i<4; i++) {
-            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes.length).a(" "));
+        for(int i=0; i<7; i++) {
+            if(countTypes[i]!=0 && countTypes[i]!=1) {
+                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]).a(" "));
+                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)));
+            }
+            else if(countTypes[i]==1) {
+                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]));
+                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)).a(" "));
+            }
         }
 
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
