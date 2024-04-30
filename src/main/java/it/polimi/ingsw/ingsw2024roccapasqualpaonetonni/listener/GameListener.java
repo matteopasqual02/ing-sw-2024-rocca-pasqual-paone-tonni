@@ -6,11 +6,13 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
 
+import java.io.Serializable;
+
 /*
 GameListener is an interface with all the methods that are used to comunicare with the RMIClient in order to show update of changes.
 The methods here are only the ones that set somethings, not those who get something, because we only want to notify the client if something has actually changed
  */
-public interface GameListener{
+public interface GameListener extends Serializable {
     ServerInterface getServerStub();
     ConnectionType getConnectionType();
     String getNickname();

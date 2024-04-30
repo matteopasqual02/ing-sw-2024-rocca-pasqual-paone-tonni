@@ -2,9 +2,9 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 
-public class MessageMaxNum extends ServerGenericMessage{
+public class ServerMessageMaxNum extends ServerGenericMessage{
     int max;
-    public MessageMaxNum(int m){
+    public ServerMessageMaxNum(int m){
         max=m;
     }
 

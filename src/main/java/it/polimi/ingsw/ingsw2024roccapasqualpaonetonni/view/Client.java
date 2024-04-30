@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-public class Client implements GameListener, Runnable, Serializable {
+public class Client implements GameListener, Runnable {
     ServerInterface serverStub;
     ConnectionType connection;
     private int myGameId = 0;

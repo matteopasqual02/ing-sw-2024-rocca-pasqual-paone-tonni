@@ -20,9 +20,9 @@ import java.rmi.RemoteException;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
 public class SocketClient extends Thread implements ServerInterface, Serializable {
-    private Socket clientSocket;
-    private ObjectInputStream inputStream;
-    private ObjectOutputStream outputStream;
+    private transient Socket clientSocket;
+    private transient ObjectInputStream inputStream;
+    private transient ObjectOutputStream outputStream;
     private String nickname;
     private Client client;
     private GameListener serverRequestHandler;
@@ -179,6 +179,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     @Override
     public void setMaxNUm(int num) throws IOException {
         outputStream.writeObject(new MessageMaxNum(num));
+        messageDone();
     }
 
 }
