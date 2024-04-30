@@ -19,7 +19,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     public PlayerListenersHandler(){
         super();
     }
-    public void resetPlayerListeners(List<GameListener> gameListeners){
+    /*public void resetPlayerListeners(List<GameListener> gameListeners){
         listenersMap=null;
         for(GameListener lis : gameListeners){
             try {
@@ -28,7 +28,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
                 throw new RuntimeException(e);
             }
         }
-    }
+    }*/
     public void notify_setReadyToStart(Player p) {
         for(GameListener listener : listenersMap.keySet()){
                 listenersMap.get(listener).sendPlayerReady(p);

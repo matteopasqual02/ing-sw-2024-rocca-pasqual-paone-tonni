@@ -45,9 +45,9 @@ public class Player implements Serializable {
 
     }
 
-    public void setPlayerListeners(List<GameListener> currentGameListeners) {
+    /*public void setPlayerListeners(List<GameListener> currentGameListeners) {
         playerListenersHandler.resetPlayerListeners(currentGameListeners);
-    }
+    }*/
 
     public GameListener getListener() {
         return myListener;
