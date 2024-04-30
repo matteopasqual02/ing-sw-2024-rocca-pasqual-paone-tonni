@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
@@ -82,11 +83,11 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
 
     @Override
     public GameControllerInterface joinFirstAvailableGame(String nickname)throws RemoteException {
-        GameControllerInterface result = server.mainController.joinFirstAvailableGame(nickname);
-
-        if(result!=null){
+        GameControllerInterface remoteController = server.mainController.joinFirstAvailableGame(nickname);
+        GameControllerInterface result = null;
+        if(remoteController != null){
             try{
-                UnicastRemoteObject.exportObject(result,0);
+                result = (GameControllerInterface) UnicastRemoteObject.exportObject(remoteController,0);
             }catch (RemoteException e){
                 e.printStackTrace();
             }
@@ -101,17 +102,16 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
 
     @Override
     public GameControllerInterface joinGameByID(String nickname, int idToConnect) throws RemoteException {
-        GameControllerInterface result = server.mainController.joinGameByID(nickname,idToConnect);
-
-        if(result!=null){
+        GameControllerInterface remoteController = server.mainController.joinGameByID(nickname,idToConnect);
+        GameControllerInterface result = null;
+        if(remoteController != null){
             try{
-                UnicastRemoteObject.exportObject(result,0);
+                result = (GameControllerInterface) UnicastRemoteObject.exportObject(result,0);
             }catch (RemoteException e){
                 e.printStackTrace();
             }
             ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game chosen");
             return result;
-
         }
         else
         {
