@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiColors;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -27,6 +28,13 @@ public class ObjectiveCountCard extends ObjectiveCard {
     public String toString () {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = Ansi.Color.WHITE;
+
+        int j;
+        for(j=0; j<7; j++) {
+            if(countTypes[j]!=0) {
+                background = Seed.getById(j).getByAnsi();
+            }
+        }
 
         //First Line
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
