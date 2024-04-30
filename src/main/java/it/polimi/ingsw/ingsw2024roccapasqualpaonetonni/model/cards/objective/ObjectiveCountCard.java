@@ -43,18 +43,34 @@ public class ObjectiveCountCard extends ObjectiveCard {
         //Third Line
         sb.append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
 
+        int k=0;
+        int k1=0;
         for(int i=0; i<7; i++) {
+
             if(countTypes[i]!=0 && countTypes[i]!=1) {
+                if(k1==0) {
+                    sb.append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
+                    k1++;
+                }
                 sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]).a(" "));
                 sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)));
             }
             else if(countTypes[i]==1) {
                 sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]));
-                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)).a(" "));
+                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)));
+                if(k<2) {
+                    sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" "));
+                    k++;
+                }
             }
         }
 
-        sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
+        if (k!=0) {
+            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("    "));
+        }
+        else {
+            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
+        }
         sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
 

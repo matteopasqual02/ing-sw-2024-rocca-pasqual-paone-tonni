@@ -44,4 +44,40 @@ class ObjectivePointsTestToString {
         System.out.println(carta);
     }
 
+    @Test
+    void TestObjectivePoints4() {
+        int[] types ={0, 0, 0, 3, 0, 0, 0};
+        ObjectiveCard objectiveCard1 = new ObjectiveCountCard(110,2, types);
+
+        String carta= objectiveCard1.toString();
+        System.out.println(carta);
+    }
+
+    @Test
+    void TestObjectivePoints5() {
+        int[] types ={0, 0, 3, 0, 0, 0, 0};
+        ObjectiveCard objectiveCard1 = new ObjectiveCountCard(110,2, types);
+
+        String carta= objectiveCard1.toString();
+        System.out.println(carta);
+    }
+
+    @Test
+    void TestObjectivePoints6() {
+        int[] types ={0, 3, 0, 0, 0, 0, 0};
+        ObjectiveCard objectiveCard1 = new ObjectiveCountCard(110,2, types);
+
+        String carta= objectiveCard1.toString();
+        System.out.println(carta);
+    }
+
+    @Test
+    void TestObjectivePoints7() {
+        int[] types ={3, 0, 0, 0, 0, 0, 0};
+        ObjectiveCard objectiveCard1 = new ObjectiveCountCard(110,2, types);
+
+        String carta= objectiveCard1.toString();
+        System.out.println(carta);
+    }
+
 }
