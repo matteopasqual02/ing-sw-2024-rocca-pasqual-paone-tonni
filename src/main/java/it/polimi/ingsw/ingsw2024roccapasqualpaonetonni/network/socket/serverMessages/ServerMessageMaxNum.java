@@ -2,6 +2,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 
+import java.rmi.RemoteException;
+
 public class ServerMessageMaxNum extends ServerGenericMessage{
     int max;
     public ServerMessageMaxNum(int m){
@@ -10,6 +12,10 @@ public class ServerMessageMaxNum extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.maxNumPlayersSet(max);
+        try {
+            listener.maxNumPlayersSet(max);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

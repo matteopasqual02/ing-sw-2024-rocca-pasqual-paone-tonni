@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.List;
 /*
 this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
@@ -21,7 +22,11 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     public void resetPlayerListeners(List<GameListener> gameListeners){
         listenersMap=null;
         for(GameListener lis : gameListeners){
-            addListener(lis);
+            try {
+                addListener(lis);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void notify_setReadyToStart(Player p) {

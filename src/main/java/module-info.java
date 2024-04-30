@@ -11,4 +11,5 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni;
     //i had to add this last one to make mainServer work
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface;
+    exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 }

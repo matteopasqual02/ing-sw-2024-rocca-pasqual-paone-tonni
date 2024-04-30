@@ -5,6 +5,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 
+import java.rmi.RemoteException;
+
 public class RMINotifier implements NotifierInterface{
     private final GameListener listener;
 
@@ -15,138 +17,226 @@ public class RMINotifier implements NotifierInterface{
     //--------------------------GAME CREATION PHASE
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {
-        listener.maxNumPlayersSet(max);
+        try {
+            listener.maxNumPlayersSet(max);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendCreatedGame(int gameId) {
-        listener.createdGame(gameId);
+        try {
+            listener.createdGame(gameId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendYouJoinedGame(int gameId, String pNickname) {
-        listener.youJoinedGame(gameId, pNickname);
+        try {
+            listener.youJoinedGame(gameId, pNickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendAddedNewPlayer(String pNickname) {
-        listener.addedNewPlayer(pNickname);
+        try {
+            listener.addedNewPlayer(pNickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendNoAvailableGame() {
-        listener.noAvailableGame();
+        try {
+            listener.noAvailableGame();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendAskPlayersReady() {
-        listener.areYouReady();
+        try {
+            listener.areYouReady();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendFullGame() {
-        listener.fullGame();
+        try {
+            listener.fullGame();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void sendNameAlreadyInGame() {
-        listener.nameAlreadyInGame();
+        try {
+            listener.nameAlreadyInGame();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void sendPlayerRemoved(String pNickname) {
-        listener.playerRemoved(pNickname);
+        try {
+            listener.playerRemoved(pNickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendNextTurn(Player p) {
-        listener.nextTurn(p);
+        try {
+            listener.nextTurn(p);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendLastTurn() {
-        listener.lastTurn();
+        try {
+            listener.lastTurn();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendReconnectedPlayer(String nickname) {
-        listener.reconnectedPlayer(nickname);
+        try {
+            listener.reconnectedPlayer(nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void sendReconnectionImpossible(String nickname) {
-        listener.reconnectionImpossible(nickname);
+        try {
+            listener.reconnectionImpossible(nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendDisconnectedPlayer(String nickname) {
-        listener.disconnectedPlayer(nickname);
+        try {
+            listener.disconnectedPlayer(nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendDisconnectionImpossible(String nickname) {
-        listener.disconnectionImpossible(nickname);
+        try {
+            listener.disconnectionImpossible(nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendStatusSet(GameStatus status) {
-        listener.statusSet(status);
+        try {
+            listener.statusSet(status);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void sendStatusSetToLastStatus(GameStatus status) {
-        listener.statusSetToLastStatus(status);
+        try {
+            listener.statusSetToLastStatus(status);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendLastStatusReset() {
-        listener.lastStatusReset();
+        try {
+            listener.lastStatusReset();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendPlayerIsReady(Player p) {
-        listener.playerIsReady(p);
+        try {
+            listener.playerIsReady(p);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendFirstPlayerSet(Player first) {
-        listener.firstPlayerSet(first);
+        try {
+            listener.firstPlayerSet(first);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendDrawableDeckSet(DrawableDeck d) {
-        listener.drawableDeckSet(d);
+        try {
+            listener.drawableDeckSet(d);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     @Override
     public void sendBoardDeckSet(BoardDeck bd) {
-        listener.boardDeckSet(bd);
+        try {
+            listener.boardDeckSet(bd);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }

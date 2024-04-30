@@ -10,17 +10,23 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMess
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.rmi.RemoteException;
 
 public class SocketNotifier implements NotifierInterface{
     private GameListener listener;
     //private SocketWrapper reciever;
     private ObjectOutputStream outputStream;
 
-    public SocketNotifier(GameListener g){
+    public SocketNotifier(GameListener g) {
 
         listener = g;
         //reciever = new SocketWrapper(g);
-        SocketClient socketClient = (SocketClient) listener.getServerStub();
+        SocketClient socketClient = null;
+        try {
+            socketClient = (SocketClient) listener.getServerStub();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         outputStream = socketClient.getOutputStream();
     }
 
@@ -41,17 +47,29 @@ public class SocketNotifier implements NotifierInterface{
 
     @Override
     public void sendCreatedGame(int gameId) {
-        listener.createdGame(gameId);
+        try {
+            listener.createdGame(gameId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendYouJoinedGame(int gameId, String pNickname) {
-        listener.youJoinedGame(gameId, pNickname);
+        try {
+            listener.youJoinedGame(gameId, pNickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendAddedNewPlayer(String pNickname) {
-        listener.addedNewPlayer(pNickname);
+        try {
+            listener.addedNewPlayer(pNickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

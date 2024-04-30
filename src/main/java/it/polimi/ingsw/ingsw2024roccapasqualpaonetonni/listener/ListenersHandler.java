@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 
+import java.rmi.RemoteException;
 import java.util.*;
 
 /*
@@ -26,7 +27,7 @@ public abstract class ListenersHandler {
     //if the listeners connection is RMI we make a RMINotifier, if it's Socket we make a SocketNotifier
     //the notifier is created with the listener, so that it knows who to send things to
     //the notifiers are used to make a distinction between sending objects with RMI and with Socket
-    public synchronized void addListener(GameListener g){
+    public synchronized void addListener(GameListener g) throws RemoteException {
 
         //listeners.add(g);
         connection = g.getConnectionType();

@@ -8,6 +8,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlr
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class Game implements Serializable {
@@ -46,7 +47,11 @@ public class Game implements Serializable {
     }
 
     public void addListeners(GameListener me){
-        gameListenersHandler.addListener(me);
+        try {
+            gameListenersHandler.addListener(me);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void removeListener(GameListener me){

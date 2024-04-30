@@ -268,6 +268,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
+    /*
     @Override
     public void startAdded(PlayerBoard board, Player p) {
 
@@ -343,5 +344,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
+
+     */
 
 }
