@@ -7,6 +7,7 @@ import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePri
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class SocketServer extends Thread {
             serverSocket = new ServerSocket(port);
             clientRequestHandlerList = new ArrayList<>();
             this.start();
-            consolePrinter("[SOCKET] Server Ready");
+            consolePrinter("[READY] SOCKET SERVER");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,7 +33,8 @@ public class SocketServer extends Thread {
     public void run(){
         try{
             while (!Thread.interrupted()){
-                clientRequestHandlerList.add(new ClientRequestHandler(serverSocket.accept()));
+                Socket clientSocket = serverSocket.accept();
+                clientRequestHandlerList.add(new ClientRequestHandler(clientSocket));
                 clientRequestHandlerList.getLast().start();
                 consolePrinter("[SOCKET] new connection");
             }

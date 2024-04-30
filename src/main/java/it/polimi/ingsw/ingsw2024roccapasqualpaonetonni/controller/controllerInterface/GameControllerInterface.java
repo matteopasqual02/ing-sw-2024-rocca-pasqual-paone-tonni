@@ -10,8 +10,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 public interface GameControllerInterface extends Remote{
 
     //---------------------------------LISTENERS SECTION
-    void addMyselfAsListener(GameListener me);
-    void removeMyselfAsListener(GameListener me);
+    void addMyselfAsListener(GameListener me) throws RemoteException;
+    void removeMyselfAsListener(GameListener me) throws RemoteException;
 
     //---------------------------------GAME CREATION SECTION
     void addPlayer(String nickname) throws RemoteException;

@@ -16,6 +16,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerVa
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -24,16 +25,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.lang.Thread.sleep;
 
-public class GameController implements GameControllerInterface, Serializable {
+public class GameController implements GameControllerInterface {
     private final Game model;
     private final Random random;
     private final String path;
 
     // attributes needed to implement the executor
     private final Queue<Runnable> methodsQueue;
-    private final ExecutorService executorService;
+    private transient final ExecutorService executorService;
 
-    public GameController(int id) {
+    public GameController(int id) throws RemoteException {
+        super();
         this.model = new Game(id);
         this.random = new Random();
         this.path = DefaultControllerValues.jsonPath;
@@ -57,15 +59,12 @@ public class GameController implements GameControllerInterface, Serializable {
 
     //---------------------------------LISTENERS SECTION
     @Override
-    public void addMyselfAsListener(GameListener me) {
-        Runnable runnable = () -> {
-            model.addListeners(me);
-        };
-        executorService.submit(runnable);
+    public void addMyselfAsListener(GameListener me) throws RemoteException{
+        model.addListeners(me);
     }
 
     @Override
-    public void removeMyselfAsListener(GameListener me) {
+    public void removeMyselfAsListener(GameListener me) throws RemoteException {
         Runnable runnable = () -> {
             model.removeListener(me);
         };
@@ -75,28 +74,22 @@ public class GameController implements GameControllerInterface, Serializable {
     //---------------------------------GAME CREATION PHASE
     @Override
     public void addPlayer(String nickname) {
-        Runnable runnable = () -> {
-            Player px;
-            int player_number = model.getPlayerNum() + 1;
-            px = new Player(nickname, player_number);
-            try {
-                model.addPlayer(px);
-            } catch (GameAlreadyFullException | PlayerAlreadyInException e) {
-                e.printStackTrace();
-            }
-            if (model.getPlayerNum() == model.getMaxNumberOfPlayer()) {
-                model.askPlayersReady();
-            }
-        };
-        executorService.submit(runnable);
+        Player px;
+        int player_number = model.getPlayerNum() + 1;
+        px = new Player(nickname, player_number);
+        try {
+            model.addPlayer(px);
+        } catch (GameAlreadyFullException | PlayerAlreadyInException e) {
+            e.printStackTrace();
+        }
+        if (model.getPlayerNum() == model.getMaxNumberOfPlayer()) {
+            model.askPlayersReady();
+        }
     }
 
     @Override
     public void setMaxNumberOfPlayer(int num) throws RemoteException {
-        Runnable runnable = () -> {
-            model.setMaxNumberOfPlayer(num);
-        };
-        executorService.submit(runnable);
+        model.setMaxNumberOfPlayer(num);
     }
 
     @Override

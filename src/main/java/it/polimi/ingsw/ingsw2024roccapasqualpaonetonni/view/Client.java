@@ -11,11 +11,12 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.Soc
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-public class Client implements GameListener, Runnable {
+public class Client extends UnicastRemoteObject implements GameListener, Runnable {
     ServerInterface serverStub;
     ConnectionType connection;
     private int myGameId = 0;

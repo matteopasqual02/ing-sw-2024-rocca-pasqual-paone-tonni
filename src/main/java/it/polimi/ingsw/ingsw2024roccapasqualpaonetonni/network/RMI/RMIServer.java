@@ -40,6 +40,11 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         super(0);
         mainController = MainController.getInstance();
     }
+
+    public void test() throws RemoteException {
+        ;
+    }
+
     public synchronized static RMIServer getInstance() {
         if(server == null) {
             try {
@@ -63,11 +68,11 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     //override section
     @Override
     public GameControllerInterface createGameController(String nickname, int numMaxOfPlayer) throws RemoteException {
-        GameControllerInterface result = server.mainController.createGameController(nickname,numMaxOfPlayer);
-
+        GameControllerInterface remoteController = server.mainController.createGameController(nickname,numMaxOfPlayer);
+        GameControllerInterface result = null;
         try{
             //result needs to be an exportable object
-            UnicastRemoteObject.exportObject(result,0);
+            result = (GameControllerInterface) UnicastRemoteObject.exportObject(remoteController,0);
         }catch (RemoteException e){
             e.printStackTrace();
         }

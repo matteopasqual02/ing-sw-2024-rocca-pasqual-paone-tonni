@@ -49,7 +49,7 @@ public abstract class ListenersHandler {
     }
 
     public synchronized List<GameListener> getListener(){
-        return (List<GameListener>) listenersMap.keySet();
+        return new ArrayList<>(listenersMap.keySet());
         //return listeners;
     }
 }
