@@ -15,7 +15,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
 
-    public static void main(String[] args) throws RemoteException, NotBoundException {
+    public static void main(String[] args) throws IOException, NotBoundException {
         clearCMD();
         int selection;
         String input;

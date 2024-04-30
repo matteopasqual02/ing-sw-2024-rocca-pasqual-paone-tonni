@@ -9,18 +9,19 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-public class Client implements GameListener, Runnable {
+public class Client implements GameListener, Runnable, Serializable {
     ServerInterface serverStub;
     ConnectionType connection;
     private int myGameId = 0;
     private String myNickname = null;
 
-    public Client(ConnectionType conSel) {
+    public Client(ConnectionType conSel) throws IOException {
         connection = conSel;
         switch (conSel){
             case RMI -> {

@@ -2,19 +2,14 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 
-import java.io.Serializable;
-
-public class SerializableMaxNumPlayers extends ServerGenericMessage{
+public class MessageMaxNum extends ServerGenericMessage{
     int max;
-    public SerializableMaxNumPlayers(int m){
+    public MessageMaxNum(int m){
         max=m;
-    }
-    public int getInt(){
-        return max;
     }
 
     @Override
     public void launchMessage(GameListener listener) {
-
+        listener.maxNumPlayersSet(max);
     }
 }

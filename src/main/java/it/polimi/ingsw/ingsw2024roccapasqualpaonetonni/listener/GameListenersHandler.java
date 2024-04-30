@@ -19,6 +19,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     public void notify_setMaxNumPlayers(int gameId, int max) {
         for(GameListener listener: listenersMap.keySet()){
             try {
+                int i=0;
                 listenersMap.get(listener).sendMaxNumPlayersSet(gameId,max);
             }
             catch(Exception e){

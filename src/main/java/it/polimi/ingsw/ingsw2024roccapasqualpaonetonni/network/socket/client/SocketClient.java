@@ -12,32 +12,35 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
-public class SocketClient extends Thread implements ServerInterface {
+public class SocketClient extends Thread implements ServerInterface, Serializable {
     private Socket clientSocket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private String nickname;
     private Client client;
+    private GameListener serverRequestHandler;
 
     //private final SocketNotifier socketNotifier;
 
-    public SocketClient(Client client){
+    public SocketClient(Client client) throws IOException {
         this.client=client;
         connect();
         this.start();
     }
 
     public void run(){
+        ServerGenericMessage message;
         while (true){
             try{
-                ServerGenericMessage serverGenericMessage = (ServerGenericMessage) inputStream.readObject();
-                //serverGenericMessage.launchMessage();
+                message = (ServerGenericMessage) inputStream.readObject();
+                message.launchMessage(client);
             } catch (IOException | ClassNotFoundException e) {
                 consolePrinter("[SOCKET] Connection Lost!");
                 System.exit(-1);
@@ -104,7 +107,7 @@ public class SocketClient extends Thread implements ServerInterface {
     }
     @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers));
+        outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers,me));
         messageDone();
     }
 
