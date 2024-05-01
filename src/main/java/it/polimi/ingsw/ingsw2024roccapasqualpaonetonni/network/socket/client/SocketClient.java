@@ -181,5 +181,4 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         outputStream.writeObject(new MessageMaxNum(num));
         messageDone();
     }
-
 }

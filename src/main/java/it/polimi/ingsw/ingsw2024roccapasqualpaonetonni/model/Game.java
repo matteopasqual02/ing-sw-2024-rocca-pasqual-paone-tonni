@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListenersHandler;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
 
@@ -46,9 +47,9 @@ public class Game implements Serializable {
         gameListenersHandler.notify_createdGame(id);
     }
 
-    public void addListeners(GameListener me){
+    public void addListeners(GameListener me, NotifierInterface notifier){
         try {
-            gameListenersHandler.addListener(me);
+            gameListenersHandler.addListener(me, notifier);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

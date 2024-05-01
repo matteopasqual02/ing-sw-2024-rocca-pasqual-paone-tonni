@@ -2,7 +2,13 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.NotifierInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageMaxNum;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,7 +20,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
-public class ClientRequestHandler extends Thread {
+public class ClientRequestHandler extends Thread implements NotifierInterface {
     private final ObjectInputStream inputStream;
     private final ObjectOutputStream outputStream;
 
@@ -66,7 +72,7 @@ public class ClientRequestHandler extends Thread {
                 message = processingQueue.take();
 
                 if(message.isForMainController()){
-                    gameControllerInterface = message.launchMessage(MainController.getInstance());
+                    gameControllerInterface = message.launchMessage(MainController.getInstance(),this);
                 }
                 else{
                     message.launchMessage(gameControllerInterface);
@@ -78,5 +84,220 @@ public class ClientRequestHandler extends Thread {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void messageDone() throws IOException {
+        outputStream.flush();
+        outputStream.reset();
+    }
+    @Override
+    public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
+        outputStream.writeObject(new ServerMessageMaxNum(max));
+        messageDone();
+    }
+
+    @Override
+    public void sendCreatedGame(int gameId) {
+
+    }
+
+    @Override
+    public void sendYouJoinedGame(int gameId, String pNickname) {
+
+    }
+
+    @Override
+    public void sendAddedNewPlayer(String pNickname) {
+
+    }
+
+    @Override
+    public void sendNoAvailableGame() {
+
+    }
+
+    @Override
+    public void sendAskPlayersReady() {
+
+    }
+
+    @Override
+    public void sendFullGame() {
+
+    }
+
+    @Override
+    public void sendNameAlreadyInGame() {
+
+    }
+
+    @Override
+    public void sendPlayerRemoved(String pNickname) {
+
+    }
+
+    @Override
+    public void sendNextTurn(Player p) {
+
+    }
+
+    @Override
+    public void sendLastTurn() {
+
+    }
+
+    @Override
+    public void sendReconnectedPlayer(String nickname) {
+
+    }
+
+    @Override
+    public void sendReconnectionImpossible(String nickname) {
+
+    }
+
+    @Override
+    public void sendDisconnectedPlayer(String nickname) {
+
+    }
+
+    @Override
+    public void sendDisconnectionImpossible(String nickname) {
+
+    }
+
+    @Override
+    public void sendStatusSet(GameStatus status) {
+
+    }
+
+    @Override
+    public void sendStatusSetToLastStatus(GameStatus status) {
+
+    }
+
+    @Override
+    public void sendLastStatusReset() {
+
+    }
+
+    @Override
+    public void sendPlayerIsReady(Player p) {
+
+    }
+
+    @Override
+    public void sendFirstPlayerSet(Player first) {
+
+    }
+
+    @Override
+    public void sendDrawableDeckSet(DrawableDeck d) {
+
+    }
+
+    @Override
+    public void sendBoardDeckSet(BoardDeck bd) {
+
+    }
+
+    @Override
+    public void sendStartAdded(PlayerBoard board, Player p) {
+
+    }
+
+    @Override
+    public void sendCardAdded(PlayerBoard board, Player p) {
+
+    }
+
+    @Override
+    public void sendChoseInvalidPlace(Player p) {
+
+    }
+
+    @Override
+    public void sendConditionsNotMet(Player p) {
+
+    }
+
+    @Override
+    public void sendStartingCardDrew(StartingCard start, Player p) {
+
+    }
+
+    @Override
+    public void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) {
+
+    }
+
+    @Override
+    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p) {
+
+    }
+
+    @Override
+    public void sendCardNotInHand(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void sendResourceDrawn(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void sendGoldDrawn(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void sendDrewFromBoard(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void sendPlayerIsConnected(Player p) {
+
+    }
+
+    @Override
+    public void sendPointsIncreased(int points, Player p) {
+
+    }
+
+    @Override
+    public void sendSeedCountUpdated(int[] seedCount, Player p) {
+
+    }
+
+    @Override
+    public void sendCardRemovedFromHand(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void sendPlayerReady(Player p) {
+
+    }
+
+    @Override
+    public void sendYouWereRemoved(String pNickname) {
+
+    }
+
+    @Override
+    public void youWereReconnected() {
+
+    }
+
+    @Override
+    public void sendYouAreFirst() {
+
+    }
+
+    @Override
+    public void sendItsYourTurn() {
+
     }
 }

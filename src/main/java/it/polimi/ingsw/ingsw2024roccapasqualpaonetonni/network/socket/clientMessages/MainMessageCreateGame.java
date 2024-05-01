@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMes
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.NotifierInterface;
 
 import java.rmi.RemoteException;
 
@@ -17,9 +18,9 @@ public class MainMessageCreateGame extends ClientGenericMessage{
     }
 
     @Override
-    public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface) throws RemoteException {
+    public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface controller = mainControllerInterface.createGameController(nickname,numberOfPlayers);
-        controller.addMyselfAsListener(listener);
+        controller.addMyselfAsListener(listener, notifier);
         return controller;
     }
 

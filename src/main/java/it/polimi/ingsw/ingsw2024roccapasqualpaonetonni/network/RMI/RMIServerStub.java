@@ -22,6 +22,7 @@ public class RMIServerStub implements ServerInterface {
     private static MainControllerInterface requests;
     private GameControllerInterface gameController = null;
     private Registry registry;
+    private RMINotifier notifier;
 
     public RMIServerStub(){
         super();
@@ -76,7 +77,8 @@ public class RMIServerStub implements ServerInterface {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.createGameController(name, maxNumPlayers);
-        gameController.addMyselfAsListener(me);
+        notifier = new RMINotifier(me);
+        gameController.addMyselfAsListener(me,notifier);
     }
 
     @Override
@@ -85,7 +87,8 @@ public class RMIServerStub implements ServerInterface {
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinFirstAvailableGame(name);
         if (gameController != null) {
-            gameController.addMyselfAsListener(me);
+            notifier = new RMINotifier(me);
+            gameController.addMyselfAsListener(me,notifier);
         }
         else {
             me.noAvailableGame();
@@ -98,7 +101,8 @@ public class RMIServerStub implements ServerInterface {
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.joinGameByID(name, idGame);
         if(gameController != null){
-            gameController.addMyselfAsListener(me);
+            notifier = new RMINotifier(me);
+            gameController.addMyselfAsListener(me,notifier);
         }
     }
 
@@ -112,7 +116,8 @@ public class RMIServerStub implements ServerInterface {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         gameController = requests.reconnect(name, idGame);
-        gameController.addMyselfAsListener(me);
+       notifier = new RMINotifier(me);
+       gameController.addMyselfAsListener(me,notifier);
 
    }
     @Override

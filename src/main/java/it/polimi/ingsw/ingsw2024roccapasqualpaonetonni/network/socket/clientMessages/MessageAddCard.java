@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
 import java.rmi.RemoteException;
@@ -23,7 +24,7 @@ public class MessageAddCard extends ClientGenericMessage{
 
 
     @Override
-    public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface) throws RemoteException {
+    public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
         return null;
     }
 

@@ -4,13 +4,14 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
 public interface GameControllerInterface extends Remote{
 
     //---------------------------------LISTENERS SECTION
-    void addMyselfAsListener(GameListener me) throws RemoteException;
+    void addMyselfAsListener(GameListener me, NotifierInterface notifier) throws RemoteException;
     void removeMyselfAsListener(GameListener me) throws RemoteException;
 
     //---------------------------------GAME CREATION SECTION
