@@ -5,14 +5,15 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.NotifierInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class RMINotifier implements NotifierInterface {
+public class RMINotifier extends UnicastRemoteObject implements NotifierInterface {
     private final GameListener listener;
 
-    public RMINotifier(GameListener g){
+    public RMINotifier(GameListener g) throws RemoteException {
         listener = g;
     }
 

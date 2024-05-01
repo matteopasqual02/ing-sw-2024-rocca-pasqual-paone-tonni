@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -6,90 +6,91 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 
 import java.io.IOException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-public interface NotifierInterface {
+public interface NotifierInterface extends Remote {
 
     //--------------------------GAME CREATION PHASE
-    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException;
-    void sendCreatedGame(int gameId);
-    void sendYouJoinedGame(int gameId, String pNickname);
-    void sendAddedNewPlayer(String pNickname);
-    void sendNoAvailableGame();
-    void sendAskPlayersReady();
+    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException, RemoteException;
+    void sendCreatedGame(int gameId) throws RemoteException;
+    void sendYouJoinedGame(int gameId, String pNickname) throws RemoteException;
+    void sendAddedNewPlayer(String pNickname) throws RemoteException;
+    void sendNoAvailableGame() throws RemoteException;
+    void sendAskPlayersReady() throws RemoteException;
+    void sendFullGame() throws RemoteException;
 
-    void sendFullGame();
+    void sendNameAlreadyInGame() throws RemoteException;
 
-    void sendNameAlreadyInGame();
+    void sendPlayerRemoved(String pNickname) throws RemoteException;
 
-    void sendPlayerRemoved(String pNickname);
+    void sendNextTurn(Player p) throws RemoteException;
 
-    void sendNextTurn(Player p);
+    void sendLastTurn() throws RemoteException;
 
-    void sendLastTurn();
+    void sendReconnectedPlayer(String nickname) throws RemoteException;
 
-    void sendReconnectedPlayer(String nickname);
+    void sendReconnectionImpossible(String nickname) throws RemoteException;
 
-    void sendReconnectionImpossible(String nickname);
+    void sendDisconnectedPlayer(String nickname) throws RemoteException;
 
-    void sendDisconnectedPlayer(String nickname);
+    void sendDisconnectionImpossible(String nickname) throws RemoteException;
 
-    void sendDisconnectionImpossible(String nickname);
+    void sendStatusSet(GameStatus status) throws RemoteException;
 
-    void sendStatusSet(GameStatus status);
+    void sendStatusSetToLastStatus(GameStatus status) throws RemoteException;
 
-    void sendStatusSetToLastStatus(GameStatus status);
+    void sendLastStatusReset() throws RemoteException;
 
-    void sendLastStatusReset();
-
-    void sendPlayerIsReady(Player p);
+    void sendPlayerIsReady(Player p) throws RemoteException;
 
     //void tableCreated(GameImmutable model);
 
     //void playersNotReady(GameImmutable model);
 
-    void sendFirstPlayerSet(Player first);
+    void sendFirstPlayerSet(Player first) throws RemoteException;
 
-    void sendDrawableDeckSet(DrawableDeck d);
+    void sendDrawableDeckSet(DrawableDeck d) throws RemoteException ;
 
-    void sendBoardDeckSet(BoardDeck bd);
+    void sendBoardDeckSet(BoardDeck bd) throws RemoteException;
 
-    void sendStartAdded(PlayerBoard board, Player p);
+    void sendStartAdded(PlayerBoard board, Player p) throws RemoteException;
 
-    void sendCardAdded(PlayerBoard board, Player p);
+    void sendCardAdded(PlayerBoard board, Player p) throws RemoteException;
 
-    void sendChoseInvalidPlace(Player p);
+    void sendChoseInvalidPlace(Player p) throws RemoteException;
 
-    void sendConditionsNotMet(Player p);
+    void sendConditionsNotMet(Player p) throws RemoteException;
 
-    void sendStartingCardDrew(StartingCard start, Player p);
+    void sendStartingCardDrew(StartingCard start, Player p) throws RemoteException;
 
-    void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p);
+    void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
 
-    void sendPersonalGoalChosen(ObjectiveCard goal, Player p);
+    void sendPersonalGoalChosen(ObjectiveCard goal, Player p) throws RemoteException;
 
-    void sendCardNotInHand(PlayingCard card, Player p);
+    void sendCardNotInHand(PlayingCard card, Player p) throws RemoteException;
 
-    void sendResourceDrawn(PlayingCard card, Player p);
+    void sendResourceDrawn(PlayingCard card, Player p) throws RemoteException;
 
-    void sendGoldDrawn(PlayingCard card, Player p);
+    void sendGoldDrawn(PlayingCard card, Player p) throws RemoteException;
 
-    void sendDrewFromBoard(PlayingCard card, Player p);
+    void sendDrewFromBoard(PlayingCard card, Player p) throws RemoteException;
 
-    void sendPlayerIsConnected(Player p);
+    void sendPlayerIsConnected(Player p) throws RemoteException;
 
-    void sendPointsIncreased(int points,Player p);
+    void sendPointsIncreased(int points,Player p) throws RemoteException;
 
-    void sendSeedCountUpdated(int[] seedCount,Player p);
+    void sendSeedCountUpdated(int[] seedCount,Player p) throws RemoteException;
 
-    void sendCardRemovedFromHand(PlayingCard card, Player p);
+    void sendCardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
 
-    void sendPlayerReady(Player p);
+    void sendPlayerReady(Player p) throws RemoteException;
 
-    void sendYouWereRemoved(String pNickname);
+    void sendYouWereRemoved(String pNickname) throws RemoteException;
 
-    void youWereReconnected();
+    void youWereReconnected() throws RemoteException;
 
-    void sendYouAreFirst();
+    void sendYouAreFirst() throws RemoteException;
 
-    void sendItsYourTurn();
+    void sendItsYourTurn() throws RemoteException;
 }

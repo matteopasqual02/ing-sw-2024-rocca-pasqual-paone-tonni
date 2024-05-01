@@ -31,7 +31,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
     public void notify_createdGame(int gameId) {
         for(GameListener listener: listenersMap.keySet()){
-            listenersMap.get(listener).sendCreatedGame(gameId);
+            try {
+                listenersMap.get(listener).sendCreatedGame(gameId);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -88,7 +92,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
     public void notify_askPlayersReady() {
         for(GameListener listener : listenersMap.keySet()) {
-            listenersMap.get(listener).sendAskPlayersReady();
+            try {
+                listenersMap.get(listener).sendAskPlayersReady();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -170,17 +178,29 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     }
     public void notify_setStatus(GameStatus status) {
         for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendStatusSet(status);
+            try {
+                listenersMap.get(listener).sendStatusSet(status);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void notify_setLastStatus(GameStatus status) {
         for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendStatusSetToLastStatus(status);
+            try {
+                listenersMap.get(listener).sendStatusSetToLastStatus(status);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void notify_resetLastStatus() {
         for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendLastStatusReset();
+            try {
+                listenersMap.get(listener).sendLastStatusReset();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void notify_nextPlayer(Player p) {
@@ -199,22 +219,38 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     }
     public void notify_lastTurn() {
         for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendLastTurn();
+            try {
+                listenersMap.get(listener).sendLastTurn();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void notify_playerIsReadyToStart(Player p) {
         for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendPlayerIsReady(p);
+            try {
+                listenersMap.get(listener).sendPlayerIsReady(p);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void notify_setGameDrawableDeck(DrawableDeck d) {
         for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendDrawableDeckSet(d);
+            try {
+                listenersMap.get(listener).sendDrawableDeckSet(d);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void notify_setGameBoardDeck(BoardDeck bd) {
         for(GameListener listener : listenersMap.keySet()){
-            listenersMap.get(listener).sendBoardDeckSet(bd);
+            try {
+                listenersMap.get(listener).sendBoardDeckSet(bd);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
