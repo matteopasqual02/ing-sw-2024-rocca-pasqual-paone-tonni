@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 
 public interface ServerInterface extends Remote{
 
@@ -28,4 +29,7 @@ public interface ServerInterface extends Remote{
     public void drawGoldFromDeck(String nickname) throws IOException;
     public void drawFromBoard(String nickname, int position) throws IOException;
 
+    //--------------------------CHAT
+    public void sendMessage(String txt, String nickname) throws IOException;
+    public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException;
 }

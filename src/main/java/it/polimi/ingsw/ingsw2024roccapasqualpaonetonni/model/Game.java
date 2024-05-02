@@ -290,6 +290,13 @@ public class Game implements Serializable {
 
 //---------------------------------CHAT SECTION
 
+    public void sendMessage(String txt, String nickname){
+        chat.addMessage(new Message(txt,nickname));
+        gameListenersHandler.notify_messageSent(txt,nickname);
+    }
+    public void sendPrivateMessage(String senderName, String recieverName, String txt){
+        chat.addPrivateMessage(senderName,recieverName,new PrivateMessage(txt,senderName,recieverName));
+    }
     public Chat getChat() {
         return chat;
     }

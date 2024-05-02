@@ -176,6 +176,19 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         outputStream.writeObject(new MessageDrawFromBoard(nickname, position));
         messageDone();
     }
+
+    @Override
+    public void sendMessage(String txt, String nickname) throws IOException {
+        outputStream.writeObject(new MessageSendMessage(txt,nickname));
+        messageDone();
+    }
+
+    @Override
+    public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException {
+        outputStream.writeObject(new MessageSendPrivateMessage(nicknameSender,nicknameReciever,txt));
+        messageDone();
+    }
+
     @Override
     public void setMaxNUm(int num) throws IOException {
         outputStream.writeObject(new MessageMaxNum(num));

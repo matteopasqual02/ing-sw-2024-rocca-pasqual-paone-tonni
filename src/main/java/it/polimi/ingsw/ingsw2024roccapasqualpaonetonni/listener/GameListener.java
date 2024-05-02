@@ -3,12 +3,14 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
 
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /*
 GameListener is an interface with all the methods that are used to comunicare with the RMIClient in order to show update of changes.
@@ -47,6 +49,9 @@ public interface GameListener extends Remote {
     void firstPlayerSet(Player first) throws RemoteException;
     void drawableDeckSet(DrawableDeck d) throws RemoteException;
     void boardDeckSet(BoardDeck bd) throws RemoteException;
+    void newMessage(String txt, String nickname) throws RemoteException;
+
+    void chatUpdate(List<Message> allMessages) throws RemoteException;
 
     /*
     void startAdded(PlayerBoard board, Player p);

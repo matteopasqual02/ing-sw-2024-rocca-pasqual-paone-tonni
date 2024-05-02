@@ -1,9 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /*
 this class handles the listeners of the game class in the model: the listeners are elements related to each client, when a change
@@ -256,4 +259,14 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
     public void notify_gameStarted(GameListener listener) {
     }
+
+    public void notify_messageSent(String txt, String nickname) {
+        for(GameListener listener: listenersMap.keySet()){
+            try {
+                listenersMap.get(listener).sendMessage(txt,nickname);
+        } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+}
 }

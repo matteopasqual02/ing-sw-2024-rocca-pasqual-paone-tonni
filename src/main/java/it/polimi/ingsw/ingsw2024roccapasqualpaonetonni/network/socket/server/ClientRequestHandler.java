@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -9,12 +10,14 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageMaxNum;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -299,5 +302,16 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     @Override
     public void sendItsYourTurn() {
 
+    }
+
+    @Override
+    public void sendUpdatedChat(List<Message> allMessages) throws RemoteException {
+
+    }
+
+    @Override
+    public void sendMessage(String txt, String nickname) throws IOException {
+        outputStream.writeObject(new ServerMessageNewMessage(txt,nickname));
+        messageDone();
     }
 }

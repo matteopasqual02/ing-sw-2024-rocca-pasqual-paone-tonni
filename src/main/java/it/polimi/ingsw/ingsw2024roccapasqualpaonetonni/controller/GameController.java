@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
@@ -388,6 +389,16 @@ public class GameController implements GameControllerInterface {
                 return;
             }
         }
+    }
+
+    @Override
+    public void sendMessage(String txt, String nickname) {
+        model.sendMessage(txt,nickname);
+    }
+
+    @Override
+    public void sendPrivateMessage(String senderName, String recieverName, String txt) {
+        model.sendPrivateMessage(senderName,recieverName,txt);
     }
 
 

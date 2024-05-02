@@ -164,6 +164,16 @@ public class RMIServerStub implements ServerInterface {
     }
 
     @Override
+    public void sendMessage(String txt, String nickname) throws RemoteException {
+        gameController.sendMessage(txt,nickname);
+    }
+
+    @Override
+    public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws RemoteException {
+        gameController.sendPrivateMessage(nicknameSender,nicknameReciever,txt);
+    }
+
+    @Override
     public void setMaxNUm(int num) throws IOException {
         gameController.setMaxNumberOfPlayer(num);
     }

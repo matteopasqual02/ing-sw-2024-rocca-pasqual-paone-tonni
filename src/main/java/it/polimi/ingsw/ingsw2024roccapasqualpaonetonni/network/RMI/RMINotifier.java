@@ -5,10 +5,12 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class RMINotifier extends UnicastRemoteObject implements NotifierInterface {
     private final GameListener listener;
@@ -342,5 +344,23 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     @Override
     public void sendItsYourTurn() {
 
+    }
+
+    @Override
+    public void sendUpdatedChat(List<Message> allMessages) throws RemoteException {
+        try {
+            listener.chatUpdate(allMessages);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void sendMessage(String txt, String nickname) throws RemoteException {
+        try {
+            listener.newMessage(txt,nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

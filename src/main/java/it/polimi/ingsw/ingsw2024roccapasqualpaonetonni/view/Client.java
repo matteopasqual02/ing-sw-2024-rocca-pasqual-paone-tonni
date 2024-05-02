@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
@@ -11,7 +12,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.Soc
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
@@ -84,6 +87,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 try {
                     serverStub.createGame(myNickname, maxNumPlayers, this);
                     serverStub.setMaxNUm(maxNumPlayers);
+                    serverStub.sendMessage("ciao",this.myNickname);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -265,6 +269,17 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void boardDeckSet(BoardDeck bd) {
+
+    }
+
+    @Override
+    public void newMessage(String txt, String nickname) throws RemoteException {
+        String message = String.format("[%s] %s",nickname,txt);
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void chatUpdate(List<Message> allMessages) throws RemoteException {
 
     }
 

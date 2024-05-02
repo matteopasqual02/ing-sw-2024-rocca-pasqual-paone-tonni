@@ -4,10 +4,12 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface NotifierInterface extends Remote {
 
@@ -93,4 +95,8 @@ public interface NotifierInterface extends Remote {
     void sendYouAreFirst() throws RemoteException;
 
     void sendItsYourTurn() throws RemoteException;
+
+    void sendUpdatedChat(List<Message> allMessages) throws RemoteException;
+
+    void sendMessage(String txt, String nickname) throws IOException;
 }
