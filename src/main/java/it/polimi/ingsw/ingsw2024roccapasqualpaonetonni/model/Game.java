@@ -296,6 +296,7 @@ public class Game implements Serializable {
     }
     public void sendPrivateMessage(String senderName, String recieverName, String txt){
         chat.addPrivateMessage(senderName,recieverName,new PrivateMessage(txt,senderName,recieverName));
+        gameListenersHandler.notify_privateMessageSent(txt,senderName,recieverName);
     }
     public Chat getChat() {
         return chat;

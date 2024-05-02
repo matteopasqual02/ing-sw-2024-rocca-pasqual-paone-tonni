@@ -11,6 +11,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.Obj
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageMaxNum;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewPrivateMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -313,5 +314,10 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     public void sendMessage(String txt, String nickname) throws IOException {
         outputStream.writeObject(new ServerMessageNewMessage(txt,nickname));
         messageDone();
+    }
+
+    @Override
+    public void sendPrivateMessage(String txt, String senderName, String recieverName) throws IOException {
+        outputStream.writeObject(new ServerMessageNewPrivateMessage(txt,senderName, recieverName));
     }
 }

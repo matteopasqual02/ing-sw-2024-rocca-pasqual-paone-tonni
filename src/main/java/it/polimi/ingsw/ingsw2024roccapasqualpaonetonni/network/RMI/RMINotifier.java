@@ -8,6 +8,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.Obj
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -359,6 +360,17 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     public void sendMessage(String txt, String nickname) throws RemoteException {
         try {
             listener.newMessage(txt,nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void sendPrivateMessage(String txt, String senderName, String recieverName) throws IOException {
+        try {
+            if(listener.getNickname().equals(recieverName)){
+                listener.newPrivateMessage(senderName,recieverName,txt);
+            }
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

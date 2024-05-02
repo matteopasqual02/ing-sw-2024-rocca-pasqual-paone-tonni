@@ -53,6 +53,8 @@ public interface GameListener extends Remote {
 
     void chatUpdate(List<Message> allMessages) throws RemoteException;
 
+    void newPrivateMessage(String senderName, String recieverName, String txt) throws RemoteException;
+
     /*
     void startAdded(PlayerBoard board, Player p);
     void cardAdded(PlayerBoard board, Player p);

@@ -269,4 +269,14 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
 }
+
+    public void notify_privateMessageSent(String txt, String senderName, String recieverName) {
+        for(GameListener listener: listenersMap.keySet()){
+            try {
+                listenersMap.get(listener).sendPrivateMessage(txt,senderName,recieverName);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

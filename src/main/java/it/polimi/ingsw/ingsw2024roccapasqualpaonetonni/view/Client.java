@@ -98,6 +98,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 myNickname = new Scanner(System.in).nextLine();
                 try {
                     serverStub.joinFirstAvailable(myNickname, this);
+                    serverStub.sendPrivateMessage("ciao a","b","a");
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -281,6 +282,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void chatUpdate(List<Message> allMessages) throws RemoteException {
 
+    }
+
+    @Override
+    public void newPrivateMessage(String senderName, String recieverName, String txt) throws RemoteException {
+        String message = String.format("[%s] privately sent you: %s",senderName,txt);
+        ConsolePrinter.consolePrinter(message);
     }
 
     /*

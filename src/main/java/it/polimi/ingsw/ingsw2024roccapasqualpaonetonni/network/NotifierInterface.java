@@ -99,4 +99,6 @@ public interface NotifierInterface extends Remote {
     void sendUpdatedChat(List<Message> allMessages) throws RemoteException;
 
     void sendMessage(String txt, String nickname) throws IOException;
+
+    void sendPrivateMessage(String txt, String senderName, String recieverName) throws IOException;
 }
