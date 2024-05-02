@@ -291,12 +291,14 @@ public class Game implements Serializable {
 //---------------------------------CHAT SECTION
 
     public void sendMessage(String txt, String nickname){
-        chat.addMessage(new Message(txt,nickname));
-        gameListenersHandler.notify_messageSent(txt,nickname);
+        Message message = new Message(txt,nickname);
+        chat.addMessage(message);
+        gameListenersHandler.notify_messageSent(message);
     }
     public void sendPrivateMessage(String senderName, String recieverName, String txt){
-        chat.addPrivateMessage(senderName,recieverName,new PrivateMessage(txt,senderName,recieverName));
-        gameListenersHandler.notify_privateMessageSent(txt,senderName,recieverName);
+        PrivateMessage message = new PrivateMessage(txt,senderName,recieverName);
+        chat.addPrivateMessage(senderName,recieverName,message);
+        gameListenersHandler.notify_privateMessageSent(message);
     }
     public Chat getChat() {
         return chat;

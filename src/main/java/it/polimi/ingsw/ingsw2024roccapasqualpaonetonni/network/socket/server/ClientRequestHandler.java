@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -311,13 +312,13 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendMessage(String txt, String nickname) throws IOException {
-        outputStream.writeObject(new ServerMessageNewMessage(txt,nickname));
+    public void sendMessage(Message message) throws IOException {
+        outputStream.writeObject(new ServerMessageNewMessage(message));
         messageDone();
     }
 
     @Override
-    public void sendPrivateMessage(String txt, String senderName, String recieverName) throws IOException {
-        outputStream.writeObject(new ServerMessageNewPrivateMessage(txt,senderName, recieverName));
+    public void sendPrivateMessage(PrivateMessage message) throws IOException {
+        outputStream.writeObject(new ServerMessageNewPrivateMessage(message));
     }
 }

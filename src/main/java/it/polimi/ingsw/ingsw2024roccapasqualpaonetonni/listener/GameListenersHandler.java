@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -260,23 +261,24 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     public void notify_gameStarted(GameListener listener) {
     }
 
-    public void notify_messageSent(String txt, String nickname) {
+    public void notify_messageSent(Message message) {
         for(GameListener listener: listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendMessage(txt,nickname);
+                listenersMap.get(listener).sendMessage(message);
         } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 }
 
-    public void notify_privateMessageSent(String txt, String senderName, String recieverName) {
+    public void notify_privateMessageSent(PrivateMessage message) {
         for(GameListener listener: listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPrivateMessage(txt,senderName,recieverName);
+                listenersMap.get(listener).sendPrivateMessage(message);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
 }

@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 
 import java.io.IOException;
 import java.rmi.Remote;
@@ -98,7 +99,7 @@ public interface NotifierInterface extends Remote {
 
     void sendUpdatedChat(List<Message> allMessages) throws RemoteException;
 
-    void sendMessage(String txt, String nickname) throws IOException;
+    void sendMessage(Message message) throws IOException;
 
-    void sendPrivateMessage(String txt, String senderName, String recieverName) throws IOException;
+    void sendPrivateMessage(PrivateMessage message) throws IOException;
 }

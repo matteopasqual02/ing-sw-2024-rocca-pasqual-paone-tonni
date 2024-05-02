@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
@@ -274,8 +275,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     @Override
-    public void newMessage(String txt, String nickname) throws RemoteException {
-        String message = String.format("[%s] %s",nickname,txt);
+    public void newMessage(Message m) throws RemoteException {
+        String message = String.format("[%s] %s",m.getSender(),m.getText());
         ConsolePrinter.consolePrinter(message);
     }
 
@@ -285,8 +286,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     @Override
-    public void newPrivateMessage(String senderName, String recieverName, String txt) throws RemoteException {
-        String message = String.format("[%s] privately sent you: %s",senderName,txt);
+    public void newPrivateMessage(PrivateMessage m) throws RemoteException {
+        String message = String.format("[%s] privately sent you: %s",m.getSender(),m.getText());
         ConsolePrinter.consolePrinter(message);
     }
 

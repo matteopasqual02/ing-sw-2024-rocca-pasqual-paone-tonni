@@ -2,9 +2,10 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class Message {
+public class Message implements Serializable {
     private String text;
     private String sender;
     private LocalTime localTime;
