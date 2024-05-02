@@ -5,8 +5,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import java.rmi.RemoteException;
 
 public class ServerMessageNewMessage extends ServerGenericMessage{
-    private String nickname;
-    private String txt;
+    private final String nickname;
+    private final String txt;
     public ServerMessageNewMessage(String txt, String nickname){
         this.nickname = nickname;
         this.txt = txt;

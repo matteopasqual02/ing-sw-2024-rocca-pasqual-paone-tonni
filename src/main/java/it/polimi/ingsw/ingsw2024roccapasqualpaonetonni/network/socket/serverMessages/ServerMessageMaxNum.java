@@ -5,7 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import java.rmi.RemoteException;
 
 public class ServerMessageMaxNum extends ServerGenericMessage{
-    int max;
+    private final int max;
     public ServerMessageMaxNum(int m){
         max=m;
     }
