@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.List;
 
 public class PrivateMessage implements Serializable {
     private String text;
@@ -25,11 +26,11 @@ public class PrivateMessage implements Serializable {
     }
 
     public String getText(){return text;}
-    public void setText(String text) {this.text = text;}
+    //public void setText(String text) {this.text = text;}
     public String getSender(){return sender;}
     public String getReciever(){return reciever;}
-    public void setSender(String sender) { this.sender = sender; }
+    //public void setSender(String sender) { this.sender = sender; }
     public LocalTime getTime(){return localTime;}
-    public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
+    //public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
 
 }

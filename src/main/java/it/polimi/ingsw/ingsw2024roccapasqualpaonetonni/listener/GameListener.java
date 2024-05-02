@@ -56,6 +56,8 @@ public interface GameListener extends Remote {
 
     void newPrivateMessage(PrivateMessage message) throws RemoteException;
 
+    void publicChatLog(List<Message> allMessages) throws RemoteException;
+
     /*
     void startAdded(PlayerBoard board, Player p);
     void cardAdded(PlayerBoard board, Player p);

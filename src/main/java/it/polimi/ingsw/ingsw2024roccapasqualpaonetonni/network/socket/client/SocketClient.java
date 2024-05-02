@@ -190,6 +190,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     }
 
     @Override
+    public void getPublicChatLog(String requesterName) throws IOException {
+        outputStream.writeObject(new MessageGetPublicChatLog(requesterName));
+        messageDone();
+    }
+
+    @Override
     public void setMaxNUm(int num) throws IOException {
         outputStream.writeObject(new MessageMaxNum(num));
         messageDone();

@@ -281,4 +281,13 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    public void notify_publicChatLog(String requesterName, List<Message> allMessages) {
+        for(GameListener listener: listenersMap.keySet()){
+            try {
+                listenersMap.get(listener).sendPublicChatLog(requesterName,allMessages);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

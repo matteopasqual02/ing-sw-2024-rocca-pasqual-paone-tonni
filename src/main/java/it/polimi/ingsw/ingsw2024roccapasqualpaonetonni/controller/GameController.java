@@ -401,6 +401,11 @@ public class GameController implements GameControllerInterface {
         model.sendPrivateMessage(senderName,recieverName,txt);
     }
 
+    @Override
+    public void getPublicChatLog(String requesterName) throws RemoteException {
+        model.getPublicChatLog(requesterName);
+    }
+
 
     //---------------------------------END SECTION
     private void checkPoints20Points() {

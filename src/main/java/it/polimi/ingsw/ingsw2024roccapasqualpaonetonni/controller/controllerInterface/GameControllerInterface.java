@@ -30,5 +30,5 @@ public interface GameControllerInterface extends Remote{
 
     void sendMessage(String txt, String nickname) throws RemoteException;
     void sendPrivateMessage(String senderName, String recieverName, String txt) throws RemoteException;
-
+    void getPublicChatLog(String requesterName) throws RemoteException;
 }

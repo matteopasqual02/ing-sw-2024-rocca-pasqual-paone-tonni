@@ -29,4 +29,7 @@ public class PrivateChat implements Serializable {
     public String getPlayer2(){
         return player2;
     }
+    public List<PrivateMessage> getPrivateMessageList(){
+        return privateMessageList;
+    }
 }

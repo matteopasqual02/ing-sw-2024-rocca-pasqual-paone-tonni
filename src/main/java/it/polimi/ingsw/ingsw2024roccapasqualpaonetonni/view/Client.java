@@ -291,6 +291,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         ConsolePrinter.consolePrinter(message);
     }
 
+    @Override
+    public void publicChatLog(List<Message> allMessages) throws RemoteException {
+        //find how to print all the chat log
+    }
+
     /*
     @Override
     public void startAdded(PlayerBoard board, Player p) {

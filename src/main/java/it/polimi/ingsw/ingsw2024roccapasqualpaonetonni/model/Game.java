@@ -303,4 +303,8 @@ public class Game implements Serializable {
     public Chat getChat() {
         return chat;
     }
+
+    public void getPublicChatLog(String requesterName) {
+        gameListenersHandler.notify_publicChatLog(requesterName,chat.getAllMessages());
+    }
 }

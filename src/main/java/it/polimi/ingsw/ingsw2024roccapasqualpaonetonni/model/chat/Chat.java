@@ -38,4 +38,12 @@ public class Chat implements Serializable {
     public List<Message> getAllMessages(){
         return messagesList;
     }
+    public List<PrivateMessage> getPrivateChat(String senderName, String recieverName) {
+        for (PrivateChat chat : privateChats) {
+            if ((chat.getPlayer1().equals(senderName) && chat.getPlayer2().equals(recieverName)) || (chat.getPlayer1().equals(recieverName) && chat.getPlayer2().equals(senderName))) {
+                return chat.getPrivateMessageList();
+            }
+        }
+        return null;
+    }
 }

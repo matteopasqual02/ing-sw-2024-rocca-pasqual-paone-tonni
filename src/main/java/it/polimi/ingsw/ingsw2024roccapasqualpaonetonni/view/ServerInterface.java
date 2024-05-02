@@ -32,4 +32,5 @@ public interface ServerInterface extends Remote{
     //--------------------------CHAT
     public void sendMessage(String txt, String nickname) throws IOException;
     public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException;
+    public void getPublicChatLog(String requesterName) throws IOException;
 }

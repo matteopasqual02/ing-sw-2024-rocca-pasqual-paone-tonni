@@ -13,6 +13,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMess
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageMaxNum;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewPrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessagePublicChatLog;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -320,5 +321,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     @Override
     public void sendPrivateMessage(PrivateMessage message) throws IOException {
         outputStream.writeObject(new ServerMessageNewPrivateMessage(message));
+        messageDone();
+    }
+
+    @Override
+    public void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException {
+        outputStream.writeObject(new ServerMessagePublicChatLog(requesterName,allMessages));
+        messageDone();
     }
 }

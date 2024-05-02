@@ -376,4 +376,15 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException {
+        try {
+            if(listener.getNickname().equals(requesterName)){
+                listener.publicChatLog(allMessages);
+            }
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
