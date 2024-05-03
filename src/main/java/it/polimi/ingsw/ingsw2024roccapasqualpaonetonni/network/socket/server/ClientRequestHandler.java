@@ -10,10 +10,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageMaxNum;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewMessage;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewPrivateMessage;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessagePublicChatLog;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -327,6 +324,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     @Override
     public void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException {
         outputStream.writeObject(new ServerMessagePublicChatLog(requesterName,allMessages));
+        messageDone();
+    }
+
+    @Override
+    public void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException {
+        outputStream.writeObject(new ServerMessagePrivateChatLog(yourName,otherName,privateChat));
         messageDone();
     }
 }

@@ -113,7 +113,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     @Override
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageJoinFirstAvailable(name));
+        outputStream.writeObject(new MainMessageJoinFirstAvailable(name,me));
         messageDone();
     }
 
@@ -192,6 +192,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     @Override
     public void getPublicChatLog(String requesterName) throws IOException {
         outputStream.writeObject(new MessageGetPublicChatLog(requesterName));
+        messageDone();
+    }
+
+    @Override
+    public void getPrivateChatLog(String yourName, String otherName) throws IOException {
+        outputStream.writeObject(new MessageGetPrivateChatLog(yourName,otherName));
         messageDone();
     }
 
