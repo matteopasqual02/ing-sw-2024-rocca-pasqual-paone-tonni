@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -106,7 +107,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendStartAdded(board,p);
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -129,7 +130,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendCardAdded(board,p);
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

@@ -296,7 +296,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         //find how to print all the chat log
     }
 
-    /*
+
     @Override
     public void startAdded(PlayerBoard board, Player p) {
 
@@ -306,7 +306,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void cardAdded(PlayerBoard board, Player p) {
 
     }
-
+/*
     @Override
     public void choseInvalidPlace(Player p) {
 

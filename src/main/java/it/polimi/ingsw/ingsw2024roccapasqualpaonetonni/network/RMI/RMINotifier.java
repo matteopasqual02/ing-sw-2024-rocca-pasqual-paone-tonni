@@ -250,22 +250,22 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     @Override
     public void sendStartAdded(PlayerBoard board, Player p) {
-
+        listener.startAdded(board,p);
     }
 
     @Override
     public void sendCardAdded(PlayerBoard board, Player p) {
-
+        listener.cardAdded(board,p);
     }
 
     @Override
     public void sendChoseInvalidPlace(Player p) {
-
+        listener.choseInvalidPlace(p);
     }
 
     @Override
     public void sendConditionsNotMet(Player p) {
-
+        listener.conditionsNotMet(p);
     }
 
     @Override
@@ -290,17 +290,17 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     @Override
     public void sendResourceDrawn(PlayingCard card, Player p) {
-
+        listener.resourceDrawn(card,p);
     }
 
     @Override
     public void sendGoldDrawn(PlayingCard card, Player p) {
-
+        listener.goldDrawn(card, p);
     }
 
     @Override
     public void sendDrewFromBoard(PlayingCard card, Player p) {
-
+        listener.drewFromBoard(card, p);
     }
 
     @Override

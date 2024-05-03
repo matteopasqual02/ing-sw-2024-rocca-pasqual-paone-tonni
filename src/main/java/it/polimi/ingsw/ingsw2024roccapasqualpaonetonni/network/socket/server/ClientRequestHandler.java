@@ -207,23 +207,27 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendStartAdded(PlayerBoard board, Player p) {
-
+    public void sendStartAdded(PlayerBoard board, Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageStartAdded(board,p));
+        messageDone();
     }
 
     @Override
-    public void sendCardAdded(PlayerBoard board, Player p) {
-
+    public void sendCardAdded(PlayerBoard board, Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageCardAdded(board,p));
+        messageDone();
     }
 
     @Override
-    public void sendChoseInvalidPlace(Player p) {
-
+    public void sendChoseInvalidPlace(Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageInvalidPlace(p));
+        messageDone();
     }
 
     @Override
-    public void sendConditionsNotMet(Player p) {
-
+    public void sendConditionsNotMet(Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageConditionsNotMet(p));
+        messageDone();
     }
 
     @Override

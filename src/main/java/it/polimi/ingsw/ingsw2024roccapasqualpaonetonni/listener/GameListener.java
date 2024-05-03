@@ -58,7 +58,7 @@ public interface GameListener extends Remote {
 
     void publicChatLog(List<Message> allMessages) throws RemoteException;
 
-    /*
+
     void startAdded(PlayerBoard board, Player p);
     void cardAdded(PlayerBoard board, Player p);
     void choseInvalidPlace(Player p);
@@ -74,5 +74,5 @@ public interface GameListener extends Remote {
     void pointsIncreased(int points,Player p);
     void seedCountUpdated(int[] seedCount,Player p);
     void cardRemovedFromHand(PlayingCard card, Player p);
-     */
+
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public interface NotifierInterface extends Remote {
 
     //--------------------------GAME CREATION PHASE
-    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException, RemoteException;
+    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException;
     void sendCreatedGame(int gameId) throws IOException;
     void sendYouJoinedGame(int gameId, String pNickname) throws RemoteException;
     void sendAddedNewPlayer(String pNickname) throws IOException;
@@ -57,13 +57,13 @@ public interface NotifierInterface extends Remote {
 
     void sendBoardDeckSet(BoardDeck bd) throws RemoteException;
 
-    void sendStartAdded(PlayerBoard board, Player p) throws RemoteException;
+    void sendStartAdded(PlayerBoard board, Player p) throws IOException;
 
-    void sendCardAdded(PlayerBoard board, Player p) throws RemoteException;
+    void sendCardAdded(PlayerBoard board, Player p) throws IOException;
 
-    void sendChoseInvalidPlace(Player p) throws RemoteException;
+    void sendChoseInvalidPlace(Player p) throws IOException;
 
-    void sendConditionsNotMet(Player p) throws RemoteException;
+    void sendConditionsNotMet(Player p) throws IOException;
 
     void sendStartingCardDrew(StartingCard start, Player p) throws RemoteException;
 
