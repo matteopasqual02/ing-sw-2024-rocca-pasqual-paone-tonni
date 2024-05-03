@@ -16,9 +16,9 @@ public interface NotifierInterface extends Remote {
 
     //--------------------------GAME CREATION PHASE
     void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException, RemoteException;
-    void sendCreatedGame(int gameId) throws RemoteException;
+    void sendCreatedGame(int gameId) throws IOException;
     void sendYouJoinedGame(int gameId, String pNickname) throws RemoteException;
-    void sendAddedNewPlayer(String pNickname) throws RemoteException;
+    void sendAddedNewPlayer(String pNickname) throws IOException;
     void sendNoAvailableGame() throws RemoteException;
     void sendAskPlayersReady() throws RemoteException;
     void sendFullGame() throws RemoteException;
@@ -89,7 +89,7 @@ public interface NotifierInterface extends Remote {
 
     void sendPlayerReady(Player p) throws RemoteException;
 
-    void sendYouWereRemoved(String pNickname) throws RemoteException;
+    void sendYouWereRemoved(String pNickname) throws IOException;
 
     void youWereReconnected() throws RemoteException;
 

@@ -10,10 +10,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageMaxNum;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewMessage;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessageNewPrivateMessage;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerMessagePublicChatLog;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -103,8 +100,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendCreatedGame(int gameId) {
-
+    public void sendCreatedGame(int gameId) throws IOException {
+        outputStream.writeObject(new ServerMessageCreatedGame(gameId));
+        messageDone();
     }
 
     @Override
@@ -113,8 +111,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendAddedNewPlayer(String pNickname) {
-
+    public void sendAddedNewPlayer(String pNickname) throws IOException {
+        outputStream.writeObject(new ServerMessageNewPlayer(pNickname));
+        messageDone();
     }
 
     @Override
@@ -288,8 +287,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendYouWereRemoved(String pNickname) {
-
+    public void sendYouWereRemoved(String pNickname) throws IOException {
+        outputStream.writeObject(new ServerMessagePlayerRemoved(pNickname));
+        messageDone();
     }
 
     @Override
