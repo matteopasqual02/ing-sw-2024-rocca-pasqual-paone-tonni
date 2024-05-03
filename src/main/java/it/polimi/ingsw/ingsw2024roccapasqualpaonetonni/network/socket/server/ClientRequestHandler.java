@@ -112,7 +112,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
 
     @Override
     public void sendAddedNewPlayer(String pNickname) throws IOException {
-        outputStream.writeObject(new ServerMessageNewPlayer(pNickname));
+        outputStream.writeObject(new ServerMessagePlayerAdded(pNickname));
         messageDone();
     }
 
@@ -122,8 +122,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendAskPlayersReady() {
-
+    public void sendAskPlayersReady() throws IOException {
+        outputStream.writeObject(new ServerMessageAskPlayerReady());
+        messageDone();
     }
 
     @Override
@@ -220,13 +221,13 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
 
     @Override
     public void sendChoseInvalidPlace(Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageInvalidPlace(p));
+        outputStream.writeObject(new ServerMessageCardInvalidPlace(p));
         messageDone();
     }
 
     @Override
     public void sendConditionsNotMet(Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageConditionsNotMet(p));
+        outputStream.writeObject(new ServerMessageCardConditionsNotMet(p));
         messageDone();
     }
 
@@ -327,19 +328,19 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
 
     @Override
     public void sendPrivateMessage(PrivateMessage message) throws IOException {
-        outputStream.writeObject(new ServerMessageNewPrivateMessage(message));
+        outputStream.writeObject(new ServerMessageChatNewPrivateMessage(message));
         messageDone();
     }
 
     @Override
     public void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException {
-        outputStream.writeObject(new ServerMessagePublicChatLog(requesterName,allMessages));
+        outputStream.writeObject(new ServerMessageChatPublicLog(requesterName,allMessages));
         messageDone();
     }
 
     @Override
     public void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException {
-        outputStream.writeObject(new ServerMessagePrivateChatLog(yourName,otherName,privateChat));
+        outputStream.writeObject(new ServerMessageChatPrivateLog(yourName,otherName,privateChat));
         messageDone();
     }
 }

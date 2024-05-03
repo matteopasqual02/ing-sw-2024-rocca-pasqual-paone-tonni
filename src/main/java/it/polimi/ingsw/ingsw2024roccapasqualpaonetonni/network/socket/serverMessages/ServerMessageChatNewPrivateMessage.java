@@ -5,9 +5,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage
 
 import java.rmi.RemoteException;
 
-public class ServerMessageNewPrivateMessage extends ServerGenericMessage{
+public class ServerMessageChatNewPrivateMessage extends ServerGenericMessage{
     private PrivateMessage message;
-    public ServerMessageNewPrivateMessage(PrivateMessage message){
+    public ServerMessageChatNewPrivateMessage(PrivateMessage message){
         this.message = message;
     }
     @Override

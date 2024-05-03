@@ -2,11 +2,10 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 
-public class ServerMessageInvalidPlace extends ServerGenericMessage{
+public class ServerMessageCardInvalidPlace extends ServerGenericMessage{
     private final Player player;
-    public ServerMessageInvalidPlace( Player player){
+    public ServerMessageCardInvalidPlace(Player player){
 
         this.player=player;
     }

@@ -4,9 +4,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 
 import java.rmi.RemoteException;
 
-public class ServerMessageNewPlayer extends ServerGenericMessage{
+public class ServerMessagePlayerAdded extends ServerGenericMessage{
     private final String nickname;
-    public ServerMessageNewPlayer(String gameId){
+    public ServerMessagePlayerAdded(String gameId){
         this.nickname=gameId;
     }
 

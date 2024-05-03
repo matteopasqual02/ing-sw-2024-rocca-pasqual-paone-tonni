@@ -6,11 +6,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage
 import java.rmi.RemoteException;
 import java.util.List;
 
-public class ServerMessagePrivateChatLog extends ServerGenericMessage{
+public class ServerMessageChatPrivateLog extends ServerGenericMessage{
     private final String yourName;
     private final String otherName;
     private final List<PrivateMessage> privateChat;
-    public ServerMessagePrivateChatLog(String yourName,String otherName,List<PrivateMessage> privateChat){
+    public ServerMessageChatPrivateLog(String yourName, String otherName, List<PrivateMessage> privateChat){
         this.privateChat = privateChat;
         this.yourName = yourName;
         this.otherName = otherName;

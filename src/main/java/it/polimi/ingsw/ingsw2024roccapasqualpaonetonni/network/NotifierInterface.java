@@ -1,11 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
 
 import java.io.IOException;
 import java.rmi.Remote;
@@ -20,90 +18,46 @@ public interface NotifierInterface extends Remote {
     void sendYouJoinedGame(int gameId, String pNickname) throws RemoteException;
     void sendAddedNewPlayer(String pNickname) throws IOException;
     void sendNoAvailableGame() throws RemoteException;
-    void sendAskPlayersReady() throws RemoteException;
+    void sendAskPlayersReady() throws IOException;
     void sendFullGame() throws RemoteException;
-
     void sendNameAlreadyInGame() throws RemoteException;
-
     void sendPlayerRemoved(String pNickname) throws RemoteException;
-
     void sendNextTurn(Player p) throws RemoteException;
-
     void sendLastTurn() throws RemoteException;
-
     void sendReconnectedPlayer(String nickname) throws RemoteException;
-
     void sendReconnectionImpossible(String nickname) throws RemoteException;
-
     void sendDisconnectedPlayer(String nickname) throws RemoteException;
-
     void sendDisconnectionImpossible(String nickname) throws RemoteException;
-
     void sendStatusSet(GameStatus status) throws RemoteException;
-
     void sendStatusSetToLastStatus(GameStatus status) throws RemoteException;
-
     void sendLastStatusReset() throws RemoteException;
-
     void sendPlayerIsReady(Player p) throws RemoteException;
-
-    //void tableCreated(GameImmutable model);
-
-    //void playersNotReady(GameImmutable model);
-
     void sendFirstPlayerSet(Player first) throws RemoteException;
-
     void sendDrawableDeckSet(DrawableDeck d) throws RemoteException ;
-
     void sendBoardDeckSet(BoardDeck bd) throws RemoteException;
-
     void sendStartAdded(PlayerBoard board, Player p) throws IOException;
-
     void sendCardAdded(PlayerBoard board, Player p) throws IOException;
-
     void sendChoseInvalidPlace(Player p) throws IOException;
-
     void sendConditionsNotMet(Player p) throws IOException;
-
     void sendStartingCardDrew(StartingCard start, Player p) throws RemoteException;
-
     void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
-
     void sendPersonalGoalChosen(ObjectiveCard goal, Player p) throws RemoteException;
-
     void sendCardNotInHand(PlayingCard card, Player p) throws RemoteException;
-
     void sendResourceDrawn(PlayingCard card, Player p) throws IOException;
-
     void sendGoldDrawn(PlayingCard card, Player p) throws IOException;
-
     void sendDrewFromBoard(PlayingCard card, Player p) throws IOException;
-
     void sendPlayerIsConnected(Player p) throws RemoteException;
-
     void sendPointsIncreased(int points,Player p) throws RemoteException;
-
     void sendSeedCountUpdated(int[] seedCount,Player p) throws RemoteException;
-
     void sendCardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
-
     void sendPlayerReady(Player p) throws RemoteException;
-
     void sendYouWereRemoved(String pNickname) throws IOException;
-
     void youWereReconnected() throws RemoteException;
-
     void sendYouAreFirst() throws RemoteException;
-
     void sendItsYourTurn() throws RemoteException;
-
     void sendUpdatedChat(List<Message> allMessages) throws RemoteException;
-
     void sendMessage(Message message) throws IOException;
-
     void sendPrivateMessage(PrivateMessage message) throws IOException;
-
     void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException;
-
     void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException;
 }

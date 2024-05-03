@@ -6,10 +6,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public class ServerMessagePublicChatLog extends ServerGenericMessage{
+public class ServerMessageChatPublicLog extends ServerGenericMessage{
     private String requesterName;
     private List<Message> allMessages;
-    public ServerMessagePublicChatLog(String requesterName, List<Message> allMessages){
+    public ServerMessageChatPublicLog(String requesterName, List<Message> allMessages){
         this.allMessages = allMessages;
         this.requesterName = requesterName;
     }
