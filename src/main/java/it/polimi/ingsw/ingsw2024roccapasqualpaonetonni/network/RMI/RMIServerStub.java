@@ -179,6 +179,11 @@ public class RMIServerStub implements ServerInterface {
     }
 
     @Override
+    public void getPrivateChatLog(String yourName, String otherName) throws IOException{
+        gameController.getPrivateChatLog(yourName,otherName);
+    }
+
+    @Override
     public void setMaxNUm(int num) throws IOException {
         gameController.setMaxNumberOfPlayer(num);
     }

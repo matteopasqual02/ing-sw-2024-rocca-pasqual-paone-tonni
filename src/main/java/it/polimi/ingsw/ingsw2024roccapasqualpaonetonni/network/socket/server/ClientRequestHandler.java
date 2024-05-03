@@ -333,4 +333,10 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         outputStream.writeObject(new ServerMessagePublicChatLog(requesterName,allMessages));
         messageDone();
     }
+
+    @Override
+    public void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException {
+        outputStream.writeObject(new ServerMessagePrivateChatLog(yourName,otherName,privateChat));
+        messageDone();
+    }
 }

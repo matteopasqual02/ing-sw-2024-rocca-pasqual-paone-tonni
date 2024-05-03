@@ -300,11 +300,13 @@ public class Game implements Serializable {
         chat.addPrivateMessage(senderName,recieverName,message);
         gameListenersHandler.notify_privateMessageSent(message);
     }
-    public Chat getChat() {
-        return chat;
-    }
-
     public void getPublicChatLog(String requesterName) {
         gameListenersHandler.notify_publicChatLog(requesterName,chat.getAllMessages());
+    }
+    public void getPrivateChatLog(String yourName, String otherName){
+        gameListenersHandler.notify_privateChatLog(yourName,otherName,chat.getPrivateChat(yourName,otherName));
+    }
+    public Chat getChat(){
+        return chat;
     }
 }

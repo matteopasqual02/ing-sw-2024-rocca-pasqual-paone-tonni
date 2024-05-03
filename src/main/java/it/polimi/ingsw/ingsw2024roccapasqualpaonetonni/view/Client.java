@@ -71,8 +71,55 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void run() {
         joinLobby();
+        choice();
     }
 
+    public void choice(){
+        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Select your action:\n1) Send a public message\n2) Send a private message\n3)View public chat\n4/View private chat\n "));
+        int selection = Integer.parseInt(new Scanner(System.in).nextLine());
+        switch (selection){
+            case 1: {
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert message: "));
+                String message = new Scanner(System.in).nextLine();
+                try {
+                    serverStub.sendMessage(message,myNickname);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                choice();
+            }
+            case 2:{
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert reciever username: "));
+                String reciever = new Scanner(System.in).nextLine();
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert message: "));
+                String message = new Scanner(System.in).nextLine();
+                try {
+                    serverStub.sendPrivateMessage(message,myNickname,reciever);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                choice();
+            }
+            case 3:{
+                try {
+                    serverStub.getPublicChatLog(myNickname);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                choice();
+            }
+            case 4:{
+                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert reciever username: "));
+                String otherName = new Scanner(System.in).nextLine();
+                try {
+                    serverStub.getPrivateChatLog(myNickname,otherName);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            choice();
+        }
+    }
     public void joinLobby(){
         ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID "));
         int selection = Integer.parseInt(new Scanner(System.in).nextLine());
@@ -87,7 +134,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
                 try {
                     serverStub.createGame(myNickname, maxNumPlayers, this);
+                    //trying listener
                     serverStub.setMaxNUm(maxNumPlayers);
+                    //trying message
                     serverStub.sendMessage("ciao",this.myNickname);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
@@ -100,6 +149,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 try {
                     serverStub.joinFirstAvailable(myNickname, this);
                     serverStub.sendPrivateMessage("ciao a","b","a");
+                    serverStub.getPublicChatLog(myNickname);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -284,7 +334,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void chatUpdate(List<Message> allMessages) throws RemoteException {
 
     }
-
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
         String message = String.format("[%s] privately sent you: %s",m.getSender(),m.getText());
@@ -293,7 +342,30 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void publicChatLog(List<Message> allMessages) throws RemoteException {
-        //find how to print all the chat log
+        if(allMessages!=null){
+            StringBuilder chat = new StringBuilder();
+            for(Message m: allMessages){
+                chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
+            }
+            ConsolePrinter.consolePrinter(chat);
+        }
+        else {
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("There is no public chat"));
+        }
+    }
+
+    @Override
+    public void privateChatLog(String otherName, List<PrivateMessage> privateChat) throws RemoteException {
+        if(privateChat!=null){
+            StringBuilder chat = new StringBuilder();
+            for(PrivateMessage m: privateChat){
+                chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
+            }
+            ConsolePrinter.consolePrinter(chat);
+        }
+        else {
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("You have no private chat with this player"));
+        }
     }
 
 

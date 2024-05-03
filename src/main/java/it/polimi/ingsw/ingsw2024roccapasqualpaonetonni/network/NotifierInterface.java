@@ -104,4 +104,6 @@ public interface NotifierInterface extends Remote {
     void sendPrivateMessage(PrivateMessage message) throws IOException;
 
     void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException;
+
+    void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException;
 }
