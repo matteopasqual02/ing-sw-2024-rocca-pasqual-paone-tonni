@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 
 public class ToStringAllTest {
     @Test
-    void TestAllDrawable() throws RemoteException {
+    void TestAll() throws RemoteException {
         GameController gameController = new GameController(0);
 
         gameController.setMaxNumberOfPlayer(4);
@@ -33,6 +33,11 @@ public class ToStringAllTest {
 
         System.out.println("\n\nStarting:\n");
         for(Card card: gameController.getGame().getGameDrawableDeck().getDecks().get("starting")) {
+            System.out.println(card.toString());
+        }
+
+        System.out.println("\n\nObjective:\n");
+        for(Card card: gameController.getGame().getGameDrawableDeck().getDecks().get("objective")) {
             System.out.println(card.toString());
         }
 
