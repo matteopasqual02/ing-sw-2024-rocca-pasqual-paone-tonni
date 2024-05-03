@@ -251,18 +251,21 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendResourceDrawn(PlayingCard card, Player p) {
-
+    public void sendResourceDrawn(PlayingCard card, Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewResources(card,p));
+        messageDone();
     }
 
     @Override
-    public void sendGoldDrawn(PlayingCard card, Player p) {
-
+    public void sendGoldDrawn(PlayingCard card, Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewGold(card,p));
+        messageDone();
     }
 
     @Override
-    public void sendDrewFromBoard(PlayingCard card, Player p) {
-
+    public void sendDrewFromBoard(PlayingCard card, Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewBoard(card,p));
+        messageDone();
     }
 
     @Override

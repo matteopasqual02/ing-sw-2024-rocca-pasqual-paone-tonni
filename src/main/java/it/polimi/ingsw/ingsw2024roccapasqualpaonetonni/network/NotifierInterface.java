@@ -73,11 +73,11 @@ public interface NotifierInterface extends Remote {
 
     void sendCardNotInHand(PlayingCard card, Player p) throws RemoteException;
 
-    void sendResourceDrawn(PlayingCard card, Player p) throws RemoteException;
+    void sendResourceDrawn(PlayingCard card, Player p) throws IOException;
 
-    void sendGoldDrawn(PlayingCard card, Player p) throws RemoteException;
+    void sendGoldDrawn(PlayingCard card, Player p) throws IOException;
 
-    void sendDrewFromBoard(PlayingCard card, Player p) throws RemoteException;
+    void sendDrewFromBoard(PlayingCard card, Player p) throws IOException;
 
     void sendPlayerIsConnected(Player p) throws RemoteException;
 
