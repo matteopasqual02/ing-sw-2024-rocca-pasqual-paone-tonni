@@ -139,7 +139,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendChoseInvalidPlace(p);
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -148,7 +148,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendConditionsNotMet(p);
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

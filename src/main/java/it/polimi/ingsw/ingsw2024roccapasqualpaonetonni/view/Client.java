@@ -306,6 +306,71 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void cardAdded(PlayerBoard board, Player p) {
 
     }
+
+    @Override
+    public void choseInvalidPlace(Player p) {
+
+    }
+
+    @Override
+    public void conditionsNotMet(Player p) {
+
+    }
+
+    @Override
+    public void startingCardDrew(StartingCard start, Player p) {
+
+    }
+
+    @Override
+    public void drewPersonalGoals(ObjectiveCard[] goals, Player p) {
+
+    }
+
+    @Override
+    public void personalGoalChosen(ObjectiveCard goal, Player p) {
+
+    }
+
+    @Override
+    public void cardNotInHand(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void resourceDrawn(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void goldDrawn(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void drewFromBoard(PlayingCard card, Player p) {
+
+    }
+
+    @Override
+    public void playerIsConnected(Player p) {
+
+    }
+
+    @Override
+    public void pointsIncreased(int points, Player p) {
+
+    }
+
+    @Override
+    public void seedCountUpdated(int[] seedCount, Player p) {
+
+    }
+
+    @Override
+    public void cardRemovedFromHand(PlayingCard card, Player p) {
+
+    }
 /*
     @Override
     public void choseInvalidPlace(Player p) {
