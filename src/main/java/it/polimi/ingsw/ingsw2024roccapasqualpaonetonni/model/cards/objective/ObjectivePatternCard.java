@@ -65,7 +65,6 @@ public class ObjectivePatternCard extends ObjectiveCard {
 
                 line++;
             }
-
         }
 
         return sb.toString();
