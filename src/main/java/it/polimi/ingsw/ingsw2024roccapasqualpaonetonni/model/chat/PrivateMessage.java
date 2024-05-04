@@ -1,36 +1,34 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.List;
 
 public class PrivateMessage implements Serializable {
     private String text;
     private String sender;
-    private String reciever;
+    private String receiver;
     private LocalTime localTime;
 
     public PrivateMessage() {
         text=null;
         localTime=null;
         sender=null;
-        reciever = null;
+        receiver = null;
     }
-    public PrivateMessage(String txt, String sender, String reciever){
+    public PrivateMessage(String txt, String sender, String receiver){
         this.text=txt;
         this.sender=sender;
-        this.reciever = reciever;
+        this.receiver = receiver;
         localTime= java.time.LocalTime.now();
     }
 
     public String getText(){return text;}
-    //public void setText(String text) {this.text = text;}
+    public void setText(String text) {this.text = text;}
     public String getSender(){return sender;}
-    public String getReciever(){return reciever;}
-    //public void setSender(String sender) { this.sender = sender; }
+    public String getReceiver(){return receiver;}
+    public void setSender(String sender) { this.sender = sender; }
+    public void setReceiver(String receiver){this.receiver =receiver;}
     public LocalTime getTime(){return localTime;}
-    //public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
+    public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
 
 }

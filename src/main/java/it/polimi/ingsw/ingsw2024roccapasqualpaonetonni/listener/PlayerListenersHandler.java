@@ -3,11 +3,12 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.util.List;
+
 /*
 this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
 occurs in the model (the controller does something) one of these methods gets called in order to show the

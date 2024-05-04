@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
@@ -8,10 +7,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

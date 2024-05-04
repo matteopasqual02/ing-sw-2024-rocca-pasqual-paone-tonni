@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
@@ -404,7 +404,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     @Override
     public void sendPrivateMessage(PrivateMessage message) throws IOException {
         try {
-            if(listener.getNickname().equals(message.getReciever())){
+            if(listener.getNickname().equals(message.getReceiver())){
                 listener.newPrivateMessage(message);
             }
         } catch (RemoteException e) {

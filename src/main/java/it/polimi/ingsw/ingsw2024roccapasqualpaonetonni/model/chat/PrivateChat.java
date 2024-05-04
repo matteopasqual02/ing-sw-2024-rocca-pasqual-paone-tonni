@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PrivateChat implements Serializable {
-    private String player1;
-    private String player2;
+    private final String player1;
+    private final String player2;
     private final List<PrivateMessage> privateMessageList;
 
-    public PrivateChat(String sender, String reciever){
-        this.player1 = sender;
-        this.player2 = reciever;
+    public PrivateChat(String player1, String player2){
+        this.player1 = player1;
+        this.player2 = player2;
         privateMessageList = new ArrayList<>();
 
     }

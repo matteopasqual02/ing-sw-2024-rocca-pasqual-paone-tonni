@@ -22,25 +22,25 @@ public class Chat implements Serializable {
     public void addMessage(Message m){
         messagesList.add(m);
     }
-    public void addPrivateMessage(String senderName, String recieverName, PrivateMessage m){
+    public void addPrivateMessage(String senderName, String receiverName, PrivateMessage m){
         for(PrivateChat chat: privateChats)
         {
-            if((chat.getPlayer1().equals(senderName) && chat.getPlayer2().equals(recieverName)) || (chat.getPlayer1().equals(recieverName) && chat.getPlayer2().equals(senderName))){
+            if((chat.getPlayer1().equals(senderName) && chat.getPlayer2().equals(receiverName)) || (chat.getPlayer1().equals(receiverName) && chat.getPlayer2().equals(senderName))){
                 chat.addPrivateMessage(m);
                 found = Boolean.TRUE;
             }
         }
         if(found == Boolean.FALSE){
-            privateChats.add(new PrivateChat(senderName,recieverName));
+            privateChats.add(new PrivateChat(senderName,receiverName));
             privateChats.getLast().addPrivateMessage(m);
         }
     }
     public List<Message> getAllMessages(){
         return messagesList;
     }
-    public List<PrivateMessage> getPrivateChat(String senderName, String recieverName) {
+    public List<PrivateMessage> getPrivateChat(String senderName, String receiverName) {
         for (PrivateChat chat : privateChats) {
-            if ((chat.getPlayer1().equals(senderName) && chat.getPlayer2().equals(recieverName)) || (chat.getPlayer1().equals(recieverName) && chat.getPlayer2().equals(senderName))) {
+            if ((chat.getPlayer1().equals(senderName) && chat.getPlayer2().equals(receiverName)) || (chat.getPlayer1().equals(receiverName) && chat.getPlayer2().equals(senderName))) {
                 return chat.getPrivateMessageList();
             }
         }

@@ -4,7 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.Obj
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotInHandException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;

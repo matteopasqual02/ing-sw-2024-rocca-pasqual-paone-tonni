@@ -13,4 +13,5 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
+    exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 
 import java.rmi.RemoteException;
@@ -13,7 +13,7 @@ public class ServerMessageChatNewPrivateMessage extends ServerGenericMessage{
     @Override
     public void launchMessage(GameListener listener) {
         try {
-            if(listener.getNickname().equals(message.getReciever())){
+            if(listener.getNickname().equals(message.getReceiver())){
                 listener.newPrivateMessage(message);
             }
         } catch (RemoteException e) {

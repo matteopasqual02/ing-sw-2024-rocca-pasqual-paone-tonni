@@ -1,13 +1,13 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.ServerGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +15,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 

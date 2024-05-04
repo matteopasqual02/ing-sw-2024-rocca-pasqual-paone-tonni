@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
@@ -6,16 +6,15 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 
-import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
 /*
-GameListener is an interface with all the methods that are used to comunicare with the RMIClient in order to show update of changes.
-The methods here are only the ones that set somethings, not those who get something, because we only want to notify the client if something has actually changed
+GameListener is an interface with all the methods that are used to communicate with the RMIClient in order to show update of changes.
+The methods here are only the ones that set something's, not those who get something, because we only want to notify the client if something has actually changed
  */
 public interface GameListener extends Remote {
     ServerInterface getServerStub() throws RemoteException;

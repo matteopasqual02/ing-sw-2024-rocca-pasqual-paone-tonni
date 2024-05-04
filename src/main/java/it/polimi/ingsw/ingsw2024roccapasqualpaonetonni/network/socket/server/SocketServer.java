@@ -1,18 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server.ClientRequestHandler;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
-
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SocketServer extends Thread {
     private ServerSocket serverSocket;

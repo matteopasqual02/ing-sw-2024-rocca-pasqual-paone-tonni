@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;

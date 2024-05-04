@@ -1,12 +1,10 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 
 public interface ServerInterface extends Remote{
 

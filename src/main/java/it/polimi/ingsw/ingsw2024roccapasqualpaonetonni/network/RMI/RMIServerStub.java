@@ -1,12 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ServerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
