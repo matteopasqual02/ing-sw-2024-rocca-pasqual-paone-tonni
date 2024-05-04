@@ -69,11 +69,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 */
     @Override
     public void run() {
+        title();
         joinLobby();
         choice();
     }
 
-    public void choice(){
+    private void choice(){
         ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Select your action:\n1) Send a public message\n2) Send a private message\n3)View public chat\n4/View private chat\n "));
         int selection = Integer.parseInt(new Scanner(System.in).nextLine());
         switch (selection){
@@ -119,7 +120,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             choice();
         }
     }
-    public void joinLobby(){
+    private void joinLobby(){
         ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID "));
         int selection = Integer.parseInt(new Scanner(System.in).nextLine());
 
@@ -163,6 +164,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 break;
             }
         }
+    }
+    private void title(){
+
     }
 
     @Override

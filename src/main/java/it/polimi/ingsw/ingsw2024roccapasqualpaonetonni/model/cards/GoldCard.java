@@ -3,7 +3,12 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 
+import org.fusesource.jansi.Ansi;
+
 import java.util.Arrays;
+import java.util.concurrent.locks.Condition;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class GoldCard extends PlayingCard {
     private final String pointCondition;
@@ -50,6 +55,169 @@ public class GoldCard extends PlayingCard {
 
     public int[] getPlaceCondition(){return placeCondition;}
     public String getPointCondition() { return pointCondition; }
+
+
+    public String toString() {
+        boolean flipped = isFlipped;
+        StringBuilder sb = new StringBuilder();
+        Ansi.Color background = cardSeed.getByAnsi();
+
+        if (!flipped) {
+
+
+            //First Line
+
+            if (corners[0] == null || corners[0].getSeed() == null) {
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+            } else {
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+                sb.append(ansi().cursor(0, 0).fg(corners[0].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[0].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            }
+
+
+            if (pointCondition == null) {
+                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.BLACK).bg(background).a("    ").a(points).a("    "));
+            } else {
+                sb.append(ansi().cursor(1, 0).fg(Ansi.Color.BLACK).bg(background).a("   ").a(points).a(" ").a(pointCondition.substring(0,1).toUpperCase()).a("   "));
+            }
+
+
+            if (corners[1] == null || corners[1].getSeed() == null) {
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+            } else {
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+                sb.append(ansi().cursor(4, 0).fg(corners[1].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[1].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            }
+            sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a("\n"));
+
+
+            //Second Line
+            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("_______________"));
+            sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
+
+            //Third Line
+
+            if (corners[3] == null || corners[3].getSeed() == null) {
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
+            } else {
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+                sb.append(ansi().cursor(0, 0).fg(corners[3].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[3].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a("  "));
+            }
+
+
+            //PlaceCondition centered
+
+
+            int l = 0;
+            for(int i=0;i<4;i++){
+                l=l+placeCondition[i];
+            }
+
+            switch (l){
+                case 3 ->{
+                    sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                    int i,j,k=0;
+                    for(i=0; i<placeCondition.length; i++) {
+                        for (j=0; j<placeCondition[i]; j++) {
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.BLACK).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            k++;
+                        }
+
+                    }
+
+                    for(j=k; k<6; k++) {
+                        sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                    }
+
+                }
+                case 4 ->{
+                    int i,j,k=0;
+                    int count=0;
+                    for(i=0; i<placeCondition.length; i++) {
+                        for (j=0; j<placeCondition[i]; j++) {
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.BLACK).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            k++;
+                            if(count==1) {
+                                sb.append(ansi().cursor(0,0).bg(background).a(" "));
+                            }
+                            count++;
+                        }
+                    }
+
+                    for(j=k; k<6; k++) {
+                        sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                    }
+
+                }
+                case 5 ->{
+                    int i,j,k=0;
+
+                    for(i=0; i<placeCondition.length; i++) {
+                        for (j=0; j<placeCondition[i]; j++) {
+                            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.BLACK).bg(background).a(Seed.getById(i).name().substring(0,1)));
+                            k++;
+                        }
+
+                    }
+
+                    for(j=k; k<6; k++) {
+                        sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                    }
+
+                    sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                }
+            }
+
+
+
+            if (corners[2] == null || corners[2].getSeed() == null) {
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+                sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a(" "));
+                sb.append(ansi().cursor(0,0).fg(background).bg(background).a(" "));
+            } else {
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+                sb.append(ansi().cursor(0, 0).fg(corners[2].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[2].getSeed().name().substring(0, 1)));
+                sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            }
+
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
+
+
+
+        } else {
+            // Retro della carta
+            //First Line
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("         "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E ").a("\n"));
+            //Second Line
+            sb.append(ansi().cursor(0, 0).fg(background).bg(background).a("______"));
+            sb.append(ansi().cursor(0, 0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            sb.append(ansi().cursor(0, 0).fg(background).bg(Ansi.Color.DEFAULT).a(cardSeed.name().substring(0,1)));
+            sb.append(ansi().cursor(0, 0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+            sb.append(ansi().cursor(0, 0).fg(background).bg(background).a("______"));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
+
+            //Third Line
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(background).a("         "));
+            sb.append(ansi().cursor(0, 0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E "));
+            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
+        }
+
+        return sb.toString();
+    }
+
 }
 
 

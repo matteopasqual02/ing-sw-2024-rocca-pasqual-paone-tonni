@@ -118,7 +118,7 @@ class ObjectiveCardTest {
                 {null, null, GREEN}};
         ObjectiveCard objectiveCard = new ObjectivePatternCard(110,2,pattern);
 
-        Player owner=new Player("a",1);
+        Player owner = new Player("a",1);
         PlayerBoard board1 = new PlayerBoard(owner);
         board1.addStartingCard(start);
         board1.addCard(card_to_add1,start,1,owner.getCountSeed());
