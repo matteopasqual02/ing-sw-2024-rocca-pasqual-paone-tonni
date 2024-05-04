@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server.ClientRequestHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 
@@ -9,12 +10,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SocketServer extends Thread {
     private ServerSocket serverSocket;
     private List<ClientRequestHandler> clientRequestHandlerList;
-
 
     public void start(int port){
         try{
@@ -27,15 +29,15 @@ public class SocketServer extends Thread {
             e.printStackTrace();
             System.err.println("[ERROR] STARTING SOCKET SERVER ");
         }
-
     }
 
     public void run(){
         try{
             while (!Thread.interrupted()){
                 Socket clientSocket = serverSocket.accept();
-                clientRequestHandlerList.add(new ClientRequestHandler(clientSocket));
-                clientRequestHandlerList.getLast().start();
+                ClientRequestHandler clientRequestHandler = new ClientRequestHandler(clientSocket);
+                clientRequestHandlerList.add(clientRequestHandler);
+                clientRequestHandler.start();
                 consolePrinter("[SOCKET] new connection");
             }
         } catch (IOException e) {

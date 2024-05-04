@@ -41,9 +41,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendYouJoinedGame(int gameId, String pNickname) {
+    public void sendYouJoinedGame(int gameId) {
         try {
-            listener.youJoinedGame(gameId, pNickname);
+            listener.youJoinedGame(gameId);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -250,22 +250,42 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     @Override
     public void sendStartAdded(PlayerBoard board, Player p) {
-        listener.startAdded(board,p);
+        try {
+            listener.startAdded(board,p);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendCardAdded(PlayerBoard board, Player p) {
-        listener.cardAdded(board,p);
+        try {
+            listener.cardAdded(board, p);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendChoseInvalidPlace(Player p) {
-        listener.choseInvalidPlace(p);
+        try {
+            listener.choseInvalidPlace(p);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendConditionsNotMet(Player p) {
-        listener.conditionsNotMet(p);
+        try {
+            listener.conditionsNotMet(p);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -290,17 +310,32 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     @Override
     public void sendResourceDrawn(PlayingCard card, Player p) {
-        listener.resourceDrawn(card,p);
+        try {
+            listener.resourceDrawn(card,p);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendGoldDrawn(PlayingCard card, Player p) {
-        listener.goldDrawn(card, p);
+        try {
+            listener.goldDrawn(card, p);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void sendDrewFromBoard(PlayingCard card, Player p) {
-        listener.drewFromBoard(card, p);
+        try {
+            listener.drewFromBoard(card, p);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -16,16 +16,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerValues;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import static java.lang.Thread.sleep;
 
 public class GameController implements GameControllerInterface {
     private final Game model;
@@ -33,7 +27,6 @@ public class GameController implements GameControllerInterface {
     private final String path;
 
     // attributes needed to implement the executor
-    private final Queue<Runnable> methodsQueue;
     private transient final ExecutorService executorService;
 
     public GameController(int id) throws RemoteException {
@@ -41,7 +34,6 @@ public class GameController implements GameControllerInterface {
         this.model = new Game(id);
         this.random = new Random();
         this.path = DefaultControllerValues.jsonPath;
-        this.methodsQueue = new LinkedBlockingQueue<>();
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -85,7 +77,10 @@ public class GameController implements GameControllerInterface {
             e.printStackTrace();
         }
         if (model.getPlayerNum() == model.getMaxNumberOfPlayer()) {
-            model.askPlayersReady();
+            Runnable runnable = () -> {
+                model.askPlayersReady();
+            };
+            executorService.submit(runnable);
         }
     }
 
@@ -409,6 +404,11 @@ public class GameController implements GameControllerInterface {
     @Override
     public void getPrivateChatLog(String yourName, String otherName) throws RemoteException {
         model.getPrivateChatLog(yourName,otherName);
+    }
+
+    @Override
+    public int getGameId() {
+        return model.getGameId();
     }
 
 

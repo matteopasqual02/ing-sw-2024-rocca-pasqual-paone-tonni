@@ -24,13 +24,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     private transient ObjectInputStream inputStream;
     private transient ObjectOutputStream outputStream;
     private String nickname;
-    private Client client;
+    private final Client client;
     private GameListener serverRequestHandler;
 
     //private final SocketNotifier socketNotifier;
 
     public SocketClient(Client client) throws IOException {
-        this.client=client;
+        this.client = client;
         connect();
         this.start();
     }
@@ -86,8 +86,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
                 retry = true;
                 attempt++;
             }
-
-        }while(retry);
+        } while(retry);
     }
     private void disconnect() throws IOException {
         inputStream.close();
@@ -99,39 +98,41 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         outputStream.reset();
     }
 
-    public ObjectOutputStream getOutputStream(){
+    public ObjectOutputStream getOutputStream() {
         return this.outputStream;
     }
-    public ObjectInputStream getInputStream(){
+
+    public ObjectInputStream getInputStream() {
         return this.inputStream;
     }
+
     @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers,me));
+        outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers, me));
         messageDone();
     }
 
     @Override
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageJoinFirstAvailable(name,me));
+        outputStream.writeObject(new MainMessageJoinFirstAvailable(name, me));
         messageDone();
     }
 
     @Override
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageJoinGameById(name,idGame));
+        outputStream.writeObject(new MainMessageJoinGameById(name, idGame, me));
         messageDone();
     }
 
     @Override
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageReconnect(name,idGame));
+        outputStream.writeObject(new MainMessageReconnect(name, idGame, me));
         messageDone();
     }
 
     @Override
     public void leave(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageReconnect(name,idGame));
+        outputStream.writeObject(new MainMessageReconnect(name, idGame, me));
         messageDone();
     }
 

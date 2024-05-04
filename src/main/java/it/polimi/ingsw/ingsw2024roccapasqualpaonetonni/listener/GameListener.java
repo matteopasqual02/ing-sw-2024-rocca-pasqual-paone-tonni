@@ -25,7 +25,7 @@ public interface GameListener extends Remote {
     //--------------------------GAME CREATION PHASE
     void maxNumPlayersSet(int max) throws RemoteException;
     void createdGame(int gameId) throws RemoteException;
-    void youJoinedGame(int gameId, String pNickname) throws RemoteException;
+    void youJoinedGame(int gameId) throws RemoteException;
     void addedNewPlayer(String pNickname) throws RemoteException;
     void noAvailableGame() throws RemoteException;
     void fullGame() throws RemoteException;
@@ -60,20 +60,20 @@ public interface GameListener extends Remote {
 
     void privateChatLog(String otherName, List<PrivateMessage> privateChat) throws RemoteException;
 
-    void startAdded(PlayerBoard board, Player p);
-    void cardAdded(PlayerBoard board, Player p);
-    void choseInvalidPlace(Player p);
-    void conditionsNotMet(Player p);
-    void startingCardDrew(StartingCard start, Player p);
-    void drewPersonalGoals(ObjectiveCard[] goals, Player p);
-    void personalGoalChosen(ObjectiveCard goal, Player p);
-    void cardNotInHand(PlayingCard card,Player p);
-    void resourceDrawn(PlayingCard card, Player p);
-    void goldDrawn(PlayingCard card, Player p);
-    void drewFromBoard(PlayingCard card, Player p);
-    void playerIsConnected(Player p);
-    void pointsIncreased(int points,Player p);
-    void seedCountUpdated(int[] seedCount,Player p);
-    void cardRemovedFromHand(PlayingCard card, Player p);
+    void startAdded(PlayerBoard board, Player p) throws RemoteException;
+    void cardAdded(PlayerBoard board, Player p) throws RemoteException;
+    void choseInvalidPlace(Player p) throws RemoteException;
+    void conditionsNotMet(Player p) throws RemoteException;
+    void startingCardDrew(StartingCard start, Player p) throws RemoteException;
+    void drewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
+    void personalGoalChosen(ObjectiveCard goal, Player p) throws RemoteException;
+    void cardNotInHand(PlayingCard card,Player p) throws RemoteException;
+    void resourceDrawn(PlayingCard card, Player p) throws RemoteException;
+    void goldDrawn(PlayingCard card, Player p) throws RemoteException;
+    void drewFromBoard(PlayingCard card, Player p) throws RemoteException;
+    void playerIsConnected(Player p) throws RemoteException;
+    void pointsIncreased(int points,Player p) throws RemoteException;
+    void seedCountUpdated(int[] seedCount,Player p) throws RemoteException;
+    void cardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
 
 }

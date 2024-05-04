@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
@@ -7,8 +8,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 import java.rmi.RemoteException;
 
-public class MainMessageJoinFirstAvailable extends ClientGenericMessage{
+public class MainMessageJoinFirstAvailable extends ClientGenericMessage {
     private final GameListener listener;
+
     public MainMessageJoinFirstAvailable(String nickname, GameListener listener){
         this.nickname = nickname;
         this.isForMainController = true;
@@ -17,7 +19,7 @@ public class MainMessageJoinFirstAvailable extends ClientGenericMessage{
 
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
-        GameControllerInterface controller = mainControllerInterface.joinFirstAvailableGame(nickname);
+        GameControllerInterface controller = mainControllerInterface.joinFirstAvailableGame(nickname, listener, notifier);
         if(controller!=null){
             controller.addMyselfAsListener(listener,notifier);
         }

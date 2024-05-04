@@ -76,21 +76,17 @@ public class RMIServerStub implements ServerInterface {
     public void createGame(String name, int maxNumPlayers, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.createGameController(name, maxNumPlayers);
-        notifier = new RMINotifier(me);
-        gameController.addMyselfAsListener(me,notifier);
+        RMINotifier notifier = new RMINotifier(me);
+        gameController = requests.createGameController(name, maxNumPlayers, me, notifier);
     }
 
     @Override
     public void joinFirstAvailable(String name, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.joinFirstAvailableGame(name);
-        if (gameController != null) {
-            notifier = new RMINotifier(me);
-            gameController.addMyselfAsListener(me,notifier);
-        }
-        else {
+        RMINotifier notifier = new RMINotifier(me);
+        gameController = requests.joinFirstAvailableGame(name, me, notifier);
+        if (gameController == null) {
             me.noAvailableGame();
         }
     }
@@ -99,11 +95,8 @@ public class RMIServerStub implements ServerInterface {
     public void joinGameByID(String name, int idGame, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.joinGameByID(name, idGame);
-        if(gameController != null){
-            notifier = new RMINotifier(me);
-            gameController.addMyselfAsListener(me,notifier);
-        }
+        RMINotifier notifier = new RMINotifier(me);
+        gameController = requests.joinGameByID(name, idGame, me, notifier);
     }
 
     @Override
@@ -115,18 +108,15 @@ public class RMIServerStub implements ServerInterface {
    public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-        gameController = requests.reconnect(name, idGame);
-       notifier = new RMINotifier(me);
-       gameController.addMyselfAsListener(me,notifier);
+       RMINotifier notifier = new RMINotifier(me);
+        gameController = requests.reconnect(name, idGame, me, notifier);
 
    }
     @Override
     public void leave(String nickname, int idGame, GameListener me) throws IOException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-
-        requests.leaveGame(nickname, idGame);
-        gameController.removeMyselfAsListener(me);
+        requests.leaveGame(nickname, idGame, me);
         gameController = null;
     }
 

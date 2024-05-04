@@ -4,12 +4,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
-public interface GameControllerInterface extends Remote{
+public interface GameControllerInterface extends Remote {
 
     //---------------------------------LISTENERS SECTION
     void addMyselfAsListener(GameListener me, NotifierInterface notifier) throws RemoteException;
@@ -19,6 +18,7 @@ public interface GameControllerInterface extends Remote{
     void addPlayer(String nickname) throws RemoteException;
     void setMaxNumberOfPlayer(int num) throws RemoteException;
     void ready(String nickname) throws RemoteException;
+
 
     //---------------------------------TABLE AND INIT SECTION
     void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
@@ -32,4 +32,6 @@ public interface GameControllerInterface extends Remote{
     void sendPrivateMessage(String senderName, String recieverName, String txt) throws RemoteException;
     void getPublicChatLog(String requesterName) throws RemoteException;
     void getPrivateChatLog(String yourName, String otherName) throws RemoteException;
+
+    int getGameId() throws RemoteException;
 }

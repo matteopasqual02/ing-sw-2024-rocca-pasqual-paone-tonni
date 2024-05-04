@@ -47,7 +47,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         for(GameListener listener : listenersMap.keySet()) {
             try {
                 if (listener.getNickname().equals(pNickname)) {
-                    listenersMap.get(listener).sendYouJoinedGame(gameId, pNickname);
+                    try {
+                        listenersMap.get(listener).sendYouJoinedGame(gameId);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     listenersMap.get(listener).sendAddedNewPlayer(pNickname);
@@ -64,7 +69,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 if (listener.getNickname().equals(nickname)) {
                     listenersMap.get(listener).sendNoAvailableGame();
                 }
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -76,13 +81,13 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 if (listener.getNickname().equals(player.getNickname())) {
                     listenersMap.get(listener).sendFullGame();
                 }
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public void notify_playerAlredyIn(Player player) {
+    public void notify_playerAlreadyIn(Player player) {
         for(GameListener listener : listenersMap.keySet()) {
             try {
                 if (listener.getNickname().equals(player.getNickname())) {
@@ -98,7 +103,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         for(GameListener listener : listenersMap.keySet()) {
             try {
                 listenersMap.get(listener).sendAskPlayersReady();
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }

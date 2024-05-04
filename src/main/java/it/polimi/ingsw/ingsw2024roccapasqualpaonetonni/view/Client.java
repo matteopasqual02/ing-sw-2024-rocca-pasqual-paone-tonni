@@ -134,10 +134,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
                 try {
                     serverStub.createGame(myNickname, maxNumPlayers, this);
-                    //trying listener
-                    serverStub.setMaxNUm(maxNumPlayers);
-                    //trying message
-                    serverStub.sendMessage("ciao",this.myNickname);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -199,10 +195,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     @Override
-    public void youJoinedGame(int gameId, String pNickname) {
+    public void youJoinedGame(int gameId) {
         myGameId = gameId;
-        myNickname = pNickname;
-        String message = String.format("You joined game %d, with nickname %d", myGameId, myNickname);
+        String message = String.format("You joined game %d", myGameId);
         ConsolePrinter.consolePrinter(message);
     }
 
@@ -222,6 +217,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void areYouReady() {
         ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Press the key (Y) when you are ready to start the game!"));
+        /*
         String selection = new Scanner(System.in).nextLine();
 
         if (selection.equals("Y")) {
@@ -237,6 +233,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             ConsolePrinter.consolePrinter(message);
             areYouReady();
         }
+        */
     }
 
     @Override

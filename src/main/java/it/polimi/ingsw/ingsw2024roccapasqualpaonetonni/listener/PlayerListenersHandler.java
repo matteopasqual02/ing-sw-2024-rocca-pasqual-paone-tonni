@@ -13,7 +13,7 @@ this class handles the listeners of the player class in the model: the listeners
 occurs in the model (the controller does something) one of these methods gets called in order to show the
 change to each of the clients. These methods call other methods on the actual single listener giving it the change occurred
 
-these are not hte methods that directly notify the clients, they are the ones that call those methods on all of the clients.
+these are not the methods that directly notify the clients, they are the ones that call those methods on all of the clients.
  */
 public class PlayerListenersHandler extends ListenersHandler implements Serializable {
 
@@ -21,7 +21,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         super();
     }
     /*public void resetPlayerListeners(List<GameListener> gameListeners){
-        listenersMap=null;
+        //listenersMap=null;
         for(GameListener lis : gameListeners){
             try {
                 addListener(lis);
@@ -80,7 +80,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendGoldDrawn(card,p);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -89,7 +89,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendResourceDrawn(card,p);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -98,7 +98,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendDrewFromBoard(card, p);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }

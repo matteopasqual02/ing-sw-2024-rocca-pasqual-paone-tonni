@@ -44,7 +44,6 @@ public class Game implements Serializable {
 
         chat = new Chat();
         gameListenersHandler = new GameListenersHandler();
-        gameListenersHandler.notify_createdGame(id);
     }
 
     public void addListeners(GameListener me, NotifierInterface notifier){
@@ -85,7 +84,10 @@ public class Game implements Serializable {
                 /*for(Player p: players){
                     p.setPlayerListeners(gameListenersHandler.getListener());
                 }*/
-                gameListenersHandler.notify_addPlayer(px.getNickname(), gameId);
+                if (players.size() == 1) {
+                    gameListenersHandler.notify_createdGame(this.gameId);
+                }
+                gameListenersHandler.notify_addPlayer(px.getNickname(), this.gameId);
             }
             else {
                 gameListenersHandler.notify_gameFull(px);
@@ -93,7 +95,7 @@ public class Game implements Serializable {
             }
         }
         else {
-            gameListenersHandler.notify_playerAlredyIn(px);
+            gameListenersHandler.notify_playerAlreadyIn(px);
             throw new PlayerAlreadyInException("The player is already in the game");
         }
 

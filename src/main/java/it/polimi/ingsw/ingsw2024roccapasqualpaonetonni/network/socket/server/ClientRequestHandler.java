@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
@@ -11,10 +12,14 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageJoinFirstAvailable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -35,7 +40,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         processingQueue = new LinkedBlockingQueue<>();
-
         //link the server's output to client
     }
 
@@ -73,9 +77,25 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         try{
             while(!this.isInterrupted()){
                 message = processingQueue.take();
-
-                if(message.isForMainController()){
-                    gameControllerInterface = message.launchMessage(MainController.getInstance(),this);
+                if (message.isForMainController()){
+                    gameControllerInterface = message.launchMessage(MainController.getInstance(), this);
+                    if (message instanceof MainMessageCreateGame) {
+                        try {
+                            // sendCreatedGame(gameControllerInterface.getGameId());
+                            sendYouJoinedGame(gameControllerInterface.getGameId());
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if (message instanceof MainMessageJoinFirstAvailable) {
+                        try {
+                            sendYouJoinedGame(gameControllerInterface.getGameId());
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 else{
                     message.launchMessage(gameControllerInterface);
@@ -93,6 +113,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         outputStream.flush();
         outputStream.reset();
     }
+
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
         outputStream.writeObject(new ServerMessageMaxNum(max));
@@ -106,13 +127,16 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendYouJoinedGame(int gameId, String pNickname) {
-
+    public void sendYouJoinedGame(int gameId) throws IOException {
+        if (gameControllerInterface != null) {
+            outputStream.writeObject(new MainMessageJoinedGame(gameControllerInterface.getGameId()));
+            messageDone();
+        }
     }
 
     @Override
     public void sendAddedNewPlayer(String pNickname) throws IOException {
-        outputStream.writeObject(new ServerMessagePlayerAdded(pNickname));
+        outputStream.writeObject(new MainMessageNewPlayerJoined(pNickname));
         messageDone();
     }
 

@@ -2,22 +2,26 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.rmi.RemoteException;
 
 public class MainMessageReconnect extends ClientGenericMessage{
-    int idToConnect;
+    private final int idToConnect;
+    private final GameListener listener;
 
-    public MainMessageReconnect(String nickname, int idToConnect){
+    public MainMessageReconnect(String nickname, int idToConnect, GameListener listener){
         this.nickname = nickname;
         this.isForMainController = true;
         this.idToConnect = idToConnect;
+        this.listener = listener;
     }
 
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
-        return mainControllerInterface.reconnect(nickname,idToConnect);
+        return mainControllerInterface.reconnect(nickname, idToConnect, listener, notifier);
     }
 
     @Override
