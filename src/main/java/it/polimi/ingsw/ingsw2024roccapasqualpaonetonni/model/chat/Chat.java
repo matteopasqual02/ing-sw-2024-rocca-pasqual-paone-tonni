@@ -25,12 +25,13 @@ public class Chat implements Serializable {
     public void addPrivateMessage(String senderName, String receiverName, PrivateMessage m){
         for(PrivateChat chat: privateChats)
         {
+            found = false;
             if((chat.getPlayer1().equals(senderName) && chat.getPlayer2().equals(receiverName)) || (chat.getPlayer1().equals(receiverName) && chat.getPlayer2().equals(senderName))){
                 chat.addPrivateMessage(m);
-                found = Boolean.TRUE;
+                found = true;
             }
         }
-        if(found == Boolean.FALSE){
+        if(!found){
             privateChats.add(new PrivateChat(senderName,receiverName));
             privateChats.getLast().addPrivateMessage(m);
         }
