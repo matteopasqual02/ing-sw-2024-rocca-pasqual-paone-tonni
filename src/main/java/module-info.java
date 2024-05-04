@@ -9,7 +9,8 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
 
     opens it.polimi.ingsw.ingsw2024roccapasqualpaonetonni to javafx.fxml;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni;
-    //i had to add this last one to make mainServer work
+
+    //I had to add this last one to make mainServer work
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
