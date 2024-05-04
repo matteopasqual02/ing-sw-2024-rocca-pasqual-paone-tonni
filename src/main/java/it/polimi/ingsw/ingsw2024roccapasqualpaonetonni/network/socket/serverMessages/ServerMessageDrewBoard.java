@@ -15,6 +15,11 @@ public class ServerMessageDrewBoard extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.drewFromBoard(playingCard,player);
+        try {
+            listener.drewFromBoard(playingCard,player);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

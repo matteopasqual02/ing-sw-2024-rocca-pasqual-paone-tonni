@@ -14,6 +14,11 @@ public class ServerMessageDrewGold extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.goldDrawn(playingCard,player);
+        try {
+            listener.goldDrawn(playingCard,player);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

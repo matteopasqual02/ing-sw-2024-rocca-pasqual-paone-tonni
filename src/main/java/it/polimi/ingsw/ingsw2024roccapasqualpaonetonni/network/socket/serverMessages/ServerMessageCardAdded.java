@@ -14,6 +14,11 @@ public class ServerMessageCardAdded extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.cardAdded(playerBoard,player);
+        try {
+            listener.cardAdded(playerBoard,player);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

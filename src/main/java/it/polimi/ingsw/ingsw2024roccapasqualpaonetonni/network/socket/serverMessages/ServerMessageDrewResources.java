@@ -14,6 +14,11 @@ public class ServerMessageDrewResources extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.resourceDrawn(playingCard,player);
+        try {
+            listener.resourceDrawn(playingCard,player);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

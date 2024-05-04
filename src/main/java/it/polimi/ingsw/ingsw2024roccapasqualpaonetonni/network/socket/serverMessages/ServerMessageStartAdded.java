@@ -16,6 +16,11 @@ public class ServerMessageStartAdded extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.startAdded(playerBoard,player);
+        try {
+            listener.startAdded(playerBoard,player);
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,6 +3,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 
+import java.rmi.RemoteException;
+
 public class ServerMessageCardInvalidPlace extends ServerGenericMessage{
     private final Player player;
     public ServerMessageCardInvalidPlace(Player player){
@@ -12,6 +14,11 @@ public class ServerMessageCardInvalidPlace extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.choseInvalidPlace(player);
+        try {
+            listener.choseInvalidPlace(player);
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

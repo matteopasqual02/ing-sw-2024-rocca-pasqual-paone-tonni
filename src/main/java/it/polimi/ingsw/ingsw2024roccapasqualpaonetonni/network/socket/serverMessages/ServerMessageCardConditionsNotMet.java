@@ -12,6 +12,11 @@ public class ServerMessageCardConditionsNotMet extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) {
-        listener.conditionsNotMet(player);
+        try {
+            listener.conditionsNotMet(player);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
