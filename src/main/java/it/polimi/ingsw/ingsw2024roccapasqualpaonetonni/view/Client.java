@@ -62,7 +62,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void setMyNickname(String myNickname) {
         this.myNickname = myNickname;
     }
-    public String getMyNickname(){
+    @Override
+    public String getNickname() throws RemoteException {
         return myNickname;
     }
     public ServerInterface getServerInterface(){
