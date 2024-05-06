@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 
 public class MessageSendMessage extends ClientGenericMessage{
     private String txt;
-    public MessageSendMessage(String nickname, String txt){
+    public MessageSendMessage(String txt, String nickname){
         this.isForMainController = false;
         this.nickname = nickname;
         this.txt = txt;
