@@ -218,7 +218,7 @@ public class Game implements Serializable {
         gameListenersHandler.notify_nextPlayer(newCurrent);
     }
 
-    public void gameReady() {
+    public void gameReady()  {
         gameListenersHandler.notify_All(new GameImmutable(this));
     }
 
@@ -287,12 +287,12 @@ public class Game implements Serializable {
 //---------------------------------DECK SECTION
     public void setGameDrawableDeck(DrawableDeck deck) {
         this.gameDrawableDeck = deck;
-        gameListenersHandler.notify_setGameDrawableDeck(deck);
+        //gameListenersHandler.notify_setGameDrawableDeck(deck);
     }
 
     public void setGameBoardDeck(BoardDeck deck) {
         this.gameBoardDeck = deck;
-        gameListenersHandler.notify_setGameBoardDeck(deck);
+        //gameListenersHandler.notify_setGameBoardDeck(deck);
     }
 
 //---------------------------------CHAT SECTION

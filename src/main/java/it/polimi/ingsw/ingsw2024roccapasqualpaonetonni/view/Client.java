@@ -75,10 +75,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
-    @Override
-    public void allGame(GameImmutable gameImmutable) {
 
-    }
     @Override
     public void maxNumPlayersSet(int max) {
         view.show_maxNumPlayersSet(max);
@@ -102,7 +99,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void addedNewPlayer(String pNickname) {
         view.show_addedNewPlayer(pNickname);
     }
-
     @Override
     public void areYouReady() {
         view.show_areYouReady();
@@ -111,6 +107,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         } catch (NotBoundException | IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void allGame(GameImmutable gameImmutable) {
+        ConsolePrinter.consolePrinter("new model");
     }
 
     @Override

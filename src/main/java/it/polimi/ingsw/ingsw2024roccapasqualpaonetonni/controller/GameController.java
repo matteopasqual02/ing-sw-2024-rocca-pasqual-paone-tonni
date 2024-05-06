@@ -89,7 +89,7 @@ public class GameController implements GameControllerInterface {
     }
 
     @Override
-    public void ready(String nickname) {
+    public void ready(String nickname) throws RemoteException {
         synchronized (model) {
             model.setPlayerReady(nickname);
             if (model.getReadyPlayersNum() == model.getPlayerNum()) {

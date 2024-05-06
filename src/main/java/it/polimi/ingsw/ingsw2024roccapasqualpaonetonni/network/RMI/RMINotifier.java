@@ -24,7 +24,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     @Override
     public void sendAll(GameImmutable gameImmutable) {
-        listener.allGame(gameImmutable);
+        try{
+            listener.allGame(gameImmutable);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //--------------------------GAME CREATION PHASE

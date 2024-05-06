@@ -18,7 +18,7 @@ The methods here are only the ones that set something's, not those who get somet
  */
 public interface GameListener extends Remote {
     String getNickname() throws RemoteException;
-    void allGame(GameImmutable gameImmutable);
+    void allGame(GameImmutable gameImmutable) throws RemoteException;
 
     //--------------------------GAME CREATION PHASE
     void maxNumPlayersSet(int max) throws RemoteException;

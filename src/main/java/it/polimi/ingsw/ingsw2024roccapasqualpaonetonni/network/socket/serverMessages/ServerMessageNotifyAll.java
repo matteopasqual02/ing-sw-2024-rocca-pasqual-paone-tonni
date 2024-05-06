@@ -13,6 +13,10 @@ public class ServerMessageNotifyAll extends ServerGenericMessage{
 
     @Override
     public void launchMessage(GameListener listener) throws RemoteException {
-        listener.allGame(gameImmutable);
+        try {
+            listener.allGame(gameImmutable);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

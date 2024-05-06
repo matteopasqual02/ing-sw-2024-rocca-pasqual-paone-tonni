@@ -3,11 +3,12 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class GameImmutable {
+public class GameImmutable implements Serializable {
     private final int gameId;
     private final int maxNumberOfPlayers;
     private final Queue<Player> players;
