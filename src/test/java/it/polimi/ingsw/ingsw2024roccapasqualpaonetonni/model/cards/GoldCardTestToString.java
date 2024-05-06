@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed.*;

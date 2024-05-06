@@ -111,7 +111,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void allGame(GameImmutable gameImmutable) {
-        ConsolePrinter.consolePrinter("new model");
+        view.show_All(gameImmutable,myNickname);
     }
 
     @Override

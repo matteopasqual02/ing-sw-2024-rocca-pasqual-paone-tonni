@@ -3,7 +3,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
 //import static org.fusesource.jansi.Ansi.ansi;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import org.fusesource.jansi.Ansi;
 

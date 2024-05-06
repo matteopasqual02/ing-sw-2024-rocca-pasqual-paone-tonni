@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;

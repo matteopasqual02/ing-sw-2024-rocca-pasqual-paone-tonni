@@ -1,11 +1,17 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 
 public class GUI implements ViewUpdate {
     @Override
     public void joinLobby(Client client) {
+
+    }
+
+    @Override
+    public void show_All(GameImmutable gameImmutable, String nickname) {
 
     }
 

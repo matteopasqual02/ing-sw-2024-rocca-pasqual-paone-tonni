@@ -1,8 +1,11 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.AlreadyCoveredException;
 
-public class Corner {
+import java.io.Serializable;
+
+public class Corner implements Serializable {
     private final int position;
     private final Seed seed;
 

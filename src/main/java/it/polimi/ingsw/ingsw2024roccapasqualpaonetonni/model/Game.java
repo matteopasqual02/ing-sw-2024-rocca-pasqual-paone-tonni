@@ -156,12 +156,12 @@ public class Game implements Serializable {
 
     public synchronized void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
-        gameListenersHandler.notify_setFirstPlayer(fp);
+        //gameListenersHandler.notify_setFirstPlayer(fp);
     }
 
     public void setStatus(GameStatus status) {
         this.status[0] = status;
-        gameListenersHandler.notify_setStatus(status);
+        //gameListenersHandler.notify_setStatus(status);
     }
 
     public void startGame() {

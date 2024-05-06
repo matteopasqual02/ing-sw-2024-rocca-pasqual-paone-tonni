@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 
 import java.util.Arrays;

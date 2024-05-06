@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
