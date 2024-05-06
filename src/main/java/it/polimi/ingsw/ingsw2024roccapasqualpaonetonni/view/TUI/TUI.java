@@ -11,6 +11,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public TUI() throws RemoteException {
     }
@@ -80,6 +82,47 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
             }
         }
         client.setMyNickname(myNickname);
+    }
+
+    @Override
+    public void show_maxNumPlayersSet(int max) {
+        String message = String.format("New max number of players for game: %d players maximum", max);
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void show_createdGame(int gameID) {
+        String message = String.format("Game created, with GameID: %d", gameID);
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void show_youJoinedGame(int gameID) {
+        String message = String.format("You joined game %d", gameID);
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void show_noAvailableGame() {
+        String message = "No game available, try again \n";
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void show_addedNewPlayer(String pNickname) {
+        String message = String.format("Player \"%s\" joined the game", pNickname);
+        ConsolePrinter.consolePrinter(message);
+    }
+
+    @Override
+    public void show_areYouReady() {
+        String selection;
+        ConsolePrinter.consolePrinter("Press the key (Y) when you are ready to start the game!");
+
+        do{
+            selection = new Scanner(System.in).nextLine();
+        }while (!selection.equals("Y"));
+
     }
 
     private void title(){

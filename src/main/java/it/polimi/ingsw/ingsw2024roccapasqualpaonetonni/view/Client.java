@@ -14,6 +14,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -74,57 +75,36 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void maxNumPlayersSet(int max) {
-        String message = String.format("New max number of players for game: %d players maximum", max);
-        ConsolePrinter.consolePrinter(message);
+        view.show_maxNumPlayersSet(max);
     }
-
     @Override
     public void createdGame(int gameId) {
         myGameId = gameId;
-        String message = String.format("Game created, with GameID: %d", myGameId);
-        ConsolePrinter.consolePrinter(message);
+        view.show_createdGame(gameId);
     }
-
     @Override
     public void youJoinedGame(int gameId) {
         myGameId = gameId;
-        String message = String.format("You joined game %d", myGameId);
-        ConsolePrinter.consolePrinter(message);
+        view.show_youJoinedGame(gameId);
     }
-
     @Override
     public void noAvailableGame() {
-        String message = String.format("No game available, try again");
-        ConsolePrinter.consolePrinter(message);
+        view.show_noAvailableGame();
         view.joinLobby(this);
     }
-
     @Override
     public void addedNewPlayer(String pNickname) {
-        String message = String.format("Player \"%s\" joined the game", pNickname);
-        ConsolePrinter.consolePrinter(message);
+        view.show_addedNewPlayer(pNickname);
     }
 
     @Override
     public void areYouReady() {
-        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Press the key (Y) when you are ready to start the game!"));
-        /*
-        String selection = new Scanner(System.in).nextLine();
-
-        if (selection.equals("Y")) {
-            try {
-                serverStub.ready(myNickname);
-            }
-            catch (NotBoundException | IOException e) {
-                throw new RuntimeException(e);
-            }
+        view.show_areYouReady();
+        try {
+            server.ready(myNickname);
+        } catch (NotBoundException | IOException e) {
+            throw new RuntimeException(e);
         }
-        else {
-            String message = String.format("You pressed an invalid key, try again!");
-            ConsolePrinter.consolePrinter(message);
-            areYouReady();
-        }
-        */
     }
 
     @Override

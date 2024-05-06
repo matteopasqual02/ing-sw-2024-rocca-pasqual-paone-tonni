@@ -8,4 +8,34 @@ public class GUI implements ViewUpdate {
     public void joinLobby(Client client) {
 
     }
+
+    @Override
+    public void show_maxNumPlayersSet(int max) {
+
+    }
+
+    @Override
+    public void show_createdGame(int gameID) {
+
+    }
+
+    @Override
+    public void show_youJoinedGame(int gameID) {
+
+    }
+
+    @Override
+    public void show_noAvailableGame() {
+
+    }
+
+    @Override
+    public void show_addedNewPlayer(String pNickname) {
+
+    }
+
+    @Override
+    public void show_areYouReady() {
+
+    }
 }
