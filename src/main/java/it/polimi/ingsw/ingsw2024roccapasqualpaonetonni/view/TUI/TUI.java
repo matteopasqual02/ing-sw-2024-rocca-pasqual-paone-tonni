@@ -7,9 +7,14 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class TUI implements ViewUpdate {
+public class TUI extends UnicastRemoteObject implements ViewUpdate  {
+    public TUI() throws RemoteException {
+    }
+
     @Override
     public void joinLobby(Client client){
         String myNickname = null;
