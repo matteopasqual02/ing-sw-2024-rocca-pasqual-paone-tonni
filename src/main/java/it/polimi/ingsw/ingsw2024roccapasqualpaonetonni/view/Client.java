@@ -209,6 +209,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void chatUpdate(List<Message> allMessages) throws RemoteException {
 
     }
+
+    /**
+     * this method recieves a private message and prints the sender and the content on both players' displays
+     * @param m
+     * @throws RemoteException
+     */
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
         String message = String.format("[%s] privately sent you: %s",m.getSender(),m.getText());
