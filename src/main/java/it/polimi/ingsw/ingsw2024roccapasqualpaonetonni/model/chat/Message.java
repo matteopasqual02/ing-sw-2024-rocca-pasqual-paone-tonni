@@ -2,11 +2,12 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class Message {
+public class Message implements Serializable {
     private String text;
-    private Player sender;
+    private String sender;
     private LocalTime localTime;
 
     public Message(){
@@ -14,7 +15,7 @@ public class Message {
         localTime=null;
         sender=null;
     }
-    public Message(String txt, Player sender){
+    public Message(String txt, String sender){
         this.text=txt;
         this.sender=sender;
         localTime= java.time.LocalTime.now();
@@ -22,8 +23,8 @@ public class Message {
 
     public String getText(){return text;}
     public void setText(String text) {this.text = text;}
-    public Player getSender(){return sender;}
-    public void setSender(Player sender) { this.sender = sender; }
+    public String getSender(){return sender;}
+    public void setSender(String sender) { this.sender = sender; }
     public LocalTime getTime(){return localTime;}
     public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
 

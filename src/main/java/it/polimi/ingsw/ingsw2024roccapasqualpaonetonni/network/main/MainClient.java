@@ -4,22 +4,25 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValue
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, NotBoundException {
         clearCMD();
         int selection;
         String input;
         killLoggers();
 
         do {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert remote IP (leave empty for localhost)"));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert Sever IP (leave empty for localhost)"));
             input = new Scanner(System.in).nextLine();
             if(!input.isEmpty() && !isValidIP(input)){
                 clearCMD();
@@ -33,7 +36,7 @@ public class MainClient {
 
         clearCMD();
         do {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert your IP (leave empty for localhost)"));
+            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert Your IP (leave empty for localhost)"));
             input = new Scanner(System.in).nextLine();
             if(!input.isEmpty() && !isValidIP(input)){
                 clearCMD();
@@ -70,10 +73,11 @@ public class MainClient {
         //Starts the UI wanted
         if (selection == 1 || selection == 2) {
             //Starts the game with TUI
+            new Client(conSel);
 
         } else {
             //Starts the game with GUI
-
+            new Client(conSel);
         }
 
     }

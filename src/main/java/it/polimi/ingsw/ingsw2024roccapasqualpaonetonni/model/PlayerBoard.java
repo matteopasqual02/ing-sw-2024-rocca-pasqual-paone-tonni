@@ -6,7 +6,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.Condition
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 
-public class PlayerBoard {
+import java.io.Serializable;
+
+public class PlayerBoard implements Serializable {
     private int dim_x;
     private int dim_y;
     private PlayingCard[][] board;
@@ -88,32 +90,33 @@ public class PlayerBoard {
     // public method used to add a new card to the board
     // the position where to add the card is given by indicating the card and the corner where to attach it
     public void addCard(PlayingCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException, ConditionsNotMetException{
-        int[] prev_coord = card_on_board.getCoordinates();
-        int[] place_coord = new int[2];
+        int[] prev_cord = card_on_board.getCoordinates();
+        int[] place_cord = new int[2];
         if (corner == 1) {
-            place_coord[0] = prev_coord[0] - 1;
-            place_coord[1] = prev_coord[1] - 1;
+            place_cord[0] = prev_cord[0] - 1;
+            place_cord[1] = prev_cord[1] - 1;
         }
         else if (corner == 2) {
-            place_coord[0] = prev_coord[0] - 1;
-            place_coord[1] = prev_coord[1] + 1;
+            place_cord[0] = prev_cord[0] - 1;
+            place_cord[1] = prev_cord[1] + 1;
         }
         else if (corner == 3) {
-            place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] + 1;
+            place_cord[0] = prev_cord[0] + 1;
+            place_cord[1] = prev_cord[1] + 1;
         }
         else if (corner == 4) {
-            place_coord[0] = prev_coord[0] + 1;
-            place_coord[1] = prev_coord[1] - 1;
+            place_cord[0] = prev_cord[0] + 1;
+            place_cord[1] = prev_cord[1] - 1;
         }
 
-        if (checkSpotAvailable(place_coord)) {
+        if (checkSpotAvailable(place_cord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
             if (card_to_add.isFlipped() || tmp[0] == 1) {
-                addCardToBoard(place_coord, card_to_add, seedCount);
+                addCardToBoard(place_cord, card_to_add, seedCount);
             }
             else {
-                throw new ConditionsNotMetException("Not enough seed type" + Seed.getById(tmp[1]).getName());
+                throw new ConditionsNotMetException("Not enough seed type" + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
+
             }
         }
         else {
