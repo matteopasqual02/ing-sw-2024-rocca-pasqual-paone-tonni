@@ -11,7 +11,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-import static org.fusesource.jansi.Ansi.ansi;
 
 public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public TUI() throws RemoteException {
@@ -19,9 +18,8 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
 
     @Override
     public void joinLobby(Client client){
-        String myNickname = null;
+        String myNickname;
         ServerInterface server = client.getServerInterface();
-        int myGameID =0;
         title();
         ConsolePrinter.consolePrinter(
           "Welcome! Select your action:\n (n)-> Create a new game \n (j)-> Join the first available game \n (jid) Join a game by game ID \n (r) Reconnect to a Game"
@@ -35,6 +33,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 int maxNumPlayers = Integer.parseInt(new Scanner(System.in).nextLine());
                 ConsolePrinter.consolePrinter("Set nickname: ");
                 myNickname = new Scanner(System.in).nextLine();
+                client.setMyNickname(myNickname);
 
                 try {
                     server.createGame(myNickname, maxNumPlayers, client);
@@ -46,6 +45,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
             case "j":{
                 ConsolePrinter.consolePrinter("Set nickname: ");
                 myNickname = new Scanner(System.in).nextLine();
+                client.setMyNickname(myNickname);
 
                 try {
                     server.joinFirstAvailable(myNickname, client);
@@ -57,6 +57,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
             case "jid":{
                 ConsolePrinter.consolePrinter("Set nickname: ");
                 myNickname = new Scanner(System.in).nextLine();
+                client.setMyNickname(myNickname);
                 ConsolePrinter.consolePrinter("Set the gameID: ");
                 int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
 
@@ -70,6 +71,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
             case "r":{
                 ConsolePrinter.consolePrinter("Set your nickname: ");
                 myNickname = new Scanner(System.in).nextLine();
+                client.setMyNickname(myNickname);
                 ConsolePrinter.consolePrinter("Set the previous gameID: ");
                 int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
 
@@ -81,7 +83,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 break;
             }
         }
-        client.setMyNickname(myNickname);
+
     }
 
     @Override

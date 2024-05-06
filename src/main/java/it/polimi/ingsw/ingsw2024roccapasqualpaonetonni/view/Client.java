@@ -9,6 +9,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainClient;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMethod;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
@@ -54,7 +55,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void run() {
-        MainClient.clearCMD();
+        MainStaticMethod.clearCMD();
         view.joinLobby(this);
     }
 
@@ -311,73 +312,5 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void cardRemovedFromHand(PlayingCard card, Player p) {
 
     }
-/*
-    @Override
-    public void choseInvalidPlace(Player p) {
-
-    }
-
-    @Override
-    public void conditionsNotMet(Player p) {
-
-    }
-
-    @Override
-    public void startingCardDrew(StartingCard start, Player p) {
-
-    }
-
-    @Override
-    public void drewPersonalGoals(ObjectiveCard[] goals, Player p) {
-
-    }
-
-    @Override
-    public void personalGoalChosen(ObjectiveCard goal, Player p) {
-
-    }
-
-    @Override
-    public void cardNotInHand(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void resourceDrawn(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void goldDrawn(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void drewFromBoard(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void playerIsConnected(Player p) {
-
-    }
-
-    @Override
-    public void pointsIncreased(int points, Player p) {
-
-    }
-
-    @Override
-    public void seedCountUpdated(int[] seedCount, Player p) {
-
-    }
-
-    @Override
-    public void cardRemovedFromHand(PlayingCard card, Player p) {
-
-    }
-
-
-     */
 
 }

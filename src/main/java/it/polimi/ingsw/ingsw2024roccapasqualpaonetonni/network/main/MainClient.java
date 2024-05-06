@@ -11,12 +11,13 @@ import java.util.Scanner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumViewType;
 
+
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
 
     public static void main(String[] args) throws IOException, NotBoundException {
-        clearCMD();
+        MainStaticMethod.clearCMD();
         boolean selection;
         String inputString;
         EnumConnectionType selConnection;
@@ -25,28 +26,28 @@ public class MainClient {
         do {
             ConsolePrinter.consolePrinter("[MAIN] Insert the Sever IP or leave empty for localhost");
             inputString = new Scanner(System.in).nextLine();
-            if(!inputString.isEmpty() && isNotValidIP(inputString)){
-                clearCMD();
+            if(!inputString.isEmpty() && MainStaticMethod.isNotValidIP(inputString)){
+                MainStaticMethod.clearCMD();
                 ConsolePrinter.consolePrinter("[MAIN] Not valid IP");
             }
-        } while (!inputString.isEmpty() && isNotValidIP(inputString));
+        } while (!inputString.isEmpty() && MainStaticMethod.isNotValidIP(inputString));
         if (!inputString.isEmpty()){
             DefaultNetworkValues.Server_Ip_address = inputString;
         }
 
-        clearCMD();
+        MainStaticMethod.clearCMD();
         do {
             ConsolePrinter.consolePrinter("[MAIN] Insert Your IP or leave empty for localhost ");
             inputString = new Scanner(System.in).nextLine();
-            if(!inputString.isEmpty() && isNotValidIP(inputString)){
-                clearCMD();
+            if(!inputString.isEmpty() && MainStaticMethod.isNotValidIP(inputString)){
+                MainStaticMethod.clearCMD();
                 ConsolePrinter.consolePrinter("[MAIN] Not valid IP");
             }
-        } while (!inputString.isEmpty() && isNotValidIP(inputString));
+        } while (!inputString.isEmpty() && MainStaticMethod.isNotValidIP(inputString));
         if (!inputString.isEmpty()){System.setProperty("java.rmi.server.hostname", inputString);}
 
 
-        clearCMD();
+        MainStaticMethod.clearCMD();
         do {
             ConsolePrinter.consolePrinter(
                     "Select option: \n (ts)-> TUI + Socket \n (tr)-> TUI + RMI \n (gs)-> GUI + Socket \n (gr)-> GUI + RMI "
@@ -90,29 +91,7 @@ public class MainClient {
 
     }
 
-    public static void clearCMD() {
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
-            ConsolePrinter.consolePrinter("\033\143");   //for Mac
-        }
-    }
 
-    private static boolean isNotValidIP(String input) {
-        List<String> parsed;
-        parsed = Arrays.stream(input.split("\\.")).toList();
-        if (parsed.size() != 4) {
-            return true;
-        }
-        for (String part : parsed) {
-            try {
-                Integer.parseInt(part);
-            } catch (NumberFormatException e) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
 }
