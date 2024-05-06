@@ -85,13 +85,16 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                             e.printStackTrace();
                         }
                     }
-                    else if (message instanceof MainMessageJoinFirstAvailable) {
+                    else if (message instanceof MainMessageJoinFirstAvailable && gameControllerInterface!=null) {
                         try {
                             sendYouJoinedGame(gameControllerInterface.getGameId());
                         }
                         catch (Exception e) {
                             e.printStackTrace();
                         }
+                    }
+                    else if(gameControllerInterface == null){
+                        sendNoAvailableGame();
                     }
                 }
                 else{
@@ -102,6 +105,8 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         catch (InterruptedException ignored){
 
         } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -138,8 +143,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendNoAvailableGame() {
-
+    public void sendNoAvailableGame() throws IOException{
+        outputStream.writeObject(new MainMessageNoAvailableGame());
+        messageDone();
     }
 
     @Override

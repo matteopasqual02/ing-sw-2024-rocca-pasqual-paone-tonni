@@ -17,7 +17,7 @@ public interface NotifierInterface extends Remote {
     void sendCreatedGame(int gameId) throws IOException, RemoteException;
     void sendYouJoinedGame(int gameId) throws IOException, RemoteException;
     void sendAddedNewPlayer(String pNickname) throws IOException, RemoteException;
-    void sendNoAvailableGame() throws RemoteException;
+    void sendNoAvailableGame() throws RemoteException, IOException;
     void sendAskPlayersReady() throws RemoteException, IOException;
     void sendFullGame() throws RemoteException;
 

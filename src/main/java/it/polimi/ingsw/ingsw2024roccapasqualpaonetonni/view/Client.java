@@ -144,8 +144,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 myNickname = new Scanner(System.in).nextLine();
                 try {
                     serverStub.joinFirstAvailable(myNickname, this);
-                    serverStub.sendPrivateMessage("ciao a","b","a");
-                    serverStub.getPublicChatLog(myNickname);
                 } catch (NotBoundException | IOException e) {
                     throw new RuntimeException(e);
                 }
