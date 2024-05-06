@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
@@ -217,6 +218,10 @@ public class Game implements Serializable {
         gameListenersHandler.notify_nextPlayer(newCurrent);
     }
 
+    public void gameReady() {
+        gameListenersHandler.notify_All(new GameImmutable(this));
+    }
+
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
         return p.getCurrentPoints()
@@ -311,4 +316,6 @@ public class Game implements Serializable {
     public Chat getChat(){
         return chat;
     }
+
+
 }

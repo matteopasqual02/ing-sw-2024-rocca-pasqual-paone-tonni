@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 
 import java.rmi.Remote;
@@ -17,6 +18,7 @@ The methods here are only the ones that set something's, not those who get somet
  */
 public interface GameListener extends Remote {
     String getNickname() throws RemoteException;
+    void allGame(GameImmutable gameImmutable);
 
     //--------------------------GAME CREATION PHASE
     void maxNumPlayersSet(int max) throws RemoteException;
@@ -71,5 +73,6 @@ public interface GameListener extends Remote {
     void pointsIncreased(int points,Player p) throws RemoteException;
     void seedCountUpdated(int[] seedCount,Player p) throws RemoteException;
     void cardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
+
 
 }

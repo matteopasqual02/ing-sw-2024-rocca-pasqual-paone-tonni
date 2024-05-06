@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -19,6 +20,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     public RMINotifier(GameListener g) throws RemoteException {
         listener = g;
+    }
+
+    @Override
+    public void sendAll(GameImmutable gameImmutable) {
+        listener.allGame(gameImmutable);
     }
 
     //--------------------------GAME CREATION PHASE

@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -109,6 +110,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     private void messageDone() throws IOException {
         outputStream.flush();
         outputStream.reset();
+    }
+
+    @Override
+    public void sendAll(GameImmutable gameImmutable) throws IOException, RemoteException {
+        outputStream.writeObject(new ServerMessageNotifyAll(gameImmutable));
+        messageDone();
     }
 
     @Override

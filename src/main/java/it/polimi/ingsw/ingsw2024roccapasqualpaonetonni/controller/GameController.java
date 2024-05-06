@@ -93,12 +93,17 @@ public class GameController implements GameControllerInterface {
         synchronized (model) {
             model.setPlayerReady(nickname);
             if (model.getReadyPlayersNum() == model.getPlayerNum()) {
-                createTable();
 
+                //create Table
+                createTable();
+                //random first player
+                randomFirstPlayer();
                 //run TurnZero
                 turnZero();
-
+                //set Running
                 model.setStatus(GameStatus.RUNNING);
+                //notify ALL
+                model.gameReady();
             }
         }
     }
@@ -212,9 +217,6 @@ public class GameController implements GameControllerInterface {
 
         model.setGameDrawableDeck(decks);
         model.setGameBoardDeck(boardDeck);
-
-        //random first player
-        randomFirstPlayer();
 
         return true;
     }

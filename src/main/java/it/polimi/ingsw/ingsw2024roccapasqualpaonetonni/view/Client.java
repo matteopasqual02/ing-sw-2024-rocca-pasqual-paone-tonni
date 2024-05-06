@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
@@ -68,12 +69,16 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public String getNickname() throws RemoteException {
         return myNickname;
     }
+
     public ServerInterface getServerInterface(){
         return server;
     }
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
+    @Override
+    public void allGame(GameImmutable gameImmutable) {
 
+    }
     @Override
     public void maxNumPlayersSet(int max) {
         view.show_maxNumPlayersSet(max);

@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 import java.io.IOException;
 import java.rmi.Remote;
@@ -11,6 +12,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface NotifierInterface extends Remote {
+    void sendAll(GameImmutable gameImmutable)throws IOException, RemoteException;
 
     //--------------------------GAME CREATION PHASE
     void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException, RemoteException;
@@ -100,4 +102,6 @@ public interface NotifierInterface extends Remote {
     void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException;
 
     void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException;
+
+
 }

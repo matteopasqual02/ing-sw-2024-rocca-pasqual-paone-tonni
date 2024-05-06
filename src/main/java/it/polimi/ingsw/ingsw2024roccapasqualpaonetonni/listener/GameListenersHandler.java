@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.io.IOException;
@@ -20,6 +21,18 @@ these are not hte methods that directly notify the clients, they are the ones th
 public class GameListenersHandler extends ListenersHandler implements Serializable {
     public GameListenersHandler(){
         super();
+    }
+
+    public void notify_All(GameImmutable gameImmutable) {
+        for(GameListener listener: listenersMap.keySet()){
+            try {
+                int i=0;
+                listenersMap.get(listener).sendAll(gameImmutable);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     public void notify_setMaxNumPlayers(int gameId, int max) {
@@ -306,4 +319,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+
 }
