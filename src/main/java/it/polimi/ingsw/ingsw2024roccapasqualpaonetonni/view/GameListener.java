@@ -5,7 +5,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ConnectionType;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 
 import java.rmi.Remote;
@@ -17,10 +16,6 @@ GameListener is an interface with all the methods that are used to communicate w
 The methods here are only the ones that set something's, not those who get something, because we only want to notify the client if something has actually changed
  */
 public interface GameListener extends Remote {
-    ServerInterface getServerStub() throws RemoteException;
-    ConnectionType getConnectionType() throws RemoteException;
-    String getNickname() throws RemoteException;
-
     //--------------------------GAME CREATION PHASE
     void maxNumPlayersSet(int max) throws RemoteException;
     void createdGame(int gameId) throws RemoteException;
@@ -74,5 +69,6 @@ public interface GameListener extends Remote {
     void pointsIncreased(int points,Player p) throws RemoteException;
     void seedCountUpdated(int[] seedCount,Player p) throws RemoteException;
     void cardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
+
 
 }

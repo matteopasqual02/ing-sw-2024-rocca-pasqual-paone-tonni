@@ -8,181 +8,68 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 
 import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Client extends UnicastRemoteObject implements GameListener, Runnable {
-    ServerInterface serverStub;
-    ConnectionType connection;
-    private int myGameId = 0;
-    private String myNickname = null;
+    ServerInterface server;
+    EnumConnectionType connectionType;
+    EnumViewType viewType;
+    ViewUpdate view;
+    private int myGameId;
+    private String myNickname;
 
-    public Client(ConnectionType conSel) throws IOException {
-        connection = conSel;
-        switch (conSel){
+    public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
+        this.myGameId = 0;
+        this.myNickname = null;
+        this.server = null;
+        this.connectionType = connectionType;
+        this.viewType = viewType;
+
+        switch (connectionType){
             case RMI -> {
-                serverStub = new RMIServerStub();
+                server = new RMIServerStub();
                 new Thread(this).start();
             }
             case SOCKET -> {
-                serverStub = new SocketClient(this);
+                server = new SocketClient(this);
                 new Thread(this).start();
             }
         }
+        switch (viewType){
+            case GUI -> view = new GUI();
+            case TUI -> view = new TUI();
+        }
     }
-/*
+
     @Override
     public void run() {
-
-        //ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
-        //int num = Integer.parseInt(new Scanner(System.in).nextLine());
-        System.out.println("Set max number of players: ");
-        String num = scanner.nextLine();
-        //ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert nickname: "));
-        //String nickname = new Scanner(System.in).nextLine();
-        System.out.println("Welcome! Please, insert your username: ");
-        String nickname = scanner.nextLine();
-        try {
-            //client.createGame(nickname,num,this);
-            client.joinFirstAvailable(nickname,this);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
-        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set new max number of players: "));
-        int max = Integer.parseInt(new Scanner(System.in).nextLine());
-        try {
-            client.setNumberOfPlayers(max);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-*/
-    @Override
-    public void run() {
-        title();
-        joinLobby();
-        choice();
+        MainClient.clearCMD();
+        view.joinLobby(this);
     }
 
-    private void choice(){
-        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Select your action:\n1) Send a public message\n2) Send a private message\n3)View public chat\n4/View private chat\n "));
-        int selection = Integer.parseInt(new Scanner(System.in).nextLine());
-        switch (selection){
-            case 1: {
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert message: "));
-                String message = new Scanner(System.in).nextLine();
-                try {
-                    serverStub.sendMessage(message,myNickname);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                choice();
-            }
-            case 2:{
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert reciever username: "));
-                String reciever = new Scanner(System.in).nextLine();
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert message: "));
-                String message = new Scanner(System.in).nextLine();
-                try {
-                    serverStub.sendPrivateMessage(message,myNickname,reciever);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                choice();
-            }
-            case 3:{
-                try {
-                    serverStub.getPublicChatLog(myNickname);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                choice();
-            }
-            case 4:{
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert reciever username: "));
-                String otherName = new Scanner(System.in).nextLine();
-                try {
-                    serverStub.getPrivateChatLog(myNickname,otherName);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            choice();
-        }
+    //------------------------------------- SET GET ------------------------------------------------------------------------------
+
+    public void setMyNickname(String myNickname) {
+        this.myNickname = myNickname;
     }
-    private void joinLobby(){
-        ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Welcome! Select your action:\n1) Create a new game\n2) Join the first available game\n3) Join a game by game ID "));
-        int selection = Integer.parseInt(new Scanner(System.in).nextLine());
-
-        switch(selection) {
-            case 1: {
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set max number of players: "));
-                int maxNumPlayers = Integer.parseInt(new Scanner(System.in).nextLine());
-
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
-                myNickname = new Scanner(System.in).nextLine();
-
-                try {
-                    serverStub.createGame(myNickname, maxNumPlayers, this);
-                } catch (NotBoundException | IOException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            }
-            case 2:{
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
-                myNickname = new Scanner(System.in).nextLine();
-                try {
-                    serverStub.joinFirstAvailable(myNickname, this);
-                    serverStub.sendPrivateMessage("ciao a","b","a");
-                    serverStub.getPublicChatLog(myNickname);
-                } catch (NotBoundException | IOException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            }
-            case 3:{
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set nickname: "));
-                myNickname = new Scanner(System.in).nextLine();
-                ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Set gameID: "));
-                int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
-                try {
-                    serverStub.joinGameByID(myNickname, gameID, this);
-                } catch (NotBoundException | IOException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            }
-        }
-    }
-    private void title(){
-
-    }
-
-    @Override
-    public ServerInterface getServerStub(){
-        return this.serverStub;
-    }
-
-    @Override
-    public ConnectionType getConnectionType() {
-        return connection;
-    }
-
-    @Override
-    public String getNickname() {
+    public String getMyNickname(){
         return myNickname;
     }
+    public ServerInterface getServerInterface(){
+        return server;
+    }
+
+    //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 
     @Override
     public void maxNumPlayersSet(int max) {
@@ -208,7 +95,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void noAvailableGame() {
         String message = String.format("No game available, try again");
         ConsolePrinter.consolePrinter(message);
-        joinLobby();
+        view.joinLobby(this);
     }
 
     @Override

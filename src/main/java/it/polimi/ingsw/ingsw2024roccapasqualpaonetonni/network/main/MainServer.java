@@ -20,9 +20,9 @@ public class MainServer {
         //insert IP
         do{
             clearCMD();
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert the remote IP (leave empty and press enter for localhost);"));
+            ConsolePrinter.consolePrinter("[MAIN] Insert the remote IP or leave empty and press enter for localhost;");
             inputRemoteIP = new Scanner(System.in).nextLine();
-        }while (!inputRemoteIP.isEmpty() && !isValidIP(inputRemoteIP)) ;
+        }while (!inputRemoteIP.isEmpty() && isNotValidIP(inputRemoteIP)) ;
 
         //create Remote
         if (inputRemoteIP.isEmpty())
@@ -39,20 +39,20 @@ public class MainServer {
 
     }
 
-    private static boolean isValidIP(String input) {
+    private static boolean isNotValidIP(String input) {
         List<String> parsedIP;
         parsedIP = Arrays.stream(input.split("\\.")).toList();
         if (parsedIP.size() != 4) {
-            return false;
+            return true;
         }
         for (String part : parsedIP) {
             try {
                 Integer.parseInt(part);
             } catch (NumberFormatException e) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
     private static void clearCMD() {
         try {
