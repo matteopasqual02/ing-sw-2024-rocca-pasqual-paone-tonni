@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
+import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -21,69 +22,79 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void joinLobby(Client client){
         String myNickname;
         ServerInterface server = client.getServerInterface();
+        boolean ok;
         title();
-        ConsolePrinter.consolePrinter(
-          "Welcome! Select your action:\n (n)-> Create a new game \n (j)-> Join the first available game \n (jid) Join a game by game ID \n (r) Reconnect to a Game"
-        );
+        do{
+            ok=true;
+            ConsolePrinter.consolePrinter(
+              "[CLIENT] Welcome! Select your action:\n (n)-> Create a new game \n (j)-> Join the first available game \n (jid) Join a game by game ID \n (r) Reconnect to a Game"
+            );
 
-        String selection = new Scanner(System.in).nextLine();
+            String selection = new Scanner(System.in).nextLine();
 
-        switch(selection) {
-            case "n": {
-                ConsolePrinter.consolePrinter("Set max number of players: ");
-                int maxNumPlayers = Integer.parseInt(new Scanner(System.in).nextLine());
-                ConsolePrinter.consolePrinter("Set nickname: ");
-                myNickname = new Scanner(System.in).nextLine();
-                client.setMyNickname(myNickname);
+            switch(selection) {
+                case "n": {
+                    ConsolePrinter.consolePrinter("Set max number of players: ");
+                    int maxNumPlayers = Integer.parseInt(new Scanner(System.in).nextLine());
+                    ConsolePrinter.consolePrinter("Set nickname: ");
+                    myNickname = new Scanner(System.in).nextLine();
+                    client.setMyNickname(myNickname);
 
-                try {
-                    server.createGame(myNickname, maxNumPlayers, client);
-                } catch (NotBoundException | IOException e) {
-                    throw new RuntimeException(e);
+                    try {
+                        server.createGame(myNickname, maxNumPlayers, client);
+                    } catch (NotBoundException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
                 }
-                break;
-            }
-            case "j":{
-                ConsolePrinter.consolePrinter("Set nickname: ");
-                myNickname = new Scanner(System.in).nextLine();
-                client.setMyNickname(myNickname);
+                case "j":{
+                    ConsolePrinter.consolePrinter("Set nickname: ");
+                    myNickname = new Scanner(System.in).nextLine();
+                    client.setMyNickname(myNickname);
 
-                try {
-                    server.joinFirstAvailable(myNickname, client);
-                } catch (NotBoundException | IOException e) {
-                    throw new RuntimeException(e);
+                    try {
+                        server.joinFirstAvailable(myNickname, client);
+                    } catch (NotBoundException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
                 }
-                break;
-            }
-            case "jid":{
-                ConsolePrinter.consolePrinter("Set nickname: ");
-                myNickname = new Scanner(System.in).nextLine();
-                client.setMyNickname(myNickname);
-                ConsolePrinter.consolePrinter("Set the gameID: ");
-                int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
+                case "jid":{
+                    ConsolePrinter.consolePrinter("Set nickname: ");
+                    myNickname = new Scanner(System.in).nextLine();
+                    client.setMyNickname(myNickname);
+                    ConsolePrinter.consolePrinter("Set the gameID: ");
+                    int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
 
-                try {
-                    server.joinGameByID(myNickname, gameID, client);
-                } catch (NotBoundException | IOException e) {
-                    throw new RuntimeException(e);
+                    try {
+                        server.joinGameByID(myNickname, gameID, client);
+                    } catch (NotBoundException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
                 }
-                break;
-            }
-            case "r":{
-                ConsolePrinter.consolePrinter("Set your nickname: ");
-                myNickname = new Scanner(System.in).nextLine();
-                client.setMyNickname(myNickname);
-                ConsolePrinter.consolePrinter("Set the previous gameID: ");
-                int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
+                case "r":{
+                    ConsolePrinter.consolePrinter("Set your nickname: ");
+                    myNickname = new Scanner(System.in).nextLine();
+                    client.setMyNickname(myNickname);
+                    ConsolePrinter.consolePrinter("Set the previous gameID: ");
+                    int gameID = Integer.parseInt(new Scanner(System.in).nextLine());
 
-                try {
-                    server.reconnect(myNickname, gameID, client);
-                } catch (NotBoundException | IOException e) {
-                    throw new RuntimeException(e);
+                    try {
+                        server.reconnect(myNickname, gameID, client);
+                    } catch (NotBoundException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
                 }
-                break;
+                case null, default:
+                    ok=false;
+                    ConsolePrinter.consolePrinter(
+                            "[CLIENT] Not valid option"
+                    );
             }
-        }
+
+        }while (!ok);
 
     }
 
@@ -245,7 +256,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }*/
 
     private void title(){
-        ConsolePrinter.consolePrinter("""
+        System.out.println(Ansi.ansi().fg(42).a("""
                 
                  ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗    ███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗
                 ██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝    ████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝
@@ -254,6 +265,32 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 ╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗    ██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║
                  ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝
                                                                                                                                    \s
-                """);
+                """).fg(Ansi.Color.DEFAULT));
+    }
+    private void gameOver(){
+        System.out.println(Ansi.ansi().fg(42).a("""
+                
+                 ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗\s
+                ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
+                ██║  ███╗███████║██╔████╔██║█████╗      ██║   ██║██║   ██║█████╗  ██████╔╝
+                ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
+                ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
+                 ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
+                                                                                         \s
+                                                                                                                                                                                                    \s
+                """).fg(Ansi.Color.DEFAULT));
+    }
+    private void winner(){
+        System.out.println(Ansi.ansi().fg(42).a("""
+                                
+                ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗\s
+                ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
+                ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝ \s
+                ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗ \s
+                ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║ \s
+                 ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ \s
+                                                                         
+                                                                                                                                                                                                    \s
+                """).fg(Ansi.Color.DEFAULT));
     }
 }

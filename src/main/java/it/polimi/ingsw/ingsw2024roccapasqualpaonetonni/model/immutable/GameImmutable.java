@@ -127,7 +127,7 @@ public class GameImmutable implements Serializable {
         stringBuilder.append(player.getBoard().toString());
 
         stringBuilder.append("\nCOMMON BOARD:\n");
-        for (int i=0;i<4;i++){
+        for (int i=1;i<5;i++){
             stringBuilder.append(boardDeck.getCard(i).toString());
         }
         ResourceCard resourceCard = (ResourceCard) drawableDeck.getDecks().get("resources").peek();
