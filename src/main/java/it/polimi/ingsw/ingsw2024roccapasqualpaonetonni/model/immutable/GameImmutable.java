@@ -118,11 +118,18 @@ public class GameImmutable implements Serializable {
         for(int i=0;i<3;i++){
             int finalI = i;
             player.getHand().forEach(playingCard -> stringBuilder.append(playingCard.toString(false, finalI)).append("\t"));
+            stringBuilder.append("\t|\t");
 
-            stringBuilder.append("\t|\t").append(player.getObjectiveBeforeChoice()[0].toString(finalI)).append("\t");
-            stringBuilder.append(player.getObjectiveBeforeChoice()[1].toString(finalI)).append("\t");
+            if(player.getGoal()==null){
+                stringBuilder.append(player.getObjectiveBeforeChoice()[0].toString(finalI)).append("\t");
+                stringBuilder.append(player.getObjectiveBeforeChoice()[1].toString(finalI)).append("\t");
+            }else {
+                stringBuilder.append(player.getGoal().toString(finalI)).append("\t");
+            }
 
-            stringBuilder.append("\t|\t").append(player.getStartingCard().toString(false,finalI)).append("\n");
+            if(player.getBoard().getBoard()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
+                stringBuilder.append("\t|\t").append(player.getStartingCard().toString(false,finalI)).append("\n");
+            }
         }
 
 
