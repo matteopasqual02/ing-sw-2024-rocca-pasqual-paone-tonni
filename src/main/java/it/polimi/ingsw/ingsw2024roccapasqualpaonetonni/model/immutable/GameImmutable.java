@@ -89,7 +89,7 @@ public class GameImmutable implements Serializable {
                 .orElse(null);
 
         if (player==null) return null;
-        int color = player.getColorPlayer();
+        int color = player.getColorPlayer()-1;
         Seed seedPlayer = Seed.getById(color);
 
         if(seedPlayer!=null){
@@ -163,12 +163,12 @@ public class GameImmutable implements Serializable {
         stringBuilder.append("\nOTHERS PLAYER\n");
         for(Player playerI : players ){
             if(!playerI.equals(player)){
-                Ansi.Color colorI= Seed.getById(playerI.getColorPlayer()).getByAnsi();
+                Ansi.Color colorI= Seed.getById(playerI.getColorPlayer()-1).getByAnsi();
                 stringBuilder.append("NICKNAME:\t").append(
                         ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getNickname()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
                 ).append("\t");
                 stringBuilder.append("COLOR:\t").append(
-                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getColorPlayer()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(Seed.getById(playerI.getColorPlayer()-1)).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
                 ).append("\t");
                 stringBuilder.append("POINTS:\t").append(
                         ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(player.getCurrentPoints()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)

@@ -24,21 +24,19 @@ import java.util.List;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Client extends UnicastRemoteObject implements GameListener, Runnable {
-    ServerInterface server;
-    EnumConnectionType connectionType;
-    EnumViewType viewType;
-    ViewUpdate view;
+    private ServerInterface server;
+    private ViewUpdate view;
     private int myGameId;
     private String myNickname;
     private GameStatus state = null;
     private Boolean myTurn = false;
+    private GameImmutable currentImmutable;
 
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
         this.myNickname = null;
         this.server = null;
-        this.connectionType = connectionType;
-        this.viewType = viewType;
+        this.currentImmutable=null;
 
         switch (connectionType){
             case RMI -> {
@@ -68,10 +66,10 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                     }
                     case RUNNING -> {
                         if(myTurn){
-                            view.myRunningTurn(this);
+                            //view.myRunningTurn(this);
                         }
                         else{
-                            view.notMyTurn(this);
+                            //view.notMyTurn(this);
                         }
                     }
                     case WAITING_LAST_TURN -> {
@@ -143,6 +141,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void allGame(GameImmutable gameImmutable) {
+        currentImmutable=gameImmutable;
         view.show_All(gameImmutable,myNickname);
     }
 
