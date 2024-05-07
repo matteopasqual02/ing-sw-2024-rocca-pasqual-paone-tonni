@@ -1,6 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 import org.fusesource.jansi.Ansi;
 
@@ -121,6 +125,25 @@ public class GameImmutable implements Serializable {
 
         stringBuilder.append("\nMY BOARD:\n");
         stringBuilder.append(player.getBoard().toString());
+
+        stringBuilder.append("\nCOMMON BOARD:\n");
+        for (int i=0;i<4;i++){
+            stringBuilder.append(boardDeck.getCard(i).toString());
+        }
+        ResourceCard resourceCard = (ResourceCard) drawableDeck.getDecks().get("resources").peek();
+        if (resourceCard!=null){
+            stringBuilder.append(resourceCard.toString(true)).append("\n");
+        }
+        GoldCard goldCard = (GoldCard) drawableDeck.getDecks().get("gold").peek();
+        if (goldCard!=null){
+            stringBuilder.append(goldCard.toString(true)).append("\n");
+        }
+
+        stringBuilder.append("\nCOMMON OBJECTIVE:\n");
+        for (int i=0;i<2;i++){
+            stringBuilder.append(boardDeck.getCommonObjective(i).toString()).append("\n");
+        }
+
 
         return stringBuilder.toString();
     }
