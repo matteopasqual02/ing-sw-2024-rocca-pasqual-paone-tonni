@@ -30,6 +30,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     ViewUpdate view;
     private int myGameId;
     private String myNickname;
+    private GameStatus state = null;
+    private Boolean myTurn;
 
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
@@ -58,6 +60,36 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void run() {
         MainStaticMethod.clearCMD();
         view.joinLobby(this);
+        while(!Thread.interrupted()){
+            if(state !=null){
+                switch (state) {
+                    case PREPARATION ->{
+                        view.preparation();
+                    }
+                    case RUNNING -> {
+                        if(myTurn){
+                            view.myRunningTurn(this);
+                        }
+                        else{
+                            view.notMyTurn(this);
+                        }
+                    }
+                    case WAITING_LAST_TURN -> {
+
+                    }
+                    case LAST_TURN -> {
+
+                    }
+                    case ENDED -> {
+
+                    }
+                    case WAITING_RECONNECTION -> {
+
+                    }
+                }
+            }
+        }
+
     }
 
     //------------------------------------- SET GET ------------------------------------------------------------------------------
@@ -135,8 +167,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     @Override
-    public void nextTurn(Player p) {
-
+    public void nextTurn(String nickname) {
+        if(myNickname.equals(nickname)){
+            myTurn = true;
+        }
+        else{
+            myTurn = false;
+        }
     }
 
     @Override
@@ -166,7 +203,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void statusSet(GameStatus status) {
-
+        state=status;
     }
 
     @Override
@@ -185,8 +222,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     @Override
-    public void firstPlayerSet(Player first) {
-
+    public void firstPlayerSet(String nickname) {
+        if(myNickname.equals(nickname)){
+            myTurn = true;
+        }
+        else{
+            myTurn = false;
+        }
     }
 
     @Override

@@ -33,7 +33,7 @@ public interface GameListener extends Remote {
 
     void playerReady(Player p) throws RemoteException;
     void playerRemoved(String p) throws RemoteException;
-    void nextTurn(Player p) throws RemoteException;
+    void nextTurn(String nickname) throws RemoteException;
     void lastTurn() throws RemoteException;
     void reconnectedPlayer(String nickname) throws RemoteException;
     void reconnectionImpossible(String nickname) throws RemoteException;
@@ -45,7 +45,7 @@ public interface GameListener extends Remote {
     void playerIsReady(Player p) throws RemoteException;
     //void tableCreated(GameImmutable model);
     //void playersNotReady(GameImmutable model);
-    void firstPlayerSet(Player first) throws RemoteException;
+    void firstPlayerSet(String nickname) throws RemoteException;
     void drawableDeckSet(DrawableDeck d) throws RemoteException;
     void boardDeckSet(BoardDeck bd) throws RemoteException;
     void newMessage(Message message) throws RemoteException;
@@ -73,6 +73,4 @@ public interface GameListener extends Remote {
     void pointsIncreased(int points,Player p) throws RemoteException;
     void seedCountUpdated(int[] seedCount,Player p) throws RemoteException;
     void cardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
-
-
 }

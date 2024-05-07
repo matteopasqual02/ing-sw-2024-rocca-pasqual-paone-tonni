@@ -135,6 +135,117 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
 
     }
 
+    @Override
+    public void preparation() {
+        ConsolePrinter.consolePrinter("We are waiting for all players to be ready...");
+    }
+
+    @Override
+    public void myRunningTurn(Client client) {}/*
+        ServerInterface server = client.getServerInterface();
+        ConsolePrinter.consolePrinter(
+                "It's your turn! Select your action:\n" +
+                        "(p)-> put a card on the board (index in the hand, )\n" +
+                        "(l) leave game \n"+
+                        "(ch) send a public message \n"+
+                        "(cp) send a private message \n"+
+                        "(sc) see the public chat \n"+
+                        "(sp) see the private chat\n"
+        );
+        String selection = new Scanner(System.in).nextLine();
+        switch (selection){
+            case "p" -> {
+
+            }
+            case "l"-> {
+                //server.leave(client.getNickname(),client.);
+            }
+            case "ch" ->{
+                ConsolePrinter.consolePrinter("Insert message: ");
+                String txt = new Scanner(System.in).nextLine();
+                try {
+                    server.sendMessage(txt,client.getNickname());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "cp" ->{
+                ConsolePrinter.consolePrinter("Insert message: ");
+                String txt = new Scanner(System.in).nextLine();
+                ConsolePrinter.consolePrinter("Insert reciever: ");
+                String reciever = new Scanner(System.in).nextLine();
+                try {
+                    server.sendPrivateMessage(txt,client.getNickname(),reciever);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "sc" ->{
+                try {
+                    server.getPublicChatLog(client.getNickname());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "sp" ->{
+                ConsolePrinter.consolePrinter("Insert name of the persone you want to see the chat with: ");
+                String reciever = new Scanner(System.in).nextLine();
+                try {
+                    server.getPrivateChatLog(client.getNickname(),reciever);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        }
+*/
+    @Override
+    public void notMyTurn(Client client) {}/*
+        ServerInterface server = client.getServerInterface();
+        ConsolePrinter.consolePrinter(
+                "It's not your turn.\n (ch) send a public message \n (cp) send a private message \n (sc) see the public chat \n (sp) see the private chat\n"
+        );
+        String selection = new Scanner(System.in).nextLine();
+        switch (selection){
+            case "ch" ->{
+                ConsolePrinter.consolePrinter("Insert message: ");
+                String txt = new Scanner(System.in).nextLine();
+                try {
+                    server.sendMessage(txt,client.getNickname());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "cp" ->{
+                ConsolePrinter.consolePrinter("Insert message: ");
+                String txt = new Scanner(System.in).nextLine();
+                ConsolePrinter.consolePrinter("Insert reciever: ");
+                String reciever = new Scanner(System.in).nextLine();
+                try {
+                    server.sendPrivateMessage(txt,client.getNickname(),reciever);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "sc" ->{
+                try {
+                    server.getPublicChatLog(client.getNickname());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "sp" ->{
+                ConsolePrinter.consolePrinter("Insert name of the persone you want to see the chat with: ");
+                String reciever = new Scanner(System.in).nextLine();
+                try {
+                    server.getPrivateChatLog(client.getNickname(),reciever);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }*/
+
     private void title(){
         ConsolePrinter.consolePrinter("""
                 

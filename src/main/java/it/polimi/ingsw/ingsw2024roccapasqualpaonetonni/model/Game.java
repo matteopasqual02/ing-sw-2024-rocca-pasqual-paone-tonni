@@ -161,7 +161,7 @@ public class Game implements Serializable {
 
     public void setStatus(GameStatus status) {
         this.status[0] = status;
-        //gameListenersHandler.notify_setStatus(status);
+        gameListenersHandler.notify_setStatus(status);
     }
 
     public void startGame() {
@@ -215,7 +215,7 @@ public class Game implements Serializable {
             status[0] = GameStatus.LAST_TURN;
             gameListenersHandler.notify_lastTurn();
         }
-        gameListenersHandler.notify_nextPlayer(newCurrent);
+        gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
     }
 
     public void gameReady()  {
@@ -316,6 +316,4 @@ public class Game implements Serializable {
     public Chat getChat(){
         return chat;
     }
-
-
 }

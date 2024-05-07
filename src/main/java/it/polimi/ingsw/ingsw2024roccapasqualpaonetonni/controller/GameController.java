@@ -148,10 +148,6 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
-    public GameStatus getGameStatus() {
-        return model.getGameStatus();
-    }
-
     public GameStatus getLastStatus() {
         return model.getLastStatus();
     }

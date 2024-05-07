@@ -44,4 +44,19 @@ public class GUI implements ViewUpdate {
     public void show_areYouReady() {
 
     }
+
+    @Override
+    public void preparation() {
+
+    }
+
+    @Override
+    public void myRunningTurn(Client client) {
+
+    }
+
+    @Override
+    public void notMyTurn(Client client) {
+
+    }
 }

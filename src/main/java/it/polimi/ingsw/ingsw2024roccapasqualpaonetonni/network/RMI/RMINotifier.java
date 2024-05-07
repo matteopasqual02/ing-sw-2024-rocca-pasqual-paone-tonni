@@ -118,9 +118,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendNextTurn(Player p) {
+    public void sendNextTurn(String nickname) {
         try {
-            listener.nextTurn(p);
+            listener.nextTurn(nickname);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -226,9 +226,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendFirstPlayerSet(Player first) {
+    public void sendFirstPlayerSet(String nickname) {
         try {
-            listener.firstPlayerSet(first);
+            listener.firstPlayerSet(nickname);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

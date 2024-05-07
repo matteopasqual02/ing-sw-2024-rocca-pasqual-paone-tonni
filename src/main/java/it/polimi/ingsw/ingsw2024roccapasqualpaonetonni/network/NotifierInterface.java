@@ -27,7 +27,7 @@ public interface NotifierInterface extends Remote {
 
     void sendPlayerRemoved(String pNickname) throws RemoteException;
 
-    void sendNextTurn(Player p) throws RemoteException;
+    void sendNextTurn(String nickname) throws IOException;
 
     void sendLastTurn() throws RemoteException;
 
@@ -47,7 +47,7 @@ public interface NotifierInterface extends Remote {
 
     void sendPlayerIsReady(Player p) throws RemoteException;
 
-    void sendFirstPlayerSet(Player first) throws RemoteException;
+    void sendFirstPlayerSet(String nickname) throws IOException;
 
     void sendDrawableDeckSet(DrawableDeck d) throws RemoteException ;
 
@@ -102,6 +102,5 @@ public interface NotifierInterface extends Remote {
     void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException;
 
     void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException;
-
 
 }

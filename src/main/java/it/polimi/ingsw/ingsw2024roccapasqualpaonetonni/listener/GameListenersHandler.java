@@ -185,16 +185,13 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
         }
     }
-    public void notify_setFirstPlayer(Player first) {
+    public void notify_setFirstPlayer(String nickname) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                if(listener.getNickname().equals(first.getNickname())){
-                    listenersMap.get(listener).sendYouAreFirst();
-                }
-                else{
-                    listenersMap.get(listener).sendFirstPlayerSet(first);
-                }
+                    listenersMap.get(listener).sendFirstPlayerSet(nickname);
             } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -226,16 +223,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-    public void notify_nextPlayer(Player p) {
+    public void notify_nextTurn(String nickname) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                if(listener.getNickname().equals(p.getNickname())){
-                    listenersMap.get(listener).sendItsYourTurn();
-                }
-                else{
-                    listenersMap.get(listener).sendNextTurn(p);
-                }
-            } catch (RemoteException e) {
+                listenersMap.get(listener).sendNextTurn(nickname);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

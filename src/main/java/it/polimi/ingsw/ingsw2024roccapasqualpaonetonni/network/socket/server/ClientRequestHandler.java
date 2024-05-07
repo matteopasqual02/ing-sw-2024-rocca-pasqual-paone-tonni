@@ -177,8 +177,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendNextTurn(Player p) {
-
+    public void sendNextTurn(String nickname) throws IOException {
+        outputStream.writeObject(new ServerMessageNextTurn(nickname));
+        messageDone();
     }
 
     @Override
@@ -227,8 +228,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendFirstPlayerSet(Player first) {
-
+    public void sendFirstPlayerSet(String nickname) throws IOException {
+        outputStream.writeObject(new ServerMessageFirstPlayerSet(nickname));
+        messageDone();
     }
 
     @Override

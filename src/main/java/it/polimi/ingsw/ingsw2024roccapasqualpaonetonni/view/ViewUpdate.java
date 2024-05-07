@@ -4,7 +4,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmut
 
 public interface ViewUpdate {
     void joinLobby(Client client);
-
     void show_All(GameImmutable gameImmutable, String nickname);
     void show_maxNumPlayersSet(int max);
     void show_createdGame(int gameID);
@@ -13,4 +12,7 @@ public interface ViewUpdate {
     void show_noAvailableGame();
     void show_addedNewPlayer(String pNickname);
     void show_areYouReady();
+    void preparation();
+    void myRunningTurn(Client client);
+    void notMyTurn(Client client);
 }

@@ -103,8 +103,7 @@ public class RMIServerStub implements ServerInterface {
     public void ready(String nickname) throws RemoteException, NotBoundException {
         gameController.ready(nickname);
     }
-
-   @Override
+    @Override
    public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
