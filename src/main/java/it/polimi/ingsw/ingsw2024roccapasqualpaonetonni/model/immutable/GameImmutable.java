@@ -114,36 +114,44 @@ public class GameImmutable implements Serializable {
                 ).append("   ");
             }
         }
-
         stringBuilder.append("\nMY HAND:\n");
-        player.getHand().forEach(playingCard -> stringBuilder.append(playingCard.toString()).append("\n"));
-        stringBuilder.append("\nMY OBJECTIVE:\n");
-        stringBuilder.append(player.getObjectiveBeforeChoice()[0].toString()).append("\n");
-        stringBuilder.append(player.getObjectiveBeforeChoice()[1].toString()).append("\n");
-        stringBuilder.append("\nMY STARTING:\n");
-        stringBuilder.append(player.getStartingCard().toString());
+        for(int i=0;i<3;i++){
+            int finalI = i;
+            player.getHand().forEach(playingCard -> stringBuilder.append(playingCard.toString(false, finalI)).append("\t"));
+
+            stringBuilder.append("\t|\t").append(player.getObjectiveBeforeChoice()[0].toString(finalI)).append("\t");
+            stringBuilder.append(player.getObjectiveBeforeChoice()[1].toString(finalI)).append("\t");
+
+            stringBuilder.append("\t|\t").append(player.getStartingCard().toString(false,finalI)).append("\n");
+        }
+
 
         stringBuilder.append("\nMY BOARD:\n");
         stringBuilder.append(player.getBoard().toString());
 
-        stringBuilder.append("\nCOMMON BOARD:\n");
-        for (int i=1;i<5;i++){
-            stringBuilder.append(boardDeck.getCard(i).toString());
+        stringBuilder.append("\nCOMMON DECKS:\n");
+        for(int k=0;k<3;k++) {
+            for (int i = 1; i < 3; i++) {
+                stringBuilder.append(boardDeck.getCard(i).toString(false,k)).append("\t");
+            }
+            ResourceCard resourceCard = (ResourceCard) drawableDeck.getDecks().get("resources").peek();
+            if (resourceCard != null) {
+                stringBuilder.append(resourceCard.toString(true,k)).append("\t");
+            }
+            stringBuilder.append("\t|\t");
+            for (int i = 3; i < 5; i++) {
+                stringBuilder.append(boardDeck.getCard(i).toString(false,k)).append("\t");
+            }
+            GoldCard goldCard = (GoldCard) drawableDeck.getDecks().get("gold").peek();
+            if (goldCard != null) {
+                stringBuilder.append(goldCard.toString(true,k)).append("\t");
+            }
+            stringBuilder.append("\t|\t");
+            for (int i=0;i<2;i++){
+                stringBuilder.append(boardDeck.getCommonObjective(i).toString(k)).append("\t");
+            }
+            stringBuilder.append("\n");
         }
-        ResourceCard resourceCard = (ResourceCard) drawableDeck.getDecks().get("resources").peek();
-        if (resourceCard!=null){
-            stringBuilder.append(resourceCard.toString(true)).append("\n");
-        }
-        GoldCard goldCard = (GoldCard) drawableDeck.getDecks().get("gold").peek();
-        if (goldCard!=null){
-            stringBuilder.append(goldCard.toString(true)).append("\n");
-        }
-
-        stringBuilder.append("\nCOMMON OBJECTIVE:\n");
-        for (int i=0;i<2;i++){
-            stringBuilder.append(boardDeck.getCommonObjective(i).toString()).append("\n");
-        }
-
 
         return stringBuilder.toString();
     }

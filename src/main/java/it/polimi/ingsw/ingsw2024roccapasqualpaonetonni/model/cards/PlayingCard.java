@@ -56,4 +56,10 @@ public abstract class PlayingCard extends Card {
         return points;
     }
 
+    public String toString(Boolean flip, int line) {
+        return null;
+    }
+    public String toString(Boolean flip) {
+        return null;
+    }
 }
