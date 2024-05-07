@@ -17,8 +17,6 @@ public class ResourceCard extends PlayingCard {
         return points;
     }
 
-
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = cardSeed.getByAnsi();
@@ -52,7 +50,6 @@ public class ResourceCard extends PlayingCard {
             sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
             //Third Line
-
             if (corners[3] == null || corners[3].getSeed() == null) {
                 sb.append(ansi().fg(background).bg(background).a("   "));
             } else {

@@ -60,22 +60,6 @@ public class ToStringAllTest {
         ObjectiveCard objectiveCard2 = gameController.getGame().getGameBoardDeck().getCommonObjective(0);
         System.out.println(objectiveCard2.toString());
 
-        System.out.println("Players section\n");
-
-        for(Player player: gameController.getGame().getPlayers()) {
-            System.out.println("Player: ");
-            System.out.println(player.getNickname());
-            System.out.println(player.getColorPlayer());
-
-            for(PlayingCard playingCard: player.getHand()) {
-                System.out.println(playingCard.toString());
-            }
-
-            System.out.println(player.getObjectiveBeforeChoice()[0].toString());
-            System.out.println(player.getObjectiveBeforeChoice()[1].toString());
-
-            System.out.println(player.getStartingCard().toString());
-        }
     }
 
 }
