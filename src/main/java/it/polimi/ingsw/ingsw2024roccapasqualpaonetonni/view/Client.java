@@ -31,7 +31,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     private int myGameId;
     private String myNickname;
     private GameStatus state = null;
-    private Boolean myTurn;
+    private Boolean myTurn = false;
 
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
