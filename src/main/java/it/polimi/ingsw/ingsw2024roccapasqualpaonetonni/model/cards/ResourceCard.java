@@ -85,14 +85,7 @@ public class ResourceCard extends PlayingCard {
             sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" E \n"));
         }
-
         return sb.toString();
     }
 
-
-
 }
-
-// Resource Card is actually a PlayingCard Without being an abstract class
-
-

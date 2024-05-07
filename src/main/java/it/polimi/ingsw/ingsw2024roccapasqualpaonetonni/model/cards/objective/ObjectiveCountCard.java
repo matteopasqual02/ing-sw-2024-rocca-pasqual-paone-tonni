@@ -37,50 +37,47 @@ public class ObjectiveCountCard extends ObjectiveCard {
         }
 
         //First Line
-        sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
-        sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
-        sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(points));
-        sb.append(ansi().cursor(0,0).fg(background).bg(Ansi.Color.DEFAULT).a(" "));
-        sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
-        sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
+        sb.append(ansi().fg(background).bg(background).a("      "));
+        sb.append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+        sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(points));
+        sb.append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
+        sb.append(ansi().fg(background).bg(background).a("      "));
+        sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
         //Second Line
-        sb.append(ansi().cursor(0,0).fg(background).bg(background).a("               "));
-        sb.append(ansi().cursor(0,0).bg(Ansi.Color.DEFAULT).a("\n"));
+        sb.append(ansi().fg(background).bg(background).a("               "));
+        sb.append(ansi().bg(Ansi.Color.DEFAULT).a("\n"));
 
         //Third Line
-        sb.append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
-
+        sb.append(ansi().fg(background).bg(background).a("   "));
         int k=0;
         int k1=0;
         for(int i=0; i<7; i++) {
-
             if(countTypes[i]!=0 && countTypes[i]!=1) {
                 if(k1==0) {
-                    sb.append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
+                    sb.append(ansi().fg(background).bg(background).a("   "));
                     k1++;
                 }
-                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]).a(" "));
-                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)));
+                sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]).a(" "));
+                sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)));
             }
             else if(countTypes[i]==1) {
-                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]));
-                sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)));
+                sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(countTypes[i]));
+                sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(Seed.getById(i).name().substring(0,1)));
                 if(k<2) {
-                    sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" "));
+                    sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" "));
                     k++;
                 }
             }
         }
 
         if (k!=0) {
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("    "));
+            sb.append(ansi().fg(background).bg(background).a("    "));
         }
         else {
-            sb.append(ansi().cursor(0,0).fg(background).bg(background).a("      "));
+            sb.append(ansi().fg(background).bg(background).a("      "));
         }
-        sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
-
+        sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
 
         return sb.toString();
     }
