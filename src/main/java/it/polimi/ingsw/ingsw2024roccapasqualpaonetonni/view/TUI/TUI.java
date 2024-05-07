@@ -108,31 +108,26 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         String message = String.format("New max number of players for game: %d players maximum", max);
         ConsolePrinter.consolePrinter(message);
     }
-
     @Override
     public void show_createdGame(int gameID) {
         String message = String.format("Game created, with GameID: %d", gameID);
         ConsolePrinter.consolePrinter(message);
     }
-
     @Override
     public void show_youJoinedGame(int gameID) {
         String message = String.format("You joined game %d", gameID);
         ConsolePrinter.consolePrinter(message);
     }
-
     @Override
     public void show_noAvailableGame() {
         String message = "No game available, try again \n";
         ConsolePrinter.consolePrinter(message);
     }
-
     @Override
     public void show_addedNewPlayer(String pNickname) {
         String message = String.format("Player \"%s\" joined the game", pNickname);
         ConsolePrinter.consolePrinter(message);
     }
-
     @Override
     public void show_areYouReady() {
         String selection;
@@ -143,24 +138,88 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         }while (!selection.equals("Y"));
 
     }
-
     @Override
     public void preparation() {
         ConsolePrinter.consolePrinter("We are waiting for all players to be ready...");
     }
 
     @Override
-    public void myRunningTurn(Client client) {}/*
-        ServerInterface server = client.getServerInterface();
+    public void myRunningTurn(Client client) {
         ConsolePrinter.consolePrinter(
-                "It's your turn! Select your action:\n" +
-                        "(p)-> put a card on the board (index in the hand, )\n" +
-                        "(l) leave game \n"+
-                        "(ch) send a public message \n"+
-                        "(cp) send a private message \n"+
-                        "(sc) see the public chat \n"+
-                        "(sp) see the private chat\n"
+                """
+                It's your turn. Remember firstly you place a card then you can draw
+                    (/addStarting + flipped(true,false)) -> to add the starting card
+                    (/chooseGoal + choice(1,2)) -> to chose my personal goal
+                    (/addCard + handIndex + idCardToAttach + position (ne,nw,se,sw) + flipped (true,false)) -> to add a new card
+                    (/drawGold) -> to draw a gold card
+                    (/drawResources) -> to draw a resource card
+                    (/drawBoard + position (1,2,3,4)) -> to draw from common board
+                    (/chat + message) -> send a public message
+                    (/chatPrivate + receiver + message) -> send a private message
+                    (/seeChat) -> see all the public chat
+                    (/seeChatPrivate) -> see my private chat
+                    (/leave) -> to leave the game
+             
+                """
         );
+    }
+    @Override
+    public void notMyTurn(Client client) {
+        ConsolePrinter.consolePrinter(
+                """
+                It's not your turn. You can
+                    (/chat + message) -> send a public message
+                    (/chatPrivate + receiver + message) -> send a private message
+                    (/seeChat) -> see all the public chat
+                    (/seeChatPrivate) -> see my private chat
+                    (/leave) -> to leave the game
+                    
+                """
+        );
+    }
+
+    private void title(){
+        System.out.println(Ansi.ansi().fg(42).a("""
+                
+                 ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗    ███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗
+                ██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝    ████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝
+                ██║     ██║   ██║██║  ██║█████╗   ╚███╔╝     ██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝███████║██║     ██║███████╗
+                ██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗     ██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║
+                ╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗    ██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║
+                 ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝
+                                                                                                                                   \s
+                """).fg(Ansi.Color.DEFAULT));
+    }
+    private void gameOver(){
+        System.out.println(Ansi.ansi().fg(42).a("""
+                
+                 ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗\s
+                ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
+                ██║  ███╗███████║██╔████╔██║█████╗      ██║   ██║██║   ██║█████╗  ██████╔╝
+                ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
+                ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
+                 ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
+                                                                                         \s
+                                                                                                                                                                                                    \s
+                """).fg(Ansi.Color.DEFAULT));
+    }
+    private void winner(){
+        System.out.println(Ansi.ansi().fg(42).a("""
+                                
+                ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗\s
+                ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
+                ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝ \s
+                ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗ \s
+                ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║ \s
+                 ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ \s
+                                                                         
+                                                                                                                                                                                                    \s
+                """).fg(Ansi.Color.DEFAULT));
+    }
+}
+
+/*
+
         String selection = new Scanner(System.in).nextLine();
         switch (selection){
             case "p" -> {
@@ -208,8 +267,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         }
         }
 */
-    @Override
-    public void notMyTurn(Client client) {}/*
+/*
         ServerInterface server = client.getServerInterface();
         ConsolePrinter.consolePrinter(
                 "It's not your turn.\n (ch) send a public message \n (cp) send a private message \n (sc) see the public chat \n (sp) see the private chat\n"
@@ -254,43 +312,3 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
             }
         }
     }*/
-
-    private void title(){
-        System.out.println(Ansi.ansi().fg(42).a("""
-                
-                 ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗    ███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗
-                ██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝    ████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝
-                ██║     ██║   ██║██║  ██║█████╗   ╚███╔╝     ██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝███████║██║     ██║███████╗
-                ██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗     ██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║
-                ╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗    ██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║
-                 ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝
-                                                                                                                                   \s
-                """).fg(Ansi.Color.DEFAULT));
-    }
-    private void gameOver(){
-        System.out.println(Ansi.ansi().fg(42).a("""
-                
-                 ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗\s
-                ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
-                ██║  ███╗███████║██╔████╔██║█████╗      ██║   ██║██║   ██║█████╗  ██████╔╝
-                ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
-                ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
-                 ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
-                                                                                         \s
-                                                                                                                                                                                                    \s
-                """).fg(Ansi.Color.DEFAULT));
-    }
-    private void winner(){
-        System.out.println(Ansi.ansi().fg(42).a("""
-                                
-                ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗\s
-                ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
-                ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝ \s
-                ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗ \s
-                ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║ \s
-                 ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ \s
-                                                                         
-                                                                                                                                                                                                    \s
-                """).fg(Ansi.Color.DEFAULT));
-    }
-}

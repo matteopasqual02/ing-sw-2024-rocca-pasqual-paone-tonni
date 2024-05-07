@@ -106,7 +106,7 @@ public class ObjectiveCountCard extends ObjectiveCard {
 
         //Second Line
         sb[1].append(ansi().fg(background).bg(background).a("               "));
-        sb[1].append(ansi().bg(Ansi.Color.DEFAULT).a(""));
+        sb[1].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(""));
 
         //Third Line
         sb[2].append(ansi().fg(background).bg(background).a("   "));

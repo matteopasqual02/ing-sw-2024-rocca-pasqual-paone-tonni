@@ -160,6 +160,22 @@ public class GameImmutable implements Serializable {
             stringBuilder.append("\n");
         }
 
+        stringBuilder.append("\nOTHERS PLAYER\n");
+        for(Player playerI : players ){
+            if(!playerI.equals(player)){
+                Ansi.Color colorI= Seed.getById(playerI.getColorPlayer()).getByAnsi();
+                stringBuilder.append("NICKNAME:\t").append(
+                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getNickname()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+                ).append("\t");
+                stringBuilder.append("COLOR:\t").append(
+                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getColorPlayer()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+                ).append("\t");
+                stringBuilder.append("POINTS:\t").append(
+                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(player.getCurrentPoints()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+                ).append("\n");
+            }
+        }
+
         return stringBuilder.toString();
     }
 
