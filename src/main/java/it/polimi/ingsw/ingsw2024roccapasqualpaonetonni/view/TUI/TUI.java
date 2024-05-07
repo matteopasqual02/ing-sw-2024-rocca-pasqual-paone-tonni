@@ -89,9 +89,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
 
     @Override
     public void show_All(GameImmutable gameImmutable, String nickname) {
-        ConsolePrinter.consolePrinter(
-                gameImmutable.getPlayers().stream().filter(player -> player.getNickname().equals(nickname)).toString()
-                );
+        ConsolePrinter.consolePrinter(gameImmutable.toString(nickname));
     }
 
     @Override

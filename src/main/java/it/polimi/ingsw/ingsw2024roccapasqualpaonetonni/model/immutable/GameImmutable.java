@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -70,6 +71,40 @@ public class GameImmutable implements Serializable {
             points[p.getColorPlayer()-1] = p.getCurrentPoints();
         }
         return points;
+    }
+
+    public String toString(String nickname){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Player player = players.stream()
+                .filter(p -> p.getNickname().equals(nickname))
+                .findFirst()
+                .orElse(null);
+
+        if (player==null) return null;
+
+        stringBuilder.append("NICKNAME:\t").append(player.getNickname()).append("\n");
+        int color = player.getColorPlayer();
+        Seed seedPlayer = Seed.getById(color);
+        stringBuilder.append("COLOR:\t").append(seedPlayer).append("\n");
+        stringBuilder.append("POINTS:\t").append(player.getCurrentPoints()).append("\n");
+
+        stringBuilder.append("AVAILABLE SEED:\n");
+        int[] countSeed = player.getCountSeed();
+        for (int i = 0; i < 7; i++) {
+            stringBuilder.append(Seed.getById(i)).append("  ").append(countSeed[i]).append("   ");
+        }
+
+        stringBuilder.append("\nMY HAND:\n\n");
+        player.getHand().forEach(playingCard -> stringBuilder.append(playingCard.toString()).append("\n"));
+        stringBuilder.append(player.getObjectiveBeforeChoice()[0].toString());
+        stringBuilder.append(player.getObjectiveBeforeChoice()[1].toString());
+        stringBuilder.append(player.getStartingCard().toString());
+
+        stringBuilder.append("MY BOARD:\n");
+        stringBuilder.append(player.getBoard().toString());
+
+        return stringBuilder.toString();
     }
 
 }

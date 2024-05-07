@@ -36,7 +36,6 @@ class PlayerBoardTest {
         int[] twenty={board1.getDim_x()/2, board1.getDim_y()/2};
         assertArrayEquals(twenty,coordinates);
 
-
     }
     @Test
     void addStartingCardNotNullTest(){
@@ -107,7 +106,7 @@ class PlayerBoardTest {
         int[] twenty={board1.getDim_x()/2-1, board1.getDim_y()/2-1};
         assertArrayEquals(twenty,coordinates);
 
-
+        System.out.println(board1.toString());
     }
     @Test
     void addResourceCardCorner2Test() throws InvalidPlaceException, ConditionsNotMetException {
@@ -222,6 +221,7 @@ class PlayerBoardTest {
 
         int[] twenty={board1.getDim_x()/2 + 2, board1.getDim_y()/2};
         assertArrayEquals(twenty,coordinates);
+        System.out.println(board1.toString());
 
     }
 

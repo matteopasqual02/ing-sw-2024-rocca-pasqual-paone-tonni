@@ -6,8 +6,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
+import org.fusesource.jansi.Ansi;
 
 import java.io.Serializable;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class PlayerBoard implements Serializable {
     private int dim_x;
@@ -240,5 +243,45 @@ public class PlayerBoard implements Serializable {
     }
     public Player getPlayer(){
         return player;
+    }
+
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i=0;i<dim_x;i++){
+            for (int j=0;j<dim_y;j++){
+                if(board[i][j]==null){
+                    stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                }
+                else{
+                    Seed seed = board[i][j].getSeed();
+                    Ansi.Color color;
+                    if(seed==Seed.EMPTY){
+                        color = Ansi.Color.WHITE;
+                    }
+                    else {
+                        color = seed.getByAnsi();
+                    }
+                    int id = board[i][j].getIdCard();
+                    String idString;
+                    if(id<10){
+                        idString = " "+id+" ";
+                    } else if (id <100) {
+                        idString = " "+id;
+                    }
+                    else {
+                        idString = ""+id;
+                    }
+
+                    stringBuilder.append(
+                            ansi().fg(Ansi.Color.DEFAULT).bg(color).a(" ").a(idString).a(" ")
+                    );
+
+                }
+            }
+            stringBuilder.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
+        }
+
+        return stringBuilder.toString();
     }
 }
