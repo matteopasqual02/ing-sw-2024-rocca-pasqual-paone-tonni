@@ -2,12 +2,15 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
+import org.fusesource.jansi.Ansi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class GameImmutable implements Serializable {
     private final int gameId;
@@ -82,26 +85,41 @@ public class GameImmutable implements Serializable {
                 .orElse(null);
 
         if (player==null) return null;
-
-        stringBuilder.append("NICKNAME:\t").append(player.getNickname()).append("\n");
         int color = player.getColorPlayer();
         Seed seedPlayer = Seed.getById(color);
-        stringBuilder.append("COLOR:\t").append(seedPlayer).append("\n");
-        stringBuilder.append("POINTS:\t").append(player.getCurrentPoints()).append("\n");
 
-        stringBuilder.append("AVAILABLE SEED:\n");
-        int[] countSeed = player.getCountSeed();
-        for (int i = 0; i < 7; i++) {
-            stringBuilder.append(Seed.getById(i)).append("  ").append(countSeed[i]).append("   ");
+        if(seedPlayer!=null){
+            stringBuilder.append("NICKNAME:\t").append(
+                    ansi().fg(seedPlayer.getByAnsi()).bg(Ansi.Color.DEFAULT).a(player.getNickname()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+            ).append("\t");
+            stringBuilder.append("COLOR:\t").append(
+                    ansi().fg(seedPlayer.getByAnsi()).bg(Ansi.Color.DEFAULT).a(seedPlayer).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+            ).append("\t");
+            stringBuilder.append("POINTS:\t").append(
+                    ansi().fg(seedPlayer.getByAnsi()).bg(Ansi.Color.DEFAULT).a(player.getCurrentPoints()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+            ).append("\n");
         }
 
-        stringBuilder.append("\nMY HAND:\n\n");
+        stringBuilder.append("AVAILABLE SEED:\t");
+        int[] countSeed = player.getCountSeed();
+        for (int i = 0; i < 7; i++) {
+            Seed seed= Seed.getById(i);
+            if(seed!=null){
+                stringBuilder.append(Seed.getById(i)).append("  ").append(
+                        ansi().fg(seed.getByAnsi()).bg(Ansi.Color.DEFAULT).a(countSeed[i]).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+                ).append("   ");
+            }
+        }
+
+        stringBuilder.append("\nMY HAND:\n");
         player.getHand().forEach(playingCard -> stringBuilder.append(playingCard.toString()).append("\n"));
-        stringBuilder.append(player.getObjectiveBeforeChoice()[0].toString());
-        stringBuilder.append(player.getObjectiveBeforeChoice()[1].toString());
+        stringBuilder.append("\nMY OBJECTIVE:\n");
+        stringBuilder.append(player.getObjectiveBeforeChoice()[0].toString()).append("\n");
+        stringBuilder.append(player.getObjectiveBeforeChoice()[1].toString()).append("\n");
+        stringBuilder.append("\nMY STARTING:\n");
         stringBuilder.append(player.getStartingCard().toString());
 
-        stringBuilder.append("MY BOARD:\n");
+        stringBuilder.append("\nMY BOARD:\n");
         stringBuilder.append(player.getBoard().toString());
 
         return stringBuilder.toString();

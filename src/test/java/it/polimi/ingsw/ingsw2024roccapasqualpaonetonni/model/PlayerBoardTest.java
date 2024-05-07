@@ -339,6 +339,8 @@ class PlayerBoardTest {
         int[] twenty={board1.getDim_x()/2+17, board1.getDim_y()/2+17};
         assertArrayEquals(twenty,coordinates);
 
+        System.out.println(board1.toString());
+
     }
     @Test
     void AddingCardOverTheBorderWithANegativeIncreaseTest() throws InvalidPlaceException, ConditionsNotMetException {
