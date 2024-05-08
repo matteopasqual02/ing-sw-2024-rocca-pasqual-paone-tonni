@@ -3,7 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 public interface ViewUpdate {
-    void joinLobby(Client client);
+    void joinLobby();
     void show_All(GameImmutable gameImmutable, String nickname);
     void show_maxNumPlayersSet(int max);
     void show_createdGame(int gameID);
@@ -15,7 +15,7 @@ public interface ViewUpdate {
     void preparation();
     void myRunningTurn(Client client);
     void notMyTurn(Client client);
-    void askText();
+
 
     void invalidMessage();
 }

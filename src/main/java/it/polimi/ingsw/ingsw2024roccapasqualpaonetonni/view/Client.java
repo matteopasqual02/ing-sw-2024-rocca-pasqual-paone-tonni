@@ -9,13 +9,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmut
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMethod;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerGUI;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
 
 import java.io.IOException;
@@ -35,7 +33,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     private GameStatus state = null;
     private Boolean myTurn = false;
     private GameImmutable currentImmutable;
-    private ScannerInterface scanner;
 
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
@@ -53,14 +50,15 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 new Thread(this).start();
             }
         }
+
         switch (viewType){
             case GUI ->{
                 view = new GUI();
-                scanner = new ScannerGUI();
+                new ScannerGUI();
             }
             case TUI -> {
                 view = new TUI();
-                scanner = new ScannerTUI(this);
+                new ScannerTUI(this);
             }
         }
     }
@@ -68,7 +66,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void run() {
         MainStaticMethod.clearCMD();
-        view.joinLobby(this);
+        view.joinLobby();
         while(!Thread.interrupted()){
             if(state !=null){
                 switch (state) {
@@ -100,13 +98,61 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
 
     }
-    public void recieveInput(String input) throws IOException {
+    public void receiveInput(String input) throws IOException, NotBoundException {
         String[] parole = input.split(" ");
 
         switch (parole[0]) {
+            case "/new" -> {
+                if(state==null){
+                    int maxNumPlayers= Integer.parseInt(parole[1]);
+                    myNickname = parole[2];
+                    server.createGame(myNickname, maxNumPlayers, this);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/join" -> {
+                if(state==null){
+                    myNickname = parole[1];
+                    server.joinFirstAvailable(myNickname, this);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/joinById" -> {
+                if(state==null){
+                    myNickname = parole[1];
+                    int gameId= Integer.parseInt(parole[2]);
+                    server.joinGameByID(myNickname,gameId,this);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/reconnect" -> {
+                if(state==null){
+                    myNickname = parole[1];
+                    int gameId= Integer.parseInt(parole[2]);
+                    server.reconnect(myNickname,gameId,this);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
             case "/addStarting" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
                     server.addStartingCard(myNickname, Objects.equals(parole[1], "true"));
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/choseGoal" -> {
+                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+                    int pos = Integer.parseInt(parole[1]);
+                    server.choosePlayerGoal(myNickname,pos-1);
                 }
                 else {
                     view.invalidMessage();
@@ -135,7 +181,64 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/drawGold" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
-
+                    server.drawGoldFromDeck(myNickname);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/drawResources" -> {
+                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+                    server.drawResourceFromDeck(myNickname);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/drawBoard" -> {
+                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+                    int pos = Integer.parseInt(parole[1]);
+                    server.drawFromBoard(myNickname,pos);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/chat" -> {
+                if(state!=GameStatus.WAITING_RECONNECTION){
+                    server.sendMessage(myNickname,parole[1]);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/chatPrivate" -> {
+                if(state!=GameStatus.WAITING_RECONNECTION){
+                    server.sendPrivateMessage(myNickname,parole[1],parole[2]);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/seeChat" -> {
+                if(state!=GameStatus.WAITING_RECONNECTION){
+                    server.getPublicChatLog(myNickname);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/seeChatPrivate" -> {
+                if(state!=GameStatus.WAITING_RECONNECTION){
+                    server.getPrivateChatLog(myNickname, parole[1]);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/leave" -> {
+                if(state!=GameStatus.WAITING_RECONNECTION){
+                    server.leave(myNickname,myGameId,this);
                 }
                 else {
                     view.invalidMessage();
@@ -144,8 +247,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case null, default -> view.invalidMessage();
 
         }
-
-
     }
 
     //------------------------------------- SET GET ------------------------------------------------------------------------------
@@ -181,7 +282,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void noAvailableGame() {
         view.show_noAvailableGame();
-        view.joinLobby(this);
+        view.joinLobby();
     }
     @Override
     public void addedNewPlayer(String pNickname) {
@@ -310,7 +411,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     /**
-     * this method recieves a private message and prints the sender and the content on both players' displays
+     * this method receives a private message and prints the sender and the content on both players' displays
      * @param m
      * @throws RemoteException
      */
