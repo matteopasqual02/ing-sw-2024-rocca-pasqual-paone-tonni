@@ -67,34 +67,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void run() {
         MainStaticMethod.clearCMD();
         view.joinLobby();
+
         while(!Thread.interrupted()){
-            if(state !=null){
-                switch (state) {
-                    case PREPARATION ->{
-                        view.preparation();
-                    }
-                    case RUNNING -> {
-                        if(myTurn){
-                            view.myRunningTurn(this);
-                        }
-                        else{
-                            //view.notMyTurn(this);
-                        }
-                    }
-                    case WAITING_LAST_TURN -> {
 
-                    }
-                    case LAST_TURN -> {
-
-                    }
-                    case ENDED -> {
-
-                    }
-                    case WAITING_RECONNECTION -> {
-
-                    }
-                }
-            }
         }
 
     }
@@ -136,6 +111,14 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                     myNickname = parole[1];
                     int gameId= Integer.parseInt(parole[2]);
                     server.reconnect(myNickname,gameId,this);
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "Y","y" -> {
+                if(state==null){
+                    server.ready(myNickname);
                 }
                 else {
                     view.invalidMessage();
@@ -214,7 +197,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/chatPrivate" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
-                    server.sendPrivateMessage(myNickname,parole[1],parole[2]);
+                    server.sendPrivateMessage(parole[2],myNickname,parole[1]);
                 }
                 else {
                     view.invalidMessage();
@@ -291,17 +274,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void areYouReady() {
         view.show_areYouReady();
-        try {
-            server.ready(myNickname);
-        } catch (NotBoundException | IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
     public void allGame(GameImmutable gameImmutable) {
         currentImmutable=gameImmutable;
         view.show_All(gameImmutable,myNickname);
+        view.myRunningTurn();
     }
 
     @Override
@@ -481,8 +460,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     @Override
-    public void personalGoalChosen(ObjectiveCard goal, Player p) {
-
+    public void personalGoalChosen(ObjectiveCard goal, Player p, int choice) {
+        currentImmutable.getPlayer(p).chooseGoal(choice);
+        view.show_All(currentImmutable,myNickname);
     }
 
     @Override

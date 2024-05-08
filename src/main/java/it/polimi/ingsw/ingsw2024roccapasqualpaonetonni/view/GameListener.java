@@ -6,7 +6,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -64,7 +63,7 @@ public interface GameListener extends Remote {
     void conditionsNotMet(Player p) throws RemoteException;
     void startingCardDrew(StartingCard start, Player p) throws RemoteException;
     void drewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
-    void personalGoalChosen(ObjectiveCard goal, Player p) throws RemoteException;
+    void personalGoalChosen(ObjectiveCard goal, Player p, int choice) throws RemoteException;
     void cardNotInHand(PlayingCard card,Player p) throws RemoteException;
     void resourceDrawn(PlayingCard card, Player p) throws RemoteException;
     void goldDrawn(PlayingCard card, Player p) throws RemoteException;

@@ -309,8 +309,13 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p) {
-
+    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p, int choice) {
+        try {
+            listener.personalGoalChosen(goal, p,choice);
+        }
+        catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

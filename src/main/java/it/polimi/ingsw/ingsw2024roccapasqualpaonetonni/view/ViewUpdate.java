@@ -13,8 +13,8 @@ public interface ViewUpdate {
     void show_addedNewPlayer(String pNickname);
     void show_areYouReady();
     void preparation();
-    void myRunningTurn(Client client);
-    void notMyTurn(Client client);
+    void myRunningTurn();
+    void notMyTurn();
 
 
     void invalidMessage();

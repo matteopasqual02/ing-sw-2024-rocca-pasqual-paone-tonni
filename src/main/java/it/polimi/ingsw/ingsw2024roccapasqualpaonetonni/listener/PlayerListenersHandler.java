@@ -59,11 +59,11 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
             }
         }
     }
-    public void notify_chooseGoal(ObjectiveCard goal, Player p) {
+    public void notify_chooseGoal(ObjectiveCard goal, Player p,int choice) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPersonalGoalChosen(goal, p);
-            } catch (RemoteException e) {
+                listenersMap.get(listener).sendPersonalGoalChosen(goal, p,choice);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

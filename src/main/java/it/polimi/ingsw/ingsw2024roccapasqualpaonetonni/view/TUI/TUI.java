@@ -69,13 +69,13 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         );
     }
     @Override
-    public void myRunningTurn(Client client) {
+    public void myRunningTurn() {
         ConsolePrinter.consolePrinter(
                 """
                 It's your turn. Remember firstly you place a card then you can draw
                     (/addStarting + flipped(true,false)) -> to add the starting card
-                    (/chooseGoal + choice(1,2)) -> to chose my personal goal
-                    (/addCard + handIndex + idCardToAttach + position (ne,nw,se,sw) + flipped (true,false)) -> to add a new card
+                    (/choseGoal + choice(1,2)) -> to chose my personal goal
+                    (/addCard + handIndex + idCardToAttach + position (1,2,3,4) + flipped (true,false)) -> to add a new card
                     (/drawGold) -> to draw a gold card
                     (/drawResources) -> to draw a resource card
                     (/drawBoard + position (1,2,3,4)) -> to draw from common board
@@ -89,7 +89,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         );
     }
     @Override
-    public void notMyTurn(Client client) {
+    public void notMyTurn() {
         ConsolePrinter.consolePrinter(
                 """
                 It's not your turn. You can

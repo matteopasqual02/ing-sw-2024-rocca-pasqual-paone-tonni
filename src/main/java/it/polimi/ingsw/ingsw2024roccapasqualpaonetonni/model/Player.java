@@ -98,7 +98,7 @@ public class Player implements Serializable {
         else {
             goal=firstGoals[1];
         }
-        playerListenersHandler.notify_chooseGoal(goal,this);
+        playerListenersHandler.notify_chooseGoal(goal,this,choice);
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();

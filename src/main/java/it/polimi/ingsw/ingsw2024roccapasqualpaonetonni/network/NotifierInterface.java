@@ -65,7 +65,7 @@ public interface NotifierInterface extends Remote {
 
     void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
 
-    void sendPersonalGoalChosen(ObjectiveCard goal, Player p) throws RemoteException;
+    void sendPersonalGoalChosen(ObjectiveCard goal, Player p, int choice) throws IOException;
 
     void sendCardNotInHand(PlayingCard card, Player p) throws RemoteException;
 

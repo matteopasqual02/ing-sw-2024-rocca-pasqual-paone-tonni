@@ -51,12 +51,12 @@ public class GUI implements ViewUpdate {
     }
 
     @Override
-    public void myRunningTurn(Client client) {
+    public void myRunningTurn() {
 
     }
 
     @Override
-    public void notMyTurn(Client client) {
+    public void notMyTurn() {
 
     }
 

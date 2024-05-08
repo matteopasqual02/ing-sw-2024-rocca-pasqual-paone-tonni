@@ -278,8 +278,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p) {
-
+    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p, int choice) throws IOException {
+        outputStream.writeObject(new ServerMessageGoalChosen(goal,p,choice));
+        messageDone();
     }
 
     @Override
