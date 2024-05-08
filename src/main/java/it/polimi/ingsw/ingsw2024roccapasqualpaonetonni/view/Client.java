@@ -131,8 +131,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/choseGoal" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
-                    int pos = Integer.parseInt(parole[1]);
-                    server.choosePlayerGoal(myNickname,pos-1);
+                    try {
+                        int pos = Integer.parseInt(parole[1]);
+                        server.choosePlayerGoal(myNickname,pos-1);
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
                 }
                 else {
                     view.invalidMessage();
