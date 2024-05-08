@@ -27,8 +27,8 @@ public abstract class ListenersHandler {
         //listeners.remove(g);
     }
 
-    public synchronized List<GameListener> getListener(){
-        return new ArrayList<>(listenersMap.keySet());
-        //return listeners;
+    public synchronized HashMap<GameListener, NotifierInterface> getListener(){
+        //return new ArrayList<>(listenersMap.keySet());
+        return listenersMap;
     }
 }

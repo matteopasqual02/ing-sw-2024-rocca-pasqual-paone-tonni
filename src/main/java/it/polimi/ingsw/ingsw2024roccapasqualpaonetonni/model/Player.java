@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.Obj
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotInHandException;
@@ -45,9 +46,9 @@ public class Player implements Serializable {
 
     }
 
-    /*public void setPlayerListeners(List<GameListener> currentGameListeners) {
+    public void setPlayerListeners(HashMap<GameListener, NotifierInterface> currentGameListeners) {
         playerListenersHandler.resetPlayerListeners(currentGameListeners);
-    }*/
+    }
 
     public GameListener getListener() {
         return myListener;

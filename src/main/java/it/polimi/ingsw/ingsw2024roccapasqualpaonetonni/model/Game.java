@@ -58,9 +58,10 @@ public class Game implements Serializable {
     public void removeListener(GameListener me){
         synchronized (gameListenersHandler) {
             gameListenersHandler.removeListener(me);
-            /*for(Player p: players){
+
+            for(Player p: players){
                 p.setPlayerListeners(gameListenersHandler.getListener());
-            }*/
+            }
         }
     }
 
@@ -82,9 +83,11 @@ public class Game implements Serializable {
         if (!players.contains(px)) {
             if (players.size() < maxNumberOfPlayer) {
                 players.add(px);
-                /*for(Player p: players){
+
+                for(Player p: players){
                     p.setPlayerListeners(gameListenersHandler.getListener());
-                }*/
+                }
+
                 if (players.size() == 1) {
                     gameListenersHandler.notify_createdGame(this.gameId);
                 }

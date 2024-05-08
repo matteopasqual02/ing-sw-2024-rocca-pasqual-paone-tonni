@@ -3,11 +3,14 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.List;
 
 /*
 this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
@@ -21,16 +24,17 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     public PlayerListenersHandler(){
         super();
     }
-    /*public void resetPlayerListeners(List<GameListener> gameListeners){
+
+    public void resetPlayerListeners(HashMap<GameListener, NotifierInterface> gameListenersMap){
         //listenersMap=null;
-        for(GameListener lis : gameListeners){
+        for(GameListener lis : gameListenersMap.keySet()){
             try {
-                addListener(lis);
+                addListener(lis,gameListenersMap.get(lis));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }
-    }*/
+    }
 
     public void notify_setReadyToStart(Player p) {
         for(GameListener listener : listenersMap.keySet()){
