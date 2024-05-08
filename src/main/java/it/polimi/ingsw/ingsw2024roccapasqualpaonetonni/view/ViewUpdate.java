@@ -15,4 +15,7 @@ public interface ViewUpdate {
     void preparation();
     void myRunningTurn(Client client);
     void notMyTurn(Client client);
+    void askText();
+
+    void invalidMessage();
 }

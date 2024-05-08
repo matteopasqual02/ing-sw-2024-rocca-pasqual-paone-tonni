@@ -59,4 +59,14 @@ public class GUI implements ViewUpdate {
     public void notMyTurn(Client client) {
 
     }
+
+    @Override
+    public void askText() {
+
+    }
+
+    @Override
+    public void invalidMessage() {
+
+    }
 }

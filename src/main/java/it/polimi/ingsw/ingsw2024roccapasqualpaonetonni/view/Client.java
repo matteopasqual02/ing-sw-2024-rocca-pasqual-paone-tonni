@@ -14,12 +14,16 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMe
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerGUI;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Objects;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -31,6 +35,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     private GameStatus state = null;
     private Boolean myTurn = false;
     private GameImmutable currentImmutable;
+    private ScannerInterface scanner;
 
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
@@ -49,8 +54,14 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
         }
         switch (viewType){
-            case GUI -> view = new GUI();
-            case TUI -> view = new TUI();
+            case GUI ->{
+                view = new GUI();
+                scanner = new ScannerGUI();
+            }
+            case TUI -> {
+                view = new TUI();
+                scanner = new ScannerTUI(this);
+            }
         }
     }
 
@@ -66,7 +77,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                     }
                     case RUNNING -> {
                         if(myTurn){
-                            //view.myRunningTurn(this);
+                            view.myRunningTurn(this);
                         }
                         else{
                             //view.notMyTurn(this);
@@ -87,6 +98,53 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
         }
+
+    }
+    public void recieveInput(String input) throws IOException {
+        String[] parole = input.split(" ");
+
+        switch (parole[0]) {
+            case "/addStarting" -> {
+                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+                    server.addStartingCard(myNickname, Objects.equals(parole[1], "true"));
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/addCard" -> {
+                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+                    int card1 = Integer.parseInt(parole[1]);
+                    PlayingCard c1 = currentImmutable.getPlayers().peek().getHand().get(card1);
+                    int card2 = Integer.parseInt(parole[2]);
+                    PlayingCard[][] board = currentImmutable.getPlayers().peek().getBoard().getBoard();
+                    int pos = Integer.parseInt(parole[3]);
+
+                    for (PlayingCard[] playingCards : board) {
+                        for (PlayingCard playingCard : playingCards) {
+                            if (playingCard != null && playingCard.getIdCard() == card2) {
+                                server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[1], "true"));
+                                break;
+                            }
+                        }
+                    }
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case "/drawGold" -> {
+                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+
+                }
+                else {
+                    view.invalidMessage();
+                }
+            }
+            case null, default -> view.invalidMessage();
+
+        }
+
 
     }
 
