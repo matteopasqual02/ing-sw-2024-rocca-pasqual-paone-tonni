@@ -61,18 +61,15 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 new ScannerTUI(this);
             }
         }
+        MainStaticMethod.clearCMD();
+        view.joinLobby();
     }
 
     @Override
     public void run() {
-        MainStaticMethod.clearCMD();
-        view.joinLobby();
-
-        while(!Thread.interrupted()){
-
-        }
 
     }
+
     public void receiveInput(String input) throws IOException, NotBoundException {
         String[] parole = input.split(" ");
 
@@ -461,6 +458,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void personalGoalChosen(ObjectiveCard goal, Player p, int choice) {
+        System.out.println("here");
         currentImmutable.getPlayer(p).chooseGoal(choice);
         view.show_All(currentImmutable,myNickname);
     }
