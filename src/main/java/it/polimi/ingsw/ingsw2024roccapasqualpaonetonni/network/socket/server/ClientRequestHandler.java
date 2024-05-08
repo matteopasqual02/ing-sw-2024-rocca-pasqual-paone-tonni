@@ -208,8 +208,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendStatusSet(GameStatus status) {
-
+    public void sendStatusSet(GameStatus status) throws IOException {
+        outputStream.writeObject(new ServerMessageStatusSet(status));
+        messageDone();
     }
 
     @Override

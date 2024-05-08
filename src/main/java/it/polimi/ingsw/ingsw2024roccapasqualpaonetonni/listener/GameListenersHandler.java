@@ -200,7 +200,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendStatusSet(status);
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

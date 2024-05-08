@@ -39,7 +39,7 @@ public interface NotifierInterface extends Remote {
 
     void sendDisconnectionImpossible(String nickname) throws RemoteException;
 
-    void sendStatusSet(GameStatus status) throws RemoteException;
+    void sendStatusSet(GameStatus status) throws IOException;
 
     void sendStatusSetToLastStatus(GameStatus status) throws RemoteException;
 
