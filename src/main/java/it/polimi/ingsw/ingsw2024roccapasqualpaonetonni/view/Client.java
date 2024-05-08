@@ -433,12 +433,17 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void startAdded(PlayerBoard board, Player p) {
-
+        currentImmutable.getPlayer(p).setPlayerBoard(board);
+        view.show_All(currentImmutable,myNickname);
+        view.myRunningTurn();
     }
 
     @Override
     public void cardAdded(PlayerBoard board, Player p) {
-
+        currentImmutable.getPlayer(p).setPlayerBoard(board);
+        currentImmutable.getPlayer(p).setHand(p.getHand());
+        view.show_All(currentImmutable,myNickname);
+        view.myRunningTurn();
     }
 
     @Override
@@ -463,9 +468,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void personalGoalChosen(ObjectiveCard goal, Player p, int choice) {
-        System.out.println("here");
         currentImmutable.getPlayer(p).chooseGoal(choice);
         view.show_All(currentImmutable,myNickname);
+        view.myRunningTurn();
     }
 
     @Override

@@ -19,8 +19,8 @@ public class Player implements Serializable {
     private final int colorPlayer;
     private int currentPoints;
     private final int[] countSeed;
-    private final PlayerBoard board;
-    private final List<PlayingCard> hand;
+    private PlayerBoard board;
+    private List<PlayingCard> hand;
     private ObjectiveCard goal;
     private final ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
@@ -182,4 +182,10 @@ public class Player implements Serializable {
         return firstGoals;
     }
 
+    public void setPlayerBoard(PlayerBoard board) {
+        this.board=board;
+    }
+    public void setHand(List<PlayingCard> l){
+        this.hand=l;
+    }
 }

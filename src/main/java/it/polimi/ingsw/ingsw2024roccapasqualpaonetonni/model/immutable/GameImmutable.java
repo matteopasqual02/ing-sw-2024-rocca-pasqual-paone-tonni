@@ -133,6 +133,9 @@ public class GameImmutable implements Serializable {
             if(player.getBoard().getBoard()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
                 stringBuilder.append("\t|\t").append(player.getStartingCard().toString(false,finalI)).append("\n");
             }
+            else {
+                stringBuilder.append("\n");
+            }
         }
 
 
