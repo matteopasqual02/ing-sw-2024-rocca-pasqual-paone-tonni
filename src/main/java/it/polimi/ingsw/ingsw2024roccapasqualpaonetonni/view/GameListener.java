@@ -42,8 +42,7 @@ public interface GameListener extends Remote {
     void statusSetToLastStatus(GameStatus status) throws RemoteException;
     void lastStatusReset() throws RemoteException;
     void playerIsReady(Player p) throws RemoteException;
-    //void tableCreated(GameImmutable model);
-    //void playersNotReady(GameImmutable model);
+
     void firstPlayerSet(String nickname) throws RemoteException;
     void drawableDeckSet(DrawableDeck d) throws RemoteException;
     void boardDeckSet(BoardDeck bd) throws RemoteException;
@@ -57,13 +56,13 @@ public interface GameListener extends Remote {
 
     void privateChatLog(String otherName, List<PrivateMessage> privateChat) throws RemoteException;
 
-    void startAdded(PlayerBoard board, Player p) throws RemoteException;
-    void cardAdded(PlayerBoard board, Player p) throws RemoteException;
+    void startAdded(Player p) throws RemoteException;
+    void cardAdded(Player p) throws RemoteException;
     void choseInvalidPlace(Player p) throws RemoteException;
     void conditionsNotMet(Player p) throws RemoteException;
     void startingCardDrew(StartingCard start, Player p) throws RemoteException;
     void drewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
-    void personalGoalChosen(ObjectiveCard goal, Player p, int choice) throws RemoteException;
+    void personalGoalChosen( Player p) throws RemoteException;
     void cardNotInHand(PlayingCard card,Player p) throws RemoteException;
     void resourceDrawn(PlayingCard card, Player p) throws RemoteException;
     void goldDrawn(PlayingCard card, Player p) throws RemoteException;

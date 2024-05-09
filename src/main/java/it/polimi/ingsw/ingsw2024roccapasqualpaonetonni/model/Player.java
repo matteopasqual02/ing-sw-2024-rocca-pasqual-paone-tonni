@@ -99,7 +99,7 @@ public class Player implements Serializable {
         else {
             goal=firstGoals[1];
         }
-        playerListenersHandler.notify_chooseGoal(goal,this,choice);
+        playerListenersHandler.notify_chooseGoal(this);
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
@@ -125,7 +125,7 @@ public class Player implements Serializable {
 
     public void addStarting(){
         board.addStartingCard(startingCard);
-        playerListenersHandler.notify_addStarting(board,this);
+        playerListenersHandler.notify_addStarting(this);
     }
     public void setStartingCard(StartingCard card){
         this.startingCard=card;
@@ -141,7 +141,7 @@ public class Player implements Serializable {
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
-            playerListenersHandler.notify_addToBoard(board,this);
+
         }
         catch(InvalidPlaceException e) {
             playerListenersHandler.notify_invalidPlace(this);
@@ -149,6 +149,7 @@ public class Player implements Serializable {
         catch(ConditionsNotMetException e) {
             playerListenersHandler.notify_conditionsNotMet(this);
         }
+        playerListenersHandler.notify_addToBoard(this);
     }
 
     public void increasePoints(int newPoints) {
@@ -169,8 +170,11 @@ public class Player implements Serializable {
             hand.remove(p);
             playerListenersHandler.notify_removeFromHand(p,this);
         }
-        else {throw new CardNotInHandException("Card Doesn't exists in player hand");}
-        playerListenersHandler.notify_cardNotInHand(p,this);
+        else {
+            playerListenersHandler.notify_cardNotInHand(p,this);
+            throw new CardNotInHandException("Card Doesn't exists in player hand");
+        }
+
     }
 
 
@@ -182,10 +186,5 @@ public class Player implements Serializable {
         return firstGoals;
     }
 
-    public void setPlayerBoard(PlayerBoard board) {
-        this.board=board;
-    }
-    public void setHand(List<PlayingCard> l){
-        this.hand=l;
-    }
+
 }

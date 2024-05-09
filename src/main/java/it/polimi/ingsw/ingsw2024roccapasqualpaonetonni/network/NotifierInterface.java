@@ -53,9 +53,9 @@ public interface NotifierInterface extends Remote {
 
     void sendBoardDeckSet(BoardDeck bd) throws RemoteException;
 
-    void sendStartAdded(PlayerBoard board, Player p) throws IOException;
+    void sendStartAdded(Player p) throws IOException;
 
-    void sendCardAdded(PlayerBoard board, Player p) throws IOException;
+    void sendCardAdded(Player p) throws IOException;
 
     void sendChoseInvalidPlace(Player p) throws IOException;
 
@@ -65,7 +65,7 @@ public interface NotifierInterface extends Remote {
 
     void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
 
-    void sendPersonalGoalChosen(ObjectiveCard goal, Player p, int choice) throws IOException;
+    void sendPersonalGoalChosen(Player p) throws IOException;
 
     void sendCardNotInHand(PlayingCard card, Player p) throws RemoteException;
 

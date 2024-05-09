@@ -284,6 +284,36 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         view.show_All(gameImmutable,myNickname);
         view.myRunningTurn();
     }
+    @Override
+    public void nextTurn(String nickname) {
+        myTurn = myNickname.equals(nickname);
+    }
+    @Override
+    public void startAdded(Player p) {
+        currentImmutable.refreshPlayer(p);
+        view.show_All(currentImmutable,myNickname);
+        view.myRunningTurn();
+    }
+
+    @Override
+    public void cardAdded(Player p) {
+        currentImmutable.refreshPlayer(p);
+        view.show_All(currentImmutable,myNickname);
+        view.myRunningTurn();
+    }
+    @Override
+    public void personalGoalChosen(Player p) {
+        currentImmutable.refreshPlayer(p);
+        view.show_All(currentImmutable,myNickname);
+        view.myRunningTurn();
+    }
+
+
+
+
+
+
+
 
     @Override
     public void playerReady(Player p) {
@@ -305,15 +335,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
-    @Override
-    public void nextTurn(String nickname) {
-        if(myNickname.equals(nickname)){
-            myTurn = true;
-        }
-        else{
-            myTurn = false;
-        }
-    }
+
 
     @Override
     public void lastTurn() {
@@ -431,20 +453,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
 
-    @Override
-    public void startAdded(PlayerBoard board, Player p) {
-        currentImmutable.getPlayer(p).setPlayerBoard(board);
-        view.show_All(currentImmutable,myNickname);
-        view.myRunningTurn();
-    }
 
-    @Override
-    public void cardAdded(PlayerBoard board, Player p) {
-        currentImmutable.getPlayer(p).setPlayerBoard(board);
-        currentImmutable.getPlayer(p).setHand(p.getHand());
-        view.show_All(currentImmutable,myNickname);
-        view.myRunningTurn();
-    }
 
     @Override
     public void choseInvalidPlace(Player p) {
@@ -466,12 +475,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
-    @Override
-    public void personalGoalChosen(ObjectiveCard goal, Player p, int choice) {
-        currentImmutable.getPlayer(p).chooseGoal(choice);
-        view.show_All(currentImmutable,myNickname);
-        view.myRunningTurn();
-    }
+
 
     @Override
     public void cardNotInHand(PlayingCard card, Player p) {

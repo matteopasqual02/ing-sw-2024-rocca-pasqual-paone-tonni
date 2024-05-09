@@ -245,14 +245,14 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendStartAdded(PlayerBoard board, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageStartAdded(board,p));
+    public void sendStartAdded(Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageStartAdded(p));
         messageDone();
     }
 
     @Override
-    public void sendCardAdded(PlayerBoard board, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageCardAdded(board,p));
+    public void sendCardAdded(Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageCardAdded(p));
         messageDone();
     }
 
@@ -279,8 +279,8 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p, int choice) throws IOException {
-        outputStream.writeObject(new ServerMessageGoalChosen(goal,p,choice));
+    public void sendPersonalGoalChosen(Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageGoalChosen(p));
         messageDone();
     }
 

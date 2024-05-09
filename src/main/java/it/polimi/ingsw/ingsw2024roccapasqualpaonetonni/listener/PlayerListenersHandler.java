@@ -63,10 +63,10 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
             }
         }
     }
-    public void notify_chooseGoal(ObjectiveCard goal, Player p,int choice) {
+    public void notify_chooseGoal(Player p) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPersonalGoalChosen(goal, p,choice);
+                listenersMap.get(listener).sendPersonalGoalChosen(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -108,10 +108,10 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
             }
         }
     }
-    public void notify_addStarting(PlayerBoard board, Player p) {
+    public void notify_addStarting( Player p) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendStartAdded(board,p);
+                listenersMap.get(listener).sendStartAdded(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -131,10 +131,10 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
             }
         }
     }
-    public void notify_addToBoard(PlayerBoard board, Player p) {
+    public void notify_addToBoard(Player p) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendCardAdded(board,p);
+                listenersMap.get(listener).sendCardAdded(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

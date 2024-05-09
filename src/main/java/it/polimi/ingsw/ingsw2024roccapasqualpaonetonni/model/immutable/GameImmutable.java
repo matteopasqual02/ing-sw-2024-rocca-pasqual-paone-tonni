@@ -56,8 +56,13 @@ public class GameImmutable implements Serializable {
     public Queue<Player> getPlayers() {
         return players;
     }
-    public Player getPlayer(Player player){
-        return players.stream().filter(player1 -> player1.getNickname().equals(player.getNickname())).toList().getFirst();
+    public void refreshPlayer(Player player){
+        for (Player p: players){
+            if(p.getNickname().equals(player.getNickname())){
+                players.remove(p);
+                players.add(player);
+            }
+        }
     }
     public Queue<Player> getWinners() {
         return winners;

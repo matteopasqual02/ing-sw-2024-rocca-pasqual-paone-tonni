@@ -259,9 +259,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendStartAdded(PlayerBoard board, Player p) {
+    public void sendStartAdded(Player p) {
         try {
-            listener.startAdded(board,p);
+            listener.startAdded(p);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -269,9 +269,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendCardAdded(PlayerBoard board, Player p) {
+    public void sendCardAdded(Player p) {
         try {
-            listener.cardAdded(board, p);
+            listener.cardAdded(p);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -309,9 +309,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p, int choice) {
+    public void sendPersonalGoalChosen(Player p) {
         try {
-            listener.personalGoalChosen(goal, p,choice);
+            listener.personalGoalChosen(p);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
