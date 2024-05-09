@@ -76,9 +76,15 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         switch (parole[0]) {
             case "/new" -> {
                 if(state==null){
-                    int maxNumPlayers= Integer.parseInt(parole[1]);
-                    myNickname = parole[2];
-                    server.createGame(myNickname, maxNumPlayers, this);
+                    try{
+                        int maxNumPlayers= Integer.parseInt(parole[1]);
+                        myNickname = parole[2];
+                        server.createGame(myNickname, maxNumPlayers, this);
+                    }
+                    catch (IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
+
                 }
                 else {
                     view.invalidMessage();
@@ -86,8 +92,14 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/join" -> {
                 if(state==null){
-                    myNickname = parole[1];
-                    server.joinFirstAvailable(myNickname, this);
+                    try{
+                        myNickname = parole[1];
+                        server.joinFirstAvailable(myNickname, this);
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
+
                 }
                 else {
                     view.invalidMessage();
@@ -95,9 +107,14 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/joinById" -> {
                 if(state==null){
-                    myNickname = parole[1];
-                    int gameId= Integer.parseInt(parole[2]);
-                    server.joinGameByID(myNickname,gameId,this);
+                    try{
+                        myNickname = parole[1];
+                        int gameId= Integer.parseInt(parole[2]);
+                        server.joinGameByID(myNickname,gameId,this);
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
                 }
                 else {
                     view.invalidMessage();
@@ -105,9 +122,15 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/reconnect" -> {
                 if(state==null){
-                    myNickname = parole[1];
-                    int gameId= Integer.parseInt(parole[2]);
-                    server.reconnect(myNickname,gameId,this);
+                    try{
+                        myNickname = parole[1];
+                        int gameId= Integer.parseInt(parole[2]);
+                        server.reconnect(myNickname,gameId,this);
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
+
                 }
                 else {
                     view.invalidMessage();
@@ -123,7 +146,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/addStarting" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
-                    server.addStartingCard(myNickname, Objects.equals(parole[1], "true"));
+                    try{
+                        server.addStartingCard(myNickname, Objects.equals(parole[1], "true"));
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
+
                 }
                 else {
                     view.invalidMessage();
@@ -145,19 +174,24 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/addCard" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
-                    int card1 = Integer.parseInt(parole[1]);
-                    PlayingCard c1 = currentImmutable.getPlayers().peek().getHand().get(card1);
-                    int card2 = Integer.parseInt(parole[2]);
-                    PlayingCard[][] board = currentImmutable.getPlayers().peek().getBoard().getBoard();
-                    int pos = Integer.parseInt(parole[3]);
+                    try{
+                        int card1 = Integer.parseInt(parole[1]);
+                        PlayingCard c1 = currentImmutable.getPlayers().peek().getHand().get(card1);
+                        int card2 = Integer.parseInt(parole[2]);
+                        PlayingCard[][] board = currentImmutable.getPlayers().peek().getBoard().getBoard();
+                        int pos = Integer.parseInt(parole[3]);
 
-                    for (PlayingCard[] playingCards : board) {
-                        for (PlayingCard playingCard : playingCards) {
-                            if (playingCard != null && playingCard.getIdCard() == card2) {
-                                server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[1], "true"));
-                                break;
+                        for (PlayingCard[] playingCards : board) {
+                            for (PlayingCard playingCard : playingCards) {
+                                if (playingCard != null && playingCard.getIdCard() == card2) {
+                                    server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[1], "true"));
+                                    break;
+                                }
                             }
                         }
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
                     }
                 }
                 else {
@@ -182,8 +216,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/drawBoard" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
-                    int pos = Integer.parseInt(parole[1]);
-                    server.drawFromBoard(myNickname,pos);
+                    try{
+                        int pos = Integer.parseInt(parole[1]);
+                        server.drawFromBoard(myNickname,pos);
+                    }catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
                 }
                 else {
                     view.invalidMessage();
@@ -191,7 +229,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/chat" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
-                    server.sendMessage(myNickname,parole[1]);
+                    try{
+                        server.sendMessage(myNickname,parole[1]);
+                    }catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
                 }
                 else {
                     view.invalidMessage();
@@ -199,7 +241,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/chatPrivate" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
-                    server.sendPrivateMessage(parole[2],myNickname,parole[1]);
+                    try{
+                        server.sendPrivateMessage(parole[2],myNickname,parole[1]);
+                    }catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
                 }
                 else {
                     view.invalidMessage();
@@ -215,7 +261,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/seeChatPrivate" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
-                    server.getPrivateChatLog(myNickname, parole[1]);
+                    try{
+                        server.getPrivateChatLog(myNickname, parole[1]);
+                    }catch(IndexOutOfBoundsException e){
+                        view.invalidMessage();
+                    }
                 }
                 else {
                     view.invalidMessage();
