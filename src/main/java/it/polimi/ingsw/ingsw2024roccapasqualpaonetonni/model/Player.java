@@ -25,11 +25,13 @@ public class Player implements Serializable {
     private final ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
     private boolean readyToStart;
+    private boolean connected;
 
     private GameListener myListener;
     private final PlayerListenersHandler playerListenersHandler;
 
     public Player(String name, int color){
+        this.connected=true;
         this.nickname=name;
         this.colorPlayer=color;
         this.currentPoints=0;
@@ -91,7 +93,6 @@ public class Player implements Serializable {
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
-        playerListenersHandler.notify_drawStarting(this);
     }
     public void drawGoldFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstGold());
@@ -172,4 +173,7 @@ public class Player implements Serializable {
     }
 
 
+    public void setIsConnected(boolean b) {
+        connected = b;
+    }
 }
