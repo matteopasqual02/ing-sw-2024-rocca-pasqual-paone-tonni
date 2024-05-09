@@ -222,7 +222,7 @@ public class Game implements Serializable {
     }
 
     public void gameReady()  {
-        gameListenersHandler.notify_All(new GameImmutable(this));
+        gameListenersHandler.notify_All(this);
     }
 
 //---------------------------------POINT SECTION

@@ -70,7 +70,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
-    public void receiveInput(String input) throws IOException, NotBoundException {
+    public synchronized void receiveInput(String input) throws IOException, NotBoundException {
         String[] parole = input.split(" ");
 
         switch (parole[0]) {
@@ -81,7 +81,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                         myNickname = parole[2];
                         server.createGame(myNickname, maxNumPlayers, this);
                     }
-                    catch (IndexOutOfBoundsException e){
+                    catch (IndexOutOfBoundsException | NumberFormatException e){
                         view.invalidMessage();
                     }
 
@@ -332,7 +332,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void allGame(GameImmutable gameImmutable) {
         currentImmutable=gameImmutable;
         view.show_All(gameImmutable,myNickname);
-        view.myRunningTurn();
+        if(myTurn){
+            view.myRunningTurn();
+        }
+        else{
+            view.notMyTurn();
+        }
     }
     @Override
     public void nextTurn(String nickname) {
@@ -342,20 +347,35 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void startAdded(Player p) {
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname);
-        view.myRunningTurn();
+        if(myTurn){
+            view.myRunningTurn();
+        }
+        else{
+            view.notMyTurn();
+        }
     }
 
     @Override
     public void cardAdded(Player p) {
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname);
-        view.myRunningTurn();
+        if(myTurn){
+            view.myRunningTurn();
+        }
+        else{
+            view.notMyTurn();
+        }
     }
     @Override
     public void personalGoalChosen(Player p) {
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname);
-        view.myRunningTurn();
+        if(myTurn){
+            view.myRunningTurn();
+        }
+        else{
+            view.notMyTurn();
+        }
     }
 
 
@@ -434,12 +454,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void firstPlayerSet(String nickname) {
-        if(myNickname.equals(nickname)){
-            myTurn = true;
-        }
-        else{
-            myTurn = false;
-        }
+        myTurn = myNickname.equals(nickname);
     }
 
     @Override

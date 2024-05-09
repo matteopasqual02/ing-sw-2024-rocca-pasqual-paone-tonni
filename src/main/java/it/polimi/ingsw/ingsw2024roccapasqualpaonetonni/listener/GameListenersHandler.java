@@ -23,11 +23,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         super();
     }
 
-    public void notify_All(GameImmutable gameImmutable) {
+    public void notify_All(Game game) {
         for(GameListener listener: listenersMap.keySet()){
             try {
                 int i=0;
-                listenersMap.get(listener).sendAll(gameImmutable);
+                listenersMap.get(listener).sendAll(new GameImmutable(game));
             }
             catch(Exception e){
                 e.printStackTrace();
