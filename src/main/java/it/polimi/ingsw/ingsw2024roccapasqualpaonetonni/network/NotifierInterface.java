@@ -61,29 +61,17 @@ public interface NotifierInterface extends Remote {
 
     void sendConditionsNotMet(Player p) throws IOException;
 
-    void sendStartingCardDrew(StartingCard start, Player p) throws RemoteException;
-
-    void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
-
     void sendPersonalGoalChosen(Player p) throws IOException;
 
-    void sendCardNotInHand(PlayingCard card, Player p) throws RemoteException;
+    void sendCardNotInHand(Player p) throws RemoteException;
 
-    void sendResourceDrawn(PlayingCard card, Player p) throws IOException;
+    void sendResourceDrawn( Player p) throws IOException;
 
-    void sendGoldDrawn(PlayingCard card, Player p) throws IOException;
+    void sendGoldDrawn(Player p) throws IOException;
 
-    void sendDrewFromBoard(PlayingCard card, Player p) throws IOException;
+    void sendDrewFromBoard(Player p) throws IOException;
 
-    void sendPlayerIsConnected(Player p) throws RemoteException;
-
-    void sendPointsIncreased(int points,Player p) throws RemoteException;
-
-    void sendSeedCountUpdated(int[] seedCount,Player p) throws RemoteException;
-
-    void sendCardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
-
-    void sendPlayerReady(Player p) throws RemoteException;
+    void sendCardRemovedFromHand(Player p) throws RemoteException;
 
     void sendYouWereRemoved(String pNickname) throws IOException;
 

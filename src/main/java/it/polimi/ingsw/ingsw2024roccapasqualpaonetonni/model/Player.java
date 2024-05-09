@@ -25,7 +25,6 @@ public class Player implements Serializable {
     private final ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
     private boolean readyToStart;
-    private boolean connected;
 
     private GameListener myListener;
     private final PlayerListenersHandler playerListenersHandler;
@@ -41,7 +40,6 @@ public class Player implements Serializable {
         this.firstGoals=new ObjectiveCard[2];
         this.startingCard=null;
         this.readyToStart = false;
-        this.connected=true;
         playerListenersHandler = new PlayerListenersHandler();
 
     }
@@ -66,15 +64,6 @@ public class Player implements Serializable {
         return readyToStart;
     }
 
-    public Boolean getIsConnected(){
-        return connected;
-    }
-
-    public void setIsConnected(Boolean b){
-        connected = b;
-        playerListenersHandler.notify_setIsConnected(this);
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -90,7 +79,6 @@ public class Player implements Serializable {
     public void drawGoals(DrawableDeck d) throws DeckEmptyException{
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
-        playerListenersHandler.notify_drawPersonalGoals(firstGoals,this);
     }
     public void chooseGoal(int choice){
         if(choice==0){
@@ -103,20 +91,20 @@ public class Player implements Serializable {
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
-        playerListenersHandler.notify_drawStarting(startingCard,this);
+        playerListenersHandler.notify_drawStarting(this);
     }
     public void drawGoldFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstGold());
-        playerListenersHandler.notify_drawGoldFromDeck(hand.getLast(),this);
+        playerListenersHandler.notify_drawGoldFromDeck(this);
     }
     public void drawResourcesFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstResource());
-        playerListenersHandler.notify_drawResourceFromDeck(hand.getLast(),this);
+        playerListenersHandler.notify_drawResourceFromDeck(this);
 
     }
     public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
         hand.add(b.draw(position));
-        playerListenersHandler.notify_drawFromBoard(hand.getLast(),this);
+        playerListenersHandler.notify_drawFromBoard(this);
 
     }
     public int[] getCountSeed() {
@@ -137,7 +125,7 @@ public class Player implements Serializable {
             removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
-            playerListenersHandler.notify_cardNotInHand(cardToAdd,this);
+            playerListenersHandler.notify_cardNotInHand(this);
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
@@ -153,25 +141,22 @@ public class Player implements Serializable {
     }
 
     public void increasePoints(int newPoints) {
-
         currentPoints = currentPoints + newPoints;
-        playerListenersHandler.notify_increasePoints(currentPoints,this);
     }
 
     public void updateSeedCount(int[] change) {
         for (int i = 0; i < 7; i++) {
             countSeed[i]+= change[i];
         }
-        playerListenersHandler.notify_updateSeedCount(countSeed,this);
     }
 
     private void removeFromHand(PlayingCard p) throws CardNotInHandException{
         if(hand.contains(p)){
             hand.remove(p);
-            playerListenersHandler.notify_removeFromHand(p,this);
+            playerListenersHandler.notify_removeFromHand(this);
         }
         else {
-            playerListenersHandler.notify_cardNotInHand(p,this);
+            playerListenersHandler.notify_cardNotInHand(this);
             throw new CardNotInHandException("Card Doesn't exists in player hand");
         }
 

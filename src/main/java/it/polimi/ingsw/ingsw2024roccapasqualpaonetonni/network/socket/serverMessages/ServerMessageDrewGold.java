@@ -5,17 +5,15 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 
 public class ServerMessageDrewGold extends ServerGenericMessage{
-    private final PlayingCard playingCard;
     private final Player player;
-    public ServerMessageDrewGold(PlayingCard playingCard, Player player){
-        this.playingCard=playingCard;
+    public ServerMessageDrewGold( Player player){
         this.player=player;
     }
 
     @Override
     public void launchMessage(GameListener listener) {
         try {
-            listener.goldDrawn(playingCard,player);
+            listener.goldDrawn(player);
         }
         catch(Exception e){
             e.printStackTrace();

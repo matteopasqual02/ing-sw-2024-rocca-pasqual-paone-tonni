@@ -60,15 +60,10 @@ public interface GameListener extends Remote {
     void cardAdded(Player p) throws RemoteException;
     void choseInvalidPlace(Player p) throws RemoteException;
     void conditionsNotMet(Player p) throws RemoteException;
-    void startingCardDrew(StartingCard start, Player p) throws RemoteException;
-    void drewPersonalGoals(ObjectiveCard[] goals, Player p) throws RemoteException;
     void personalGoalChosen( Player p) throws RemoteException;
-    void cardNotInHand(PlayingCard card,Player p) throws RemoteException;
-    void resourceDrawn(PlayingCard card, Player p) throws RemoteException;
-    void goldDrawn(PlayingCard card, Player p) throws RemoteException;
-    void drewFromBoard(PlayingCard card, Player p) throws RemoteException;
-    void playerIsConnected(Player p) throws RemoteException;
-    void pointsIncreased(int points,Player p) throws RemoteException;
-    void seedCountUpdated(int[] seedCount,Player p) throws RemoteException;
-    void cardRemovedFromHand(PlayingCard card, Player p) throws RemoteException;
+    void cardNotInHand(Player p) throws RemoteException;
+    void resourceDrawn( Player p) throws RemoteException;
+    void goldDrawn(Player p) throws RemoteException;
+    void drewFromBoard(Player p) throws RemoteException;
+    void cardRemovedFromHand( Player p) throws RemoteException;
 }

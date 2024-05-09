@@ -3,9 +3,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
@@ -298,15 +295,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
-    @Override
-    public void sendStartingCardDrew(StartingCard start, Player p) {
 
-    }
-
-    @Override
-    public void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) {
-
-    }
 
     @Override
     public void sendPersonalGoalChosen(Player p) {
@@ -319,14 +308,14 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendCardNotInHand(PlayingCard card, Player p) {
+    public void sendCardNotInHand(Player p) {
 
     }
 
     @Override
-    public void sendResourceDrawn(PlayingCard card, Player p) {
+    public void sendResourceDrawn(Player p) {
         try {
-            listener.resourceDrawn(card,p);
+            listener.resourceDrawn(p);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -334,9 +323,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendGoldDrawn(PlayingCard card, Player p) {
+    public void sendGoldDrawn(Player p) {
         try {
-            listener.goldDrawn(card, p);
+            listener.goldDrawn(p);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -344,9 +333,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendDrewFromBoard(PlayingCard card, Player p) {
+    public void sendDrewFromBoard(Player p) {
         try {
-            listener.drewFromBoard(card, p);
+            listener.drewFromBoard(p);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -354,27 +343,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendPlayerIsConnected(Player p) {
-
-    }
-
-    @Override
-    public void sendPointsIncreased(int points, Player p) {
-
-    }
-
-    @Override
-    public void sendSeedCountUpdated(int[] seedCount, Player p) {
-
-    }
-
-    @Override
-    public void sendCardRemovedFromHand(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void sendPlayerReady(Player p) {
+    public void sendCardRemovedFromHand(Player p) {
 
     }
 

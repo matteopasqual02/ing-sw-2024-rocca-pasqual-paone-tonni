@@ -269,66 +269,36 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendStartingCardDrew(StartingCard start, Player p) {
-
-    }
-
-    @Override
-    public void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) {
-
-    }
-
-    @Override
     public void sendPersonalGoalChosen(Player p) throws IOException {
         outputStream.writeObject(new ServerMessageGoalChosen(p));
         messageDone();
     }
 
     @Override
-    public void sendCardNotInHand(PlayingCard card, Player p) {
+    public void sendCardNotInHand( Player p) {
 
     }
 
     @Override
-    public void sendResourceDrawn(PlayingCard card, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewResources(card,p));
+    public void sendResourceDrawn( Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewResources(p));
         messageDone();
     }
 
     @Override
-    public void sendGoldDrawn(PlayingCard card, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewGold(card,p));
+    public void sendGoldDrawn( Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewGold(p));
         messageDone();
     }
 
     @Override
-    public void sendDrewFromBoard(PlayingCard card, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewBoard(card,p));
+    public void sendDrewFromBoard( Player p) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewBoard(p));
         messageDone();
     }
 
     @Override
-    public void sendPlayerIsConnected(Player p) {
-
-    }
-
-    @Override
-    public void sendPointsIncreased(int points, Player p) {
-
-    }
-
-    @Override
-    public void sendSeedCountUpdated(int[] seedCount, Player p) {
-
-    }
-
-    @Override
-    public void sendCardRemovedFromHand(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void sendPlayerReady(Player p) {
+    public void sendCardRemovedFromHand(Player p) {
 
     }
 
