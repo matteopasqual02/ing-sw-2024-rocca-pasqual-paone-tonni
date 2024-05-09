@@ -319,4 +319,8 @@ public class Game implements Serializable {
     public Chat getChat(){
         return chat;
     }
+
+    public void ping(String client) {
+        gameListenersHandler.notify_ping(client);
+    }
 }

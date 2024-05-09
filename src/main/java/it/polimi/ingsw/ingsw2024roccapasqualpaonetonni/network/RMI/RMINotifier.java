@@ -28,6 +28,16 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    @Override
+    public void sendPing() {
+        try {
+            listener.ping();
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     //--------------------------GAME CREATION PHASE
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {

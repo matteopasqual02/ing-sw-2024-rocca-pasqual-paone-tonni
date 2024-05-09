@@ -73,11 +73,22 @@ public class RMIServerStub implements ServerInterface {
     }
 
     @Override
+    public void pong(String me) {
+        try {
+            gameController.pong(me);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         RMINotifier notifier = new RMINotifier(me);
         gameController = requests.createGameController(name, maxNumPlayers, me, notifier);
+        gameController.addToPingPong(name);
     }
 
     @Override
@@ -89,6 +100,7 @@ public class RMIServerStub implements ServerInterface {
         if (gameController == null) {
             me.noAvailableGame();
         }
+        gameController.addToPingPong(name);
     }
 
     @Override
@@ -97,19 +109,21 @@ public class RMIServerStub implements ServerInterface {
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         RMINotifier notifier = new RMINotifier(me);
         gameController = requests.joinGameByID(name, idGame, me, notifier);
+        gameController.addToPingPong(name);
     }
 
     @Override
     public void ready(String nickname) throws RemoteException, NotBoundException {
         gameController.ready(nickname);
     }
+
     @Override
    public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
-       RMINotifier notifier = new RMINotifier(me);
+        RMINotifier notifier = new RMINotifier(me);
         gameController = requests.reconnect(name, idGame, me, notifier);
-
+        gameController.addToPingPong(name);
    }
     @Override
     public void leave(String nickname, int idGame, GameListener me) throws IOException, NotBoundException {

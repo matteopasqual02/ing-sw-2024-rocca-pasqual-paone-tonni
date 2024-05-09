@@ -124,6 +124,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
+    public void sendPing() throws IOException{
+        outputStream.writeObject(new ServerMessagePing());
+        messageDone();
+    }
+
+    @Override
     public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
         outputStream.writeObject(new ServerMessageMaxNum(max));
         messageDone();

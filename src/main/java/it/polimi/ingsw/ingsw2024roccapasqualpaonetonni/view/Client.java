@@ -17,6 +17,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerGUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -33,6 +34,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     private GameStatus state = null;
     private Boolean myTurn = false;
     private GameImmutable currentImmutable;
+    private transient final PingPongThreadClient pongThread = new PingPongThreadClient();
 
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
@@ -63,6 +65,50 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
         MainStaticMethod.clearCMD();
         view.joinLobby();
+
+        //this.pongThread.start();
+    }
+
+    private class PingPongThreadClient extends Thread {
+        private boolean pinged = false;
+        private Object  lock = new Object();
+
+        public void pinged() {
+            synchronized (lock) {
+                pinged = true;
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(20000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (!pinged) {
+                    ConsolePrinter.consolePrinter("server dead");
+                }
+                else {
+                    synchronized (lock) {
+                        pinged = false;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void ping() {
+        try {
+            server.pong(this.myNickname);
+            ConsolePrinter.consolePrinter("pinged");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

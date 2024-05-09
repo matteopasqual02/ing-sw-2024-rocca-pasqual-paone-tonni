@@ -32,4 +32,6 @@ public interface ServerInterface extends Remote{
     public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException;
     public void getPublicChatLog(String requesterName) throws IOException;
     public void getPrivateChatLog(String yourName, String otherName) throws IOException;
+
+    public void pong(String me) throws IOException, NotBoundException;
 }

@@ -91,4 +91,5 @@ public interface NotifierInterface extends Remote {
 
     void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException;
 
+    void sendPing() throws IOException;
 }

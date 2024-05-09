@@ -33,4 +33,7 @@ public interface GameControllerInterface extends Remote {
     void getPrivateChatLog(String yourName, String otherName) throws RemoteException;
 
     int getGameId() throws RemoteException;
+
+    void pong(String client) throws RemoteException;
+    void addToPingPong(String client) throws RemoteException;
 }

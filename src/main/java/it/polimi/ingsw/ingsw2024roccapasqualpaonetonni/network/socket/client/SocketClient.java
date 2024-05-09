@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
@@ -106,8 +107,16 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     }
 
     @Override
+    public void pong(String me) throws IOException, NotBoundException {
+        outputStream.writeObject(new MessagePong(me));
+        messageDone();
+    }
+
+    @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers, me));
+        messageDone();
+        outputStream.writeObject(new MessageAddToPingPong(name));
         messageDone();
     }
 
@@ -115,17 +124,23 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageJoinFirstAvailable(name, me));
         messageDone();
+        outputStream.writeObject(new MessageAddToPingPong(name));
+        messageDone();
     }
 
     @Override
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageJoinGameById(name, idGame, me));
         messageDone();
+        outputStream.writeObject(new MessageAddToPingPong(name));
+        messageDone();
     }
 
     @Override
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         outputStream.writeObject(new MainMessageReconnect(name, idGame, me));
+        messageDone();
+        outputStream.writeObject(new MessageAddToPingPong(name));
         messageDone();
     }
 

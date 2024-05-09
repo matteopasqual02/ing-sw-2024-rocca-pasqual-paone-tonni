@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
@@ -28,12 +29,16 @@ public class GameController implements GameControllerInterface {
     // attributes needed to implement the executor
     private transient final ExecutorService executorService;
 
+    private transient final PingPongThread pingPongThread;
+
     public GameController(int id) throws RemoteException {
         super();
         this.model = new Game(id);
         this.random = new Random();
         this.path = DefaultControllerValues.jsonPath;
         this.executorService = Executors.newSingleThreadExecutor();
+        this.pingPongThread = new PingPongThread();
+        this.pingPongThread.start();
     }
 
     //---------------------------------EXECUTOR SECTION
@@ -45,9 +50,78 @@ public class GameController implements GameControllerInterface {
         executorService.shutdown();
     }
 
+    private class PingPongThread extends Thread {
+
+        List<String> clientsRunning = new ArrayList<>();
+        List<String> clients;
+
+        private void addClient(String client) {
+            synchronized (clientsRunning) {
+                clientsRunning.add(client);
+                ConsolePrinter.consolePrinter("added listener");
+                ConsolePrinter.consolePrinter(client);
+            }
+        }
+
+        private void pong(String client) {
+            synchronized (clientsRunning) {
+                clientsRunning.add(client);
+                ConsolePrinter.consolePrinter("ponged");
+                ConsolePrinter.consolePrinter(client);
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                // Send ping message to client
+                synchronized (clientsRunning) {
+                    clients = new ArrayList<>(clientsRunning);
+                    clientsRunning.clear();
+                }
+                for (String client : clients) {
+                    model.ping(client);
+                    ConsolePrinter.consolePrinter("pinging");
+                    ConsolePrinter.consolePrinter(client);
+                }
+
+                // Wait for a certain period before sending the next ping
+                try {
+                    Thread.sleep(5000); // 7 seconds
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                synchronized (clientsRunning) {
+                    for (String client : clientsRunning) {
+                        ConsolePrinter.consolePrinter("safe");
+                        ConsolePrinter.consolePrinter(client);
+                        clients.remove(client);
+                    }
+                }
+                for (String deadClient : clients) {
+                    ConsolePrinter.consolePrinter("dead client");
+                    ConsolePrinter.consolePrinter(deadClient);
+
+                    // CONTROLLARE SE FUNZIONA CON REMOTE OBJECT
+                    disconnectPlayer(deadClient);
+                }
+            }
+        }
+    }
+
     //---------------------------------SERVER SECTION
     public int getGameID() {
         return model.getGameId();
+    }
+
+    @Override
+    public void pong(String client) throws RemoteException {
+        this.pingPongThread.pong(client);
+    }
+
+    public void addToPingPong(String client) throws RemoteException {
+        this.pingPongThread.addClient(client);
     }
 
     //---------------------------------LISTENERS SECTION

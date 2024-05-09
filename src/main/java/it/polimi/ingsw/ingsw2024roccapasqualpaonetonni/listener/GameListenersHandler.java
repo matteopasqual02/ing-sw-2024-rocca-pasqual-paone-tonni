@@ -35,6 +35,21 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    public void notify_ping(String client) {
+        for (GameListener listener: listenersMap.keySet()) {
+            try {
+                if (client.equals(listener.getNickname())) {
+                    try {
+                        listenersMap.get(listener).sendPing();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }}
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public void notify_setMaxNumPlayers(int gameId, int max) {
         for(GameListener listener: listenersMap.keySet()){
             try {
