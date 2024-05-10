@@ -105,4 +105,8 @@ public class BoardDeck implements Serializable {
                 && cards2[1] == null;
     }
 
+    public DrawableDeck getDrawableDeck(){
+        return model.getGameDrawableDeck();
+    }
+
 }

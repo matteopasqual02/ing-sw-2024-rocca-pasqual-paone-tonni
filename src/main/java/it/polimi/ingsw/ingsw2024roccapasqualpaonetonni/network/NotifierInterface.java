@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
@@ -65,11 +63,11 @@ public interface NotifierInterface extends Remote {
 
     void sendCardNotInHand(Player p) throws RemoteException;
 
-    void sendResourceDrawn( Player p) throws IOException;
+    void sendResourceDrawn(Player p, DrawableDeck d) throws IOException;
 
-    void sendGoldDrawn(Player p) throws IOException;
+    void sendGoldDrawn(Player p, DrawableDeck d) throws IOException;
 
-    void sendDrewFromBoard(Player p) throws IOException;
+    void sendDrewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws IOException;
 
     void sendCardRemovedFromHand(Player p) throws RemoteException;
 

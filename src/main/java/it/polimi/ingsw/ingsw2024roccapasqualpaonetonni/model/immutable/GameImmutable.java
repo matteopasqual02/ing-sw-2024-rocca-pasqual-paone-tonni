@@ -22,8 +22,8 @@ public class GameImmutable implements Serializable {
     private final Queue<Player> players;
     private final Queue<Player> winners;
     private final GameStatus status;
-    private final BoardDeck boardDeck;
-    private final DrawableDeck drawableDeck;
+    private BoardDeck boardDeck;
+    private DrawableDeck drawableDeck;
     private final Chat chat;
 
     public GameImmutable(){
@@ -88,6 +88,12 @@ public class GameImmutable implements Serializable {
             points[p.getColorPlayer()-1] = p.getCurrentPoints();
         }
         return points;
+    }
+    public void setDrawableDeck(DrawableDeck d) {
+        this.drawableDeck=d;
+    }
+    public void setBoardDeck(BoardDeck b) {
+        this.boardDeck = b;
     }
 
     public String toString(String nickname){
@@ -191,5 +197,6 @@ public class GameImmutable implements Serializable {
 
         return stringBuilder.toString();
     }
+
 
 }

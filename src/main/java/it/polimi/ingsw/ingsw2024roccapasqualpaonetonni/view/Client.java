@@ -2,7 +2,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
@@ -17,7 +16,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerGUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -77,6 +75,10 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     public synchronized void receiveInput(String input) throws IOException, NotBoundException {
+        if(input == null){
+            view.invalidMessage();
+            return;
+        }
         String[] parole = input.split(" ");
 
         switch (parole[0]) {
@@ -299,7 +301,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public String getNickname() throws RemoteException {
         return myNickname;
     }
-
     public ServerInterface getServerInterface(){
         return server;
     }
@@ -333,7 +334,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void areYouReady() {
         view.show_areYouReady();
     }
-
     @Override
     public void allGame(GameImmutable gameImmutable) {
         currentImmutable=gameImmutable;
@@ -360,7 +360,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.notMyTurn();
         }
     }
-
     @Override
     public void cardAdded(Player p) {
         currentImmutable.refreshPlayer(p);
@@ -383,9 +382,58 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.notMyTurn();
         }
     }
+    @Override
+    public void statusSet(GameStatus status) {
+        state=status;
+    }
+    @Override
+    public void firstPlayerSet(String nickname) {
+        myTurn = myNickname.equals(nickname);
+    }
+    @Override
+    public void resourceDrawn(Player p, DrawableDeck d) {
+        if(currentImmutable!=null){
+            currentImmutable.refreshPlayer(p);
+            currentImmutable.setDrawableDeck(d);
+            view.show_All(currentImmutable,myNickname);
+            if(myTurn){
+                view.myRunningTurn();
+            }
+            else{
+                view.notMyTurn();
+            }
+        }
 
-
-
+    }
+    @Override
+    public void goldDrawn(Player p, DrawableDeck d) {
+        if(currentImmutable!=null){
+            currentImmutable.refreshPlayer(p);
+            currentImmutable.setDrawableDeck(d);
+            view.show_All(currentImmutable,myNickname);
+            if(myTurn){
+                view.myRunningTurn();
+            }
+            else{
+                view.notMyTurn();
+            }
+        }
+    }
+    @Override
+    public void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
+        if(currentImmutable!=null){
+            currentImmutable.refreshPlayer(p);
+            currentImmutable.setDrawableDeck(d);
+            currentImmutable.setBoardDeck(b);
+            view.show_All(currentImmutable,myNickname);
+            if(myTurn){
+                view.myRunningTurn();
+            }
+            else{
+                view.notMyTurn();
+            }
+        }
+    }
 
 
 
@@ -438,10 +486,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
-    @Override
-    public void statusSet(GameStatus status) {
-        state=status;
-    }
+
 
     @Override
     public void statusSetToLastStatus(GameStatus status) {
@@ -458,10 +503,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
-    @Override
-    public void firstPlayerSet(String nickname) {
-        myTurn = myNickname.equals(nickname);
-    }
+
 
     @Override
     public void drawableDeckSet(DrawableDeck d) {
@@ -541,20 +583,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
-    @Override
-    public void resourceDrawn(Player p) {
 
-    }
-
-    @Override
-    public void goldDrawn(Player p) {
-
-    }
-
-    @Override
-    public void drewFromBoard( Player p) {
-
-    }
 
     @Override
     public void cardRemovedFromHand(Player p) throws RemoteException {

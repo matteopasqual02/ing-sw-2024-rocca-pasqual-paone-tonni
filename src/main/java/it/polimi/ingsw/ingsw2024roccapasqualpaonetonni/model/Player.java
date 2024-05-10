@@ -96,16 +96,16 @@ public class Player implements Serializable {
     }
     public void drawGoldFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstGold());
-        playerListenersHandler.notify_drawGoldFromDeck(this);
+        playerListenersHandler.notify_drawGoldFromDeck(this,d);
     }
     public void drawResourcesFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstResource());
-        playerListenersHandler.notify_drawResourceFromDeck(this);
+        playerListenersHandler.notify_drawResourceFromDeck(this,d);
 
     }
     public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
         hand.add(b.draw(position));
-        playerListenersHandler.notify_drawFromBoard(this);
+        playerListenersHandler.notify_drawFromBoard(this,b,b.getDrawableDeck());
 
     }
     public int[] getCountSeed() {

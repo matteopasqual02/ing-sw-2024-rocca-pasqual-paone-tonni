@@ -323,9 +323,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendResourceDrawn(Player p) {
+    public void sendResourceDrawn(Player p, DrawableDeck d) {
         try {
-            listener.resourceDrawn(p);
+            listener.resourceDrawn(p,d);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -333,9 +333,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendGoldDrawn(Player p) {
+    public void sendGoldDrawn(Player p, DrawableDeck d) {
         try {
-            listener.goldDrawn(p);
+            listener.goldDrawn(p,d);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -343,9 +343,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendDrewFromBoard(Player p) {
+    public void sendDrewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         try {
-            listener.drewFromBoard(p);
+            listener.drewFromBoard(p,b,d);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);

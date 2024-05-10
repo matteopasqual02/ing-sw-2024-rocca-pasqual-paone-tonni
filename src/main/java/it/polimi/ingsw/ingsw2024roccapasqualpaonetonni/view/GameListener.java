@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
@@ -62,9 +60,9 @@ public interface GameListener extends Remote {
     void conditionsNotMet(Player p) throws RemoteException;
     void personalGoalChosen( Player p) throws RemoteException;
     void cardNotInHand(Player p) throws RemoteException;
-    void resourceDrawn( Player p) throws RemoteException;
-    void goldDrawn(Player p) throws RemoteException;
-    void drewFromBoard(Player p) throws RemoteException;
+    void resourceDrawn(Player p, DrawableDeck d) throws RemoteException;
+    void goldDrawn(Player p, DrawableDeck d) throws RemoteException;
+    void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws RemoteException;
     void cardRemovedFromHand( Player p) throws RemoteException;
     void ping() throws RemoteException;
 }

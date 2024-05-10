@@ -251,7 +251,22 @@ public class PlayerBoard implements Serializable {
         for (int i=0;i<dim_x;i++){
             for (int j=0;j<dim_y;j++){
                 if(board[i][j]==null){
-                    stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    if(i+1<board.length && j-1>0 && board[i+1][j-1]!=null && board[i+1][j-1].getCorner(2)!=null){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+                    else if(i+1<board.length && j+1<board[i].length && board[i+1][j+1]!=null && board[i+1][j+1].getCorner(1)!=null){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(i-1>0 && j+1<board[i].length && board[i-1][j+1]!=null && board[i-1][j+1].getCorner(4)!=null){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else if(i-1>0 && j-1>0 && board[i-1][j-1]!=null && board[i-1][j-1].getCorner(3)!=null){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+
                 }
                 else{
                     Seed seed = board[i][j].getSeed();

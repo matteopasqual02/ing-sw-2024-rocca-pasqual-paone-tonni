@@ -7,9 +7,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
@@ -286,20 +283,20 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendResourceDrawn( Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewResources(p));
+    public void sendResourceDrawn(Player p, DrawableDeck d) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewResources(p,d));
         messageDone();
     }
 
     @Override
-    public void sendGoldDrawn( Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewGold(p));
+    public void sendGoldDrawn(Player p, DrawableDeck d) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewGold(p,d));
         messageDone();
     }
 
     @Override
-    public void sendDrewFromBoard( Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewBoard(p));
+    public void sendDrewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws IOException {
+        outputStream.writeObject(new ServerMessageDrewBoard(p,b,d));
         messageDone();
     }
 

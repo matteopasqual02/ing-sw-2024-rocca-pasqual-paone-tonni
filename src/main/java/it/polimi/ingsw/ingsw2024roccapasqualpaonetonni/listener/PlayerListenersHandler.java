@@ -46,28 +46,28 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         }
     }
 
-    public void notify_drawGoldFromDeck(Player p) {
+    public void notify_drawGoldFromDeck(Player p,DrawableDeck d) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendGoldDrawn(p);
+                listenersMap.get(listener).sendGoldDrawn(p,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_drawResourceFromDeck(Player p) {
+    public void notify_drawResourceFromDeck(Player p,DrawableDeck d) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendResourceDrawn(p);
+                listenersMap.get(listener).sendResourceDrawn(p,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_drawFromBoard(Player p) {
+    public void notify_drawFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendDrewFromBoard(p);
+                listenersMap.get(listener).sendDrewFromBoard(p,b,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
