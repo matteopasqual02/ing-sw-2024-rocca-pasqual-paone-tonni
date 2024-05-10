@@ -69,47 +69,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         //this.pongThread.start();
     }
 
-    private class PingPongThreadClient extends Thread {
-        private boolean pinged = false;
-        private Object  lock = new Object();
 
-        public void pinged() {
-            synchronized (lock) {
-                pinged = true;
-            }
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    Thread.sleep(20000);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (!pinged) {
-                    ConsolePrinter.consolePrinter("server dead");
-                }
-                else {
-                    synchronized (lock) {
-                        pinged = false;
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void ping() {
-        try {
-            server.pong(this.myNickname);
-            ConsolePrinter.consolePrinter("pinged");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void run() {
@@ -601,5 +561,45 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
+    private class PingPongThreadClient extends Thread {
+        private boolean pinged = false;
+        private final Object  lock = new Object();
 
+        public void pinged() {
+            synchronized (lock) {
+                pinged = true;
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(20000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (!pinged) {
+                    ConsolePrinter.consolePrinter("server dead");
+                }
+                else {
+                    synchronized (lock) {
+                        pinged = false;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void ping() {
+        try {
+            server.pong(this.myNickname);
+            //ConsolePrinter.consolePrinter("pinged");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

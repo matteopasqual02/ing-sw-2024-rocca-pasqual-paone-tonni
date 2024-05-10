@@ -19,12 +19,12 @@ public class Player implements Serializable {
     private final int colorPlayer;
     private int currentPoints;
     private final int[] countSeed;
-    private PlayerBoard board;
-    private List<PlayingCard> hand;
+    private final PlayerBoard board;
+    private final List<PlayingCard> hand;
     private ObjectiveCard goal;
     private final ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
-    private boolean readyToStart;
+    private final boolean readyToStart;
     private boolean connected;
 
     private GameListener myListener;
@@ -152,15 +152,15 @@ public class Player implements Serializable {
     }
 
     private void removeFromHand(PlayingCard p) throws CardNotInHandException{
-        if(hand.contains(p)){
-            hand.remove(p);
-            playerListenersHandler.notify_removeFromHand(this);
-        }
-        else {
-            playerListenersHandler.notify_cardNotInHand(this);
-            throw new CardNotInHandException("Card Doesn't exists in player hand");
-        }
 
+        for(PlayingCard playingCard: hand){
+            if(playingCard.getIdCard() == p.getIdCard()){
+                hand.remove(playingCard);
+                return;
+            }
+        }
+        playerListenersHandler.notify_cardNotInHand(this);
+        throw new CardNotInHandException("Card Doesn't exists in player hand");
     }
 
 
