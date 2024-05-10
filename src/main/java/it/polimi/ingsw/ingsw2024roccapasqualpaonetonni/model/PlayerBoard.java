@@ -251,16 +251,16 @@ public class PlayerBoard implements Serializable {
         for (int i=0;i<dim_x;i++){
             for (int j=0;j<dim_y;j++){
                 if(board[i][j]==null){
-                    if(i+1<board.length && j-1>0 && board[i+1][j-1]!=null && board[i+1][j-1].getCorner(2)!=null){
+                    if(i+1<board.length && j-1>0 && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
                         stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
                     }
-                    else if(i+1<board.length && j+1<board[i].length && board[i+1][j+1]!=null && board[i+1][j+1].getCorner(1)!=null){
+                    else if(i+1<board.length && j+1<board[i].length && board[i+1][j+1]!=null && (board[i+1][j+1].getCorner(1)!=null || board[i+1][j+1].isFlipped())){
                         stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
                     }
-                    else if(i-1>0 && j+1<board[i].length && board[i-1][j+1]!=null && board[i-1][j+1].getCorner(4)!=null){
+                    else if(i-1>0 && j+1<board[i].length && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null|| board[i-1][j+1].isFlipped())){
                         stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
                     }
-                    else if(i-1>0 && j-1>0 && board[i-1][j-1]!=null && board[i-1][j-1].getCorner(3)!=null){
+                    else if(i-1>0 && j-1>0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
                         stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
                     }
                     else {
