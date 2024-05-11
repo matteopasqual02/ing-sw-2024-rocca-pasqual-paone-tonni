@@ -65,4 +65,6 @@ public interface GameListener extends Remote {
     void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws RemoteException;
     void cardRemovedFromHand( Player p) throws RemoteException;
     void ping() throws RemoteException;
+
+    void genericError(String s) throws RemoteException;
 }

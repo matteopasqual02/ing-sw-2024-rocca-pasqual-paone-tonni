@@ -83,13 +83,13 @@ public class Player implements Serializable {
         firstGoals[1]=d.drawFirstObjective();
     }
     public void chooseGoal(int choice){
-        if(choice==0){
-            goal=firstGoals[0];
+        if(goal==null && choice>=0 && choice<2){
+            goal=firstGoals[choice];
+            playerListenersHandler.notify_chooseGoal(this);
+            return;
         }
-        else {
-            goal=firstGoals[1];
-        }
-        playerListenersHandler.notify_chooseGoal(this);
+        playerListenersHandler.notify_genericError("Goal invalid Action");
+
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
@@ -113,6 +113,14 @@ public class Player implements Serializable {
     }
 
     public void addStarting(){
+        for(PlayingCard[] playingCards: board.getBoard()){
+            for (PlayingCard playingCard: playingCards){
+                if(playingCard!=null){
+                    playerListenersHandler.notify_genericError("Starting Card invalid Action");
+                    return;
+                }
+            }
+        }
         board.addStartingCard(startingCard);
         playerListenersHandler.notify_addStarting(this);
     }

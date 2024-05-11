@@ -434,6 +434,10 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
         }
     }
+    @Override
+    public void genericError(String s) throws RemoteException {
+        view.invalidMessage(s);
+    }
 
 
 
@@ -631,4 +635,5 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             e.printStackTrace();
         }
     }
+
 }

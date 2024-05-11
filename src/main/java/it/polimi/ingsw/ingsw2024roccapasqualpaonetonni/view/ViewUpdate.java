@@ -18,4 +18,5 @@ public interface ViewUpdate {
 
 
     void invalidMessage();
+    void invalidMessage(String s);
 }

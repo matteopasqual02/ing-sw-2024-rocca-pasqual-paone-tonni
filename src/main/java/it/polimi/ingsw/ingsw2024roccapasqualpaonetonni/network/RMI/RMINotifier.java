@@ -38,6 +38,16 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    @Override
+    public void genericError(String s) throws IOException {
+        try {
+            listener.genericError(s);
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     //--------------------------GAME CREATION PHASE
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {

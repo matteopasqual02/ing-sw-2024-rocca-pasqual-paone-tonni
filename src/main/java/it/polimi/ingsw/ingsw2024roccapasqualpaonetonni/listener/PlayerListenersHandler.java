@@ -120,11 +120,11 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         }
     }
 
-    public void notify_removeFromHand(Player p) {
+    public void notify_genericError(String s){
         for(GameListener listener : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendCardRemovedFromHand(p);
-            } catch (RemoteException e) {
+                listenersMap.get(listener).genericError(s);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

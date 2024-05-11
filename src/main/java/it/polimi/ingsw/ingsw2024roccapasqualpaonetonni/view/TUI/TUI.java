@@ -106,6 +106,12 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void invalidMessage() {
         ConsolePrinter.consolePrinter("Invalid Input " );
     }
+
+    @Override
+    public void invalidMessage(String s) {
+        ConsolePrinter.consolePrinter("Invalid: " + s );
+    }
+
     private void title(){
         System.out.println(Ansi.ansi().fg(42).a("""
                 
