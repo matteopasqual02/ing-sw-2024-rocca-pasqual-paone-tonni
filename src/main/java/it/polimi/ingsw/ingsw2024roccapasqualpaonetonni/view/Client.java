@@ -238,7 +238,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/chat" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
                     try{
-                        server.sendMessage(parole[1],myNickname);
+                        StringBuilder builder = new StringBuilder();
+                        for(int i=1; i<parole.length; i++){
+                            builder.append(parole[i]).append(" ");
+                        }
+                        String frase = builder.toString();
+                        server.sendMessage(frase,myNickname);
                     }catch(IndexOutOfBoundsException e){
                         view.invalidMessage();
                     }
@@ -250,7 +255,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/chatPrivate" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
                     try{
-                        server.sendPrivateMessage(parole[2],myNickname,parole[1]);
+                        StringBuilder builder = new StringBuilder();
+                        for(int i=2; i<parole.length; i++){
+                            builder.append(parole[i]).append(" ");
+                        }
+                        String frase = builder.toString();
+                        server.sendPrivateMessage(frase,myNickname,parole[1]);
                     }catch(IndexOutOfBoundsException e){
                         view.invalidMessage();
                     }
