@@ -5,6 +5,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 
 public class GUI implements ViewUpdate {
+    /*private GUIApplication application;
+    public GUI(GUIApplication application){
+        this.application = application;
+    }*/
     @Override
     public void joinLobby() {
 
