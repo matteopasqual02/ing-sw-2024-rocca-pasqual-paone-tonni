@@ -238,7 +238,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/chat" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
                     try{
-                        server.sendMessage(myNickname,parole[1]);
+                        server.sendMessage(parole[1],myNickname);
                     }catch(IndexOutOfBoundsException e){
                         view.invalidMessage();
                     }

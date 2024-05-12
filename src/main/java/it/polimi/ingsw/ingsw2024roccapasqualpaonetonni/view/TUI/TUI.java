@@ -96,7 +96,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                     (/chat + message) -> send a public message
                     (/chatPrivate + receiver + message) -> send a private message
                     (/seeChat) -> see all the public chat
-                    (/seeChatPrivate) -> see my private chat
+                    (/seeChatPrivate + privateChatter) -> see my private chat
                     (/leave) -> to leave the game
                     
                 """
