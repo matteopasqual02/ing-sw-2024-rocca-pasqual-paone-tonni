@@ -14,10 +14,13 @@ public class GUIApplication extends Application {
     private Parent createContent(){
         return new StackPane(new Text("Hello world!"));
     }
-
     @Override
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(createContent(),300,300));
+        stage.setTitle("Codex naturalis");
         stage.show();
+    }
+    public void joinLobby(){
+
     }
 }

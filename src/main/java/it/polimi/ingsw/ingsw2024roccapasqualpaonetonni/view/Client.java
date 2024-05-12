@@ -11,9 +11,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMethod;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerGUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
+import javafx.application.Application;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -53,6 +55,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
         switch (viewType){
             case GUI ->{
+                Application.launch(GUIApplication.class,connectionType.toString());
                 view = new GUI();
                 new ScannerGUI();
             }
