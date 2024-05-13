@@ -220,6 +220,7 @@ public class Game implements Serializable {
     public void gameReady()  {
         gameListenersHandler.notify_All(this);
     }
+    public void gameError(String s){gameListenersHandler.notify_gameGenericError(s);}
 
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){

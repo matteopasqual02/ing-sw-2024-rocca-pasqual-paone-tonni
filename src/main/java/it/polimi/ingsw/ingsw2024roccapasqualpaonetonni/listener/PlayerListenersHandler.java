@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
@@ -10,7 +8,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.List;
 
 /*
 this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
@@ -90,7 +87,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
         }
     }
 
-    public void notify_genericError(String s){
+    public void notify_playerGenericError(String s){
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).genericError(s);

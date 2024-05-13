@@ -88,7 +88,7 @@ public class Player implements Serializable {
             playerListenersHandler.notify_chooseGoal(this);
             return;
         }
-        playerListenersHandler.notify_genericError("Goal invalid Action");
+        playerListenersHandler.notify_playerGenericError("Goal invalid Action");
 
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
@@ -116,7 +116,7 @@ public class Player implements Serializable {
         for(PlayingCard[] playingCards: board.getBoardMatrix()){
             for (PlayingCard playingCard: playingCards){
                 if(playingCard!=null){
-                    playerListenersHandler.notify_genericError(
+                    playerListenersHandler.notify_playerGenericError(
                             "Starting Card invalid Action: Card Already Added"
                     );
                     return;
@@ -136,18 +136,18 @@ public class Player implements Serializable {
             removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
-            playerListenersHandler.notify_genericError("Card not in Hand");
+            playerListenersHandler.notify_playerGenericError("Card not in Hand");
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
         }
         catch(InvalidPlaceException e) {
             hand.add(cardToAdd);
-            playerListenersHandler.notify_genericError("Card Invalid Place");
+            playerListenersHandler.notify_playerGenericError("Card Invalid Place");
         }
         catch(ConditionsNotMetException e) {
             hand.add(cardToAdd);
-            playerListenersHandler.notify_genericError("Conditions not met");
+            playerListenersHandler.notify_playerGenericError("Conditions not met");
         }
         playerListenersHandler.notify_addToBoard(this);
     }

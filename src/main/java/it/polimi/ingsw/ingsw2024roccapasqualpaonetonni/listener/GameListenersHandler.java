@@ -276,4 +276,13 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    public void notify_gameGenericError(String s){
+        for(GameListener listener : listenersMap.keySet()){
+            try {
+                listenersMap.get(listener).genericError(s);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
