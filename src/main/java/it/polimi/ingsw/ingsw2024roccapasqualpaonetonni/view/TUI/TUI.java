@@ -84,7 +84,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void myRunningTurnChooseObjective() {
         ConsolePrinter.consolePrinter(
                 """
-                It's your turn. Remember firstly you place a card then you can draw
+                It's your turn.
                     (/choseGoal + choice(1,2)) -> to chose my personal goal
                     (/chat + message) -> send a public message
                     (/chatPrivate + receiver + message) -> send a private message
@@ -99,7 +99,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void myRunningTurnPlaceStarting() {
         ConsolePrinter.consolePrinter(
                 """
-                It's your turn. Remember firstly you place a card then you can draw
+                It's your turn.
                     (/addStarting + flipped(true,false)) -> to add the starting card
                     (/chat + message) -> send a public message
                     (/chatPrivate + receiver + message) -> send a private message
@@ -114,7 +114,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void notMyTurn() {
         ConsolePrinter.consolePrinter(
                 """
-                It's not your turn. You can
+                It's not your turn.
                     (/chat + message) -> send a public message
                     (/chatPrivate + receiver + message) -> send a private message
                     (/seeChat) -> see all the public chat
@@ -129,7 +129,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void myRunningTurnPlaceCard() {
         ConsolePrinter.consolePrinter(
                 """
-                It's your turn. Remember firstly you place a card then you can draw
+                It's your turn.
                     (/addCard + handIndex + idCardToAttach + position (1,2,3,4) + flipped (true,false)) -> to add a new card
                     (/chat + message) -> send a public message
                     (/chatPrivate + receiver + message) -> send a private message

@@ -363,6 +363,18 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void nextTurn(String nickname) {
         myTurn = myNickname.equals(nickname);
+        if(currentImmutable==null){return;}
+        if(myTurn){
+            if(currentImmutable.getPlayers().stream().filter(player -> nickname.equals(player.getNickname())).toList().getFirst().getGoal()==null){
+                view.myRunningTurnPlaceStarting();
+            }
+            else {
+                view.myRunningTurnPlaceCard();
+            }
+        }
+        else {
+            view.notMyTurn();
+        }
     }
     @Override
     public void startAdded(Player p) {
@@ -407,12 +419,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
             view.show_All(currentImmutable,myNickname);
-            if(myTurn){
-                view.myRunningTurnDrawCard();
-            }
-            else{
-                view.notMyTurn();
-            }
         }
 
     }
@@ -422,12 +428,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
             view.show_All(currentImmutable,myNickname);
-            if(myTurn){
-                view.myRunningTurnDrawCard();
-            }
-            else{
-                view.notMyTurn();
-            }
         }
     }
     @Override
@@ -437,12 +437,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             currentImmutable.setDrawableDeck(d);
             currentImmutable.setBoardDeck(b);
             view.show_All(currentImmutable,myNickname);
-            if(myTurn){
-                view.myRunningTurnDrawCard();
-            }
-            else{
-                view.notMyTurn();
-            }
         }
     }
     @Override

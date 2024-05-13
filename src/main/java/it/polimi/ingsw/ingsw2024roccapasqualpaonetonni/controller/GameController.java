@@ -336,6 +336,11 @@ public class GameController implements GameControllerInterface {
             // listener invalid action
             return;
         }
+        if (getCurrentPlayer().getHand().size()<3){
+            model.gameError("You cannot add two cards in a turn");
+            // listener invalid action
+            return;
+        }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
             model.gameError("You cannot add a Card in this Phase");

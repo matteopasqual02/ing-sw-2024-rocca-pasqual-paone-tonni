@@ -140,6 +140,7 @@ public class Player implements Serializable {
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
+            playerListenersHandler.notify_addToBoard(this);
         }
         catch(InvalidPlaceException e) {
             hand.add(cardToAdd);
@@ -149,7 +150,7 @@ public class Player implements Serializable {
             hand.add(cardToAdd);
             playerListenersHandler.notify_playerGenericError("Conditions not met");
         }
-        playerListenersHandler.notify_addToBoard(this);
+
     }
 
     public void increasePoints(int newPoints) {
