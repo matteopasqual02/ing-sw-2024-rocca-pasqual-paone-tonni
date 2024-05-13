@@ -22,4 +22,6 @@ public interface ViewUpdate {
     void myRunningTurnPlaceCard();
     void notMyTurn();
 
+    void displayChat(String s);
+
 }

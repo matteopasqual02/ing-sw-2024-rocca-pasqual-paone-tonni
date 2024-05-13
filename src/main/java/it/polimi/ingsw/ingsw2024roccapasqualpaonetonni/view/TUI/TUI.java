@@ -2,16 +2,11 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 import org.fusesource.jansi.Ansi;
 
-import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Scanner;
 
 
 public class TUI extends UnicastRemoteObject implements ViewUpdate  {
@@ -129,6 +124,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 """
         );
     }
+
     @Override
     public void myRunningTurnPlaceCard() {
         ConsolePrinter.consolePrinter(
@@ -143,6 +139,11 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
              
                 """
         );
+    }
+
+    @Override
+    public void displayChat(String s) {
+        ConsolePrinter.consolePrinter("CHAT \n"+s+"\n");
     }
 
     //------------------MESSAGE

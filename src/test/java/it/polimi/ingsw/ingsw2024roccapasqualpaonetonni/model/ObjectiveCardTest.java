@@ -125,7 +125,7 @@ class ObjectiveCardTest {
         board1.addCard(card_to_add2,card_to_add1,1,owner.getCountSeed());
         board1.addCard(card_to_add3,card_to_add2,1,owner.getCountSeed());
 
-        PlayingCard[][] pb = board1.getBoard();
+        PlayingCard[][] pb = board1.getBoardMatrix();
         int pointsReached = objectiveCard.pointCard(board1);
 
         assertEquals(2,pointsReached);

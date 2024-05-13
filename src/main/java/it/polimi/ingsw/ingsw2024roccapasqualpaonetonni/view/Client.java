@@ -183,17 +183,22 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/addCard" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
                     try{
+                        Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
+                        if(me==null){return;}
                         int card1 = Integer.parseInt(parole[1]);
-                        PlayingCard c1 = currentImmutable.getPlayers().peek().getHand().get(card1);
+                        PlayingCard c1 = me.getHand().get(card1);
                         int card2 = Integer.parseInt(parole[2]);
-                        PlayingCard[][] board = currentImmutable.getPlayers().peek().getBoard().getBoard();
+                        PlayingCard[][] board = me.getBoard().getBoardMatrix();
                         int pos = Integer.parseInt(parole[3]);
 
                         for (PlayingCard[] playingCards : board) {
                             for (PlayingCard playingCard : playingCards) {
-                                if (playingCard != null && playingCard.getIdCard() == card2) {
-                                    server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[1], "true"));
-                                    break;
+                                if (playingCard != null ) {
+                                    if(playingCard.getIdCard() == card2){
+                                        server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[4], "true"));
+                                        return;
+                                    }
+
                                 }
                             }
                         }
@@ -487,12 +492,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void newMessage(Message m) throws RemoteException {
         String message = String.format("[%s] %s",m.getSender(),m.getText());
-        ConsolePrinter.consolePrinter(message);
+        view.displayChat(message);
     }
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
         String message = String.format("[%s] privately sent you: %s",m.getSender(),m.getText());
-        ConsolePrinter.consolePrinter(message);
+        view.displayChat(message);
     }
     @Override
     public void publicChatLog(List<Message> allMessages) throws RemoteException {
@@ -501,10 +506,10 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             for(Message m: allMessages){
                 chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
             }
-            ConsolePrinter.consolePrinter(chat);
+            view.displayChat(chat.toString());
         }
         else {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("There is no public chat"));
+            view.displayChat("There is no public chat");
         }
     }
     @Override
@@ -514,10 +519,10 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             for(PrivateMessage m: privateChat){
                 chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
             }
-            ConsolePrinter.consolePrinter(chat);
+            view.displayChat(chat.toString());
         }
         else {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("You have no private chat with this player"));
+            view.displayChat("There is no private chat with: " + otherName);
         }
     }
 

@@ -113,7 +113,7 @@ public class Player implements Serializable {
     }
 
     public void addStarting(){
-        for(PlayingCard[] playingCards: board.getBoard()){
+        for(PlayingCard[] playingCards: board.getBoardMatrix()){
             for (PlayingCard playingCard: playingCards){
                 if(playingCard!=null){
                     playerListenersHandler.notify_genericError(
