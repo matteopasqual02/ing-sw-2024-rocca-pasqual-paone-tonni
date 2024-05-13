@@ -227,7 +227,7 @@ public class GameController implements GameControllerInterface {
     }
 
     //---------------------------------TABLE AND INIT SECTION
-    public boolean createTable() {
+    public void createTable() {
         Map<String, List<Card>> cardsMap = null;
         try {
             cardsMap = JSONUtils.createCardsFromJson(path);
@@ -288,7 +288,6 @@ public class GameController implements GameControllerInterface {
         model.setGameDrawableDeck(decks);
         model.setGameBoardDeck(boardDeck);
 
-        return true;
     }
 
     private void randomFirstPlayer() {
@@ -330,7 +329,6 @@ public class GameController implements GameControllerInterface {
             }
         }
 
-        model.startGame();
     }
 
 

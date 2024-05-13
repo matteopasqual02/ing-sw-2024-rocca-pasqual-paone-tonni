@@ -17,7 +17,7 @@ public interface GameListener extends Remote {
     String getNickname() throws RemoteException;
     void allGame(GameImmutable gameImmutable) throws RemoteException;
 
-    //--------------------------GAME CREATION PHASE
+    //--------------------------GAME
     void maxNumPlayersSet(int max) throws RemoteException;
     void createdGame(int gameId) throws RemoteException;
     void youJoinedGame(int gameId) throws RemoteException;
@@ -26,45 +26,33 @@ public interface GameListener extends Remote {
     void fullGame() throws RemoteException;
     void nameAlreadyInGame() throws RemoteException;
     void areYouReady() throws RemoteException;
-
-
-    void playerReady(Player p) throws RemoteException;
     void playerRemoved(String p) throws RemoteException;
     void nextTurn(String nickname) throws RemoteException;
     void lastTurn() throws RemoteException;
     void reconnectedPlayer(String nickname) throws RemoteException;
     void reconnectionImpossible(String nickname) throws RemoteException;
     void disconnectedPlayer(String nickname) throws RemoteException;
-    void disconnectionImpossible(String nickname) throws RemoteException;
     void statusSet(GameStatus status) throws RemoteException;
     void statusSetToLastStatus(GameStatus status) throws RemoteException;
     void lastStatusReset() throws RemoteException;
-    void playerIsReady(Player p) throws RemoteException;
 
-    void firstPlayerSet(String nickname) throws RemoteException;
-    void drawableDeckSet(DrawableDeck d) throws RemoteException;
-    void boardDeckSet(BoardDeck bd) throws RemoteException;
+    //--------------------------CHAT
     void newMessage(Message message) throws RemoteException;
-
-    void chatUpdate(List<Message> allMessages) throws RemoteException;
-
     void newPrivateMessage(PrivateMessage message) throws RemoteException;
-
     void publicChatLog(List<Message> allMessages) throws RemoteException;
-
     void privateChatLog(String otherName, List<PrivateMessage> privateChat) throws RemoteException;
 
+    //--------------------------PLAYER
     void startAdded(Player p) throws RemoteException;
     void cardAdded(Player p) throws RemoteException;
-    void choseInvalidPlace(Player p) throws RemoteException;
-    void conditionsNotMet(Player p) throws RemoteException;
     void personalGoalChosen( Player p) throws RemoteException;
-    void cardNotInHand(Player p) throws RemoteException;
     void resourceDrawn(Player p, DrawableDeck d) throws RemoteException;
     void goldDrawn(Player p, DrawableDeck d) throws RemoteException;
     void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws RemoteException;
-    void cardRemovedFromHand( Player p) throws RemoteException;
+
+    //--------------------------PING
     void ping() throws RemoteException;
 
+    //--------------------------ERROR
     void genericError(String s) throws RemoteException;
 }

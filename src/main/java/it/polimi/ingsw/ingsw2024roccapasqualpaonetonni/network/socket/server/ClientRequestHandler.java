@@ -211,10 +211,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
 
     }
 
-    @Override
-    public void sendDisconnectionImpossible(String nickname) {
 
-    }
 
     @Override
     public void sendStatusSet(GameStatus status) throws IOException {
@@ -233,27 +230,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendPlayerIsReady(Player p) {
-
-    }
-
-    @Override
-    public void sendFirstPlayerSet(String nickname) throws IOException {
-        outputStream.writeObject(new ServerMessageFirstPlayerSet(nickname));
-        messageDone();
-    }
-
-    @Override
-    public void sendDrawableDeckSet(DrawableDeck d) {
-
-    }
-
-    @Override
-    public void sendBoardDeckSet(BoardDeck bd) {
-
-    }
-
-    @Override
     public void sendStartAdded(Player p) throws IOException {
         outputStream.writeObject(new ServerMessageStartAdded(p));
         messageDone();
@@ -266,26 +242,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendChoseInvalidPlace(Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageCardInvalidPlace(p));
-        messageDone();
-    }
-
-    @Override
-    public void sendConditionsNotMet(Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageCardConditionsNotMet(p));
-        messageDone();
-    }
-
-    @Override
     public void sendPersonalGoalChosen(Player p) throws IOException {
         outputStream.writeObject(new ServerMessageGoalChosen(p));
         messageDone();
-    }
-
-    @Override
-    public void sendCardNotInHand( Player p) {
-
     }
 
     @Override
@@ -307,11 +266,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendCardRemovedFromHand(Player p) {
-
-    }
-
-    @Override
     public void sendYouWereRemoved(String pNickname) throws IOException {
         outputStream.writeObject(new ServerMessagePlayerRemoved(pNickname));
         messageDone();
@@ -319,21 +273,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
 
     @Override
     public void youWereReconnected() {
-
-    }
-
-    @Override
-    public void sendYouAreFirst() {
-
-    }
-
-    @Override
-    public void sendItsYourTurn() {
-
-    }
-
-    @Override
-    public void sendUpdatedChat(List<Message> allMessages) throws RemoteException {
 
     }
 

@@ -24,7 +24,6 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     public PlayerListenersHandler(){
         super();
     }
-
     public void resetPlayerListeners(HashMap<GameListener, NotifierInterface> gameListenersMap){
         //listenersMap=null;
         for(GameListener lis : gameListenersMap.keySet()){
@@ -45,7 +44,6 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
             }
         }
     }
-
     public void notify_drawGoldFromDeck(Player p,DrawableDeck d) {
         for(GameListener listener : listenersMap.keySet()){
             try {
@@ -73,7 +71,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
             }
         }
     }
-    public void notify_addStarting( Player p) {
+    public void notify_addStarting(Player p) {
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendStartAdded(p);
@@ -82,38 +80,10 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
             }
         }
     }
-
-    public void notify_cardNotInHand(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendCardNotInHand(p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
     public void notify_addToBoard(Player p) {
         for(GameListener listener : listenersMap.keySet()){
             try {
                 listenersMap.get(listener).sendCardAdded(p);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_invalidPlace(Player p){
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendChoseInvalidPlace(p);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_conditionsNotMet(Player p){
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendConditionsNotMet(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

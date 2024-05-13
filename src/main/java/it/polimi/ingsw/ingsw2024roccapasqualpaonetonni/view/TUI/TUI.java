@@ -17,6 +17,8 @@ import java.util.Scanner;
 public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public TUI() throws RemoteException {
     }
+
+    //------------------PREPARATION
     @Override
     public void show_All(GameImmutable gameImmutable, String nickname) {
         ConsolePrinter.consolePrinter(gameImmutable.toString(nickname));
@@ -50,11 +52,9 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void show_areYouReady() {
         ConsolePrinter.consolePrinter("Press the key (Y) when you are ready to start the game!");
     }
-    @Override
-    public void preparation() {
-        ConsolePrinter.consolePrinter("We are waiting for all players to be ready...");
-    }
 
+
+    //------------------TURN
     @Override
     public void joinLobby(){
         title();
@@ -69,16 +69,43 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         );
     }
     @Override
-    public void myRunningTurn() {
+    public void myRunningTurnDrawCard() {
+        ConsolePrinter.consolePrinter(
+                """
+                It's your turn.
+                    (/drawGold) -> to draw a gold card
+                    (/drawResources) -> to draw a resource card
+                    (/drawBoard + position (1,2,3,4)) -> to draw from common board
+                    (/chat + message) -> send a public message
+                    (/chatPrivate + receiver + message) -> send a private message
+                    (/seeChat) -> see all the public chat
+                    (/seeChatPrivate + privateChatter) -> see my private chat
+                    (/leave) -> to leave the game
+             
+                """
+        );
+    }
+    @Override
+    public void myRunningTurnChooseObjective() {
+        ConsolePrinter.consolePrinter(
+                """
+                It's your turn. Remember firstly you place a card then you can draw
+                    (/choseGoal + choice(1,2)) -> to chose my personal goal
+                    (/chat + message) -> send a public message
+                    (/chatPrivate + receiver + message) -> send a private message
+                    (/seeChat) -> see all the public chat
+                    (/seeChatPrivate + privateChatter) -> see my private chat
+                    (/leave) -> to leave the game
+             
+                """
+        );
+    }
+    @Override
+    public void myRunningTurnPlaceStarting() {
         ConsolePrinter.consolePrinter(
                 """
                 It's your turn. Remember firstly you place a card then you can draw
                     (/addStarting + flipped(true,false)) -> to add the starting card
-                    (/choseGoal + choice(1,2)) -> to chose my personal goal
-                    (/addCard + handIndex + idCardToAttach + position (1,2,3,4) + flipped (true,false)) -> to add a new card
-                    (/drawGold) -> to draw a gold card
-                    (/drawResources) -> to draw a resource card
-                    (/drawBoard + position (1,2,3,4)) -> to draw from common board
                     (/chat + message) -> send a public message
                     (/chatPrivate + receiver + message) -> send a private message
                     (/seeChat) -> see all the public chat
@@ -103,15 +130,32 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         );
     }
     @Override
-    public void invalidMessage() {
-        ConsolePrinter.consolePrinter("Invalid Input " );
+    public void myRunningTurnPlaceCard() {
+        ConsolePrinter.consolePrinter(
+                """
+                It's your turn. Remember firstly you place a card then you can draw
+                    (/addCard + handIndex + idCardToAttach + position (1,2,3,4) + flipped (true,false)) -> to add a new card
+                    (/chat + message) -> send a public message
+                    (/chatPrivate + receiver + message) -> send a private message
+                    (/seeChat) -> see all the public chat
+                    (/seeChatPrivate + privateChatter) -> see my private chat
+                    (/leave) -> to leave the game
+             
+                """
+        );
     }
 
+    //------------------MESSAGE
+    @Override
+    public void invalidMessage() {
+        ConsolePrinter.consolePrinter("[ERROR] Invalid Input. Choose another option !!! " );
+    }
     @Override
     public void invalidMessage(String s) {
-        ConsolePrinter.consolePrinter("Invalid: " + s );
+        ConsolePrinter.consolePrinter("[ERROR] " + s );
     }
 
+    //------------------PRINTER
     private void title(){
         System.out.println(Ansi.ansi().fg(42).a("""
                 
@@ -150,5 +194,5 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                                                                                                                                                                                                     \s
                 """).fg(Ansi.Color.DEFAULT));
     }
-}
 
+}

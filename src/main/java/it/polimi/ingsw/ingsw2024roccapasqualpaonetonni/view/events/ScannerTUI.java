@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.InputSender;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,11 +10,13 @@ import java.rmi.NotBoundException;
 
 public class ScannerTUI extends Thread implements ScannerInterface{
     private final Client client;
-    BufferedReader bufferedReader = null;
+    BufferedReader bufferedReader;
+    InputSender inputSender;
     public ScannerTUI(Client client){
         this.client = client;
         this.start();
         bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        inputSender = new InputSender();
     }
     public void run(){
         while(!Thread.interrupted()){

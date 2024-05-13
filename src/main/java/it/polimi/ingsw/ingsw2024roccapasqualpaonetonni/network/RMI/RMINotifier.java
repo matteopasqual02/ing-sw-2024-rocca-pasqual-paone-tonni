@@ -27,7 +27,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void sendPing() {
         try {
@@ -37,7 +36,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             e.printStackTrace();
         }
     }
-
     @Override
     public void genericError(String s) throws IOException {
         try {
@@ -57,7 +55,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void sendCreatedGame(int gameId) {
         try {
@@ -66,7 +63,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void sendYouJoinedGame(int gameId) {
         try {
@@ -75,7 +71,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void sendAddedNewPlayer(String pNickname) {
         try {
@@ -84,7 +79,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void sendNoAvailableGame() {
         try {
@@ -93,7 +87,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void sendAskPlayersReady() {
         try {
@@ -102,7 +95,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void sendFullGame() {
         try {
@@ -112,7 +104,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
 
     }
-
     @Override
     public void sendNameAlreadyInGame() {
         try {
@@ -188,16 +179,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
-    @Override
-    public void sendDisconnectionImpossible(String nickname) {
-        try {
-            listener.disconnectionImpossible(nickname);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
 
     @Override
     public void sendStatusSet(GameStatus status) {
@@ -232,50 +213,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendPlayerIsReady(Player p) {
-        try {
-            listener.playerIsReady(p);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-    @Override
-    public void sendFirstPlayerSet(String nickname) {
-        try {
-            listener.firstPlayerSet(nickname);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-    @Override
-    public void sendDrawableDeckSet(DrawableDeck d) {
-        try {
-            listener.drawableDeckSet(d);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-    @Override
-    public void sendBoardDeckSet(BoardDeck bd) {
-        try {
-            listener.boardDeckSet(bd);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-    @Override
     public void sendStartAdded(Player p) {
         try {
             listener.startAdded(p);
@@ -296,28 +233,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
     @Override
-    public void sendChoseInvalidPlace(Player p) {
-        try {
-            listener.choseInvalidPlace(p);
-        }
-        catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void sendConditionsNotMet(Player p) {
-        try {
-            listener.conditionsNotMet(p);
-        }
-        catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
-    @Override
     public void sendPersonalGoalChosen(Player p) {
         try {
             listener.personalGoalChosen(p);
@@ -325,11 +240,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void sendCardNotInHand(Player p) {
-
     }
 
     @Override
@@ -362,10 +272,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
-    @Override
-    public void sendCardRemovedFromHand(Player p) {
-
-    }
 
     @Override
     public void sendYouWereRemoved(String pNickname) {
@@ -375,25 +281,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     @Override
     public void youWereReconnected() {
 
-    }
-
-    @Override
-    public void sendYouAreFirst() {
-
-    }
-
-    @Override
-    public void sendItsYourTurn() {
-
-    }
-
-    @Override
-    public void sendUpdatedChat(List<Message> allMessages) throws RemoteException {
-        try {
-            listener.chatUpdate(allMessages);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override

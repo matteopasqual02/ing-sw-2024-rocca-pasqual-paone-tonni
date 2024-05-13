@@ -61,7 +61,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_createdGame(int gameId) {
         for(GameListener listener: listenersMap.keySet()){
             try {
@@ -71,7 +70,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_addPlayer(String pNickname, int gameId) {
         for(GameListener listener : listenersMap.keySet()) {
             try {
@@ -91,7 +89,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_noAvailableGame(String nickname) {
         for(GameListener listener : listenersMap.keySet()) {
             try {
@@ -103,7 +100,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_gameFull(Player player) {
         for(GameListener listener : listenersMap.keySet()) {
             try {
@@ -115,7 +111,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_playerAlreadyIn(Player player) {
         for(GameListener listener : listenersMap.keySet()) {
             try {
@@ -127,7 +122,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_askPlayersReady() {
         for(GameListener listener : listenersMap.keySet()) {
             try {
@@ -137,7 +131,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_removePlayer(String pNickname) {
         for(GameListener listener : listenersMap.keySet()){
             try {
@@ -200,17 +193,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
         }
     }
-    public void notify_setFirstPlayer(String nickname) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                    listenersMap.get(listener).sendFirstPlayerSet(nickname);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
     public void notify_setStatus(GameStatus status) {
         for(GameListener listener : listenersMap.keySet()){
             try {
@@ -256,36 +238,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-    public void notify_playerIsReadyToStart(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendPlayerIsReady(p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_setGameDrawableDeck(DrawableDeck d) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendDrawableDeckSet(d);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_setGameBoardDeck(BoardDeck bd) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendBoardDeckSet(bd);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public void notify_gameStarted(GameListener listener) {
-    }
 
     public void notify_messageSent(Message message) {
         for(GameListener listener: listenersMap.keySet()){
@@ -296,7 +248,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
 }
-
     public void notify_privateMessageSent(PrivateMessage message) {
         for(GameListener listener: listenersMap.keySet()){
             try {
@@ -306,7 +257,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_publicChatLog(String requesterName, List<Message> allMessages) {
         for(GameListener listener: listenersMap.keySet()){
             try {
@@ -316,7 +266,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
     public void notify_privateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) {
         for(GameListener listener: listenersMap.keySet()){
             try {
@@ -326,6 +275,5 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
-
 
 }
