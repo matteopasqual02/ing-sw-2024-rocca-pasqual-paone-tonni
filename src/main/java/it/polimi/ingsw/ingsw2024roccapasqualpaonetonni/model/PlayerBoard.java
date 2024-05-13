@@ -232,7 +232,7 @@ public class PlayerBoard implements Serializable {
         return seedUpdate;
     }
 
-    public PlayingCard[][] getBoard() {
+    public PlayingCard[][] getBoardMatrix() {
         return board;
     }
     public int getDim_x() {

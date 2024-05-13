@@ -88,7 +88,7 @@ public class Player implements Serializable {
             playerListenersHandler.notify_chooseGoal(this);
             return;
         }
-        playerListenersHandler.notify_genericError("Goal invalid Action");
+        playerListenersHandler.notify_playerGenericError("Goal invalid Action");
 
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
@@ -113,10 +113,12 @@ public class Player implements Serializable {
     }
 
     public void addStarting(){
-        for(PlayingCard[] playingCards: board.getBoard()){
+        for(PlayingCard[] playingCards: board.getBoardMatrix()){
             for (PlayingCard playingCard: playingCards){
                 if(playingCard!=null){
-                    playerListenersHandler.notify_genericError("Starting Card invalid Action");
+                    playerListenersHandler.notify_playerGenericError(
+                            "Starting Card invalid Action: Card Already Added"
+                    );
                     return;
                 }
             }
@@ -134,17 +136,18 @@ public class Player implements Serializable {
             removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
-            playerListenersHandler.notify_cardNotInHand(this);
+            playerListenersHandler.notify_playerGenericError("Card not in Hand");
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
-
         }
         catch(InvalidPlaceException e) {
-            playerListenersHandler.notify_invalidPlace(this);
+            hand.add(cardToAdd);
+            playerListenersHandler.notify_playerGenericError("Card Invalid Place");
         }
         catch(ConditionsNotMetException e) {
-            playerListenersHandler.notify_conditionsNotMet(this);
+            hand.add(cardToAdd);
+            playerListenersHandler.notify_playerGenericError("Conditions not met");
         }
         playerListenersHandler.notify_addToBoard(this);
     }
@@ -167,7 +170,6 @@ public class Player implements Serializable {
                 return;
             }
         }
-        playerListenersHandler.notify_cardNotInHand(this);
         throw new CardNotInHandException("Card Doesn't exists in player hand");
     }
 

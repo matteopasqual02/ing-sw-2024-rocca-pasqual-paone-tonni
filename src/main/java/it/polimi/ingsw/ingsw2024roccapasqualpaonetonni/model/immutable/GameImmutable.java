@@ -1,16 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 import org.fusesource.jansi.Ansi;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -47,13 +43,13 @@ public class GameImmutable implements Serializable {
         drawableDeck = modelToCopy.getGameDrawableDeck();
     }
 
-    public int getGameId() {
+    public synchronized int getGameId() {
         return gameId;
     }
-    public int getMaxNumberOfPlayers() {
+    public synchronized int getMaxNumberOfPlayers() {
         return maxNumberOfPlayers;
     }
-    public Queue<Player> getPlayers() {
+    public synchronized Queue<Player> getPlayers() {
         return players;
     }
     public synchronized void refreshPlayer(Player player){
@@ -66,37 +62,37 @@ public class GameImmutable implements Serializable {
         players.remove(modify);
         players.add(player);
     }
-    public Queue<Player> getWinners() {
+    public synchronized Queue<Player> getWinners() {
         return winners;
     }
-    public GameStatus getStatus() {
+    public synchronized GameStatus getStatus() {
         return status;
     }
-    public Chat getChat() {
+    public synchronized Chat getChat() {
         return chat;
     }
-    public BoardDeck getBoardDeck() {
+    public synchronized BoardDeck getBoardDeck() {
         return boardDeck;
     }
-    public DrawableDeck getDrawableDeck() {
+    public synchronized DrawableDeck getDrawableDeck() {
         return drawableDeck;
     }
 
-    public int[] getAllPoints(){
+    public synchronized int[] getAllPoints(){
         int[] points = new int[players.size()];
         for(Player p : players){
             points[p.getColorPlayer()-1] = p.getCurrentPoints();
         }
         return points;
     }
-    public void setDrawableDeck(DrawableDeck d) {
+    public synchronized void setDrawableDeck(DrawableDeck d) {
         this.drawableDeck=d;
     }
-    public void setBoardDeck(BoardDeck b) {
+    public synchronized void setBoardDeck(BoardDeck b) {
         this.boardDeck = b;
     }
 
-    public String toString(String nickname){
+    public synchronized String toString(String nickname){
         StringBuilder stringBuilder = new StringBuilder();
 
         Player player = players.stream()
@@ -143,7 +139,7 @@ public class GameImmutable implements Serializable {
                 stringBuilder.append(player.getGoal().toString(finalI)).append("\t");
             }
 
-            if(player.getBoard().getBoard()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
+            if(player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
                 stringBuilder.append("\t|\t").append(player.getStartingCard().toString(false,finalI)).append("\n");
             }
             else {

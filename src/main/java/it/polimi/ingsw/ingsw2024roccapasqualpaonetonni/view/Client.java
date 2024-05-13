@@ -186,17 +186,22 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/addCard" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
                     try{
+                        Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
+                        if(me==null){return;}
                         int card1 = Integer.parseInt(parole[1]);
-                        PlayingCard c1 = currentImmutable.getPlayers().peek().getHand().get(card1);
+                        PlayingCard c1 = me.getHand().get(card1);
                         int card2 = Integer.parseInt(parole[2]);
-                        PlayingCard[][] board = currentImmutable.getPlayers().peek().getBoard().getBoard();
+                        PlayingCard[][] board = me.getBoard().getBoardMatrix();
                         int pos = Integer.parseInt(parole[3]);
 
                         for (PlayingCard[] playingCards : board) {
                             for (PlayingCard playingCard : playingCards) {
-                                if (playingCard != null && playingCard.getIdCard() == card2) {
-                                    server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[1], "true"));
-                                    break;
+                                if (playingCard != null ) {
+                                    if(playingCard.getIdCard() == card2){
+                                        server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[4], "true"));
+                                        return;
+                                    }
+
                                 }
                             }
                         }
@@ -352,7 +357,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         currentImmutable=gameImmutable;
         view.show_All(gameImmutable,myNickname);
         if(myTurn){
-            view.myRunningTurn();
+            view.myRunningTurnPlaceStarting();
         }
         else{
             view.notMyTurn();
@@ -367,7 +372,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname);
         if(myTurn){
-            view.myRunningTurn();
+            view.myRunningTurnChooseObjective();
         }
         else{
             view.notMyTurn();
@@ -378,7 +383,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname);
         if(myTurn){
-            view.myRunningTurn();
+            view.myRunningTurnDrawCard();
         }
         else{
             view.notMyTurn();
@@ -389,7 +394,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname);
         if(myTurn){
-            view.myRunningTurn();
+            view.myRunningTurnPlaceCard();
         }
         else{
             view.notMyTurn();
@@ -400,17 +405,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         state=status;
     }
     @Override
-    public void firstPlayerSet(String nickname) {
-        myTurn = myNickname.equals(nickname);
-    }
-    @Override
     public void resourceDrawn(Player p, DrawableDeck d) {
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
             view.show_All(currentImmutable,myNickname);
             if(myTurn){
-                view.myRunningTurn();
+                view.myRunningTurnDrawCard();
             }
             else{
                 view.notMyTurn();
@@ -425,7 +426,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             currentImmutable.setDrawableDeck(d);
             view.show_All(currentImmutable,myNickname);
             if(myTurn){
-                view.myRunningTurn();
+                view.myRunningTurnDrawCard();
             }
             else{
                 view.notMyTurn();
@@ -440,7 +441,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             currentImmutable.setBoardDeck(b);
             view.show_All(currentImmutable,myNickname);
             if(myTurn){
-                view.myRunningTurn();
+                view.myRunningTurnDrawCard();
             }
             else{
                 view.notMyTurn();
@@ -453,107 +454,54 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
 
-
-
-
-    @Override
-    public void playerReady(Player p) {
-
-    }
-
     @Override
     public void fullGame() {
 
     }
-
     @Override
     public void nameAlreadyInGame() {
 
     }
-
     @Override
     public void playerRemoved(String p) {
 
     }
-
-
-
     @Override
     public void lastTurn() {
 
     }
-
     @Override
     public void reconnectedPlayer(String nickname) {
 
     }
-
     @Override
     public void reconnectionImpossible(String nickname) {
 
     }
-
     @Override
     public void disconnectedPlayer(String nickname) {
 
     }
-
-    @Override
-    public void disconnectionImpossible(String nickname) {
-
-    }
-
-
-
     @Override
     public void statusSetToLastStatus(GameStatus status) {
 
     }
-
     @Override
     public void lastStatusReset() {
 
     }
 
-    @Override
-    public void playerIsReady(Player p) {
-
-    }
-
-
-
-    @Override
-    public void drawableDeckSet(DrawableDeck d) {
-
-    }
-
-    @Override
-    public void boardDeckSet(BoardDeck bd) {
-
-    }
-
+    //--------------------------CHAT
     @Override
     public void newMessage(Message m) throws RemoteException {
         String message = String.format("[%s] %s",m.getSender(),m.getText());
-        ConsolePrinter.consolePrinter(message);
+        view.displayChat(message);
     }
-
-    @Override
-    public void chatUpdate(List<Message> allMessages) throws RemoteException {
-
-    }
-
-    /**
-     * this method receives a private message and prints the sender and the content on both players' displays
-     * @param m
-     * @throws RemoteException
-     */
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
         String message = String.format("[%s] privately sent you: %s",m.getSender(),m.getText());
-        ConsolePrinter.consolePrinter(message);
+        view.displayChat(message);
     }
-
     @Override
     public void publicChatLog(List<Message> allMessages) throws RemoteException {
         if(allMessages!=null){
@@ -561,13 +509,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             for(Message m: allMessages){
                 chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
             }
-            ConsolePrinter.consolePrinter(chat);
+            view.displayChat(chat.toString());
         }
         else {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("There is no public chat"));
+            view.displayChat("There is no public chat");
         }
     }
-
     @Override
     public void privateChatLog(String otherName, List<PrivateMessage> privateChat) throws RemoteException {
         if(privateChat!=null){
@@ -575,38 +522,14 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             for(PrivateMessage m: privateChat){
                 chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
             }
-            ConsolePrinter.consolePrinter(chat);
+            view.displayChat(chat.toString());
         }
         else {
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("You have no private chat with this player"));
+            view.displayChat("There is no private chat with: " + otherName);
         }
     }
 
-
-
-
-    @Override
-    public void choseInvalidPlace(Player p) {
-
-    }
-
-    @Override
-    public void conditionsNotMet(Player p) {
-
-    }
-
-    @Override
-    public void cardNotInHand( Player p) {
-
-    }
-
-
-
-    @Override
-    public void cardRemovedFromHand(Player p) throws RemoteException {
-
-    }
-
+    //--------------------------PIN PONG
     private class PingPongThreadClient extends Thread {
         private boolean pinged = false;
         private final Object  lock = new Object();
@@ -637,7 +560,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
         }
     }
-
     @Override
     public void ping() {
         try {

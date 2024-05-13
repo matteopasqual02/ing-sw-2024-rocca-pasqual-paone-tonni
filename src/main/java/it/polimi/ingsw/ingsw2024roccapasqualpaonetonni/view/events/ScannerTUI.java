@@ -9,11 +9,12 @@ import java.rmi.NotBoundException;
 
 public class ScannerTUI extends Thread implements ScannerInterface{
     private final Client client;
-    BufferedReader bufferedReader = null;
+    BufferedReader bufferedReader;
+
     public ScannerTUI(Client client){
         this.client = client;
-        this.start();
         bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        this.start();
     }
     public void run(){
         while(!Thread.interrupted()){

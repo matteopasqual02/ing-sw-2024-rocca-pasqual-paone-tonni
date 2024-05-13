@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 import javafx.application.Platform;
 
@@ -54,17 +53,22 @@ public class GUI implements ViewUpdate {
     }
 
     @Override
-    public void preparation() {
-
-    }
-
-    @Override
-    public void myRunningTurn() {
+    public void myRunningTurnDrawCard() {
 
     }
 
     @Override
     public void notMyTurn() {
+
+    }
+
+    @Override
+    public void displayChat(String s) {
+
+    }
+
+    @Override
+    public void myRunningTurnPlaceCard() {
 
     }
 
@@ -75,6 +79,16 @@ public class GUI implements ViewUpdate {
 
     @Override
     public void invalidMessage(String s) {
+
+    }
+
+    @Override
+    public void myRunningTurnChooseObjective() {
+
+    }
+
+    @Override
+    public void myRunningTurnPlaceStarting() {
 
     }
 }

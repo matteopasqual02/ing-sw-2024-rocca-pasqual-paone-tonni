@@ -50,6 +50,7 @@ public class GameController implements GameControllerInterface {
         executorService.shutdown();
     }
 
+    //---------------------------------SERVER SECTION
     private class PingPongThread extends Thread {
 
         List<String> clientsRunning = new ArrayList<>();
@@ -110,7 +111,6 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    //---------------------------------SERVER SECTION
     public int getGameID() {
         return model.getGameId();
     }
@@ -195,10 +195,6 @@ public class GameController implements GameControllerInterface {
         return model.getMaxNumberOfPlayer();
     }
 
-    public void nextTurn() {
-        model.nextPlayer();
-    }
-
     public void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
         if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
@@ -227,7 +223,7 @@ public class GameController implements GameControllerInterface {
     }
 
     //---------------------------------TABLE AND INIT SECTION
-    public boolean createTable() {
+    public void createTable() {
         Map<String, List<Card>> cardsMap = null;
         try {
             cardsMap = JSONUtils.createCardsFromJson(path);
@@ -288,7 +284,6 @@ public class GameController implements GameControllerInterface {
         model.setGameDrawableDeck(decks);
         model.setGameBoardDeck(boardDeck);
 
-        return true;
     }
 
     private void randomFirstPlayer() {
@@ -330,7 +325,6 @@ public class GameController implements GameControllerInterface {
             }
         }
 
-        model.startGame();
     }
 
 
@@ -338,11 +332,13 @@ public class GameController implements GameControllerInterface {
     @Override
     public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
+            model.gameError("Not your turn");
             // listener invalid action
             return;
         }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
+            model.gameError("You cannot add a Card in this Phase");
             return;
         }
         if (flip) {
@@ -356,10 +352,12 @@ public class GameController implements GameControllerInterface {
     public void addStartingCard(String nickname, Boolean flip) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
+            model.gameError("Not your turn");
             return;
         }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
             // listener you cannot draw in this phase
+            model.gameError("You cannot add a Starting Card in this Phase");
             return;
         }
         if (flip) {
@@ -372,15 +370,16 @@ public class GameController implements GameControllerInterface {
     public void choosePlayerGoal(String nickname, int choice) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
+            model.gameError("Not your turn");
             return;
         }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING))) {
             // listener you cannot draw in this phase
+            model.gameError("You cannot choose the Objective Card in this Phase");
             return;
         }
         getCurrentPlayer().chooseGoal(choice);
     }
-
 
     //---------------------------------DRAW SECTION
     private boolean decksAreAllEmpty() {
@@ -393,20 +392,24 @@ public class GameController implements GameControllerInterface {
     public void drawResourceFromDeck(String nickname) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
+            model.gameError("Not your turn");
             return;
         }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
+            model.gameError("You cannot draw a Resource Card in this phase");
             return;
         }
         if (decksAreAllEmpty()) {
             model.setStatus(GameStatus.WAITING_LAST_TURN);
-        } else {
+        }
+        else {
             try {
                 getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
+                model.nextPlayer();
             } catch (DeckEmptyException e) {
                 // listener change deck
-                e.printStackTrace();
+                model.gameError("Resource deck is empty");
             }
         }
     }
@@ -415,10 +418,12 @@ public class GameController implements GameControllerInterface {
     public void drawGoldFromDeck(String nickname) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
+            model.gameError("Not your turn");
             return;
         }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
+            model.gameError("You cannot draw a Gold Card in this phase");
             return;
         }
         if (decksAreAllEmpty()) {
@@ -427,9 +432,10 @@ public class GameController implements GameControllerInterface {
         } else {
             try {
                 getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
+                model.nextPlayer();
             } catch (DeckEmptyException e) {
                 // listener change deck
-                e.printStackTrace();
+                model.gameError("Gold deck is empty");
             }
         }
     }
@@ -438,10 +444,12 @@ public class GameController implements GameControllerInterface {
     public void drawFromBoard(String nickname, int position) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
+            model.gameError("Not your turn");
             return;
         }
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
+            model.gameError("You cannot draw from Common Board in this phase");
             return;
         }
         if (decksAreAllEmpty()) {
@@ -450,13 +458,14 @@ public class GameController implements GameControllerInterface {
         } else {
             try {
                 getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
+                model.nextPlayer();
             } catch (NoCardException e) {
-                // listener change deck
-                return;
+                model.gameError("This position is empty");
             }
         }
     }
 
+    //---------------------------------CHAT
     @Override
     public void sendMessage(String txt, String nickname) {
         model.sendMessage(txt,nickname);
@@ -477,6 +486,8 @@ public class GameController implements GameControllerInterface {
         model.getPrivateChatLog(yourName,otherName);
     }
 
+
+    //---------------------------------GAME ID
     @Override
     public int getGameId() {
         return model.getGameId();
@@ -506,4 +517,5 @@ public class GameController implements GameControllerInterface {
     public GameImmutable getImmutableGame() {
         return new GameImmutable(model);
     }
+
 }

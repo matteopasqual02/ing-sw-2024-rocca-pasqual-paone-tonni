@@ -10,7 +10,7 @@ import java.util.List;
 public class ObjectivePointsPattern implements ObjectivePointsStrategy{
     @Override
     public int count(PlayerBoard playerBoard, int[] countTypes, Seed[][] pattern){
-        PlayingCard[][] board = playerBoard.getBoard();
+        PlayingCard[][] board = playerBoard.getBoardMatrix();
         int totalPoints=0;
         List<PlayingCard> usedByObjectiveCard =  new ArrayList<>();
 

@@ -167,10 +167,6 @@ public class Game implements Serializable {
         gameListenersHandler.notify_setStatus(status);
     }
 
-    public void startGame() {
-        gameListenersHandler.notify_gameStarted(this.firstPlayer.getListener());
-    }
-
     public void setLastStatus() {
         status[1] =status[0];
         gameListenersHandler.notify_setLastStatus(status[0]);
@@ -224,6 +220,7 @@ public class Game implements Serializable {
     public void gameReady()  {
         gameListenersHandler.notify_All(this);
     }
+    public void gameError(String s){gameListenersHandler.notify_gameGenericError(s);}
 
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
