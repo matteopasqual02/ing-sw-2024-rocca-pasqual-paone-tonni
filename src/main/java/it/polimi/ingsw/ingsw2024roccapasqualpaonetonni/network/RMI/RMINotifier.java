@@ -37,9 +37,19 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
     @Override
-    public void genericError(String s) throws IOException {
+    public void genericError(String s) {
         try {
             listener.genericError(s);
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void winners(List<Player> list) {
+        try {
+            listener.winners(list);
         }
         catch (RemoteException e) {
             e.printStackTrace();

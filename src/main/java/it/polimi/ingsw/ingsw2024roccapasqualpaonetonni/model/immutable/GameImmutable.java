@@ -7,8 +7,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 import org.fusesource.jansi.Ansi;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -175,21 +174,23 @@ public class GameImmutable implements Serializable {
             stringBuilder.append("\n");
         }
 
-        stringBuilder.append("\nOTHERS PLAYER\n");
-        for(Player playerI : players ){
-            if(!playerI.equals(player)){
-                Ansi.Color colorI= Seed.getById(playerI.getColorPlayer()-1).getByAnsi();
-                stringBuilder.append("NICKNAME:\t").append(
-                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getNickname()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
-                ).append("\t");
-                stringBuilder.append("COLOR:\t").append(
-                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(Seed.getById(playerI.getColorPlayer()-1)).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
-                ).append("\t");
-                stringBuilder.append("POINTS:\t").append(
-                        ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(player.getCurrentPoints()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
-                ).append("\n");
-            }
+        List<Player> sortedPlayers = new ArrayList<>(players);
+        sortedPlayers.sort(Comparator.comparingInt(Player::getCurrentPoints).reversed());
+
+        stringBuilder.append("\nPOINTS\n");
+        for (Player playerI : sortedPlayers) {
+            Ansi.Color colorI = Seed.getById(playerI.getColorPlayer() - 1).getByAnsi();
+            stringBuilder.append("NICKNAME:\t").append(
+                    ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getNickname()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+            ).append("\t");
+            stringBuilder.append("COLOR:\t").append(
+                    ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(Seed.getById(playerI.getColorPlayer() - 1)).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+            ).append("\t");
+            stringBuilder.append("POINTS:\t").append(
+                    ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getCurrentPoints()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+            ).append("\n");
         }
+
 
         return stringBuilder.toString();
     }

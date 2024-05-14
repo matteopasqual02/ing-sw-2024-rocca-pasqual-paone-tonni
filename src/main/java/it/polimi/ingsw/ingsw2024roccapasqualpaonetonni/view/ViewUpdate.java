@@ -13,7 +13,6 @@ public interface ViewUpdate {
     void show_addedNewPlayer(String pNickname);
     void show_areYouReady();
 
-    void invalidMessage();
     void invalidMessage(String s);
 
     void myRunningTurnChooseObjective();
@@ -24,4 +23,5 @@ public interface ViewUpdate {
 
     void displayChat(String s);
 
+    void notMyTurnChat();
 }

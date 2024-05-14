@@ -133,6 +133,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
+    public void winners(List<Player> list) throws IOException {
+        outputStream.writeObject(new ServerMessageWinners(list));
+        messageDone();
+    }
+
+    @Override
     public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
         outputStream.writeObject(new ServerMessageMaxNum(max));
         messageDone();

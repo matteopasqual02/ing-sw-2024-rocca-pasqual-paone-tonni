@@ -16,6 +16,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     //------------------PREPARATION
     @Override
     public void show_All(GameImmutable gameImmutable, String nickname) {
+        if(gameImmutable==null){
+            invalidMessage("Game immutable is null");
+            return;
+        }
         ConsolePrinter.consolePrinter(gameImmutable.toString(nickname));
     }
     @Override
@@ -56,10 +60,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         ConsolePrinter.consolePrinter(
                 """ 
                 Welcome! Select your action:
-                    (/new + playerNumbers + Nickname)-> Create a new game
-                    (/join + Nickname)-> Join the first available game
-                    (/joinById + Nickname + gameID) Join a game by game ID
-                    (/reconnect + Nickname + gameID) Reconnect to a Game
+                    (/new playerNumbers Nickname)-> Create a new game (2-4 players)
+                    (/join Nickname)-> Join the first available game
+                    (/joinById Nickname gameID) Join a game by game ID
+                    (/reconnect Nickname gameID) Reconnect to a Game
                 """
         );
     }
@@ -70,9 +74,9 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 It's your turn.
                     (/drawGold) -> to draw a gold card
                     (/drawResources) -> to draw a resource card
-                    (/drawBoard + position (1,2,3,4)) -> to draw from common board
-                    (/chat + message) -> send a public message
-                    (/chatPrivate + receiver + message) -> send a private message
+                    (/drawBoard position ) -> to draw from common board (position can be (1,2,3,4))
+                    (/chat message) -> send a public message
+                    (/chatPrivate receiver message) -> send a private message
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate + privateChatter) -> see my private chat
                     (/leave) -> to leave the game
@@ -84,12 +88,12 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void myRunningTurnChooseObjective() {
         ConsolePrinter.consolePrinter(
                 """
-                It's your turn. Remember firstly you place a card then you can draw
-                    (/choseGoal + choice(1,2)) -> to chose my personal goal
-                    (/chat + message) -> send a public message
-                    (/chatPrivate + receiver + message) -> send a private message
+                It's your turn.
+                    (/choseGoal choice) -> to chose my personal goal (choice can be 1 or 2)
+                    (/chat message) -> send a public message
+                    (/chatPrivate receiver message) -> send a private message
                     (/seeChat) -> see all the public chat
-                    (/seeChatPrivate + privateChatter) -> see my private chat
+                    (/seeChatPrivate privateChatter) -> see my private chat
                     (/leave) -> to leave the game
              
                 """
@@ -99,12 +103,13 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void myRunningTurnPlaceStarting() {
         ConsolePrinter.consolePrinter(
                 """
-                It's your turn. Remember firstly you place a card then you can draw
-                    (/addStarting + flipped(true,false)) -> to add the starting card
-                    (/chat + message) -> send a public message
-                    (/chatPrivate + receiver + message) -> send a private message
+                It's your turn.
+                    (/addStarting flipped) -> to add the starting card (flipped can be true or false)
+                    (/addStarting ) -> to add the starting card (flipped set by default as false)
+                    (/chat message) -> send a public message
+                    (/chatPrivate receiver message) -> send a private message
                     (/seeChat) -> see all the public chat
-                    (/seeChatPrivate + privateChatter) -> see my private chat
+                    (/seeChatPrivate privateChatter) -> see my private chat
                     (/leave) -> to leave the game
              
                 """
@@ -114,25 +119,39 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public void notMyTurn() {
         ConsolePrinter.consolePrinter(
                 """
-                It's not your turn. You can
-                    (/chat + message) -> send a public message
-                    (/chatPrivate + receiver + message) -> send a private message
+                It's not your turn.
+                    (/chat message) -> send a public message
+                    (/chatPrivate receiver message) -> send a private message
                     (/seeChat) -> see all the public chat
-                    (/seeChatPrivate + privateChatter) -> see my private chat
+                    (/seeChatPrivate privateChatter) -> see my private chat
                     (/leave) -> to leave the game
                     
                 """
         );
     }
-
+    @Override
+    public void notMyTurnChat() {
+        ConsolePrinter.consolePrinter(
+                """
+                Waiting others player Connection.
+                    (/chat message) -> send a public message
+                    (/chatPrivate receiver message) -> send a private message
+                    (/seeChat) -> see all the public chat
+                    (/seeChatPrivate privateChatter) -> see my private chat
+                    (/leave) -> to leave the game
+                    
+                """
+        );
+    }
     @Override
     public void myRunningTurnPlaceCard() {
         ConsolePrinter.consolePrinter(
                 """
-                It's your turn. Remember firstly you place a card then you can draw
-                    (/addCard + handIndex + idCardToAttach + position (1,2,3,4) + flipped (true,false)) -> to add a new card
-                    (/chat + message) -> send a public message
-                    (/chatPrivate + receiver + message) -> send a private message
+                It's your turn. CornerPosition is X if you want to attach in corner CX
+                    (/addCard handIndex idCardToAttach cornerPosition flipped) -> to add a new card (flipped can be true ore false)
+                    (/addCard handIndex idCardToAttach cornerPosition ) -> to add a new card (default not flipped)
+                    (/chat message) -> send a public message
+                    (/chatPrivate receiver message) -> send a private message
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate + privateChatter) -> see my private chat
                     (/leave) -> to leave the game
@@ -146,11 +165,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         ConsolePrinter.consolePrinter("CHAT \n"+s+"\n");
     }
 
-    //------------------MESSAGE
-    @Override
-    public void invalidMessage() {
-        ConsolePrinter.consolePrinter("[ERROR] Invalid Input. Choose another option !!! " );
-    }
+
     @Override
     public void invalidMessage(String s) {
         ConsolePrinter.consolePrinter("[ERROR] " + s );

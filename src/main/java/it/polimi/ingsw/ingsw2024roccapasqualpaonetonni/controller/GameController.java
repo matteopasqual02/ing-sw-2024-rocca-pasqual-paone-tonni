@@ -126,12 +126,12 @@ public class GameController implements GameControllerInterface {
 
     //---------------------------------LISTENERS SECTION
     @Override
-    public void addMyselfAsListener(GameListener me, NotifierInterface notifier) throws RemoteException{
+    public synchronized void addMyselfAsListener(GameListener me, NotifierInterface notifier) throws RemoteException{
         model.addListeners(me, notifier);
     }
 
     @Override
-    public void removeMyselfAsListener(GameListener me) throws RemoteException {
+    public synchronized void removeMyselfAsListener(GameListener me) throws RemoteException {
         Runnable runnable = () -> {
             model.removeListener(me);
         };
@@ -140,7 +140,7 @@ public class GameController implements GameControllerInterface {
 
     //---------------------------------GAME CREATION PHASE
     @Override
-    public void addPlayer(String nickname) {
+    public synchronized void addPlayer(String nickname) {
         Player px;
         int player_number = model.getPlayerNum() + 1;
         px = new Player(nickname, player_number);
@@ -150,52 +150,48 @@ public class GameController implements GameControllerInterface {
             e.printStackTrace();
         }
         if (model.getPlayerNum() == model.getMaxNumberOfPlayer()) {
-            Runnable runnable = () -> {
-                model.askPlayersReady();
-            };
+            Runnable runnable = model::askPlayersReady;
             executorService.submit(runnable);
         }
     }
 
     @Override
-    public void setMaxNumberOfPlayer(int num) throws RemoteException {
+    public synchronized void setMaxNumberOfPlayer(int num) throws RemoteException {
         model.setMaxNumberOfPlayer(num);
     }
 
     @Override
-    public void ready(String nickname) throws RemoteException {
-        synchronized (model) {
-            model.setPlayerReady(nickname);
-            if (model.getReadyPlayersNum() == model.getPlayerNum()) {
-
-                //create Table
-                createTable();
-                //random first player
-                randomFirstPlayer();
-                //run TurnZero
-                turnZero();
-                //set Running
-                model.setStatus(GameStatus.RUNNING);
-                //notify ALL
-                model.gameReady();
-            }
+    public synchronized void ready(String nickname) throws RemoteException {
+        model.setPlayerReady(nickname);
+        if (model.getReadyPlayersNum() == model.getPlayerNum()) {
+            //create Table
+            createTable();
+            //random first player
+            randomFirstPlayer();
+            //run TurnZero
+            turnZero();
+            //set Running
+            model.setStatus(GameStatus.RUNNING);
+            //notify ALL
+            model.gameReady();
         }
+
     }
 
     //---------------------------------PLAYER SECTION
-    public Queue<Player> getAllPlayer() {
+    public synchronized Queue<Player> getAllPlayer() {
         return model.getPlayers();
     }
 
-    public Player getCurrentPlayer() {
+    public synchronized Player getCurrentPlayer() {
         return model.getCurrentPlayer();
     }
 
-    public int getMaxNumberOfPlayer() {
+    public synchronized int getMaxNumberOfPlayer() {
         return model.getMaxNumberOfPlayer();
     }
 
-    public void reconnectPlayer(String nickname) {
+    public synchronized void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
         if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
             model.setStatus(model.getLastStatus());
@@ -203,7 +199,7 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public void disconnectPlayer(String nickname) {
+    public synchronized void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
         if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
             model.setLastStatus();
@@ -211,7 +207,7 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public void removePlayer(Player player) {
+    public synchronized void removePlayer(Player player) {
         Runnable runnable = () -> {
             model.removePlayer(player);
         };
@@ -223,7 +219,7 @@ public class GameController implements GameControllerInterface {
     }
 
     //---------------------------------TABLE AND INIT SECTION
-    public void createTable() {
+    public synchronized void createTable() {
         Map<String, List<Card>> cardsMap = null;
         try {
             cardsMap = JSONUtils.createCardsFromJson(path);
@@ -286,7 +282,7 @@ public class GameController implements GameControllerInterface {
 
     }
 
-    private void randomFirstPlayer() {
+    private synchronized void randomFirstPlayer() {
         int first = random.nextInt(4);
 
         for (int i = 0; i < first; i++) {
@@ -296,7 +292,7 @@ public class GameController implements GameControllerInterface {
         model.setFirstPlayer(model.getCurrentPlayer());
     }
 
-    private void turnZero() {
+    private synchronized void turnZero() {
         for (Player player : getAllPlayer()) {
             try {
                 player.drawStarting(model.getGameDrawableDeck());
@@ -330,9 +326,14 @@ public class GameController implements GameControllerInterface {
 
     //---------------------------------ADD CARD SECTION
     @Override
-    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
+    public synchronized void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             model.gameError("Not your turn");
+            // listener invalid action
+            return;
+        }
+        if (getCurrentPlayer().getHand().size()<3){
+            model.gameError("You cannot add two cards in a turn");
             // listener invalid action
             return;
         }
@@ -349,7 +350,7 @@ public class GameController implements GameControllerInterface {
     }
 
     @Override
-    public void addStartingCard(String nickname, Boolean flip) {
+    public synchronized void addStartingCard(String nickname, Boolean flip) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
             model.gameError("Not your turn");
@@ -367,7 +368,7 @@ public class GameController implements GameControllerInterface {
     }
 
     @Override
-    public void choosePlayerGoal(String nickname, int choice) {
+    public synchronized void choosePlayerGoal(String nickname, int choice) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
             model.gameError("Not your turn");
@@ -389,7 +390,7 @@ public class GameController implements GameControllerInterface {
     }
 
     @Override
-    public void drawResourceFromDeck(String nickname) {
+    public synchronized void drawResourceFromDeck(String nickname) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
             model.gameError("Not your turn");
@@ -398,6 +399,11 @@ public class GameController implements GameControllerInterface {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             model.gameError("You cannot draw a Resource Card in this phase");
+            return;
+        }
+        if(getCurrentPlayer().getHand().size()==3){
+            // listener you cannot draw in this phase
+            model.gameError("You cannot draw before a card is placed");
             return;
         }
         if (decksAreAllEmpty()) {
@@ -415,7 +421,7 @@ public class GameController implements GameControllerInterface {
     }
 
     @Override
-    public void drawGoldFromDeck(String nickname) {
+    public synchronized void drawGoldFromDeck(String nickname) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
             model.gameError("Not your turn");
@@ -424,6 +430,11 @@ public class GameController implements GameControllerInterface {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             model.gameError("You cannot draw a Gold Card in this phase");
+            return;
+        }
+        if(getCurrentPlayer().getHand().size()==3){
+            // listener you cannot draw in this phase
+            model.gameError("You cannot draw before a card is placed");
             return;
         }
         if (decksAreAllEmpty()) {
@@ -441,7 +452,7 @@ public class GameController implements GameControllerInterface {
     }
 
     @Override
-    public void drawFromBoard(String nickname, int position) {
+    public synchronized void drawFromBoard(String nickname, int position) {
         if (!getCurrentPlayer().getNickname().equals(nickname)){
             // listener invalid action
             model.gameError("Not your turn");
@@ -450,6 +461,11 @@ public class GameController implements GameControllerInterface {
         if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
             // listener you cannot draw in this phase
             model.gameError("You cannot draw from Common Board in this phase");
+            return;
+        }
+        if(getCurrentPlayer().getHand().size()==3){
+            // listener you cannot draw in this phase
+            model.gameError("You cannot draw before a card is placed");
             return;
         }
         if (decksAreAllEmpty()) {
@@ -495,7 +511,7 @@ public class GameController implements GameControllerInterface {
 
 
     //---------------------------------END SECTION
-    private void checkPoints20Points() {
+    private synchronized void checkPoints20Points() {
         for (Player player : getAllPlayer()) {
             // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione
             if (player.getCurrentPoints() >= 20) {
@@ -504,7 +520,7 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public void checkWinner() {
+    public synchronized void checkWinner() {
         //model.checkWinner();
         model.setStatus(GameStatus.ENDED);
     }
