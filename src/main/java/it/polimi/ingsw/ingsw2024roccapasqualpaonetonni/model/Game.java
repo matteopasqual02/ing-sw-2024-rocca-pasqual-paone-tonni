@@ -210,14 +210,16 @@ public class Game implements Serializable {
         temp = players.poll();
         players.add(temp);
         Player newCurrent = players.peek();
-        if(newCurrent != null && newCurrent.getNickname().equals(firstPlayer.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
+        if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
             checkWinner();
             status[0] = GameStatus.ENDED;
             gameListenersHandler.notify_winners(getWinners().stream().toList());
+            return;
         }
-        if (newCurrent != null && newCurrent.getNickname().equals(firstPlayer.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
+        if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
             status[0] = GameStatus.LAST_TURN;
             gameListenersHandler.notify_lastTurn();
+            return;
         }
         if(newCurrent!=null) {
             gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
