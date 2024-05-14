@@ -32,7 +32,7 @@ public class GUI implements ViewUpdate {
 
     @Override
     public void show_createdGame(int gameID) {
-
+        runLater(()->application.show_createdGame(gameID));
     }
 
     @Override

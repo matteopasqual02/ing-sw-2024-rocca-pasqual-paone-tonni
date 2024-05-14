@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,14 +31,34 @@ public class GUIApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
-        Button button = new Button("New game");
+
+        Button buttonNew = new Button("Create");
+        Button buttonJoin = new Button("Join any");
+        Button buttonJoinID = new Button("JoinById");
+        Button buttonReconnect = new Button("Reconnect");
+        HBox startButtons = new HBox();
+        StackPane root = new StackPane();
+        startButtons.getChildren().addAll(buttonNew,buttonJoin,buttonJoinID,buttonReconnect);
+
+        buttonNew.setOnAction(event -> {
+            executor.submit(()->{
+                try {
+                    client.receiveInput("/new 2 a");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+            });});
+        root.getChildren().add(startButtons);
+        /*        Button button = new Button("New game");
         StackPane root = new StackPane();
         root.getChildren().add(button);
 
         button.setOnAction(event -> {
             executor.submit(()->{
                 try {
-                    client.receiveInput("/new a 1");
+                    client.receiveInput("/new 2 a");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 } catch (NotBoundException e) {
@@ -45,12 +66,16 @@ public class GUIApplication extends Application {
                 }
             });
         });
-
+*/
         stage.setScene(new Scene(root,300,300));
         stage.setTitle("Codex naturalis");
         stage.show();
     }
     public void joinLobby(){
-        ConsolePrinter.consolePrinter("new game");
+        ConsolePrinter.consolePrinter("joinLobby");
+    }
+    public void show_createdGame(int gameID){
+        String message = String.format("Game created, with GameID: %d", gameID);
+        ConsolePrinter.consolePrinter(message);
     }
 }
