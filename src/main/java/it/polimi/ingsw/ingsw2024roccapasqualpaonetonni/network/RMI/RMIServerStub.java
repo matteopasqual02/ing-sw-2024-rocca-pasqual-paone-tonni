@@ -99,6 +99,7 @@ public class RMIServerStub implements ServerInterface {
         gameController = requests.joinFirstAvailableGame(name, me, notifier);
         if (gameController == null) {
             me.noAvailableGame();
+            return;
         }
         gameController.addToPingPong(name);
     }
