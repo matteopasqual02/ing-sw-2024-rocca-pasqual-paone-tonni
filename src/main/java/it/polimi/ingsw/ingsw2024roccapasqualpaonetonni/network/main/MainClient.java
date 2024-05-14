@@ -89,7 +89,6 @@ public class MainClient {
         ConsolePrinter.consolePrinter("[MAIN] Starting the game manager!");
 
         new Client(selConnection,selView);
-
     }
 
 
