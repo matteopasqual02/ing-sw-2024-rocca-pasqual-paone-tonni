@@ -96,8 +96,10 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         clientSocket.close();
     }
     private void messageDone() throws IOException {
-        outputStream.flush();
-        outputStream.reset();
+        synchronized (outputStream) {
+            outputStream.flush();
+            outputStream.reset();
+        }
     }
 
     public ObjectOutputStream getOutputStream() {
@@ -110,117 +112,168 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     @Override
     public void pong(String me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MessagePong(me));
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessagePong(me));
+        }
         messageDone();
+
     }
 
     @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageCreateGame(name, maxNumPlayers));
+        synchronized (outputStream) {
+            outputStream.writeObject(new MainMessageCreateGame(name, maxNumPlayers));
+        }
         messageDone();
-        outputStream.writeObject(new MessageAddToPingPong(name));
+
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageAddToPingPong(name));
+        }
         messageDone();
+
     }
 
     @Override
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageJoinFirstAvailable(name, me));
-        messageDone();
-        outputStream.writeObject(new MessageAddToPingPong(name));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MainMessageJoinFirstAvailable(name, me));
+            messageDone();
+        }
+
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageAddToPingPong(name));
+            messageDone();
+        }
+
     }
 
     @Override
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageJoinGameById(name, idGame, me));
-        messageDone();
-        outputStream.writeObject(new MessageAddToPingPong(name));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MainMessageJoinGameById(name, idGame, me));
+            messageDone();
+        }
+
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageAddToPingPong(name));
+            messageDone();
+        }
     }
 
     @Override
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageReconnect(name, idGame, me));
-        messageDone();
-        outputStream.writeObject(new MessageAddToPingPong(name));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MainMessageReconnect(name, idGame, me));
+            messageDone();
+        }
+
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageAddToPingPong(name));
+            messageDone();
+        }
     }
 
     @Override
     public void leave(String name, int idGame) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageDisconnect(name, idGame));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MainMessageDisconnect(name, idGame));
+            messageDone();
+        }
     }
 
     @Override
     public void ready(String nickname) throws IOException, NotBoundException {
-        outputStream.writeObject(new MessagePlayerReady(nickname));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessagePlayerReady(nickname));
+            messageDone();
+        }
     }
 
     @Override
     public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException {
-        outputStream.writeObject(new MessageAddCard(nickname,cardToAdd,cardOnBoard,cornerToAttach,flip));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageAddCard(nickname, cardToAdd, cardOnBoard, cornerToAttach, flip));
+            messageDone();
+        }
     }
 
     @Override
     public void addStartingCard(String nickname, Boolean flip) throws IOException {
-        outputStream.writeObject(new MessageAddStarting(nickname, flip));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageAddStarting(nickname, flip));
+            messageDone();
+        }
     }
 
     @Override
     public void choosePlayerGoal(String nickname, int choice) throws IOException {
-        outputStream.writeObject(new MessageObjectiveChosen(nickname,choice));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageObjectiveChosen(nickname, choice));
+            messageDone();
+        }
     }
 
     @Override
     public void drawResourceFromDeck(String nickname) throws IOException {
-        outputStream.writeObject(new MessageDrawResources(nickname));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageDrawResources(nickname));
+            messageDone();
+        }
     }
 
     @Override
     public void drawGoldFromDeck(String nickname) throws IOException {
-        outputStream.writeObject(new MessageDrawGold(nickname));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageDrawGold(nickname));
+            messageDone();
+        }
     }
 
     @Override
     public void drawFromBoard(String nickname, int position) throws IOException {
-        outputStream.writeObject(new MessageDrawFromBoard(nickname, position));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageDrawFromBoard(nickname, position));
+            messageDone();
+        }
     }
 
     @Override
     public void sendMessage(String txt, String nickname) throws IOException {
-        outputStream.writeObject(new MessageSendMessage(txt,nickname));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageSendMessage(txt, nickname));
+            messageDone();
+        }
     }
 
     @Override
     public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException {
-        outputStream.writeObject(new MessageSendPrivateMessage(nicknameSender,nicknameReciever,txt));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageSendPrivateMessage(nicknameSender, nicknameReciever, txt));
+            messageDone();
+        }
     }
 
     @Override
     public void getPublicChatLog(String requesterName) throws IOException {
-        outputStream.writeObject(new MessageGetPublicChatLog(requesterName));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageGetPublicChatLog(requesterName));
+            messageDone();
+        }
     }
 
     @Override
     public void getPrivateChatLog(String yourName, String otherName) throws IOException {
-        outputStream.writeObject(new MessageGetPrivateChatLog(yourName,otherName));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageGetPrivateChatLog(yourName, otherName));
+            messageDone();
+        }
     }
 
     @Override
     public void setMaxNUm(int num) throws IOException {
-        outputStream.writeObject(new MessageMaxNum(num));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MessageMaxNum(num));
+            messageDone();
+        }
     }
 }
