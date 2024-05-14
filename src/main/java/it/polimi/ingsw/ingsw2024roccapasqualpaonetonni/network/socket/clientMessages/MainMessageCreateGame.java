@@ -9,18 +9,16 @@ import java.rmi.RemoteException;
 
 public class MainMessageCreateGame extends ClientGenericMessage{
     private final int numberOfPlayers;
-    private final GameListener listener;
 
-    public MainMessageCreateGame(String nickname, int numberOfPlayers, GameListener listener){
+    public MainMessageCreateGame(String nickname, int numberOfPlayers){
         this.nickname = nickname;
         this.isForMainController = true;
         this.numberOfPlayers = numberOfPlayers;
-        this.listener = listener;
     }
 
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
-        return mainControllerInterface.createGameController(nickname, numberOfPlayers, listener, notifier);
+        return mainControllerInterface.createGameController(nickname, numberOfPlayers, notifier);
     }
 
     @Override

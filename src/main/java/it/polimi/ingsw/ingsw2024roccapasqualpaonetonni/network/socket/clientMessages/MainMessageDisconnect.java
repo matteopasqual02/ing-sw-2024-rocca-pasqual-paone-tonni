@@ -11,7 +11,7 @@ public class MainMessageDisconnect extends ClientGenericMessage{
     int idToDisconnect;
     GameListener listener;
 
-    public MainMessageDisconnect(String nickname, int idToDisconnect, GameListener listener){
+    public MainMessageDisconnect(String nickname, int idToDisconnect){
         this.nickname = nickname;
         this.isForMainController = true;
         this.idToDisconnect = idToDisconnect;
@@ -20,7 +20,7 @@ public class MainMessageDisconnect extends ClientGenericMessage{
 
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
-        return mainControllerInterface.leaveGame(nickname, idToDisconnect, listener);
+        return mainControllerInterface.leaveGame(nickname, idToDisconnect);
     }
 
     @Override

@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -21,11 +22,11 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     public PlayerListenersHandler(){
         super();
     }
-    public void resetPlayerListeners(HashMap<GameListener, NotifierInterface> gameListenersMap){
+    public void resetPlayerListeners(HashMap<String, NotifierInterface> gameListenersMap){
         //listenersMap=null;
-        for(GameListener lis : gameListenersMap.keySet()){
+        for(String name : gameListenersMap.keySet()){
             try {
-                addListener(lis,gameListenersMap.get(lis));
+                addListener(name, gameListenersMap.get(name));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
@@ -33,54 +34,54 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     }
 
     public void notify_chooseGoal(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPersonalGoalChosen(p);
+                listenersMap.get(name).sendPersonalGoalChosen(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_drawGoldFromDeck(Player p,DrawableDeck d) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendGoldDrawn(p,d);
+                listenersMap.get(name).sendGoldDrawn(p,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_drawResourceFromDeck(Player p,DrawableDeck d) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendResourceDrawn(p,d);
+                listenersMap.get(name).sendResourceDrawn(p,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_drawFromBoard(Player p, BoardDeck b, DrawableDeck d) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendDrewFromBoard(p,b,d);
+                listenersMap.get(name).sendDrewFromBoard(p,b,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_addStarting(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendStartAdded(p);
+                listenersMap.get(name).sendStartAdded(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_addToBoard(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendCardAdded(p);
+                listenersMap.get(name).sendCardAdded(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -88,9 +89,9 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     }
 
     public void notify_playerGenericError(String s){
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).genericError(s);
+                listenersMap.get(name).genericError(s);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

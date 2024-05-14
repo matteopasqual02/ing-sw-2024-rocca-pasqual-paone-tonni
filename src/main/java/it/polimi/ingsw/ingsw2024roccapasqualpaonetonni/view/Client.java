@@ -312,7 +312,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/leave" -> {
-                server.leave(myNickname,myGameId,this);
+                server.leave(myNickname, myGameId);
                 currentImmutable=null;
                 view.joinLobby();
             }

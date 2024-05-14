@@ -91,7 +91,7 @@ public class GameController implements GameControllerInterface {
 
                 // Wait for a certain period before sending the next ping
                 try {
-                    Thread.sleep(5000); // 7 seconds
+                    Thread.sleep(1000); // 1 seconds
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -127,12 +127,12 @@ public class GameController implements GameControllerInterface {
 
     //---------------------------------LISTENERS SECTION
     @Override
-    public synchronized void addMyselfAsListener(GameListener me, NotifierInterface notifier) throws RemoteException{
+    public synchronized void addMyselfAsListener(String me, NotifierInterface notifier) throws RemoteException{
         model.addListeners(me, notifier);
     }
 
     @Override
-    public synchronized void removeMyselfAsListener(GameListener me) throws RemoteException {
+    public synchronized void removeMyselfAsListener(String me) throws RemoteException {
         Runnable runnable = () -> {
             model.removeListener(me);
         };
@@ -210,13 +210,6 @@ public class GameController implements GameControllerInterface {
         else if (model.getPlayerNum() == 0) {
             MainController.getInstance().removeGame(this);
         }
-    }
-
-    public synchronized void removePlayer(Player player) {
-        Runnable runnable = () -> {
-            model.removePlayer(player);
-        };
-        executorService.submit(runnable);
     }
 
     public GameStatus getLastStatus() {

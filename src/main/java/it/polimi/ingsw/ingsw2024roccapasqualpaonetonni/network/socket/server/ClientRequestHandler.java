@@ -76,7 +76,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                     gameControllerInterface = message.launchMessage(MainController.getInstance(), this);
                     if (message instanceof MainMessageCreateGame) {
                         try {
-                            // sendCreatedGame(gameControllerInterface.getGameId());
                             sendYouJoinedGame(gameControllerInterface.getGameId());
                         }
                         catch (Exception e) {

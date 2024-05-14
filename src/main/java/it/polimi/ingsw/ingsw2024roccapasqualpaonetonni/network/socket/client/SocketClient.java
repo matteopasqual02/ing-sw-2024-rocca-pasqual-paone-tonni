@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -42,6 +43,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
                 message = (ServerGenericMessage) inputStream.readObject();
                 message.launchMessage(client);
             } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
                 consolePrinter("[SOCKET] Connection Lost!");
                 System.exit(-1);
             }
@@ -114,7 +116,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageCreateGame(name,maxNumPlayers, me));
+        outputStream.writeObject(new MainMessageCreateGame(name, maxNumPlayers));
         messageDone();
         outputStream.writeObject(new MessageAddToPingPong(name));
         messageDone();
@@ -145,8 +147,8 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     }
 
     @Override
-    public void leave(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        outputStream.writeObject(new MainMessageReconnect(name, idGame, me));
+    public void leave(String name, int idGame) throws IOException, NotBoundException {
+        outputStream.writeObject(new MainMessageDisconnect(name, idGame));
         messageDone();
     }
 

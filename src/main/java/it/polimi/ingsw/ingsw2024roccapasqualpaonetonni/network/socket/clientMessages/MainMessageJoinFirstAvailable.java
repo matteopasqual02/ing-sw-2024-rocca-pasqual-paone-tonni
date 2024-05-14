@@ -18,9 +18,9 @@ public class MainMessageJoinFirstAvailable extends ClientGenericMessage {
 
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
-        GameControllerInterface controller = mainControllerInterface.joinFirstAvailableGame(nickname, listener, notifier);
+        GameControllerInterface controller = mainControllerInterface.joinFirstAvailableGame(nickname, notifier);
         if(controller!=null){
-            controller.addMyselfAsListener(listener,notifier);
+            controller.addMyselfAsListener(nickname, notifier);
         }
         return controller;
     }

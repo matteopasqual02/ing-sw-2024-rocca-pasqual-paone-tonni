@@ -47,7 +47,7 @@ public class Game implements Serializable {
         gameListenersHandler = new GameListenersHandler();
     }
 
-    public void addListeners(GameListener me, NotifierInterface notifier){
+    public void addListeners(String me, NotifierInterface notifier){
         try {
             gameListenersHandler.addListener(me, notifier);
         } catch (RemoteException e) {
@@ -55,11 +55,10 @@ public class Game implements Serializable {
         }
     }
 
-    public void removeListener(GameListener me){
+    public void removeListener(String name) {
         synchronized (gameListenersHandler) {
-            gameListenersHandler.removeListener(me);
-
-            for(Player p: players){
+            gameListenersHandler.removeListener(name);
+            for (Player p : players) {
                 p.setPlayerListeners(gameListenersHandler.getListener());
             }
         }
@@ -146,7 +145,7 @@ public class Game implements Serializable {
             p.setIsConnected(false);
             playersDisconnected.add(p);
             players.remove(p);
-            gameListenersHandler.removeListener(p.getListener());
+            gameListenersHandler.removeListener(nickname);
             gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {
