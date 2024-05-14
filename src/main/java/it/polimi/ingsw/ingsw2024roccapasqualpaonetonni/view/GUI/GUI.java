@@ -69,11 +69,6 @@ public class GUI implements ViewUpdate {
     }
 
     @Override
-    public void invalidMessage() {
-
-    }
-
-    @Override
     public void invalidMessage(String s) {
 
     }

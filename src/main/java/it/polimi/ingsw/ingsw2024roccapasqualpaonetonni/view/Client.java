@@ -76,72 +76,72 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     public synchronized void receiveInput(String input) throws IOException, NotBoundException {
         if(input == null){
-            view.invalidMessage();
+            view.invalidMessage("empty input");
             return;
         }
         String[] parole = input.split(" ");
 
         switch (parole[0]) {
             case "/new" -> {
-                if(state==null){
+                if(state==null && parole.length==3){
                     try{
                         int maxNumPlayers= Integer.parseInt(parole[1]);
                         myNickname = parole[2];
                         server.createGame(myNickname, maxNumPlayers, this);
                     }
                     catch (IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage();
+                        view.invalidMessage("Invalid number format");
                     }
 
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Command not complete");
                 }
             }
             case "/join" -> {
-                if(state==null){
+                if(state==null && parole.length==2){
                     try{
                         myNickname = parole[1];
                         server.joinFirstAvailable(myNickname, this);
                     }
                     catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                        view.invalidMessage("Invalid format");
                     }
 
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Command not complete");
                 }
             }
-            case "/joinById" -> {
-                if(state==null){
+            case "/joinById","/joinbyid" -> {
+                if(state==null && parole.length==3){
                     try{
                         myNickname = parole[1];
                         int gameId= Integer.parseInt(parole[2]);
                         server.joinGameByID(myNickname,gameId,this);
                     }
-                    catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                    catch(IndexOutOfBoundsException | NumberFormatException e){
+                        view.invalidMessage("Invalid number format");
                     }
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Command not complete");
                 }
             }
             case "/reconnect" -> {
-                if(state==null){
+                if(state==null && parole.length==3){
                     try{
                         myNickname = parole[1];
                         int gameId= Integer.parseInt(parole[2]);
                         server.reconnect(myNickname,gameId,this);
                     }
-                    catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                    catch(IndexOutOfBoundsException | NumberFormatException e){
+                        view.invalidMessage("Invalid number format");
                     }
 
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Command not complete");
                 }
             }
             case "Y","y" -> {
@@ -149,39 +149,48 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                     server.ready(myNickname);
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("You cannot be ready now (or you are already ready)");
                 }
             }
-            case "/addStarting" -> {
+            case "/addStarting","/addstarting" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
                     try{
+                        if(parole[1]==null){
+                            server.addStartingCard(myNickname, false);
+                            return;
+                        }
                         server.addStartingCard(myNickname, Objects.equals(parole[1], "true"));
                     }
-                    catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                    catch(IndexOutOfBoundsException | NumberFormatException e){
+                        view.invalidMessage("Wrong format");
                     }
 
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Not my turn (or game is waiting)");
                 }
             }
-            case "/choseGoal" -> {
-                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+            case "/choseGoal","/chosegoal" -> {
+                if(state==GameStatus.RUNNING && parole[1]!=null && myTurn!=null && myTurn && parole.length==2){
+                    Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
+                    if(me.getGoal()!=null){
+                        view.invalidMessage("Goal already chosen");
+                    }
                     try {
                         int pos = Integer.parseInt(parole[1]);
                         server.choosePlayerGoal(myNickname,pos-1);
                     }
-                    catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                    catch(IndexOutOfBoundsException | NumberFormatException e){
+                        view.invalidMessage("Invalid Format");
                     }
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Command not complete");
                 }
             }
-            case "/addCard" -> {
-                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+            case "/addCard", "/addcard" -> {
+                if((state==GameStatus.RUNNING || state==GameStatus.WAITING_LAST_TURN || state==GameStatus.LAST_TURN)
+                        && myTurn!=null && parole.length==5){
                     try{
                         Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
                         if(me==null){return;}
@@ -193,51 +202,52 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
                         for (PlayingCard[] playingCards : board) {
                             for (PlayingCard playingCard : playingCards) {
-                                if (playingCard != null ) {
-                                    if(playingCard.getIdCard() == card2){
-                                        server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[4], "true"));
+                                if (playingCard != null && playingCard.getIdCard() == card2){
+                                    if(parole[4]==null){
+                                        server.addCard(myNickname, c1, playingCard, pos , false);
                                         return;
                                     }
-
+                                    server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[4], "true"));
+                                    return;
                                 }
                             }
                         }
                     }
-                    catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                    catch(IndexOutOfBoundsException | NumberFormatException e){
+                        view.invalidMessage("Invalid number format");
                     }
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Command not complete or not your turn");
                 }
             }
-            case "/drawGold" -> {
-                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+            case "/drawGold","/drawgold" -> {
+                if((state==GameStatus.RUNNING || state==GameStatus.WAITING_LAST_TURN ) && myTurn!=null && myTurn){
                     server.drawGoldFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Not your Turn or last phase");
                 }
             }
-            case "/drawResources" -> {
-                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+            case "/drawResources","/drawresources"  -> {
+                if((state==GameStatus.RUNNING || state==GameStatus.WAITING_LAST_TURN )&& myTurn!=null && myTurn){
                     server.drawResourceFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Not your Turn or last phase");
                 }
             }
-            case "/drawBoard" -> {
-                if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
+            case "/drawBoard","/drawboard" -> {
+                if(state==GameStatus.RUNNING && myTurn!=null && parole.length==2){
                     try{
                         int pos = Integer.parseInt(parole[1]);
                         server.drawFromBoard(myNickname,pos);
-                    }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                    }catch(IndexOutOfBoundsException | NumberFormatException e){
+                        view.invalidMessage("Invalid number format");
                     }
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("Not your Turn or last phase or command not complete");
                 }
             }
             case "/chat" -> {
@@ -247,62 +257,58 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                         for(int i=1; i<parole.length; i++){
                             builder.append(parole[i]).append(" ");
                         }
-                        String frase = builder.toString();
-                        server.sendMessage(frase,myNickname);
+                        String msg = builder.toString();
+                        server.sendMessage(msg,myNickname);
                     }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                        view.invalidMessage("Invalid format");
                     }
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("The game is waiting");
                 }
             }
-            case "/chatPrivate" -> {
-                if(state!=GameStatus.WAITING_RECONNECTION){
+            case "/chatPrivate","/chatprivate" -> {
+                if(state!=GameStatus.WAITING_RECONNECTION && parole.length==2){
                     try{
                         StringBuilder builder = new StringBuilder();
                         for(int i=2; i<parole.length; i++){
                             builder.append(parole[i]).append(" ");
                         }
-                        String frase = builder.toString();
-                        server.sendPrivateMessage(frase,myNickname,parole[1]);
+                        String msg = builder.toString();
+                        server.sendPrivateMessage(msg,myNickname,parole[1]);
                     }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                        view.invalidMessage("Invalid format");
                     }
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("The game is waiting or receiver missing");
                 }
             }
-            case "/seeChat" -> {
+            case "/seeChat", "/seechat" -> {
                 if(state!=GameStatus.WAITING_RECONNECTION){
                     server.getPublicChatLog(myNickname);
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("The game is waiting");
                 }
             }
-            case "/seeChatPrivate" -> {
-                if(state!=GameStatus.WAITING_RECONNECTION){
+            case "/seeChatPrivate" ,"/seechatprivate"-> {
+                if(state!=GameStatus.WAITING_RECONNECTION && parole.length==2){
                     try{
                         server.getPrivateChatLog(myNickname, parole[1]);
                     }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage();
+                        view.invalidMessage("Invalid format");
                     }
                 }
                 else {
-                    view.invalidMessage();
+                    view.invalidMessage("The game is waiting or private chatter missing");
                 }
             }
             case "/leave" -> {
-                if(state!=GameStatus.WAITING_RECONNECTION){
-                    server.leave(myNickname,myGameId,this);
-                }
-                else {
-                    view.invalidMessage();
-                }
+                server.leave(myNickname,myGameId,this);
+                view.joinLobby();
             }
-            case null, default -> view.invalidMessage();
+            case null, default -> view.invalidMessage("invalid command");
 
         }
     }

@@ -16,6 +16,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     //------------------PREPARATION
     @Override
     public void show_All(GameImmutable gameImmutable, String nickname) {
+        if(gameImmutable==null){
+            invalidMessage("Game immutable is null");
+            return;
+        }
         ConsolePrinter.consolePrinter(gameImmutable.toString(nickname));
     }
     @Override
@@ -146,11 +150,6 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         ConsolePrinter.consolePrinter("CHAT \n"+s+"\n");
     }
 
-    //------------------MESSAGE
-    @Override
-    public void invalidMessage() {
-        ConsolePrinter.consolePrinter("[ERROR] Invalid Input. Choose another option !!! " );
-    }
     @Override
     public void invalidMessage(String s) {
         ConsolePrinter.consolePrinter("[ERROR] " + s );
