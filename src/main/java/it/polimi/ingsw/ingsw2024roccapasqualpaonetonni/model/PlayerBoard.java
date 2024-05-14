@@ -245,12 +245,60 @@ public class PlayerBoard implements Serializable {
         return player;
     }
 
+
+
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (int i=0;i<dim_x;i++){
-            for (int j=0;j<dim_y;j++){
-                if(board[i][j]==null){
+        for (int i=-1;i<dim_x+1;i++){
+            for (int j=-1;j<dim_y+1;j++){
+                if(i==-1){
+                    if(j+1<dim_y && board[i+1][j+1]!=null  && (board[i+1][j+1].getCorner(1)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(j-1>=0 && board[i+1][j-1]!=null  && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(j==-1){
+                    if(i+1<dim_x && board[i+1][j+1]!=null && (board[i+1][j+1].getCorner(1)!=null || board[i+1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(i-1>=0 && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null|| board[i-1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(i==dim_x){
+                    if(j+1<dim_y && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null || board[i-1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else if(j-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(j==dim_y){
+                    if(i+1<dim_x && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+                    else if(i-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+
+                else if(board[i][j]==null){
                     if(i+1<board.length && j-1>0 && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
                         stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
                     }
@@ -299,4 +347,6 @@ public class PlayerBoard implements Serializable {
 
         return stringBuilder.toString();
     }
+
+
 }
