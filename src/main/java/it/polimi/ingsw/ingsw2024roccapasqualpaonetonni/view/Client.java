@@ -523,20 +523,18 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     //--------------------------CHAT
     @Override
     public void newMessage(Message m) throws RemoteException {
-        String message = String.format("[%s] %s",m.getSender(),m.getText());
-        view.displayChat(message);
+        view.displayChat(m.toString());
     }
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
-        String message = String.format("[%s] privately sent you: %s",m.getSender(),m.getText());
-        view.displayChat(message);
+        view.displayChat(m.toString());
     }
     @Override
     public void publicChatLog(List<Message> allMessages) throws RemoteException {
         if(allMessages!=null){
             StringBuilder chat = new StringBuilder();
             for(Message m: allMessages){
-                chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
+                chat.append(m.toString());
             }
             view.displayChat(chat.toString());
         }
@@ -549,7 +547,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         if(privateChat!=null){
             StringBuilder chat = new StringBuilder();
             for(PrivateMessage m: privateChat){
-                chat.append(String.format("[%s] %s\n",m.getSender(),m.getText()));
+                chat.append(m.toString());
             }
             view.displayChat(chat.toString());
         }

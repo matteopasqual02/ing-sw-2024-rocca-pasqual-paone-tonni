@@ -10,6 +10,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 
 public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     public TUI() throws RemoteException {
@@ -178,7 +180,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
 
     @Override
     public void displayChat(String s) {
-        ConsolePrinter.consolePrinter("CHAT \n"+s+"\n");
+        ConsolePrinter.consolePrinter(
+                String.valueOf(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.DEFAULT).a("CHAT \n")
+                        .fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(s).a("\n"))
+        );
     }
 
 
@@ -189,7 +194,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
 
     //------------------PRINTER
     private void title(){
-        System.out.println(Ansi.ansi().fg(42).a("""
+        System.out.println(ansi().fg(42).a("""
                 
                  ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗    ███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗
                 ██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝    ████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝
@@ -201,7 +206,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 """).fg(Ansi.Color.DEFAULT));
     }
     private void gameOver(){
-        System.out.println(Ansi.ansi().fg(42).a("""
+        System.out.println(ansi().fg(42).a("""
                 
                  ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗\s
                 ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
@@ -213,7 +218,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 """).fg(Ansi.Color.DEFAULT));
     }
     private void winner(){
-        System.out.println(Ansi.ansi().fg(42).a("""
+        System.out.println(ansi().fg(42).a("""
                                 
                 ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗
                 ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗

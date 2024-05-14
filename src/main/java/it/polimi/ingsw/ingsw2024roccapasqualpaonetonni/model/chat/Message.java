@@ -1,9 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import org.fusesource.jansi.Ansi;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class Message implements Serializable {
     private String text;
@@ -27,5 +30,15 @@ public class Message implements Serializable {
     public void setSender(String sender) { this.sender = sender; }
     public LocalTime getTime(){return localTime;}
     public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
+
+    @Override
+    public String toString() {
+        return String.valueOf(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.DEFAULT).
+                a("[").a(localTime.getHour()).a(":")
+                .a(localTime.getMinute()).a(":")
+                .a(localTime.getSecond()).a(" - ")
+                .a(sender).a(" ] ")
+                .fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(text));
+    }
 
 }
