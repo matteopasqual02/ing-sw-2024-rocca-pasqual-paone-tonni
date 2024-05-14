@@ -36,7 +36,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     private GameImmutable currentImmutable;
     private transient final PingPongThreadClient pongThread = new PingPongThreadClient();
 
-    public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
+    public Client(EnumConnectionType connectionType) throws IOException {
         this.myGameId = 0;
         this.myNickname = null;
         this.server = null;
@@ -53,23 +53,37 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
         }
 
-        switch (viewType){
-            case GUI ->{
-                Application.launch(GUIApplication.class,connectionType.toString());
-                view = new GUI();
-                new ScannerGUI();
-            }
-            case TUI -> {
-                view = new TUI();
-                new ScannerTUI(this);
-            }
-        }
+        view = new TUI();
+        new ScannerTUI(this);
         MainStaticMethod.clearCMD();
         view.joinLobby();
 
         //this.pongThread.start();
     }
 
+    public Client(GUIApplication application, EnumConnectionType connectionType) throws IOException {
+        this.myGameId = 0;
+        this.myNickname = null;
+        this.server = null;
+        this.currentImmutable=null;
+
+        switch (connectionType){
+            case RMI -> {
+                server = new RMIServerStub();
+                new Thread(this).start();
+            }
+            case SOCKET -> {
+                server = new SocketClient(this);
+                new Thread(this).start();
+            }
+        }
+        view = new GUI(application);
+        new ScannerGUI();
+        MainStaticMethod.clearCMD();
+        view.joinLobby();
+
+        //this.pongThread.start();
+    }
 
 
     @Override

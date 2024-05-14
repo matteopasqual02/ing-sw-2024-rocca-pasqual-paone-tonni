@@ -9,6 +9,9 @@ public class GUI implements ViewUpdate {
     /**
      * this method is used to pass a runnable function to the UI thread that will handle the changes to the gui.
      */
+    public GUI(GUIApplication application){
+        this.application = application;
+    }
     public void runLater(Runnable runnable){
         Platform.runLater(runnable);
     }
