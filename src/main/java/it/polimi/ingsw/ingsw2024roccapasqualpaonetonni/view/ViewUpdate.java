@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+
+import java.util.List;
 
 public interface ViewUpdate {
     void joinLobby();
@@ -24,4 +27,9 @@ public interface ViewUpdate {
     void displayChat(String s);
 
     void notMyTurnChat();
+
+    void show_status(String s);
+
+    void winners(List<Player> list, String nick);
 }
+

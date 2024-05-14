@@ -80,6 +80,16 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
     }
 
     @Override
+    public void show_status(String s) {
+
+    }
+
+    @Override
+    public void winners(List<Player> list, String nick) {
+
+    }
+
+    @Override
     public void myRunningTurnPlaceCard() {
 
     }

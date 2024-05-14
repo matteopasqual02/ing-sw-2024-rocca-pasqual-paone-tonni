@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
@@ -112,7 +113,7 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public int getGameID() {
+    public synchronized int getGameID() {
         return model.getGameId();
     }
 
@@ -212,7 +213,7 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public GameStatus getLastStatus() {
+    public synchronized GameStatus getLastStatus() {
         return model.getLastStatus();
     }
 
@@ -330,7 +331,7 @@ public class GameController implements GameControllerInterface {
             // listener invalid action
             return;
         }
-        if (getCurrentPlayer().getHand().size()<3){
+        if (getCurrentPlayer().getHand().size()<DefaultModelValues.Default_Hand_Dimension){
             model.gameError("You cannot add two cards in a turn");
             // listener invalid action
             return;
@@ -343,8 +344,14 @@ public class GameController implements GameControllerInterface {
         if (flip) {
             cardToAdd.flip();
         }
-        getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
-        checkPoints20Points();
+        boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
+        if(GameStatus.RUNNING==model.getGameStatus()){
+            checkPoints20Points();
+        }
+        if(GameStatus.LAST_TURN==model.getGameStatus() && done){
+            model.nextPlayer();
+        }
+
     }
 
     @Override
@@ -399,7 +406,7 @@ public class GameController implements GameControllerInterface {
             model.gameError("You cannot draw a Resource Card in this phase");
             return;
         }
-        if(getCurrentPlayer().getHand().size()==3){
+        if(getCurrentPlayer().getHand().size()>=DefaultModelValues.Default_Hand_Dimension){
             // listener you cannot draw in this phase
             model.gameError("You cannot draw before a card is placed");
             return;
@@ -430,7 +437,7 @@ public class GameController implements GameControllerInterface {
             model.gameError("You cannot draw a Gold Card in this phase");
             return;
         }
-        if(getCurrentPlayer().getHand().size()==3){
+        if(getCurrentPlayer().getHand().size()>=DefaultModelValues.Default_Hand_Dimension){
             // listener you cannot draw in this phase
             model.gameError("You cannot draw before a card is placed");
             return;
@@ -461,7 +468,7 @@ public class GameController implements GameControllerInterface {
             model.gameError("You cannot draw from Common Board in this phase");
             return;
         }
-        if(getCurrentPlayer().getHand().size()==3){
+        if(getCurrentPlayer().getHand().size()>=DefaultModelValues.Default_Hand_Dimension){
             // listener you cannot draw in this phase
             model.gameError("You cannot draw before a card is placed");
             return;
@@ -508,28 +515,20 @@ public class GameController implements GameControllerInterface {
     }
 
 
-    //---------------------------------END SECTION
+    //---------------------------------CHECK END SECTION
     private synchronized void checkPoints20Points() {
         for (Player player : getAllPlayer()) {
             // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione
-            if (player.getCurrentPoints() >= 20) {
+            if (player.getCurrentPoints() >= DefaultModelValues.Default_LastTurn_Points) {
                 model.setStatus(GameStatus.WAITING_LAST_TURN);
             }
         }
     }
 
-    public synchronized void checkWinner() {
-        //model.checkWinner();
-        model.setStatus(GameStatus.ENDED);
-    }
 
     //---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
     public Game getGame() {
         return model;
-    }
-
-    public GameImmutable getImmutableGame() {
-        return new GameImmutable(model);
     }
 
 }

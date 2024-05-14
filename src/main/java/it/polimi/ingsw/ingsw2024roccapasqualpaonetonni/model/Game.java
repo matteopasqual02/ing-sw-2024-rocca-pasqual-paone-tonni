@@ -124,11 +124,11 @@ public class Game implements Serializable {
             playersDisconnected.remove(p);
             ArrayList<Player> copiedList = new ArrayList<>(players);
             int first = copiedList.getFirst().getColorPlayer();
-            int[] indx = new int[maxNumberOfPlayer];
+            int[] index = new int[maxNumberOfPlayer];
             for(int i = 0; i < maxNumberOfPlayer; i++) {
-                indx[(first + i) % maxNumberOfPlayer - 1] = i;
+                index[(first + i) % maxNumberOfPlayer - 1] = i;
             }
-            copiedList.add(indx[p.getColorPlayer() - 1], p);
+            copiedList.add(index[p.getColorPlayer() - 1], p);
             players.clear();
             players.addAll(copiedList);
 
@@ -212,13 +212,14 @@ public class Game implements Serializable {
         Player newCurrent = players.peek();
         if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
             checkWinner();
-            status[0] = GameStatus.ENDED;
+            setStatus(GameStatus.ENDED);
             gameListenersHandler.notify_winners(getWinners().stream().toList());
             return;
         }
         if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
-            status[0] = GameStatus.LAST_TURN;
+            setStatus(GameStatus.LAST_TURN);
             gameListenersHandler.notify_lastTurn();
+            gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
             return;
         }
         if(newCurrent!=null) {
