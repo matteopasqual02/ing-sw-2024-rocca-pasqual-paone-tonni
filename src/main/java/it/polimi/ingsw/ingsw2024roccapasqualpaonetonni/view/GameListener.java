@@ -55,4 +55,6 @@ public interface GameListener extends Remote {
 
     //--------------------------ERROR
     void genericError(String s) throws RemoteException;
+
+    void winners(List<Player> list)throws RemoteException;;
 }

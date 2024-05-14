@@ -23,4 +23,5 @@ public interface ViewUpdate {
 
     void displayChat(String s);
 
+    void notMyTurnChat();
 }

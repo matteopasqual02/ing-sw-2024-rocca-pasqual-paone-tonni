@@ -86,6 +86,10 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 if(state==null && parole.length==3){
                     try{
                         int maxNumPlayers= Integer.parseInt(parole[1]);
+                        if (maxNumPlayers<2 || maxNumPlayers>4){
+                            view.invalidMessage("Invalid number of players");
+                            return;
+                        }
                         myNickname = parole[2];
                         server.createGame(myNickname, maxNumPlayers, this);
                     }
@@ -146,6 +150,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "Y","y" -> {
                 if(state==null){
+                    view.notMyTurnChat();
                     server.ready(myNickname);
                 }
                 else {
@@ -190,7 +195,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             }
             case "/addCard", "/addcard" -> {
                 if((state==GameStatus.RUNNING || state==GameStatus.WAITING_LAST_TURN || state==GameStatus.LAST_TURN)
-                        && myTurn!=null && parole.length==5){
+                        && myTurn!=null && parole.length>=4){
                     try{
                         Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
                         if(me==null){return;}
@@ -203,7 +208,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                         for (PlayingCard[] playingCards : board) {
                             for (PlayingCard playingCard : playingCards) {
                                 if (playingCard != null && playingCard.getIdCard() == card2){
-                                    if(parole[4]==null){
+                                    if(parole.length==4){
                                         server.addCard(myNickname, c1, playingCard, pos , false);
                                         return;
                                     }
@@ -449,6 +454,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void genericError(String s) throws RemoteException {
         view.invalidMessage(s);
+    }
+
+    @Override
+    public void winners(List<Player> list) {
+        ConsolePrinter.consolePrinter(list.stream().map(Player::getNickname).toString());
     }
 
 

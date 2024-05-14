@@ -64,6 +64,11 @@ public class GUI implements ViewUpdate {
     }
 
     @Override
+    public void notMyTurnChat() {
+
+    }
+
+    @Override
     public void myRunningTurnPlaceCard() {
 
     }

@@ -150,9 +150,7 @@ public class GameController implements GameControllerInterface {
             e.printStackTrace();
         }
         if (model.getPlayerNum() == model.getMaxNumberOfPlayer()) {
-            Runnable runnable = () -> {
-                model.askPlayersReady();
-            };
+            Runnable runnable = model::askPlayersReady;
             executorService.submit(runnable);
         }
     }

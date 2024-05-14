@@ -52,4 +52,7 @@ public interface NotifierInterface extends Remote {
 
     //--------------------------GENERIC ERROR
     void genericError(String s)throws IOException;
+
+    //--------------------------END
+    void winners(List<Player> list)throws IOException;
 }

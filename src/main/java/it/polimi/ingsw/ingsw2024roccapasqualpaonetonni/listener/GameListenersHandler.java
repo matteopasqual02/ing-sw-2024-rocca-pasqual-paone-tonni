@@ -285,4 +285,14 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    public void notify_winners(List<Player> list) {
+        for(GameListener listener : listenersMap.keySet()){
+            try {
+                listenersMap.get(listener).winners(list);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
