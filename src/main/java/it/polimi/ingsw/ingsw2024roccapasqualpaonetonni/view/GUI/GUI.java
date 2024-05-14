@@ -1,11 +1,13 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 import javafx.application.Platform;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class GUI extends UnicastRemoteObject implements ViewUpdate {
     private transient GUIApplication application;
