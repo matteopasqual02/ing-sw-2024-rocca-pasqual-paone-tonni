@@ -58,7 +58,7 @@ public class MainController implements MainControllerInterface {
     }
 
     @Override
-    public GameControllerInterface joinGameByID(String nickname, int idToConnect, GameListener listener, NotifierInterface notifier) throws RemoteException{
+    public synchronized GameControllerInterface joinGameByID(String nickname, int idToConnect, GameListener listener, NotifierInterface notifier) throws RemoteException{
         List<GameController> gameList = getRunningGames();
 
         for (GameController i : gameList){
@@ -77,7 +77,7 @@ public class MainController implements MainControllerInterface {
 
 
     @Override
-    public GameControllerInterface reconnect(String nickname, int idToReconnect, GameListener listener, NotifierInterface notifier) throws RemoteException{
+    public synchronized GameControllerInterface reconnect(String nickname, int idToReconnect, GameListener listener, NotifierInterface notifier) throws RemoteException{
         Player player;
         List<GameController> ris = runningGames.stream().filter(gc -> (gc.getGameID() == idToReconnect)).toList();
         if(!ris.isEmpty()){
@@ -92,7 +92,7 @@ public class MainController implements MainControllerInterface {
     }
 
     @Override
-    public GameControllerInterface leaveGame(String nickname, int idToDisconnect, GameListener listener) throws RemoteException {
+    public synchronized GameControllerInterface leaveGame(String nickname, int idToDisconnect, GameListener listener) throws RemoteException {
         Player p;
         List<GameController> ris = runningGames.stream().filter(x -> (x.getGameID() == idToDisconnect)).toList();
         if(!ris.isEmpty()){
@@ -107,7 +107,7 @@ public class MainController implements MainControllerInterface {
     }
 
     @Override
-    public void clearSingleton() {
+    public synchronized void clearSingleton() {
         runningGames.clear();
 
     }

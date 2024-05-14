@@ -155,7 +155,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/addStarting","/addstarting" -> {
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
                     try{
-                        if(parole[1]==null){
+                        if(parole.length==1){
                             server.addStartingCard(myNickname, false);
                             return;
                         }
@@ -268,7 +268,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/chatPrivate","/chatprivate" -> {
-                if(state!=GameStatus.WAITING_RECONNECTION && parole.length==2){
+                if(state!=GameStatus.WAITING_RECONNECTION && parole.length>=2){
                     try{
                         StringBuilder builder = new StringBuilder();
                         for(int i=2; i<parole.length; i++){
@@ -359,6 +359,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void allGame(GameImmutable gameImmutable) {
         currentImmutable=gameImmutable;
         view.show_All(gameImmutable,myNickname);
+        myTurn = myNickname.equals(currentImmutable.getPlayers().peek().getNickname());
         if(myTurn){
             view.myRunningTurnPlaceStarting();
         }
