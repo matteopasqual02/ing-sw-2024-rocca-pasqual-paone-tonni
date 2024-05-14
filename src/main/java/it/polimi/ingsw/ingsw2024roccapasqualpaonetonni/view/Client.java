@@ -15,6 +15,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerGUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
+import org.fusesource.jansi.Ansi;
 import javafx.application.Application;
 
 import java.io.IOException;
@@ -150,6 +151,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/reconnect" -> {
+                ConsolePrinter.consolePrinter(Ansi.ansi(parole.length));
                 if(state==null && parole.length==3){
                     try{
                         myNickname = parole[1];
@@ -327,7 +329,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/leave" -> {
-                server.leave(myNickname,myGameId,this);
+                server.leave(myNickname, myGameId);
+                currentImmutable=null;
                 view.joinLobby();
             }
             case null, default -> view.invalidMessage("invalid command");

@@ -32,24 +32,24 @@ public class MainController implements MainControllerInterface {
     }
 
     @Override
-    public synchronized GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, GameListener listener, NotifierInterface notifier) throws RemoteException {
+    public synchronized GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, NotifierInterface notifier) throws RemoteException {
         GameController g = new GameController(getRunningGames().size()+1);
         g.setMaxNumberOfPlayer(numMaxOfPlayer);
-        g.addMyselfAsListener(listener, notifier);
+        g.addMyselfAsListener(nickname, notifier);
         g.addPlayer(nickname);
         runningGames.add(g);
         return g;
     }
 
     @Override
-    public synchronized GameControllerInterface joinFirstAvailableGame(String nickname, GameListener listener, NotifierInterface notifier) throws RemoteException{
+    public synchronized GameControllerInterface joinFirstAvailableGame(String nickname, NotifierInterface notifier) throws RemoteException{
         List<GameController> gameList = getRunningGames();
         for (GameController i : gameList){
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
             int playersSize = i.getAllPlayer().size();
             int maxSize = i.getMaxNumberOfPlayer();
             if(playersSize < maxSize && playersEqualIn == 0){
-                i.addMyselfAsListener(listener, notifier);
+                i.addMyselfAsListener(nickname, notifier);
                 i.addPlayer(nickname);
                 return i;
             }
@@ -58,7 +58,7 @@ public class MainController implements MainControllerInterface {
     }
 
     @Override
-    public synchronized GameControllerInterface joinGameByID(String nickname, int idToConnect, GameListener listener, NotifierInterface notifier) throws RemoteException{
+    public synchronized GameControllerInterface joinGameByID(String nickname, int idToConnect, NotifierInterface notifier) throws RemoteException{
         List<GameController> gameList = getRunningGames();
 
         for (GameController i : gameList){
@@ -67,7 +67,7 @@ public class MainController implements MainControllerInterface {
             int maxSize = i.getMaxNumberOfPlayer();
             boolean gameIdEqual = (i.getGameID() == idToConnect);
             if(playersSize < maxSize && playersEqualIn==0 && gameIdEqual){
-                i.addMyselfAsListener(listener, notifier);
+                i.addMyselfAsListener(nickname, notifier);
                 i.addPlayer(nickname);
                 return  i;
             }
@@ -77,13 +77,13 @@ public class MainController implements MainControllerInterface {
 
 
     @Override
-    public synchronized GameControllerInterface reconnect(String nickname, int idToReconnect, GameListener listener, NotifierInterface notifier) throws RemoteException{
+    public synchronized GameControllerInterface reconnect(String nickname, int idToReconnect, NotifierInterface notifier) throws RemoteException {
         Player player;
         List<GameController> ris = runningGames.stream().filter(gc -> (gc.getGameID() == idToReconnect)).toList();
         if(!ris.isEmpty()){
             player = ris.getFirst().getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null);
             if(player!=null){
-                ris.getFirst().addMyselfAsListener(listener, notifier);
+                ris.getFirst().addMyselfAsListener(nickname, notifier);
                 ris.getFirst().reconnectPlayer(nickname);
                 return ris.getFirst();
             }
@@ -92,13 +92,13 @@ public class MainController implements MainControllerInterface {
     }
 
     @Override
-    public synchronized GameControllerInterface leaveGame(String nickname, int idToDisconnect, GameListener listener) throws RemoteException {
+    public synchronized GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException {
         Player p;
         List<GameController> ris = runningGames.stream().filter(x -> (x.getGameID() == idToDisconnect)).toList();
         if(!ris.isEmpty()){
             p = ris.getFirst().getAllPlayer().stream().filter(pp -> pp.getNickname().equals(nickname)).findFirst().orElse(null);
             if(p!=null){
-                ris.getFirst().removeMyselfAsListener(listener);
+                ris.getFirst().removeMyselfAsListener(nickname);
                 ris.getFirst().disconnectPlayer(nickname);
                 return ris.getFirst();
             }
@@ -106,10 +106,13 @@ public class MainController implements MainControllerInterface {
         return null;
     }
 
+    public void removeGame(GameController g) {
+        runningGames.remove(g);
+    }
+
     @Override
     public synchronized void clearSingleton() {
         runningGames.clear();
-
     }
 
 }

@@ -10,6 +10,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersH
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotInHandException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
+import javafx.util.Pair;
 
 import java.io.Serializable;
 import java.util.*;
@@ -46,7 +47,7 @@ public class Player implements Serializable {
 
     }
 
-    public void setPlayerListeners(HashMap<GameListener, NotifierInterface> currentGameListeners) {
+    public void setPlayerListeners(HashMap<String, NotifierInterface> currentGameListeners) {
         playerListenersHandler.resetPlayerListeners(currentGameListeners);
     }
 

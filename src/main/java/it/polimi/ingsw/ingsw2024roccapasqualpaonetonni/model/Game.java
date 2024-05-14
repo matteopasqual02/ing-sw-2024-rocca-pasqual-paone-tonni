@@ -47,7 +47,7 @@ public class Game implements Serializable {
         gameListenersHandler = new GameListenersHandler();
     }
 
-    public void addListeners(GameListener me, NotifierInterface notifier){
+    public void addListeners(String me, NotifierInterface notifier){
         try {
             gameListenersHandler.addListener(me, notifier);
         } catch (RemoteException e) {
@@ -55,11 +55,10 @@ public class Game implements Serializable {
         }
     }
 
-    public void removeListener(GameListener me){
+    public void removeListener(String name) {
         synchronized (gameListenersHandler) {
-            gameListenersHandler.removeListener(me);
-
-            for(Player p: players){
+            gameListenersHandler.removeListener(name);
+            for (Player p : players) {
                 p.setPlayerListeners(gameListenersHandler.getListener());
             }
         }
@@ -146,6 +145,7 @@ public class Game implements Serializable {
             p.setIsConnected(false);
             playersDisconnected.add(p);
             players.remove(p);
+            gameListenersHandler.removeListener(nickname);
             gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {
@@ -210,14 +210,16 @@ public class Game implements Serializable {
         temp = players.poll();
         players.add(temp);
         Player newCurrent = players.peek();
-        if(newCurrent != null && newCurrent.getNickname().equals(firstPlayer.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
+        if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
             checkWinner();
             status[0] = GameStatus.ENDED;
             gameListenersHandler.notify_winners(getWinners().stream().toList());
+            return;
         }
-        if (newCurrent != null && newCurrent.getNickname().equals(firstPlayer.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
+        if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
             status[0] = GameStatus.LAST_TURN;
             gameListenersHandler.notify_lastTurn();
+            return;
         }
         if(newCurrent!=null) {
             gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
@@ -326,7 +328,7 @@ public class Game implements Serializable {
         return chat;
     }
 
-    public void ping(String client) {
+    public void ping(String client) throws Exception{
         gameListenersHandler.notify_ping(client);
     }
 }

@@ -20,7 +20,7 @@ public class MainMessageReconnect extends ClientGenericMessage{
 
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
-        return mainControllerInterface.reconnect(nickname, idToConnect, listener, notifier);
+        return mainControllerInterface.reconnect(nickname, idToConnect, notifier);
     }
 
     @Override

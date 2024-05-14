@@ -13,7 +13,7 @@ public interface ServerInterface extends Remote{
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException;
-    public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException;
+    public void leave(String nick, int idGame) throws IOException, NotBoundException;
 
     //--------------------------READY PHASE
     public void ready(String nickname) throws IOException, NotBoundException;
