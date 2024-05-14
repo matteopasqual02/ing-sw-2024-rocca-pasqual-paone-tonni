@@ -124,11 +124,11 @@ public class Game implements Serializable {
             playersDisconnected.remove(p);
             ArrayList<Player> copiedList = new ArrayList<>(players);
             int first = copiedList.getFirst().getColorPlayer();
-            int[] indx = new int[maxNumberOfPlayer];
+            int[] index = new int[maxNumberOfPlayer];
             for(int i = 0; i < maxNumberOfPlayer; i++) {
-                indx[(first + i) % maxNumberOfPlayer - 1] = i;
+                index[(first + i) % maxNumberOfPlayer - 1] = i;
             }
-            copiedList.add(indx[p.getColorPlayer() - 1], p);
+            copiedList.add(index[p.getColorPlayer() - 1], p);
             players.clear();
             players.addAll(copiedList);
 
