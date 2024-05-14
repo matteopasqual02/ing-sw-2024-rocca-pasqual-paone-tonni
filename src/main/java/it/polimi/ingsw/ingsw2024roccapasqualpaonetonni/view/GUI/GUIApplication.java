@@ -41,33 +41,6 @@ public class GUIApplication extends Application {
         stage.setTitle("Simple Button Example");
         stage.show();
 
-
-
-
-
-        /*Button buttonNew = new Button("Create");
-        Button buttonJoin = new Button("Join any");
-        Button buttonJoinID = new Button("JoinById");
-        Button buttonReconnect = new Button("Reconnect");
-        HBox startButtons = new HBox();
-        StackPane root = new StackPane();
-        startButtons.getChildren().addAll(buttonNew,buttonJoin,buttonJoinID,buttonReconnect);
-
-        buttonNew.setOnAction(event -> {
-            executor.submit(()->{
-                try {
-                    client.receiveInput("/new 2 a");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (NotBoundException e) {
-                    throw new RuntimeException(e);
-                }
-            });});
-        root.getChildren().add(startButtons);
-
-        stage.setScene(new Scene(root,300,300));
-        stage.setTitle("Codex naturalis");
-        stage.show();*/
     }
     public void joinLobby(){
         ConsolePrinter.consolePrinter("joinLobby");
@@ -87,9 +60,9 @@ public class GUIApplication extends Application {
     public void changeScene(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
-        NameNumberController nameNumberController = loader.getController();
+        GenericController controller = loader.getController();
 
-        nameNumberController.setParameters(executor, client);
+        controller.setParameters(executor, client);
 
         stage.setScene(new Scene(root, 300, 200));
         stage.setTitle("Codex Naturalis");

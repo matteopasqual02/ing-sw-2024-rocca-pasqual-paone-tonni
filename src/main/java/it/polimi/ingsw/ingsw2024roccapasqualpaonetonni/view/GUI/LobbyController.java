@@ -30,21 +30,14 @@ public class LobbyController {
                 throw new RuntimeException(e);
             }
         });
-        /*executor.submit(()->{
-            try {
-                client.receiveInput("/new 2 a");
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });*/
     }
 
     @FXML
     public void handleJoinGameButtonClick(ActionEvent event){
-        executor.submit(()->{
+        Platform.runLater(()-> {
             try {
-                client.receiveInput("/join b");
-            } catch (IOException | NotBoundException e) {
+                application.changeScene("/Name.fxml");
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -52,10 +45,10 @@ public class LobbyController {
 
     @FXML
     public void handleJoinGameIDButtonClick(ActionEvent event){
-        executor.submit(()->{
+        Platform.runLater(()-> {
             try {
-                client.receiveInput("/join b 2");
-            } catch (IOException | NotBoundException e) {
+                application.changeScene("/NameGameId.fxml");
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });

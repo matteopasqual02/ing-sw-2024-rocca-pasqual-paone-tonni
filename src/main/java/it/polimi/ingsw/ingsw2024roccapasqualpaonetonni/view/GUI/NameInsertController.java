@@ -10,13 +10,11 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
-public class NameNumberController extends GenericController{
+public class NameInsertController extends GenericController{
     @FXML
     public Button button;
     @FXML
     private TextField string1;
-    @FXML
-    private TextField string2;
     private ExecutorService executor;
     private Client client;
     @Override
@@ -28,11 +26,10 @@ public class NameNumberController extends GenericController{
     public void handleButtonClick(ActionEvent event){
 
         String name = string1.getText();
-        int num = Integer.parseInt(string2.getText());
 
         executor.submit(()->{
             try {
-                client.receiveInput("/new "+num + " "+ name);
+                client.receiveInput("/join "+ name);
             } catch (IOException | NotBoundException e) {
                 throw new RuntimeException(e);
             }
