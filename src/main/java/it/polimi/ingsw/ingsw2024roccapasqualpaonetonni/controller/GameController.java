@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
@@ -59,16 +60,14 @@ public class GameController implements GameControllerInterface {
         private void addClient(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
-                ConsolePrinter.consolePrinter("added listener");
-                ConsolePrinter.consolePrinter(client);
+                //ConsolePrinter.consolePrinter("added listener " + client);
             }
         }
 
         private void pong(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
-                ConsolePrinter.consolePrinter("ponged");
-                ConsolePrinter.consolePrinter(client);
+                //ConsolePrinter.consolePrinter("ponged " + client);
             }
         }
 
@@ -81,9 +80,13 @@ public class GameController implements GameControllerInterface {
                     clientsRunning.clear();
                 }
                 for (String client : clients) {
-                    model.ping(client);
-                    ConsolePrinter.consolePrinter("pinging");
-                    ConsolePrinter.consolePrinter(client);
+                    try {
+                        model.ping(client);
+                        //ConsolePrinter.consolePrinter("pinging " + client);
+                    }
+                    catch (Exception e) {
+
+                    }
                 }
 
                 // Wait for a certain period before sending the next ping
@@ -95,14 +98,12 @@ public class GameController implements GameControllerInterface {
 
                 synchronized (clientsRunning) {
                     for (String client : clientsRunning) {
-                        ConsolePrinter.consolePrinter("safe");
-                        ConsolePrinter.consolePrinter(client);
+                        //ConsolePrinter.consolePrinter("safe " + client);
                         clients.remove(client);
                     }
                 }
                 for (String deadClient : clients) {
-                    ConsolePrinter.consolePrinter("dead client");
-                    ConsolePrinter.consolePrinter(deadClient);
+                    //ConsolePrinter.consolePrinter("dead client " + deadClient);
 
                     // CONTROLLARE SE FUNZIONA CON REMOTE OBJECT
                     disconnectPlayer(deadClient);
@@ -201,9 +202,13 @@ public class GameController implements GameControllerInterface {
 
     public synchronized void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
-        if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
+        // if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
+        if (model.getPlayerNum() == 1) {
             model.setLastStatus();
             model.setStatus(GameStatus.WAITING_RECONNECTION);
+        }
+        else if (model.getPlayerNum() == 0) {
+            MainController.getInstance().removeGame(this);
         }
     }
 

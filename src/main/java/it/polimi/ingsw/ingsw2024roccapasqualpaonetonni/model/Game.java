@@ -146,6 +146,7 @@ public class Game implements Serializable {
             p.setIsConnected(false);
             playersDisconnected.add(p);
             players.remove(p);
+            gameListenersHandler.removeListener(p.getListener());
             gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {
@@ -326,7 +327,7 @@ public class Game implements Serializable {
         return chat;
     }
 
-    public void ping(String client) {
+    public void ping(String client) throws Exception{
         gameListenersHandler.notify_ping(client);
     }
 }

@@ -22,6 +22,18 @@ public abstract class ListenersHandler {
         listenersMap.put(g, notifier);
     }
 
+    public synchronized void removeListener(String nickname) {
+        for (GameListener g : listenersMap.keySet()) {
+            try {
+                if (!g.getNickname().equals(nickname)) {
+                }
+            }
+            catch (Exception e) {
+                listenersMap.remove(g);
+            }
+        }
+    }
+
     public synchronized void removeListener(GameListener g){
         listenersMap.remove(g);
         //listeners.remove(g);

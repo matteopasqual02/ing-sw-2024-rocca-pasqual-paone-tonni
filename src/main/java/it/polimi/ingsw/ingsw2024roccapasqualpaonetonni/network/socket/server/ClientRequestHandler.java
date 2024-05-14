@@ -55,7 +55,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                     processingQueue.add(message);
 
                 }catch (IOException | ClassNotFoundException e) {
-                    consolePrinter("[SOCKET] no more with the client");
+                    // consolePrinter("[SOCKET] no more with the client");
                 }
 
             }
@@ -121,7 +121,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     @Override
-    public void sendPing() throws IOException{
+    public void sendPing() throws IOException {
         outputStream.writeObject(new ServerMessagePing());
         messageDone();
     }

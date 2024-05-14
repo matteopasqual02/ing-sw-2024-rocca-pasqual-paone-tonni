@@ -106,10 +106,13 @@ public class MainController implements MainControllerInterface {
         return null;
     }
 
+    public void removeGame(GameController g) {
+        runningGames.remove(g);
+    }
+
     @Override
     public synchronized void clearSingleton() {
         runningGames.clear();
-
     }
 
 }
