@@ -178,7 +178,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/choseGoal","/chosegoal" -> {
-                if(state==GameStatus.RUNNING && parole[1]!=null && myTurn!=null && myTurn && parole.length==2){
+                if(state==GameStatus.RUNNING  && myTurn!=null && myTurn && parole.length==2){
                     Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
                     if(me.getGoal()!=null){
                         view.invalidMessage("Goal already chosen");
@@ -406,7 +406,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void cardAdded(Player p) {
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname);
-        if(myTurn){
+        if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }
         else{
@@ -427,6 +427,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void statusSet(GameStatus status) {
         state=status;
+        view.show_status(state.toString());
     }
     @Override
     public void resourceDrawn(Player p, DrawableDeck d) {
@@ -461,7 +462,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     @Override
     public void winners(List<Player> list) {
-        ConsolePrinter.consolePrinter(list.stream().map(Player::getNickname).toString());
+        view.winners(list,myNickname);
     }
 
 

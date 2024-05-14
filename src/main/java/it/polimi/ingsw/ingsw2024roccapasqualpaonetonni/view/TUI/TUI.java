@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
@@ -7,6 +8,7 @@ import org.fusesource.jansi.Ansi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 
 public class TUI extends UnicastRemoteObject implements ViewUpdate  {
@@ -80,7 +82,6 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate + privateChatter) -> see my private chat
                     (/leave) -> to leave the game
-             
                 """
         );
     }
@@ -95,7 +96,6 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate privateChatter) -> see my private chat
                     (/leave) -> to leave the game
-             
                 """
         );
     }
@@ -111,7 +111,6 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate privateChatter) -> see my private chat
                     (/leave) -> to leave the game
-             
                 """
         );
     }
@@ -125,7 +124,6 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate privateChatter) -> see my private chat
                     (/leave) -> to leave the game
-                    
                 """
         );
     }
@@ -139,10 +137,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate privateChatter) -> see my private chat
                     (/leave) -> to leave the game
-                    
                 """
         );
     }
+
     @Override
     public void myRunningTurnPlaceCard() {
         ConsolePrinter.consolePrinter(
@@ -155,9 +153,27 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                     (/seeChat) -> see all the public chat
                     (/seeChatPrivate + privateChatter) -> see my private chat
                     (/leave) -> to leave the game
-             
                 """
         );
+    }
+
+    @Override
+    public void show_status(String s) {
+        ConsolePrinter.consolePrinter("[GAME STATUS]:" +s+ "\n");
+    }
+
+    @Override
+    public void winners(List<Player> list, String nick) {
+        if(list.stream().filter(player -> player.getNickname().equals(nick)).toList().isEmpty()){
+            gameOver();
+        }
+        else {
+            winner();
+        }
+
+        ConsolePrinter.consolePrinter("WINNERS: \n");
+        list.forEach(player -> ConsolePrinter.consolePrinter(player.getNickname()));
+
     }
 
     @Override
@@ -181,7 +197,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 ██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗     ██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║
                 ╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗    ██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║
                  ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝
-                                                                                                                                   \s
+                                                                                                                                   
                 """).fg(Ansi.Color.DEFAULT));
     }
     private void gameOver(){
@@ -193,20 +209,18 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                 ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
                 ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
                  ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
-                                                                                         \s
-                                                                                                                                                                                                    \s
+                                                                                                                                                                                                   \s
                 """).fg(Ansi.Color.DEFAULT));
     }
     private void winner(){
         System.out.println(Ansi.ansi().fg(42).a("""
                                 
-                ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗\s
+                ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗
                 ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
-                ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝ \s
-                ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗ \s
-                ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║ \s
-                 ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ \s
-                                                                         
+                ██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝
+                ██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗
+                ╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║
+                 ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
                                                                                                                                                                                                     \s
                 """).fg(Ansi.Color.DEFAULT));
     }

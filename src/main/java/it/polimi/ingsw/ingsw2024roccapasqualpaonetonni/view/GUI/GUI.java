@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
+
+import java.util.List;
 
 public class GUI implements ViewUpdate {
     /*private GUIApplication application;
@@ -65,6 +68,16 @@ public class GUI implements ViewUpdate {
 
     @Override
     public void notMyTurnChat() {
+
+    }
+
+    @Override
+    public void show_status(String s) {
+
+    }
+
+    @Override
+    public void winners(List<Player> list, String nick) {
 
     }
 

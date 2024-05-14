@@ -132,12 +132,13 @@ public class Player implements Serializable {
     }
     public StartingCard getStartingCard(){return startingCard;}
 
-    public void addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
+    public boolean addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
             removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
             playerListenersHandler.notify_playerGenericError("Card not in Hand");
+            return false;
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
@@ -146,12 +147,15 @@ public class Player implements Serializable {
         catch(InvalidPlaceException e) {
             hand.add(cardToAdd);
             playerListenersHandler.notify_playerGenericError("Card Invalid Place");
+            return false;
         }
         catch(ConditionsNotMetException e) {
             hand.add(cardToAdd);
             playerListenersHandler.notify_playerGenericError("Conditions not met");
+            return false;
         }
 
+        return true;
     }
 
     public void increasePoints(int newPoints) {

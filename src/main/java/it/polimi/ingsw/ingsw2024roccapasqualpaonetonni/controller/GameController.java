@@ -113,7 +113,7 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public int getGameID() {
+    public synchronized int getGameID() {
         return model.getGameId();
     }
 
@@ -213,7 +213,7 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public GameStatus getLastStatus() {
+    public synchronized GameStatus getLastStatus() {
         return model.getLastStatus();
     }
 
@@ -344,8 +344,14 @@ public class GameController implements GameControllerInterface {
         if (flip) {
             cardToAdd.flip();
         }
-        getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
-        checkPoints20Points();
+        boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
+        if(GameStatus.RUNNING==model.getGameStatus()){
+            checkPoints20Points();
+        }
+        if(GameStatus.LAST_TURN==model.getGameStatus() && done){
+            model.nextPlayer();
+        }
+
     }
 
     @Override
@@ -509,7 +515,7 @@ public class GameController implements GameControllerInterface {
     }
 
 
-    //---------------------------------END SECTION
+    //---------------------------------CHECK END SECTION
     private synchronized void checkPoints20Points() {
         for (Player player : getAllPlayer()) {
             // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione
@@ -519,18 +525,10 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    public synchronized void checkWinner() {
-        //model.checkWinner();
-        model.setStatus(GameStatus.ENDED);
-    }
 
     //---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
     public Game getGame() {
         return model;
-    }
-
-    public GameImmutable getImmutableGame() {
-        return new GameImmutable(model);
     }
 
 }
