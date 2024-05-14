@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -77,6 +78,14 @@ public class GUIApplication extends Application {
     }
     public void show_createdGame(int gameID){
         String message = String.format("Game created, with GameID: %d", gameID);
+        ConsolePrinter.consolePrinter(message);
+    }
+    public void show_youJoinedGame(int gameID){
+        String message = String.format("Joined game: %d", gameID);
+        ConsolePrinter.consolePrinter(message);
+    }
+    public void show_noAvailableGame(){
+        String message = String.format("no games available");
         ConsolePrinter.consolePrinter(message);
     }
 }

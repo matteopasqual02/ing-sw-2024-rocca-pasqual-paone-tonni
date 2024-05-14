@@ -4,12 +4,16 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmut
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 import javafx.application.Platform;
 
-public class GUI implements ViewUpdate {
-    private GUIApplication application;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class GUI extends UnicastRemoteObject implements ViewUpdate {
+    private transient GUIApplication application;
     /**
      * this method is used to pass a runnable function to the UI thread that will handle the changes to the gui.
      */
-    public GUI(GUIApplication application){
+    public GUI(GUIApplication application) throws RemoteException {
+        super();
         this.application = application;
     }
     public void runLater(Runnable runnable){
@@ -37,12 +41,12 @@ public class GUI implements ViewUpdate {
 
     @Override
     public void show_youJoinedGame(int gameID) {
-
+        runLater(()->application.show_youJoinedGame(gameID));
     }
 
     @Override
     public void show_noAvailableGame() {
-
+        runLater(()->application.show_noAvailableGame());
     }
 
     @Override

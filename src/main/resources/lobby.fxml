@@ -9,6 +9,14 @@
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.Controller1">
-    <Button text="New game" onAction="#handleButtonClick"
-            prefHeight="400.0" prefWidth="600.0"/>
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="New game" onAction="#handleNewGameButtonClick"
+                prefHeight="400.0" prefWidth="600.0"/>
+        <Button text="Join game" onAction="#handleJoinGameButtonClick"
+                prefHeight="400.0" prefWidth="600.0"/>
+        <Button text="JoinGameId" onAction="#handleJoinGameIDButtonClick"
+                prefHeight="400.0" prefWidth="600.0"/>
+        <Button text="Reconnect" onAction="#handleReconnectButtonClick"
+                prefHeight="400.0" prefWidth="600.0"/>
+    </HBox>
 </StackPane>

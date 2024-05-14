@@ -19,10 +19,43 @@ public class Controller1 {
         this.client = client;
     }
     @FXML
-    public void handleButtonClick(ActionEvent event){
+    public void handleNewGameButtonClick(ActionEvent event){
         executor.submit(()->{
             try {
                 client.receiveInput("/new 2 a");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @FXML
+    public void handleJoinGameButtonClick(ActionEvent event){
+        executor.submit(()->{
+            try {
+                client.receiveInput("/join b");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @FXML
+    public void handleJoinGameIDButtonClick(ActionEvent event){
+        executor.submit(()->{
+            try {
+                client.receiveInput("/join b 2");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @FXML
+    public void handleReconnectButtonClick(ActionEvent event){
+        executor.submit(()->{
+            try {
+                client.receiveInput("/reconnect a 1");
             } catch (IOException | NotBoundException e) {
                 throw new RuntimeException(e);
             }

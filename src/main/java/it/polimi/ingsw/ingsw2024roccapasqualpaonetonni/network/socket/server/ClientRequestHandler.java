@@ -56,6 +56,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
 
                 }catch (IOException | ClassNotFoundException e) {
                     consolePrinter("[SOCKET] no more with the client");
+                    e.printStackTrace();
                 }
 
             }
