@@ -287,11 +287,11 @@ public class PlayerBoard implements Serializable {
                     }
                 }
                 else if(j==dim_y){
-                    if(i+1<dim_x && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
-                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
-                    }
-                    else if(i-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                    if(i-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
                         stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else if(i+1<dim_x && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
                     }
                     else {
                         stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
