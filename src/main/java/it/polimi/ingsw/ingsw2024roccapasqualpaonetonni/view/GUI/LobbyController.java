@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,24 +10,33 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
-public class Controller1 {
+public class LobbyController {
     @FXML
-    public Button button;
+    private Button button;
     private ExecutorService executor;
     private Client client;
-    public void setParameters(ExecutorService executor, Client client){
+    private GUIApplication application;
+    public void setParameters(ExecutorService executor, Client client,GUIApplication application){
         this.executor = executor;
         this.client = client;
+        this.application = application;
     }
     @FXML
     public void handleNewGameButtonClick(ActionEvent event){
-        executor.submit(()->{
+        Platform.runLater(()-> {
+            try {
+                application.changeScene("/NameNumber.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        /*executor.submit(()->{
             try {
                 client.receiveInput("/new 2 a");
             } catch (IOException | NotBoundException e) {
                 throw new RuntimeException(e);
             }
-        });
+        });*/
     }
 
     @FXML
