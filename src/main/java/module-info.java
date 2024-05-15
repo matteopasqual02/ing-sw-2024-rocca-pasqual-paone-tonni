@@ -18,4 +18,6 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
+    exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
+    opens it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers to javafx.fxml;
 }

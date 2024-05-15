@@ -1,7 +1,8 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
-import javafx.application.Platform;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
-public class NameGameIDController extends GenericController{
+public class NameGameIDController extends GenericController {
     @FXML
     public Button button;
     @FXML
@@ -22,7 +23,7 @@ public class NameGameIDController extends GenericController{
     private Client client;
     private int gameID;
     @Override
-    public void setParameters(ExecutorService executor, Client client){
+    public void setParameters(ExecutorService executor, Client client, GUIApplication application){
         this.executor = executor;
         this.client = client;
     }

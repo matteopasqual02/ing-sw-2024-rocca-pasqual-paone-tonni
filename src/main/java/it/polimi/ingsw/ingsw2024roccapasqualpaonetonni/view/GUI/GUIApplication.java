@@ -3,6 +3,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.LobbyController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -58,10 +60,13 @@ public class GUIApplication extends Application {
         ConsolePrinter.consolePrinter(message);
     }
     public void show_noAvailableGame(){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        /*Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Message");
         alert.setHeaderText("Error:");
-        alert.setContentText("no games available");
+        alert.setContentText("no games available, retry");
+        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
+        alert.setHeight(30);
+        alert.setWidth(40);
         alert.showAndWait();
         Platform.runLater(()->{
             try {
@@ -69,27 +74,35 @@ public class GUIApplication extends Application {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
-        //infoBox("no games available","Error","Message:");
-        String message = String.format("no games available");
-        ConsolePrinter.consolePrinter(message);
+        });*/
+        infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
     }
-    public static void infoBox(String message, String title, String header){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    public void infoBox(String message, String title, String header, Alert.AlertType alertType, String fxml){
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(message);
+        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
+        alert.setHeight(30);
+        alert.setWidth(40);
         alert.showAndWait();
+        Platform.runLater(()->{
+            try {
+                this.changeScene(fxml);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
     public void changeScene(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent newRoot = loader.load();
         GenericController controller = loader.getController();
 
-        controller.setParameters(executor, client);
+        controller.setParameters(executor, client,this);
 
         //Stage stage = (Stage) root.getScene().getWindow();
-        Scene scene = new Scene(newRoot,300,200);
+        Scene scene = new Scene(newRoot,1024,600);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();

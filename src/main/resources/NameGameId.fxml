@@ -8,7 +8,7 @@
 
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.NameGameIDController">
+           fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameGameIDController">
     <HBox spacing="10" alignment="CENTER">
         <TextField fx:id="string1" promptText="Insert your nickname"/>
         <TextField fx:id="string2" promptText="Insert gameID"/>

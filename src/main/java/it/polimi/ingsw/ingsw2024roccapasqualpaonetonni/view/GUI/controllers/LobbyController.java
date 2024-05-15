@@ -1,6 +1,8 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +12,7 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
-public class LobbyController extends GenericController{
+public class LobbyController extends GenericController {
     @FXML
     private Button button;
     private ExecutorService executor;
