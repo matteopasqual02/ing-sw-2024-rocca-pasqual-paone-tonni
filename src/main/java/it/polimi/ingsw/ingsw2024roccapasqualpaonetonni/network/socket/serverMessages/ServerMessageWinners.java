@@ -6,8 +6,20 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import java.rmi.RemoteException;
 import java.util.List;
 
+/**
+ * The type Server message winners.
+ */
 public class ServerMessageWinners extends ServerGenericMessage{
+    /**
+     * The Players.
+     */
     List<Player> players;
+
+    /**
+     * Instantiates a new Server message winners.
+     *
+     * @param players the players
+     */
     public ServerMessageWinners(List<Player> players){
         this.players=players;
     }

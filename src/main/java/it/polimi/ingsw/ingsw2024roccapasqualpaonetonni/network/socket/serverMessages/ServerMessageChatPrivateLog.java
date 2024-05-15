@@ -6,10 +6,21 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import java.rmi.RemoteException;
 import java.util.List;
 
+/**
+ * The type Server message chat private log.
+ */
 public class ServerMessageChatPrivateLog extends ServerGenericMessage{
     private final String yourName;
     private final String otherName;
     private final List<PrivateMessage> privateChat;
+
+    /**
+     * Instantiates a new Server message chat private log.
+     *
+     * @param yourName    the your name
+     * @param otherName   the other name
+     * @param privateChat the private chat
+     */
     public ServerMessageChatPrivateLog(String yourName, String otherName, List<PrivateMessage> privateChat){
         this.privateChat = privateChat;
         this.yourName = yourName;

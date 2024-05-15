@@ -6,9 +6,19 @@ import org.fusesource.jansi.Ansi;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Objective count card.
+ */
 public class ObjectiveCountCard extends ObjectiveCard {
     private final int[] countTypes;
 
+    /**
+     * Instantiates a new Objective count card.
+     *
+     * @param id         the id
+     * @param points     the points
+     * @param countTypes the count types
+     */
     public ObjectiveCountCard(int id, int points, int[] countTypes) {
         super(id, points);
         this.countTypes = countTypes;
@@ -20,6 +30,11 @@ public class ObjectiveCountCard extends ObjectiveCard {
         return points * objectivePointsStrategy.count(playerBoard,countTypes,null);
     }
 
+    /**
+     * Get count types int [ ].
+     *
+     * @return the int [ ]
+     */
     public int[] getCountTypes() {
         return countTypes;
     }

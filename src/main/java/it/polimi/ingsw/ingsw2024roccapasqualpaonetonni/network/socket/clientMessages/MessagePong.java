@@ -6,9 +6,17 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Message pong.
+ */
 public class MessagePong extends ClientGenericMessage{
     private final String client;
 
+    /**
+     * Instantiates a new Message pong.
+     *
+     * @param me the me
+     */
     public MessagePong(String me) {
         this.client = me;
         this.isForMainController = false;

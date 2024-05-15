@@ -7,10 +7,25 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Main message disconnect.
+ */
 public class MainMessageDisconnect extends ClientGenericMessage{
+    /**
+     * The Id to disconnect.
+     */
     int idToDisconnect;
+    /**
+     * The Listener.
+     */
     GameListener listener;
 
+    /**
+     * Instantiates a new Main message disconnect.
+     *
+     * @param nickname       the nickname
+     * @param idToDisconnect the id to disconnect
+     */
     public MainMessageDisconnect(String nickname, int idToDisconnect){
         this.nickname = nickname;
         this.isForMainController = true;

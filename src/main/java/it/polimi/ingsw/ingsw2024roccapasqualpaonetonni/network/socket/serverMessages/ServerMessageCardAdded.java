@@ -3,8 +3,17 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
+/**
+ * The type Server message card added.
+ */
 public class ServerMessageCardAdded extends ServerGenericMessage{
     private final Player player;
+
+    /**
+     * Instantiates a new Server message card added.
+     *
+     * @param player the player
+     */
     public ServerMessageCardAdded( Player player){
         this.player=player;
     }

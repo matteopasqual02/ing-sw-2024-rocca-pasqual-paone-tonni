@@ -7,6 +7,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Objective points pattern.
+ */
 public class ObjectivePointsPattern implements ObjectivePointsStrategy{
     @Override
     public int count(PlayerBoard playerBoard, int[] countTypes, Seed[][] pattern){

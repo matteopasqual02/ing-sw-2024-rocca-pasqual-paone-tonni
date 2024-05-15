@@ -13,7 +13,15 @@ import java.util.List;
 import static org.fusesource.jansi.Ansi.ansi;
 
 
+/**
+ * The type Tui.
+ */
 public class TUI extends UnicastRemoteObject implements ViewUpdate  {
+    /**
+     * Instantiates a new Tui.
+     *
+     * @throws RemoteException the remote exception
+     */
     public TUI() throws RemoteException {
     }
 

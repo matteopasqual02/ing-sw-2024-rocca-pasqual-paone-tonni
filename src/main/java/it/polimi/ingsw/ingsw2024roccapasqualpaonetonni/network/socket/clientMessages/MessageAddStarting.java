@@ -6,9 +6,18 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Message add starting.
+ */
 public class MessageAddStarting extends ClientGenericMessage{
     private final Boolean flip;
 
+    /**
+     * Instantiates a new Message add starting.
+     *
+     * @param nickname the nickname
+     * @param flip     the flip
+     */
     public MessageAddStarting(String nickname, Boolean flip){
         this.flip=flip;
         this.isForMainController = false;

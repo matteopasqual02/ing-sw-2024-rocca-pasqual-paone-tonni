@@ -6,8 +6,16 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Message draw resources.
+ */
 public class MessageDrawResources extends ClientGenericMessage{
 
+    /**
+     * Instantiates a new Message draw resources.
+     *
+     * @param nickname the nickname
+     */
     public MessageDrawResources(String nickname){
         this.isForMainController = false;
         this.nickname = nickname;

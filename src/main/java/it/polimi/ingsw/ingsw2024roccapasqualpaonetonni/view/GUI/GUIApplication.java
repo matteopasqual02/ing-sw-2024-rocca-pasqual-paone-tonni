@@ -7,6 +7,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * The type Gui application.
+ */
 public class GUIApplication extends Application {
     private Parent createContent(){
         return new StackPane(new Text("Hello world!"));

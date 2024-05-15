@@ -4,8 +4,20 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Main message joined game.
+ */
 public class MainMessageJoinedGame extends ServerGenericMessage{
+    /**
+     * The Game id.
+     */
     int gameId;
+
+    /**
+     * Instantiates a new Main message joined game.
+     *
+     * @param gameId the game id
+     */
     public MainMessageJoinedGame(int gameId) {
         this.gameId = gameId;
     }

@@ -10,8 +10,18 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.Scanner;
 
+/**
+ * The type Main client.
+ */
 public class MainClient {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     public static void main(String[] args) throws IOException, NotBoundException {
         MainStaticMethod.clearCMD();
         boolean selection;

@@ -7,9 +7,18 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Main message join first available.
+ */
 public class MainMessageJoinFirstAvailable extends ClientGenericMessage {
     private final GameListener listener;
 
+    /**
+     * Instantiates a new Main message join first available.
+     *
+     * @param nickname the nickname
+     * @param listener the listener
+     */
     public MainMessageJoinFirstAvailable(String nickname, GameListener listener){
         this.nickname = nickname;
         this.isForMainController = true;

@@ -26,6 +26,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Client.
+ */
 public class Client extends UnicastRemoteObject implements GameListener, Runnable {
     private ServerInterface server;
     private ViewUpdate view;
@@ -36,6 +39,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     private GameImmutable currentImmutable;
     private transient final PingPongThreadClient pongThread = new PingPongThreadClient();
 
+    /**
+     * Instantiates a new Client.
+     *
+     * @param connectionType the connection type
+     * @param viewType       the view type
+     * @throws IOException the io exception
+     */
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
         this.myNickname = null;
@@ -76,6 +86,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
+    /**
+     * Receive input.
+     *
+     * @param input the input
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     public synchronized void receiveInput(String input) throws IOException, NotBoundException {
         if(input == null){
             view.invalidMessage("empty input");
@@ -324,6 +341,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     //------------------------------------- SET GET ------------------------------------------------------------------------------
 
+    /**
+     * Sets my nickname.
+     *
+     * @param myNickname the my nickname
+     */
     public void setMyNickname(String myNickname) {
         this.myNickname = myNickname;
     }
@@ -331,6 +353,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public String getNickname() throws RemoteException {
         return myNickname;
     }
+
+    /**
+     * Get server interface server interface.
+     *
+     * @return the server interface
+     */
     public ServerInterface getServerInterface(){
         return server;
     }
@@ -545,6 +573,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         private boolean pinged = false;
         private final Object  lock = new Object();
 
+        /**
+         * Pinged.
+         */
         public void pinged() {
             synchronized (lock) {
                 pinged = true;

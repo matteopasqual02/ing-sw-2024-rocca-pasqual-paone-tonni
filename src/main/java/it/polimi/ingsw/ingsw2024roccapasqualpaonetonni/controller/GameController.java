@@ -19,6 +19,9 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The type Game controller.
+ */
 public class GameController implements GameControllerInterface {
     private final Game model;
     private final Random random;
@@ -29,6 +32,12 @@ public class GameController implements GameControllerInterface {
 
     private transient final PingPongThread pingPongThread;
 
+    /**
+     * Instantiates a new Game controller.
+     *
+     * @param id the id
+     * @throws RemoteException the remote exception
+     */
     public GameController(int id) throws RemoteException {
         super();
         this.model = new Game(id);
@@ -51,7 +60,13 @@ public class GameController implements GameControllerInterface {
     //---------------------------------SERVER SECTION
     private class PingPongThread extends Thread {
 
+        /**
+         * The Clients running.
+         */
         List<String> clientsRunning = new ArrayList<>();
+        /**
+         * The Clients.
+         */
         List<String> clients;
 
         private void addClient(String client) {
@@ -109,6 +124,11 @@ public class GameController implements GameControllerInterface {
         }
     }
 
+    /**
+     * Gets game id.
+     *
+     * @return the game id
+     */
     public synchronized int getGameID() {
         return model.getGameId();
     }
@@ -176,19 +196,39 @@ public class GameController implements GameControllerInterface {
 
     }
 
-    //---------------------------------PLAYER SECTION
+    /**
+     * Gets all player.
+     *
+     * @return the all player
+     */
+//---------------------------------PLAYER SECTION
     public synchronized Queue<Player> getAllPlayer() {
         return model.getPlayers();
     }
 
+    /**
+     * Gets current player.
+     *
+     * @return the current player
+     */
     public synchronized Player getCurrentPlayer() {
         return model.getCurrentPlayer();
     }
 
+    /**
+     * Gets max number of player.
+     *
+     * @return the max number of player
+     */
     public synchronized int getMaxNumberOfPlayer() {
         return model.getMaxNumberOfPlayer();
     }
 
+    /**
+     * Reconnect player.
+     *
+     * @param nickname the nickname
+     */
     public synchronized void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
         if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
@@ -197,6 +237,11 @@ public class GameController implements GameControllerInterface {
         }
     }
 
+    /**
+     * Disconnect player.
+     *
+     * @param nickname the nickname
+     */
     public synchronized void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
         // if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
@@ -209,11 +254,19 @@ public class GameController implements GameControllerInterface {
         }
     }
 
+    /**
+     * Gets last status.
+     *
+     * @return the last status
+     */
     public synchronized GameStatus getLastStatus() {
         return model.getLastStatus();
     }
 
-    //---------------------------------TABLE AND INIT SECTION
+    /**
+     * Create table.
+     */
+//---------------------------------TABLE AND INIT SECTION
     public synchronized void createTable() {
         Map<String, List<Card>> cardsMap = null;
         try {
@@ -522,7 +575,12 @@ public class GameController implements GameControllerInterface {
     }
 
 
-    //---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
+    /**
+     * Gets game.
+     *
+     * @return the game
+     */
+//---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
     public Game getGame() {
         return model;
     }

@@ -12,6 +12,9 @@ import java.io.Serializable;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Player board.
+ */
 public class PlayerBoard implements Serializable {
     private int dim_x;
     private int dim_y;
@@ -19,6 +22,11 @@ public class PlayerBoard implements Serializable {
 
     private final Player player;
 
+    /**
+     * Instantiates a new Player board.
+     *
+     * @param owner the owner
+     */
     public PlayerBoard(Player owner) {
         dim_x = DefaultModelValues.Default_Board_Dim_X;
         dim_y = DefaultModelValues.Default_Board_Dim_Y;
@@ -91,7 +99,17 @@ public class PlayerBoard implements Serializable {
         return board;
     }
 
-    // public method used to add a new card to the board
+    /**
+     * Add card.
+     *
+     * @param card_to_add   the card to add
+     * @param card_on_board the card on board
+     * @param corner        the corner
+     * @param seedCount     the seed count
+     * @throws InvalidPlaceException     the invalid place exception
+     * @throws ConditionsNotMetException the conditions not met exception
+     */
+// public method used to add a new card to the board
     // the position where to add the card is given by indicating the card and the corner where to attach it
     public void addCard(PlayingCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException, ConditionsNotMetException{
         int[] prev_cord = card_on_board.getCoordinates();
@@ -128,6 +146,11 @@ public class PlayerBoard implements Serializable {
         }
     }
 
+    /**
+     * Add starting card.
+     *
+     * @param firstCard the first card
+     */
     public void addStartingCard(StartingCard firstCard){
         int x = dim_x/2;
         int y = dim_y/2;
@@ -232,15 +255,38 @@ public class PlayerBoard implements Serializable {
         return seedUpdate;
     }
 
+    /**
+     * Get board matrix playing card [ ] [ ].
+     *
+     * @return the playing card [ ] [ ]
+     */
     public PlayingCard[][] getBoardMatrix() {
         return board;
     }
+
+    /**
+     * Gets dim x.
+     *
+     * @return the dim x
+     */
     public int getDim_x() {
         return dim_x;
     }
+
+    /**
+     * Gets dim y.
+     *
+     * @return the dim y
+     */
     public int getDim_y() {
         return dim_y;
     }
+
+    /**
+     * Get player player.
+     *
+     * @return the player
+     */
     public Player getPlayer(){
         return player;
     }

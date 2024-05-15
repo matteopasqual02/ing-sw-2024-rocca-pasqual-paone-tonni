@@ -6,9 +6,19 @@ import org.fusesource.jansi.Ansi;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Objective pattern card.
+ */
 public class ObjectivePatternCard extends ObjectiveCard {
     private final Seed[][] pattern;
 
+    /**
+     * Instantiates a new Objective pattern card.
+     *
+     * @param id      the id
+     * @param points  the points
+     * @param pattern the pattern
+     */
     public ObjectivePatternCard(int id, int points, Seed[][] pattern) {
         super(id, points);
         this.pattern = pattern;
@@ -19,6 +29,11 @@ public class ObjectivePatternCard extends ObjectiveCard {
         return points * objectivePointsStrategy.count(playerBoard,null,pattern);
     }
 
+    /**
+     * Get pattern seed [ ] [ ].
+     *
+     * @return the seed [ ] [ ]
+     */
     public Seed[][] getPattern() {
         return pattern;
     }

@@ -5,8 +5,17 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Server message start added.
+ */
 public class ServerMessageStartAdded extends ServerGenericMessage{
     private final Player player;
+
+    /**
+     * Instantiates a new Server message start added.
+     *
+     * @param player the player
+     */
     public ServerMessageStartAdded(Player player){
         this.player=player;
     }

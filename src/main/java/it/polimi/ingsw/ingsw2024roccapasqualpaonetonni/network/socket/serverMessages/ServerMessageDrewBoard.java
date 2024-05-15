@@ -5,10 +5,21 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
+/**
+ * The type Server message drew board.
+ */
 public class ServerMessageDrewBoard extends ServerGenericMessage{
     private final Player player;
     private final BoardDeck boardDeck;
     private final DrawableDeck drawableDeck;
+
+    /**
+     * Instantiates a new Server message drew board.
+     *
+     * @param player       the player
+     * @param boardDeck    the board deck
+     * @param drawableDeck the drawable deck
+     */
     public ServerMessageDrewBoard(Player player,BoardDeck boardDeck,DrawableDeck drawableDeck){
         this.player=player;
         this.boardDeck=boardDeck;

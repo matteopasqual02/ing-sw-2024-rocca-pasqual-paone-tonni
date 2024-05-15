@@ -17,12 +17,18 @@ import java.rmi.registry.Registry;
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
 
+/**
+ * The type Rmi server stub.
+ */
 public class RMIServerStub implements ServerInterface {
     private static MainControllerInterface requests;
     private GameControllerInterface gameController = null;
     private Registry registry;
     private RMINotifier notifier;
 
+    /**
+     * Instantiates a new Rmi server stub.
+     */
     public RMIServerStub(){
         super();
         connect();

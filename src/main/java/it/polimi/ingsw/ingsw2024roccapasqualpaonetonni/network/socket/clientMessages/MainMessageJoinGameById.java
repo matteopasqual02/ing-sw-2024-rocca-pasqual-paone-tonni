@@ -7,10 +7,20 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Main message join game by id.
+ */
 public class MainMessageJoinGameById extends ClientGenericMessage{
     private final int idToConnect;
     private final GameListener listener;
 
+    /**
+     * Instantiates a new Main message join game by id.
+     *
+     * @param nickname    the nickname
+     * @param idToConnect the id to connect
+     * @param listener    the listener
+     */
     public MainMessageJoinGameById(String nickname, int idToConnect, GameListener listener){
         this.nickname = nickname;
         this.isForMainController = true;

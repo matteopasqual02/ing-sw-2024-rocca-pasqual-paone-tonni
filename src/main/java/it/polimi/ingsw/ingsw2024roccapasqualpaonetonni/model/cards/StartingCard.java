@@ -7,10 +7,21 @@ import java.util.Arrays;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Starting card.
+ */
 public class StartingCard extends PlayingCard {
     private final Boolean[] center;
     private final Corner[] cornersBack;
 
+    /**
+     * Instantiates a new Starting card.
+     *
+     * @param id the id
+     * @param c  the c
+     * @param cf the cf
+     * @param cb the cb
+     */
     public StartingCard(int id, Boolean[] c, Corner[] cf, Corner[] cb){
         super(id, Seed.EMPTY,cf,0);
         this.center= Arrays.copyOf(c,4);
@@ -19,6 +30,11 @@ public class StartingCard extends PlayingCard {
 
     }
 
+    /**
+     * Get center boolean [ ].
+     *
+     * @return the boolean [ ]
+     */
     public Boolean[] getCenter() {
         return center;
     }

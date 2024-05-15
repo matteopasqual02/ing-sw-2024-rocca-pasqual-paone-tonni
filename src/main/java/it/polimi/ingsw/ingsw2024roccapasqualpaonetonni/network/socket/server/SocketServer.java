@@ -8,10 +8,18 @@ import java.util.List;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
+/**
+ * The type Socket server.
+ */
 public class SocketServer extends Thread {
     private ServerSocket serverSocket;
     private List<ClientRequestHandler> clientRequestHandlerList;
 
+    /**
+     * Start.
+     *
+     * @param port the port
+     */
     public void start(int port){
         try{
             serverSocket = new ServerSocket(port);
@@ -45,6 +53,9 @@ public class SocketServer extends Thread {
         }
     }
 
+    /**
+     * Interrupt connection.
+     */
     @Deprecated
     public void interruptConnection(){
         if(clientRequestHandlerList != null){

@@ -12,6 +12,9 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
 
+/**
+ * The type Game.
+ */
 public class Game implements Serializable {
     private final int gameId;
     private final GameStatus[] status; //current and previous status needed for reconnection
@@ -27,6 +30,11 @@ public class Game implements Serializable {
 
     private final GameListenersHandler gameListenersHandler;
 
+    /**
+     * Instantiates a new Game.
+     *
+     * @param id the id
+     */
     public Game(int id){
         players = new LinkedList<>();
         winner = new LinkedList<>();
@@ -46,6 +54,12 @@ public class Game implements Serializable {
         gameListenersHandler = new GameListenersHandler();
     }
 
+    /**
+     * Add listeners.
+     *
+     * @param me       the me
+     * @param notifier the notifier
+     */
     public void addListeners(String me, NotifierInterface notifier){
         try {
             gameListenersHandler.addListener(me, notifier);
@@ -54,6 +68,11 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Remove listener.
+     *
+     * @param name the name
+     */
     public void removeListener(String name) {
         synchronized (gameListenersHandler) {
             gameListenersHandler.removeListener(name);
@@ -63,20 +82,42 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Get game id int.
+     *
+     * @return the int
+     */
 //---------------------------------PLAYER SECTION
     public int getGameId(){
         return gameId;
     }
 
+    /**
+     * Set max number of player.
+     *
+     * @param number the number
+     */
     public void setMaxNumberOfPlayer(int number){
         this.maxNumberOfPlayer = number;
         gameListenersHandler.notify_setMaxNumPlayers(gameId,maxNumberOfPlayer);
     }
 
+    /**
+     * Get max number of player int.
+     *
+     * @return the int
+     */
     public int getMaxNumberOfPlayer(){
         return maxNumberOfPlayer;
     }
 
+    /**
+     * Add player.
+     *
+     * @param px the px
+     * @throws GameAlreadyFullException the game already full exception
+     * @throws PlayerAlreadyInException the player already in exception
+     */
     public synchronized void addPlayer(Player px) throws GameAlreadyFullException, PlayerAlreadyInException {
         if (!players.contains(px)) {
             if (players.size() < maxNumberOfPlayer) {
@@ -103,10 +144,20 @@ public class Game implements Serializable {
 
     }
 
+    /**
+     * No available game.
+     *
+     * @param px the px
+     */
     public void noAvailableGame(Player px) {
         gameListenersHandler.notify_noAvailableGame(px.getNickname());
     }
 
+    /**
+     * Remove player.
+     *
+     * @param p the p
+     */
     public synchronized void removePlayer(Player p){
         players.remove(p);
         if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
@@ -116,6 +167,11 @@ public class Game implements Serializable {
         gameListenersHandler.notify_removePlayer(p.getNickname());
     }
 
+    /**
+     * Reconnect player.
+     *
+     * @param nickname the nickname
+     */
     public synchronized void reconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
@@ -138,6 +194,11 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Disconnect player.
+     *
+     * @param nickname the nickname
+     */
     public synchronized void disconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
@@ -152,58 +213,117 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Number disconnected players int.
+     *
+     * @return the int
+     */
     public synchronized int numberDisconnectedPlayers() {
         return playersDisconnected.size();
     }
 
+    /**
+     * Set first player.
+     *
+     * @param fp the fp
+     */
     public synchronized void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
         //gameListenersHandler.notify_setFirstPlayer(fp);
     }
 
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
     public void setStatus(GameStatus status) {
         this.status[0] = status;
         gameListenersHandler.notify_setStatus(status);
     }
 
+    /**
+     * Sets last status.
+     */
     public void setLastStatus() {
         status[1] =status[0];
         gameListenersHandler.notify_setLastStatus(status[0]);
     }
 
+    /**
+     * Reset last status.
+     */
     public void resetLastStatus() {
         status[1] = null;
         gameListenersHandler.notify_resetLastStatus();
     }
 
+    /**
+     * Get game status game status.
+     *
+     * @return the game status
+     */
     public GameStatus getGameStatus(){
         return status[0];
     }
 
+    /**
+     * Get last status game status.
+     *
+     * @return the game status
+     */
     public GameStatus getLastStatus(){
         return status[1];
     }
 
+    /**
+     * Gets players.
+     *
+     * @return the players
+     */
     public Queue<Player> getPlayers() {
         return new LinkedList<>(players);
     }
 
+    /**
+     * Gets player num.
+     *
+     * @return the player num
+     */
     public int getPlayerNum() {
         return players.size();
     }
 
+    /**
+     * Get current player player.
+     *
+     * @return the player
+     */
     public Player getCurrentPlayer(){
         return players.peek();
     }
 
+    /**
+     * Get game drawable deck drawable deck.
+     *
+     * @return the drawable deck
+     */
     public DrawableDeck getGameDrawableDeck(){
         return gameDrawableDeck;
     }
 
+    /**
+     * Get game board deck board deck.
+     *
+     * @return the board deck
+     */
     public BoardDeck getGameBoardDeck(){
         return gameBoardDeck;
     }
 
+    /**
+     * Next player.
+     */
     public void nextPlayer(){
         Player temp;
         temp = players.poll();
@@ -228,11 +348,26 @@ public class Game implements Serializable {
         gameListenersHandler.notify_gameGenericError("Error in Next Turn");
     }
 
+    /**
+     * Game ready.
+     */
     public void gameReady()  {
         gameListenersHandler.notify_All(this);
     }
+
+    /**
+     * Game error.
+     *
+     * @param s the s
+     */
     public void gameError(String s){gameListenersHandler.notify_gameGenericError(s);}
 
+    /**
+     * Check player total point int.
+     *
+     * @param p the p
+     * @return the int
+     */
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
         return p.getCurrentPoints()
@@ -241,6 +376,10 @@ public class Game implements Serializable {
                 + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard())
                 ;
     }
+
+    /**
+     * Check winner.
+     */
     public void checkWinner(){
        int max=0;
         for (Player cplayer : players ){
@@ -258,10 +397,20 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Get winners queue.
+     *
+     * @return the queue
+     */
     public Queue<Player> getWinners(){
         return winner;
     }
 
+    /**
+     * Set player ready.
+     *
+     * @param nickname the nickname
+     */
 //---------------------------------READY SECTION
     /*
     public void playerIsReadyToStart(Player p){
@@ -287,20 +436,38 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Gets ready players num.
+     *
+     * @return the ready players num
+     */
     public int getReadyPlayersNum() {
         return ready.size();
     }
 
+    /**
+     * Ask players ready.
+     */
     public void askPlayersReady() {
         gameListenersHandler.notify_askPlayersReady();
     }
 
+    /**
+     * Sets game drawable deck.
+     *
+     * @param deck the deck
+     */
 //---------------------------------DECK SECTION
     public void setGameDrawableDeck(DrawableDeck deck) {
         this.gameDrawableDeck = deck;
         //gameListenersHandler.notify_setGameDrawableDeck(deck);
     }
 
+    /**
+     * Sets game board deck.
+     *
+     * @param deck the deck
+     */
     public void setGameBoardDeck(BoardDeck deck) {
         this.gameBoardDeck = deck;
         //gameListenersHandler.notify_setGameBoardDeck(deck);
@@ -308,26 +475,65 @@ public class Game implements Serializable {
 
 //---------------------------------CHAT SECTION
 
+    /**
+     * Send message.
+     *
+     * @param txt      the txt
+     * @param nickname the nickname
+     */
     public void sendMessage(String txt, String nickname){
         Message message = new Message(txt,nickname);
         chat.addMessage(message);
         gameListenersHandler.notify_messageSent(message);
     }
+
+    /**
+     * Send private message.
+     *
+     * @param senderName   the sender name
+     * @param recieverName the reciever name
+     * @param txt          the txt
+     */
     public void sendPrivateMessage(String senderName, String recieverName, String txt){
         PrivateMessage message = new PrivateMessage(txt,senderName,recieverName);
         chat.addPrivateMessage(senderName,recieverName,message);
         gameListenersHandler.notify_privateMessageSent(message);
     }
+
+    /**
+     * Gets public chat log.
+     *
+     * @param requesterName the requester name
+     */
     public void getPublicChatLog(String requesterName) {
         gameListenersHandler.notify_publicChatLog(requesterName,chat.getAllMessages());
     }
+
+    /**
+     * Get private chat log.
+     *
+     * @param yourName  the your name
+     * @param otherName the other name
+     */
     public void getPrivateChatLog(String yourName, String otherName){
         gameListenersHandler.notify_privateChatLog(yourName,otherName,chat.getPrivateChat(yourName,otherName));
     }
+
+    /**
+     * Get chat chat.
+     *
+     * @return the chat
+     */
     public Chat getChat(){
         return chat;
     }
 
+    /**
+     * Ping.
+     *
+     * @param client the client
+     * @throws Exception the exception
+     */
     public void ping(String client) throws Exception{
         gameListenersHandler.notify_ping(client);
     }

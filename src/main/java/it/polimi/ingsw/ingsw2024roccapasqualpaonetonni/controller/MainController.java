@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Main controller.
+ */
 public class MainController implements MainControllerInterface {
     private static MainController instance = null;
 
@@ -18,7 +21,12 @@ public class MainController implements MainControllerInterface {
         runningGames = new ArrayList<>();
     }
 
-    //singleton
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
+//singleton
     public synchronized static MainController getInstance() {
         if (instance == null) {
             instance = new MainController();
@@ -106,6 +114,11 @@ public class MainController implements MainControllerInterface {
         return null;
     }
 
+    /**
+     * Remove game.
+     *
+     * @param g the g
+     */
     public void removeGame(GameController g) {
         runningGames.remove(g);
     }

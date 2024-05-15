@@ -15,9 +15,18 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+/**
+ * The type Rmi notifier.
+ */
 public class RMINotifier extends UnicastRemoteObject implements NotifierInterface {
     private final GameListener listener;
 
+    /**
+     * Instantiates a new Rmi notifier.
+     *
+     * @param g the g
+     * @throws RemoteException the remote exception
+     */
     public RMINotifier(GameListener g) throws RemoteException {
         listener = g;
     }

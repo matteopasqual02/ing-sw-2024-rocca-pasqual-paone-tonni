@@ -6,6 +6,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 
 import java.util.List;
 
+/**
+ * The type Gui.
+ */
 public class GUI implements ViewUpdate {
     /*private GUIApplication application;
     public GUI(GUIApplication application){

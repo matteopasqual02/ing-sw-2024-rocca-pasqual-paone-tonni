@@ -6,8 +6,17 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Message max num.
+ */
 public class MessageMaxNum extends ClientGenericMessage{
     private final int max;
+
+    /**
+     * Instantiates a new Message max num.
+     *
+     * @param num the num
+     */
     public MessageMaxNum(int num){
         this.isForMainController = false;
         this.max=num;

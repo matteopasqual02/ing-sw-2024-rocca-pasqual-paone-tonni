@@ -15,13 +15,21 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 
+/**
+ * The type Rmi server.
+ */
 public class RMIServer extends UnicastRemoteObject implements MainControllerInterface {
 
     private final MainControllerInterface mainController;
     private static RMIServer server = null;
     private static Registry registry = null;
 
-    //server section
+    /**
+     * Bind rmi server.
+     *
+     * @return the rmi server
+     */
+//server section
     public static RMIServer bind(){
         try{
             server = new RMIServer();
@@ -36,16 +44,32 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }
         return getInstance();
     }
-    //the constructor of the RMI server associates the MainController to the server, because we only have 1 main controller
+
+    /**
+     * Instantiates a new Rmi server.
+     *
+     * @throws RemoteException the remote exception
+     */
+//the constructor of the RMI server associates the MainController to the server, because we only have 1 main controller
     public RMIServer() throws RemoteException {
         super(0);
         mainController = MainController.getInstance();
     }
 
+    /**
+     * Test.
+     *
+     * @throws RemoteException the remote exception
+     */
     public void test() throws RemoteException {
         ;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public synchronized static RMIServer getInstance() {
         if(server == null) {
             try {
@@ -56,6 +80,13 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }
         return server;
     }
+
+    /**
+     * Gets registry.
+     *
+     * @return the registry
+     * @throws RemoteException the remote exception
+     */
     public synchronized static Registry getRegistry() throws RemoteException {
         return registry;
     }

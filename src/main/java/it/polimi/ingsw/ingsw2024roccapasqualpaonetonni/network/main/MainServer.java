@@ -9,7 +9,16 @@ import java.io.IOException;
 import java.util.Scanner;
 //import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.*;
 
+/**
+ * The type Main server.
+ */
 public class MainServer {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException the io exception
+     */
     public static void main( String[] args) throws IOException{
         String inputRemoteIP;
 

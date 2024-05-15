@@ -4,8 +4,17 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Server message created game.
+ */
 public class ServerMessageCreatedGame extends ServerGenericMessage{
     private final int gameId;
+
+    /**
+     * Instantiates a new Server message created game.
+     *
+     * @param gameId the game id
+     */
     public ServerMessageCreatedGame(int gameId){
         this.gameId=gameId;
     }

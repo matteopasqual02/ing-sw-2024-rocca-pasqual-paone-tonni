@@ -11,6 +11,9 @@ import java.util.*;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Game immutable.
+ */
 public class GameImmutable implements Serializable {
     private final int gameId;
     private final int maxNumberOfPlayers;
@@ -21,6 +24,9 @@ public class GameImmutable implements Serializable {
     private DrawableDeck drawableDeck;
     private final Chat chat;
 
+    /**
+     * Instantiates a new Game immutable.
+     */
     public GameImmutable(){
         gameId=0;
         maxNumberOfPlayers=0;
@@ -31,6 +37,12 @@ public class GameImmutable implements Serializable {
         drawableDeck=null;
         chat=null;
     }
+
+    /**
+     * Instantiates a new Game immutable.
+     *
+     * @param modelToCopy the model to copy
+     */
     public GameImmutable(Game modelToCopy){
         gameId = modelToCopy.getGameId();
         maxNumberOfPlayers = modelToCopy.getMaxNumberOfPlayer();
@@ -42,15 +54,38 @@ public class GameImmutable implements Serializable {
         drawableDeck = modelToCopy.getGameDrawableDeck();
     }
 
+    /**
+     * Gets game id.
+     *
+     * @return the game id
+     */
     public synchronized int getGameId() {
         return gameId;
     }
+
+    /**
+     * Gets max number of players.
+     *
+     * @return the max number of players
+     */
     public synchronized int getMaxNumberOfPlayers() {
         return maxNumberOfPlayers;
     }
+
+    /**
+     * Gets players.
+     *
+     * @return the players
+     */
     public synchronized Queue<Player> getPlayers() {
         return players;
     }
+
+    /**
+     * Refresh player.
+     *
+     * @param player the player
+     */
     public synchronized void refreshPlayer(Player player){
         Player modify=null;
         for (Player p: players){
@@ -61,22 +96,57 @@ public class GameImmutable implements Serializable {
         players.remove(modify);
         players.add(player);
     }
+
+    /**
+     * Gets winners.
+     *
+     * @return the winners
+     */
     public synchronized Queue<Player> getWinners() {
         return winners;
     }
+
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
     public synchronized GameStatus getStatus() {
         return status;
     }
+
+    /**
+     * Gets chat.
+     *
+     * @return the chat
+     */
     public synchronized Chat getChat() {
         return chat;
     }
+
+    /**
+     * Gets board deck.
+     *
+     * @return the board deck
+     */
     public synchronized BoardDeck getBoardDeck() {
         return boardDeck;
     }
+
+    /**
+     * Gets drawable deck.
+     *
+     * @return the drawable deck
+     */
     public synchronized DrawableDeck getDrawableDeck() {
         return drawableDeck;
     }
 
+    /**
+     * Get all points int [ ].
+     *
+     * @return the int [ ]
+     */
     public synchronized int[] getAllPoints(){
         int[] points = new int[players.size()];
         for(Player p : players){
@@ -84,13 +154,31 @@ public class GameImmutable implements Serializable {
         }
         return points;
     }
+
+    /**
+     * Sets drawable deck.
+     *
+     * @param d the d
+     */
     public synchronized void setDrawableDeck(DrawableDeck d) {
         this.drawableDeck=d;
     }
+
+    /**
+     * Sets board deck.
+     *
+     * @param b the b
+     */
     public synchronized void setBoardDeck(BoardDeck b) {
         this.boardDeck = b;
     }
 
+    /**
+     * To string string.
+     *
+     * @param nickname the nickname
+     * @return the string
+     */
     public synchronized String toString(String nickname){
         StringBuilder stringBuilder = new StringBuilder();
 

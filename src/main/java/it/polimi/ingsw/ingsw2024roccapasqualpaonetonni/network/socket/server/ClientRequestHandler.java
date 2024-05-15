@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * The type Client request handler.
+ */
 public class ClientRequestHandler extends Thread implements NotifierInterface {
     private final ObjectInputStream inputStream;
     private final ObjectOutputStream outputStream;
@@ -32,6 +35,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     private final BlockingQueue<ClientGenericMessage> processingQueue;
 
 
+    /**
+     * Instantiates a new Client request handler.
+     *
+     * @param socket the socket
+     * @throws IOException the io exception
+     */
     public ClientRequestHandler(Socket socket) throws IOException {
         inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -39,6 +48,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         //link the server's output to client
     }
 
+    /**
+     * Interrupt thread.
+     */
     public void interruptThread() {
         this.interrupt();
     }

@@ -10,7 +10,18 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.Obj
 
 import java.util.Map;
 
+/**
+ * The type Card factory.
+ */
 public class CardFactory {
+    /**
+     * Create playing card playing card.
+     *
+     * @param type       the type
+     * @param id         the id
+     * @param attributes the attributes
+     * @return the playing card
+     */
     public static PlayingCard createPlayingCard(String type, int id, Map<String, JsonElement> attributes) {
         if (type.equalsIgnoreCase("Resources")) {
             return createResourceCard(id, attributes);
@@ -23,6 +34,14 @@ public class CardFactory {
         }
     }
 
+    /**
+     * Create objective card objective card.
+     *
+     * @param type       the type
+     * @param id         the id
+     * @param attributes the attributes
+     * @return the objective card
+     */
     public static ObjectiveCard createObjectiveCard(String type, int id, Map<String, JsonElement> attributes) {
         if (type.equalsIgnoreCase("Objective_Count")) {
             return createObjectiveCountCard(id, attributes);

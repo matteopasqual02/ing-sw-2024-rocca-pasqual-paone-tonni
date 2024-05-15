@@ -8,7 +8,18 @@ import org.fusesource.jansi.Ansi;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Resource card.
+ */
 public class ResourceCard extends PlayingCard {
+    /**
+     * Instantiates a new Resource card.
+     *
+     * @param id     the id
+     * @param seed   the seed
+     * @param c      the c
+     * @param points the points
+     */
     public ResourceCard(int id, Seed seed, Corner[] c, int points){
         super(id,seed,c,points);
     }

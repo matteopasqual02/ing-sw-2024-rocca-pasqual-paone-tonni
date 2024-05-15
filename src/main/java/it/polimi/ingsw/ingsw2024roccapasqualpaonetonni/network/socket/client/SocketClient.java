@@ -18,6 +18,9 @@ import java.rmi.NotBoundException;
 
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
+/**
+ * The type Socket client.
+ */
 public class SocketClient extends Thread implements ServerInterface, Serializable {
     private transient Socket clientSocket;
     private transient ObjectInputStream inputStream;
@@ -28,6 +31,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     //private final SocketNotifier socketNotifier;
 
+    /**
+     * Instantiates a new Socket client.
+     *
+     * @param client the client
+     * @throws IOException the io exception
+     */
     public SocketClient(Client client) throws IOException {
         this.client = client;
         connect();
@@ -100,10 +109,20 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Gets output stream.
+     *
+     * @return the output stream
+     */
     public ObjectOutputStream getOutputStream() {
         return this.outputStream;
     }
 
+    /**
+     * Gets input stream.
+     *
+     * @return the input stream
+     */
     public ObjectInputStream getInputStream() {
         return this.inputStream;
     }

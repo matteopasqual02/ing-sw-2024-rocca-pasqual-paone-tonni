@@ -7,10 +7,23 @@ import java.util.Arrays;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Gold card.
+ */
 public class GoldCard extends PlayingCard {
     private final String pointCondition;
     private final int[] placeCondition;
 
+    /**
+     * Instantiates a new Gold card.
+     *
+     * @param id     the id
+     * @param seed   the seed
+     * @param c      the c
+     * @param points the points
+     * @param cond   the cond
+     * @param p      the p
+     */
     public GoldCard(int id, Seed seed, Corner[] c, int points, String cond, int[] p){
         super(id,seed,c,points);
         pointCondition=cond;
@@ -50,7 +63,18 @@ public class GoldCard extends PlayingCard {
         }
     }
 
+    /**
+     * Get place condition int [ ].
+     *
+     * @return the int [ ]
+     */
     public int[] getPlaceCondition(){return placeCondition;}
+
+    /**
+     * Gets point condition.
+     *
+     * @return the point condition
+     */
     public String getPointCondition() { return pointCondition; }
 
 

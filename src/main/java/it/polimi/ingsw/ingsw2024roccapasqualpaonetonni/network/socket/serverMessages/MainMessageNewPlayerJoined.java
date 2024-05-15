@@ -4,9 +4,20 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Main message new player joined.
+ */
 public class MainMessageNewPlayerJoined extends ServerGenericMessage {
+    /**
+     * The Name.
+     */
     String name;
 
+    /**
+     * Instantiates a new Main message new player joined.
+     *
+     * @param name the name
+     */
     public MainMessageNewPlayerJoined(String name) {
         this.name = name;
     }

@@ -4,8 +4,20 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Server message error.
+ */
 public class ServerMessageError extends ServerGenericMessage{
+    /**
+     * The String.
+     */
     String string;
+
+    /**
+     * Instantiates a new Server message error.
+     *
+     * @param string the string
+     */
     public ServerMessageError(String string){
         this.string=string;
     }

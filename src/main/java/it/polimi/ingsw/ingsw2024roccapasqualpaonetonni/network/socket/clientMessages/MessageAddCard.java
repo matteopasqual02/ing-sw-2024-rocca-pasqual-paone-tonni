@@ -7,12 +7,24 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Message add card.
+ */
 public class MessageAddCard extends ClientGenericMessage{
     private final Boolean flip;
     private final PlayingCard cardToAdd;
     private final PlayingCard cardOnBoard;
     private final int corner;
 
+    /**
+     * Instantiates a new Message add card.
+     *
+     * @param nickname    the nickname
+     * @param cardToAdd   the card to add
+     * @param cardOnBoard the card on board
+     * @param corner      the corner
+     * @param flip        the flip
+     */
     public MessageAddCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int corner, Boolean flip){
         this.flip=flip;
         this.cardOnBoard=cardOnBoard;

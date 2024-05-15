@@ -6,8 +6,18 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Message send message.
+ */
 public class MessageSendMessage extends ClientGenericMessage{
     private String txt;
+
+    /**
+     * Instantiates a new Message send message.
+     *
+     * @param txt      the txt
+     * @param nickname the nickname
+     */
     public MessageSendMessage(String txt, String nickname){
         this.isForMainController = false;
         this.nickname = nickname;
