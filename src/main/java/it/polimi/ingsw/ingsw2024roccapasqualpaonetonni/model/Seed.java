@@ -107,9 +107,9 @@ public enum Seed {
     }
 
     /**
-     * Get by ansi ansi . color.
+     * Get by ansi.color.
      *
-     * @return the ansi . color
+     * @return the ansi.color.
      */
     public Ansi.Color getByAnsi(){
         switch (this){

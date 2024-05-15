@@ -63,7 +63,7 @@ public class PrivateChat implements Serializable {
     }
 
     /**
-     * Get private message list list.
+     * Get private message list.
      *
      * @return the list
      */

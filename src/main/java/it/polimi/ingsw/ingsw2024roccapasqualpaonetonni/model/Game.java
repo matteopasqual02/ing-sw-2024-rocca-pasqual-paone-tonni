@@ -93,7 +93,7 @@ public class Game implements Serializable {
     /**
      * Add listeners.
      *
-     * @param me       the me
+     * @param me       my nickname
      * @param notifier the notifier
      */
     public void addListeners(String me, NotifierInterface notifier){
@@ -295,7 +295,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * Get game status game status.
+     * Get game status .
      *
      * @return the game status
      */
@@ -331,7 +331,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * Get current player player.
+     * Get current player.
      *
      * @return the player
      */
@@ -349,7 +349,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * Get game board deck board deck.
+     * Get game board deck.
      *
      * @return the board deck
      */
@@ -548,7 +548,7 @@ public class Game implements Serializable {
     /**
      * Get private chat log.
      *
-     * @param yourName  the your name
+     * @param yourName  your name
      * @param otherName the other name
      */
     public void getPrivateChatLog(String yourName, String otherName){

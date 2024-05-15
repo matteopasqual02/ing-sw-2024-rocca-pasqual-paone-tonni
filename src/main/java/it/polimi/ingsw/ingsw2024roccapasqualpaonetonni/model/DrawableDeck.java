@@ -39,7 +39,7 @@ public class DrawableDeck implements Serializable {
     }
 
     /**
-     * Draw first resource resource card.
+     * Draw first resource.
      *
      * @return the resource card
      * @throws DeckEmptyException the deck empty exception
@@ -57,7 +57,7 @@ public class DrawableDeck implements Serializable {
     }
 
     /**
-     * Draw first gold gold card.
+     * Draw first gold .
      *
      * @return the gold card
      * @throws DeckEmptyException the deck empty exception
@@ -75,7 +75,7 @@ public class DrawableDeck implements Serializable {
     }
 
     /**
-     * Draw first objective objective card.
+     * Draw first objective .
      *
      * @return the objective card
      * @throws DeckEmptyException the deck empty exception
@@ -93,7 +93,7 @@ public class DrawableDeck implements Serializable {
     }
 
     /**
-     * Draw first starting starting card.
+     * Draw first starting.
      *
      * @return the starting card
      * @throws DeckEmptyException the deck empty exception

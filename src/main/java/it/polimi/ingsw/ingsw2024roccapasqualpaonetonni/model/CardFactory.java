@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class CardFactory {
     /**
-     * Create playing card playing card.
+     * Create playing card.
      *
      * @param type       the type
      * @param id         the id
@@ -35,7 +35,7 @@ public class CardFactory {
     }
 
     /**
-     * Create objective card objective card.
+     * Create objective card.
      *
      * @param type       the type
      * @param id         the id
@@ -53,7 +53,7 @@ public class CardFactory {
     }
 
     /**
-     * Create resource card resource card.
+     * Create resource card.
      *
      * @param id         the id
      * @param attributes the attributes
@@ -93,7 +93,7 @@ public class CardFactory {
     }
 
     /**
-     * Create gold card gold card.
+     * Create gold card.
      *
      * @param id         the id
      * @param attributes the attributes
@@ -144,7 +144,7 @@ public class CardFactory {
     }
 
     /**
-     * Create starting card starting card.
+     * Create starting card.
      *
      * @param id         the id
      * @param attributes the attributes

@@ -46,11 +46,12 @@ public class StartingCard extends PlayingCard {
     }
 
     /**
-     * Get corner corner.
+     * Get corner.
      *
      * @param pos the pos
      * @return the corner
      */
+    @Override
     public Corner getCorner(int pos){
         if (isFlipped) {
             return cornersBack[pos - 1];
@@ -66,6 +67,7 @@ public class StartingCard extends PlayingCard {
      *
      * @return the string
      */
+    @Override
     public String toString() {
         boolean flipped = isFlipped;
         StringBuilder sb = new StringBuilder();

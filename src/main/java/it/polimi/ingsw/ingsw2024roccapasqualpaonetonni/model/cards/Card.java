@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public abstract class Card implements Serializable {
     /**
-     * The Id card.
+     * ID card.
      */
     private final int idCard;
 

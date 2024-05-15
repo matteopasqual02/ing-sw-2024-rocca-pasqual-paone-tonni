@@ -33,6 +33,7 @@ public class ResourceCard extends PlayingCard {
      * @param y         the y
      * @return the int
      */
+    @Override
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y) {
         return points;
     }
@@ -42,6 +43,7 @@ public class ResourceCard extends PlayingCard {
      *
      * @return the string
      */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         boolean flipped = isFlipped;
@@ -58,6 +60,7 @@ public class ResourceCard extends PlayingCard {
      * @param flipped the flipped
      * @return the string
      */
+    @Override
     public String toString(Boolean flipped) {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = cardSeed.getByAnsi();
@@ -149,6 +152,7 @@ public class ResourceCard extends PlayingCard {
      * @param line    the line
      * @return the string
      */
+    @Override
     public String toString(Boolean flipped, int line) {
         StringBuilder[] sb = new StringBuilder[3];
         for (int i = 0; i < sb.length; i++) {

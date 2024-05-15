@@ -63,7 +63,7 @@ public class Player implements Serializable {
     private boolean connected;
 
     /**
-     * The My listener.
+     * My listener.
      */
     private GameListener myListener;
     /**
@@ -274,7 +274,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * Get starting card starting card.
+     * Get starting card.
      *
      * @return the starting card
      */
