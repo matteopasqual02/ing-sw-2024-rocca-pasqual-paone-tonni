@@ -9,6 +9,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServer;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server.SocketServer;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
+import org.fusesource.jansi.AnsiConsole;
+
 import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 import static org.fusesource.jansi.Ansi.ansi;
 //import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.*;
@@ -19,10 +21,10 @@ public class MainServer {
 
         //insert IP
         do{
-            clearCMD();
-            ConsolePrinter.consolePrinter(ansi().cursor(1, 0).a("Insert the remote IP (leave empty and press enter for localhost);"));
+            MainStaticMethod.clearCMD();
+            ConsolePrinter.consolePrinter("[MAIN] Insert the remote IP or leave empty and press enter for localhost;");
             inputRemoteIP = new Scanner(System.in).nextLine();
-        }while (!inputRemoteIP.isEmpty() && !isValidIP(inputRemoteIP)) ;
+        }while (!inputRemoteIP.isEmpty() && MainStaticMethod.isNotValidIP(inputRemoteIP)) ;
 
         //create Remote
         if (inputRemoteIP.isEmpty())
@@ -39,26 +41,4 @@ public class MainServer {
 
     }
 
-    private static boolean isValidIP(String input) {
-        List<String> parsedIP;
-        parsedIP = Arrays.stream(input.split("\\.")).toList();
-        if (parsedIP.size() != 4) {
-            return false;
-        }
-        for (String part : parsedIP) {
-            try {
-                Integer.parseInt(part);
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-        return true;
-    }
-    private static void clearCMD() {
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
-            ConsolePrinter.consolePrinter("\033\143");   //for Mac
-        }
-    }
 }

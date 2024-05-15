@@ -4,11 +4,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
@@ -57,7 +55,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                     processingQueue.add(message);
 
                 }catch (IOException | ClassNotFoundException e) {
-                    consolePrinter("[SOCKET] no more with the client");
+                    // consolePrinter("[SOCKET] no more with the client");
                 }
 
             }
@@ -78,7 +76,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                     gameControllerInterface = message.launchMessage(MainController.getInstance(), this);
                     if (message instanceof MainMessageCreateGame) {
                         try {
-                            // sendCreatedGame(gameControllerInterface.getGameId());
                             sendYouJoinedGame(gameControllerInterface.getGameId());
                         }
                         catch (Exception e) {
@@ -112,262 +109,248 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     private void messageDone() throws IOException {
-        outputStream.flush();
-        outputStream.reset();
+        synchronized (outputStream) {
+            outputStream.flush();
+            outputStream.reset();
+        }
     }
 
     @Override
-    public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
-        outputStream.writeObject(new ServerMessageMaxNum(max));
-        messageDone();
-    }
-
-    @Override
-    public void sendCreatedGame(int gameId) throws IOException {
-        outputStream.writeObject(new ServerMessageCreatedGame(gameId));
-        messageDone();
-    }
-
-    @Override
-    public void sendYouJoinedGame(int gameId) throws IOException {
-        if (gameControllerInterface != null) {
-            outputStream.writeObject(new MainMessageJoinedGame(gameControllerInterface.getGameId()));
+    public void sendAll(GameImmutable gameImmutable) throws IOException, RemoteException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageNotifyAll(gameImmutable));
             messageDone();
         }
     }
 
     @Override
+    public void sendPing() throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessagePing());
+            messageDone();
+        }
+    }
+
+    @Override
+    public void genericError(String s) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageError(s));
+            messageDone();
+        }
+    }
+
+    @Override
+    public void winners(List<Player> list) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageWinners(list));
+            messageDone();
+        }
+    }
+
+    @Override
+    public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageMaxNum(max));
+            messageDone();
+        }
+    }
+
+    @Override
+    public void sendCreatedGame(int gameId) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageCreatedGame(gameId));
+            messageDone();
+        }
+    }
+
+    @Override
+    public void sendYouJoinedGame(int gameId) throws IOException {
+        if (gameControllerInterface != null) {
+            synchronized (outputStream) {
+                outputStream.writeObject(new MainMessageJoinedGame(gameControllerInterface.getGameId()));
+                messageDone();
+            }
+        }
+    }
+
+    @Override
     public void sendAddedNewPlayer(String pNickname) throws IOException {
-        outputStream.writeObject(new MainMessageNewPlayerJoined(pNickname));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MainMessageNewPlayerJoined(pNickname));
+            messageDone();
+        }
     }
 
     @Override
     public void sendNoAvailableGame() throws IOException{
-        outputStream.writeObject(new MainMessageNoAvailableGame());
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new MainMessageNoAvailableGame());
+            messageDone();
+        }
     }
 
     @Override
     public void sendAskPlayersReady() throws IOException {
-        outputStream.writeObject(new ServerMessageAskPlayerReady());
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageAskPlayerReady());
+            messageDone();
+        }
     }
 
     @Override
     public void sendFullGame() {
-
+        synchronized (outputStream) {
+        }
     }
 
     @Override
     public void sendNameAlreadyInGame() {
-
+        synchronized (outputStream) {}
     }
 
     @Override
     public void sendPlayerRemoved(String pNickname) {
-
+        synchronized (outputStream) {}
     }
 
     @Override
-    public void sendNextTurn(Player p) {
-
+    public void sendNextTurn(String nickname) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageNextTurn(nickname));
+            messageDone();
+        }
     }
 
     @Override
     public void sendLastTurn() {
-
+        synchronized (outputStream) {}
     }
 
     @Override
     public void sendReconnectedPlayer(String nickname) {
-
+        synchronized (outputStream) {}
     }
 
     @Override
     public void sendReconnectionImpossible(String nickname) {
-
+        synchronized (outputStream) {}
     }
 
     @Override
     public void sendDisconnectedPlayer(String nickname) {
-
+        synchronized (outputStream) {}
     }
 
-    @Override
-    public void sendDisconnectionImpossible(String nickname) {
 
-    }
 
     @Override
-    public void sendStatusSet(GameStatus status) {
-
+    public void sendStatusSet(GameStatus status) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageStatusSet(status));
+            messageDone();
+        }
     }
 
     @Override
     public void sendStatusSetToLastStatus(GameStatus status) {
-
+        synchronized (outputStream) {}
     }
 
     @Override
     public void sendLastStatusReset() {
-
+        synchronized (outputStream) {}
     }
 
     @Override
-    public void sendPlayerIsReady(Player p) {
-
+    public void sendStartAdded(Player p) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageStartAdded(p));
+            messageDone();
+        }
     }
 
     @Override
-    public void sendFirstPlayerSet(Player first) {
-
+    public void sendCardAdded(Player p) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageCardAdded(p));
+            messageDone();
+        }
     }
 
     @Override
-    public void sendDrawableDeckSet(DrawableDeck d) {
-
+    public void sendPersonalGoalChosen(Player p) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageGoalChosen(p));
+            messageDone();
+        }
     }
 
     @Override
-    public void sendBoardDeckSet(BoardDeck bd) {
-
+    public void sendResourceDrawn(Player p, DrawableDeck d) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageDrewResources(p, d));
+            messageDone();
+        }
     }
 
     @Override
-    public void sendStartAdded(PlayerBoard board, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageStartAdded(board,p));
-        messageDone();
+    public void sendGoldDrawn(Player p, DrawableDeck d) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageDrewGold(p, d));
+            messageDone();
+        }
     }
 
     @Override
-    public void sendCardAdded(PlayerBoard board, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageCardAdded(board,p));
-        messageDone();
-    }
-
-    @Override
-    public void sendChoseInvalidPlace(Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageCardInvalidPlace(p));
-        messageDone();
-    }
-
-    @Override
-    public void sendConditionsNotMet(Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageCardConditionsNotMet(p));
-        messageDone();
-    }
-
-    @Override
-    public void sendStartingCardDrew(StartingCard start, Player p) {
-
-    }
-
-    @Override
-    public void sendDrewPersonalGoals(ObjectiveCard[] goals, Player p) {
-
-    }
-
-    @Override
-    public void sendPersonalGoalChosen(ObjectiveCard goal, Player p) {
-
-    }
-
-    @Override
-    public void sendCardNotInHand(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void sendResourceDrawn(PlayingCard card, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewResources(card,p));
-        messageDone();
-    }
-
-    @Override
-    public void sendGoldDrawn(PlayingCard card, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewGold(card,p));
-        messageDone();
-    }
-
-    @Override
-    public void sendDrewFromBoard(PlayingCard card, Player p) throws IOException {
-        outputStream.writeObject(new ServerMessageDrewBoard(card,p));
-        messageDone();
-    }
-
-    @Override
-    public void sendPlayerIsConnected(Player p) {
-
-    }
-
-    @Override
-    public void sendPointsIncreased(int points, Player p) {
-
-    }
-
-    @Override
-    public void sendSeedCountUpdated(int[] seedCount, Player p) {
-
-    }
-
-    @Override
-    public void sendCardRemovedFromHand(PlayingCard card, Player p) {
-
-    }
-
-    @Override
-    public void sendPlayerReady(Player p) {
-
+    public void sendDrewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageDrewBoard(p, b, d));
+            messageDone();
+        }
     }
 
     @Override
     public void sendYouWereRemoved(String pNickname) throws IOException {
-        outputStream.writeObject(new ServerMessagePlayerRemoved(pNickname));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessagePlayerRemoved(pNickname));
+            messageDone();
+        }
     }
 
     @Override
     public void youWereReconnected() {
-
-    }
-
-    @Override
-    public void sendYouAreFirst() {
-
-    }
-
-    @Override
-    public void sendItsYourTurn() {
-
-    }
-
-    @Override
-    public void sendUpdatedChat(List<Message> allMessages) throws RemoteException {
-
+        synchronized (outputStream) {}
     }
 
     @Override
     public void sendMessage(Message message) throws IOException {
-        outputStream.writeObject(new ServerMessageNewMessage(message));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageNewMessage(message));
+            messageDone();
+        }
     }
 
     @Override
     public void sendPrivateMessage(PrivateMessage message) throws IOException {
-        outputStream.writeObject(new ServerMessageChatNewPrivateMessage(message));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageChatNewPrivateMessage(message));
+            messageDone();
+        }
     }
 
     @Override
     public void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException {
-        outputStream.writeObject(new ServerMessageChatPublicLog(requesterName,allMessages));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageChatPublicLog(requesterName, allMessages));
+            messageDone();
+        }
     }
 
     @Override
     public void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException {
-        outputStream.writeObject(new ServerMessageChatPrivateLog(yourName,otherName,privateChat));
-        messageDone();
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageChatPrivateLog(yourName, otherName, privateChat));
+            messageDone();
+        }
     }
 }

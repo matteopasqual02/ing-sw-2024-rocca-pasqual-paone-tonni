@@ -1,13 +1,14 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 
 /*
 this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
@@ -21,162 +22,77 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     public PlayerListenersHandler(){
         super();
     }
-    /*public void resetPlayerListeners(List<GameListener> gameListeners){
+    public void resetPlayerListeners(HashMap<String, NotifierInterface> gameListenersMap){
         //listenersMap=null;
-        for(GameListener lis : gameListeners){
+        for(String name : gameListenersMap.keySet()){
             try {
-                addListener(lis);
+                addListener(name, gameListenersMap.get(name));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }
-    }*/
+    }
 
-    public void notify_setReadyToStart(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+    public void notify_chooseGoal(Player p) {
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPlayerReady(p);
-            } catch (RemoteException e) {
+                listenersMap.get(name).sendPersonalGoalChosen(p);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_setIsConnected(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+    public void notify_drawGoldFromDeck(Player p,DrawableDeck d) {
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPlayerIsConnected(p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_drawPersonalGoals(ObjectiveCard[] goals, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendDrewPersonalGoals(goals,p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_chooseGoal(ObjectiveCard goal, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendPersonalGoalChosen(goal, p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_drawStarting(StartingCard card, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendStartingCardDrew(card,p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_drawGoldFromDeck(PlayingCard card, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendGoldDrawn(card,p);
+                listenersMap.get(name).sendGoldDrawn(p,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_drawResourceFromDeck(PlayingCard card, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+    public void notify_drawResourceFromDeck(Player p,DrawableDeck d) {
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendResourceDrawn(card,p);
+                listenersMap.get(name).sendResourceDrawn(p,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_drawFromBoard(PlayingCard card, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+    public void notify_drawFromBoard(Player p, BoardDeck b, DrawableDeck d) {
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendDrewFromBoard(card, p);
+                listenersMap.get(name).sendDrewFromBoard(p,b,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_addStarting(PlayerBoard board, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+    public void notify_addStarting(Player p) {
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendStartAdded(board,p);
+                listenersMap.get(name).sendStartAdded(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    /*public void notify_setStartingCard(Game model) {
-        for(GameListener listener : listeners){
-            listener.playerJoined(new GameImmutable(model));
-        }
-    }*/
-    public void notify_cardNotInHand(PlayingCard card, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+    public void notify_addToBoard(Player p) {
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendCardNotInHand(card,p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_addToBoard(PlayerBoard board, Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendCardAdded(board,p);
+                listenersMap.get(name).sendCardAdded(p);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_invalidPlace(Player p){
-        for(GameListener listener : listenersMap.keySet()){
+
+    public void notify_playerGenericError(String s){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendChoseInvalidPlace(p);
+                listenersMap.get(name).genericError(s);
             } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_conditionsNotMet(Player p){
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendConditionsNotMet(p);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_increasePoints(int points,Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendPointsIncreased(points,p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_updateSeedCount(int[] countSeed,Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendSeedCountUpdated(countSeed,p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_removeFromHand(PlayingCard card,Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendCardRemovedFromHand(card,p);
-            } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }

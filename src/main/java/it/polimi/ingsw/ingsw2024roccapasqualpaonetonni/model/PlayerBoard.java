@@ -1,12 +1,16 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
+import org.fusesource.jansi.Ansi;
 
 import java.io.Serializable;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class PlayerBoard implements Serializable {
     private int dim_x;
@@ -228,7 +232,7 @@ public class PlayerBoard implements Serializable {
         return seedUpdate;
     }
 
-    public PlayingCard[][] getBoard() {
+    public PlayingCard[][] getBoardMatrix() {
         return board;
     }
     public int getDim_x() {
@@ -240,4 +244,109 @@ public class PlayerBoard implements Serializable {
     public Player getPlayer(){
         return player;
     }
+
+
+
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i=-1;i<dim_x+1;i++){
+            for (int j=-1;j<dim_y+1;j++){
+                if(i==-1){
+                    if(j+1<dim_y && board[i+1][j+1]!=null  && (board[i+1][j+1].getCorner(1)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(j-1>=0 && board[i+1][j-1]!=null  && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(j==-1){
+                    if(i+1<dim_x && board[i+1][j+1]!=null && (board[i+1][j+1].getCorner(1)!=null || board[i+1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(i-1>=0 && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null|| board[i-1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(i==dim_x){
+                    if(j+1<dim_y && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null || board[i-1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else if(j-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(j==dim_y){
+                    if(i-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else if(i+1<dim_x && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+
+                else if(board[i][j]==null){
+                    if(i+1<board.length && j-1>0 && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+                    else if(i+1<board.length && j+1<board[i].length && board[i+1][j+1]!=null && (board[i+1][j+1].getCorner(1)!=null || board[i+1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(i-1>0 && j+1<board[i].length && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null|| board[i-1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else if(i-1>0 && j-1>0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+
+                }
+                else{
+                    Seed seed = board[i][j].getSeed();
+                    Ansi.Color color;
+                    if(seed==Seed.EMPTY){
+                        color = Ansi.Color.WHITE;
+                    }
+                    else {
+                        color = seed.getByAnsi();
+                    }
+                    int id = board[i][j].getIdCard();
+                    String idString;
+                    if(id<10){
+                        idString = " "+id+" ";
+                    } else if (id <100) {
+                        idString = " "+id;
+                    }
+                    else {
+                        idString = ""+id;
+                    }
+
+                    stringBuilder.append(
+                            ansi().fg(Ansi.Color.DEFAULT).bg(color).a(" ").a(idString).a(" ")
+                    );
+
+                }
+            }
+            stringBuilder.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
+        }
+
+        return stringBuilder.toString();
+    }
+
+
 }

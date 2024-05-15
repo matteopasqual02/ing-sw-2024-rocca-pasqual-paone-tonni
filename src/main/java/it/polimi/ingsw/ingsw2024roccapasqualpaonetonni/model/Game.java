@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
@@ -46,7 +47,7 @@ public class Game implements Serializable {
         gameListenersHandler = new GameListenersHandler();
     }
 
-    public void addListeners(GameListener me, NotifierInterface notifier){
+    public void addListeners(String me, NotifierInterface notifier){
         try {
             gameListenersHandler.addListener(me, notifier);
         } catch (RemoteException e) {
@@ -54,12 +55,12 @@ public class Game implements Serializable {
         }
     }
 
-    public void removeListener(GameListener me){
+    public void removeListener(String name) {
         synchronized (gameListenersHandler) {
-            gameListenersHandler.removeListener(me);
-            /*for(Player p: players){
+            gameListenersHandler.removeListener(name);
+            for (Player p : players) {
                 p.setPlayerListeners(gameListenersHandler.getListener());
-            }*/
+            }
         }
     }
 
@@ -81,9 +82,11 @@ public class Game implements Serializable {
         if (!players.contains(px)) {
             if (players.size() < maxNumberOfPlayer) {
                 players.add(px);
-                /*for(Player p: players){
+
+                for(Player p: players){
                     p.setPlayerListeners(gameListenersHandler.getListener());
-                }*/
+                }
+
                 if (players.size() == 1) {
                     gameListenersHandler.notify_createdGame(this.gameId);
                 }
@@ -121,11 +124,11 @@ public class Game implements Serializable {
             playersDisconnected.remove(p);
             ArrayList<Player> copiedList = new ArrayList<>(players);
             int first = copiedList.getFirst().getColorPlayer();
-            int[] indx = new int[maxNumberOfPlayer];
+            int[] index = new int[maxNumberOfPlayer];
             for(int i = 0; i < maxNumberOfPlayer; i++) {
-                indx[(first + i) % maxNumberOfPlayer - 1] = i;
+                index[(first + i) % maxNumberOfPlayer - 1] = i;
             }
-            copiedList.add(indx[p.getColorPlayer() - 1], p);
+            copiedList.add(index[p.getColorPlayer() - 1], p);
             players.clear();
             players.addAll(copiedList);
 
@@ -142,6 +145,7 @@ public class Game implements Serializable {
             p.setIsConnected(false);
             playersDisconnected.add(p);
             players.remove(p);
+            gameListenersHandler.removeListener(nickname);
             gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {
@@ -155,16 +159,12 @@ public class Game implements Serializable {
 
     public synchronized void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
-        gameListenersHandler.notify_setFirstPlayer(fp);
+        //gameListenersHandler.notify_setFirstPlayer(fp);
     }
 
     public void setStatus(GameStatus status) {
         this.status[0] = status;
         gameListenersHandler.notify_setStatus(status);
-    }
-
-    public void startGame() {
-        gameListenersHandler.notify_gameStarted(this.firstPlayer.getListener());
     }
 
     public void setLastStatus() {
@@ -210,12 +210,29 @@ public class Game implements Serializable {
         temp = players.poll();
         players.add(temp);
         Player newCurrent = players.peek();
-        if (newCurrent != null && newCurrent.equals(firstPlayer) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
-            status[0] = GameStatus.LAST_TURN;
-            gameListenersHandler.notify_lastTurn();
+        if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
+            checkWinner();
+            setStatus(GameStatus.ENDED);
+            gameListenersHandler.notify_winners(getWinners().stream().toList());
+            return;
         }
-        gameListenersHandler.notify_nextPlayer(newCurrent);
+        if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
+            setStatus(GameStatus.LAST_TURN);
+            gameListenersHandler.notify_lastTurn();
+            gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
+            return;
+        }
+        if(newCurrent!=null) {
+            gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
+            return;
+        }
+        gameListenersHandler.notify_gameGenericError("Error in Next Turn");
     }
+
+    public void gameReady()  {
+        gameListenersHandler.notify_All(this);
+    }
+    public void gameError(String s){gameListenersHandler.notify_gameGenericError(s);}
 
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
@@ -282,12 +299,12 @@ public class Game implements Serializable {
 //---------------------------------DECK SECTION
     public void setGameDrawableDeck(DrawableDeck deck) {
         this.gameDrawableDeck = deck;
-        gameListenersHandler.notify_setGameDrawableDeck(deck);
+        //gameListenersHandler.notify_setGameDrawableDeck(deck);
     }
 
     public void setGameBoardDeck(BoardDeck deck) {
         this.gameBoardDeck = deck;
-        gameListenersHandler.notify_setGameBoardDeck(deck);
+        //gameListenersHandler.notify_setGameBoardDeck(deck);
     }
 
 //---------------------------------CHAT SECTION
@@ -310,5 +327,9 @@ public class Game implements Serializable {
     }
     public Chat getChat(){
         return chat;
+    }
+
+    public void ping(String client) throws Exception{
+        gameListenersHandler.notify_ping(client);
     }
 }

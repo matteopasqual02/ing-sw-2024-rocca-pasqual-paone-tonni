@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
@@ -34,7 +35,6 @@ class PlayerBoardTest {
         int[] coordinates = cardToAdd.getCoordinates();
         int[] twenty={board1.getDim_x()/2, board1.getDim_y()/2};
         assertArrayEquals(twenty,coordinates);
-
 
     }
     @Test
@@ -106,7 +106,7 @@ class PlayerBoardTest {
         int[] twenty={board1.getDim_x()/2-1, board1.getDim_y()/2-1};
         assertArrayEquals(twenty,coordinates);
 
-
+        System.out.println(board1.toString());
     }
     @Test
     void addResourceCardCorner2Test() throws InvalidPlaceException, ConditionsNotMetException {
@@ -221,6 +221,7 @@ class PlayerBoardTest {
 
         int[] twenty={board1.getDim_x()/2 + 2, board1.getDim_y()/2};
         assertArrayEquals(twenty,coordinates);
+        System.out.println(board1.toString());
 
     }
 
@@ -338,6 +339,8 @@ class PlayerBoardTest {
         int[] twenty={board1.getDim_x()/2+17, board1.getDim_y()/2+17};
         assertArrayEquals(twenty,coordinates);
 
+        System.out.println(board1.toString());
+
     }
     @Test
     void AddingCardOverTheBorderWithANegativeIncreaseTest() throws InvalidPlaceException, ConditionsNotMetException {
@@ -383,6 +386,90 @@ class PlayerBoardTest {
         int[] coordinates = cardOnBoard.getCoordinates();
         int[] twenty={0,0};
         assertArrayEquals(twenty,coordinates);
+
+        System.out.println(board1.toString());
+    }
+
+    @Test
+    void AddingCardOverTheBorder2() throws InvalidPlaceException, ConditionsNotMetException {
+
+        //ho cambiato tante cose per fare questo test perchè la posizione non veniva aggiornata bene
+        //non funziona ancora bene perche devo tenere il >= della posizione
+        //era un caso limite dell'aggiunta solo in diagonale, se aggiungessi un'altra alla stessa dim non so se andrebbe bene
+        StartingCard start = getStartingCard(EMPTY);
+
+        // factory;
+        HashMap<String, JsonElement> attributes =new HashMap<>();
+        ResourceCard card;
+        PlayingCard cardOnBoard;
+
+        Player owner=new Player("a",1);
+        PlayerBoard board1 = new PlayerBoard(owner);
+        board1.addStartingCard(start);
+
+        //attributes that will be the same for every card because I want to test the basic version
+        String color = "green";
+        attributes.put("color", new JsonPrimitive(color));
+        int points = 1;
+        attributes.put("points", new JsonPrimitive(points));
+        String[] cs={"green","empty","blue","red"};
+        JsonArray jArray = new JsonArray();
+        for (String s: cs) {
+            jArray.add(new JsonPrimitive(s));
+        }
+        attributes.put("corners", jArray);
+
+        //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
+        cardOnBoard = start;
+        for(int i=0; i<30; i++){
+            card = (ResourceCard) CardFactory.createPlayingCard("Resources", i, attributes);
+            board1.addCard(card,cardOnBoard,2, owner.getCountSeed());
+            cardOnBoard = card;
+        }
+
+        System.out.println(board1.toString());
+
+    }
+
+    @Test
+    void AddingCardOverTheBorder4() throws InvalidPlaceException, ConditionsNotMetException {
+
+        //ho cambiato tante cose per fare questo test perchè la posizione non veniva aggiornata bene
+        //non funziona ancora bene perche devo tenere il >= della posizione
+        //era un caso limite dell'aggiunta solo in diagonale, se aggiungessi un'altra alla stessa dim non so se andrebbe bene
+        StartingCard start = getStartingCard(EMPTY);
+
+        // factory;
+        HashMap<String, JsonElement> attributes =new HashMap<>();
+        ResourceCard card;
+        PlayingCard cardOnBoard;
+
+        Player owner=new Player("a",1);
+        PlayerBoard board1 = new PlayerBoard(owner);
+        board1.addStartingCard(start);
+
+        //attributes that will be the same for every card because I want to test the basic version
+        String color = "green";
+        attributes.put("color", new JsonPrimitive(color));
+        int points = 1;
+        attributes.put("points", new JsonPrimitive(points));
+        String[] cs={"green","empty","blue","red"};
+        JsonArray jArray = new JsonArray();
+        for (String s: cs) {
+            jArray.add(new JsonPrimitive(s));
+        }
+        attributes.put("corners", jArray);
+
+        //card= (ResourceCard) CardFactory.createPlayingCard("Resources",1,attributes);
+        cardOnBoard = start;
+        for(int i=0; i<30; i++){
+            card = (ResourceCard) CardFactory.createPlayingCard("Resources", i, attributes);
+            board1.addCard(card,cardOnBoard,4, owner.getCountSeed());
+            cardOnBoard = card;
+        }
+
+        System.out.println(board1.toString());
+
     }
 
     private static StartingCard getStartingCard(Seed empty) {

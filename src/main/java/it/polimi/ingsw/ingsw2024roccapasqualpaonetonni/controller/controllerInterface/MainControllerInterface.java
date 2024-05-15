@@ -9,11 +9,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface
 
 public interface MainControllerInterface extends Remote{
     List<GameController> getRunningGames() throws RemoteException;
-    GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, GameListener listener, NotifierInterface notifier) throws RemoteException;
-    GameControllerInterface joinFirstAvailableGame(String nickname, GameListener me, NotifierInterface notifier) throws RemoteException;
-    GameControllerInterface joinGameByID(String nickname, int idToConnect, GameListener me, NotifierInterface notifier) throws RemoteException;
-    GameControllerInterface reconnect(String nickname, int idToReconnect, GameListener me, NotifierInterface notifier) throws RemoteException;
-    GameControllerInterface leaveGame(String nickname, int idToDisconnect, GameListener me) throws RemoteException;
+    GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, NotifierInterface notifier) throws RemoteException;
+    GameControllerInterface joinFirstAvailableGame(String nickname, NotifierInterface notifier) throws RemoteException;
+    GameControllerInterface joinGameByID(String nickname, int idToConnect, NotifierInterface notifier) throws RemoteException;
+    GameControllerInterface reconnect(String nickname, int idToReconnect, NotifierInterface notifier) throws RemoteException;
+    GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException;
 
     void clearSingleton() throws RemoteException;
 }

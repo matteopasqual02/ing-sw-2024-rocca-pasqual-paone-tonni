@@ -4,9 +4,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.DeckEmptyException;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class DrawableDeck {
+public class DrawableDeck implements Serializable {
     private final Map<String, Queue<Card>> decks;
 
     public DrawableDeck(Map<String, Queue<Card>> decks){

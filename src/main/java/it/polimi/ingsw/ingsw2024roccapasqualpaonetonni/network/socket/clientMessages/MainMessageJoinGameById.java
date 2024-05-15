@@ -20,7 +20,7 @@ public class MainMessageJoinGameById extends ClientGenericMessage{
 
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
-        return mainControllerInterface.joinGameByID(nickname, idToConnect, listener, notifier);
+        return mainControllerInterface.joinGameByID(nickname, idToConnect, notifier);
     }
 
     @Override

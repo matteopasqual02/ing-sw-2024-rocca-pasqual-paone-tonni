@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Corner;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 
 import java.util.Arrays;
@@ -57,4 +56,10 @@ public abstract class PlayingCard extends Card {
         return points;
     }
 
+    public String toString(Boolean flip, int line) {
+        return null;
+    }
+    public String toString(Boolean flip) {
+        return null;
+    }
 }

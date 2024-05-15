@@ -13,7 +13,7 @@ public interface ServerInterface extends Remote{
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException;
-    public void leave(String nick, int idGame, GameListener me) throws IOException, NotBoundException;
+    public void leave(String nick, int idGame) throws IOException, NotBoundException;
 
     //--------------------------READY PHASE
     public void ready(String nickname) throws IOException, NotBoundException;
@@ -32,4 +32,6 @@ public interface ServerInterface extends Remote{
     public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException;
     public void getPublicChatLog(String requesterName) throws IOException;
     public void getPrivateChatLog(String yourName, String otherName) throws IOException;
+
+    public void pong(String me) throws IOException, NotBoundException;
 }

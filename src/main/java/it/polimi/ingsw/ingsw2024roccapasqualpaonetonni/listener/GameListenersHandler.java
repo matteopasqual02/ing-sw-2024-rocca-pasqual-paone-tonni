@@ -3,6 +3,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.io.IOException;
@@ -22,11 +24,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         super();
     }
 
-    public void notify_setMaxNumPlayers(int gameId, int max) {
-        for(GameListener listener: listenersMap.keySet()){
+    public void notify_All(Game game) {
+        for(String name: listenersMap.keySet()){
             try {
                 int i=0;
-                listenersMap.get(listener).sendMaxNumPlayersSet(gameId,max);
+                listenersMap.get(name).sendAll(new GameImmutable(game));
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -34,10 +36,29 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
-    public void notify_createdGame(int gameId) {
-        for(GameListener listener: listenersMap.keySet()){
+    public void notify_ping(String client) throws Exception{
+        for (String name: listenersMap.keySet()) {
+            if (client.equals(name)) {
+                listenersMap.get(name).sendPing();
+            }
+        }
+    }
+
+    public void notify_setMaxNumPlayers(int gameId, int max) {
+        for(String name: listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendCreatedGame(gameId);
+                int i=0;
+                listenersMap.get(name).sendMaxNumPlayersSet(gameId,max);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+    public void notify_createdGame(int gameId) {
+        for(String name: listenersMap.keySet()){
+            try {
+                listenersMap.get(name).sendCreatedGame(gameId);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -45,18 +66,18 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     }
 
     public void notify_addPlayer(String pNickname, int gameId) {
-        for(GameListener listener : listenersMap.keySet()) {
+        for(String name : listenersMap.keySet()) {
             try {
-                if (listener.getNickname().equals(pNickname)) {
+                if (name.equals(pNickname)) {
                     try {
-                        listenersMap.get(listener).sendYouJoinedGame(gameId);
+                        listenersMap.get(name).sendYouJoinedGame(gameId);
                     }
                     catch (Exception e){
                         e.printStackTrace();
                     }
                 }
                 else {
-                    listenersMap.get(listener).sendAddedNewPlayer(pNickname);
+                    listenersMap.get(name).sendAddedNewPlayer(pNickname);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -65,59 +86,55 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     }
 
     public void notify_noAvailableGame(String nickname) {
-        for(GameListener listener : listenersMap.keySet()) {
+        for(String name : listenersMap.keySet()) {
             try {
-                if (listener.getNickname().equals(nickname)) {
-                    listenersMap.get(listener).sendNoAvailableGame();
+                if (name.equals(nickname)) {
+                    listenersMap.get(name).sendNoAvailableGame();
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
     public void notify_gameFull(Player player) {
-        for(GameListener listener : listenersMap.keySet()) {
+        for(String name : listenersMap.keySet()) {
             try {
-                if (listener.getNickname().equals(player.getNickname())) {
-                    listenersMap.get(listener).sendFullGame();
+                if (name.equals(player.getNickname())) {
+                    listenersMap.get(name).sendFullGame();
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
     public void notify_playerAlreadyIn(Player player) {
-        for(GameListener listener : listenersMap.keySet()) {
+        for(String name : listenersMap.keySet()) {
             try {
-                if (listener.getNickname().equals(player.getNickname())) {
-                    listenersMap.get(listener).sendNameAlreadyInGame();
+                if (name.equals(player.getNickname())) {
+                    listenersMap.get(name).sendNameAlreadyInGame();
                 }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
     public void notify_askPlayersReady() {
-        for(GameListener listener : listenersMap.keySet()) {
+        for(String name : listenersMap.keySet()) {
             try {
-                listenersMap.get(listener).sendAskPlayersReady();
+                listenersMap.get(name).sendAskPlayersReady();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
     public void notify_removePlayer(String pNickname) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                if(listener.getNickname().equals(pNickname)){
-                    listenersMap.get(listener).sendYouWereRemoved(pNickname);
+                if(name.equals(pNickname)){
+                    listenersMap.get(name).sendYouWereRemoved(pNickname);
                 }
                 else {
-                    listenersMap.get(listener).sendPlayerRemoved(pNickname);
+                    listenersMap.get(name).sendPlayerRemoved(pNickname);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -125,13 +142,13 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
     public void notify_reconnectPlayer(String nickname) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                if(listener.getNickname().equals(nickname)){
-                    listenersMap.get(listener).youWereReconnected();
+                if(name.equals(nickname)){
+                    listenersMap.get(name).youWereReconnected();
                 }
                 else{
-                    listenersMap.get(listener).sendReconnectedPlayer(nickname);
+                    listenersMap.get(name).sendReconnectedPlayer(nickname);
                 }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
@@ -139,10 +156,10 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
     public void notify_reconnectionImpossible(String nickname) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                if(listener.getNickname().equals(nickname)){
-                    listenersMap.get(listener).sendReconnectionImpossible(nickname);
+                if(name.equals(nickname)){
+                    listenersMap.get(name).sendReconnectionImpossible(nickname);
                 }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
@@ -150,10 +167,10 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
     public void notify_disconnectedPlayer(String nickname) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                if(!listener.getNickname().equals(nickname)){
-                    listenersMap.get(listener).sendDisconnectedPlayer(nickname);
+                if(!name.equals(nickname)){
+                    listenersMap.get(name).sendDisconnectedPlayer(nickname);
                 }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
@@ -161,10 +178,10 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
     public void notify_disconnectionImpossible(String nickname) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                if(listener.getNickname().equals(nickname)){
-                    listenersMap.get(listener).sendDisconnectedPlayer(nickname);
+                if(name.equals(nickname)){
+                    listenersMap.get(name).sendDisconnectedPlayer(nickname);
                 }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
@@ -172,135 +189,103 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
         }
     }
-    public void notify_setFirstPlayer(Player first) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                if(listener.getNickname().equals(first.getNickname())){
-                    listenersMap.get(listener).sendYouAreFirst();
-                }
-                else{
-                    listenersMap.get(listener).sendFirstPlayerSet(first);
-                }
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
     public void notify_setStatus(GameStatus status) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendStatusSet(status);
-            } catch (RemoteException e) {
+                listenersMap.get(name).sendStatusSet(status);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_setLastStatus(GameStatus status) {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendStatusSetToLastStatus(status);
+                listenersMap.get(name).sendStatusSetToLastStatus(status);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_resetLastStatus() {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendLastStatusReset();
+                listenersMap.get(name).sendLastStatusReset();
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void notify_nextPlayer(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
+    public void notify_nextTurn(String nickname) {
+        for(String name : listenersMap.keySet()){
             try {
-                if(listener.getNickname().equals(p.getNickname())){
-                    listenersMap.get(listener).sendItsYourTurn();
-                }
-                else{
-                    listenersMap.get(listener).sendNextTurn(p);
-                }
-            } catch (RemoteException e) {
+                listenersMap.get(name).sendNextTurn(nickname);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
     public void notify_lastTurn() {
-        for(GameListener listener : listenersMap.keySet()){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendLastTurn();
+                listenersMap.get(name).sendLastTurn();
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }
-    }
-    public void notify_playerIsReadyToStart(Player p) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendPlayerIsReady(p);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_setGameDrawableDeck(DrawableDeck d) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendDrawableDeckSet(d);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    public void notify_setGameBoardDeck(BoardDeck bd) {
-        for(GameListener listener : listenersMap.keySet()){
-            try {
-                listenersMap.get(listener).sendBoardDeckSet(bd);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public void notify_gameStarted(GameListener listener) {
     }
 
     public void notify_messageSent(Message message) {
-        for(GameListener listener: listenersMap.keySet()){
+        for(String name: listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendMessage(message);
+                listenersMap.get(name).sendMessage(message);
         } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 }
-
     public void notify_privateMessageSent(PrivateMessage message) {
-        for(GameListener listener: listenersMap.keySet()){
+        for(String name: listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPrivateMessage(message);
+                listenersMap.get(name).sendPrivateMessage(message);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
     public void notify_publicChatLog(String requesterName, List<Message> allMessages) {
-        for(GameListener listener: listenersMap.keySet()){
+        for(String name: listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPublicChatLog(requesterName,allMessages);
+                listenersMap.get(name).sendPublicChatLog(requesterName,allMessages);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void notify_privateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) {
+        for(String name: listenersMap.keySet()){
+            try {
+                listenersMap.get(name).sendPrivateChatLog(yourName,otherName,privateChat);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public void notify_privateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) {
-        for(GameListener listener: listenersMap.keySet()){
+    public void notify_gameGenericError(String s){
+        for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(listener).sendPrivateChatLog(yourName,otherName,privateChat);
+                listenersMap.get(name).genericError(s);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void notify_winners(List<Player> list) {
+        for(String name : listenersMap.keySet()){
+            try {
+                listenersMap.get(name).winners(list);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

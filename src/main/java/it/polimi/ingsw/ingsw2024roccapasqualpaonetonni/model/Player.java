@@ -4,11 +4,13 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.Obj
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotInHandException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
+import javafx.util.Pair;
 
 import java.io.Serializable;
 import java.util.*;
@@ -23,13 +25,14 @@ public class Player implements Serializable {
     private ObjectiveCard goal;
     private final ObjectiveCard[] firstGoals;
     private StartingCard startingCard;
-    private boolean readyToStart;
+    private final boolean readyToStart;
     private boolean connected;
 
     private GameListener myListener;
     private final PlayerListenersHandler playerListenersHandler;
 
     public Player(String name, int color){
+        this.connected=true;
         this.nickname=name;
         this.colorPlayer=color;
         this.currentPoints=0;
@@ -40,14 +43,13 @@ public class Player implements Serializable {
         this.firstGoals=new ObjectiveCard[2];
         this.startingCard=null;
         this.readyToStart = false;
-        this.connected=true;
         playerListenersHandler = new PlayerListenersHandler();
 
     }
 
-    /*public void setPlayerListeners(List<GameListener> currentGameListeners) {
+    public void setPlayerListeners(HashMap<String, NotifierInterface> currentGameListeners) {
         playerListenersHandler.resetPlayerListeners(currentGameListeners);
-    }*/
+    }
 
     public GameListener getListener() {
         return myListener;
@@ -65,15 +67,6 @@ public class Player implements Serializable {
         return readyToStart;
     }
 
-    public Boolean getIsConnected(){
-        return connected;
-    }
-
-    public void setIsConnected(Boolean b){
-        connected = b;
-        playerListenersHandler.notify_setIsConnected(this);
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -89,33 +82,31 @@ public class Player implements Serializable {
     public void drawGoals(DrawableDeck d) throws DeckEmptyException{
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
-        playerListenersHandler.notify_drawPersonalGoals(firstGoals,this);
     }
     public void chooseGoal(int choice){
-        if(choice==0){
-            goal=firstGoals[0];
+        if(goal==null && choice>=0 && choice<2){
+            goal=firstGoals[choice];
+            playerListenersHandler.notify_chooseGoal(this);
+            return;
         }
-        else {
-            goal=firstGoals[1];
-        }
-        playerListenersHandler.notify_chooseGoal(goal,this);
+        playerListenersHandler.notify_playerGenericError("Goal invalid Action");
+
     }
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
-        playerListenersHandler.notify_drawStarting(startingCard,this);
     }
     public void drawGoldFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstGold());
-        playerListenersHandler.notify_drawGoldFromDeck(hand.getLast(),this);
+        playerListenersHandler.notify_drawGoldFromDeck(this,d);
     }
     public void drawResourcesFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstResource());
-        playerListenersHandler.notify_drawResourceFromDeck(hand.getLast(),this);
+        playerListenersHandler.notify_drawResourceFromDeck(this,d);
 
     }
     public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
         hand.add(b.draw(position));
-        playerListenersHandler.notify_drawFromBoard(hand.getLast(),this);
+        playerListenersHandler.notify_drawFromBoard(this,b,b.getDrawableDeck());
 
     }
     public int[] getCountSeed() {
@@ -123,53 +114,69 @@ public class Player implements Serializable {
     }
 
     public void addStarting(){
+        for(PlayingCard[] playingCards: board.getBoardMatrix()){
+            for (PlayingCard playingCard: playingCards){
+                if(playingCard!=null){
+                    playerListenersHandler.notify_playerGenericError(
+                            "Starting Card invalid Action: Card Already Added"
+                    );
+                    return;
+                }
+            }
+        }
         board.addStartingCard(startingCard);
-        playerListenersHandler.notify_addStarting(board,this);
+        playerListenersHandler.notify_addStarting(this);
     }
     public void setStartingCard(StartingCard card){
         this.startingCard=card;
     }
     public StartingCard getStartingCard(){return startingCard;}
 
-    public void addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
+    public boolean addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
             removeFromHand(cardToAdd);
         }
         catch(CardNotInHandException e) {
-            playerListenersHandler.notify_cardNotInHand(cardToAdd,this);
+            playerListenersHandler.notify_playerGenericError("Card not in Hand");
+            return false;
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
-            playerListenersHandler.notify_addToBoard(board,this);
+            playerListenersHandler.notify_addToBoard(this);
         }
         catch(InvalidPlaceException e) {
-            playerListenersHandler.notify_invalidPlace(this);
+            hand.add(cardToAdd);
+            playerListenersHandler.notify_playerGenericError("Card Invalid Place");
+            return false;
         }
         catch(ConditionsNotMetException e) {
-            playerListenersHandler.notify_conditionsNotMet(this);
+            hand.add(cardToAdd);
+            playerListenersHandler.notify_playerGenericError("Conditions not met");
+            return false;
         }
+
+        return true;
     }
 
     public void increasePoints(int newPoints) {
-
         currentPoints = currentPoints + newPoints;
-        playerListenersHandler.notify_increasePoints(currentPoints,this);
     }
 
     public void updateSeedCount(int[] change) {
         for (int i = 0; i < 7; i++) {
             countSeed[i]+= change[i];
         }
-        playerListenersHandler.notify_updateSeedCount(countSeed,this);
     }
 
     private void removeFromHand(PlayingCard p) throws CardNotInHandException{
-        if(hand.contains(p)){
-            hand.remove(p);
-            playerListenersHandler.notify_removeFromHand(p,this);
+
+        for(PlayingCard playingCard: hand){
+            if(playingCard.getIdCard() == p.getIdCard()){
+                hand.remove(playingCard);
+                return;
+            }
         }
-        else {throw new CardNotInHandException("Card Doesn't exists in player hand");}
-        playerListenersHandler.notify_cardNotInHand(p,this);
+        throw new CardNotInHandException("Card Doesn't exists in player hand");
     }
 
 
@@ -181,4 +188,8 @@ public class Player implements Serializable {
         return firstGoals;
     }
 
+
+    public void setIsConnected(boolean b) {
+        connected = b;
+    }
 }

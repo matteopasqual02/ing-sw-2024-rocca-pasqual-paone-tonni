@@ -10,14 +10,13 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 public interface GameControllerInterface extends Remote {
 
     //---------------------------------LISTENERS SECTION
-    void addMyselfAsListener(GameListener me, NotifierInterface notifier) throws RemoteException;
-    void removeMyselfAsListener(GameListener me) throws RemoteException;
+    void addMyselfAsListener(String me, NotifierInterface notifier) throws RemoteException;
+    void removeMyselfAsListener(String me) throws RemoteException;
 
     //---------------------------------GAME CREATION SECTION
     void addPlayer(String nickname) throws RemoteException;
     void setMaxNumberOfPlayer(int num) throws RemoteException;
     void ready(String nickname) throws RemoteException;
-
 
     //---------------------------------TABLE AND INIT SECTION
     void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
@@ -33,4 +32,7 @@ public interface GameControllerInterface extends Remote {
     void getPrivateChatLog(String yourName, String otherName) throws RemoteException;
 
     int getGameId() throws RemoteException;
+
+    void pong(String client) throws RemoteException;
+    void addToPingPong(String client) throws RemoteException;
 }

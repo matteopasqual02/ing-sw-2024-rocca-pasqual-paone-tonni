@@ -19,5 +19,9 @@ public abstract class ObjectiveCard extends Card {
     public int getPoints(){
         return points;
     }
+
+    public String toString(int line) {
+        return null;
+    }
 }
 

@@ -56,9 +56,10 @@ public enum Seed {
             case FEATHER, POTION, SCROLL -> {
                 return Ansi.Color.WHITE;
             }
-
+            default -> {
+                return Ansi.Color.DEFAULT;
+            }
         }
 
-        return Ansi.Color.DEFAULT;
     }
 }

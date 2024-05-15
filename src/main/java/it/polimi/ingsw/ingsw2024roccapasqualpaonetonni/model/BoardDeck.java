@@ -6,7 +6,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoCardException;
 
-public class BoardDeck {
+import java.io.Serializable;
+
+public class BoardDeck implements Serializable {
     private final PlayingCard[] cards1;
     private final PlayingCard[] cards2;
     private final ObjectiveCard[] commonGoals;
@@ -101,6 +103,10 @@ public class BoardDeck {
                 && cards1[1] == null
                 && cards2[0] == null
                 && cards2[1] == null;
+    }
+
+    public DrawableDeck getDrawableDeck(){
+        return model.getGameDrawableDeck();
     }
 
 }
