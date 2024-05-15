@@ -19,6 +19,7 @@ public class NameNumberController extends GenericController{
     private TextField string2;
     private ExecutorService executor;
     private Client client;
+    private int num;
     @Override
     public void setParameters(ExecutorService executor, Client client){
         this.executor = executor;
@@ -28,7 +29,11 @@ public class NameNumberController extends GenericController{
     public void handleButtonClick(ActionEvent event){
 
         String name = string1.getText();
-        int num = Integer.parseInt(string2.getText());
+        try{
+            num = Integer.parseInt(string2.getText());
+        }catch (NumberFormatException e){
+            //qualcosa che fa reinserire il tutto
+        }
 
         executor.submit(()->{
             try {

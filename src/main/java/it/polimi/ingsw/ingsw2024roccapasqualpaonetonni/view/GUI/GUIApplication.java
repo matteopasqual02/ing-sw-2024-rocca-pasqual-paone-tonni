@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
 public class GUIApplication extends Application {
     private Client client;
     private Stage stage;
+    private Parent root;
     /**
      * we use a ThreadPoolExecutor to execute bacground tasks that call alow actions on the server
      */
@@ -32,10 +33,12 @@ public class GUIApplication extends Application {
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        Parent root = loader.load();
+        root = loader.load();
         LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
 
+        stage.setMinWidth(1024);
+        stage.setMinHeight(600);
         stage.setScene(new Scene(root, 300, 200));
         stage.setTitle("Simple Button Example");
         stage.show();
@@ -58,13 +61,19 @@ public class GUIApplication extends Application {
     }
     public void changeScene(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-        Parent root = loader.load();
+        Parent newRoot = loader.load();
         GenericController controller = loader.getController();
 
         controller.setParameters(executor, client);
 
-        stage.setScene(new Scene(root, 300, 200));
+        Stage stage = (Stage) root.getScene().getWindow();
+        Scene scene = new Scene(newRoot,300,200);
+        stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
+/*
+        stage.setScene(new Scene(root, 300, 200));
+        stage.setTitle("Codex Naturalis");
+        stage.show();*/
     }
 }
