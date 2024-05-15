@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
  * The type Message pong.
  */
 public class MessagePong extends ClientGenericMessage{
+    /**
+     * The Client.
+     */
     private final String client;
 
     /**

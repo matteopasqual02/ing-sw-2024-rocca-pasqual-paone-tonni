@@ -100,7 +100,14 @@ public class JSONUtils {
         return gson.fromJson(txtContent, JsonObject.class);
     }
 
-    // function that reads the txt file and turns it into a String
+    /**
+     * Read txt file string.
+     *
+     * @param filePath the file path
+     * @return the string
+     * @throws IOException the io exception
+     */
+// function that reads the txt file and turns it into a String
     private static String readTXTFile(String filePath) throws IOException {
         // Read the contents of the TXT file
         StringBuilder content = new StringBuilder();

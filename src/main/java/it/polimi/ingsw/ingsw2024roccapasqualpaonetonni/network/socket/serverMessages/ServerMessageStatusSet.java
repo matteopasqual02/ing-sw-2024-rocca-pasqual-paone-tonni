@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
  * The type Server message status set.
  */
 public class ServerMessageStatusSet extends ServerGenericMessage{
+    /**
+     * The Status.
+     */
     private final GameStatus status;
 
     /**

@@ -22,11 +22,29 @@ import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePri
  * The type Socket client.
  */
 public class SocketClient extends Thread implements ServerInterface, Serializable {
+    /**
+     * The Client socket.
+     */
     private transient Socket clientSocket;
+    /**
+     * The Input stream.
+     */
     private transient ObjectInputStream inputStream;
+    /**
+     * The Output stream.
+     */
     private transient ObjectOutputStream outputStream;
+    /**
+     * The Nickname.
+     */
     private String nickname;
+    /**
+     * The Client.
+     */
     private final Client client;
+    /**
+     * The Server request handler.
+     */
     private GameListener serverRequestHandler;
 
     //private final SocketNotifier socketNotifier;
@@ -58,6 +76,9 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     }
 
+    /**
+     * Connect.
+     */
     private void connect(){
         boolean retry = false;
         int attempt = 1;
@@ -97,11 +118,23 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
             }
         } while(retry);
     }
+
+    /**
+     * Disconnect.
+     *
+     * @throws IOException the io exception
+     */
     private void disconnect() throws IOException {
         inputStream.close();
         outputStream.close();
         clientSocket.close();
     }
+
+    /**
+     * Message done.
+     *
+     * @throws IOException the io exception
+     */
     private void messageDone() throws IOException {
         synchronized (outputStream) {
             outputStream.flush();

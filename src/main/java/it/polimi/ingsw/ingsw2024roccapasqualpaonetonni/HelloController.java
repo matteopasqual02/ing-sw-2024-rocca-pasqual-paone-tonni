@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
  * The type Hello controller.
  */
 public class HelloController {
+    /**
+     * The Welcome text.
+     */
     @FXML
     private Label welcomeText;
 

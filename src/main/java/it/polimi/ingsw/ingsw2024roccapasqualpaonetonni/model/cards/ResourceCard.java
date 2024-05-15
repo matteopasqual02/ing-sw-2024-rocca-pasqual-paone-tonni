@@ -44,6 +44,15 @@ public class ResourceCard extends PlayingCard {
         //front
         return getString(sb, flipped, background);
     }
+
+    /**
+     * Gets string.
+     *
+     * @param sb         the sb
+     * @param flipped    the flipped
+     * @param background the background
+     * @return the string
+     */
     private String getString(StringBuilder sb, boolean flipped, Ansi.Color background) {
         if (!flipped) {
             //First Line

@@ -8,6 +8,9 @@ import java.io.Serializable;
  * The type Card.
  */
 public abstract class Card implements Serializable {
+    /**
+     * The Id card.
+     */
     private final int idCard;
 
     /**

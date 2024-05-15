@@ -38,9 +38,21 @@ public enum Seed {
      * Empty seed.
      */
     EMPTY("empty", 7);
+    /**
+     * The Name.
+     */
     private final String name;
+    /**
+     * The Index.
+     */
     private final int index;
 
+    /**
+     * Instantiates a new Seed.
+     *
+     * @param name  the name
+     * @param index the index
+     */
     Seed(String name, int index) {
         this.name = name;
         this.index = index;

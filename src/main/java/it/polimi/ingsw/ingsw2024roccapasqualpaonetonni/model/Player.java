@@ -17,19 +17,58 @@ import java.util.List;
  * The type Player.
  */
 public class Player implements Serializable {
+    /**
+     * The Nickname.
+     */
     private final String nickname;
+    /**
+     * The Color player.
+     */
     private final int colorPlayer;
+    /**
+     * The Current points.
+     */
     private int currentPoints;
+    /**
+     * The Count seed.
+     */
     private final int[] countSeed;
+    /**
+     * The Board.
+     */
     private final PlayerBoard board;
+    /**
+     * The Hand.
+     */
     private final List<PlayingCard> hand;
+    /**
+     * The Goal.
+     */
     private ObjectiveCard goal;
+    /**
+     * The First goals.
+     */
     private final ObjectiveCard[] firstGoals;
+    /**
+     * The Starting card.
+     */
     private StartingCard startingCard;
+    /**
+     * The Ready to start.
+     */
     private final boolean readyToStart;
+    /**
+     * The Connected.
+     */
     private boolean connected;
 
+    /**
+     * The My listener.
+     */
     private GameListener myListener;
+    /**
+     * The Player listeners handler.
+     */
     private final PlayerListenersHandler playerListenersHandler;
 
     /**
@@ -295,6 +334,12 @@ public class Player implements Serializable {
         }
     }
 
+    /**
+     * Remove from hand.
+     *
+     * @param p the p
+     * @throws CardNotInHandException the card not in hand exception
+     */
     private void removeFromHand(PlayingCard p) throws CardNotInHandException{
 
         for(PlayingCard playingCard: hand){

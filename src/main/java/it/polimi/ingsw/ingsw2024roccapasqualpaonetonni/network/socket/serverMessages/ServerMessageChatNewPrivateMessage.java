@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
  * The type Server message chat new private message.
  */
 public class ServerMessageChatNewPrivateMessage extends ServerGenericMessage{
+    /**
+     * The Message.
+     */
     private PrivateMessage message;
 
     /**

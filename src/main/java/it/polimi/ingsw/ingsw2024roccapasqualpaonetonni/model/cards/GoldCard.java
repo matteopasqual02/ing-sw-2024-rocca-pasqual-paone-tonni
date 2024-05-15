@@ -11,7 +11,13 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Gold card.
  */
 public class GoldCard extends PlayingCard {
+    /**
+     * The Point condition.
+     */
     private final String pointCondition;
+    /**
+     * The Place condition.
+     */
     private final int[] placeCondition;
 
     /**
@@ -92,6 +98,15 @@ public class GoldCard extends PlayingCard {
 
         return getString(sb, flipped, background);
     }
+
+    /**
+     * Gets string.
+     *
+     * @param sb         the sb
+     * @param flipped    the flipped
+     * @param background the background
+     * @return the string
+     */
     private String getString(StringBuilder sb, boolean flipped, Ansi.Color background) {
         if (!flipped) {
             //First Line

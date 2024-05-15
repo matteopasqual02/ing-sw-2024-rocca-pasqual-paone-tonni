@@ -9,8 +9,17 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
  * The type Server message drew board.
  */
 public class ServerMessageDrewBoard extends ServerGenericMessage{
+    /**
+     * The Player.
+     */
     private final Player player;
+    /**
+     * The Board deck.
+     */
     private final BoardDeck boardDeck;
+    /**
+     * The Drawable deck.
+     */
     private final DrawableDeck drawableDeck;
 
     /**

@@ -8,6 +8,9 @@ import java.rmi.RemoteException;
  * The type Server message next turn.
  */
 public class ServerMessageNextTurn extends ServerGenericMessage{
+    /**
+     * The Nickname.
+     */
     private final String nickname;
 
     /**

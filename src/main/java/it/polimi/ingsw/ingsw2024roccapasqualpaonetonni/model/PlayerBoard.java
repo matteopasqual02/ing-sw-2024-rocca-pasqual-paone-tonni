@@ -16,10 +16,22 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Player board.
  */
 public class PlayerBoard implements Serializable {
+    /**
+     * The Dim x.
+     */
     private int dim_x;
+    /**
+     * The Dim y.
+     */
     private int dim_y;
+    /**
+     * The Board.
+     */
     private PlayingCard[][] board;
 
+    /**
+     * The Player.
+     */
     private final Player player;
 
     /**
@@ -34,7 +46,14 @@ public class PlayerBoard implements Serializable {
         player = owner;
     }
 
-    // method that receives a card and the coordinates where to put it,
+    /**
+     * Add card to board.
+     *
+     * @param coordinates the coordinates
+     * @param card        the card
+     * @param seedCount   the seed count
+     */
+// method that receives a card and the coordinates where to put it,
     // it then checks if the coordinates are inside the matrix, and if they aren't calls a method to resize the matrix
     private void addCardToBoard(int[] coordinates, PlayingCard card, int[] seedCount) {
         int x = coordinates[0];
@@ -71,7 +90,14 @@ public class PlayerBoard implements Serializable {
         }
     }
 
-    // method used to resize the matrix, by creating a new one and copying the old elements
+    /**
+     * Increase board playing card [ ] [ ].
+     *
+     * @param x_increase the x increase
+     * @param y_increase the y increase
+     * @return the playing card [ ] [ ]
+     */
+// method used to resize the matrix, by creating a new one and copying the old elements
     private PlayingCard[][] increaseBoard(int x_increase, int y_increase) {
         int row_offset = 0;
         int col_offset = 0;
@@ -160,6 +186,12 @@ public class PlayerBoard implements Serializable {
         player.updateSeedCount(calculateCenterUpdate(firstCard));
     }
 
+    /**
+     * Calculate center update int [ ].
+     *
+     * @param c the c
+     * @return the int [ ]
+     */
     private int[] calculateCenterUpdate(StartingCard c) {
         int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
         Corner current_corner;
@@ -183,7 +215,13 @@ public class PlayerBoard implements Serializable {
         return seedUpdate;
     }
 
-    // checks the four spots around the position where we want to place the card
+    /**
+     * Check spot available boolean.
+     *
+     * @param coordinates the coordinates
+     * @return the boolean
+     */
+// checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
     private boolean checkSpotAvailable(int[] coordinates) {
         PlayingCard cardOnBoard;
@@ -212,6 +250,13 @@ public class PlayerBoard implements Serializable {
         return true;
     }
 
+    /**
+     * Calculate seed update int [ ].
+     *
+     * @param xNewCard the x new card
+     * @param yNewCard the y new card
+     * @return the int [ ]
+     */
     private int[] calculateSeedUpdate(int xNewCard, int yNewCard) {
         PlayingCard card, cardAttached;
         int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};

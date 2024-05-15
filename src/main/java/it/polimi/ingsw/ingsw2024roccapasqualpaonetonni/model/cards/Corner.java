@@ -8,7 +8,13 @@ import java.io.Serializable;
  * The type Corner.
  */
 public class Corner implements Serializable {
+    /**
+     * The Position.
+     */
     private final int position;
+    /**
+     * The Seed.
+     */
     private final Seed seed;
 
     /**

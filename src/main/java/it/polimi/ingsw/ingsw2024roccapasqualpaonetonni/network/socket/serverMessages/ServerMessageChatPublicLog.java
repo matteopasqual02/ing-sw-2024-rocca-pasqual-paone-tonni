@@ -10,7 +10,13 @@ import java.util.List;
  * The type Server message chat public log.
  */
 public class ServerMessageChatPublicLog extends ServerGenericMessage{
+    /**
+     * The Requester name.
+     */
     private String requesterName;
+    /**
+     * The All messages.
+     */
     private List<Message> allMessages;
 
     /**

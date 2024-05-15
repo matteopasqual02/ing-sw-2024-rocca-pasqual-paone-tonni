@@ -8,6 +8,9 @@ import java.rmi.RemoteException;
  * The type Server message player removed.
  */
 public class ServerMessagePlayerRemoved extends ServerGenericMessage{
+    /**
+     * The Nickname.
+     */
     private final String nickname;
 
     /**

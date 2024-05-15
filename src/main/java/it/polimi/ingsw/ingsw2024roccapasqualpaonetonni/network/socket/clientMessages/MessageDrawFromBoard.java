@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
  * The type Message draw from board.
  */
 public class MessageDrawFromBoard extends ClientGenericMessage{
+    /**
+     * The Position.
+     */
     private final int position;
 
     /**

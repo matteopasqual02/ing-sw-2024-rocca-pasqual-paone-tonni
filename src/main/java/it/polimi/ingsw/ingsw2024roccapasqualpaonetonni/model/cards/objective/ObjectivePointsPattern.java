@@ -29,6 +29,15 @@ public class ObjectivePointsPattern implements ObjectivePointsStrategy{
         return totalPoints;
     }
 
+    /**
+     * Add.
+     *
+     * @param board   the board
+     * @param i       the
+     * @param j       the j
+     * @param pattern the pattern
+     * @param used    the used
+     */
     private void add(PlayingCard[][] board,int i,int j, Seed[][] pattern,List<PlayingCard> used){
         for(int k=0; k< pattern.length;k++){
             for(int w=0; w < pattern[k].length; w++){
@@ -41,6 +50,17 @@ public class ObjectivePointsPattern implements ObjectivePointsStrategy{
             }
         }
     }
+
+    /**
+     * Match boolean.
+     *
+     * @param board   the board
+     * @param i       the
+     * @param j       the j
+     * @param pattern the pattern
+     * @param used    the used
+     * @return the boolean
+     */
     private Boolean match(PlayingCard[][] board,int i,int j, Seed[][] pattern,List<PlayingCard> used){
         for(int k=0; k< pattern.length;k++){
             for(int w=0; w < pattern[k].length; w++){

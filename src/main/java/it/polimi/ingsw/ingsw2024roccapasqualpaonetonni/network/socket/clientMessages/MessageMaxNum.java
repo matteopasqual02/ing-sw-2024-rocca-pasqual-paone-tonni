@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
  * The type Message max num.
  */
 public class MessageMaxNum extends ClientGenericMessage{
+    /**
+     * The Max.
+     */
     private final int max;
 
     /**

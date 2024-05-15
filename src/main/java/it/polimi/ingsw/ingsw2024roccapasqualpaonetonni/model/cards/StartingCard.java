@@ -11,7 +11,13 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Starting card.
  */
 public class StartingCard extends PlayingCard {
+    /**
+     * The Center.
+     */
     private final Boolean[] center;
+    /**
+     * The Corners back.
+     */
     private final Corner[] cornersBack;
 
     /**

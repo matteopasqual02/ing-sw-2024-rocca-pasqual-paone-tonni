@@ -15,6 +15,9 @@ import java.util.Queue;
  * The type Drawable deck.
  */
 public class DrawableDeck implements Serializable {
+    /**
+     * The Decks.
+     */
     private final Map<String, Queue<Card>> decks;
 
     /**

@@ -11,6 +11,9 @@ import java.rmi.RemoteException;
  * The type Main message join first available.
  */
 public class MainMessageJoinFirstAvailable extends ClientGenericMessage {
+    /**
+     * The Listener.
+     */
     private final GameListener listener;
 
     /**

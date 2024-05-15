@@ -10,6 +10,9 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Objective pattern card.
  */
 public class ObjectivePatternCard extends ObjectiveCard {
+    /**
+     * The Pattern.
+     */
     private final Seed[][] pattern;
 
     /**

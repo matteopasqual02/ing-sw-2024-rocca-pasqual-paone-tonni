@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
  * The type Main message create game.
  */
 public class MainMessageCreateGame extends ClientGenericMessage{
+    /**
+     * The Number of players.
+     */
     private final int numberOfPlayers;
 
     /**

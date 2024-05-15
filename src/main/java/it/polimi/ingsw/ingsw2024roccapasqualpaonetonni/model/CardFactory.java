@@ -52,6 +52,13 @@ public class CardFactory {
         }
     }
 
+    /**
+     * Create resource card resource card.
+     *
+     * @param id         the id
+     * @param attributes the attributes
+     * @return the resource card
+     */
     private static ResourceCard createResourceCard(int id, Map<String, JsonElement> attributes) {
         // Extract attributes specific to ResourcesCard and create the card
         Gson gson = new Gson();
@@ -85,6 +92,13 @@ public class CardFactory {
         return new ResourceCard(id, seed, corners, points);
     }
 
+    /**
+     * Create gold card gold card.
+     *
+     * @param id         the id
+     * @param attributes the attributes
+     * @return the gold card
+     */
     private static GoldCard createGoldCard(int id, Map<String, JsonElement> attributes) {
         // Extract attributes specific to GoldCard and create the card
         Gson gson = new Gson();
@@ -129,6 +143,13 @@ public class CardFactory {
         return new GoldCard(id, seed, corners, points, pointCondition, placeCondition);
     }
 
+    /**
+     * Create starting card starting card.
+     *
+     * @param id         the id
+     * @param attributes the attributes
+     * @return the starting card
+     */
     private static StartingCard createStartingCard(int id, Map<String, JsonElement> attributes) {
         // Extract attributes specific to StartingCard and create the card
         Gson gson = new Gson();
@@ -182,6 +203,13 @@ public class CardFactory {
         return new StartingCard(id, center, cornersFront, cornersBack);
     }
 
+    /**
+     * Create objective count card objective count card.
+     *
+     * @param id         the id
+     * @param attributes the attributes
+     * @return the objective count card
+     */
     private static ObjectiveCountCard createObjectiveCountCard(int id, Map<String, JsonElement> attributes) {
         // Extract attributes specific to ObjectiveCard and create the card
         Gson gson = new Gson();
@@ -195,6 +223,13 @@ public class CardFactory {
         return new ObjectiveCountCard(id, points, types);
     }
 
+    /**
+     * Create objective pattern card objective pattern card.
+     *
+     * @param id         the id
+     * @param attributes the attributes
+     * @return the objective pattern card
+     */
     private static ObjectivePatternCard createObjectivePatternCard(int id, Map<String, JsonElement> attributes) {
         // Extract attributes specific to ObjectiveCard and create the card
         Gson gson = new Gson();

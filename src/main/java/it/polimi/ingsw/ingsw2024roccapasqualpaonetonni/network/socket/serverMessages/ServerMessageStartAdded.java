@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
  * The type Server message start added.
  */
 public class ServerMessageStartAdded extends ServerGenericMessage{
+    /**
+     * The Player.
+     */
     private final Player player;
 
     /**

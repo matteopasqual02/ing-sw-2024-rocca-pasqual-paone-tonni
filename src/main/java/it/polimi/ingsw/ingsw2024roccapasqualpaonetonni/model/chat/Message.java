@@ -11,8 +11,17 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Message.
  */
 public class Message implements Serializable {
+    /**
+     * The Text.
+     */
     private String text;
+    /**
+     * The Sender.
+     */
     private String sender;
+    /**
+     * The Local time.
+     */
     private LocalTime localTime;
 
     /**

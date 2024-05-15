@@ -8,6 +8,9 @@ import java.rmi.RemoteException;
  * The type Server message created game.
  */
 public class ServerMessageCreatedGame extends ServerGenericMessage{
+    /**
+     * The Game id.
+     */
     private final int gameId;
 
     /**

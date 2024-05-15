@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
  * The type Message add starting.
  */
 public class MessageAddStarting extends ClientGenericMessage{
+    /**
+     * The Flip.
+     */
     private final Boolean flip;
 
     /**

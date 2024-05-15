@@ -11,6 +11,9 @@ import java.rmi.NotBoundException;
  * The type Scanner tui.
  */
 public class ScannerTUI extends Thread implements ScannerInterface{
+    /**
+     * The Client.
+     */
     private final Client client;
     /**
      * The Buffered reader.

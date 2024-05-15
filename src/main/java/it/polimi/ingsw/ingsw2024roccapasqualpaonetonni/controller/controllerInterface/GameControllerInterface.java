@@ -11,20 +11,21 @@ import java.rmi.RemoteException;
  */
 public interface GameControllerInterface extends Remote {
 
+    //---------------------------------LISTENERS SECTION
+
     /**
      * Add myself as listener.
      *
-     * @param me       the me
+     * @param me       my nickname
      * @param notifier the notifier
      * @throws RemoteException the remote exception
      */
-//---------------------------------LISTENERS SECTION
     void addMyselfAsListener(String me, NotifierInterface notifier) throws RemoteException;
 
     /**
      * Remove myself as listener.
      *
-     * @param me the me
+     * @param me my nickname
      * @throws RemoteException the remote exception
      */
     void removeMyselfAsListener(String me) throws RemoteException;
@@ -47,12 +48,14 @@ public interface GameControllerInterface extends Remote {
     void setMaxNumberOfPlayer(int num) throws RemoteException;
 
     /**
-     * Ready.
+     * player Ready.
      *
      * @param nickname the nickname
      * @throws RemoteException the remote exception
      */
     void ready(String nickname) throws RemoteException;
+
+    //---------------------------------TABLE AND INIT SECTION
 
     /**
      * Add card.
@@ -64,7 +67,6 @@ public interface GameControllerInterface extends Remote {
      * @param flip           the flip
      * @throws RemoteException the remote exception
      */
-//---------------------------------TABLE AND INIT SECTION
     void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
 
     /**

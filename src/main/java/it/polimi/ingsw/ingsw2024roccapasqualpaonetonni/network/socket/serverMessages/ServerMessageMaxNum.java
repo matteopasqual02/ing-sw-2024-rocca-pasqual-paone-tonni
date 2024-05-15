@@ -8,6 +8,9 @@ import java.rmi.RemoteException;
  * The type Server message max num.
  */
 public class ServerMessageMaxNum extends ServerGenericMessage{
+    /**
+     * The Max.
+     */
     private final int max;
 
     /**

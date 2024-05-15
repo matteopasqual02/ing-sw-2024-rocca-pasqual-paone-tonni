@@ -8,7 +8,13 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
  * The type Server message drew resources.
  */
 public class ServerMessageDrewResources extends ServerGenericMessage{
+    /**
+     * The Player.
+     */
     private final Player player;
+    /**
+     * The Deck.
+     */
     private final DrawableDeck deck;
 
     /**

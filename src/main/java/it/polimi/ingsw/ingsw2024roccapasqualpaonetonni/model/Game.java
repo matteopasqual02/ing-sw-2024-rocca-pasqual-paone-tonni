@@ -16,18 +16,54 @@ import java.util.*;
  * The type Game.
  */
 public class Game implements Serializable {
+    /**
+     * The Game id.
+     */
     private final int gameId;
+    /**
+     * The Status.
+     */
     private final GameStatus[] status; //current and previous status needed for reconnection
+    /**
+     * The Max number of player.
+     */
     private int maxNumberOfPlayer;
+    /**
+     * The Players.
+     */
     private final Queue<Player> players;
+    /**
+     * The Players disconnected.
+     */
     private final List<Player> playersDisconnected;
+    /**
+     * The Winner.
+     */
     private final Queue<Player> winner;
+    /**
+     * The First player.
+     */
     private Player firstPlayer;
+    /**
+     * The Game board deck.
+     */
     private BoardDeck gameBoardDeck;
+    /**
+     * The Game drawable deck.
+     */
     private DrawableDeck gameDrawableDeck;
+    /**
+     * The Chat.
+     */
     private final Chat chat;
+    /**
+     * The Ready.
+     */
     private final List<String> ready;
 
+    /**
+     * The Game listeners handler.
+     */
     private final GameListenersHandler gameListenersHandler;
 
     /**

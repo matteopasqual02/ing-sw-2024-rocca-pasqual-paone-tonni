@@ -11,9 +11,21 @@ import java.rmi.RemoteException;
  * The type Message add card.
  */
 public class MessageAddCard extends ClientGenericMessage{
+    /**
+     * The Flip.
+     */
     private final Boolean flip;
+    /**
+     * The Card to add.
+     */
     private final PlayingCard cardToAdd;
+    /**
+     * The Card on board.
+     */
     private final PlayingCard cardOnBoard;
+    /**
+     * The Corner.
+     */
     private final int corner;
 
     /**

@@ -12,7 +12,13 @@ import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePri
  * The type Socket server.
  */
 public class SocketServer extends Thread {
+    /**
+     * The Server socket.
+     */
     private ServerSocket serverSocket;
+    /**
+     * The Client request handler list.
+     */
     private List<ClientRequestHandler> clientRequestHandlerList;
 
     /**

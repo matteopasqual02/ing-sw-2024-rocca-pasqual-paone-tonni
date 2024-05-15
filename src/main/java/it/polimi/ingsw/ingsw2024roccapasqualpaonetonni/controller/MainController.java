@@ -13,10 +13,19 @@ import java.util.List;
  * The type Main controller.
  */
 public class MainController implements MainControllerInterface {
+    /**
+     * The constant instance.
+     */
     private static MainController instance = null;
 
+    /**
+     * The Running games.
+     */
     private final List<GameController> runningGames;
 
+    /**
+     * Instantiates a new Main controller.
+     */
     private MainController() {
         runningGames = new ArrayList<>();
     }

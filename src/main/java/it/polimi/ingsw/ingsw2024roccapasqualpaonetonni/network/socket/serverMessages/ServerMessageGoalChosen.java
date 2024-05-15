@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
  * The type Server message goal chosen.
  */
 public class ServerMessageGoalChosen extends ServerGenericMessage {
+    /**
+     * The P.
+     */
     private final Player p;
 
     /**

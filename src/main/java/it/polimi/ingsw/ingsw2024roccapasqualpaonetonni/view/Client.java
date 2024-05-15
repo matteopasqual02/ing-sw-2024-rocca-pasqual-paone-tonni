@@ -30,13 +30,37 @@ import java.util.Objects;
  * The type Client.
  */
 public class Client extends UnicastRemoteObject implements GameListener, Runnable {
+    /**
+     * The Server.
+     */
     private ServerInterface server;
+    /**
+     * The View.
+     */
     private ViewUpdate view;
+    /**
+     * The My game id.
+     */
     private int myGameId;
+    /**
+     * The My nickname.
+     */
     private String myNickname;
+    /**
+     * The State.
+     */
     private GameStatus state = null;
+    /**
+     * The My turn.
+     */
     private Boolean myTurn = false;
+    /**
+     * The Current immutable.
+     */
     private GameImmutable currentImmutable;
+    /**
+     * The Pong thread.
+     */
     private transient final PingPongThreadClient pongThread = new PingPongThreadClient();
 
     /**
@@ -568,9 +592,18 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
-    //--------------------------PIN PONG
+    /**
+     * The type Ping pong thread client.
+     */
+//--------------------------PIN PONG
     private class PingPongThreadClient extends Thread {
+        /**
+         * The Pinged.
+         */
         private boolean pinged = false;
+        /**
+         * The Lock.
+         */
         private final Object  lock = new Object();
 
         /**

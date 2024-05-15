@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
  * The type Message send message.
  */
 public class MessageSendMessage extends ClientGenericMessage{
+    /**
+     * The Txt.
+     */
     private String txt;
 
     /**

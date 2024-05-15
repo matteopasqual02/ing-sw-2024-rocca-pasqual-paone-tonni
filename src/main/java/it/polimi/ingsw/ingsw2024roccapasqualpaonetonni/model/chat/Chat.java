@@ -8,8 +8,17 @@ import java.util.List;
  * The type Chat.
  */
 public class Chat implements Serializable {
+    /**
+     * The Messages list.
+     */
     private final List<Message> messagesList;
+    /**
+     * The Private chats.
+     */
     private List<PrivateChat> privateChats;
+    /**
+     * The Found.
+     */
     private Boolean found;
 
     /**

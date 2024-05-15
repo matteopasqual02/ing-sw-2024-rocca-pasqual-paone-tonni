@@ -28,10 +28,22 @@ import java.util.concurrent.LinkedBlockingQueue;
  * The type Client request handler.
  */
 public class ClientRequestHandler extends Thread implements NotifierInterface {
+    /**
+     * The Input stream.
+     */
     private final ObjectInputStream inputStream;
+    /**
+     * The Output stream.
+     */
     private final ObjectOutputStream outputStream;
 
+    /**
+     * The Game controller interface.
+     */
     private GameControllerInterface gameControllerInterface;
+    /**
+     * The Processing queue.
+     */
     private final BlockingQueue<ClientGenericMessage> processingQueue;
 
 
@@ -79,6 +91,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
 
     }
 
+    /**
+     * Take execute.
+     */
     private void takeExecute(){
         ClientGenericMessage message;
 
@@ -121,6 +136,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Message done.
+     *
+     * @throws IOException the io exception
+     */
     private void messageDone() throws IOException {
         synchronized (outputStream) {
             outputStream.flush();

@@ -11,7 +11,13 @@ import java.rmi.RemoteException;
  * The type Main message reconnect.
  */
 public class MainMessageReconnect extends ClientGenericMessage{
+    /**
+     * The Id to connect.
+     */
     private final int idToConnect;
+    /**
+     * The Listener.
+     */
     private final GameListener listener;
 
     /**

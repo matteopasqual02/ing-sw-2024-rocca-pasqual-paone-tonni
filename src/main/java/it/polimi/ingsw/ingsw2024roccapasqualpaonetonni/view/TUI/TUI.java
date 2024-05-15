@@ -200,7 +200,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         ConsolePrinter.consolePrinter("[ERROR] " + s );
     }
 
-    //------------------PRINTER
+    /**
+     * Title.
+     */
+//------------------PRINTER
     private void title(){
         System.out.println(ansi().fg(42).a("""
                 
@@ -213,6 +216,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                                                                                                                                    
                 """).fg(Ansi.Color.DEFAULT));
     }
+
+    /**
+     * Game over.
+     */
     private void gameOver(){
         System.out.println(ansi().fg(42).a("""
                 
@@ -225,6 +232,10 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
                                                                                                                                                                                                    \s
                 """).fg(Ansi.Color.DEFAULT));
     }
+
+    /**
+     * Winner.
+     */
     private void winner(){
         System.out.println(ansi().fg(42).a("""
                                 

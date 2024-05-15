@@ -10,7 +10,13 @@ import java.rmi.RemoteException;
  * The type Message get private chat log.
  */
 public class MessageGetPrivateChatLog extends ClientGenericMessage{
+    /**
+     * The Your name.
+     */
     private final String yourName;
+    /**
+     * The Other name.
+     */
     private final String otherName;
 
     /**

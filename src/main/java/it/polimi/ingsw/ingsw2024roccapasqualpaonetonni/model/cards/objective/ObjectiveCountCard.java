@@ -10,6 +10,9 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Objective count card.
  */
 public class ObjectiveCountCard extends ObjectiveCard {
+    /**
+     * The Count types.
+     */
     private final int[] countTypes;
 
     /**

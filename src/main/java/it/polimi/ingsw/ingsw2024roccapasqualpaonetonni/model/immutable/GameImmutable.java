@@ -15,13 +15,37 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Game immutable.
  */
 public class GameImmutable implements Serializable {
+    /**
+     * The Game id.
+     */
     private final int gameId;
+    /**
+     * The Max number of players.
+     */
     private final int maxNumberOfPlayers;
+    /**
+     * The Players.
+     */
     private final Queue<Player> players;
+    /**
+     * The Winners.
+     */
     private final Queue<Player> winners;
+    /**
+     * The Status.
+     */
     private final GameStatus status;
+    /**
+     * The Board deck.
+     */
     private BoardDeck boardDeck;
+    /**
+     * The Drawable deck.
+     */
     private DrawableDeck drawableDeck;
+    /**
+     * The Chat.
+     */
     private final Chat chat;
 
     /**

@@ -20,8 +20,17 @@ import java.util.List;
  */
 public class RMIServer extends UnicastRemoteObject implements MainControllerInterface {
 
+    /**
+     * The Main controller.
+     */
     private final MainControllerInterface mainController;
+    /**
+     * The constant server.
+     */
     private static RMIServer server = null;
+    /**
+     * The constant registry.
+     */
     private static Registry registry = null;
 
     /**

@@ -10,8 +10,17 @@ import java.util.List;
  * The type Server message chat private log.
  */
 public class ServerMessageChatPrivateLog extends ServerGenericMessage{
+    /**
+     * The Your name.
+     */
     private final String yourName;
+    /**
+     * The Other name.
+     */
     private final String otherName;
+    /**
+     * The Private chat.
+     */
     private final List<PrivateMessage> privateChat;
 
     /**

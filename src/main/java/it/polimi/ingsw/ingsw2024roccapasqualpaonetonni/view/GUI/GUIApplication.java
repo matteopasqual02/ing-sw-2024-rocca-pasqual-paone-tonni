@@ -11,6 +11,11 @@ import javafx.stage.Stage;
  * The type Gui application.
  */
 public class GUIApplication extends Application {
+    /**
+     * Create content parent.
+     *
+     * @return the parent
+     */
     private Parent createContent(){
         return new StackPane(new Text("Hello world!"));
     }

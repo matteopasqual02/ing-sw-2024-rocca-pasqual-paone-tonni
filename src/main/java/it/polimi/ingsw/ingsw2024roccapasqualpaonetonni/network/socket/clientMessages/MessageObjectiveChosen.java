@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
  * The type Message objective chosen.
  */
 public class MessageObjectiveChosen extends ClientGenericMessage{
+    /**
+     * The Choice.
+     */
     private final int choice;
 
     /**

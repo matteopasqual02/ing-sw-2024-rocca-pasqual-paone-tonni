@@ -11,9 +11,21 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Private message.
  */
 public class PrivateMessage implements Serializable {
+    /**
+     * The Text.
+     */
     private String text;
+    /**
+     * The Sender.
+     */
     private String sender;
+    /**
+     * The Receiver.
+     */
     private String receiver;
+    /**
+     * The Local time.
+     */
     private LocalTime localTime;
 
     /**

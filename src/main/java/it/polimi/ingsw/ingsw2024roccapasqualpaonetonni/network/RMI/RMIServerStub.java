@@ -21,9 +21,21 @@ import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePri
  * The type Rmi server stub.
  */
 public class RMIServerStub implements ServerInterface {
+    /**
+     * The constant requests.
+     */
     private static MainControllerInterface requests;
+    /**
+     * The Game controller.
+     */
     private GameControllerInterface gameController = null;
+    /**
+     * The Registry.
+     */
     private Registry registry;
+    /**
+     * The Notifier.
+     */
     private RMINotifier notifier;
 
     /**
@@ -34,7 +46,10 @@ public class RMIServerStub implements ServerInterface {
         connect();
     }
 
-    //the client main calls this to connect to a server
+    /**
+     * Connect.
+     */
+//the client main calls this to connect to a server
     private void connect(){
         boolean retry = false;
         int attempt = 1;

@@ -23,13 +23,28 @@ import java.util.concurrent.Executors;
  * The type Game controller.
  */
 public class GameController implements GameControllerInterface {
+    /**
+     * The Model.
+     */
     private final Game model;
+    /**
+     * The Random.
+     */
     private final Random random;
+    /**
+     * The Path.
+     */
     private final String path;
 
-    // attributes needed to implement the executor
+    /**
+     * The Executor service.
+     */
+// attributes needed to implement the executor
     private transient final ExecutorService executorService;
 
+    /**
+     * The Ping pong thread.
+     */
     private transient final PingPongThread pingPongThread;
 
     /**
@@ -48,7 +63,10 @@ public class GameController implements GameControllerInterface {
         this.pingPongThread.start();
     }
 
-    //---------------------------------EXECUTOR SECTION
+    /**
+     * Stop executor.
+     */
+//---------------------------------EXECUTOR SECTION
     // the executor is a thread that can be fed a queue of Runnable or Callable, such as lambda expressions or
     // method-like expressions, and that executes them in order
     // it is used to de-synchronize the RMI calls, that now don't wait for the return at the end of the method
@@ -57,7 +75,10 @@ public class GameController implements GameControllerInterface {
         executorService.shutdown();
     }
 
-    //---------------------------------SERVER SECTION
+    /**
+     * The type Ping pong thread.
+     */
+//---------------------------------SERVER SECTION
     private class PingPongThread extends Thread {
 
         /**
@@ -69,6 +90,11 @@ public class GameController implements GameControllerInterface {
          */
         List<String> clients;
 
+        /**
+         * Add client.
+         *
+         * @param client the client
+         */
         private void addClient(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
@@ -76,6 +102,11 @@ public class GameController implements GameControllerInterface {
             }
         }
 
+        /**
+         * Pong.
+         *
+         * @param client the client
+         */
         private void pong(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
@@ -330,6 +361,9 @@ public class GameController implements GameControllerInterface {
 
     }
 
+    /**
+     * Random first player.
+     */
     private synchronized void randomFirstPlayer() {
         int first = random.nextInt(4);
 
@@ -340,6 +374,9 @@ public class GameController implements GameControllerInterface {
         model.setFirstPlayer(model.getCurrentPlayer());
     }
 
+    /**
+     * Turn zero.
+     */
     private synchronized void turnZero() {
         for (Player player : getAllPlayer()) {
             try {
@@ -436,7 +473,12 @@ public class GameController implements GameControllerInterface {
         getCurrentPlayer().chooseGoal(choice);
     }
 
-    //---------------------------------DRAW SECTION
+    /**
+     * Decks are all empty boolean.
+     *
+     * @return the boolean
+     */
+//---------------------------------DRAW SECTION
     private boolean decksAreAllEmpty() {
         return model.getGameDrawableDeck().getDecks().get("resources").isEmpty()
                 && model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
@@ -564,7 +606,10 @@ public class GameController implements GameControllerInterface {
     }
 
 
-    //---------------------------------CHECK END SECTION
+    /**
+     * Check points 20 points.
+     */
+//---------------------------------CHECK END SECTION
     private synchronized void checkPoints20Points() {
         for (Player player : getAllPlayer()) {
             // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione

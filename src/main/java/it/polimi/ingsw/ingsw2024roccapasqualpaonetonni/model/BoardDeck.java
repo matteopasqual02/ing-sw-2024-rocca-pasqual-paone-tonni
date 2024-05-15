@@ -12,9 +12,21 @@ import java.io.Serializable;
  * The type Board deck.
  */
 public class BoardDeck implements Serializable {
+    /**
+     * The Cards 1.
+     */
     private final PlayingCard[] cards1;
+    /**
+     * The Cards 2.
+     */
     private final PlayingCard[] cards2;
+    /**
+     * The Common goals.
+     */
     private final ObjectiveCard[] commonGoals;
+    /**
+     * The Model.
+     */
     private final Game model;
 
     /**

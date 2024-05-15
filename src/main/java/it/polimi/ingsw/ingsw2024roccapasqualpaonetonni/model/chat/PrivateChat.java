@@ -8,8 +8,17 @@ import java.util.List;
  * The type Private chat.
  */
 public class PrivateChat implements Serializable {
+    /**
+     * The Player 1.
+     */
     private final String player1;
+    /**
+     * The Player 2.
+     */
     private final String player2;
+    /**
+     * The Private message list.
+     */
     private final List<PrivateMessage> privateMessageList;
 
     /**

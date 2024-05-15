@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
  * The type Server message notify all.
  */
 public class ServerMessageNotifyAll extends ServerGenericMessage{
+    /**
+     * The Game immutable.
+     */
     private final GameImmutable gameImmutable;
 
     /**

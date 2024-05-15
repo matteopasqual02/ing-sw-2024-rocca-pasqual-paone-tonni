@@ -19,6 +19,9 @@ import java.util.List;
  * The type Rmi notifier.
  */
 public class RMINotifier extends UnicastRemoteObject implements NotifierInterface {
+    /**
+     * The Listener.
+     */
     private final GameListener listener;
 
     /**
