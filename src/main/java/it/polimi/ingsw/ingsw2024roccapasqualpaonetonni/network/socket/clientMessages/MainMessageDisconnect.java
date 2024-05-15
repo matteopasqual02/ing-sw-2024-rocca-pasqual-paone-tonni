@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
  */
 public class MainMessageDisconnect extends ClientGenericMessage{
     /**
-     * The Id to disconnect.
+     * The ID to disconnect.
      */
     int idToDisconnect;
     /**

@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
  */
 public class MainMessageReconnect extends ClientGenericMessage{
     /**
-     * The Id to connect.
+     * The ID to connect.
      */
     private final int idToConnect;
     /**

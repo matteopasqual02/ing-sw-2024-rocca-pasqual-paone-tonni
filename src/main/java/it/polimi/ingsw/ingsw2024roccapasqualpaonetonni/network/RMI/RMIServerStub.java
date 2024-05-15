@@ -95,7 +95,7 @@ public class RMIServerStub implements ServerInterface {
     /**
      * Pong.
      *
-     * @param me the me
+     * @param me me
      */
     @Override
     public void pong(String me) {
@@ -112,7 +112,7 @@ public class RMIServerStub implements ServerInterface {
      *
      * @param name          the name
      * @param maxNumPlayers the max num players
-     * @param me            the me
+     * @param me            me
      * @throws RemoteException   the remote exception
      * @throws NotBoundException the not bound exception
      */
@@ -129,7 +129,7 @@ public class RMIServerStub implements ServerInterface {
      * Join first available.
      *
      * @param name the name
-     * @param me   the me
+     * @param me   me
      * @throws RemoteException   the remote exception
      * @throws NotBoundException the not bound exception
      */
@@ -151,7 +151,7 @@ public class RMIServerStub implements ServerInterface {
      *
      * @param name   the name
      * @param idGame the id game
-     * @param me     the me
+     * @param me     me
      * @throws RemoteException   the remote exception
      * @throws NotBoundException the not bound exception
      */
@@ -181,7 +181,7 @@ public class RMIServerStub implements ServerInterface {
      *
      * @param name   the name
      * @param idGame the id game
-     * @param me     the me
+     * @param me     me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -325,7 +325,7 @@ public class RMIServerStub implements ServerInterface {
     /**
      * Gets private chat log.
      *
-     * @param yourName  the your name
+     * @param yourName  your name
      * @param otherName the other name
      * @throws IOException the io exception
      */

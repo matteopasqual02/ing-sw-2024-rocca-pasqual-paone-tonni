@@ -166,7 +166,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     /**
      * Pong.
      *
-     * @param me the me
+     * @param me me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -184,7 +184,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      *
      * @param name          the name
      * @param maxNumPlayers the max num players
-     * @param me            the me
+     * @param me            me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -206,7 +206,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      * Join first available.
      *
      * @param name the name
-     * @param me   the me
+     * @param me   me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -229,7 +229,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      *
      * @param name   the name
      * @param idGame the id game
-     * @param me     the me
+     * @param me     me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -251,7 +251,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      *
      * @param name   the name
      * @param idGame the id game
-     * @param me     the me
+     * @param me     me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -438,7 +438,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     /**
      * Gets private chat log.
      *
-     * @param yourName  the your name
+     * @param yourName  your name
      * @param otherName the other name
      * @throws IOException the io exception
      */

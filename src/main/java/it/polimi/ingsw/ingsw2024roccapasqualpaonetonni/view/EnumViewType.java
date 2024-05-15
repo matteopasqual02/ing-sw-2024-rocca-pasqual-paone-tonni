@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 /**
- * The enum Enum view type.
+ * The Enum view type.
  */
 public enum EnumViewType {
     /**

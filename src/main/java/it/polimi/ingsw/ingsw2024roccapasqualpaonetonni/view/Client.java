@@ -39,11 +39,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     private ViewUpdate view;
     /**
-     * The My game id.
+     * My game id.
      */
     private int myGameId;
     /**
-     * The My nickname.
+     * My nickname.
      */
     private String myNickname;
     /**
@@ -51,7 +51,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     private GameStatus state = null;
     /**
-     * The My turn.
+     * My turn.
      */
     private Boolean myTurn = false;
     /**
@@ -370,7 +370,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     /**
      * Sets my nickname.
      *
-     * @param myNickname the my nickname
+     * @param myNickname my nickname
      */
     public void setMyNickname(String myNickname) {
         this.myNickname = myNickname;
@@ -450,7 +450,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     }
 
     /**
-     * Are you ready.
+     * Are you ready
      */
     @Override
     public void areYouReady() {

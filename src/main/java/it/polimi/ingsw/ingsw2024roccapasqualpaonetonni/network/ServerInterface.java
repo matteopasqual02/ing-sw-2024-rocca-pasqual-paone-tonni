@@ -28,7 +28,7 @@ public interface ServerInterface extends Remote{
      * Join first available.
      *
      * @param name the name
-     * @param me   the me
+     * @param me   me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */

@@ -219,7 +219,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     }
 
     /**
-     * Leave game game controller interface.
+     * Leave game controller interface.
      *
      * @param nickname       the nickname
      * @param idToDisconnect the id to disconnect

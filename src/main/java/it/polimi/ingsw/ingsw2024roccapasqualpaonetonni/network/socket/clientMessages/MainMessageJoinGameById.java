@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
  */
 public class MainMessageJoinGameById extends ClientGenericMessage{
     /**
-     * The Id to connect.
+     * The ID to connect.
      */
     private final int idToConnect;
     /**

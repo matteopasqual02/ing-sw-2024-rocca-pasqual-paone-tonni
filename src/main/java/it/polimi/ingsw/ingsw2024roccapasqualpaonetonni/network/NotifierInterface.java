@@ -262,7 +262,7 @@ public interface NotifierInterface extends Remote {
     /**
      * Send private chat log.
      *
-     * @param yourName    the your name
+     * @param yourName    your name
      * @param otherName   the other name
      * @param privateChat the private chat
      * @throws IOException the io exception

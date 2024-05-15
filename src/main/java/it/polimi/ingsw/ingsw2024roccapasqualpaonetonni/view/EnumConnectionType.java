@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 /**
- * The enum Enum connection type.
+ * The Enum connection type.
  */
 public enum EnumConnectionType {
     /**
