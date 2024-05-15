@@ -7,16 +7,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" styleClass="root" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.LobbyController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" styleClass="root" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.LobbyController">
     <children>
         <HBox alignment="CENTER" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button alignment="CENTER" contentDisplay="BOTTOM" layoutY="70.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="200.0" text="Create Game" onAction="#handleNewGameButtonClick"/>
+                <Button alignment="CENTER" contentDisplay="BOTTOM" layoutY="70.0" mnemonicParsing="false" onAction="#handleNewGameButtonClick" prefHeight="70.0" prefWidth="200.0" text="Create Game" />
             </children>
         </HBox>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="70.0" prefWidth="200.0" text="Join Game" onAction="#handleJoinGameButtonClick"/>
+                <Button alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#handleJoinGameButtonClick" prefHeight="70.0" prefWidth="200.0" text="Join Game" />
             </children>
         </HBox>
     </children>

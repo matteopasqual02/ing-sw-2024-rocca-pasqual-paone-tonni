@@ -6,13 +6,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml"
-           fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.NameNumberController">
-    <HBox spacing="10" alignment="CENTER">
-        <TextField fx:id="string1" promptText="Insert yout nickname"/>
-        <TextField fx:id="string2" promptText="Insert the number of players"/>
-        <Button text="Insert" onAction="#handleButtonClick"
-                prefHeight="400.0" prefWidth="600.0"/>
-    </HBox>
-</StackPane>
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="root-green" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.NameNumberController">
+    <children>
+      <HBox alignment="CENTER" layoutY="413.0" prefHeight="187.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
+         <children>
+               <Button alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="268.0" text="Insert" textAlignment="CENTER" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="76.0" prefHeight="128.0" prefWidth="1024.0" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+         <children>
+               <TextField fx:id="string2" alignment="CENTER" prefHeight="18.0" prefWidth="500.0" promptText="Insert the number of players" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="8.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+               <TextField fx:id="string1" alignment="CENTER" prefHeight="31.0" prefWidth="500.0" promptText="Insert yout nickname" />
+         </children>
+      </HBox>
+    </children>
+</AnchorPane>
