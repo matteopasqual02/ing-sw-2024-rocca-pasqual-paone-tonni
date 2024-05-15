@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
-public class LobbyController {
+public class LobbyController extends GenericController{
     @FXML
     private Button button;
     private ExecutorService executor;

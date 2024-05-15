@@ -4,9 +4,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,7 +42,7 @@ public class GUIApplication extends Application {
         stage.setMinWidth(1024);
         stage.setMinHeight(600);
         stage.setScene(new Scene(root, 300, 200));
-        stage.setTitle("Simple Button Example");
+        stage.setTitle("Codex Naturalis");
         stage.show();
 
     }
@@ -56,8 +58,28 @@ public class GUIApplication extends Application {
         ConsolePrinter.consolePrinter(message);
     }
     public void show_noAvailableGame(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Message");
+        alert.setHeaderText("Error:");
+        alert.setContentText("no games available");
+        alert.showAndWait();
+        Platform.runLater(()->{
+            try {
+                this.changeScene("/Lobby.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        //infoBox("no games available","Error","Message:");
         String message = String.format("no games available");
         ConsolePrinter.consolePrinter(message);
+    }
+    public static void infoBox(String message, String title, String header){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
     public void changeScene(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -66,14 +88,10 @@ public class GUIApplication extends Application {
 
         controller.setParameters(executor, client);
 
-        Stage stage = (Stage) root.getScene().getWindow();
+        //Stage stage = (Stage) root.getScene().getWindow();
         Scene scene = new Scene(newRoot,300,200);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
-/*
-        stage.setScene(new Scene(root, 300, 200));
-        stage.setTitle("Codex Naturalis");
-        stage.show();*/
     }
 }
