@@ -63,7 +63,7 @@ public interface MainControllerInterface extends Remote{
     GameControllerInterface reconnect(String nickname, int idToReconnect, NotifierInterface notifier) throws RemoteException;
 
     /**
-     * Leave game game controller interface.
+     * Leave game controller interface.
      *
      * @param nickname       the nickname
      * @param idToDisconnect the id to disconnect

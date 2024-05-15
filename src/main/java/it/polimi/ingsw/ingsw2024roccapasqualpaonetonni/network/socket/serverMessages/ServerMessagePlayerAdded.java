@@ -22,6 +22,11 @@ public class ServerMessagePlayerAdded extends ServerGenericMessage{
         this.nickname=gameId;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

@@ -24,10 +24,24 @@ public class ResourceCard extends PlayingCard {
         super(id,seed,c,points);
     }
 
+    /**
+     * Calculate points int.
+     *
+     * @param board     the board
+     * @param seedCount the seed count
+     * @param x         the x
+     * @param y         the y
+     * @return the int
+     */
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y) {
         return points;
     }
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         boolean flipped = isFlipped;
@@ -37,6 +51,13 @@ public class ResourceCard extends PlayingCard {
         //card
         return getString(sb, flipped, background);
     }
+
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @return the string
+     */
     public String toString(Boolean flipped) {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = cardSeed.getByAnsi();
@@ -121,6 +142,13 @@ public class ResourceCard extends PlayingCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @param line    the line
+     * @return the string
+     */
     public String toString(Boolean flipped, int line) {
         StringBuilder[] sb = new StringBuilder[3];
         for (int i = 0; i < sb.length; i++) {

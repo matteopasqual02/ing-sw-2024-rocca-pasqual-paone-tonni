@@ -29,6 +29,12 @@ public class ServerMessageChatPublicLog extends ServerGenericMessage{
         this.allMessages = allMessages;
         this.requesterName = requesterName;
     }
+
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

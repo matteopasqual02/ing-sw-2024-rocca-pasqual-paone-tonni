@@ -21,6 +21,13 @@ public class ServerMessageNextTurn extends ServerGenericMessage{
     public ServerMessageNextTurn(String nickname){
         this.nickname = nickname;
     }
+
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void launchMessage(GameListener listener) throws RemoteException {
         try {

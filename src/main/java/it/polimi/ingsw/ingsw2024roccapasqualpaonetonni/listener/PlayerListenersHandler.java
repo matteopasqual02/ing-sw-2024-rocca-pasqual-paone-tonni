@@ -12,13 +12,10 @@ import java.util.HashMap;
 
 /**
  * The type Player listeners handler.
- */
-/*
-this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
-occurs in the model (the controller does something) one of these methods gets called in order to show the
-change to each of the clients. These methods call other methods on the actual single listener giving it the change occurred
-
-these are not the methods that directly notify the clients, they are the ones that call those methods on all of the clients.
+ * this class handles the listeners of the player class in the model: the listeners are elements related to each client, when a change
+ * occurs in the model (the controller does something) one of these methods gets called in order to show the
+ * change to each of the clients. These methods call other methods on the actual single listener giving it the change occurred
+ * these are not the methods that directly notify the clients, they are the ones that call those methods on all the clients.
  */
 public class PlayerListenersHandler extends ListenersHandler implements Serializable {
 

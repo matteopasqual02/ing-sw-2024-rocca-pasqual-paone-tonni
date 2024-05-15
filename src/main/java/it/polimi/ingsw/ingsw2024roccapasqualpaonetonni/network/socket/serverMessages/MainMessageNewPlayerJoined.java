@@ -22,6 +22,11 @@ public class MainMessageNewPlayerJoined extends ServerGenericMessage {
         this.name = name;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

@@ -23,6 +23,12 @@ public class ServerMessageGoalChosen extends ServerGenericMessage {
         this.p =p;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void launchMessage(GameListener listener) throws RemoteException {
         listener.personalGoalChosen(p);

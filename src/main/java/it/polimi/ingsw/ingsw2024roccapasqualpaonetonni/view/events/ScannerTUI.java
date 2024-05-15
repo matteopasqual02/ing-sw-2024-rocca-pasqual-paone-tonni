@@ -30,6 +30,10 @@ public class ScannerTUI extends Thread implements ScannerInterface{
         bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         this.start();
     }
+
+    /**
+     * Run.
+     */
     public void run(){
         while(!Thread.interrupted()){
             try {

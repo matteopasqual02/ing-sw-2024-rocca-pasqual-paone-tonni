@@ -9,6 +9,12 @@ import java.rmi.RemoteException;
  */
 public class ServerMessagePing extends ServerGenericMessage{
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     * @throws RemoteException the remote exception
+     */
     public void launchMessage(GameListener listener) throws RemoteException {
         try {
             listener.ping();

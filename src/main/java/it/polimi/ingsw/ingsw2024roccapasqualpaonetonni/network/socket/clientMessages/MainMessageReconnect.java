@@ -34,11 +34,24 @@ public class MainMessageReconnect extends ClientGenericMessage{
         this.listener = listener;
     }
 
+    /**
+     * Launch message game controller interface.
+     *
+     * @param mainControllerInterface the main controller interface
+     * @param notifier                the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
         return mainControllerInterface.reconnect(nickname, idToConnect, notifier);
     }
 
+    /**
+     * Launch message.
+     *
+     * @param gameControllerInterface the game controller interface
+     */
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) {
 

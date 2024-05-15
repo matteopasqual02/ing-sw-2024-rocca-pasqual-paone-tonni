@@ -25,11 +25,25 @@ public class MessageAddToPingPong extends ClientGenericMessage {
         this.isForMainController = false;
     }
 
+    /**
+     * Launch message game controller interface.
+     *
+     * @param mainControllerInterface the main controller interface
+     * @param notifier                the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
         return null;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param gameControllerInterface the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
         gameControllerInterface.addToPingPong(client);

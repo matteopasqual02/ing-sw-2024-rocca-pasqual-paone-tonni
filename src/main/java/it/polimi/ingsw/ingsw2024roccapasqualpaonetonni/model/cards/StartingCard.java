@@ -45,6 +45,12 @@ public class StartingCard extends PlayingCard {
         return center;
     }
 
+    /**
+     * Get corner corner.
+     *
+     * @param pos the pos
+     * @return the corner
+     */
     public Corner getCorner(int pos){
         if (isFlipped) {
             return cornersBack[pos - 1];
@@ -55,6 +61,11 @@ public class StartingCard extends PlayingCard {
     }
 
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString() {
         boolean flipped = isFlipped;
         StringBuilder sb = new StringBuilder();
@@ -186,6 +197,13 @@ public class StartingCard extends PlayingCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @param line    the line
+     * @return the string
+     */
     public String toString(Boolean flipped, int line) {
         StringBuilder[] sb = new StringBuilder[3];
         Ansi.Color background = Ansi.Color.WHITE;

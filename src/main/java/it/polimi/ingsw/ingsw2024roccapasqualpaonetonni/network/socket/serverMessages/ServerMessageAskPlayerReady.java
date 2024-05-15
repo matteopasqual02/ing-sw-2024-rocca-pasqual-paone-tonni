@@ -15,6 +15,12 @@ public class ServerMessageAskPlayerReady extends ServerGenericMessage{
     public ServerMessageAskPlayerReady(){
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void launchMessage(GameListener listener) throws RemoteException {
         listener.areYouReady();

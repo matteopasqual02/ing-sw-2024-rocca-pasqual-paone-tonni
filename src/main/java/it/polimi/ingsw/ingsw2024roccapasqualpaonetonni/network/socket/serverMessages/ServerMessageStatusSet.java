@@ -22,6 +22,13 @@ public class ServerMessageStatusSet extends ServerGenericMessage{
     public ServerMessageStatusSet(GameStatus status){
         this.status = status;
     }
+
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void launchMessage(GameListener listener) throws RemoteException {
         try {

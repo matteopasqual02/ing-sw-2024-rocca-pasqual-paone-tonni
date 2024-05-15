@@ -23,6 +23,12 @@ public class ServerMessageNotifyAll extends ServerGenericMessage{
         this.gameImmutable=gameImmutable;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void launchMessage(GameListener listener) throws RemoteException {
         try {

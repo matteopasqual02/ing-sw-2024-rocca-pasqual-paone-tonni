@@ -43,11 +43,25 @@ public class MainController implements MainControllerInterface {
         return instance;
     }
 
+    /**
+     * Get running games list.
+     *
+     * @return the list
+     */
     @Override
     public synchronized List<GameController> getRunningGames(){
         return runningGames;
     }
 
+    /**
+     * Create game controller game controller interface.
+     *
+     * @param nickname       the nickname
+     * @param numMaxOfPlayer the num max of player
+     * @param notifier       the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, NotifierInterface notifier) throws RemoteException {
         GameController g = new GameController(getRunningGames().size()+1);
@@ -58,6 +72,14 @@ public class MainController implements MainControllerInterface {
         return g;
     }
 
+    /**
+     * Join first available game game controller interface.
+     *
+     * @param nickname the nickname
+     * @param notifier the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized GameControllerInterface joinFirstAvailableGame(String nickname, NotifierInterface notifier) throws RemoteException{
         List<GameController> gameList = getRunningGames();
@@ -74,6 +96,15 @@ public class MainController implements MainControllerInterface {
         return null;
     }
 
+    /**
+     * Join game by id game controller interface.
+     *
+     * @param nickname    the nickname
+     * @param idToConnect the id to connect
+     * @param notifier    the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized GameControllerInterface joinGameByID(String nickname, int idToConnect, NotifierInterface notifier) throws RemoteException{
         List<GameController> gameList = getRunningGames();
@@ -93,6 +124,15 @@ public class MainController implements MainControllerInterface {
     }
 
 
+    /**
+     * Reconnect game controller interface.
+     *
+     * @param nickname      the nickname
+     * @param idToReconnect the id to reconnect
+     * @param notifier      the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized GameControllerInterface reconnect(String nickname, int idToReconnect, NotifierInterface notifier) throws RemoteException {
         Player player;
@@ -108,6 +148,14 @@ public class MainController implements MainControllerInterface {
         return null;
     }
 
+    /**
+     * Leave game controller interface.
+     *
+     * @param nickname       the nickname
+     * @param idToDisconnect the id to disconnect
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException {
         Player p;
@@ -132,6 +180,9 @@ public class MainController implements MainControllerInterface {
         runningGames.remove(g);
     }
 
+    /**
+     * Clear singleton.
+     */
     @Override
     public synchronized void clearSingleton() {
         runningGames.clear();

@@ -67,6 +67,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         this.interrupt();
     }
 
+    /**
+     * Run.
+     */
     @Override
     public void run(){
         var messageThread = new Thread(this::takeExecute);
@@ -148,6 +151,13 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send all.
+     *
+     * @param gameImmutable the game immutable
+     * @throws IOException     the io exception
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void sendAll(GameImmutable gameImmutable) throws IOException, RemoteException {
         synchronized (outputStream) {
@@ -156,6 +166,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send ping.
+     *
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPing() throws IOException {
         synchronized (outputStream) {
@@ -164,6 +179,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Generic error.
+     *
+     * @param s the s
+     * @throws IOException the io exception
+     */
     @Override
     public void genericError(String s) throws IOException {
         synchronized (outputStream) {
@@ -172,6 +193,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Winners.
+     *
+     * @param list the list
+     * @throws IOException the io exception
+     */
     @Override
     public void winners(List<Player> list) throws IOException {
         synchronized (outputStream) {
@@ -180,6 +207,14 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send max num players set.
+     *
+     * @param gameId the game id
+     * @param max    the max
+     * @throws IOException            the io exception
+     * @throws ClassNotFoundException the class not found exception
+     */
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
         synchronized (outputStream) {
@@ -188,6 +223,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send created game.
+     *
+     * @param gameId the game id
+     * @throws IOException the io exception
+     */
     @Override
     public void sendCreatedGame(int gameId) throws IOException {
         synchronized (outputStream) {
@@ -196,6 +237,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send you joined game.
+     *
+     * @param gameId the game id
+     * @throws IOException the io exception
+     */
     @Override
     public void sendYouJoinedGame(int gameId) throws IOException {
         if (gameControllerInterface != null) {
@@ -206,6 +253,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send added new player.
+     *
+     * @param pNickname the p nickname
+     * @throws IOException the io exception
+     */
     @Override
     public void sendAddedNewPlayer(String pNickname) throws IOException {
         synchronized (outputStream) {
@@ -214,6 +267,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send no available game.
+     *
+     * @throws IOException the io exception
+     */
     @Override
     public void sendNoAvailableGame() throws IOException{
         synchronized (outputStream) {
@@ -222,6 +280,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send ask players ready.
+     *
+     * @throws IOException the io exception
+     */
     @Override
     public void sendAskPlayersReady() throws IOException {
         synchronized (outputStream) {
@@ -230,22 +293,39 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send full game.
+     */
     @Override
     public void sendFullGame() {
         synchronized (outputStream) {
         }
     }
 
+    /**
+     * Send name already in game.
+     */
     @Override
     public void sendNameAlreadyInGame() {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send player removed.
+     *
+     * @param pNickname the p nickname
+     */
     @Override
     public void sendPlayerRemoved(String pNickname) {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send next turn.
+     *
+     * @param nickname the nickname
+     * @throws IOException the io exception
+     */
     @Override
     public void sendNextTurn(String nickname) throws IOException {
         synchronized (outputStream) {
@@ -254,28 +334,51 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send last turn.
+     */
     @Override
     public void sendLastTurn() {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send reconnected player.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void sendReconnectedPlayer(String nickname) {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send reconnection impossible.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void sendReconnectionImpossible(String nickname) {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send disconnected player.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void sendDisconnectedPlayer(String nickname) {
         synchronized (outputStream) {}
     }
 
 
-
+    /**
+     * Send status set.
+     *
+     * @param status the status
+     * @throws IOException the io exception
+     */
     @Override
     public void sendStatusSet(GameStatus status) throws IOException {
         synchronized (outputStream) {
@@ -284,16 +387,30 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send status set to last status.
+     *
+     * @param status the status
+     */
     @Override
     public void sendStatusSetToLastStatus(GameStatus status) {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send last status reset.
+     */
     @Override
     public void sendLastStatusReset() {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send start added.
+     *
+     * @param p the p
+     * @throws IOException the io exception
+     */
     @Override
     public void sendStartAdded(Player p) throws IOException {
         synchronized (outputStream) {
@@ -302,6 +419,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send card added.
+     *
+     * @param p the p
+     * @throws IOException the io exception
+     */
     @Override
     public void sendCardAdded(Player p) throws IOException {
         synchronized (outputStream) {
@@ -310,6 +433,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send personal goal chosen.
+     *
+     * @param p the p
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPersonalGoalChosen(Player p) throws IOException {
         synchronized (outputStream) {
@@ -318,6 +447,13 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send resource drawn.
+     *
+     * @param p the p
+     * @param d the d
+     * @throws IOException the io exception
+     */
     @Override
     public void sendResourceDrawn(Player p, DrawableDeck d) throws IOException {
         synchronized (outputStream) {
@@ -326,6 +462,13 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send gold drawn.
+     *
+     * @param p the p
+     * @param d the d
+     * @throws IOException the io exception
+     */
     @Override
     public void sendGoldDrawn(Player p, DrawableDeck d) throws IOException {
         synchronized (outputStream) {
@@ -334,6 +477,14 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send drew from board.
+     *
+     * @param p the p
+     * @param b the b
+     * @param d the d
+     * @throws IOException the io exception
+     */
     @Override
     public void sendDrewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws IOException {
         synchronized (outputStream) {
@@ -342,6 +493,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send you were removed.
+     *
+     * @param pNickname the p nickname
+     * @throws IOException the io exception
+     */
     @Override
     public void sendYouWereRemoved(String pNickname) throws IOException {
         synchronized (outputStream) {
@@ -350,11 +507,20 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * You were reconnected.
+     */
     @Override
     public void youWereReconnected() {
         synchronized (outputStream) {}
     }
 
+    /**
+     * Send message.
+     *
+     * @param message the message
+     * @throws IOException the io exception
+     */
     @Override
     public void sendMessage(Message message) throws IOException {
         synchronized (outputStream) {
@@ -363,6 +529,12 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send private message.
+     *
+     * @param message the message
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPrivateMessage(PrivateMessage message) throws IOException {
         synchronized (outputStream) {
@@ -371,6 +543,13 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send public chat log.
+     *
+     * @param requesterName the requester name
+     * @param allMessages   the all messages
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException {
         synchronized (outputStream) {
@@ -379,6 +558,14 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    /**
+     * Send private chat log.
+     *
+     * @param yourName    the your name
+     * @param otherName   the other name
+     * @param privateChat the private chat
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException {
         synchronized (outputStream) {

@@ -22,6 +22,11 @@ public class ServerMessageMaxNum extends ServerGenericMessage{
         max=m;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

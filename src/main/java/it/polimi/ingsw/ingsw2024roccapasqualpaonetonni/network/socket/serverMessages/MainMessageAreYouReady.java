@@ -8,6 +8,11 @@ import java.rmi.RemoteException;
  * The type Main message are you ready.
  */
 public class MainMessageAreYouReady extends ServerGenericMessage {
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

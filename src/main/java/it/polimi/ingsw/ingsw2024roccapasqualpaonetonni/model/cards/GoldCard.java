@@ -36,6 +36,12 @@ public class GoldCard extends PlayingCard {
         this.placeCondition= Arrays.copyOf(p,4);
     }
 
+    /**
+     * Check requirements int [ ].
+     *
+     * @param available_seeds the available seeds
+     * @return the int [ ]
+     */
     public int[] checkRequirements(int[] available_seeds) {
         int[] result = new int[2];
         for (int i = 0; i < placeCondition.length; i++) {
@@ -48,6 +54,15 @@ public class GoldCard extends PlayingCard {
         return result;
     }
 
+    /**
+     * Calculate points int.
+     *
+     * @param board     the board
+     * @param seedCount the seed count
+     * @param x         the x
+     * @param y         the y
+     * @return the int
+     */
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y) {
         int curr_points = 0;
         PlayingCard cardOnBoard;
@@ -84,6 +99,11 @@ public class GoldCard extends PlayingCard {
     public String getPointCondition() { return pointCondition; }
 
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         boolean flipped = isFlipped;
@@ -92,6 +112,13 @@ public class GoldCard extends PlayingCard {
 
         return getString(sb, flipped, background);
     }
+
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @return the string
+     */
     public String toString(Boolean flipped) {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = cardSeed.getByAnsi();
@@ -229,6 +256,13 @@ public class GoldCard extends PlayingCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @param line    the line
+     * @return the string
+     */
     public String toString(Boolean flipped,int line) {
         StringBuilder[] sb = new StringBuilder[3];
         for (int i = 0; i < sb.length; i++) {

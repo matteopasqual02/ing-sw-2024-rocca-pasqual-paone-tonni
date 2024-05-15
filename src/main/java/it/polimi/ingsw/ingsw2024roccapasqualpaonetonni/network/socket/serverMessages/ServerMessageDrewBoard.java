@@ -35,6 +35,11 @@ public class ServerMessageDrewBoard extends ServerGenericMessage{
         this.drawableDeck=drawableDeck;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

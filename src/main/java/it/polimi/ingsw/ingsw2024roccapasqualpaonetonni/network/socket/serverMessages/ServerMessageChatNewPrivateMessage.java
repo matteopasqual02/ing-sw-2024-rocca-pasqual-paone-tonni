@@ -22,6 +22,12 @@ public class ServerMessageChatNewPrivateMessage extends ServerGenericMessage{
     public ServerMessageChatNewPrivateMessage(PrivateMessage message){
         this.message = message;
     }
+
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

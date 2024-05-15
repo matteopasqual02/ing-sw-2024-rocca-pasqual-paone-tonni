@@ -21,6 +21,12 @@ public class ServerMessageError extends ServerGenericMessage{
     public ServerMessageError(String string){
         this.string=string;
     }
+
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

@@ -23,6 +23,12 @@ public class ServerMessageWinners extends ServerGenericMessage{
     public ServerMessageWinners(List<Player> players){
         this.players=players;
     }
+
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

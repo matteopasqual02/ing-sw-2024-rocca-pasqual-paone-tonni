@@ -142,7 +142,7 @@ public interface GameControllerInterface extends Remote {
     /**
      * Gets private chat log.
      *
-     * @param yourName  the your name
+     * @param yourName  your name
      * @param otherName the other name
      * @throws RemoteException the remote exception
      */

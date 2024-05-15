@@ -61,6 +61,9 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         this.start();
     }
 
+    /**
+     * Run.
+     */
     public void run(){
         ServerGenericMessage message;
         while (true){
@@ -160,6 +163,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         return this.inputStream;
     }
 
+    /**
+     * Pong.
+     *
+     * @param me the me
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     @Override
     public void pong(String me) throws IOException, NotBoundException {
         synchronized (outputStream) {
@@ -169,6 +179,15 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     }
 
+    /**
+     * Create game.
+     *
+     * @param name          the name
+     * @param maxNumPlayers the max num players
+     * @param me            the me
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
         synchronized (outputStream) {
@@ -183,6 +202,14 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     }
 
+    /**
+     * Join first available.
+     *
+     * @param name the name
+     * @param me   the me
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     @Override
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
         synchronized (outputStream) {
@@ -197,6 +224,15 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
 
     }
 
+    /**
+     * Join game by id.
+     *
+     * @param name   the name
+     * @param idGame the id game
+     * @param me     the me
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     @Override
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         synchronized (outputStream) {
@@ -210,6 +246,15 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Reconnect.
+     *
+     * @param name   the name
+     * @param idGame the id game
+     * @param me     the me
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     @Override
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
         synchronized (outputStream) {
@@ -223,6 +268,14 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Leave.
+     *
+     * @param name   the name
+     * @param idGame the id game
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     @Override
     public void leave(String name, int idGame) throws IOException, NotBoundException {
         synchronized (outputStream) {
@@ -231,6 +284,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Ready.
+     *
+     * @param nickname the nickname
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     @Override
     public void ready(String nickname) throws IOException, NotBoundException {
         synchronized (outputStream) {
@@ -239,6 +299,16 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Add card.
+     *
+     * @param nickname       the nickname
+     * @param cardToAdd      the card to add
+     * @param cardOnBoard    the card on board
+     * @param cornerToAttach the corner to attach
+     * @param flip           the flip
+     * @throws IOException the io exception
+     */
     @Override
     public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException {
         synchronized (outputStream) {
@@ -247,6 +317,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Add starting card.
+     *
+     * @param nickname the nickname
+     * @param flip     the flip
+     * @throws IOException the io exception
+     */
     @Override
     public void addStartingCard(String nickname, Boolean flip) throws IOException {
         synchronized (outputStream) {
@@ -255,6 +332,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Choose player goal.
+     *
+     * @param nickname the nickname
+     * @param choice   the choice
+     * @throws IOException the io exception
+     */
     @Override
     public void choosePlayerGoal(String nickname, int choice) throws IOException {
         synchronized (outputStream) {
@@ -263,6 +347,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Draw resource from deck.
+     *
+     * @param nickname the nickname
+     * @throws IOException the io exception
+     */
     @Override
     public void drawResourceFromDeck(String nickname) throws IOException {
         synchronized (outputStream) {
@@ -271,6 +361,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Draw gold from deck.
+     *
+     * @param nickname the nickname
+     * @throws IOException the io exception
+     */
     @Override
     public void drawGoldFromDeck(String nickname) throws IOException {
         synchronized (outputStream) {
@@ -279,6 +375,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Draw from board.
+     *
+     * @param nickname the nickname
+     * @param position the position
+     * @throws IOException the io exception
+     */
     @Override
     public void drawFromBoard(String nickname, int position) throws IOException {
         synchronized (outputStream) {
@@ -287,6 +390,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Send message.
+     *
+     * @param txt      the txt
+     * @param nickname the nickname
+     * @throws IOException the io exception
+     */
     @Override
     public void sendMessage(String txt, String nickname) throws IOException {
         synchronized (outputStream) {
@@ -295,6 +405,14 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Send private message.
+     *
+     * @param txt              the txt
+     * @param nicknameSender   the nickname sender
+     * @param nicknameReciever the nickname reciever
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException {
         synchronized (outputStream) {
@@ -303,6 +421,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Gets public chat log.
+     *
+     * @param requesterName the requester name
+     * @throws IOException the io exception
+     */
     @Override
     public void getPublicChatLog(String requesterName) throws IOException {
         synchronized (outputStream) {
@@ -311,6 +435,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Gets private chat log.
+     *
+     * @param yourName  the your name
+     * @param otherName the other name
+     * @throws IOException the io exception
+     */
     @Override
     public void getPrivateChatLog(String yourName, String otherName) throws IOException {
         synchronized (outputStream) {
@@ -319,6 +450,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         }
     }
 
+    /**
+     * Sets max n um.
+     *
+     * @param num the num
+     * @throws IOException the io exception
+     */
     @Override
     public void setMaxNUm(int num) throws IOException {
         synchronized (outputStream) {

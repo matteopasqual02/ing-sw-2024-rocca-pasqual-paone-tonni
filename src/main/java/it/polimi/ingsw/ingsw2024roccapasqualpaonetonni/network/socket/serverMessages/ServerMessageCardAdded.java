@@ -21,6 +21,11 @@ public class ServerMessageCardAdded extends ServerGenericMessage{
         this.player=player;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

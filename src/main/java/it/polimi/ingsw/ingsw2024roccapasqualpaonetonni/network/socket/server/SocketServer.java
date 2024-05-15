@@ -39,6 +39,9 @@ public class SocketServer extends Thread {
         }
     }
 
+    /**
+     * Run.
+     */
     public void run(){
         try{
             while (!Thread.interrupted()){

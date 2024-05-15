@@ -87,6 +87,11 @@ public class Message implements Serializable {
      */
     public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     @Override
     public String toString() {
         return String.valueOf(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.DEFAULT).

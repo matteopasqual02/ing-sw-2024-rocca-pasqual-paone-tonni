@@ -28,6 +28,11 @@ public class ServerMessageDrewResources extends ServerGenericMessage{
         this.deck=deck;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

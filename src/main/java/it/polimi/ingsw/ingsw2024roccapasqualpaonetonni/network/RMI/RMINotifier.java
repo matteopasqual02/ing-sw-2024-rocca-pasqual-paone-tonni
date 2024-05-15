@@ -34,6 +34,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         listener = g;
     }
 
+    /**
+     * Send all.
+     *
+     * @param gameImmutable the game immutable
+     */
     @Override
     public void sendAll(GameImmutable gameImmutable) {
         try{
@@ -42,6 +47,10 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Send ping.
+     */
     @Override
     public void sendPing() {
         try {
@@ -51,6 +60,12 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             e.printStackTrace();
         }
     }
+
+    /**
+     * Generic error.
+     *
+     * @param s the s
+     */
     @Override
     public void genericError(String s) {
         try {
@@ -61,6 +76,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Winners.
+     *
+     * @param list the list
+     */
     @Override
     public void winners(List<Player> list) {
         try {
@@ -71,7 +91,13 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
-    //--------------------------GAME CREATION PHASE
+    /**
+     * Send max num players set.
+     *
+     * @param gameId the game id
+     * @param max    the max
+     */
+//--------------------------GAME CREATION PHASE
     @Override
     public void sendMaxNumPlayersSet(int gameId, int max) {
         try {
@@ -80,6 +106,12 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Send created game.
+     *
+     * @param gameId the game id
+     */
     @Override
     public void sendCreatedGame(int gameId) {
         try {
@@ -88,6 +120,12 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Send you joined game.
+     *
+     * @param gameId the game id
+     */
     @Override
     public void sendYouJoinedGame(int gameId) {
         try {
@@ -96,6 +134,12 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Send added new player.
+     *
+     * @param pNickname the p nickname
+     */
     @Override
     public void sendAddedNewPlayer(String pNickname) {
         try {
@@ -104,6 +148,10 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Send no available game.
+     */
     @Override
     public void sendNoAvailableGame() {
         try {
@@ -112,6 +160,10 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Send ask players ready.
+     */
     @Override
     public void sendAskPlayersReady() {
         try {
@@ -120,6 +172,10 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Send full game.
+     */
     @Override
     public void sendFullGame() {
         try {
@@ -129,6 +185,10 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
 
     }
+
+    /**
+     * Send name already in game.
+     */
     @Override
     public void sendNameAlreadyInGame() {
         try {
@@ -139,6 +199,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send player removed.
+     *
+     * @param pNickname the p nickname
+     */
     @Override
     public void sendPlayerRemoved(String pNickname) {
         try {
@@ -150,6 +215,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send next turn.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void sendNextTurn(String nickname) {
         try {
@@ -161,6 +231,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send last turn.
+     */
     @Override
     public void sendLastTurn() {
         try {
@@ -172,6 +245,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send reconnected player.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void sendReconnectedPlayer(String nickname) {
         try {
@@ -182,6 +260,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send reconnection impossible.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void sendReconnectionImpossible(String nickname) {
         try {
@@ -193,6 +276,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send disconnected player.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void sendDisconnectedPlayer(String nickname) {
         try {
@@ -205,6 +293,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
 
+    /**
+     * Send status set.
+     *
+     * @param status the status
+     */
     @Override
     public void sendStatusSet(GameStatus status) {
         try {
@@ -215,6 +308,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send status set to last status.
+     *
+     * @param status the status
+     */
     @Override
     public void sendStatusSetToLastStatus(GameStatus status) {
         try {
@@ -226,6 +324,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send last status reset.
+     */
     @Override
     public void sendLastStatusReset() {
         try {
@@ -237,6 +338,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
+    /**
+     * Send start added.
+     *
+     * @param p the p
+     */
     @Override
     public void sendStartAdded(Player p) {
         try {
@@ -247,6 +353,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send card added.
+     *
+     * @param p the p
+     */
     @Override
     public void sendCardAdded(Player p) {
         try {
@@ -257,6 +368,11 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send personal goal chosen.
+     *
+     * @param p the p
+     */
     @Override
     public void sendPersonalGoalChosen(Player p) {
         try {
@@ -267,6 +383,12 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send resource drawn.
+     *
+     * @param p the p
+     * @param d the d
+     */
     @Override
     public void sendResourceDrawn(Player p, DrawableDeck d) {
         try {
@@ -277,6 +399,12 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send gold drawn.
+     *
+     * @param p the p
+     * @param d the d
+     */
     @Override
     public void sendGoldDrawn(Player p, DrawableDeck d) {
         try {
@@ -287,6 +415,13 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send drew from board.
+     *
+     * @param p the p
+     * @param b the b
+     * @param d the d
+     */
     @Override
     public void sendDrewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         try {
@@ -298,16 +433,30 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     }
 
 
+    /**
+     * Send you were removed.
+     *
+     * @param pNickname the p nickname
+     */
     @Override
     public void sendYouWereRemoved(String pNickname) {
 
     }
 
+    /**
+     * You were reconnected.
+     */
     @Override
     public void youWereReconnected() {
 
     }
 
+    /**
+     * Send message.
+     *
+     * @param message the message
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void sendMessage(Message message) throws RemoteException {
         try {
@@ -317,6 +466,12 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send private message.
+     *
+     * @param message the message
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPrivateMessage(PrivateMessage message) throws IOException {
         try {
@@ -328,6 +483,13 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send public chat log.
+     *
+     * @param requesterName the requester name
+     * @param allMessages   the all messages
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPublicChatLog(String requesterName, List<Message> allMessages) throws IOException {
         try {
@@ -339,6 +501,14 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    /**
+     * Send private chat log.
+     *
+     * @param yourName    the your name
+     * @param otherName   the other name
+     * @param privateChat the private chat
+     * @throws IOException the io exception
+     */
     @Override
     public void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException {
         try {

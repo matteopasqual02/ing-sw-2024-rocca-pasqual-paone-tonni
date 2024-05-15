@@ -11,6 +11,14 @@ import java.util.List;
  * The type Objective points pattern.
  */
 public class ObjectivePointsPattern implements ObjectivePointsStrategy{
+    /**
+     * Count int.
+     *
+     * @param playerBoard the player board
+     * @param countTypes  the count types
+     * @param pattern     the pattern
+     * @return the int
+     */
     @Override
     public int count(PlayerBoard playerBoard, int[] countTypes, Seed[][] pattern){
         PlayingCard[][] board = playerBoard.getBoardMatrix();

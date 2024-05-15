@@ -27,6 +27,13 @@ public class ObjectivePatternCard extends ObjectiveCard {
         this.pattern = pattern;
         objectivePointsStrategy = new ObjectivePointsPattern();
     }
+
+    /**
+     * Point card int.
+     *
+     * @param playerBoard the player board
+     * @return the int
+     */
     @Override
     public int pointCard(PlayerBoard playerBoard){
         return points * objectivePointsStrategy.count(playerBoard,null,pattern);
@@ -42,6 +49,11 @@ public class ObjectivePatternCard extends ObjectiveCard {
     }
 
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString () {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = Ansi.Color.WHITE;
@@ -102,6 +114,12 @@ public class ObjectivePatternCard extends ObjectiveCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param line the line
+     * @return the string
+     */
     public String toString (int line) {
         StringBuilder[] sb = new StringBuilder[3];
         Ansi.Color background = Ansi.Color.WHITE;

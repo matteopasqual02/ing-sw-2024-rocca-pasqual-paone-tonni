@@ -337,7 +337,11 @@ public class PlayerBoard implements Serializable {
     }
 
 
-
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
 

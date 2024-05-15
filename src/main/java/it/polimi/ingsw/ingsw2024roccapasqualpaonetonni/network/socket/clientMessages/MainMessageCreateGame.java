@@ -27,11 +27,24 @@ public class MainMessageCreateGame extends ClientGenericMessage{
         this.numberOfPlayers = numberOfPlayers;
     }
 
+    /**
+     * Launch message game controller interface.
+     *
+     * @param mainControllerInterface the main controller interface
+     * @param notifier                the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
         return mainControllerInterface.createGameController(nickname, numberOfPlayers, notifier);
     }
 
+    /**
+     * Launch message.
+     *
+     * @param gameControllerInterface the game controller interface
+     */
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) {
     }

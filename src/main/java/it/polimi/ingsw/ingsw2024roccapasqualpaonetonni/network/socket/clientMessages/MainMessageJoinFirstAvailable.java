@@ -28,6 +28,14 @@ public class MainMessageJoinFirstAvailable extends ClientGenericMessage {
         this.listener = listener;
     }
 
+    /**
+     * Launch message game controller interface.
+     *
+     * @param mainControllerInterface the main controller interface
+     * @param notifier                the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface launchMessage(MainControllerInterface mainControllerInterface, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface controller = mainControllerInterface.joinFirstAvailableGame(nickname, notifier);
@@ -37,6 +45,11 @@ public class MainMessageJoinFirstAvailable extends ClientGenericMessage {
         return controller;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param gameControllerInterface the game controller interface
+     */
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) {
     }

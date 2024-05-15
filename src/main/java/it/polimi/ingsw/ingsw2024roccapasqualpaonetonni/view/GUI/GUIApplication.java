@@ -20,6 +20,12 @@ public class GUIApplication extends Application {
         return new StackPane(new Text("Hello world!"));
     }
 
+    /**
+     * Start.
+     *
+     * @param stage the stage
+     * @throws Exception the exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(createContent(),300,300));
