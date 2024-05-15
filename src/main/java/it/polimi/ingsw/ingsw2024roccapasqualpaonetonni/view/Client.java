@@ -201,7 +201,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                     try{
                         Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
                         if(me==null){return;}
-                        int card1 = Integer.parseInt(parole[1]);
+                        int card1 = Integer.parseInt(parole[1])-1;
                         PlayingCard c1 = me.getHand().get(card1);
                         int card2 = Integer.parseInt(parole[2]);
                         PlayingCard[][] board = me.getBoard().getBoardMatrix();

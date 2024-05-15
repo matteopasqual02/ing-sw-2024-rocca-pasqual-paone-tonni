@@ -42,6 +42,6 @@ public class PrivateMessage implements Serializable {
                 .a(localTime.getMinute()).a(":")
                 .a(localTime.getSecond()).a(" - ")
                 .a(sender).a(" - PRIVATE] ")
-                .fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(text));
+                .fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(text).a("\n"));
     }
 }

@@ -126,6 +126,13 @@ public class GameImmutable implements Serializable {
             }
         }
         stringBuilder.append("\nMY HAND:\n");
+        stringBuilder.append("\tHAND 1\t\t\tHAND 2\t\t\tHAND 3\t\t\t\tPRIVATE GOAL");
+        if(player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
+            stringBuilder.append("\t\t\t\t\t\t\t\tSTARTING\n");
+        }
+        else {
+            stringBuilder.append("\n");
+        }
         for(int i=0;i<3;i++){
             int finalI = i;
             player.getHand().forEach(playingCard -> stringBuilder.append(playingCard.toString(false, finalI)).append("\t"));
@@ -151,17 +158,15 @@ public class GameImmutable implements Serializable {
         stringBuilder.append(player.getBoard().toString());
 
         stringBuilder.append("\nCOMMON DECKS:\n");
+        stringBuilder.append("\tBOARD 1\t\t\tBOARD 2\t\t\tBOARD 3\t\t\tBOARD 4\t\t\t\t\tRESOURCES\t\tGOLD\t\t\t\tCOMMON OBJECTIVES\n");
         for(int k=0;k<3;k++) {
-            for (int i = 1; i < 3; i++) {
+            for (int i = 1; i < 5; i++) {
                 stringBuilder.append(boardDeck.getCard(i).toString(false,k)).append("\t");
             }
+            stringBuilder.append("\t|\t");
             ResourceCard resourceCard = (ResourceCard) drawableDeck.getDecks().get("resources").peek();
             if (resourceCard != null) {
                 stringBuilder.append(resourceCard.toString(true,k)).append("\t");
-            }
-            stringBuilder.append("\t|\t");
-            for (int i = 3; i < 5; i++) {
-                stringBuilder.append(boardDeck.getCard(i).toString(false,k)).append("\t");
             }
             GoldCard goldCard = (GoldCard) drawableDeck.getDecks().get("gold").peek();
             if (goldCard != null) {
@@ -177,23 +182,20 @@ public class GameImmutable implements Serializable {
         List<Player> sortedPlayers = new ArrayList<>(players);
         sortedPlayers.sort(Comparator.comparingInt(Player::getCurrentPoints).reversed());
 
-        stringBuilder.append("\nPOINTS\n");
+        stringBuilder.append("\nPOINTS:\n");
         for (Player playerI : sortedPlayers) {
             Ansi.Color colorI = Seed.getById(playerI.getColorPlayer() - 1).getByAnsi();
             stringBuilder.append("NICKNAME:\t").append(
                     ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getNickname()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
             ).append("\t");
-            stringBuilder.append("COLOR:\t").append(
-                    ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(Seed.getById(playerI.getColorPlayer() - 1)).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
-            ).append("\t");
             stringBuilder.append("POINTS:\t").append(
                     ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(playerI.getCurrentPoints()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
+            ).append("\t");
+            stringBuilder.append("COLOR:\t").append(
+                    ansi().fg(colorI).bg(Ansi.Color.DEFAULT).a(Seed.getById(playerI.getColorPlayer() - 1)).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
             ).append("\n");
         }
-
-
         return stringBuilder.toString();
     }
-
 
 }
