@@ -31,10 +31,9 @@ public class GUIApplication extends Application {
         this.stage = stage;
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby2.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
         Parent root = loader.load();
-        //LobbyController controller = loader.getController();
-        Lobby2Controller controller = loader.getController();
+        LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
 
         stage.setScene(new Scene(root, 300, 200));
