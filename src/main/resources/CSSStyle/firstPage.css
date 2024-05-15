@@ -1,0 +1,4 @@
+.root{
+    -fx-background-image: url("../images/background_codex_bigger.jpg");
+    -fx-background-size: cover;
+}
