@@ -2,8 +2,8 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.BoardDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 public class ServerMessageDrewBoard extends ServerGenericMessage{
     private final Player player;

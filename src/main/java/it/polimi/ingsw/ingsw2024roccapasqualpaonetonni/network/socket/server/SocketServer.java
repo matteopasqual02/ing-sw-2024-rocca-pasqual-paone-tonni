@@ -1,12 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
 
 public class SocketServer extends Thread {
     private ServerSocket serverSocket;

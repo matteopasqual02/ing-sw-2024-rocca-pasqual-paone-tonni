@@ -1,19 +1,14 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main;
+
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumViewType;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumViewType;
-import org.fusesource.jansi.AnsiConsole;
-
-
-import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
 

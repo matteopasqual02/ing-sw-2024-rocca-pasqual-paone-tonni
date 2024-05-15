@@ -3,7 +3,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiColors;
 
 import static org.fusesource.jansi.Ansi.ansi;
 

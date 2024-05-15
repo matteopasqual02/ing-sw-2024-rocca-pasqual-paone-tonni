@@ -4,8 +4,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import org.fusesource.jansi.Ansi;
 
-import java.util.Arrays;
-
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class ObjectivePatternCard extends ObjectiveCard {

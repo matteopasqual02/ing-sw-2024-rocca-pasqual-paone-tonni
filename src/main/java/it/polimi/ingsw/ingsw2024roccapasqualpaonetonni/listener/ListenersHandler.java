@@ -1,11 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
-import javafx.util.Pair;
 
 import java.rmi.RemoteException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 this abstract class defines the thing that are common for each for the ListenersHandler classes. It defines the methods to add a listener to the list and to get it back

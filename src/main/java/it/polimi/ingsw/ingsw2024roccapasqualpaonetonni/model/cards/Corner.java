@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.AlreadyCoveredException;
 
 import java.io.Serializable;
 

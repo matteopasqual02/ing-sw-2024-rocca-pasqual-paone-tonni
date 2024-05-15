@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import org.fusesource.jansi.Ansi;
 
 import java.io.Serializable;

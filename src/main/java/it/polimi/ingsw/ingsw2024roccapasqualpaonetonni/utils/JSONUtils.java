@@ -1,18 +1,15 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
+import com.google.gson.JsonObject;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.CardFactory;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
+import java.util.*;
 
 public class JSONUtils {
 

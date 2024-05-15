@@ -2,8 +2,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.rmi.RemoteException;
 
 public class ServerMessagePing extends ServerGenericMessage{

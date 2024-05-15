@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.BoardDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
@@ -22,8 +25,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Objects;
-
-import static org.fusesource.jansi.Ansi.ansi;
 
 public class Client extends UnicastRemoteObject implements GameListener, Runnable {
     private ServerInterface server;

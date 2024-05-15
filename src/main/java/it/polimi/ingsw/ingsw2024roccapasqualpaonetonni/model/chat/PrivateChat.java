@@ -1,11 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-
 import java.io.Serializable;
-import java.security.PrivateKey;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PrivateChat implements Serializable {

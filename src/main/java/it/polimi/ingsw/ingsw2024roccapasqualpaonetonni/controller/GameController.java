@@ -1,10 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -12,10 +8,10 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.DeckEmpty
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoCardException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerValues;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 
 import java.io.IOException;
 import java.rmi.RemoteException;

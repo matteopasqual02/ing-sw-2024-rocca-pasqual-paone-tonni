@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 

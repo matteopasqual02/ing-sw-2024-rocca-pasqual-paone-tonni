@@ -1,9 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoCardException;
 
 import java.io.Serializable;

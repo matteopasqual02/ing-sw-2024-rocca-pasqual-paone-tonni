@@ -1,11 +1,14 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.BoardDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.io.IOException;
 import java.rmi.RemoteException;

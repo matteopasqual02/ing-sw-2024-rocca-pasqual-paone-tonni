@@ -1,9 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.BoardDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
-import javafx.util.Pair;
 
 import java.io.IOException;
 import java.io.Serializable;

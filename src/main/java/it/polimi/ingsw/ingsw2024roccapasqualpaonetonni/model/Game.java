@@ -1,13 +1,12 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListenersHandler;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
-
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
