@@ -1,0 +1,5 @@
+.button
+{
+    -fx-background-image: url("../images/blue_button.jpg");
+    -fx-background-size: cover;
+}

@@ -36,13 +36,13 @@ public class GUIApplication extends Application {
         this.stage = stage;
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby_1.fxml"));
         root = loader.load();
         LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
 
-        stage.setMinWidth(1024);
-        stage.setMinHeight(600);
+        stage.setMinWidth(1048);
+        stage.setMinHeight(589);
         stage.setScene(new Scene(root, 300, 200));
         stage.setTitle("Codex Naturalis");
         stage.show();
