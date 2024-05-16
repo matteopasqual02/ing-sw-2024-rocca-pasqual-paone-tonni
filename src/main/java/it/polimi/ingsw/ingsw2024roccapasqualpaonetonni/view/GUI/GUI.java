@@ -58,7 +58,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void show_areYouReady() {
-
+        runLater(()->application.show_areYouReady());
     }
 
     @Override

@@ -36,7 +36,8 @@ public class GUIApplication extends Application {
         this.stage = stage;
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby_1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
+        //with new lobby: FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby_1.fxml"));
         root = loader.load();
         LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
@@ -55,27 +56,33 @@ public class GUIApplication extends Application {
         String message = String.format("Game created, with GameID: %d", gameID);
         ConsolePrinter.consolePrinter(message);
     }
-    public void show_youJoinedGame(int gameID){
+    public void show_areYouReady(){
+        try {
+            changeScene("/AreYouReady.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String message = String.format("everyone entered, press y to begin");
+        ConsolePrinter.consolePrinter(message);
+    }
+    public void show_youJoinedGame(int gameID) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
+        Parent newRoot = null;
+        try {
+            newRoot = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(newRoot,1024,600);
+        stage.setScene(scene);
+        stage.setTitle("Codex Naturalis");
+        stage.show();
         String message = String.format("Joined game: %d", gameID);
         ConsolePrinter.consolePrinter(message);
     }
     public void show_noAvailableGame(){
-        /*Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Message");
-        alert.setHeaderText("Error:");
-        alert.setContentText("no games available, retry");
-        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
-        alert.setHeight(30);
-        alert.setWidth(40);
-        alert.showAndWait();
-        Platform.runLater(()->{
-            try {
-                this.changeScene("/Lobby.fxml");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });*/
         infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
+    //with new lobby: infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby_1.fxml");
     }
     public void infoBox(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);

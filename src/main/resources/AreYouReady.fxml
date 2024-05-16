@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.AreYouReadyController">
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Press to begin" onAction="#handleButtonClick"
+                prefHeight="400.0" prefWidth="600.0"/>
+    </HBox>
+</StackPane>
