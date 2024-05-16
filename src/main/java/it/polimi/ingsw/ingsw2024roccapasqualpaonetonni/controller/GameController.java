@@ -1,9 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
@@ -12,7 +9,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.DeckEmpty
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.NoCardException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerValues;
@@ -28,7 +24,10 @@ public class GameController implements GameControllerInterface {
     private final Random random;
     private final String path;
 
-    // attributes needed to implement the executor
+    // the executor is a thread that can be fed a queue of Runnable or Callable, such as lambda expressions or
+    // method-like expressions, and that executes them in order
+    // it is used to de-synchronize the RMI calls, that now don't wait for the return at the end of the method
+    // execution, but return after submitting the Runnable to the executor
     private transient final ExecutorService executorService;
 
     private transient final PingPongThread pingPongThread;
@@ -43,20 +42,11 @@ public class GameController implements GameControllerInterface {
         this.pingPongThread.start();
     }
 
-    //---------------------------------EXECUTOR SECTION
-    // the executor is a thread that can be fed a queue of Runnable or Callable, such as lambda expressions or
-    // method-like expressions, and that executes them in order
-    // it is used to de-synchronize the RMI calls, that now don't wait for the return at the end of the method
-    // execution, but return after submitting the Runnable to the executor
-    private void stopExecutor() {
-        executorService.shutdown();
-    }
-
     //---------------------------------SERVER SECTION
     private class PingPongThread extends Thread {
 
-        List<String> clientsRunning = new ArrayList<>();
-        List<String> clients;
+        private final List<String> clientsRunning = new ArrayList<>();
+        private final List<String> clients = new ArrayList<>();
 
         private void addClient(String client) {
             synchronized (clientsRunning) {
@@ -77,17 +67,17 @@ public class GameController implements GameControllerInterface {
             while (true) {
                 // Send ping message to client
                 synchronized (clientsRunning) {
-                    clients = new ArrayList<>(clientsRunning);
+                    clients.clear();
+                    clients.addAll(clientsRunning);
                     clientsRunning.clear();
                 }
+
                 for (String client : clients) {
                     try {
                         model.ping(client);
                         //ConsolePrinter.consolePrinter("pinging " + client);
                     }
-                    catch (Exception e) {
-
-                    }
+                    catch (Exception e) {}
                 }
 
                 // Wait for a certain period before sending the next ping
@@ -103,10 +93,31 @@ public class GameController implements GameControllerInterface {
                         clients.remove(client);
                     }
                 }
+
+                // ping again whoever didn't ping back, to give another opportunity
+                for (String client : clients) {
+                    try {
+                        model.ping(client);
+                        //ConsolePrinter.consolePrinter("pinging " + client);
+                    }
+                    catch (Exception e) {}
+                }
+
+                try {
+                    Thread.sleep(1000); // 1 seconds
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                synchronized (clientsRunning) {
+                    for (String client : clientsRunning) {
+                        //ConsolePrinter.consolePrinter("safe " + client);
+                        clients.remove(client);
+                    }
+                }
+
                 for (String deadClient : clients) {
                     //ConsolePrinter.consolePrinter("dead client " + deadClient);
-
-                    // CONTROLLARE SE FUNZIONA CON REMOTE OBJECT
                     disconnectPlayer(deadClient);
                 }
             }
@@ -119,7 +130,8 @@ public class GameController implements GameControllerInterface {
 
     @Override
     public void pong(String client) throws RemoteException {
-        this.pingPongThread.pong(client);
+        Runnable runnable = () -> this.pingPongThread.pong(client);
+        executorService.submit(runnable);
     }
 
     public void addToPingPong(String client) throws RemoteException {
@@ -134,9 +146,7 @@ public class GameController implements GameControllerInterface {
 
     @Override
     public synchronized void removeMyselfAsListener(String me) throws RemoteException {
-        Runnable runnable = () -> {
-            model.removeListener(me);
-        };
+        Runnable runnable = () -> model.removeListener(me);
         executorService.submit(runnable);
     }
 
@@ -164,20 +174,22 @@ public class GameController implements GameControllerInterface {
 
     @Override
     public synchronized void ready(String nickname) throws RemoteException {
-        model.setPlayerReady(nickname);
-        if (model.getReadyPlayersNum() == model.getPlayerNum()) {
-            //create Table
-            createTable();
-            //random first player
-            randomFirstPlayer();
-            //run TurnZero
-            turnZero();
-            //set Running
-            model.setStatus(GameStatus.RUNNING);
-            //notify ALL
-            model.gameReady();
-        }
-
+        Runnable runnable = () -> {
+            model.setPlayerReady(nickname);
+            if (model.getReadyPlayersNum() == model.getPlayerNum()) {
+                //create Table
+                createTable();
+                //random first player
+                randomFirstPlayer();
+                //run TurnZero
+                turnZero();
+                //set Running
+                model.setStatus(GameStatus.RUNNING);
+                //notify ALL
+                model.gameReady();
+            }
+        };
+        executorService.submit(runnable);
     }
 
     //---------------------------------PLAYER SECTION
@@ -213,17 +225,21 @@ public class GameController implements GameControllerInterface {
         }
     }
 
+    /*
     public synchronized GameStatus getLastStatus() {
         return model.getLastStatus();
     }
+    */
 
     //---------------------------------TABLE AND INIT SECTION
     public synchronized void createTable() {
         Map<String, List<Card>> cardsMap = null;
-        try {
-            cardsMap = JSONUtils.createCardsFromJson(path);
-        } catch (IOException e) {
-            e.printStackTrace();
+        while (cardsMap == null) {
+            try {
+                cardsMap = JSONUtils.createCardsFromJson(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Map<String, Queue<Card>> shuffledDecks = new HashMap<>();
@@ -326,65 +342,73 @@ public class GameController implements GameControllerInterface {
     //---------------------------------ADD CARD SECTION
     @Override
     public synchronized void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
-        if (!getCurrentPlayer().getNickname().equals(nickname)){
-            model.gameError("Not your turn");
-            // listener invalid action
-            return;
-        }
-        if (getCurrentPlayer().getHand().size()<DefaultModelValues.Default_Hand_Dimension){
-            model.gameError("You cannot add two cards in a turn");
-            // listener invalid action
-            return;
-        }
-        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
-            // listener you cannot draw in this phase
-            model.gameError("You cannot add a Card in this Phase");
-            return;
-        }
-        if (flip) {
-            cardToAdd.flip();
-        }
-        boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
-        if(GameStatus.RUNNING==model.getGameStatus()){
-            checkPoints20Points();
-        }
-        if(GameStatus.LAST_TURN==model.getGameStatus() && done){
-            model.nextPlayer();
-        }
-
+        Runnable runnable = () -> {
+            if (!getCurrentPlayer().getNickname().equals(nickname)) {
+                model.gameError("Not your turn");
+                // listener invalid action
+                return;
+            }
+            if (getCurrentPlayer().getHand().size() < DefaultModelValues.Default_Hand_Dimension) {
+                model.gameError("You cannot add two cards in a turn");
+                // listener invalid action
+                return;
+            }
+            if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot add a Card in this Phase");
+                return;
+            }
+            if (flip) {
+                cardToAdd.flip();
+            }
+            boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
+            if (GameStatus.RUNNING == model.getGameStatus()) {
+                checkPoints20Points();
+            }
+            if (GameStatus.LAST_TURN == model.getGameStatus() && done) {
+                model.nextPlayer();
+            }
+        };
+        executorService.submit(runnable);
     }
 
     @Override
     public synchronized void addStartingCard(String nickname, Boolean flip) {
-        if (!getCurrentPlayer().getNickname().equals(nickname)){
-            // listener invalid action
-            model.gameError("Not your turn");
-            return;
-        }
-        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
-            // listener you cannot draw in this phase
-            model.gameError("You cannot add a Starting Card in this Phase");
-            return;
-        }
-        if (flip) {
-            getCurrentPlayer().getStartingCard().flip();
-        }
-        getCurrentPlayer().addStarting();
+        Runnable runnable = () -> {
+            if (!getCurrentPlayer().getNickname().equals(nickname)) {
+                // listener invalid action
+                model.gameError("Not your turn");
+                return;
+            }
+            if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot add a Starting Card in this Phase");
+                return;
+            }
+            if (flip) {
+                getCurrentPlayer().getStartingCard().flip();
+            }
+            getCurrentPlayer().addStarting();
+        };
+        executorService.submit(runnable);
     }
 
     @Override
     public synchronized void choosePlayerGoal(String nickname, int choice) {
-        if (!getCurrentPlayer().getNickname().equals(nickname)){
-            // listener invalid action
-            model.gameError("Not your turn");
-            return;
-        }
-        if (!(model.getGameStatus().equals(GameStatus.RUNNING))) {
-            // listener you cannot draw in this phase
-            model.gameError("You cannot choose the Objective Card in this Phase");
-            return;
-        }
-        getCurrentPlayer().chooseGoal(choice);
+        Runnable runnable = () -> {
+            if (!getCurrentPlayer().getNickname().equals(nickname)) {
+                // listener invalid action
+                model.gameError("Not your turn");
+                return;
+            }
+            if (!(model.getGameStatus().equals(GameStatus.RUNNING))) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot choose the Objective Card in this Phase");
+                return;
+            }
+            getCurrentPlayer().chooseGoal(choice);
+        };
+        executorService.submit(runnable);
     }
 
     //---------------------------------DRAW SECTION
@@ -396,115 +420,135 @@ public class GameController implements GameControllerInterface {
 
     @Override
     public synchronized void drawResourceFromDeck(String nickname) {
-        if (!getCurrentPlayer().getNickname().equals(nickname)){
-            // listener invalid action
-            model.gameError("Not your turn");
-            return;
-        }
-        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
-            // listener you cannot draw in this phase
-            model.gameError("You cannot draw a Resource Card in this phase");
-            return;
-        }
-        if(getCurrentPlayer().getHand().size()>=DefaultModelValues.Default_Hand_Dimension){
-            // listener you cannot draw in this phase
-            model.gameError("You cannot draw before a card is placed");
-            return;
-        }
-        if (decksAreAllEmpty()) {
-            model.setStatus(GameStatus.WAITING_LAST_TURN);
-        }
-        else {
-            try {
-                getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
-                model.nextPlayer();
-            } catch (DeckEmptyException e) {
-                // listener change deck
-                model.gameError("Resource deck is empty");
+        Runnable runnable = () -> {
+            if (!getCurrentPlayer().getNickname().equals(nickname)) {
+                // listener invalid action
+                model.gameError("Not your turn");
+                return;
             }
-        }
+            if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot draw a Resource Card in this phase");
+                return;
+            }
+            if (getCurrentPlayer().getHand().size() >= DefaultModelValues.Default_Hand_Dimension) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot draw before a card is placed");
+                return;
+            }
+            if (decksAreAllEmpty()) {
+                model.setStatus(GameStatus.WAITING_LAST_TURN);
+            } else {
+                try {
+                    getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
+                    model.nextPlayer();
+                } catch (DeckEmptyException e) {
+                    // listener change deck
+                    model.gameError("Resource deck is empty");
+                }
+            }
+        };
+        executorService.submit(runnable);
     }
 
     @Override
     public synchronized void drawGoldFromDeck(String nickname) {
-        if (!getCurrentPlayer().getNickname().equals(nickname)){
-            // listener invalid action
-            model.gameError("Not your turn");
-            return;
-        }
-        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
-            // listener you cannot draw in this phase
-            model.gameError("You cannot draw a Gold Card in this phase");
-            return;
-        }
-        if(getCurrentPlayer().getHand().size()>=DefaultModelValues.Default_Hand_Dimension){
-            // listener you cannot draw in this phase
-            model.gameError("You cannot draw before a card is placed");
-            return;
-        }
-        if (decksAreAllEmpty()) {
-            model.setStatus(GameStatus.WAITING_LAST_TURN);
-
-        } else {
-            try {
-                getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
-                model.nextPlayer();
-            } catch (DeckEmptyException e) {
-                // listener change deck
-                model.gameError("Gold deck is empty");
+        Runnable runnable = () -> {
+            if (!getCurrentPlayer().getNickname().equals(nickname)) {
+                // listener invalid action
+                model.gameError("Not your turn");
+                return;
             }
-        }
+            if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot draw a Gold Card in this phase");
+                return;
+            }
+            if (getCurrentPlayer().getHand().size() >= DefaultModelValues.Default_Hand_Dimension) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot draw before a card is placed");
+                return;
+            }
+            if (decksAreAllEmpty()) {
+                model.setStatus(GameStatus.WAITING_LAST_TURN);
+
+            } else {
+                try {
+                    getCurrentPlayer().drawGoldFromDeck(model.getGameDrawableDeck());
+                    model.nextPlayer();
+                } catch (DeckEmptyException e) {
+                    // listener change deck
+                    model.gameError("Gold deck is empty");
+                }
+            }
+        };
+        executorService.submit(runnable);
     }
 
     @Override
     public synchronized void drawFromBoard(String nickname, int position) {
-        if (!getCurrentPlayer().getNickname().equals(nickname)){
-            // listener invalid action
-            model.gameError("Not your turn");
-            return;
-        }
-        if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
-            // listener you cannot draw in this phase
-            model.gameError("You cannot draw from Common Board in this phase");
-            return;
-        }
-        if(getCurrentPlayer().getHand().size()>=DefaultModelValues.Default_Hand_Dimension){
-            // listener you cannot draw in this phase
-            model.gameError("You cannot draw before a card is placed");
-            return;
-        }
-        if (decksAreAllEmpty()) {
-            model.setStatus(GameStatus.WAITING_LAST_TURN);
-
-        } else {
-            try {
-                getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
-                model.nextPlayer();
-            } catch (NoCardException e) {
-                model.gameError("This position is empty");
+        Runnable runnable = () -> {
+            if (!getCurrentPlayer().getNickname().equals(nickname)) {
+                // listener invalid action
+                model.gameError("Not your turn");
+                return;
             }
-        }
+            if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot draw from Common Board in this phase");
+                return;
+            }
+            if (getCurrentPlayer().getHand().size() >= DefaultModelValues.Default_Hand_Dimension) {
+                // listener you cannot draw in this phase
+                model.gameError("You cannot draw before a card is placed");
+                return;
+            }
+            if (decksAreAllEmpty()) {
+                model.setStatus(GameStatus.WAITING_LAST_TURN);
+
+            } else {
+                try {
+                    getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
+                    model.nextPlayer();
+                } catch (NoCardException e) {
+                    model.gameError("This position is empty");
+                }
+            }
+        };
+        executorService.submit(runnable);
     }
 
     //---------------------------------CHAT
     @Override
     public void sendMessage(String txt, String nickname) {
-        model.sendMessage(txt,nickname);
+        Runnable runnable = () -> {
+            model.sendMessage(txt, nickname);
+        };
+        executorService.submit(runnable);
     }
 
     @Override
-    public void sendPrivateMessage(String senderName, String recieverName, String txt) {
-        model.sendPrivateMessage(senderName,recieverName,txt);
+    public void sendPrivateMessage(String senderName, String receiverName, String txt) {
+        Runnable runnable = () -> {
+            model.sendPrivateMessage(senderName, receiverName, txt);
+        };
+        executorService.submit(runnable);
     }
 
     @Override
     public void getPublicChatLog(String requesterName) throws RemoteException {
-        model.getPublicChatLog(requesterName);
+        Runnable runnable = () -> {
+            model.getPublicChatLog(requesterName);
+        };
+        executorService.submit(runnable);
     }
 
     @Override
     public void getPrivateChatLog(String yourName, String otherName) throws RemoteException {
-        model.getPrivateChatLog(yourName,otherName);
+        Runnable runnable = () -> {
+            model.getPrivateChatLog(yourName, otherName);
+        };
+        executorService.submit(runnable);
     }
 
 
@@ -518,7 +562,7 @@ public class GameController implements GameControllerInterface {
     //---------------------------------CHECK END SECTION
     private synchronized void checkPoints20Points() {
         for (Player player : getAllPlayer()) {
-            // ATTENZIONE: aggiornare il currentPlayer a fine turno, prima di chiamare questa funzione
+            // ATTENTION: the current player needs to be updated at the end of turn, before using this function
             if (player.getCurrentPoints() >= DefaultModelValues.Default_LastTurn_Points) {
                 model.setStatus(GameStatus.WAITING_LAST_TURN);
             }
