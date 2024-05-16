@@ -36,8 +36,8 @@ public class GUIApplication extends Application {
         this.stage = stage;
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        //with new lobby: FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby_1.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby_1.fxml"));
         root = loader.load();
         LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
@@ -81,8 +81,8 @@ public class GUIApplication extends Application {
         ConsolePrinter.consolePrinter(message);
     }
     public void show_noAvailableGame(){
-        infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
-    //with new lobby: infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby_1.fxml");
+        //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
+        infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby_1.fxml");
     }
     public void infoBox(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
