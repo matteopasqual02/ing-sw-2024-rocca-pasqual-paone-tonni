@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="root-green" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameNumberController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="root-green" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameNumberController">
     <children>
       <HBox alignment="CENTER" layoutY="413.0" prefHeight="187.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
          <children>
                <Button alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="268.0" text="Insert" textAlignment="CENTER" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutY="76.0" prefHeight="128.0" prefWidth="1024.0" AnchorPane.bottomAnchor="480.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+      <HBox alignment="CENTER" layoutY="76.0" prefHeight="128.0" prefWidth="1024.0" AnchorPane.bottomAnchor="460.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
          <children>
                <TextField fx:id="string2" alignment="CENTER" prefHeight="18.0" prefWidth="500.0" promptText="Insert the number of players" />
          </children>
