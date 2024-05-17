@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -15,14 +18,46 @@
                <Button alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="268.0" text="Insert" textAlignment="CENTER" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutY="76.0" prefHeight="128.0" prefWidth="1024.0" AnchorPane.bottomAnchor="460.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+      <HBox alignment="CENTER" layoutY="102.0" prefHeight="78.0" prefWidth="1024.0" AnchorPane.bottomAnchor="396.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
          <children>
-               <TextField fx:id="string2" alignment="CENTER" prefHeight="18.0" prefWidth="500.0" promptText="Insert the number of players" />
+            <Text id="textWithBackground" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="background-green" text="Select Number of Player " textAlignment="CENTER" wrappingWidth="995.7109375">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Text>
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="8.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" layoutX="8.0" prefHeight="110.0" prefWidth="1024.0" AnchorPane.bottomAnchor="466.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-               <TextField fx:id="string1" alignment="CENTER" prefHeight="31.0" prefWidth="500.0" promptText="Insert yout nickname" />
+               <TextField fx:id="string1" alignment="CENTER" prefHeight="40.0" prefWidth="500.0" promptText="Insert yout nickname" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="180.0" prefHeight="100.0" prefWidth="1024.0" AnchorPane.bottomAnchor="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <ToggleButton mnemonicParsing="false" text="2">
+               <font>
+                  <Font size="27.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="toggleGroupu1" />
+               </toggleGroup>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" text="3" toggleGroup="$toggleGroupu1">
+               <font>
+                  <Font size="27.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" text="4" toggleGroup="$toggleGroupu1">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </ToggleButton>
          </children>
       </HBox>
     </children>
