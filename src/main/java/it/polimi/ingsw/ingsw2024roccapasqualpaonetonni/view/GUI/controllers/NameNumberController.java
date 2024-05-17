@@ -18,7 +18,7 @@ public class NameNumberController extends GenericController {
     @FXML
     private TextField string1;
     @FXML
-    private TextField string2;
+    //private TextField string2;
     private ExecutorService executor;
     private Client client;
     private int num;
@@ -27,7 +27,8 @@ public class NameNumberController extends GenericController {
         this.executor = executor;
         this.client = client;
     }
-    @FXML
+
+    /*@FXML
     public void handleButtonClick(ActionEvent event){
 
         String name = string1.getText();
@@ -44,6 +45,29 @@ public class NameNumberController extends GenericController {
                 throw new RuntimeException(e);
             }
         });
+    }*/
+
+    @FXML
+    public void handleButtonClick(ActionEvent event) {
+        executor.submit(()->{
+            try {
+                client.receiveInput("/new "+num + " "+ string1.getText());
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+    @FXML
+    public void handleButton2Click(ActionEvent event){
+        num = 2;
+    }
+    @FXML
+    public void handleButton3Click(ActionEvent event){
+        num = 3;
+    }
+    @FXML
+    public void handleButton4Click(ActionEvent event){
+        num = 4;
     }
 
 
