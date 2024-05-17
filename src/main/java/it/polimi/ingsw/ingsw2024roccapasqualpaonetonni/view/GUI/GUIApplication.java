@@ -75,6 +75,10 @@ public class GUIApplication extends Application {
             {
                 String message = nickname + " joined this game";
                 ConsolePrinter.consolePrinter(message);
+                /*Label messageLabel = new Label(message);
+                AnchorPane.setTopAnchor(messageLabel, 50.0);
+                AnchorPane.setLeftAnchor(messageLabel, 50.0);
+                root.getChildren().add(messageLabel);*/
             }
 
         } catch (RemoteException e) {
