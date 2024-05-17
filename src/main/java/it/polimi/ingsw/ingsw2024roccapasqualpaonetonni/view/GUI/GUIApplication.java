@@ -8,9 +8,11 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.Lobb
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -64,6 +66,19 @@ public class GUIApplication extends Application {
         }
         String message = String.format("everyone entered, press y to begin");
         ConsolePrinter.consolePrinter(message);
+    }
+    public void show_addedNewPlayer(String nickname){
+        String message = nickname + " joined this game";
+        Label newLabel = new Label(message);
+        //NB: in questo momento la JoinedGame è uno stackPane, ma quando questo cambiera anche questi comandi vanno cambiati
+        if(root instanceof StackPane){
+            StackPane stackPane = (StackPane) root;
+            StackPane.setAlignment(newLabel, Pos.TOP_CENTER);
+            stackPane.getChildren().add(newLabel);
+
+        }else{
+            ConsolePrinter.consolePrinter("not stackpane");
+        }
     }
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));

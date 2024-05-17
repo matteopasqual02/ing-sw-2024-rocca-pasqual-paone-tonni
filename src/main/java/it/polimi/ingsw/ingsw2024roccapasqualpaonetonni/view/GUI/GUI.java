@@ -53,7 +53,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void show_addedNewPlayer(String pNickname) {
-
+        runLater(()->application.show_addedNewPlayer(pNickname));
     }
 
     @Override
