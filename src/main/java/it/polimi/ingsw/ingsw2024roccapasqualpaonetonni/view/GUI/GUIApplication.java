@@ -13,11 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -68,16 +70,15 @@ public class GUIApplication extends Application {
         ConsolePrinter.consolePrinter(message);
     }
     public void show_addedNewPlayer(String nickname){
-        String message = nickname + " joined this game";
-        Label newLabel = new Label(message);
-        //NB: in questo momento la JoinedGame è uno stackPane, ma quando questo cambiera anche questi comandi vanno cambiati
-        if(root instanceof StackPane){
-            StackPane stackPane = (StackPane) root;
-            StackPane.setAlignment(newLabel, Pos.TOP_CENTER);
-            stackPane.getChildren().add(newLabel);
+        try {
+            if(!nickname.equals(client.getNickname()))
+            {
+                String message = nickname + " joined this game";
+                ConsolePrinter.consolePrinter(message);
+            }
 
-        }else{
-            ConsolePrinter.consolePrinter("not stackpane");
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
     public void show_youJoinedGame(int gameID) {
