@@ -7,3 +7,7 @@
     -fx-background-image: url("../images/backgound_green.jpg");
     -fx-background-size: cover;
 }
+
+.text_background_white {
+    -fx-background-color: white;
+}

@@ -20,7 +20,7 @@
       </HBox>
       <HBox alignment="CENTER" layoutY="102.0" prefHeight="78.0" prefWidth="1024.0" AnchorPane.bottomAnchor="396.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
          <children>
-            <Text id="textWithBackground" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="background-green" text="Select Number of Player " textAlignment="CENTER" wrappingWidth="995.7109375">
+            <Text id="textWithBackground" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_background_white" text="Select Number of Player" textAlignment="CENTER" wrappingWidth="995.7109375">
                <font>
                   <Font size="27.0" />
                </font>
