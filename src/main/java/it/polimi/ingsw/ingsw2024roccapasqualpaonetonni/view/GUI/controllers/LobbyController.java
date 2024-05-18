@@ -49,7 +49,7 @@ public class LobbyController extends GenericController {
     public void handleJoinGameIDButtonClick(ActionEvent event){
         Platform.runLater(()-> {
             try {
-                application.changeScene("/NameGameId.fxml");
+                application.changeScene("/NameGameId_1.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
