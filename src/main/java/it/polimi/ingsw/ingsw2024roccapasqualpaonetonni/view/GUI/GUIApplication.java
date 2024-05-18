@@ -8,6 +8,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.Lobb
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +29,8 @@ public class GUIApplication extends Application {
     private Client client;
     private Stage stage;
     private Parent root;
+    private StackPane joinedGameRoot;
+    private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute bacground tasks that call alow actions on the server
      */
@@ -75,10 +78,12 @@ public class GUIApplication extends Application {
             {
                 String message = nickname + " joined this game";
                 ConsolePrinter.consolePrinter(message);
-                /*Label messageLabel = new Label(message);
-                AnchorPane.setTopAnchor(messageLabel, 50.0);
-                AnchorPane.setLeftAnchor(messageLabel, 50.0);
-                root.getChildren().add(messageLabel);*/
+
+                Label messageLabel = new Label(message);
+                StackPane.setMargin(messageLabel, new Insets(50+i, 0, 0, 50));
+                i= i+20;
+                joinedGameRoot.getChildren().add(messageLabel);
+                joinedGameRoot.layout();
             }
 
         } catch (RemoteException e) {
@@ -87,13 +92,14 @@ public class GUIApplication extends Application {
     }
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
-        Parent newRoot = null;
+        //Parent newRoot = null;
+        //StackPane newRoot = null;
         try {
-            newRoot = loader.load();
+            joinedGameRoot = loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(newRoot,1024,600);
+        Scene scene = new Scene(joinedGameRoot,1024,600);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
