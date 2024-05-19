@@ -100,7 +100,9 @@ public class GUIApplication extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(joinedGameRoot,1024,600);
+        double currWidth = stage.getWidth();
+        double currHeight = stage.getHeight();
+        Scene scene = new Scene(joinedGameRoot,currWidth,currHeight);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
@@ -136,7 +138,9 @@ public class GUIApplication extends Application {
         controller.setParameters(executor, client,this);
 
         //Stage stage = (Stage) root.getScene().getWindow();
-        Scene scene = new Scene(newRoot,1024,600);
+        double currWidth = stage.getWidth();
+        double currHeight = stage.getHeight();
+        Scene scene = new Scene(newRoot,currWidth,currHeight);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
