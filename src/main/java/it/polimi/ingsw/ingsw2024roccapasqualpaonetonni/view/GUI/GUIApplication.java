@@ -53,6 +53,7 @@ public class GUIApplication extends Application {
         stage.setMinHeight(589);
         stage.setScene(new Scene(root, 300, 200));
         stage.setTitle("Codex Naturalis");
+        //stage.setFullScreen(true);
         stage.show();
 
     }
