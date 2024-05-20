@@ -154,4 +154,14 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.show();
     }
+    public void changeSceneWithNoController(String fxmlFile) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent newRoot = loader.load();
+        double currWidth = stage.getWidth();
+        double currHeight = stage.getHeight();
+        Scene scene = new Scene(newRoot,currWidth,currHeight);
+        stage.setScene(scene);
+        stage.setTitle("Codex Naturalis");
+        stage.show();
+    }
 }
