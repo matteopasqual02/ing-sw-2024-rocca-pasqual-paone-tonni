@@ -28,9 +28,9 @@ public class GUIApplication extends Application {
     private Parent root;
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
-    private int i=0; //used to change the position in which the joined message arrives for each player
+    //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
-     * we use a ThreadPoolExecutor to execute bacground tasks that call alow actions on the server
+     * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
      */
     private final ExecutorService executor = Executors.newCachedThreadPool();
     private Parent createContent(){
@@ -95,6 +95,8 @@ public class GUIApplication extends Application {
         joinedGameController.addNewLabel(message);
 
     }
+    //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
+    //when I need to dynamically change the file we need to keep a reference to the controller.
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
         //Parent newRoot = null;
