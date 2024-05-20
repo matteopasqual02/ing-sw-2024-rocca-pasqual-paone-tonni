@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
@@ -112,6 +113,14 @@ public class GUIApplication extends Application {
     public void show_noAvailableGame(){
         //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
         infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby_1.fxml");
+    }
+    public void show_all(GameImmutable gameImmutable, String nickname){
+        ConsolePrinter.consolePrinter("Game started");
+        /*try {
+            changeScene("/Game.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
     }
     public void infoBox(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
