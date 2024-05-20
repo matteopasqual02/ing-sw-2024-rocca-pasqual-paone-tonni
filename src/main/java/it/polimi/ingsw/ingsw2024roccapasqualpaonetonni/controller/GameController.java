@@ -19,19 +19,43 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The type Game controller.
+ */
 public class GameController implements GameControllerInterface {
+    /**
+     * The Model.
+     */
     private final Game model;
+    /**
+     * The Random number to choose the first player.
+     */
     private final Random random;
+    /**
+     * The Json Path to load the cards.
+     */
     private final String path;
 
-    // the executor is a thread that can be fed a queue of Runnable or Callable, such as lambda expressions or
-    // method-like expressions, and that executes them in order
-    // it is used to de-synchronize the RMI calls, that now don't wait for the return at the end of the method
-    // execution, but return after submitting the Runnable to the executor
+    /**
+     * The Executor service.
+     * the executor is a thread that can be fed a queue of Runnable or Callable, such as lambda expressions or
+     * method-like expressions, and that executes them in order
+     * it is used to de-synchronize the RMI calls, that now don't wait for the return at the end of the method
+     * execution, but return after submitting the Runnable to the executor
+     */
     private transient final ExecutorService executorService;
 
+    /**
+     * The Ping pong thread.
+     */
     private transient final PingPongThread pingPongThread;
 
+    /**
+     * Instantiates a new Game controller.
+     *
+     * @param id the id
+     * @throws RemoteException the remote exception
+     */
     public GameController(int id) throws RemoteException {
         super();
         this.model = new Game(id);
@@ -42,12 +66,26 @@ public class GameController implements GameControllerInterface {
         this.pingPongThread.start();
     }
 
-    //---------------------------------SERVER SECTION
+//---------------------------------SERVER SECTION
+    /**
+     * The type Ping pong thread.
+     */
     private class PingPongThread extends Thread {
 
+        /**
+         * The Clients running.
+         */
         private final List<String> clientsRunning = new ArrayList<>();
+        /**
+         * The Clients.
+         */
         private final List<String> clients = new ArrayList<>();
 
+        /**
+         * Add client.
+         *
+         * @param client the client
+         */
         private void addClient(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
@@ -55,6 +93,11 @@ public class GameController implements GameControllerInterface {
             }
         }
 
+        /**
+         * Pong.
+         *
+         * @param client the client
+         */
         private void pong(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
@@ -62,6 +105,9 @@ public class GameController implements GameControllerInterface {
             }
         }
 
+        /**
+         * Run.
+         */
         @Override
         public void run() {
             while (true) {
@@ -77,7 +123,7 @@ public class GameController implements GameControllerInterface {
                         model.ping(client);
                         //ConsolePrinter.consolePrinter("pinging " + client);
                     }
-                    catch (Exception e) {}
+                    catch (Exception ignored) {}
                 }
 
                 // Wait for a certain period before sending the next ping
@@ -100,7 +146,7 @@ public class GameController implements GameControllerInterface {
                         model.ping(client);
                         //ConsolePrinter.consolePrinter("pinging " + client);
                     }
-                    catch (Exception e) {}
+                    catch (Exception ignored) {}
                 }
 
                 try {
@@ -124,33 +170,68 @@ public class GameController implements GameControllerInterface {
         }
     }
 
+    /**
+     * Gets game id.
+     *
+     * @return the game id
+     */
     public synchronized int getGameID() {
         return model.getGameId();
     }
 
+    /**
+     * Pong.
+     *
+     * @param client the client
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void pong(String client) throws RemoteException {
         Runnable runnable = () -> this.pingPongThread.pong(client);
         executorService.submit(runnable);
     }
 
+    /**
+     * Add to ping pong.
+     *
+     * @param client the client
+     * @throws RemoteException the remote exception
+     */
     public void addToPingPong(String client) throws RemoteException {
         this.pingPongThread.addClient(client);
     }
 
-    //---------------------------------LISTENERS SECTION
+//---------------------------------LISTENERS SECTION
+    /**
+     * Add myself as listener.
+     *
+     * @param me       me
+     * @param notifier the notifier
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized void addMyselfAsListener(String me, NotifierInterface notifier) throws RemoteException{
         model.addListeners(me, notifier);
     }
 
+    /**
+     * Remove myself as listener.
+     *
+     * @param me me
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized void removeMyselfAsListener(String me) throws RemoteException {
         Runnable runnable = () -> model.removeListener(me);
         executorService.submit(runnable);
     }
 
-    //---------------------------------GAME CREATION PHASE
+//---------------------------------GAME CREATION PHASE
+    /**
+     * Add player.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public synchronized void addPlayer(String nickname) {
         Player px;
@@ -167,11 +248,23 @@ public class GameController implements GameControllerInterface {
         }
     }
 
+    /**
+     * Sets max number of player.
+     *
+     * @param num the num
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized void setMaxNumberOfPlayer(int num) throws RemoteException {
         model.setMaxNumberOfPlayer(num);
     }
 
+    /**
+     * Ready.
+     *
+     * @param nickname the nickname
+     * @throws RemoteException the remote exception
+     */
     @Override
     public synchronized void ready(String nickname) throws RemoteException {
         Runnable runnable = () -> {
@@ -192,19 +285,39 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
-    //---------------------------------PLAYER SECTION
+//---------------------------------PLAYER SECTION
+    /**
+     * Gets all player.
+     *
+     * @return the all player
+     */
     public synchronized Queue<Player> getAllPlayer() {
         return model.getPlayers();
     }
 
+    /**
+     * Gets current player.
+     *
+     * @return the current player
+     */
     public synchronized Player getCurrentPlayer() {
         return model.getCurrentPlayer();
     }
 
+    /**
+     * Gets max number of player.
+     *
+     * @return the max number of player
+     */
     public synchronized int getMaxNumberOfPlayer() {
         return model.getMaxNumberOfPlayer();
     }
 
+    /**
+     * Reconnect player.
+     *
+     * @param nickname the nickname
+     */
     public synchronized void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
         if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
@@ -213,6 +326,11 @@ public class GameController implements GameControllerInterface {
         }
     }
 
+    /**
+     * Disconnect player.
+     *
+     * @param nickname the nickname
+     */
     public synchronized void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
         // if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
@@ -225,13 +343,10 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    /*
-    public synchronized GameStatus getLastStatus() {
-        return model.getLastStatus();
-    }
-    */
-
-    //---------------------------------TABLE AND INIT SECTION
+//---------------------------------TABLE AND INIT SECTION
+    /**
+     * Create table.
+     */
     public synchronized void createTable() {
         Map<String, List<Card>> cardsMap = null;
         while (cardsMap == null) {
@@ -297,6 +412,9 @@ public class GameController implements GameControllerInterface {
 
     }
 
+    /**
+     * Random first player.
+     */
     private synchronized void randomFirstPlayer() {
         int first = random.nextInt(4);
 
@@ -307,6 +425,9 @@ public class GameController implements GameControllerInterface {
         model.setFirstPlayer(model.getCurrentPlayer());
     }
 
+    /**
+     * Turn zero.
+     */
     private synchronized void turnZero() {
         for (Player player : getAllPlayer()) {
             try {
@@ -338,8 +459,16 @@ public class GameController implements GameControllerInterface {
 
     }
 
-
-    //---------------------------------ADD CARD SECTION
+//---------------------------------ADD CARD SECTION
+    /**
+     * Add a card to the board.
+     *
+     * @param nickname       the nickname
+     * @param cardToAdd      the card to add
+     * @param cardOnBoard    the card on board
+     * @param cornerToAttach the corner to attach
+     * @param flip           the flip
+     */
     @Override
     public synchronized void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
         Runnable runnable = () -> {
@@ -372,6 +501,12 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
+    /**
+     * Add starting card.
+     *
+     * @param nickname the nickname
+     * @param flip     the flip
+     */
     @Override
     public synchronized void addStartingCard(String nickname, Boolean flip) {
         Runnable runnable = () -> {
@@ -393,6 +528,12 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
+    /**
+     * Choose player goal.
+     *
+     * @param nickname the nickname
+     * @param choice   the choice
+     */
     @Override
     public synchronized void choosePlayerGoal(String nickname, int choice) {
         Runnable runnable = () -> {
@@ -411,13 +552,23 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
-    //---------------------------------DRAW SECTION
+//---------------------------------DRAW SECTION
+    /**
+     * Decks are all empty boolean.
+     *
+     * @return the boolean
+     */
     private boolean decksAreAllEmpty() {
         return model.getGameDrawableDeck().getDecks().get("resources").isEmpty()
                 && model.getGameDrawableDeck().getDecks().get("gold").isEmpty()
                 && model.getGameBoardDeck().isEmpty();
     }
 
+    /**
+     * Draw resource from deck.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public synchronized void drawResourceFromDeck(String nickname) {
         Runnable runnable = () -> {
@@ -451,6 +602,11 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
+    /**
+     * Draw gold from deck.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public synchronized void drawGoldFromDeck(String nickname) {
         Runnable runnable = () -> {
@@ -485,6 +641,12 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
+    /**
+     * Draw from board.
+     *
+     * @param nickname the nickname
+     * @param position the position
+     */
     @Override
     public synchronized void drawFromBoard(String nickname, int position) {
         Runnable runnable = () -> {
@@ -518,7 +680,13 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
-    //---------------------------------CHAT
+//---------------------------------CHAT
+    /**
+     * Send message.
+     *
+     * @param txt      the txt
+     * @param nickname the nickname
+     */
     @Override
     public void sendMessage(String txt, String nickname) {
         Runnable runnable = () -> {
@@ -527,6 +695,13 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
+    /**
+     * Send private message.
+     *
+     * @param senderName   the sender name
+     * @param receiverName the receiver name
+     * @param txt          the txt
+     */
     @Override
     public void sendPrivateMessage(String senderName, String receiverName, String txt) {
         Runnable runnable = () -> {
@@ -535,6 +710,12 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
+    /**
+     * Gets public chat log.
+     *
+     * @param requesterName the requester name
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void getPublicChatLog(String requesterName) throws RemoteException {
         Runnable runnable = () -> {
@@ -543,6 +724,13 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
+    /**
+     * Gets private chat log.
+     *
+     * @param yourName  your name
+     * @param otherName the other name
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void getPrivateChatLog(String yourName, String otherName) throws RemoteException {
         Runnable runnable = () -> {
@@ -551,15 +739,21 @@ public class GameController implements GameControllerInterface {
         executorService.submit(runnable);
     }
 
-
-    //---------------------------------GAME ID
+//---------------------------------GAME ID
+    /**
+     * Gets game id.
+     *
+     * @return the game id
+     */
     @Override
     public int getGameId() {
         return model.getGameId();
     }
 
-
-    //---------------------------------CHECK END SECTION
+//---------------------------------CHECK END SECTION
+    /**
+     * Check points 20 points.
+     */
     private synchronized void checkPoints20Points() {
         for (Player player : getAllPlayer()) {
             // ATTENTION: the current player needs to be updated at the end of turn, before using this function
@@ -569,8 +763,12 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-
-    //---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
+//---------------------------------GET SECTION TO DISPLAY THE PUBLIC PART
+    /**
+     * Gets game.
+     *
+     * @return the game
+     */
     public Game getGame() {
         return model;
     }
