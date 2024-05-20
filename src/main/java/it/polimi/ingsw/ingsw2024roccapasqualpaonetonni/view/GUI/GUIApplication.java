@@ -6,22 +6,18 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.LobbyController;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,6 +27,7 @@ public class GUIApplication extends Application {
     private Stage stage;
     private Parent root;
     private StackPane joinedGameRoot;
+    private JoinedGameController joinedGameController = null;
     private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute bacground tasks that call alow actions on the server
@@ -74,7 +71,7 @@ public class GUIApplication extends Application {
         String message = String.format("everyone entered, press y to begin");
         ConsolePrinter.consolePrinter(message);
     }
-    public void show_addedNewPlayer(String nickname){
+    /*public void show_addedNewPlayer(String nickname){
         try {
             if(!nickname.equals(client.getNickname()))
             {
@@ -91,6 +88,12 @@ public class GUIApplication extends Application {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }*/
+    public void show_addedNewPlayer(String nickname){
+        String message = nickname + " joined this game";
+        ConsolePrinter.consolePrinter(message);
+        joinedGameController.addNewLabel(message);
+
     }
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
@@ -101,6 +104,7 @@ public class GUIApplication extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        joinedGameController = loader.getController();
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
         Scene scene = new Scene(joinedGameRoot,currWidth,currHeight);
