@@ -18,11 +18,13 @@ public class LobbyController extends GenericController {
     private ExecutorService executor;
     private Client client;
     private GUIApplication application;
+
     public void setParameters(ExecutorService executor, Client client,GUIApplication application){
         this.executor = executor;
         this.client = client;
         this.application = application;
     }
+    
     @FXML
     public void handleNewGameButtonClick(ActionEvent event){
         Platform.runLater(()-> {
