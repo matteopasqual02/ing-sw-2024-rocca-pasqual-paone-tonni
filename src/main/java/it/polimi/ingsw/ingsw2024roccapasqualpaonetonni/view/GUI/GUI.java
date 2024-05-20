@@ -27,8 +27,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
     }
 
     @Override
-    public void show_All(GameImmutable gameImmutable, String nickname) {
-
+    public void show_All(GameImmutable gameImmutable, String nickname) {runLater((()->application.show_all(gameImmutable,nickname)));
     }
 
     @Override
