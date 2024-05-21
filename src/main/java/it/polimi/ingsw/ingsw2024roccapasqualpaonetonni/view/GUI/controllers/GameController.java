@@ -6,10 +6,12 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -50,7 +52,9 @@ public class GameController extends GenericController{
     @FXML
     private TextField privateMessage;
     @FXML
-    private VBox box;
+    private VBox chatBox;
+    @FXML
+    private VBox otherPlayersBox;
     private ExecutorService executor;
     private Client client;
     private GUIApplication application;
@@ -111,6 +115,48 @@ public class GameController extends GenericController{
         goldCard2.setImage(new Image(createPath(cardId)));
         cardId = gameImmutable.getBoardDeck().getCard(4).getIdCard();
         goldCard3.setImage(new Image(createPath(cardId)));
+
+        for(Player p: gameImmutable.getPlayers()){
+            if(!p.getNickname().equals(nickname)){
+                ImageView color = null;
+                if(p.getColorPlayer() == 1){
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
+                } else if (p.getColorPlayer() == 2) {
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
+                } else if (p.getColorPlayer() == 3) {
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
+                } else if (p.getColorPlayer() == 4) {
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
+                }
+                color.setFitHeight(50);
+                color.setFitWidth(50);
+                Label name = new Label(p.getNickname());
+
+                ImageView hand1 = new ImageView();
+                ImageView hand2 = new ImageView();
+                ImageView hand3 = new ImageView();
+                cardId = p.getHand().get(0).getIdCard();
+                hand1.setImage(new Image(createBackPath(cardId)));
+                cardId = p.getHand().get(1).getIdCard();
+                hand2.setImage(new Image(createBackPath(cardId)));
+                cardId = p.getHand().get(2).getIdCard();
+                hand3.setImage(new Image(createBackPath(cardId)));
+
+                hand1.setFitHeight(30);
+                hand1.setFitWidth(30);
+                hand2.setFitHeight(30);
+                hand2.setFitWidth(30);
+                hand3.setFitHeight(30);
+                hand3.setFitWidth(30);
+                Button button = new Button("See board");
+                VBox vBox1 = new VBox(name,color);
+                HBox hbox1 = new HBox(hand1,hand2,hand3);
+                VBox vBox2 = new VBox(hbox1,button);
+                HBox hbox2 = new HBox(vBox1,vBox2);
+
+                otherPlayersBox.getChildren().add(hbox2);
+            }
+        }
     }
 
     private String createBackPath(int cardId) {

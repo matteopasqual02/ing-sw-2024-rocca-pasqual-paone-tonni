@@ -90,7 +90,7 @@
                   </VBox>
                </children>
             </HBox>
-            <VBox prefHeight="388.0" prefWidth="195.0" GridPane.columnIndex="2">
+            <VBox fx:id="otherPlayersBox" prefHeight="388.0" prefWidth="195.0" GridPane.columnIndex="2">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Other Players" />
                </children>
@@ -99,7 +99,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chat" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
-                  <VBox fx:id="box" prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="chatBox" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <TextField fx:id="publicMessage" promptText="Insert public message" />
                         <Button onAction="#handleSendPublic" mnemonicParsing="false" prefHeight="26.0" prefWidth="89.0" text="Send" />
