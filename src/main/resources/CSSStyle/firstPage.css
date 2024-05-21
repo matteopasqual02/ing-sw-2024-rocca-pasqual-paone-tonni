@@ -1,5 +1,5 @@
 .root{
-    -fx-background-image: url("../images/background_complete.jpg");
+    -fx-background-image: url("../images/Background_image/background_complete.jpg");
     -fx-background-size: cover;
 }
 
@@ -9,7 +9,7 @@
 }
 
 .background-red{
-    -fx-background-image: url("../images/background_Image/background_red.jpeg");
+    -fx-background-image: url("../images/background_Image/red.jpeg");
     -fx-background-size: cover;
 }
 

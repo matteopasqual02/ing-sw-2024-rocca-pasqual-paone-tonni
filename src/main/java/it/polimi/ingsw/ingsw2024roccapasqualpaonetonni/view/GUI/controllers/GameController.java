@@ -59,37 +59,39 @@ public class GameController extends GenericController{
 
         int cardId = player.getHand().get(0).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
+            path = "/images/Codex_image/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+            path = "/images/Codex_image/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
         }
         myHandImage1.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = player.getHand().get(1).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
+            path = "/images/Codex_image/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+            path = "/images/Codex_image/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
         }
         myHandImage2.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = player.getHand().get(2).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
+            path = "/images/Codex_image/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+            path = "/images/Codex_image/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
         }
         myHandImage3.setImage(new Image(getClass().getResource(path).toString()));
 
         //setting secret objectives
 /*
         cardId = player.getObjectiveBeforeChoice()[0].getIdCard();
+        path = "/images/Codex_image/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+        secretObjectiveImage1.setImage(new Image(getClass().getResource(path).toString()));
         if(cardId<100){
             path = "images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
@@ -100,6 +102,7 @@ public class GameController extends GenericController{
         secretObjectiveImage1.setImage(new Image(getClass().getClassLoader().getResource(path).toString()));
 
         cardId = player.getObjectiveBeforeChoice()[1].getIdCard();
+        path = "/images/Codex_image/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
         if(cardId<100){
             path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
