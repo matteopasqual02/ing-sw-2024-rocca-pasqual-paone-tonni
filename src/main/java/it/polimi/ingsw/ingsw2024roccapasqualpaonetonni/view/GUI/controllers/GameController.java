@@ -67,7 +67,7 @@ public class GameController extends GenericController{
         cardId = player.getObjectiveBeforeChoice()[0].getIdCard();
         secretObjectiveImage1.setImage(new Image(createPath(cardId)));
         cardId = player.getObjectiveBeforeChoice()[1].getIdCard();
-        secretObjectiveImage1.setImage(new Image(createPath(cardId)));
+        secretObjectiveImage2.setImage(new Image(createPath(cardId)));
 
         //setting common objectives
 
@@ -78,7 +78,7 @@ public class GameController extends GenericController{
         commonObjectiveImage2.setImage(new Image(createPath(cardId)));
 
         //setting resource cards
-        if(gameImmutable.getDrawableDeck().getDecks().get("resources").isEmpty()){
+        if(!gameImmutable.getDrawableDeck().getDecks().get("resources").isEmpty()){
             cardId = gameImmutable.getDrawableDeck().getDecks().get("resources").peek().getIdCard();
         }
         resourceCard1.setImage(new Image(createBackPath(cardId)));
