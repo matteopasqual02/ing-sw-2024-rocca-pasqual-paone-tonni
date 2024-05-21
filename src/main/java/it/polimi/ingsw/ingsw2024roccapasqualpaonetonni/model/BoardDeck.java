@@ -108,8 +108,8 @@ public class BoardDeck implements Serializable {
                 try {
                     cards1[position-1] = model.getGameDrawableDeck().drawFirstGold();
                 }
-                catch(Exception e1){
-                    e1.printStackTrace();
+                catch (Exception e1){
+                    cards1[position-1] = null;
                 }
             }
         }
@@ -126,7 +126,7 @@ public class BoardDeck implements Serializable {
                     cards2[position-3] = model.getGameDrawableDeck().drawFirstResource();
                 }
                 catch(Exception e1){
-                    e1.printStackTrace();
+                    cards2[position-3] = null;
                 }
             }
         }
