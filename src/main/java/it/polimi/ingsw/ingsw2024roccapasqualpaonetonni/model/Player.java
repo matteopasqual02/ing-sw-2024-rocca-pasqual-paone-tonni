@@ -103,15 +103,6 @@ public class Player implements Serializable {
     }
 
     /**
-     * Gets listener.
-     *
-     * @return the listener
-     */
-    public GameListener getListener() {
-        return myListener;
-    }
-
-    /**
      * Gets current points.
      *
      * @return the current points
