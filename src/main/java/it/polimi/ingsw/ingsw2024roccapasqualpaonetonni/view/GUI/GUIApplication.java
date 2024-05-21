@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmut
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.LobbyController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController;
@@ -28,6 +29,7 @@ public class GUIApplication extends Application {
     private Parent root;
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
+    private GameController gameController = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
@@ -122,11 +124,26 @@ public class GUIApplication extends Application {
     }
     public void show_all(GameImmutable gameImmutable, String nickname){
         ConsolePrinter.consolePrinter("Game started");
-        /*try {
-            changeScene("/Game.fxml");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene.fxml"));
+        Parent newRoot = null;
+        try {
+            newRoot = loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
+        }
+
+        gameController = loader.getController();
+
+        gameController.setParameters(executor, client,this);
+        gameController.setScene(gameImmutable,nickname);
+
+        double currWidth = stage.getWidth();
+        double currHeight = stage.getHeight();
+        Scene scene = new Scene(newRoot,currWidth,currHeight);
+        stage.setScene(scene);
+        stage.setTitle("Codex Naturalis");
+        stage.show();
     }
     public void infoBox(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
