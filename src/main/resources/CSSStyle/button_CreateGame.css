@@ -1,6 +1,6 @@
 .button
 {
-    -fx-background-image: url("../images/green_button.jpg");
+    -fx-background-image: url("../images/Button_image/button_create_game.png");
     -fx-background-size: cover;
 }
 

@@ -1,12 +1,12 @@
 .button
 {
-    -fx-background-image: url("../images/purple_button.jpg");
+    -fx-background-image: url("../images/Button_image/button_joinID.png");
     -fx-background-size: cover;
 }
 
 .button:hover
 {
-    -fx-background-image: url("../images/purple_button.jpg");
+    -fx-background-image: url("../images/Button_image/button_joinID.png");
     -fx-background-size: cover;
     -fx-border-color: #24A0ED;
     -fx-border-width: 2px;
