@@ -289,10 +289,20 @@ public class GameController implements GameControllerInterface {
     /**
      * Gets all player.
      *
-     * @return the all player
+     * @return all players
      */
     public synchronized Queue<Player> getAllPlayer() {
         return model.getPlayers();
+    }
+
+    /**
+     * Gets all players disconnected.
+     *
+     * @return all disconnected players
+     */
+    @Override
+    public List<Player> getAllDisconnectedPlayer() {
+        return model.getPlayersDisconnected();
     }
 
     /**
@@ -320,7 +330,7 @@ public class GameController implements GameControllerInterface {
      */
     public synchronized void reconnectPlayer(String nickname) {
         model.reconnectPlayer(nickname);
-        if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
+        if (GameStatus.WAITING_RECONNECTION == getGame().getGameStatus() && model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
             model.setStatus(model.getLastStatus());
             model.resetLastStatus();
         }
@@ -415,7 +425,7 @@ public class GameController implements GameControllerInterface {
     /**
      * Random first player.
      */
-    private synchronized void randomFirstPlayer() {
+    public synchronized void randomFirstPlayer() {
         int first = random.nextInt(4);
 
         for (int i = 0; i < first; i++) {
@@ -428,7 +438,7 @@ public class GameController implements GameControllerInterface {
     /**
      * Turn zero.
      */
-    private synchronized void turnZero() {
+    public synchronized void turnZero() {
         for (Player player : getAllPlayer()) {
             try {
                 player.drawStarting(model.getGameDrawableDeck());

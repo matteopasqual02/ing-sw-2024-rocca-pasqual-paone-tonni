@@ -138,7 +138,7 @@ public class MainController implements MainControllerInterface {
         Player player;
         List<GameController> ris = runningGames.stream().filter(gc -> (gc.getGameID() == idToReconnect)).toList();
         if(!ris.isEmpty()){
-            player = ris.getFirst().getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null);
+            player = ris.getFirst().getAllDisconnectedPlayer().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null);
             if(player!=null){
                 ris.getFirst().addMyselfAsListener(nickname, notifier);
                 ris.getFirst().reconnectPlayer(nickname);

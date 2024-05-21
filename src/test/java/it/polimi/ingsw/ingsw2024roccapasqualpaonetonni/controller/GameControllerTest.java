@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.RemoteException;
@@ -49,6 +50,9 @@ class GameControllerTest {
 
         //table creation and check if the creation returns true
         gameController.createTable();
+        gameController.randomFirstPlayer();
+        gameController.turnZero();
+        gameController.getGame().setStatus(GameStatus.RUNNING);
 
         //assertion on decks
         assertEquals(30,gameController.getGame().getGameDrawableDeck().getDecks().get("resources").size());
@@ -82,7 +86,6 @@ class GameControllerTest {
     }
 
     /*It controls a complete turn */
-    /*
     @Test
     void turnGameTest() throws RemoteException{
         GameController gameController = new GameController(0);
@@ -94,32 +97,36 @@ class GameControllerTest {
         gameController.addPlayer("d");
 
         gameController.createTable();
+        gameController.randomFirstPlayer();
+        gameController.turnZero();
+        gameController.getGame().setStatus(GameStatus.RUNNING);
 
-        gameController.choosePlayerGoal("a",1);
-        gameController.addStartingCard("a",false);
+        String nick = gameController.getCurrentPlayer().getNickname();
 
-        List<PlayingCard> hand = Objects.requireNonNull(gameController.getAllPlayer().peek()).getHand();
-        StartingCard startingCard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getStartingCard();
+        gameController.choosePlayerGoal(nick,1);
+        gameController.addStartingCard(nick,false);
+
+        Player me = gameController.getAllPlayer().stream().filter(player -> player.getNickname().equals(nick)).toList().getFirst();
+
+        List<PlayingCard> hand = me.getHand();
+        StartingCard startingCard = me.getStartingCard();
         PlayingCard cardToAdd = hand.getFirst();
         int pointsReceived = cardToAdd.getPoints();
-        gameController.addCard("a",cardToAdd,startingCard,1,false);
-        gameController.drawGoldFromDeck("a");
 
         //series of assert
         //to check goal chosen
-        ObjectiveCard goal = Objects.requireNonNull(gameController.getAllPlayer().peek()).getGoal();
-        ObjectiveCard goalVector = Objects.requireNonNull(gameController.getAllPlayer().peek()).getObjectiveBeforeChoice()[1];
+        ObjectiveCard goal = me.getGoal();
+        ObjectiveCard goalVector = me.getObjectiveBeforeChoice()[1];
         assertEquals(goalVector,goal);
 
         //assert starting card
-        StartingCard cardPlaced = Objects.requireNonNull(gameController.getAllPlayer().peek()).getStartingCard();
-        PlayingCard cardOnBoard = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[20][20];
+        StartingCard cardPlaced = me.getStartingCard();
+        PlayingCard cardOnBoard = me.getBoard().getBoardMatrix()[5][5];
         assertEquals(cardPlaced,cardOnBoard);
 
         //assert correct second placing
-
-        PlayingCard cardOnBoard2 = Objects.requireNonNull(gameController.getAllPlayer().peek()).getBoard().getBoard()[19][19];
-        assertEquals(cardToAdd,cardOnBoard2);
+        gameController.addCard(nick,cardToAdd,startingCard,1,false);
+        gameController.drawGoldFromDeck(nick);
 
         //to check the correct draw
         for (Player player: gameController.getAllPlayer()){
@@ -133,60 +140,18 @@ class GameControllerTest {
         }
 
         //check points increase
-        int[] pointsOnBoard = gameController.getAllPoints();
+        int[] pointsOnBoard = new GameImmutable(gameController.getGame()).getAllPoints();
         int pointsOnBoardCurrentPlayer = pointsOnBoard[Objects.requireNonNull(gameController.getAllPlayer().peek()).getColorPlayer()-1];
         assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
     }
 
     /*It controls that set status is correctly updated*/
-    /*
     @Test
-    void gameStatusTest(){
+    void gameStatusTest() throws RemoteException {
         GameController gameController = new GameController(0);
 
         gameController.getGame().setStatus(GameStatus.PREPARATION);
-        assertEquals(GameStatus.PREPARATION, gameController.getGameStatus() );
+        assertEquals(GameStatus.PREPARATION, gameController.getGame().getGameStatus() );
     }
 
-    /*It controls multiple turns */
-    /*
-    @Test
-    void endGameTest() throws RemoteException{
-        GameController gameController = new GameController(0);
-
-        gameController.setMaxNumberOfPlayer(4);
-        gameController.addPlayer("a");
-        gameController.addPlayer("b");
-        gameController.addPlayer("c");
-        gameController.addPlayer("d");
-
-        gameController.createTable();
-        PlayingCard playedBefore;
-        PlayingCard playedNow;
-
-        //All players choose their goals and adding the first card
-        for (int i=0; i< gameController.getMaxNumberOfPlayer(); i++) {
-            gameController.choosePlayerGoal(1);
-            gameController.addStartingCard(false);
-            playedBefore = gameController.getCurrentPlayer().getHand().getFirst();
-            gameController.addCard(playedBefore,gameController.getCurrentPlayer().getStartingCard(),1,true);
-            gameController.drawResourceFromDeck();
-
-            for(int j=0; j<5; j++){
-                playedNow = gameController.getCurrentPlayer().getHand().getFirst();
-                gameController.addCard(playedNow,playedBefore,1,true);
-                gameController.drawResourceFromDeck();
-                playedBefore=playedNow;
-            }
-
-            gameController.nextTurn();
-        }
-
-        for(int points=0; points< gameController.getMaxNumberOfPlayer(); points++){
-            assertEquals(0,gameController.getAllPoints()[points]);
-        }
-
-
-
-    }*/
 }

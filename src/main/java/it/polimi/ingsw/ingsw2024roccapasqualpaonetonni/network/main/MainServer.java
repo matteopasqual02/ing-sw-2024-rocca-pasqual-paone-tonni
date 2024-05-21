@@ -44,4 +44,11 @@ public class MainServer {
 
     }
 
+    /*only test*/
+    public static void test() {
+        System.setProperty("java.rmi.server.hostname", DefaultNetworkValues.Remote_ip_address);
+        RMIServer.bind();
+        SocketServer server = new SocketServer();
+        server.start(DefaultNetworkValues.Default_SOCKET_port);
+    }
 }

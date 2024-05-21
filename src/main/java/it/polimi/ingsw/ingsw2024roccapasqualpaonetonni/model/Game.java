@@ -204,20 +204,34 @@ public class Game implements Serializable {
     }
 
     /**
+     * Gets players disconnected.
+     *
+     * @return the players disconnected
+     */
+    public List<Player> getPlayersDisconnected() {
+        return playersDisconnected;
+    }
+
+    /**
      * Reconnect player.
      *
      * @param nickname the nickname
      */
     public synchronized void reconnectPlayer(String nickname) {
-        Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
+        Player p = playersDisconnected.stream().filter(player -> nickname.equals(player.getNickname())).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(true);
-            playersDisconnected.remove(p);
+            for (int i=0; i<playersDisconnected.size();i++){
+                if(nickname.equals(playersDisconnected.get(i).getNickname())){
+                    playersDisconnected.remove(playersDisconnected.get(i));
+                    i=maxNumberOfPlayer;
+                }
+            }
             ArrayList<Player> copiedList = new ArrayList<>(players);
             int first = copiedList.getFirst().getColorPlayer();
             int[] index = new int[maxNumberOfPlayer];
             for(int i = 0; i < maxNumberOfPlayer; i++) {
-                index[(first + i) % maxNumberOfPlayer - 1] = i;
+                index[(first + i) % maxNumberOfPlayer] = i;
             }
             copiedList.add(index[p.getColorPlayer() - 1], p);
             players.clear();
