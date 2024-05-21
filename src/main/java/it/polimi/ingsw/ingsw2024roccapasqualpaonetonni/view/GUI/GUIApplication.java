@@ -44,7 +44,7 @@ public class GUIApplication extends Application {
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
 
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby_1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
         root = loader.load();
         LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
@@ -120,7 +120,7 @@ public class GUIApplication extends Application {
     }
     public void show_noAvailableGame(){
         //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
-        infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby_1.fxml");
+        infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
     public void show_all(GameImmutable gameImmutable, String nickname){
         ConsolePrinter.consolePrinter("Game started");

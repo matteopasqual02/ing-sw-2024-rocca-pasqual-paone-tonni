@@ -2,7 +2,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,7 +39,7 @@ public class LobbyController extends GenericController {
     public void handleJoinGameButtonClick(ActionEvent event){
         Platform.runLater(()-> {
             try {
-                application.changeScene("/Name_1.fxml");
+                application.changeScene("/Name.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -51,7 +50,7 @@ public class LobbyController extends GenericController {
     public void handleJoinGameIDButtonClick(ActionEvent event){
         Platform.runLater(()-> {
             try {
-                application.changeScene("/NameGameId_1.fxml");
+                application.changeScene("/NameGameId.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
