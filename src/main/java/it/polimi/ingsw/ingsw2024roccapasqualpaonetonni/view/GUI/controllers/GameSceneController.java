@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.concurrent.ExecutorService;
 
-public class GameController extends GenericController{
+public class GameSceneController extends GenericController{
     @FXML
     private ImageView resourceCard1;
     @FXML
