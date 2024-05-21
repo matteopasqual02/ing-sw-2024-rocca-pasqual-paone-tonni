@@ -88,14 +88,14 @@ public class GameController extends GenericController{
         myHandImage3.setImage(new Image(getClass().getResource(path).toString()));
 
         //setting secret objectives
-
+/*
         cardId = player.getObjectiveBeforeChoice()[0].getIdCard();
         if(cardId<100){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+            path = "images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/" + cardId +".png";
+            path = "images/gameImages/images/CODEX_cards_gold_front/" + cardId +".png";
         }
         secretObjectiveImage1.setImage(new Image(getClass().getClassLoader().getResource(path).toString()));
 
@@ -175,6 +175,6 @@ public class GameController extends GenericController{
 
         cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
         path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
-        goldCard3.setImage(new Image(getClass().getResource(path).toString()));
+        goldCard3.setImage(new Image(getClass().getResource(path).toString()));*/
     }
 }
