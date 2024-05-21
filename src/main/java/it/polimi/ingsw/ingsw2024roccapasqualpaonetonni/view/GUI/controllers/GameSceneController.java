@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
-public class GameController extends GenericController{
+public class GameSceneController extends GenericController{
     @FXML
     private ImageView resourceCard1;
     @FXML

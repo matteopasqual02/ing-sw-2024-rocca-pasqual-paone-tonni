@@ -61,7 +61,7 @@ public class GameController implements GameControllerInterface {
         private void addClient(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
-                //ConsolePrinter.consolePrinter("added listener " + client);
+                ConsolePrinter.consolePrinter("added listener " + client);
             }
         }
 

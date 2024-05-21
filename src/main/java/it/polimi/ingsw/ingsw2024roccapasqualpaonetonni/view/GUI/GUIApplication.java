@@ -4,7 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmut
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameController;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.LobbyController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController;
@@ -29,7 +29,7 @@ public class GUIApplication extends Application {
     private Parent root;
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
-    private GameController gameController = null;
+    private GameSceneController gameSceneController = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
@@ -73,29 +73,13 @@ public class GUIApplication extends Application {
         String message = String.format("everyone entered, press y to begin");
         ConsolePrinter.consolePrinter(message);
     }
-    /*public void show_addedNewPlayer(String nickname){
-        try {
-            if(!nickname.equals(client.getNickname()))
-            {
-                String message = nickname + " joined this game";
-                ConsolePrinter.consolePrinter(message);
 
-                Label messageLabel = new Label(message);
-                StackPane.setMargin(messageLabel, new Insets(50+i, 0, 0, 50));
-                i= i+20;
-                joinedGameRoot.getChildren().add(messageLabel);
-                joinedGameRoot.layout();
-            }
-
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
         ConsolePrinter.consolePrinter(message);
         joinedGameController.addNewLabel(message);
     }
+
     //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
     //when I need to dynamically change the file we need to keep a reference to the controller.
     public void show_youJoinedGame(int gameID) {
@@ -132,10 +116,10 @@ public class GUIApplication extends Application {
             throw new RuntimeException(e);
         }
 
-        gameController = loader.getController();
+        gameSceneController = loader.getController();
 
-        gameController.setParameters(executor, client,this);
-        gameController.setScene(gameImmutable,nickname);
+        gameSceneController.setParameters(executor, client,this);
+        gameSceneController.setScene(gameImmutable,nickname);
 
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
