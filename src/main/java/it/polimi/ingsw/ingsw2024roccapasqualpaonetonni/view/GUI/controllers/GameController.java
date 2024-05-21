@@ -98,7 +98,7 @@ public class GameController extends GenericController{
         secretObjectiveImage2.setImage(new Image(getClass().getResource(path).toString()));
 
         //setting common objectives
-/*
+        /*
         cardId = gameImmutable.getBoardDeck().getCommonObjective(0).getIdCard();
         path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
         commonObjectiveImage1.setImage(new Image(getClass().getResource(path).toString()));
