@@ -300,7 +300,7 @@ public class GameController implements GameControllerInterface {
      *
      * @return all disconnected players
      */
-    @Override
+
     public List<Player> getAllDisconnectedPlayer() {
         return model.getPlayersDisconnected();
     }

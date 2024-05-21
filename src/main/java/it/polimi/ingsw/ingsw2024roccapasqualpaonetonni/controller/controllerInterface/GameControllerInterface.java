@@ -175,5 +175,4 @@ public interface GameControllerInterface extends Remote {
      */
     void addToPingPong(String client) throws RemoteException;
 
-    List<Player> getAllDisconnectedPlayer();
 }
