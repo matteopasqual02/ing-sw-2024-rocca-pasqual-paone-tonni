@@ -4,10 +4,16 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
 public class GameController extends GenericController{
@@ -37,6 +43,14 @@ public class GameController extends GenericController{
     private ImageView secretObjectiveImage1;
     @FXML
     private ImageView secretObjectiveImage2;
+    @FXML
+    private TextField publicMessage;
+    @FXML
+    private TextField privateReciever;
+    @FXML
+    private TextField privateMessage;
+    @FXML
+    private VBox box;
     private ExecutorService executor;
     private Client client;
     private GUIApplication application;
@@ -127,5 +141,45 @@ public class GameController extends GenericController{
             path = "/images/Codex_image/CODEX_cards_front/" + cardId +".png";
         }
         return String.valueOf(getClass().getResource(path));
+    }
+
+    public void handleSendPublic(ActionEvent actionEvent) {
+        executor.submit(()->{
+            try {
+                client.receiveInput("/chat "+ publicMessage.getText());
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void handleSendPrivate(ActionEvent actionEvent) {
+        executor.submit(()->{
+            try {
+                client.receiveInput("/chatPrivate "+ privateReciever.getText() + " " + privateMessage.getText());
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void handleSeePublicChat(ActionEvent actionEvent) {
+        executor.submit(()->{
+            try {
+                client.receiveInput("/seeChat");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void handleSeePrivateChat(ActionEvent actionEvent) {
+        executor.submit(()->{
+            try {
+                client.receiveInput("/seeChatPrivate");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }
