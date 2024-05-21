@@ -46,6 +46,8 @@ public class MessageAddToPingPong extends ClientGenericMessage {
      */
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.addToPingPong(client);
+        if(gameControllerInterface!=null){
+            gameControllerInterface.addToPingPong(client);
+        }
     }
 }

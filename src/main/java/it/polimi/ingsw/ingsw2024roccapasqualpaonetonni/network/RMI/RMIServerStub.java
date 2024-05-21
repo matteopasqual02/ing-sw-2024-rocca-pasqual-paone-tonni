@@ -122,6 +122,10 @@ public class RMIServerStub implements ServerInterface {
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         RMINotifier notifier = new RMINotifier(me);
         gameController = requests.createGameController(name, maxNumPlayers, notifier);
+        if (gameController == null) {
+            me.noAvailableGame();
+            return;
+        }
         gameController.addToPingPong(name);
     }
 
@@ -161,6 +165,10 @@ public class RMIServerStub implements ServerInterface {
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         RMINotifier notifier = new RMINotifier(me);
         gameController = requests.joinGameByID(name, idGame, notifier);
+        if (gameController == null) {
+            me.noAvailableGame();
+            return;
+        }
         gameController.addToPingPong(name);
     }
 
@@ -191,6 +199,10 @@ public class RMIServerStub implements ServerInterface {
         requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         RMINotifier notifier = new RMINotifier(me);
         gameController = requests.reconnect(name, idGame, notifier);
+        if (gameController == null) {
+            me.noAvailableGame();
+            return;
+        }
         gameController.addToPingPong(name);
     }
 
