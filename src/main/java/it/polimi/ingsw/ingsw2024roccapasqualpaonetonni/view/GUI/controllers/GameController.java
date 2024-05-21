@@ -59,98 +59,122 @@ public class GameController extends GenericController{
 
         int cardId = player.getHand().get(0).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
         myHandImage1.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = player.getHand().get(1).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
         myHandImage2.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = player.getHand().get(2).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
         myHandImage3.setImage(new Image(getClass().getResource(path).toString()));
 
         //setting secret objectives
 
         cardId = player.getObjectiveBeforeChoice()[0].getIdCard();
-        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
-        secretObjectiveImage1.setImage(new Image(getClass().getResource(path).toString()));
+        if(cardId<100){
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+        }
+        else
+        {
+            path = "/images/gameImages/images/CODEX_cards_gold_front/" + cardId +".png";
+        }
+        secretObjectiveImage1.setImage(new Image(getClass().getClassLoader().getResource(path).toString()));
 
         cardId = player.getObjectiveBeforeChoice()[1].getIdCard();
-        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+        if(cardId<100){
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+        }
+        else
+        {
+            path = "/images/gameImages/images/CODEX_cards_gold_front/" + cardId +".png";
+        }
         secretObjectiveImage2.setImage(new Image(getClass().getResource(path).toString()));
 
         //setting common objectives
-        /*
+
         cardId = gameImmutable.getBoardDeck().getCommonObjective(0).getIdCard();
-        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+        if(cardId<100){
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+        }
+        else
+        {
+            path = "/images/gameImages/images/CODEX_cards_gold_front/" + cardId +".png";
+        }
         commonObjectiveImage1.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = gameImmutable.getBoardDeck().getCommonObjective(1).getIdCard();
-        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+        if(cardId<100){
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+        }
+        else
+        {
+            path = "/images/gameImages/images/CODEX_cards_gold_front/" + cardId +".png";
+        }
         commonObjectiveImage2.setImage(new Image(getClass().getResource(path).toString()));
 
         //setting resource cards
 
         cardId = gameImmutable.getDrawableDeck().getDecks().get("resources").peek().getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
         resourceCard1.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = gameImmutable.getBoardDeck().getCard(0).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
         resourceCard2.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
         if(cardId<10){
-            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/00" + cardId +".png";
         }
         else
         {
-            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+            path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         }
         resourceCard3.setImage(new Image(getClass().getResource(path).toString()));
 
         //setting gold cards
 
         cardId = gameImmutable.getDrawableDeck().getDecks().get("gold").peek().getIdCard();
-        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         goldCard1.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = gameImmutable.getBoardDeck().getCard(2).getIdCard();
-        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
+        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
         goldCard2.setImage(new Image(getClass().getResource(path).toString()));
 
         cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
-        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + String.valueOf(cardId) +".png";
-        goldCard3.setImage(new Image(getClass().getResource(path).toString()));*/
+        path = "/images/gameImages/images/CODEX_cards_gold_front/0" + cardId +".png";
+        goldCard3.setImage(new Image(getClass().getResource(path).toString()));
     }
 }
