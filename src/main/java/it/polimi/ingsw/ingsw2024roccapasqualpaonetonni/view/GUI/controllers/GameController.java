@@ -148,10 +148,13 @@ public class GameController extends GenericController{
                 hand2.setFitWidth(30);
                 hand3.setFitHeight(30);
                 hand3.setFitWidth(30);
+
+                String printPoints = "Points: " + p.getCurrentPoints();
+                Label points = new Label(printPoints);
                 Button button = new Button("See board");
                 VBox vBox1 = new VBox(name,color);
                 HBox hbox1 = new HBox(hand1,hand2,hand3);
-                VBox vBox2 = new VBox(hbox1,button);
+                VBox vBox2 = new VBox(hbox1,points,button);
                 HBox hbox2 = new HBox(vBox1,vBox2);
 
                 otherPlayersBox.getChildren().add(hbox2);
