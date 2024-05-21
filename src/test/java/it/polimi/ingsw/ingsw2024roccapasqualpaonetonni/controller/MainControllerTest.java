@@ -61,11 +61,11 @@ class MainControllerTest {
         MainControllerInterface mainController;
         mainController = MainController.getInstance();
         mainController.clearSingleton();
-        MainServer.test();
+
 
         GameControllerInterface p1 = mainController.createGameController("p1",4,
                 new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
-        GameControllerInterface p2= mainController.joinFirstAvailableGame("p2",
+        GameControllerInterface p2= mainController.joinGameByID("p2",1,
                 new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
         GameControllerInterface p3= mainController.joinFirstAvailableGame("p3",
                 new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
@@ -102,7 +102,7 @@ class MainControllerTest {
         MainControllerInterface mainController;
         mainController = MainController.getInstance();
         mainController.clearSingleton();
-        MainServer.test();
+
 
         mainController.createGameController("p1",4,
                 new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
