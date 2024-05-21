@@ -18,49 +18,54 @@
                <Button alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="268.0" text="Insert" textAlignment="CENTER" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutY="102.0" prefHeight="78.0" prefWidth="1024.0" AnchorPane.bottomAnchor="396.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
-         <children>
-            <Text id="textWithBackground" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_background_white" text="Select Number of Player" textAlignment="CENTER" wrappingWidth="995.7109375">
-               <font>
-                  <Font size="27.0" />
-               </font>
-            </Text>
-         </children>
-      </HBox>
-      <HBox alignment="TOP_CENTER" layoutX="8.0" prefHeight="110.0" prefWidth="1024.0" AnchorPane.bottomAnchor="480.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <HBox alignment="CENTER" layoutX="8.0" prefHeight="110.0" prefWidth="1024.0" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
                <TextField fx:id="string1" alignment="CENTER" prefHeight="40.0" prefWidth="500.0" promptText="Insert yout nickname">
                <HBox.margin>
                   <Insets />
-               </HBox.margin></TextField>
+               </HBox.margin>
+            </TextField>
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutY="180.0" prefHeight="100.0" prefWidth="1024.0" AnchorPane.bottomAnchor="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+      <HBox alignment="CENTER" layoutY="180.0" prefHeight="100.0" prefWidth="1024.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
          <children>
-            <ToggleButton mnemonicParsing="false" onAction="#handleButton2Click" text="2">
-               <font>
-                  <Font size="27.0" />
-               </font>
-               <toggleGroup>
-                  <ToggleGroup fx:id="toggleGroupu1" />
-               </toggleGroup>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </ToggleButton>
-            <ToggleButton mnemonicParsing="false" onAction="#handleButton3Click" text="3" toggleGroup="$toggleGroupu1">
-               <font>
-                  <Font size="27.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="50.0" right="50.0" />
-               </HBox.margin>
-            </ToggleButton>
-            <ToggleButton mnemonicParsing="false" onAction="#handleButton4Click" text="4" toggleGroup="$toggleGroupu1">
-               <font>
-                  <Font size="27.0" />
-               </font>
-            </ToggleButton>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Text id="textWithBackground" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_background_white" text="Select Number of Player" textAlignment="CENTER" wrappingWidth="995.7109375">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Text>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ToggleButton mnemonicParsing="false" onAction="#handleButton2Click" stylesheets="@CSSStyle/firstPage.css" text="2">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="toggleGroupu1" />
+                           </toggleGroup>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ToggleButton>
+                        <ToggleButton mnemonicParsing="false" onAction="#handleButton3Click" text="3" toggleGroup="$toggleGroupu1">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" right="50.0" />
+                           </HBox.margin>
+                        </ToggleButton>
+                        <ToggleButton mnemonicParsing="false" onAction="#handleButton4Click" text="4" toggleGroup="$toggleGroupu1">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </ToggleButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </HBox>
     </children>

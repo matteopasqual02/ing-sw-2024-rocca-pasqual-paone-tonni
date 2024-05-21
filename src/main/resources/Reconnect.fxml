@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameGameIDController">
+<AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.ReconnectController">
     <children>
         <HBox alignment="CENTER" prefHeight="121.0" prefWidth="1024.0" AnchorPane.bottomAnchor="474.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>

@@ -59,10 +59,10 @@ public class LobbyController extends GenericController {
 
     @FXML
     public void handleReconnectButtonClick(ActionEvent event){
-        executor.submit(()->{
+        Platform.runLater(()-> {
             try {
-                client.receiveInput("/reconnect a 1");
-            } catch (IOException | NotBoundException e) {
+                application.changeScene("/Reconnect.fxml");
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
