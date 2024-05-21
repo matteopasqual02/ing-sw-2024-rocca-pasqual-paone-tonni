@@ -6,22 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="root" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameGameIDController">
+<AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="background-purple" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameGameIDController">
    <children>
       <HBox alignment="CENTER" prefHeight="121.0" prefWidth="1024.0" AnchorPane.bottomAnchor="474.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField alignment="CENTER" prefHeight="40.0" prefWidth="500.0" fx:id="string1" promptText="Insert your nickaname" />
+            <TextField fx:id="string1" alignment="CENTER" prefHeight="40.0" prefWidth="500.0" promptText="Insert your nickaname" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutY="102.0" prefHeight="147.0" prefWidth="375.0" AnchorPane.bottomAnchor="372.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
          <children>
-            <TextField alignment="CENTER" prefHeight="40.0" prefWidth="500.0" fx:id="string2" promptText="Insert gameID" />
+            <TextField fx:id="string2" alignment="CENTER" prefHeight="40.0" prefWidth="500.0" promptText="Insert gameID" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutY="483.0" prefHeight="93.0" prefWidth="915.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="268.0" text="Insert" onAction="#handleButtonClick" />
+            <Button mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="268.0" text="Insert" />
          </children>
       </HBox>
    </children>

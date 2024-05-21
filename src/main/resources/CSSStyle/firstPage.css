@@ -4,9 +4,26 @@
 }
 
 .background-green{
-    -fx-background-image: url("../images/backgound_green.jpg");
+    -fx-background-image: url("../images/background_Image/green1.jpeg");
     -fx-background-size: cover;
 }
+
+.background-red{
+    -fx-background-image: url("../images/background_Image/background_red.jpeg");
+    -fx-background-size: cover;
+}
+
+.background-blue{
+    -fx-background-image: url("../images/background_Image/blue.jpeg");
+    -fx-background-size: cover;
+}
+
+.background-purple{
+    -fx-background-image: url("../images/background_Image/purple1.jpeg");
+    -fx-background-size: cover;
+}
+
+
 
 .text_background_white {
     -fx-background-color: white;

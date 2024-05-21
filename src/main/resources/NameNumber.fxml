@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="root-green" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameNumberController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="background-green" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameNumberController">
     <children>
       <HBox alignment="CENTER" layoutY="413.0" prefHeight="187.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
          <children>
@@ -27,9 +27,12 @@
             </Text>
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="8.0" prefHeight="110.0" prefWidth="1024.0" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="TOP_CENTER" layoutX="8.0" prefHeight="110.0" prefWidth="1024.0" AnchorPane.bottomAnchor="480.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-               <TextField fx:id="string1" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="500.0" promptText="Insert yout nickname" />
+               <TextField fx:id="string1" alignment="CENTER" prefHeight="40.0" prefWidth="500.0" promptText="Insert yout nickname">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></TextField>
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutY="180.0" prefHeight="100.0" prefWidth="1024.0" AnchorPane.bottomAnchor="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
