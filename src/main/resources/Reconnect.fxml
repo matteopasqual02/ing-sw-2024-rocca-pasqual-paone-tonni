@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,20 +9,27 @@
 
 <AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.ReconnectController">
     <children>
-        <HBox alignment="CENTER" prefHeight="121.0" prefWidth="1024.0" AnchorPane.bottomAnchor="474.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <TextField fx:id="string1" alignment="CENTER" prefHeight="40.0" prefWidth="500.0" promptText="Insert your nickaname" />
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutY="102.0" prefHeight="147.0" prefWidth="375.0" AnchorPane.bottomAnchor="372.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
-            <children>
-                <TextField fx:id="string2" alignment="CENTER" prefHeight="40.0" prefWidth="500.0" promptText="Insert gameID" />
-            </children>
-        </HBox>
         <HBox alignment="CENTER" layoutY="483.0" prefHeight="93.0" prefWidth="915.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
             <children>
-                <Button mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="268.0" text="Insert" />
+                <Button mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="125.0" prefWidth="400.0" styleClass="button_reconnect_enter" stylesheets="@CSSStyle/allButton.css" />
             </children>
         </HBox>
+      <VBox prefHeight="200.0" prefWidth="1024.0" AnchorPane.bottomAnchor="376.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+              <HBox alignment="CENTER" prefHeight="121.0" prefWidth="1024.0">
+                  <children>
+                      <TextField fx:id="string1" alignment="CENTER" prefHeight="76.0" prefWidth="500.0" promptText="Insert your nickaname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
+                  </children>
+              </HBox>
+              <HBox alignment="CENTER" prefHeight="147.0" prefWidth="375.0">
+                  <children>
+                      <TextField fx:id="string2" alignment="CENTER" prefHeight="76.0" prefWidth="500.0" promptText="Insert gameID" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
+                  </children>
+              </HBox>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </VBox>
     </children>
 </AnchorPane>
