@@ -35,13 +35,17 @@ public class PrivateMessage implements Serializable {
     public LocalTime getTime(){return localTime;}
     public void setLocalTime(LocalTime localTime){this.localTime=localTime;}
 
-    @Override
-    public String toString() {
+    public String toStringTUI() {
         return String.valueOf(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.DEFAULT).
                 a("[").a(localTime.getHour()).a(":")
                 .a(localTime.getMinute()).a(":")
                 .a(localTime.getSecond()).a(" - ")
                 .a(sender).a(" - PRIVATE] ")
                 .fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(text));
+    }
+
+    public String toStringGUI() {
+        return "[" + localTime.getHour() + ":" + localTime.getMinute() + ":" +
+                localTime.getSecond() + " - " + sender + " - PRIVATE] " + text;
     }
 }

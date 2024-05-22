@@ -141,7 +141,7 @@
             <ScrollPane fx:id="scrollPane" prefHeight="190.0" prefWidth="200.0">
                <VBox fx:id="messageContainer" prefHeight="200.0" prefWidth="178.0" spacing="2.0"/>
             </ScrollPane>
-            <VBox fx:id="inputContainer">
+            <VBox>
                <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
                   <TextField fx:id="receiverInput" promptText="Receiver" />
                </HBox>

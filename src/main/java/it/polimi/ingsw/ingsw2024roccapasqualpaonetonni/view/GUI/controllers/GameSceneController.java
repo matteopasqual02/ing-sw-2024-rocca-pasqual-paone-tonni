@@ -323,6 +323,7 @@ public class GameSceneController extends GenericController{
             receiverContainer.setManaged(false);
             publicChatButton.setDisable(true);
             privateChatButton.setDisable(false);
+            messageContainer.getChildren().clear();
             try {
                 client.receiveInput("/seeChat");
             } catch (IOException | NotBoundException e) {
@@ -339,6 +340,7 @@ public class GameSceneController extends GenericController{
             receiverContainer.setManaged(true);
             publicChatButton.setDisable(false);
             privateChatButton.setDisable(true);
+            messageContainer.getChildren().clear();
             try {
                 client.receiveInput("/seeChatPrivate");
             } catch (IOException | NotBoundException e) {

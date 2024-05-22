@@ -535,20 +535,34 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     //--------------------------CHAT
     @Override
     public void newMessage(Message m) throws RemoteException {
-        view.displayChat(m.toString());
+        if (view instanceof TUI) {
+            view.displayChat(m.toStringTUI());
+        }
+        else {
+            view.displayChat(m.toStringGUI());
+        }
     }
 
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
-        view.displayChat(m.toString());
+        if (view instanceof TUI) {
+            view.displayChat(m.toStringTUI());
+        }
+        else {
+            view.displayChat(m.toStringGUI());
+        }
     }
 
     @Override
     public void publicChatLog(List<Message> allMessages) throws RemoteException {
         if(allMessages!=null){
             StringBuilder chat = new StringBuilder();
-            for(Message m: allMessages){
-                chat.append(m.toString());
+            for(Message m: allMessages) {
+                if (view instanceof TUI) {
+                    chat.append(m.toStringTUI());
+                } else {
+                    chat.append(m.toStringGUI());
+                }
             }
             view.displayChat(chat.toString());
         }
@@ -562,12 +576,17 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         if(privateChat!=null){
             StringBuilder chat = new StringBuilder();
             for(PrivateMessage m: privateChat){
-                chat.append(m.toString());
+                if (view instanceof TUI) {
+                    chat.append(m.toStringTUI());
+                }
+                else {
+                    chat.append(m.toStringGUI());
+                }
             }
             view.displayChat(chat.toString());
         }
         else {
-            view.displayChat("There is no private chat with: " + otherName);
+            view.displayChat("No available messages with: " + otherName);
         }
     }
 
