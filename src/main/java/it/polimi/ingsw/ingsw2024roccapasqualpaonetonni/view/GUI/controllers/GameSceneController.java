@@ -85,6 +85,8 @@ public class GameSceneController extends GenericController{
         //setting hand
         if(player==null)return;
 
+        playerBoard = new AnchorPane();
+
         cardId = player.getHand().get(0).getIdCard();
         myHandImage1.setImage(new Image(createPath(cardId)));
         cardId = player.getHand().get(1).getIdCard();
@@ -265,5 +267,22 @@ public class GameSceneController extends GenericController{
         blur.setHeight(5);
         blur.setIterations(3);
         startingCard1.setEffect(blur);
+    }
+
+    public void handleBoardClick(MouseEvent mouseEvent) {
+        double x = mouseEvent.getX();
+        double y = mouseEvent.getY();
+        placeCardOnBoard(x, y);
+    }
+    public void placeCardOnBoard(double x, double y){
+        //we have to handle the case in which it is flipped
+        executor.submit(()->{
+            try {
+                client.receiveInput("/addStarting");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        playerBoard.getChildren().add(startingCard1);
     }
 }
