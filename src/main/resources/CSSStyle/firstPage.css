@@ -29,6 +29,22 @@
 }
 
 
+@keyframes changeBackground {
+    0% { background-image: url('../images/background_Image/purple1.jpeg'); }
+    25% { background-image: url('../images/background_Image/red.jpeg'); }
+    50% { background-image: url('../images/background_Image/blue.jpeg'); }
+    75% { background-image: url('../images/background_Image/green1.jpeg'); }
+    100% { background-image: url('../images/background_Image/background_complete.jpg'); }
+}
+
+.imageView {
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-animation: changeBackground 5s infinite;
+}
+
+
 
 .text_background_white {
     -fx-background-color: white;
