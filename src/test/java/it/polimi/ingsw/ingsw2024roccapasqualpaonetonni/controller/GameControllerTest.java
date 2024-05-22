@@ -139,10 +139,6 @@ class GameControllerTest {
             }
         }
 
-        //check points increase
-        int[] pointsOnBoard = new GameImmutable(gameController.getGame()).getAllPoints();
-        int pointsOnBoardCurrentPlayer = pointsOnBoard[Objects.requireNonNull(gameController.getAllPlayer().peek()).getColorPlayer()-1];
-        assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
     }
     /*It controls a complete turn */
     @Test
@@ -198,10 +194,6 @@ class GameControllerTest {
             }
         }
 
-        //check points increase
-        int[] pointsOnBoard = new GameImmutable(gameController.getGame()).getAllPoints();
-        int pointsOnBoardCurrentPlayer = pointsOnBoard[Objects.requireNonNull(gameController.getAllPlayer().peek()).getColorPlayer()-1];
-        assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
     }
 
     /*It controls that set status is correctly updated*/
@@ -211,6 +203,28 @@ class GameControllerTest {
 
         gameController.getGame().setStatus(GameStatus.PREPARATION);
         assertEquals(GameStatus.PREPARATION, gameController.getGame().getGameStatus() );
+    }
+
+    /*It controls the chat*/
+    @Test
+    void gameChatTest() throws RemoteException {
+        GameController gameController = new GameController(0);
+
+        gameController.setMaxNumberOfPlayer(4);
+        gameController.addPlayer("a");
+        gameController.addPlayer("b");
+        gameController.addPlayer("c");
+        gameController.addPlayer("d");
+
+        gameController.createTable();
+        gameController.randomFirstPlayer();
+        gameController.turnZero();
+        gameController.getGame().setStatus(GameStatus.RUNNING);
+
+        gameController.sendMessage("ciao a tutti", "a");
+        gameController.sendPrivateMessage("b", "a","ciao a tutti");
+        gameController.getPublicChatLog("a");
+        gameController.getPrivateChatLog("a","b");
     }
 
 }

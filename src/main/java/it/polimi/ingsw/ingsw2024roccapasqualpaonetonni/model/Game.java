@@ -181,29 +181,6 @@ public class Game implements Serializable {
     }
 
     /**
-     * No available game.
-     *
-     * @param px the px
-     */
-    public void noAvailableGame(Player px) {
-        gameListenersHandler.notify_noAvailableGame(px.getNickname());
-    }
-
-    /**
-     * Remove player.
-     *
-     * @param p the p
-     */
-    public synchronized void removePlayer(Player p){
-        players.remove(p);
-        if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
-            status[0] = GameStatus.ENDED;
-        }
-        //here before calling this method the client should call removeListener to remove itself from the listeners list, or the server should
-        gameListenersHandler.notify_removePlayer(p.getNickname());
-    }
-
-    /**
      * Gets players disconnected.
      *
      * @return the players disconnected
@@ -462,17 +439,6 @@ public class Game implements Serializable {
      * @param nickname the nickname
      */
 //---------------------------------READY SECTION
-    /*
-    public void playerIsReadyToStart(Player p){
-        p.setReadyToStart();
-        gameListenersHandler.notify_playerIsReadyToStart(p);
-    }
-
-    public Boolean arePlayerReady(){
-        return players.stream().filter(Player::getReadyToStart).count() == players.size()
-                && players.size() == maxNumberOfPlayer;
-    }
-    */
     public void setPlayerReady(String nickname){
         boolean flag = false;
         for(String nn : ready){
