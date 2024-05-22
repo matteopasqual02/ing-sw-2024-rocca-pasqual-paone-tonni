@@ -112,6 +112,13 @@ public interface ViewUpdate {
     void show_status(String s);
 
     /**
+     * Show status last.
+     *
+     * @param string the string
+     */
+    void show_statusLast(String string);
+
+    /**
      * Winners.
      *
      * @param list the list
@@ -125,5 +132,7 @@ public interface ViewUpdate {
      * @param msg the nickname
      */
     void show_generic(String msg);
+
+
 }
 

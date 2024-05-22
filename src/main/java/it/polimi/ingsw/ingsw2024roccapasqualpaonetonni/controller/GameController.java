@@ -164,7 +164,9 @@ public class GameController implements GameControllerInterface {
 
                 for (String deadClient : clients) {
                     //ConsolePrinter.consolePrinter("dead client " + deadClient);
-                    disconnectPlayer(deadClient);
+                    if(!model.getPlayersDisconnected().stream().map(Player::getNickname).toList().contains(deadClient)){
+                        disconnectPlayer(deadClient);
+                    }
                 }
             }
         }

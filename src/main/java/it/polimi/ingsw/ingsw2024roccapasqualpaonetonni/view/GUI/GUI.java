@@ -133,6 +133,11 @@ public class GUI implements ViewUpdate {
 
     }
 
+    @Override
+    public void show_statusLast(String string) {
+
+    }
+
     /**
      * Winners.
      *

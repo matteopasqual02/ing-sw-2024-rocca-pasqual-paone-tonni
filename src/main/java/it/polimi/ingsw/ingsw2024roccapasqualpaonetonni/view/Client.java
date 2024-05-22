@@ -700,7 +700,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void statusSetToLastStatus(GameStatus status) {
-
+        view.show_statusLast(status.toString());
     }
 
     /**

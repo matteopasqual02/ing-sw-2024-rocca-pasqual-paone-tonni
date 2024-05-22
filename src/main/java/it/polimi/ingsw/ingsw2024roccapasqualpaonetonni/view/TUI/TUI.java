@@ -242,6 +242,16 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }
 
     /**
+     * Show status.
+     *
+     * @param s the s
+     */
+    @Override
+    public void show_statusLast(String s) {
+        ConsolePrinter.consolePrinter("[GAME LAST STATUS]:" +s+ "\n");
+    }
+
+    /**
      * Winners.
      *
      * @param list the list
