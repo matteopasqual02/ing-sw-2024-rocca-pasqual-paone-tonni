@@ -10,7 +10,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="169.0" prefWidth="399.0" text="READY" />
+            <Button mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="160.0" prefWidth="500.0" styleClass="button_ready" stylesheets="@CSSStyle/allButton.css" />
          </children>
       </HBox>
    </children>

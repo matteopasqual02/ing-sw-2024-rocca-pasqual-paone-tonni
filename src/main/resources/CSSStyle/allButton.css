@@ -43,6 +43,11 @@
     -fx-background-size: cover;
 }
 
+.button_ready {
+    -fx-background-image: url("../images/Button_image/button_ready.png");
+    -fx-background-size: cover;
+}
+
 .button_text_reverse {
     -fx-background-image: url("../images/Button_image/button_text_rev.png");
     -fx-background-size: cover;
