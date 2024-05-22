@@ -261,6 +261,11 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
 
     }
 
+    @Override
+    public void show_generic(String msg) {
+        ConsolePrinter.consolePrinter("[INFO]: "+ msg);
+    }
+
     /**
      * Display chat.
      *

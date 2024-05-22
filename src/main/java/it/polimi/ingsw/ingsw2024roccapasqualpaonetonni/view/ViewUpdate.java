@@ -118,5 +118,12 @@ public interface ViewUpdate {
      * @param nick the nick
      */
     void winners(List<Player> list, String nick);
+
+    /**
+     * Show generic.
+     *
+     * @param msg the nickname
+     */
+    void show_generic(String msg);
 }
 

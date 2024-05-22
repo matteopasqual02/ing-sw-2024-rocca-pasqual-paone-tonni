@@ -144,6 +144,11 @@ public class GUI implements ViewUpdate {
 
     }
 
+    @Override
+    public void show_generic(String msg) {
+
+    }
+
     /**
      * My running turn place card.
      */

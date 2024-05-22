@@ -178,7 +178,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/reconnect" -> {
-                ConsolePrinter.consolePrinter(Ansi.ansi(parole.length));
                 if(state==null && parole.length==3){
                     try{
                         myNickname = parole[1];
@@ -358,6 +357,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/leave" -> {
                 server.leave(myNickname, myGameId);
                 currentImmutable=null;
+                state=null;
                 view.joinLobby();
             }
             case null, default -> view.invalidMessage("invalid command");
@@ -670,7 +670,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void reconnectedPlayer(String nickname) {
-
+        view.show_generic("Player "+nickname+" has been reconnected");
     }
 
     /**
@@ -680,7 +680,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void reconnectionImpossible(String nickname) {
-
+        view.show_generic("Player "+nickname+" reconnection failed");
     }
 
     /**
@@ -690,7 +690,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void disconnectedPlayer(String nickname) {
-
+        view.show_generic("Player "+nickname+" has been disconnected");
     }
 
     /**
@@ -711,13 +711,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
+//--------------------------CHAT
     /**
      * New message.
      *
      * @param m the m
      * @throws RemoteException the remote exception
      */
-//--------------------------CHAT
     @Override
     public void newMessage(Message m) throws RemoteException {
         view.displayChat(m.toString());
