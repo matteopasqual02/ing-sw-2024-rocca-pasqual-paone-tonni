@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class JoinedGameController {
-    private int i=0;
     private final VBox vbox = new VBox();
 
     public void addNewLabel(String text, StackPane root){
