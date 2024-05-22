@@ -48,19 +48,6 @@ public class GameImmutable implements Serializable {
      */
     private final Chat chat;
 
-    /**
-     * Instantiates a new Game immutable.
-     */
-    public GameImmutable(){
-        gameId=0;
-        maxNumberOfPlayers=0;
-        players=null;
-        winners=null;
-        status=null;
-        boardDeck=null;
-        drawableDeck=null;
-        chat=null;
-    }
 
     /**
      * Instantiates a new Game immutable.

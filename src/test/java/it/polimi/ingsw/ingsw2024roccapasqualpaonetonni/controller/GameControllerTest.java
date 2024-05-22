@@ -144,6 +144,65 @@ class GameControllerTest {
         int pointsOnBoardCurrentPlayer = pointsOnBoard[Objects.requireNonNull(gameController.getAllPlayer().peek()).getColorPlayer()-1];
         assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
     }
+    /*It controls a complete turn */
+    @Test
+    void turnGameTestBeta() throws RemoteException{
+        GameController gameController = new GameController(0);
+
+        gameController.setMaxNumberOfPlayer(4);
+        gameController.addPlayer("a");
+        gameController.addPlayer("b");
+        gameController.addPlayer("c");
+        gameController.addPlayer("d");
+
+        gameController.createTable();
+        gameController.randomFirstPlayer();
+        gameController.turnZero();
+        gameController.getGame().setStatus(GameStatus.RUNNING);
+
+        String nick = gameController.getCurrentPlayer().getNickname();
+
+        gameController.choosePlayerGoal(nick,1);
+        gameController.addStartingCard(nick,false);
+
+        Player me = gameController.getAllPlayer().stream().filter(player -> player.getNickname().equals(nick)).toList().getFirst();
+
+        List<PlayingCard> hand = me.getHand();
+        StartingCard startingCard = me.getStartingCard();
+        PlayingCard cardToAdd = hand.getFirst();
+        int pointsReceived = cardToAdd.getPoints();
+
+        //series of assert
+        //to check goal chosen
+        ObjectiveCard goal = me.getGoal();
+        ObjectiveCard goalVector = me.getObjectiveBeforeChoice()[1];
+        assertEquals(goalVector,goal);
+
+        //assert starting card
+        StartingCard cardPlaced = me.getStartingCard();
+        PlayingCard cardOnBoard = me.getBoard().getBoardMatrix()[5][5];
+        assertEquals(cardPlaced,cardOnBoard);
+
+        //assert correct second placing
+        gameController.addCard(nick,cardToAdd,startingCard,1,false);
+        gameController.drawFromBoard(nick,1);
+
+        //to check the correct draw
+        for (Player player: gameController.getAllPlayer()){
+            assertNotNull(player.getStartingCard());
+            assertNotNull(player.getObjectiveBeforeChoice()[0]);
+            assertNotNull(player.getObjectiveBeforeChoice()[1]);
+
+            for(PlayingCard playingCard: player.getHand()){
+                assertNotNull(playingCard);
+            }
+        }
+
+        //check points increase
+        int[] pointsOnBoard = new GameImmutable(gameController.getGame()).getAllPoints();
+        int pointsOnBoardCurrentPlayer = pointsOnBoard[Objects.requireNonNull(gameController.getAllPlayer().peek()).getColorPlayer()-1];
+        assertEquals(pointsReceived,pointsOnBoardCurrentPlayer);
+    }
 
     /*It controls that set status is correctly updated*/
     @Test

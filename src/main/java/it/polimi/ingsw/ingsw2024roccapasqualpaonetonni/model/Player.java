@@ -372,12 +372,5 @@ public class Player implements Serializable {
         connected = b;
     }
 
-    /**
-     * Is connected boolean.
-     *
-     * @return the boolean
-     */
-    public boolean isConnected() {
-        return connected;
-    }
+
 }

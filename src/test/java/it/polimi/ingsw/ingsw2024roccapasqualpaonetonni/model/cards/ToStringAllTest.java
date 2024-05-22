@@ -82,12 +82,32 @@ public class ToStringAllTest {
 
         System.out.println("\n\nGold:\n");
         for(Card card: gameController.getGame().getGameDrawableDeck().getDecks().get("gold")) {
-            System.out.println(card.toString());
+            PlayingCard playingCard = (PlayingCard) card;
+            System.out.println(playingCard.toString());
+            playingCard.flip();
+            System.out.println(playingCard.toString());
+            System.out.println(playingCard.toString(true));
+            for (int i=0;i<3;i++){
+                System.out.println(playingCard.toString(true,i));
+            }
+            for (int i=0;i<3;i++){
+                System.out.println(playingCard.toString(false,i));
+            }
         }
 
         System.out.println("\n\nStarting:\n");
         for(Card card: gameController.getGame().getGameDrawableDeck().getDecks().get("starting")) {
-            System.out.println(card.toString());
+            PlayingCard playingCard = (PlayingCard) card;
+            System.out.println(playingCard.toString());
+            playingCard.flip();
+            System.out.println(playingCard.toString());
+            System.out.println(playingCard.toString(true));
+            for (int i=0;i<3;i++){
+                System.out.println(playingCard.toString(true,i));
+            }
+            for (int i=0;i<3;i++){
+                System.out.println(playingCard.toString(false,i));
+            }
         }
 
         System.out.println("\n\nObjective:\n");
