@@ -78,7 +78,7 @@ public class GUIApplication extends Application {
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
         ConsolePrinter.consolePrinter(message);
-        joinedGameController.addNewLabel(message);
+        joinedGameController.addNewLabel(message,joinedGameRoot);
     }
 
     //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
