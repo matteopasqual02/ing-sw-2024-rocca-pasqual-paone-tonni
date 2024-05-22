@@ -13,60 +13,68 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="background-green" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameNumberController">
     <children>
-      <HBox alignment="CENTER" layoutY="413.0" prefHeight="187.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-               <Button alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="313.0" styleClass="button_create_game_enter" stylesheets="@CSSStyle/allButton.css" textAlignment="CENTER" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutY="180.0" prefHeight="100.0" prefWidth="1024.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="376.0" prefWidth="1031.0">
+            <HBox alignment="CENTER" prefHeight="317.0" prefWidth="1041.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="128.0" prefWidth="1024.0">
+                  <VBox alignment="CENTER" prefHeight="376.0" prefWidth="1031.0">
                      <children>
-                           <TextField fx:id="string1" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
+                        <HBox alignment="TOP_CENTER" prefHeight="110.0" prefWidth="1019.0">
+                           <children>
+                                 <TextField fx:id="string1" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="string11" alignment="CENTER" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Select Number of Player">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ToggleButton mnemonicParsing="false" onAction="#handleButton2Click" prefHeight="50.0" prefWidth="60.0" styleClass="button_2" stylesheets="@CSSStyle/allButton.css">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="toggleGroupu1" />
+                                 </toggleGroup>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </ToggleButton>
+                              <ToggleButton mnemonicParsing="false" onAction="#handleButton3Click" prefHeight="50.0" prefWidth="60.0" styleClass="button_3" stylesheets="@CSSStyle/allButton.css" toggleGroup="$toggleGroupu1">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="50.0" right="50.0" />
+                                 </HBox.margin>
+                              </ToggleButton>
+                              <ToggleButton mnemonicParsing="false" onAction="#handleButton4Click" prefHeight="50.0" prefWidth="60.0" styleClass="button_4" stylesheets="@CSSStyle/allButton.css" toggleGroup="$toggleGroupu1">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </ToggleButton>
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="string11" alignment="CENTER" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Select Number of Player">
-                           <font>
-                              <Font size="27.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <ToggleButton mnemonicParsing="false" onAction="#handleButton2Click" prefHeight="50.0" prefWidth="60.0" styleClass="button_2" stylesheets="@CSSStyle/allButton.css">
-                           <font>
-                              <Font size="27.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="toggleGroupu1" />
-                           </toggleGroup>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#handleButton3Click" prefHeight="50.0" prefWidth="60.0" styleClass="button_3" stylesheets="@CSSStyle/allButton.css" toggleGroup="$toggleGroupu1">
-                           <font>
-                              <Font size="27.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="50.0" right="50.0" />
-                           </HBox.margin>
-                        </ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#handleButton4Click" prefHeight="50.0" prefWidth="60.0" styleClass="button_4" stylesheets="@CSSStyle/allButton.css" toggleGroup="$toggleGroupu1">
-                           <font>
-                              <Font size="27.0" />
-                           </font>
-                        </ToggleButton>
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
-            </VBox>
+            </HBox>
+            <HBox alignment="BOTTOM_CENTER" prefHeight="187.0" prefWidth="1024.0">
+               <children>
+                     <Button alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="313.0" styleClass="button_create_game_enter" stylesheets="@CSSStyle/allButton.css" textAlignment="CENTER" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
     </children>
 </AnchorPane>
