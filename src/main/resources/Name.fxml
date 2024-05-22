@@ -8,7 +8,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="background-blue" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.NameInsertController">
    <children>
-      <HBox alignment="CENTER" layoutX="412.0" prefHeight="100.0" prefWidth="1024.0" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" layoutX="412.0" prefHeight="100.0" prefWidth="1024.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="string1" alignment="CENTER" prefHeight="77.0" prefWidth="500.0" promptText="Insert your nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
          </children>
