@@ -59,7 +59,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         MainStaticMethod.clearCMD();
         view.joinLobby();
 
-        //this.pongThread.start();
+        this.pongThread.start();
     }
 
     public Client(GUIApplication application, EnumConnectionType connectionType) throws IOException {
@@ -83,7 +83,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         MainStaticMethod.clearCMD();
         view.joinLobby();
 
-        //this.pongThread.start();
+        this.pongThread.start();
     }
 
 
@@ -357,29 +357,35 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void maxNumPlayersSet(int max) {
         view.show_maxNumPlayersSet(max);
     }
+
     @Override
     public void createdGame(int gameId) {
         myGameId = gameId;
         view.show_createdGame(gameId);
     }
+
     @Override
     public void youJoinedGame(int gameId) {
         myGameId = gameId;
         view.show_youJoinedGame(gameId);
     }
+
     @Override
     public void noAvailableGame() {
         view.show_noAvailableGame();
         view.joinLobby();
     }
+
     @Override
     public void addedNewPlayer(String pNickname) {
         view.show_addedNewPlayer(pNickname);
     }
+
     @Override
     public void areYouReady() {
         view.show_areYouReady();
     }
+
     @Override
     public void allGame(GameImmutable gameImmutable) {
         currentImmutable=gameImmutable;
@@ -408,6 +414,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.notMyTurn();
         }
     }
+
     @Override
     public void startAdded(Player p) {
         currentImmutable.refreshPlayer(p);
@@ -419,6 +426,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.notMyTurn();
         }
     }
+
     @Override
     public void cardAdded(Player p) {
         currentImmutable.refreshPlayer(p);
@@ -430,6 +438,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.notMyTurn();
         }
     }
+
     @Override
     public void personalGoalChosen(Player p) {
         currentImmutable.refreshPlayer(p);
@@ -441,11 +450,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.notMyTurn();
         }
     }
+
     @Override
     public void statusSet(GameStatus status) {
         state=status;
         view.show_status(state.toString());
     }
+
     @Override
     public void resourceDrawn(Player p, DrawableDeck d) {
         if(currentImmutable!=null){
@@ -455,6 +466,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
 
     }
+
     @Override
     public void goldDrawn(Player p, DrawableDeck d) {
         if(currentImmutable!=null){
@@ -463,6 +475,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.show_All(currentImmutable,myNickname);
         }
     }
+
     @Override
     public void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         if(currentImmutable!=null){
@@ -472,6 +485,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.show_All(currentImmutable,myNickname);
         }
     }
+
     @Override
     public void genericError(String s) throws RemoteException {
         view.invalidMessage(s);
@@ -482,42 +496,40 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         view.winners(list,myNickname);
     }
 
-
     @Override
     public void fullGame() {
-
     }
+
     @Override
     public void nameAlreadyInGame() {
-
     }
+
     @Override
     public void playerRemoved(String p) {
-
     }
+
     @Override
     public void lastTurn() {
-
     }
+
     @Override
     public void reconnectedPlayer(String nickname) {
-
     }
+
     @Override
     public void reconnectionImpossible(String nickname) {
-
     }
+
     @Override
     public void disconnectedPlayer(String nickname) {
-
     }
+
     @Override
     public void statusSetToLastStatus(GameStatus status) {
-
     }
+
     @Override
     public void lastStatusReset() {
-
     }
 
     //--------------------------CHAT
@@ -525,10 +537,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void newMessage(Message m) throws RemoteException {
         view.displayChat(m.toString());
     }
+
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
         view.displayChat(m.toString());
     }
+
     @Override
     public void publicChatLog(List<Message> allMessages) throws RemoteException {
         if(allMessages!=null){
@@ -539,9 +553,10 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.displayChat(chat.toString());
         }
         else {
-            view.displayChat("There is no public chat");
+            view.displayChat("No messages available");
         }
     }
+
     @Override
     public void privateChatLog(String otherName, List<PrivateMessage> privateChat) throws RemoteException {
         if(privateChat!=null){
@@ -576,19 +591,20 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (!pinged) {
-                    ConsolePrinter.consolePrinter("server dead");
-                }
-                else {
-                    synchronized (lock) {
+                synchronized (lock) {
+                    if (!pinged) {
+                        ConsolePrinter.consolePrinter("server dead");
+                    } else {
                         pinged = false;
                     }
                 }
             }
         }
     }
+
     @Override
     public void ping() {
+        pongThread.pinged();
         try {
             server.pong(this.myNickname);
             //ConsolePrinter.consolePrinter("pinged");

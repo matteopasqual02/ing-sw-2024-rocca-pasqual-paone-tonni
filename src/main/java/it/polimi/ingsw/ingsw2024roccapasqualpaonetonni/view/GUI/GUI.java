@@ -21,6 +21,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
     public void runLater(Runnable runnable){
         Platform.runLater(runnable);
     }
+
     @Override
     public void joinLobby() {
         runLater(()->application.joinLobby());
@@ -72,7 +73,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void displayChat(String s) {
-
+        runLater(() -> application.displayChat(s));
     }
 
     @Override

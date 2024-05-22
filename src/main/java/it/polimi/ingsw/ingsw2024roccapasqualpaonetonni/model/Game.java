@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.GameListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
@@ -314,17 +315,21 @@ public class Game implements Serializable {
         chat.addMessage(message);
         gameListenersHandler.notify_messageSent(message);
     }
+
     public void sendPrivateMessage(String senderName, String recieverName, String txt){
         PrivateMessage message = new PrivateMessage(txt,senderName,recieverName);
         chat.addPrivateMessage(senderName,recieverName,message);
         gameListenersHandler.notify_privateMessageSent(message);
     }
+
     public void getPublicChatLog(String requesterName) {
         gameListenersHandler.notify_publicChatLog(requesterName,chat.getAllMessages());
     }
+
     public void getPrivateChatLog(String yourName, String otherName){
         gameListenersHandler.notify_privateChatLog(yourName,otherName,chat.getPrivateChat(yourName,otherName));
     }
+
     public Chat getChat(){
         return chat;
     }

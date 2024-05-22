@@ -31,7 +31,6 @@ public class GUIApplication extends Application {
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
-    private Button lastClicked = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
@@ -110,7 +109,7 @@ public class GUIApplication extends Application {
     public void show_all(GameImmutable gameImmutable, String nickname){
         ConsolePrinter.consolePrinter("Game started");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_1.fxml"));
         Parent newRoot = null;
         try {
             newRoot = loader.load();
@@ -175,5 +174,11 @@ public class GUIApplication extends Application {
 
     public void myRunningTurnPlaceStarting() {
         gameSceneController.myRunningTurnPlaceStarting();
+    }
+
+    public void displayChat(String message){
+        if (gameSceneController != null) {
+            gameSceneController.displayChat(message);
+        }
     }
 }

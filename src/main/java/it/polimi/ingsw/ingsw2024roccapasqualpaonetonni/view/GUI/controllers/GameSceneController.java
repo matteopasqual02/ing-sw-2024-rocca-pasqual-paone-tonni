@@ -6,9 +6,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -20,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -28,47 +27,77 @@ import java.util.concurrent.ExecutorService;
 public class GameSceneController extends GenericController{
     @FXML
     private ImageView resourceCard1;
+
     @FXML
     private ImageView resourceCard2;
+
     @FXML
     private ImageView resourceCard3;
+
     @FXML
     private ImageView goldCard1;
+
     @FXML
     private ImageView goldCard2;
+
     @FXML
     private ImageView goldCard3;
+
     @FXML
     private ImageView myHandImage1;
+
     @FXML
     private ImageView myHandImage2;
+
     @FXML
     private ImageView myHandImage3;
+
     @FXML
     private ImageView commonObjectiveImage1;
+
     @FXML
     private ImageView commonObjectiveImage2;
+
     @FXML
     private ImageView secretObjectiveImage1;
+
     @FXML
     private ImageView secretObjectiveImage2;
+
     @FXML
     private ImageView startingCard1;
+
     @FXML
-    private TextField publicMessage;
+    private ScrollPane scrollPane;
+
     @FXML
-    private TextField privateReciever;
+    private VBox messageContainer;
+
     @FXML
-    private TextField privateMessage;
+    private TextArea messageInput;
+
     @FXML
-    private VBox chatBox;
+    private TextField receiverInput;
+
+    @FXML
+    private HBox receiverContainer;
+
+    @FXML
+    private Button publicChatButton;
+
+    @FXML
+    private Button privateChatButton;
+
     @FXML
     private VBox otherPlayersBox;
+
     @FXML
     private AnchorPane playerBoard;
+
     private ExecutorService executor;
     private Client client;
     private GUIApplication application;
+    private boolean isPrivateChat = false;
 
     public void setParameters(ExecutorService executor, Client client,GUIApplication application){
         this.executor = executor;
@@ -209,46 +238,6 @@ public class GameSceneController extends GenericController{
         return String.valueOf(getClass().getResource(path));
     }
 
-    public void handleSendPublic(ActionEvent actionEvent) {
-        executor.submit(()->{
-            try {
-                client.receiveInput("/chat "+ publicMessage.getText());
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    public void handleSendPrivate(ActionEvent actionEvent) {
-        executor.submit(()->{
-            try {
-                client.receiveInput("/chatPrivate "+ privateReciever.getText() + " " + privateMessage.getText());
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    public void handleSeePublicChat(ActionEvent actionEvent) {
-        executor.submit(()->{
-            try {
-                client.receiveInput("/seeChat");
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    public void handleSeePrivateChat(ActionEvent actionEvent) {
-        executor.submit(()->{
-            try {
-                client.receiveInput("/seeChatPrivate");
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
     public void myRunningTurnPlaceStarting() {
         // Effetto di illuminazione
         DropShadow borderGlow = new DropShadow();
@@ -258,8 +247,15 @@ public class GameSceneController extends GenericController{
         borderGlow.setWidth(30);
         borderGlow.setHeight(30);
         startingCard1.setEffect(borderGlow);
-
     }
+
+    public void displayChat(String message) {
+        Text text = new Text(message);
+        text.setWrappingWidth(scrollPane.getWidth() - 20); // Adjust width to fit scroll pane
+        messageContainer.getChildren().add(text);
+        scrollPane.layout();
+    }
+
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
         BoxBlur blur = new BoxBlur();
@@ -274,6 +270,7 @@ public class GameSceneController extends GenericController{
         double y = mouseEvent.getY();
         placeCardOnBoard(x, y);
     }
+
     public void placeCardOnBoard(double x, double y){
         //we have to handle the case in which it is flipped
         executor.submit(()->{
@@ -284,5 +281,69 @@ public class GameSceneController extends GenericController{
             }
         });
         playerBoard.getChildren().add(startingCard1);
+    }
+
+    public void handleSend(ActionEvent actionEvent) {
+        executor.submit(() -> {
+            String message = messageInput.getText().trim();
+            messageInput.clear();
+            if (!message.isEmpty()) {
+                if (isPrivateChat) {
+                    String receiver = receiverInput.getText().trim();
+                    if (!receiver.isEmpty()) {
+                        try {
+                            client.receiveInput("/chatPrivate " + receiver + " " + message);
+                            receiverInput.clear();
+                        } catch (IOException | NotBoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                        messageContainer.getChildren().clear();
+                        handleSeePrivateChat(actionEvent);
+                    }
+                }
+                else {
+                    try {
+                        client.receiveInput("/chat " + message);
+                    } catch (IOException | NotBoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                    messageContainer.getChildren().clear();
+                    handleSeePublicChat(actionEvent);
+                }
+            }
+        });
+    }
+
+
+    @FXML
+    public void handleSeePublicChat(ActionEvent actionEvent) {
+        executor.submit(()->{
+            isPrivateChat = false;
+            receiverContainer.setVisible(false);
+            receiverContainer.setManaged(false);
+            publicChatButton.setDisable(true);
+            privateChatButton.setDisable(false);
+            try {
+                client.receiveInput("/seeChat");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @FXML
+    public void handleSeePrivateChat(ActionEvent actionEvent) {
+        executor.submit(()->{
+            isPrivateChat = true;
+            receiverContainer.setVisible(true);
+            receiverContainer.setManaged(true);
+            publicChatButton.setDisable(false);
+            privateChatButton.setDisable(true);
+            try {
+                client.receiveInput("/seeChatPrivate");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

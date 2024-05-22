@@ -7,16 +7,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.ReconnectController">
+<AnchorPane prefHeight="589.0" prefWidth="1048.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.ReconnectController">
     <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1024.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1048.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
               <HBox alignment="TOP_CENTER" prefHeight="121.0" prefWidth="1024.0">
                   <children>
                       <TextField fx:id="string1" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="500.0" promptText="Insert your nickaname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
                   </children>
               </HBox>
-              <HBox alignment="TOP_CENTER" prefHeight="147.0" prefWidth="1024.0">
+              <HBox alignment="TOP_CENTER" prefHeight="147.0" prefWidth="1048.0">
                   <children>
                       <TextField fx:id="string2" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="500.0" promptText="Insert gameID" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
                   </children>
