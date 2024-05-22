@@ -170,4 +170,8 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.show();
     }
+
+    public void myRunningTurnPlaceStarting() {
+        gameSceneController.myRunningTurnPlaceStarting();
+    }
 }

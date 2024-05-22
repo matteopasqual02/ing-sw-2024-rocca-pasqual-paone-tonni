@@ -107,6 +107,6 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void myRunningTurnPlaceStarting() {
-
+        runLater(()->application.myRunningTurnPlaceStarting());
     }
 }

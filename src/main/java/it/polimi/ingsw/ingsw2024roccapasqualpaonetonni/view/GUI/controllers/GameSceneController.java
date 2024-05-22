@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -46,6 +47,10 @@ public class GameSceneController extends GenericController{
     @FXML
     private ImageView secretObjectiveImage2;
     @FXML
+    private ImageView startingCard1;
+    @FXML
+    private ImageView startingCard2;
+    @FXML
     private TextField publicMessage;
     @FXML
     private TextField privateReciever;
@@ -55,6 +60,8 @@ public class GameSceneController extends GenericController{
     private VBox chatBox;
     @FXML
     private VBox otherPlayersBox;
+    @FXML
+    private AnchorPane playerBoard;
     private ExecutorService executor;
     private Client client;
     private GUIApplication application;
@@ -86,6 +93,10 @@ public class GameSceneController extends GenericController{
         secretObjectiveImage1.setImage(new Image(createPath(cardId)));
         cardId = player.getObjectiveBeforeChoice()[1].getIdCard();
         secretObjectiveImage2.setImage(new Image(createPath(cardId)));
+
+        //setting starting cards
+        cardId = player.getStartingCard().getIdCard();
+        startingCard1.setImage(new Image(createPath(cardId)));
 
         //setting common objectives
 
@@ -230,5 +241,9 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public void myRunningTurnPlaceStarting() {
+
     }
 }
