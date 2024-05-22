@@ -238,7 +238,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      */
     @Override
     public void show_status(String s) {
-        ConsolePrinter.consolePrinter("[GAME STATUS]:" +s+ "\n");
+        ConsolePrinter.consolePrinter("[GAME STATUS]:" +s+ " ");
     }
 
     /**
@@ -248,7 +248,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      */
     @Override
     public void show_statusLast(String s) {
-        ConsolePrinter.consolePrinter("[GAME LAST STATUS]:" +s+ "\n");
+        ConsolePrinter.consolePrinter("[GAME LAST STATUS]:" +s+ " ");
     }
 
     /**

@@ -708,7 +708,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void lastStatusReset() {
-
+        view.show_statusLast("Reset");
     }
 
 //--------------------------CHAT

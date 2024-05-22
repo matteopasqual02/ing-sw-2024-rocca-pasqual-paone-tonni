@@ -283,6 +283,7 @@ public class Game implements Serializable {
     public void resetLastStatus() {
         status[1] = null;
         gameListenersHandler.notify_resetLastStatus();
+        gameListenersHandler.notify_nextTurn(players.peek().getNickname());
     }
 
     /**
