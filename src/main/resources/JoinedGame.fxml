@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="root" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController">
-   <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <TextField alignment="CENTER" prefHeight="117.0" prefWidth="750.0" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Waiting for other players to join...">
-               <font>
-                  <Font name="System Bold" size="27.0" />
-               </font>
-            </TextField>
-         </children>
-      </HBox>
-   </children>
-</AnchorPane>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController">
+    <VBox fx:id="labelBox" spacing="10" alignment="CENTER">
+        <Label fx:id="label" text="waiting for other players to join..."/>
+    </VBox>
+</StackPane>

@@ -83,7 +83,7 @@ public class GUIApplication extends Application {
     //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
     //when I need to dynamically change the file we need to keep a reference to the controller.
     public void show_youJoinedGame(int gameID) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame_1.fxml"));
         //Parent newRoot = null;
         //StackPane newRoot = null;
         try {
