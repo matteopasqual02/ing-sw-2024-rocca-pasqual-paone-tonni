@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,6 +31,7 @@ public class GUIApplication extends Application {
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
+    private Button lastClicked = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server

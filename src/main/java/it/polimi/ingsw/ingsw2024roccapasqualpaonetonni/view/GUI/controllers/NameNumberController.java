@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -22,6 +23,9 @@ public class NameNumberController extends GenericController {
     private ExecutorService executor;
     private Client client;
     private int num;
+
+    private ToggleButton lastClicked = null;
+
     @Override
     public void setParameters(ExecutorService executor, Client client, GUIApplication application){
         this.executor = executor;
@@ -57,17 +61,35 @@ public class NameNumberController extends GenericController {
             }
         });
     }
+
     @FXML
     public void handleButton2Click(ActionEvent event){
         num = 2;
+        if (lastClicked != null){
+            lastClicked.getStyleClass().remove("clicked");
+        }
+        lastClicked = (ToggleButton) event.getSource();
+        lastClicked.getStyleClass().add("clicked");
     }
+
     @FXML
     public void handleButton3Click(ActionEvent event){
         num = 3;
+        if (lastClicked != null){
+            lastClicked.getStyleClass().remove("clicked");
+        }
+        lastClicked = (ToggleButton) event.getSource();
+        lastClicked.getStyleClass().add("clicked");
     }
+
     @FXML
     public void handleButton4Click(ActionEvent event){
         num = 4;
+        if (lastClicked != null){
+            lastClicked.getStyleClass().remove("clicked");
+        }
+        lastClicked = (ToggleButton) event.getSource();
+        lastClicked.getStyleClass().add("clicked");
     }
 
 

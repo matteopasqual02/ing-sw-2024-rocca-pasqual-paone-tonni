@@ -49,7 +49,63 @@
 }
 
 
-.button:hover
+.button_2:hover
+{
+    -fx-border-color: #24A0ED;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
+}
+
+.button_3:hover
+{
+    -fx-border-color: #24A0ED;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
+}
+
+.button_4:hover
+{
+    -fx-border-color: #24A0ED;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
+}
+
+.button_2.clicked
+{
+    -fx-border-color: #24A0ED;
+    -fx-effect: dropshadow(gaussian, rgba(20,100,255,0.8), 10, 0.5, 0, 0);
+    -fx-border-width: 3px;
+}
+
+.button_3.clicked
+{
+    -fx-border-color: #24A0ED;
+    -fx-effect: dropshadow(gaussian, rgba(20,100,255,0.8), 10, 0.5, 0, 0);
+    -fx-border-width: 3px;
+}
+
+.button_4.clicked
+{
+    -fx-border-color: #24A0ED;
+    -fx-effect: dropshadow(gaussian, rgba(20,100,255,0.8), 10, 0.5, 0, 0);
+    -fx-border-width: 3px;
+}
+
+.button_create_game_enter:hover
+{
+    -fx-border-color: #24A0ED;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
+}
+
+.button_joinId_enter:hover
+{
+    -fx-border-color: #24A0ED;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
+}
+
+.button_reconnect_enter:hover
 {
     -fx-border-color: #24A0ED;
     -fx-border-width: 2px;
