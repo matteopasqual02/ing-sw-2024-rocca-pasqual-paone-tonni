@@ -1,13 +1,11 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;

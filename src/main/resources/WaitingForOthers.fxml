@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml">
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="waiting for all players to connect..."/>
-    </HBox>
-</StackPane>
+<AnchorPane prefHeight="576.0" prefWidth="1024.0" styleClass="root" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" prefHeight="511.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField alignment="CENTER" editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Waiting for all players to connect...">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
