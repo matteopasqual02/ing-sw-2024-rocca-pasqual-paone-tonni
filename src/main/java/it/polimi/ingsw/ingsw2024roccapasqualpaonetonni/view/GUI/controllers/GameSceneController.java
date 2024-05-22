@@ -9,11 +9,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -48,8 +54,6 @@ public class GameSceneController extends GenericController{
     private ImageView secretObjectiveImage2;
     @FXML
     private ImageView startingCard1;
-    @FXML
-    private ImageView startingCard2;
     @FXML
     private TextField publicMessage;
     @FXML
@@ -244,6 +248,22 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnPlaceStarting() {
+        // Effetto di illuminazione
+        DropShadow borderGlow = new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.BLUE);
+        borderGlow.setWidth(30);
+        borderGlow.setHeight(30);
+        startingCard1.setEffect(borderGlow);
 
+    }
+    @FXML
+    public void handleStartingCardClicked(MouseEvent event){
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(5);
+        blur.setHeight(5);
+        blur.setIterations(3);
+        startingCard1.setEffect(blur);
     }
 }

@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?language java?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
    <children>
@@ -118,7 +119,7 @@
             <VBox prefHeight="150.0" prefWidth="155.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="244.0" text="Starting Card" />
-                  <ImageView fx:id="startingCard1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="startingCard1" onMouseClicked="#handleStartingCardClicked" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                </children></VBox>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
               <content>
