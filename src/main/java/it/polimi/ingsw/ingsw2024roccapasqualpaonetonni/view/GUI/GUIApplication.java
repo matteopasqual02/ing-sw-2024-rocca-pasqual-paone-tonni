@@ -212,6 +212,10 @@ public class GUIApplication extends Application {
     }
 
     public void myRunningTurnChoseObjective() {
-        gameSceneController.myRunningTurnChoseObjective();;
+        gameSceneController.myRunningTurnChoseObjective();
+    }
+
+    public void myRunningTurnPlaceCard() {
+        gameSceneController.myRunningTurnPlaceCard();
     }
 }

@@ -100,6 +100,7 @@ public class GameSceneController extends GenericController{
     @FXML
     private Pane playerBoard;
     private int goal = 0;
+    private int hand = 4;
 
     private ExecutorService executor;
     private Client client;
@@ -392,6 +393,7 @@ public class GameSceneController extends GenericController{
     }
 
     public void startCard(GameImmutable gameImmutable, String nickname) {
+        //i have to check if its my turn because everyone gets these updates but only the player in turn has to update its gui
         if(client.getMyTurn()){
             gridPane.getChildren().remove(startCardVbox);
             startingCard1.setEffect(null);
@@ -402,8 +404,14 @@ public class GameSceneController extends GenericController{
     public void chosenGoal() {
         if(client.getMyTurn()){
             switch (goal){
-                case 1->secretObjectiveImage2.setVisible(false);
-                case 2->secretObjectiveImage1.setVisible(false);
+                case 1->{
+                    secretObjectiveImage2.setVisible(false);
+                    secretObjectiveImage1.setEffect(null);
+                }
+                case 2->{
+                    secretObjectiveImage1.setVisible(false);
+                    secretObjectiveImage2.setEffect(null);
+                }
             }
         }
     }
@@ -455,5 +463,32 @@ public class GameSceneController extends GenericController{
             }
         });
 
+    }
+
+    public void myRunningTurnPlaceCard() {
+        glow(myHandImage1);
+        glow(myHandImage2);
+        glow(myHandImage3);
+    }
+
+    public void handleHand1Clicked(MouseEvent mouseEvent) {
+        myHandImage2.setEffect(null);
+        myHandImage3.setEffect(null);
+        jump(myHandImage1);
+        hand = 1;
+    }
+
+    public void handleHand2Clicked(MouseEvent mouseEvent) {
+        myHandImage1.setEffect(null);
+        myHandImage3.setEffect(null);
+        jump(myHandImage2);
+        hand = 2;
+    }
+
+    public void handleHand3Clicked(MouseEvent mouseEvent) {
+        myHandImage2.setEffect(null);
+        myHandImage1.setEffect(null);
+        jump(myHandImage3);
+        hand = 3;
     }
 }

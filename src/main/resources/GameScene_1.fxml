@@ -79,17 +79,17 @@
                   <VBox.margin>
                      <Insets />
                   </VBox.margin>
-                  <ImageView fx:id="myHandImage1" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="myHandImage1"  onMouseClicked="#handleHand1Clicked" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="myHandImage2" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="myHandImage2" onMouseClicked="#handleHand2Clicked" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="myHandImage3" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="myHandImage3"  onMouseClicked="#handleHand3Clicked" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>

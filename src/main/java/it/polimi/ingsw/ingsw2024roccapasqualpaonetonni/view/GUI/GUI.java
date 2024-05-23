@@ -183,7 +183,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnPlaceCard() {
-
+        runLater(()->application.myRunningTurnPlaceCard());
     }
 
     /**
