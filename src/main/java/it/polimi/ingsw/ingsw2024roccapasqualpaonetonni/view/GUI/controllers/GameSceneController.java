@@ -317,13 +317,14 @@ public class GameSceneController extends GenericController{
 
     @FXML
     public void handleSeePublicChat(ActionEvent actionEvent) {
+        isPrivateChat = false;
+        receiverContainer.setVisible(false);
+        receiverContainer.setManaged(false);
+        publicChatButton.setDisable(true);
+        privateChatButton.setDisable(false);
+        messageContainer.getChildren().removeAll(messageContainer.getChildren());
+
         executor.submit(()->{
-            isPrivateChat = false;
-            receiverContainer.setVisible(false);
-            receiverContainer.setManaged(false);
-            publicChatButton.setDisable(true);
-            privateChatButton.setDisable(false);
-            messageContainer.getChildren().clear();
             try {
                 client.receiveInput("/seeChat");
             } catch (IOException | NotBoundException e) {
@@ -334,13 +335,14 @@ public class GameSceneController extends GenericController{
 
     @FXML
     public void handleSeePrivateChat(ActionEvent actionEvent) {
+        isPrivateChat = true;
+        receiverContainer.setVisible(true);
+        receiverContainer.setManaged(true);
+        publicChatButton.setDisable(false);
+        privateChatButton.setDisable(true);
+        messageContainer.getChildren().removeAll(messageContainer.getChildren());
+
         executor.submit(()->{
-            isPrivateChat = true;
-            receiverContainer.setVisible(true);
-            receiverContainer.setManaged(true);
-            publicChatButton.setDisable(false);
-            privateChatButton.setDisable(true);
-            messageContainer.getChildren().clear();
             try {
                 client.receiveInput("/seeChatPrivate");
             } catch (IOException | NotBoundException e) {

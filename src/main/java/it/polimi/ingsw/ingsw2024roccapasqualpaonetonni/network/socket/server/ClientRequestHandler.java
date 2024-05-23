@@ -9,6 +9,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.ClientGenericMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMessages.MainMessageCreateGame;
@@ -83,7 +84,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                     processingQueue.add(message);
 
                 }catch (IOException | ClassNotFoundException e) {
-                    consolePrinter("[SOCKET] no more with the client");
+                    ConsolePrinter.consolePrinter("[SOCKET] no more with the client");
                     e.printStackTrace();
                 }
 

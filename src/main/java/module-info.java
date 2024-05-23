@@ -8,7 +8,6 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
     requires java.rmi;
 
     opens it.polimi.ingsw.ingsw2024roccapasqualpaonetonni to javafx.fxml;
-    exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni;
 
     opens it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI to javafx.fxml;
 
