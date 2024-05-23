@@ -4,22 +4,22 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -98,7 +98,7 @@ public class GameSceneController extends GenericController{
     private VBox otherPlayersBox;
 
     @FXML
-    private AnchorPane playerBoard;
+    private Pane playerBoard;
 
     private ExecutorService executor;
     private Client client;
@@ -120,7 +120,7 @@ public class GameSceneController extends GenericController{
         //setting hand
         if(player==null)return;
 
-        playerBoard = new AnchorPane();
+        //playerBoard = new AnchorPane();
 
         cardId = player.getHand().get(0).getIdCard();
         myHandImage1.setImage(new Image(createPath(cardId)));
@@ -247,14 +247,7 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnPlaceStarting() {
-        // Effetto di illuminazione
-        DropShadow borderGlow = new DropShadow();
-        borderGlow.setOffsetY(0f);
-        borderGlow.setOffsetX(0f);
-        borderGlow.setColor(Color.BLUE);
-        borderGlow.setWidth(30);
-        borderGlow.setHeight(30);
-        startingCard1.setEffect(borderGlow);
+        glow(startingCard1);
     }
 
     public void displayChatPublic(String message) {
@@ -277,11 +270,17 @@ public class GameSceneController extends GenericController{
 
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
+        TranslateTransition jump = new TranslateTransition(Duration.millis(500), startingCard1);
+        jump.setByY(-20);
+        jump.setAutoReverse(true);
+        jump.setCycleCount(2);
+        jump.play();
+/*
         BoxBlur blur = new BoxBlur();
         blur.setWidth(5);
         blur.setHeight(5);
         blur.setIterations(3);
-        startingCard1.setEffect(blur);
+        startingCard1.setEffect(blur);*/
     }
 
     public void handleBoardClick(MouseEvent mouseEvent) {
@@ -404,6 +403,66 @@ public class GameSceneController extends GenericController{
     public void startCard(GameImmutable gameImmutable, String nickname) {
         if(client.getMyTurn()){
             gridPane.getChildren().remove(startCardVbox);
+            startingCard1.setEffect(null);
+            playerBoard.getChildren().add(startingCard1);
         }
+    }
+
+    public void chosenGoal() {
+
+    }
+
+    public void myRunningTurnChoseObjective() {
+        glow(secretObjectiveImage1);
+        glow(secretObjectiveImage2);
+    }
+    public void glow(ImageView image){
+        // Effetto di illuminazione
+        DropShadow borderGlow = new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.BLUE);
+        borderGlow.setWidth(30);
+        borderGlow.setHeight(30);
+        image.setEffect(borderGlow);
+    }
+
+    public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
+        secretObjectiveImage1.setEffect(null);
+        TranslateTransition jump = new TranslateTransition(Duration.millis(500), secretObjectiveImage2);
+        jump.setByY(-20);
+        jump.setAutoReverse(true);
+        jump.setCycleCount(2);
+        jump.play();
+        executor.submit(()->{
+            try {
+                client.receiveInput("/choseGoal 2");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
+        secretObjectiveImage2.setEffect(null);
+        // jumping card
+        TranslateTransition jump = new TranslateTransition(Duration.millis(500), secretObjectiveImage1);
+        jump.setByY(-20);
+        jump.setAutoReverse(true);
+        jump.setCycleCount(2);
+        jump.play();
+        /*
+        MotionBlur motionBlur = new MotionBlur();
+        motionBlur.setRadius(15);
+        motionBlur.setAngle(45);
+        secretObjectiveImage1.setEffect(motionBlur);*/
+        executor.submit(()->{
+            try {
+                client.receiveInput("/choseGoal 1");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 }

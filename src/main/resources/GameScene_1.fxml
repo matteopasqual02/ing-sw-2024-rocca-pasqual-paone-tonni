@@ -115,12 +115,12 @@
          <VBox alignment="TOP_CENTER" prefHeight="148.0" prefWidth="129.0">
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Objective" textAlignment="CENTER" />
             <HBox alignment="TOP_CENTER" prefHeight="113.0" prefWidth="542.0">
-               <ImageView fx:id="secretObjectiveImage1" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fx:id="secretObjectiveImage1" onMouseClicked="#handleObjectiveCard1Clicked" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                   <HBox.margin>
                      <Insets left="5.0" right="5.0" />
                   </HBox.margin>
                </ImageView>
-               <ImageView fx:id="secretObjectiveImage2" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fx:id="secretObjectiveImage2" onMouseClicked="#handleObjectiveCard2Clicked" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                   <HBox.margin>
                      <Insets right="5.0" />
                   </HBox.margin>
@@ -157,6 +157,6 @@
          <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="244.0" text="Starting Card" />
          <ImageView fx:id="startingCard1" fitHeight="150.0" fitWidth="159.0" onMouseClicked="#handleStartingCardClicked" pickOnBounds="true" preserveRatio="true" />
       </VBox>
-      <Pane id="playerBoard" minHeight="0.0" minWidth="0.0" onMouseClicked="#handleBoardClick" prefHeight="356.0" prefWidth="659.0" />
+      <Pane fx:id="playerBoard" minHeight="0.0" minWidth="0.0" onMouseClicked="#handleBoardClick" prefHeight="356.0" prefWidth="659.0" />
    </GridPane>
 </AnchorPane>
