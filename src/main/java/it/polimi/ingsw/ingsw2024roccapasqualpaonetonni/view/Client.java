@@ -367,14 +367,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     //------------------------------------- SET GET ------------------------------------------------------------------------------
 
-    /**
-     * Sets my nickname.
-     *
-     * @param myNickname my nickname
-     */
-    public void setMyNickname(String myNickname) {
-        this.myNickname = myNickname;
-    }
 
     /**
      * Gets nickname.
@@ -387,14 +379,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         return myNickname;
     }
 
-    /**
-     * Get server interface server interface.
-     *
-     * @return the server interface
-     */
-    public ServerInterface getServerInterface(){
-        return server;
-    }
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 

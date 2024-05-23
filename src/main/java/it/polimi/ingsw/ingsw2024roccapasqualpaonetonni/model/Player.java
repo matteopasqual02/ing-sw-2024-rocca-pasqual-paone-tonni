@@ -58,15 +58,6 @@ public class Player implements Serializable {
      */
     private final boolean readyToStart;
     /**
-     * The Connected.
-     */
-    private boolean connected;
-
-    /**
-     * My listener.
-     */
-    private GameListener myListener;
-    /**
      * The Player listeners handler.
      */
     private final PlayerListenersHandler playerListenersHandler;
@@ -78,7 +69,6 @@ public class Player implements Serializable {
      * @param color the color
      */
     public Player(String name, int color){
-        this.connected=true;
         this.nickname=name;
         this.colorPlayer=color;
         this.currentPoints=0;
@@ -364,15 +354,6 @@ public class Player implements Serializable {
         return firstGoals;
     }
 
-
-    /**
-     * Sets is connected.
-     *
-     * @param b the b
-     */
-    public void setIsConnected(boolean b) {
-        connected = b;
-    }
 
 
 }

@@ -199,7 +199,6 @@ public class Game implements Serializable {
     public synchronized void reconnectPlayer(String nickname) {
         Player p = playersDisconnected.stream().filter(player -> nickname.equals(player.getNickname())).findFirst().orElse(null);
         if(p!=null){
-            p.setIsConnected(true);
 
             for (int i=0; i<playersDisconnected.size();i++){
                 if(nickname.equals(playersDisconnected.get(i).getNickname())){
@@ -223,7 +222,12 @@ public class Game implements Serializable {
             players.clear();
             players.addAll(copiedList);
 
+            for(Player pp: players){
+                pp.setPlayerListeners(gameListenersHandler.getListener());
+            }
+
             gameListenersHandler.notify_reconnectPlayer(nickname);
+            gameListenersHandler.notify_All(this);
         }
         else {
             gameListenersHandler.notify_reconnectionImpossible(nickname);
@@ -238,7 +242,6 @@ public class Game implements Serializable {
     public synchronized void disconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
-            p.setIsConnected(false);
             playersDisconnected.add(p);
             players.remove(p);
             gameListenersHandler.removeListener(nickname);
@@ -265,7 +268,6 @@ public class Game implements Serializable {
      */
     public synchronized void setFirstPlayer(Player fp){
         this.firstPlayer=fp;
-        //gameListenersHandler.notify_setFirstPlayer(fp);
     }
 
     /**
@@ -292,7 +294,6 @@ public class Game implements Serializable {
     public void resetLastStatus() {
         status[1] = null;
         gameListenersHandler.notify_resetLastStatus();
-        gameListenersHandler.notify_nextTurn(players.peek().getNickname());
     }
 
     /**
