@@ -280,7 +280,12 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
-        playerBoard.getChildren().add(startingCard1);
+        //we change the board here while everything elese change through the show_all fuction like in the TUI
+        Label label = new Label("prova");
+        playerBoard.getChildren().add(label);
+        AnchorPane.setTopAnchor(label, 10.0);
+        AnchorPane.setLeftAnchor(label, 10.0);
+        //playerBoard.getChildren().add(startingCard1);
     }
 
     public void handleSend(ActionEvent actionEvent) {
