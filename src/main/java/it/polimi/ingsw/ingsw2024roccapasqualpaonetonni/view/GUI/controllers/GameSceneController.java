@@ -273,6 +273,11 @@ public class GameSceneController extends GenericController{
 
     public void placeCardOnBoard(double x, double y){
         //we have to handle the case in which it is flipped
+        Label label = new Label("prova");
+        playerBoard.getChildren().add(label);
+        AnchorPane.setTopAnchor(label, 10.0);
+        AnchorPane.setLeftAnchor(label, 10.0);
+        //playerBoard.getChildren().add(startingCard1);
         executor.submit(()->{
             try {
                 client.receiveInput("/addStarting");
@@ -281,11 +286,7 @@ public class GameSceneController extends GenericController{
             }
         });
         //we change the board here while everything elese change through the show_all fuction like in the TUI
-        Label label = new Label("prova");
-        playerBoard.getChildren().add(label);
-        AnchorPane.setTopAnchor(label, 10.0);
-        AnchorPane.setLeftAnchor(label, 10.0);
-        //playerBoard.getChildren().add(startingCard1);
+
     }
 
     public void handleSend(ActionEvent actionEvent) {
