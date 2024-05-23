@@ -43,10 +43,14 @@ public abstract class ListenersHandler {
      * @param nickname the nickname
      */
     public synchronized void removeListener(String nickname) {
+        String toRemove = null;
         for (String name : listenersMap.keySet()) {
             if (name.equals(nickname)) {
-                listenersMap.remove(nickname);
+                toRemove = name;
             }
+        }
+        if (toRemove != null) {
+            listenersMap.remove(toRemove);
         }
     }
 

@@ -97,10 +97,12 @@ public class Game implements Serializable {
      * @param notifier the notifier
      */
     public void addListeners(String me, NotifierInterface notifier){
-        try {
-            gameListenersHandler.addListener(me, notifier);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+        synchronized(gameListenersHandler){
+            try {
+                gameListenersHandler.addListener(me, notifier);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

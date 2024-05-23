@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
@@ -128,14 +129,14 @@ public class GameController implements GameControllerInterface {
 
                 // Wait for a certain period before sending the next ping
                 try {
-                    Thread.sleep(1000); // 1 seconds
+                    Thread.sleep(5000); // 1 seconds
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
                 synchronized (clientsRunning) {
                     for (String client : clientsRunning) {
-                        //ConsolePrinter.consolePrinter("safe " + client);
+                        ConsolePrinter.consolePrinter("safe " + client);
                         clients.remove(client);
                     }
                 }
@@ -144,28 +145,29 @@ public class GameController implements GameControllerInterface {
                 for (String client : clients) {
                     try {
                         model.ping(client);
-                        //ConsolePrinter.consolePrinter("pinging " + client);
+                        ConsolePrinter.consolePrinter("pinging " + client);
                     }
                     catch (Exception ignored) {}
                 }
 
                 try {
-                    Thread.sleep(1000); // 1 seconds
+                    Thread.sleep(5000); // 1 seconds
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
                 synchronized (clientsRunning) {
                     for (String client : clientsRunning) {
-                        //ConsolePrinter.consolePrinter("safe " + client);
+                        ConsolePrinter.consolePrinter("safe " + client);
                         clients.remove(client);
                     }
                 }
 
                 for (String deadClient : clients) {
-                    //ConsolePrinter.consolePrinter("dead client " + deadClient);
+                    ConsolePrinter.consolePrinter("dead client " + deadClient);
                     if(!model.getPlayersDisconnected().stream().map(Player::getNickname).toList().contains(deadClient)){
                         disconnectPlayer(deadClient);
+                        ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
                     }
                 }
             }

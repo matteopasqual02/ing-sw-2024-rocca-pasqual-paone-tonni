@@ -99,7 +99,9 @@ public class Player implements Serializable {
      * @param currentGameListeners the current game listeners
      */
     public void setPlayerListeners(HashMap<String, NotifierInterface> currentGameListeners) {
-        playerListenersHandler.resetPlayerListeners(currentGameListeners);
+        synchronized (playerListenersHandler) {
+            playerListenersHandler.resetPlayerListeners(currentGameListeners);
+        }
     }
 
     /**
