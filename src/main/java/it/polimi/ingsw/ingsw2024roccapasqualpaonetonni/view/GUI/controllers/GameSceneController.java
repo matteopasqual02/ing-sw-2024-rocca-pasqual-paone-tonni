@@ -279,9 +279,16 @@ public class GameSceneController extends GenericController{
     }
 
     public void handleBoardClick(MouseEvent mouseEvent) {
-        double x = mouseEvent.getX();
+        /*double x = mouseEvent.getX();
         double y = mouseEvent.getY();
-        placeCardOnBoard(x, y);
+        placeCardOnBoard(x, y);*/
+        executor.submit(()->{
+            try {
+                client.receiveInput("/addStarting");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void placeCardOnBoard(double x, double y){

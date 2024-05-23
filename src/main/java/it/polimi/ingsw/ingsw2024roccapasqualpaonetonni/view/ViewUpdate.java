@@ -20,7 +20,7 @@ public interface ViewUpdate {
      * @param gameImmutable the game immutable
      * @param nickname      the nickname
      */
-    void show_All(GameImmutable gameImmutable, String nickname);
+    void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type);
 
     /**
      * Show max num players set.
