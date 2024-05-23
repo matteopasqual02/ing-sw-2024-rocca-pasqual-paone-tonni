@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -22,11 +23,14 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 
 public class GameSceneController extends GenericController{
     @FXML
     private ImageView resourceCard1;
+    @FXML
+    private GridPane gridPane;
 
     @FXML
     private ImageView resourceCard2;
@@ -66,6 +70,8 @@ public class GameSceneController extends GenericController{
 
     @FXML
     private ImageView startingCard1;
+    @FXML
+    private VBox startCardVbox;
 
     @FXML
     private ScrollPane scrollPane;
@@ -393,5 +399,11 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public void startCard(GameImmutable gameImmutable, String nickname) {
+        if(client.getMyTurn()){
+            gridPane.getChildren().remove(startCardVbox);
+        }
     }
 }

@@ -415,6 +415,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public ServerInterface getServerInterface(){
         return server;
     }
+    public boolean getMyTurn(){return myTurn;}
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 

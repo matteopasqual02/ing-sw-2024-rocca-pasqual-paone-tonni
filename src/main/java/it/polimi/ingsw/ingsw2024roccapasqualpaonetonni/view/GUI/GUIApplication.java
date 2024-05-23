@@ -200,6 +200,7 @@ public class GUIApplication extends Application {
     }
 
     public void show_startCard(GameImmutable gameImmutable, String nickname) {
+        gameSceneController.startCard(gameImmutable,nickname);
     }
 
     public void show_board(GameImmutable gameImmutable, String nickname) {
