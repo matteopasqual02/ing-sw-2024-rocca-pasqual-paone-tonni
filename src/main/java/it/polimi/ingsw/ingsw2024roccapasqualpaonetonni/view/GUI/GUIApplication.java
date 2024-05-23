@@ -183,9 +183,20 @@ public class GUIApplication extends Application {
         gameSceneController.myRunningTurnPlaceStarting();
     }
 
-    public void displayChat(String message){
+    public void displayChat(String message){}
+
+    public void displayChat(String message, String type) {
         if (gameSceneController != null) {
-            gameSceneController.displayChat(message);
+            ConsolePrinter.consolePrinter("here");
+            switch (type) {
+                case "Pub":
+                    gameSceneController.displayChatPublic(message);
+                case "Priv":
+                    gameSceneController.displayChatPrivate(message);
+                case null, default:
+
+            }
         }
     }
+
 }

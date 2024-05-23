@@ -77,9 +77,6 @@ public class GameSceneController extends GenericController{
     private TextArea messageInput;
 
     @FXML
-    private TextField receiverInput;
-
-    @FXML
     private HBox receiverContainer;
 
     @FXML
@@ -87,6 +84,9 @@ public class GameSceneController extends GenericController{
 
     @FXML
     private Button privateChatButton;
+
+    @FXML
+    private ComboBox receiverPrivateMessages;
 
     @FXML
     private VBox otherPlayersBox;
@@ -204,6 +204,8 @@ public class GameSceneController extends GenericController{
                 HBox hbox2 = new HBox(vBox1,vBox2);
 
                 otherPlayersBox.getChildren().add(hbox2);
+
+                receiverPrivateMessages.getItems().add(p.getNickname());
             }
         }
     }
@@ -249,11 +251,22 @@ public class GameSceneController extends GenericController{
         startingCard1.setEffect(borderGlow);
     }
 
-    public void displayChat(String message) {
-        Text text = new Text(message);
-        text.setWrappingWidth(scrollPane.getWidth() - 20); // Adjust width to fit scroll pane
-        messageContainer.getChildren().add(text);
-        scrollPane.layout();
+    public void displayChatPublic(String message) {
+        if (!isPrivateChat) {
+            Text text = new Text(message);
+            text.setWrappingWidth(scrollPane.getWidth() - 20); // Adjust width to fit scroll pane
+            messageContainer.getChildren().add(text);
+            scrollPane.layout();
+        }
+    }
+
+    public void displayChatPrivate(String message) {
+        if (isPrivateChat) {
+            Text text = new Text(message);
+            text.setWrappingWidth(scrollPane.getWidth() - 20); // Adjust width to fit scroll pane
+            messageContainer.getChildren().add(text);
+            scrollPane.layout();
+        }
     }
 
     @FXML
@@ -295,11 +308,10 @@ public class GameSceneController extends GenericController{
             messageInput.clear();
             if (!message.isEmpty()) {
                 if (isPrivateChat) {
-                    String receiver = receiverInput.getText().trim();
+                    String receiver = (String) receiverPrivateMessages.getSelectionModel().getSelectedItem();
                     if (!receiver.isEmpty()) {
                         try {
                             client.receiveInput("/chatPrivate " + receiver + " " + message);
-                            receiverInput.clear();
                         } catch (IOException | NotBoundException e) {
                             throw new RuntimeException(e);
                         }
@@ -347,11 +359,30 @@ public class GameSceneController extends GenericController{
         publicChatButton.setDisable(false);
         privateChatButton.setDisable(true);
         messageContainer.getChildren().removeAll(messageContainer.getChildren());
+        String selectedPlayer = (String) receiverPrivateMessages.getSelectionModel().getSelectedItem();
+
+        executor.submit(()->{
+            if (selectedPlayer != null) {
+                try {
+                    client.receiveInput("/seeChatPrivate " + selectedPlayer);
+                } catch (IOException | NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    @FXML
+    public void handleSelectPlayerChat(ActionEvent actionEvent) {
+        isPrivateChat = true;
+        messageContainer.getChildren().removeAll(messageContainer.getChildren());
+        String selectedPlayer = (String) receiverPrivateMessages.getSelectionModel().getSelectedItem();
 
         executor.submit(()->{
             try {
-                client.receiveInput("/seeChatPrivate");
-            } catch (IOException | NotBoundException e) {
+                client.receiveInput("/seeChatPrivate " + selectedPlayer);
+            }
+            catch (IOException | NotBoundException e) {
                 throw new RuntimeException(e);
             }
         });

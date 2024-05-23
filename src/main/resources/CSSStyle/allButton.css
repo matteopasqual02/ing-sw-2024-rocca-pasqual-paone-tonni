@@ -103,6 +103,13 @@
     -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
 }
 
+.button_join_enter:hover
+{
+    -fx-border-color: #24A0ED;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
+}
+
 .button_joinId_enter:hover
 {
     -fx-border-color: #24A0ED;
@@ -111,6 +118,13 @@
 }
 
 .button_reconnect_enter:hover
+{
+    -fx-border-color: #24A0ED;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(36,160,237,0.8), 10, 0.5, 0, 0);
+}
+
+.button_ready:hover
 {
     -fx-border-color: #24A0ED;
     -fx-border-width: 2px;

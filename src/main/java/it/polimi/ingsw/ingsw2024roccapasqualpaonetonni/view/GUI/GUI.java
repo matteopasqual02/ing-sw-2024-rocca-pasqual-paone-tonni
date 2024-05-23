@@ -119,6 +119,11 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater(() -> application.displayChat(s));
     }
 
+    @Override
+    public void displayChat(String s, String type) {
+        runLater(() -> application.displayChat(s, type));
+    }
+
     /**
      * Not my turn chat.
      */

@@ -95,9 +95,17 @@ public interface ViewUpdate {
     /**
      * Display chat.
      *
-     * @param s the s
+     * @param s the string message
      */
     void displayChat(String s);
+
+    /**
+     * Display chat, informing about the type of the message
+     *
+     * @param s the string message
+     * @param type the type of the message
+     */
+    void displayChat(String s, String type);
 
     /**
      * Not my turn chat.

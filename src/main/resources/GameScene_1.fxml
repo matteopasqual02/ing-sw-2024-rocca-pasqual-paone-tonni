@@ -15,8 +15,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?language java?>
-
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1048.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
    <GridPane layoutY="-24.0" prefHeight="589.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
@@ -136,15 +136,15 @@
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <VBox prefHeight="270.0" prefWidth="195.0" spacing="3.0">
             <HBox prefHeight="100.0" prefWidth="200.0">
-               <Button fx:id="publicChatButton" mnemonicParsing="false" onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="300.0" text="See Public Chat"  disable="true"/>
-               <Button fx:id="privateChatButton" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="10.0" prefWidth="300.0" text="See Private Chat" disable="false"/>
+               <Button fx:id="publicChatButton" disable="true" mnemonicParsing="false" onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="300.0" text="Public Chat" />
+               <Button fx:id="privateChatButton" disable="false" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="300.0" text="Private Chat" />
             </HBox>
             <ScrollPane fx:id="scrollPane" prefHeight="190.0" prefWidth="200.0">
-               <VBox fx:id="messageContainer" prefHeight="200.0" prefWidth="178.0" spacing="2.0"/>
+               <VBox fx:id="messageContainer" prefHeight="200.0" prefWidth="178.0" spacing="2.0" />
             </ScrollPane>
             <VBox>
                <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
-                  <TextField fx:id="receiverInput" promptText="Receiver" />
+                  <ComboBox fx:id="receiverPrivateMessages" promptText="Select Player" onAction="#handleSelectPlayerChat"/>
                </HBox>
                <VBox>
                   <TextArea fx:id="messageInput" prefRowCount="2" wrapText="true" />
