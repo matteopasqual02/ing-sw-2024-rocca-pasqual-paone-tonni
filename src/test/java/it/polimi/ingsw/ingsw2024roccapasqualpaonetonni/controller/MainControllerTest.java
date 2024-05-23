@@ -119,15 +119,15 @@ class MainControllerTest {
         mainController.getRunningGames().getFirst().getGame().setStatus(GameStatus.RUNNING);
         assertEquals(GameStatus.RUNNING,mainController.getRunningGames().getFirst().getGame().getGameStatus());
 
-        mainController.leaveGame("p2",idGame);
-        mainController.reconnect("p2",idGame,
+        mainController.leaveGame("p1",idGame);
+        mainController.reconnect("p1",idGame,
                 new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
 
         assertEquals(GameStatus.RUNNING,mainController.getRunningGames().getFirst().getGame().getGameStatus());
 
         assertEquals(0,
                 mainController.getRunningGames().getFirst().getGame().getPlayersDisconnected().stream()
-                        .filter(player -> player.getNickname().equals("p2")).toList().size()
+                        .filter(player -> player.getNickname().equals("p1")).toList().size()
         );
     }
 

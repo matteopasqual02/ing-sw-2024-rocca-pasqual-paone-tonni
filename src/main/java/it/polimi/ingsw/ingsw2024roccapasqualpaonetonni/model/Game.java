@@ -198,6 +198,7 @@ public class Game implements Serializable {
         Player p = playersDisconnected.stream().filter(player -> nickname.equals(player.getNickname())).findFirst().orElse(null);
         if(p!=null){
             p.setIsConnected(true);
+
             for (int i=0; i<playersDisconnected.size();i++){
                 if(nickname.equals(playersDisconnected.get(i).getNickname())){
                     playersDisconnected.remove(playersDisconnected.get(i));
@@ -205,12 +206,18 @@ public class Game implements Serializable {
                 }
             }
             ArrayList<Player> copiedList = new ArrayList<>(players);
-            int first = copiedList.getFirst().getColorPlayer();
-            int[] index = new int[maxNumberOfPlayer];
-            for(int i = 0; i < maxNumberOfPlayer; i++) {
-                index[(first + i) % maxNumberOfPlayer] = i;
+
+            boolean in = false;
+            for(int i=1; i<copiedList.size() && !in; i++){
+                if(p.getColorPlayer()<copiedList.get(i).getColorPlayer()){
+                    copiedList.add(i, p);
+                    in = true;
+                }
             }
-            copiedList.add(index[p.getColorPlayer() - 1], p);
+            if(!in){
+                copiedList.add(p);
+            }
+
             players.clear();
             players.addAll(copiedList);
 
