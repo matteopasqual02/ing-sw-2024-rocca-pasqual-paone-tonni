@@ -2,21 +2,77 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
 import org.fusesource.jansi.Ansi;
 
+/**
+ * The enum Seed.
+ */
 public enum Seed {
-    GREEN("green", 0), BLUE("blue", 1),
-    RED("red", 2), PURPLE("purple", 3), FEATHER("feather", 4),
-    POTION("potion", 5), SCROLL("scroll", 6), EMPTY("empty", 7);
+    /**
+     * Green seed.
+     */
+    GREEN("green", 0),
+    /**
+     * Blue seed.
+     */
+    BLUE("blue", 1),
+    /**
+     * Red seed.
+     */
+    RED("red", 2),
+    /**
+     * Purple seed.
+     */
+    PURPLE("purple", 3),
+    /**
+     * Feather seed.
+     */
+    FEATHER("feather", 4),
+    /**
+     * Potion seed.
+     */
+    POTION("potion", 5),
+    /**
+     * Scroll seed.
+     */
+    SCROLL("scroll", 6),
+    /**
+     * Empty seed.
+     */
+    EMPTY("empty", 7);
+    /**
+     * The Name.
+     */
     private final String name;
+    /**
+     * The Index.
+     */
     private final int index;
 
+    /**
+     * Instantiates a new Seed.
+     *
+     * @param name  the name
+     * @param index the index
+     */
     Seed(String name, int index) {
         this.name = name;
         this.index = index;
     }
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Gets by id.
+     *
+     * @param id the id
+     * @return the by id
+     */
     public static Seed getById(int id) {
         for (Seed s: Seed.values()) {
             if (s.index == id) {
@@ -26,6 +82,12 @@ public enum Seed {
         return null;
     }
 
+    /**
+     * Gets by name.
+     *
+     * @param name the name
+     * @return the by name
+     */
     public static Seed getByName(String name) {
         for (Seed s: Seed.values()) {
             if (s.name.equals(name)) {
@@ -35,10 +97,20 @@ public enum Seed {
         return null;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public int getId() {
         return index;
     }
 
+    /**
+     * Get by ansi.color.
+     *
+     * @return the ansi.color.
+     */
     public Ansi.Color getByAnsi(){
         switch (this){
             case GREEN -> {

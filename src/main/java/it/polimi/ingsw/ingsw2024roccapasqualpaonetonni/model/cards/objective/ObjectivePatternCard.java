@@ -4,28 +4,56 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import org.fusesource.jansi.Ansi;
 
-import java.util.Arrays;
-
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Objective pattern card.
+ */
 public class ObjectivePatternCard extends ObjectiveCard {
+    /**
+     * The Pattern.
+     */
     private final Seed[][] pattern;
 
+    /**
+     * Instantiates a new Objective pattern card.
+     *
+     * @param id      the id
+     * @param points  the points
+     * @param pattern the pattern
+     */
     public ObjectivePatternCard(int id, int points, Seed[][] pattern) {
         super(id, points);
         this.pattern = pattern;
         objectivePointsStrategy = new ObjectivePointsPattern();
     }
+
+    /**
+     * Point card int.
+     *
+     * @param playerBoard the player board
+     * @return the int
+     */
     @Override
     public int pointCard(PlayerBoard playerBoard){
         return points * objectivePointsStrategy.count(playerBoard,null,pattern);
     }
 
+    /**
+     * Get pattern seed [ ] [ ].
+     *
+     * @return the seed [ ] [ ]
+     */
     public Seed[][] getPattern() {
         return pattern;
     }
 
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString () {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = Ansi.Color.WHITE;
@@ -86,6 +114,12 @@ public class ObjectivePatternCard extends ObjectiveCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param line the line
+     * @return the string
+     */
     public String toString (int line) {
         StringBuilder[] sb = new StringBuilder[3];
         Ansi.Color background = Ansi.Color.WHITE;

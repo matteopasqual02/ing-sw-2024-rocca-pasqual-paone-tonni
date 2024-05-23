@@ -2,10 +2,9 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.GameController;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.MainController;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
 
@@ -16,13 +15,30 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 
+/**
+ * The type Rmi server.
+ */
 public class RMIServer extends UnicastRemoteObject implements MainControllerInterface {
 
+    /**
+     * The Main controller.
+     */
     private final MainControllerInterface mainController;
+    /**
+     * The constant server.
+     */
     private static RMIServer server = null;
+    /**
+     * The constant registry.
+     */
     private static Registry registry = null;
 
-    //server section
+    /**
+     * Bind rmi server.
+     *
+     * @return the rmi server
+     */
+//server section
     public static RMIServer bind(){
         try{
             server = new RMIServer();
@@ -37,16 +53,32 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }
         return getInstance();
     }
-    //the constructor of the RMI server associates the MainController to the server, because we only have 1 main controller
+
+    /**
+     * Instantiates a new Rmi server.
+     *
+     * @throws RemoteException the remote exception
+     */
+//the constructor of the RMI server associates the MainController to the server, because we only have 1 main controller
     public RMIServer() throws RemoteException {
         super(0);
         mainController = MainController.getInstance();
     }
 
+    /**
+     * Test.
+     *
+     * @throws RemoteException the remote exception
+     */
     public void test() throws RemoteException {
         ;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public synchronized static RMIServer getInstance() {
         if(server == null) {
             try {
@@ -57,17 +89,38 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         }
         return server;
     }
+
+    /**
+     * Gets registry.
+     *
+     * @return the registry
+     * @throws RemoteException the remote exception
+     */
     public synchronized static Registry getRegistry() throws RemoteException {
         return registry;
     }
 
 
+    /**
+     * Gets running games.
+     *
+     * @return the running games
+     */
     @Override
     public List<GameController> getRunningGames() {
         return null;
     }
 
-    //override section
+    /**
+     * Create game controller game controller interface.
+     *
+     * @param nickname       the nickname
+     * @param numMaxOfPlayer the num max of player
+     * @param notifier       the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
+//override section
     @Override
     public GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController = server.mainController.createGameController(nickname, numMaxOfPlayer, notifier);
@@ -82,6 +135,14 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         return remoteControllerUniCasted;
     }
 
+    /**
+     * Join first available game game controller interface.
+     *
+     * @param nickname the nickname
+     * @param notifier the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface joinFirstAvailableGame(String nickname, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController = server.mainController.joinFirstAvailableGame(nickname, notifier);
@@ -103,6 +164,15 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         return remoteControllerUniCasted;
     }
 
+    /**
+     * Join game by id game controller interface.
+     *
+     * @param nickname    the nickname
+     * @param idToConnect the id to connect
+     * @param notifier    the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface joinGameByID(String nickname, int idToConnect, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController = server.mainController.joinGameByID(nickname, idToConnect, notifier);
@@ -123,6 +193,15 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         return remoteControllerUniCasted ;
     }
 
+    /**
+     * Reconnect game controller interface.
+     *
+     * @param nickname      the nickname
+     * @param idToReconnect the id to reconnect
+     * @param notifier      the notifier
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface reconnect(String nickname, int idToReconnect, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController  = server.mainController.reconnect(nickname, idToReconnect, notifier);
@@ -139,6 +218,14 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         return remoteControllerUniCasted;
     }
 
+    /**
+     * Leave game controller interface.
+     *
+     * @param nickname       the nickname
+     * @param idToDisconnect the id to disconnect
+     * @return the game controller interface
+     * @throws RemoteException the remote exception
+     */
     @Override
     public GameControllerInterface leaveGame(String nickname, int idToDisconnect)throws RemoteException {
         GameControllerInterface remoteController  = server.mainController.leaveGame(nickname, idToDisconnect);
@@ -154,6 +241,11 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
         return remoteControllerUniCasted;
     }
 
+    /**
+     * Clear singleton.
+     *
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void clearSingleton() throws RemoteException{
         server.mainController.clearSingleton();

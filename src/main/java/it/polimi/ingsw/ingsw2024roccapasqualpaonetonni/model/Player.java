@@ -1,36 +1,82 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.PlayerListenersHandler;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.CardNotInHandException;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.ConditionsNotMetException;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPlaceException;
-import javafx.util.Pair;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
+/**
+ * The type Player.
+ */
 public class Player implements Serializable {
+    /**
+     * The Nickname.
+     */
     private final String nickname;
+    /**
+     * The Color player.
+     */
     private final int colorPlayer;
+    /**
+     * The Current points.
+     */
     private int currentPoints;
+    /**
+     * The Count seed.
+     */
     private final int[] countSeed;
+    /**
+     * The Board.
+     */
     private final PlayerBoard board;
+    /**
+     * The Hand.
+     */
     private final List<PlayingCard> hand;
+    /**
+     * The Goal.
+     */
     private ObjectiveCard goal;
+    /**
+     * The First goals.
+     */
     private final ObjectiveCard[] firstGoals;
+    /**
+     * The Starting card.
+     */
     private StartingCard startingCard;
+    /**
+     * The Ready to start.
+     */
     private final boolean readyToStart;
+    /**
+     * The Connected.
+     */
     private boolean connected;
 
+    /**
+     * My listener.
+     */
     private GameListener myListener;
+    /**
+     * The Player listeners handler.
+     */
     private final PlayerListenersHandler playerListenersHandler;
 
+    /**
+     * Instantiates a new Player.
+     *
+     * @param name  the name
+     * @param color the color
+     */
     public Player(String name, int color){
         this.connected=true;
         this.nickname=name;
@@ -47,42 +93,87 @@ public class Player implements Serializable {
 
     }
 
+    /**
+     * Sets player listeners.
+     *
+     * @param currentGameListeners the current game listeners
+     */
     public void setPlayerListeners(HashMap<String, NotifierInterface> currentGameListeners) {
-        playerListenersHandler.resetPlayerListeners(currentGameListeners);
+        synchronized (playerListenersHandler) {
+            playerListenersHandler.resetPlayerListeners(currentGameListeners);
+        }
     }
 
-    public GameListener getListener() {
-        return myListener;
-    }
-
+    /**
+     * Gets current points.
+     *
+     * @return the current points
+     */
     public int getCurrentPoints() {
         return currentPoints;
     }
 
+    /**
+     * Get color player int.
+     *
+     * @return the int
+     */
     public int getColorPlayer(){
         return colorPlayer;
     }
 
+    /**
+     * Get ready to start boolean.
+     *
+     * @return the boolean
+     */
     public Boolean getReadyToStart(){
         return readyToStart;
     }
 
+    /**
+     * Gets nickname.
+     *
+     * @return the nickname
+     */
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     * Get goal objective card.
+     *
+     * @return the objective card
+     */
     public ObjectiveCard getGoal(){
         return goal;
     }
 
+    /**
+     * Get board player board.
+     *
+     * @return the player board
+     */
     public PlayerBoard getBoard(){
         return board;
     }
 
+    /**
+     * Draw goals.
+     *
+     * @param d the d
+     * @throws DeckEmptyException the deck empty exception
+     */
     public void drawGoals(DrawableDeck d) throws DeckEmptyException{
         firstGoals[0]=d.drawFirstObjective();
         firstGoals[1]=d.drawFirstObjective();
     }
+
+    /**
+     * Choose goal.
+     *
+     * @param choice the choice
+     */
     public void chooseGoal(int choice){
         if(goal==null && choice>=0 && choice<2){
             goal=firstGoals[choice];
@@ -92,27 +183,65 @@ public class Player implements Serializable {
         playerListenersHandler.notify_playerGenericError("Goal invalid Action");
 
     }
+
+    /**
+     * Draw starting.
+     *
+     * @param d the d
+     * @throws DeckEmptyException the deck empty exception
+     */
     public void drawStarting(DrawableDeck d) throws DeckEmptyException {
         startingCard=d.drawFirstStarting();
     }
+
+    /**
+     * Draw gold from deck.
+     *
+     * @param d the d
+     * @throws DeckEmptyException the deck empty exception
+     */
     public void drawGoldFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstGold());
         playerListenersHandler.notify_drawGoldFromDeck(this,d);
     }
+
+    /**
+     * Draw resources from deck.
+     *
+     * @param d the d
+     * @throws DeckEmptyException the deck empty exception
+     */
     public void drawResourcesFromDeck(DrawableDeck d) throws DeckEmptyException {
         hand.add(d.drawFirstResource());
         playerListenersHandler.notify_drawResourceFromDeck(this,d);
 
     }
+
+    /**
+     * Draw from board.
+     *
+     * @param position the position
+     * @param b        the b
+     * @throws NoCardException the no card exception
+     */
     public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
         hand.add(b.draw(position));
         playerListenersHandler.notify_drawFromBoard(this,b,b.getDrawableDeck());
 
     }
+
+    /**
+     * Get count seed int [ ].
+     *
+     * @return the int [ ]
+     */
     public int[] getCountSeed() {
         return countSeed;
     }
 
+    /**
+     * Add starting.
+     */
     public void addStarting(){
         for(PlayingCard[] playingCards: board.getBoardMatrix()){
             for (PlayingCard playingCard: playingCards){
@@ -127,11 +256,31 @@ public class Player implements Serializable {
         board.addStartingCard(startingCard);
         playerListenersHandler.notify_addStarting(this);
     }
+
+    /**
+     * Set starting card.
+     *
+     * @param card the card
+     */
     public void setStartingCard(StartingCard card){
         this.startingCard=card;
     }
+
+    /**
+     * Get starting card.
+     *
+     * @return the starting card
+     */
     public StartingCard getStartingCard(){return startingCard;}
 
+    /**
+     * Add to board boolean.
+     *
+     * @param cardToAdd      the card to add
+     * @param cardOnBoard    the card on board
+     * @param cornerToAttach the corner to attach
+     * @return the boolean
+     */
     public boolean addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
             removeFromHand(cardToAdd);
@@ -158,16 +307,32 @@ public class Player implements Serializable {
         return true;
     }
 
+    /**
+     * Increase points.
+     *
+     * @param newPoints the new points
+     */
     public void increasePoints(int newPoints) {
         currentPoints = currentPoints + newPoints;
     }
 
+    /**
+     * Update seed count.
+     *
+     * @param change the change
+     */
     public void updateSeedCount(int[] change) {
         for (int i = 0; i < 7; i++) {
             countSeed[i]+= change[i];
         }
     }
 
+    /**
+     * Remove from hand.
+     *
+     * @param p the p
+     * @throws CardNotInHandException the card not in hand exception
+     */
     private void removeFromHand(PlayingCard p) throws CardNotInHandException{
 
         for(PlayingCard playingCard: hand){
@@ -180,16 +345,34 @@ public class Player implements Serializable {
     }
 
 
-    //needed for testing
+    /**
+     * Get hand list.
+     *
+     * @return the list
+     */
+//needed for testing
     public List<PlayingCard> getHand(){
         return hand;
     }
+
+    /**
+     * Get objective before choice objective card [ ].
+     *
+     * @return the objective card [ ]
+     */
     public ObjectiveCard[] getObjectiveBeforeChoice(){
         return firstGoals;
     }
 
 
+    /**
+     * Sets is connected.
+     *
+     * @param b the b
+     */
     public void setIsConnected(boolean b) {
         connected = b;
     }
+
+
 }

@@ -1,21 +1,24 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServer;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server.SocketServer;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
-import org.fusesource.jansi.AnsiConsole;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
-import static org.fusesource.jansi.Ansi.ansi;
+import java.io.IOException;
+import java.util.Scanner;
 //import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.remoteinterfaces.*;
 
+/**
+ * The type Main server.
+ */
 public class MainServer {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException the io exception
+     */
     public static void main( String[] args) throws IOException{
         String inputRemoteIP;
 
@@ -41,4 +44,11 @@ public class MainServer {
 
     }
 
+    /*only test*/
+    public static void test() {
+        System.setProperty("java.rmi.server.hostname", DefaultNetworkValues.Remote_ip_address);
+        RMIServer.bind();
+        SocketServer server = new SocketServer();
+        server.start(DefaultNetworkValues.Default_SOCKET_port);
+    }
 }

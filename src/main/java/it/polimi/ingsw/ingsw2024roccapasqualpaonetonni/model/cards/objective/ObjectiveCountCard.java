@@ -3,28 +3,56 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
 import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiColors;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Objective count card.
+ */
 public class ObjectiveCountCard extends ObjectiveCard {
+    /**
+     * The Count types.
+     */
     private final int[] countTypes;
 
+    /**
+     * Instantiates a new Objective count card.
+     *
+     * @param id         the id
+     * @param points     the points
+     * @param countTypes the count types
+     */
     public ObjectiveCountCard(int id, int points, int[] countTypes) {
         super(id, points);
         this.countTypes = countTypes;
         objectivePointsStrategy = new ObjectivePointsCount();
     }
 
+    /**
+     * Point card int.
+     *
+     * @param playerBoard the player board
+     * @return the int
+     */
     @Override
     public int pointCard(PlayerBoard playerBoard){
         return points * objectivePointsStrategy.count(playerBoard,countTypes,null);
     }
 
+    /**
+     * Get count types int [ ].
+     *
+     * @return the int [ ]
+     */
     public int[] getCountTypes() {
         return countTypes;
     }
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString () {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = Ansi.Color.WHITE;
@@ -82,6 +110,12 @@ public class ObjectiveCountCard extends ObjectiveCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param line the line
+     * @return the string
+     */
     public String toString (int line) {
         StringBuilder[] sb = new StringBuilder[3];
         Ansi.Color background = Ansi.Color.WHITE;

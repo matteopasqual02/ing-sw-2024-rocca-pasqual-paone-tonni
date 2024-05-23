@@ -1,22 +1,29 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
+import com.google.gson.JsonObject;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.CardFactory;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
+import java.util.*;
 
+/**
+ * The type Json utils.
+ */
 public class JSONUtils {
 
-    // function that takes the json object into a map, with key the type of card and value the list of cards
+    /**
+     * Create cards from json map.
+     *
+     * @param filePath the file path
+     * @return the map
+     * @throws IOException the io exception
+     */
+// function that takes the json object into a map, with key the type of card and value the list of cards
     public static Map<String, List<Card>> createCardsFromJson(String filePath) throws IOException {
         // Create a map to store lists of cards for each card type
         Map<String, List<Card>> cardMap = new HashMap<>();
@@ -76,7 +83,14 @@ public class JSONUtils {
         return cardMap;
     }
 
-    // function that transforms the json in the String form into a json object
+    /**
+     * Parse txt to json json object.
+     *
+     * @param filePath the file path
+     * @return the json object
+     * @throws IOException the io exception
+     */
+// function that transforms the json in the String form into a json object
     public static JsonObject parseTxtToJson(String filePath) throws IOException {
         // Read the content of the TXT file
         String txtContent = readTXTFile(filePath);
@@ -86,7 +100,14 @@ public class JSONUtils {
         return gson.fromJson(txtContent, JsonObject.class);
     }
 
-    // function that reads the txt file and turns it into a String
+    /**
+     * Read txt file string.
+     *
+     * @param filePath the file path
+     * @return the string
+     * @throws IOException the io exception
+     */
+// function that reads the txt file and turns it into a String
     private static String readTXTFile(String filePath) throws IOException {
         // Read the contents of the TXT file
         StringBuilder content = new StringBuilder();

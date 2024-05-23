@@ -7,10 +7,27 @@ import java.util.Arrays;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Starting card.
+ */
 public class StartingCard extends PlayingCard {
+    /**
+     * The Center.
+     */
     private final Boolean[] center;
+    /**
+     * The Corners back.
+     */
     private final Corner[] cornersBack;
 
+    /**
+     * Instantiates a new Starting card.
+     *
+     * @param id the id
+     * @param c  the c
+     * @param cf the cf
+     * @param cb the cb
+     */
     public StartingCard(int id, Boolean[] c, Corner[] cf, Corner[] cb){
         super(id, Seed.EMPTY,cf,0);
         this.center= Arrays.copyOf(c,4);
@@ -19,10 +36,22 @@ public class StartingCard extends PlayingCard {
 
     }
 
+    /**
+     * Get center boolean [ ].
+     *
+     * @return the boolean [ ]
+     */
     public Boolean[] getCenter() {
         return center;
     }
 
+    /**
+     * Get corner.
+     *
+     * @param pos the pos
+     * @return the corner
+     */
+    @Override
     public Corner getCorner(int pos){
         if (isFlipped) {
             return cornersBack[pos - 1];
@@ -33,6 +62,12 @@ public class StartingCard extends PlayingCard {
     }
 
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
+    @Override
     public String toString() {
         boolean flipped = isFlipped;
         StringBuilder sb = new StringBuilder();
@@ -164,6 +199,13 @@ public class StartingCard extends PlayingCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @param line    the line
+     * @return the string
+     */
     public String toString(Boolean flipped, int line) {
         StringBuilder[] sb = new StringBuilder[3];
         Ansi.Color background = Ansi.Color.WHITE;

@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main;
+
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultNetworkValues;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumViewType;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -19,6 +22,13 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     public static void main(String[] args) throws IOException, NotBoundException {
         MainStaticMethod.clearCMD();
         boolean selection;

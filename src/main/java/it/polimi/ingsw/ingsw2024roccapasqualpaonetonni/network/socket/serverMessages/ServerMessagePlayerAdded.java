@@ -4,12 +4,29 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
+/**
+ * The type Server message player added.
+ */
 public class ServerMessagePlayerAdded extends ServerGenericMessage{
+    /**
+     * The Nickname.
+     */
     private final String nickname;
+
+    /**
+     * Instantiates a new Server message player added.
+     *
+     * @param gameId the game id
+     */
     public ServerMessagePlayerAdded(String gameId){
         this.nickname=gameId;
     }
 
+    /**
+     * Launch message.
+     *
+     * @param listener the listener
+     */
     @Override
     public void launchMessage(GameListener listener) {
         try {

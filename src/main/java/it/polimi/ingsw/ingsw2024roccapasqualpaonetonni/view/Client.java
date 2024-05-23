@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.BoardDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
@@ -28,15 +31,46 @@ import java.util.Objects;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Client extends UnicastRemoteObject implements GameListener, Runnable {
+    /**
+     * The Server.
+     */
     private ServerInterface server;
+    /**
+     * The View.
+     */
     private ViewUpdate view;
+    /**
+     * My game id.
+     */
     private int myGameId;
+    /**
+     * My nickname.
+     */
     private String myNickname;
+    /**
+     * The State.
+     */
     private GameStatus state = null;
+    /**
+     * My turn.
+     */
     private Boolean myTurn = false;
+    /**
+     * The Current immutable.
+     */
     private GameImmutable currentImmutable;
+    /**
+     * The Pong thread.
+     */
     private transient final PingPongThreadClient pongThread = new PingPongThreadClient();
 
+    /**
+     * Instantiates a new Client.
+     *
+     * @param connectionType the connection type
+     * @param viewType       the view type
+     * @throws IOException the io exception
+     */
     public Client(EnumConnectionType connectionType) throws IOException {
         this.myGameId = 0;
         this.myNickname = null;
@@ -86,12 +120,21 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         this.pongThread.start();
     }
 
-
+    /**
+     * Run.
+     */
     @Override
     public void run() {
 
     }
 
+    /**
+     * Receive input.
+     *
+     * @param input the input
+     * @throws IOException       the io exception
+     * @throws NotBoundException the not bound exception
+     */
     public synchronized void receiveInput(String input) throws IOException, NotBoundException {
         if(input == null){
             view.invalidMessage("empty input");
@@ -218,7 +261,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                     try{
                         Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
                         if(me==null){return;}
-                        int card1 = Integer.parseInt(parole[1]);
+                        int card1 = Integer.parseInt(parole[1])-1;
                         PlayingCard c1 = me.getHand().get(card1);
                         int card2 = Integer.parseInt(parole[2]);
                         PlayingCard[][] board = me.getBoard().getBoardMatrix();
@@ -331,6 +374,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case "/leave" -> {
                 server.leave(myNickname, myGameId);
                 currentImmutable=null;
+                state=null;
                 view.joinLobby();
             }
             case null, default -> view.invalidMessage("invalid command");
@@ -340,52 +384,101 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     //------------------------------------- SET GET ------------------------------------------------------------------------------
 
+    /**
+     * Sets my nickname.
+     *
+     * @param myNickname my nickname
+     */
     public void setMyNickname(String myNickname) {
         this.myNickname = myNickname;
     }
+
+    /**
+     * Gets nickname.
+     *
+     * @return the nickname
+     * @throws RemoteException the remote exception
+     */
     @Override
     public String getNickname() throws RemoteException {
         return myNickname;
     }
+
+    /**
+     * Get server interface server interface.
+     *
+     * @return the server interface
+     */
     public ServerInterface getServerInterface(){
         return server;
     }
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 
+    /**
+     * Max num players set.
+     *
+     * @param max the max
+     */
     @Override
     public void maxNumPlayersSet(int max) {
         view.show_maxNumPlayersSet(max);
     }
 
+    /**
+     * Created game.
+     *
+     * @param gameId the game id
+     */
     @Override
     public void createdGame(int gameId) {
         myGameId = gameId;
         view.show_createdGame(gameId);
     }
 
+    /**
+     * You joined game.
+     *
+     * @param gameId the game id
+     */
     @Override
     public void youJoinedGame(int gameId) {
         myGameId = gameId;
         view.show_youJoinedGame(gameId);
     }
 
+    /**
+     * No available game.
+     */
     @Override
     public void noAvailableGame() {
         view.show_noAvailableGame();
         view.joinLobby();
     }
 
+    /**
+     * Added new player.
+     *
+     * @param pNickname the p nickname
+     */
     @Override
     public void addedNewPlayer(String pNickname) {
         view.show_addedNewPlayer(pNickname);
     }
 
+    /**
+     * Are you ready
+     */
     @Override
     public void areYouReady() {
         view.show_areYouReady();
     }
 
+    /**
+     * All game.
+     *
+     * @param gameImmutable the game immutable
+     */
     @Override
     public void allGame(GameImmutable gameImmutable) {
         currentImmutable=gameImmutable;
@@ -398,6 +491,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.notMyTurn();
         }
     }
+
+    /**
+     * Next turn.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void nextTurn(String nickname) {
         myTurn = myNickname.equals(nickname);
@@ -415,6 +514,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Start added.
+     *
+     * @param p the p
+     */
     @Override
     public void startAdded(Player p) {
         currentImmutable.refreshPlayer(p);
@@ -427,6 +531,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Card added.
+     *
+     * @param p the p
+     */
     @Override
     public void cardAdded(Player p) {
         currentImmutable.refreshPlayer(p);
@@ -439,6 +548,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Personal goal chosen.
+     *
+     * @param p the p
+     */
     @Override
     public void personalGoalChosen(Player p) {
         currentImmutable.refreshPlayer(p);
@@ -451,12 +565,23 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Status set.
+     *
+     * @param status the status
+     */
     @Override
     public void statusSet(GameStatus status) {
         state=status;
         view.show_status(state.toString());
     }
 
+    /**
+     * Resource drawn.
+     *
+     * @param p the p
+     * @param d the d
+     */
     @Override
     public void resourceDrawn(Player p, DrawableDeck d) {
         if(currentImmutable!=null){
@@ -467,6 +592,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     }
 
+    /**
+     * Gold drawn.
+     *
+     * @param p the p
+     * @param d the d
+     */
     @Override
     public void goldDrawn(Player p, DrawableDeck d) {
         if(currentImmutable!=null){
@@ -476,6 +607,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Drew from board.
+     *
+     * @param p the p
+     * @param b the b
+     * @param d the d
+     */
     @Override
     public void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         if(currentImmutable!=null){
@@ -486,53 +624,114 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Generic error.
+     *
+     * @param s the s
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void genericError(String s) throws RemoteException {
         view.invalidMessage(s);
     }
 
+    /**
+     * Winners.
+     *
+     * @param list the list
+     */
     @Override
     public void winners(List<Player> list) {
         view.winners(list,myNickname);
     }
 
+
+    /**
+     * Full game.
+     */
     @Override
     public void fullGame() {
     }
 
+    /**
+     * Name already in game.
+     */
     @Override
     public void nameAlreadyInGame() {
     }
 
+    /**
+     * Player removed.
+     *
+     * @param p the p
+     */
     @Override
     public void playerRemoved(String p) {
     }
 
+    /**
+     * Last turn.
+     */
     @Override
     public void lastTurn() {
+
     }
 
+    /**
+     * Reconnected player.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void reconnectedPlayer(String nickname) {
+        view.show_generic("Player "+nickname+" has been reconnected");
     }
 
+    /**
+     * Reconnection impossible.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void reconnectionImpossible(String nickname) {
+        view.show_generic("Player "+nickname+" reconnection failed");
     }
 
+    /**
+     * Disconnected player.
+     *
+     * @param nickname the nickname
+     */
     @Override
     public void disconnectedPlayer(String nickname) {
+        view.show_generic("Player "+nickname+" has been disconnected");
     }
 
+    /**
+     * Status set to last status.
+     *
+     * @param status the status
+     */
     @Override
     public void statusSetToLastStatus(GameStatus status) {
+        view.show_statusLast(status.toString());
     }
 
+    /**
+     * Last status reset.
+     */
     @Override
     public void lastStatusReset() {
+        view.show_statusLast("Reset");
     }
 
-    //--------------------------CHAT
+//--------------------------CHAT
+    /**
+     * New message.
+     *
+     * @param m the m
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void newMessage(Message m) throws RemoteException {
         if (view instanceof TUI) {
@@ -543,6 +742,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * New private message.
+     *
+     * @param m the m
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void newPrivateMessage(PrivateMessage m) throws RemoteException {
         if (view instanceof TUI) {
@@ -553,6 +758,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Public chat log.
+     *
+     * @param allMessages the all messages
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void publicChatLog(List<Message> allMessages) throws RemoteException {
         if(allMessages!=null){
@@ -571,6 +782,13 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Private chat log.
+     *
+     * @param otherName   the other name
+     * @param privateChat the private chat
+     * @throws RemoteException the remote exception
+     */
     @Override
     public void privateChatLog(String otherName, List<PrivateMessage> privateChat) throws RemoteException {
         if(privateChat!=null){
@@ -590,17 +808,32 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
-    //--------------------------PIN PONG
+    /**
+     * The type Ping pong thread client.
+     */
+//--------------------------PIN PONG
     private class PingPongThreadClient extends Thread {
+        /**
+         * The Pinged.
+         */
         private boolean pinged = false;
+        /**
+         * The Lock.
+         */
         private final Object  lock = new Object();
 
+        /**
+         * Pinged.
+         */
         public void pinged() {
             synchronized (lock) {
                 pinged = true;
             }
         }
 
+        /**
+         * Run.
+         */
         @Override
         public void run() {
             while (true) {
@@ -621,6 +854,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+    /**
+     * Ping.
+     */
     @Override
     public void ping() {
         pongThread.pinged();

@@ -12,13 +12,33 @@ import java.io.Serializable;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Player board.
+ */
 public class PlayerBoard implements Serializable {
+    /**
+     * The Dim x.
+     */
     private int dim_x;
+    /**
+     * The Dim y.
+     */
     private int dim_y;
+    /**
+     * The Board.
+     */
     private PlayingCard[][] board;
 
+    /**
+     * The Player.
+     */
     private final Player player;
 
+    /**
+     * Instantiates a new Player board.
+     *
+     * @param owner the owner
+     */
     public PlayerBoard(Player owner) {
         dim_x = DefaultModelValues.Default_Board_Dim_X;
         dim_y = DefaultModelValues.Default_Board_Dim_Y;
@@ -26,7 +46,14 @@ public class PlayerBoard implements Serializable {
         player = owner;
     }
 
-    // method that receives a card and the coordinates where to put it,
+    /**
+     * Add card to board.
+     *
+     * @param coordinates the coordinates
+     * @param card        the card
+     * @param seedCount   the seed count
+     */
+// method that receives a card and the coordinates where to put it,
     // it then checks if the coordinates are inside the matrix, and if they aren't calls a method to resize the matrix
     private void addCardToBoard(int[] coordinates, PlayingCard card, int[] seedCount) {
         int x = coordinates[0];
@@ -63,7 +90,14 @@ public class PlayerBoard implements Serializable {
         }
     }
 
-    // method used to resize the matrix, by creating a new one and copying the old elements
+    /**
+     * Increase board playing card [ ] [ ].
+     *
+     * @param x_increase the x increase
+     * @param y_increase the y increase
+     * @return the playing card [ ] [ ]
+     */
+// method used to resize the matrix, by creating a new one and copying the old elements
     private PlayingCard[][] increaseBoard(int x_increase, int y_increase) {
         int row_offset = 0;
         int col_offset = 0;
@@ -91,7 +125,17 @@ public class PlayerBoard implements Serializable {
         return board;
     }
 
-    // public method used to add a new card to the board
+    /**
+     * Add card.
+     *
+     * @param card_to_add   the card to add
+     * @param card_on_board the card on board
+     * @param corner        the corner
+     * @param seedCount     the seed count
+     * @throws InvalidPlaceException     the invalid place exception
+     * @throws ConditionsNotMetException the conditions not met exception
+     */
+// public method used to add a new card to the board
     // the position where to add the card is given by indicating the card and the corner where to attach it
     public void addCard(PlayingCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException, ConditionsNotMetException{
         int[] prev_cord = card_on_board.getCoordinates();
@@ -128,6 +172,11 @@ public class PlayerBoard implements Serializable {
         }
     }
 
+    /**
+     * Add starting card.
+     *
+     * @param firstCard the first card
+     */
     public void addStartingCard(StartingCard firstCard){
         int x = dim_x/2;
         int y = dim_y/2;
@@ -137,6 +186,12 @@ public class PlayerBoard implements Serializable {
         player.updateSeedCount(calculateCenterUpdate(firstCard));
     }
 
+    /**
+     * Calculate center update int [ ].
+     *
+     * @param c the c
+     * @return the int [ ]
+     */
     private int[] calculateCenterUpdate(StartingCard c) {
         int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
         Corner current_corner;
@@ -160,7 +215,13 @@ public class PlayerBoard implements Serializable {
         return seedUpdate;
     }
 
-    // checks the four spots around the position where we want to place the card
+    /**
+     * Check spot available boolean.
+     *
+     * @param coordinates the coordinates
+     * @return the boolean
+     */
+// checks the four spots around the position where we want to place the card
     // if there is a card, it checks if the corners are compatible
     private boolean checkSpotAvailable(int[] coordinates) {
         PlayingCard cardOnBoard;
@@ -189,6 +250,13 @@ public class PlayerBoard implements Serializable {
         return true;
     }
 
+    /**
+     * Calculate seed update int [ ].
+     *
+     * @param xNewCard the x new card
+     * @param yNewCard the y new card
+     * @return the int [ ]
+     */
     private int[] calculateSeedUpdate(int xNewCard, int yNewCard) {
         PlayingCard card, cardAttached;
         int[] seedUpdate = {0, 0, 0, 0, 0, 0, 0};
@@ -232,25 +300,100 @@ public class PlayerBoard implements Serializable {
         return seedUpdate;
     }
 
+    /**
+     * Get board matrix playing card [ ] [ ].
+     *
+     * @return the playing card [ ] [ ]
+     */
     public PlayingCard[][] getBoardMatrix() {
         return board;
     }
+
+    /**
+     * Gets dim x.
+     *
+     * @return the dim x
+     */
     public int getDim_x() {
         return dim_x;
     }
+
+    /**
+     * Gets dim y.
+     *
+     * @return the dim y
+     */
     public int getDim_y() {
         return dim_y;
     }
+
+    /**
+     * Get player player.
+     *
+     * @return the player
+     */
     public Player getPlayer(){
         return player;
     }
 
+
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (int i=0;i<dim_x;i++){
-            for (int j=0;j<dim_y;j++){
-                if(board[i][j]==null){
+        for (int i=-1;i<dim_x+1;i++){
+            for (int j=-1;j<dim_y+1;j++){
+                if(i==-1){
+                    if(j+1<dim_y && board[i+1][j+1]!=null  && (board[i+1][j+1].getCorner(1)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(j-1>=0 && board[i+1][j-1]!=null  && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(j==-1){
+                    if(i+1<dim_x && board[i+1][j+1]!=null && (board[i+1][j+1].getCorner(1)!=null || board[i+1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C1 "));
+                    }
+                    else if(i-1>=0 && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null|| board[i-1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(i==dim_x){
+                    if(j+1<dim_y && board[i-1][j+1]!=null && (board[i-1][j+1].getCorner(4)!=null || board[i-1][j+1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a("  C4 "));
+                    }
+                    else if(j-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+                else if(j==dim_y){
+                    if(i-1>=0 && board[i-1][j-1]!=null && (board[i-1][j-1].getCorner(3)!=null|| board[i-1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C3  "));
+                    }
+                    else if(i+1<dim_x && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
+                        stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
+                    }
+                    else {
+                        stringBuilder.append(ansi().fg(Ansi.Color.BLACK).bg(Ansi.Color.BLACK).a("     "));
+                    }
+                }
+
+                else if(board[i][j]==null){
                     if(i+1<board.length && j-1>0 && board[i+1][j-1]!=null && (board[i+1][j-1].getCorner(2)!=null|| board[i+1][j-1].isFlipped())){
                         stringBuilder.append(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.BLACK).a(" C2  "));
                     }
@@ -299,4 +442,6 @@ public class PlayerBoard implements Serializable {
 
         return stringBuilder.toString();
     }
+
+
 }

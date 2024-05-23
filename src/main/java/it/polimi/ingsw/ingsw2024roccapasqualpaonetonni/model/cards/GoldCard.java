@@ -1,23 +1,48 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
-
 import org.fusesource.jansi.Ansi;
 
 import java.util.Arrays;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * The type Gold card.
+ */
 public class GoldCard extends PlayingCard {
+    /**
+     * The Point condition.
+     */
     private final String pointCondition;
+    /**
+     * The Place condition.
+     */
     private final int[] placeCondition;
 
+    /**
+     * Instantiates a new Gold card.
+     *
+     * @param id     the id
+     * @param seed   the seed
+     * @param c      the c
+     * @param points the points
+     * @param cond   the cond
+     * @param p      the p
+     */
     public GoldCard(int id, Seed seed, Corner[] c, int points, String cond, int[] p){
         super(id,seed,c,points);
         pointCondition=cond;
         this.placeCondition= Arrays.copyOf(p,4);
     }
 
+    /**
+     * Check requirements int [ ].
+     *
+     * @param available_seeds the available seeds
+     * @return the int [ ]
+     */
+    @Override
     public int[] checkRequirements(int[] available_seeds) {
         int[] result = new int[2];
         for (int i = 0; i < placeCondition.length; i++) {
@@ -30,6 +55,16 @@ public class GoldCard extends PlayingCard {
         return result;
     }
 
+    /**
+     * Calculate points int.
+     *
+     * @param board     the board
+     * @param seedCount the seed count
+     * @param x         the x
+     * @param y         the y
+     * @return the int
+     */
+    @Override
     public int calculatePoints(PlayingCard[][] board, int[] seedCount, int x, int y) {
         int curr_points = 0;
         PlayingCard cardOnBoard;
@@ -51,10 +86,27 @@ public class GoldCard extends PlayingCard {
         }
     }
 
+    /**
+     * Get place condition int [ ].
+     *
+     * @return the int [ ]
+     */
     public int[] getPlaceCondition(){return placeCondition;}
+
+    /**
+     * Gets point condition.
+     *
+     * @return the point condition
+     */
     public String getPointCondition() { return pointCondition; }
 
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         boolean flipped = isFlipped;
@@ -63,12 +115,29 @@ public class GoldCard extends PlayingCard {
 
         return getString(sb, flipped, background);
     }
+
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @return the string
+     */
+    @Override
     public String toString(Boolean flipped) {
         StringBuilder sb = new StringBuilder();
         Ansi.Color background = cardSeed.getByAnsi();
 
         return getString(sb, flipped, background);
     }
+
+    /**
+     * Gets string.
+     *
+     * @param sb         the sb
+     * @param flipped    the flipped
+     * @param background the background
+     * @return the string
+     */
     private String getString(StringBuilder sb, boolean flipped, Ansi.Color background) {
         if (!flipped) {
             //First Line
@@ -191,6 +260,14 @@ public class GoldCard extends PlayingCard {
         return sb.toString();
     }
 
+    /**
+     * To string string.
+     *
+     * @param flipped the flipped
+     * @param line    the line
+     * @return the string
+     */
+    @Override
     public String toString(Boolean flipped,int line) {
         StringBuilder[] sb = new StringBuilder[3];
         for (int i = 0; i < sb.length; i++) {

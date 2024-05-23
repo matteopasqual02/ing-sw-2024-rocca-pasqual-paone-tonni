@@ -1,17 +1,31 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.server;
 
-import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter.consolePrinter;
+
+/**
+ * The type Socket server.
+ */
 public class SocketServer extends Thread {
+    /**
+     * The Server socket.
+     */
     private ServerSocket serverSocket;
+    /**
+     * The Client request handler list.
+     */
     private List<ClientRequestHandler> clientRequestHandlerList;
 
+    /**
+     * Start.
+     *
+     * @param port the port
+     */
     public void start(int port){
         try{
             serverSocket = new ServerSocket(port);
@@ -25,6 +39,9 @@ public class SocketServer extends Thread {
         }
     }
 
+    /**
+     * Run.
+     */
     public void run(){
         try{
             while (!Thread.interrupted()){
@@ -45,6 +62,9 @@ public class SocketServer extends Thread {
         }
     }
 
+    /**
+     * Interrupt connection.
+     */
     @Deprecated
     public void interruptConnection(){
         if(clientRequestHandlerList != null){

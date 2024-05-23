@@ -3,7 +3,13 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Main static method.
+ */
 public class MainStaticMethod {
+    /**
+     * Clear cmd.
+     */
     public static void clearCMD() {
         // Check os
         String os = System.getProperty("os.name").toLowerCase();
@@ -18,6 +24,12 @@ public class MainStaticMethod {
         }
     }
 
+    /**
+     * Is not valid ip boolean.
+     *
+     * @param input the input
+     * @return the boolean
+     */
     public static boolean isNotValidIP(String input) {
         List<String> parsed;
         parsed = Arrays.stream(input.split("\\.")).toList();

@@ -1,29 +1,37 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
 
-/*
-this class handles the listeners of the game class in the model: the listeners are elements related to each client, when a change
-occurs in the model (the controller does something) one of these methods gets called in order to show the
-change to each of the clients. These methods call other methods on the actual single listener giving it the change that has occurred
-
-these are not hte methods that directly notify the clients, they are the ones that call those methods on all of the clients.
+/**
+ * The type Game listeners' handler.
+ * this class handles the listeners of the game class in the model: the listeners are elements related to each client, when a change
+ * occurs in the model (the controller does something) one of these methods gets called in order to show the
+ * change to each of the clients. These methods call other methods on the actual single listener giving it the change that has occurred
+ * these are not hte methods that directly notify the clients, they are the ones that call those methods on all the clients.
  */
 public class GameListenersHandler extends ListenersHandler implements Serializable {
+    /**
+     * Instantiates a new Game listeners handler.
+     */
     public GameListenersHandler(){
         super();
     }
 
+    /**
+     * Notify all.
+     *
+     * @param game the game
+     */
     public void notify_All(Game game) {
         for(String name: listenersMap.keySet()){
             try {
@@ -36,6 +44,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    /**
+     * Notify ping.
+     *
+     * @param client the client
+     * @throws Exception the exception
+     */
     public void notify_ping(String client) throws Exception{
         for (String name: listenersMap.keySet()) {
             if (client.equals(name)) {
@@ -44,6 +58,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    /**
+     * Notify set max num players.
+     *
+     * @param gameId the game id
+     * @param max    the max
+     */
     public void notify_setMaxNumPlayers(int gameId, int max) {
         for(String name: listenersMap.keySet()){
             try {
@@ -55,6 +75,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify created game.
+     *
+     * @param gameId the game id
+     */
     public void notify_createdGame(int gameId) {
         for(String name: listenersMap.keySet()){
             try {
@@ -65,6 +91,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    /**
+     * Notify add player.
+     *
+     * @param pNickname the p nickname
+     * @param gameId    the game id
+     */
     public void notify_addPlayer(String pNickname, int gameId) {
         for(String name : listenersMap.keySet()) {
             try {
@@ -85,6 +117,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    /**
+     * Notify no available game.
+     *
+     * @param nickname the nickname
+     */
     public void notify_noAvailableGame(String nickname) {
         for(String name : listenersMap.keySet()) {
             try {
@@ -96,6 +133,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify game full.
+     *
+     * @param player the player
+     */
     public void notify_gameFull(Player player) {
         for(String name : listenersMap.keySet()) {
             try {
@@ -107,6 +150,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify player already in.
+     *
+     * @param player the player
+     */
     public void notify_playerAlreadyIn(Player player) {
         for(String name : listenersMap.keySet()) {
             try {
@@ -118,6 +167,10 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify ask players ready.
+     */
     public void notify_askPlayersReady() {
         for(String name : listenersMap.keySet()) {
             try {
@@ -127,6 +180,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify remove player.
+     *
+     * @param pNickname the p nickname
+     */
     public void notify_removePlayer(String pNickname) {
         for(String name : listenersMap.keySet()){
             try {
@@ -141,6 +200,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify reconnect player.
+     *
+     * @param nickname the nickname
+     */
     public void notify_reconnectPlayer(String nickname) {
         for(String name : listenersMap.keySet()){
             try {
@@ -155,6 +220,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify reconnection impossible.
+     *
+     * @param nickname the nickname
+     */
     public void notify_reconnectionImpossible(String nickname) {
         for(String name : listenersMap.keySet()){
             try {
@@ -166,6 +237,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify disconnected player.
+     *
+     * @param nickname the nickname
+     */
     public void notify_disconnectedPlayer(String nickname) {
         for(String name : listenersMap.keySet()){
             try {
@@ -177,6 +254,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify disconnection impossible.
+     *
+     * @param nickname the nickname
+     */
     public void notify_disconnectionImpossible(String nickname) {
         for(String name : listenersMap.keySet()){
             try {
@@ -189,6 +272,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
 
         }
     }
+
+    /**
+     * Notify set status.
+     *
+     * @param status the status
+     */
     public void notify_setStatus(GameStatus status) {
         for(String name : listenersMap.keySet()){
             try {
@@ -198,6 +287,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify set last status.
+     *
+     * @param status the status
+     */
     public void notify_setLastStatus(GameStatus status) {
         for(String name : listenersMap.keySet()){
             try {
@@ -207,6 +302,10 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify reset last status.
+     */
     public void notify_resetLastStatus() {
         for(String name : listenersMap.keySet()){
             try {
@@ -216,6 +315,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify next turn.
+     *
+     * @param nickname the nickname
+     */
     public void notify_nextTurn(String nickname) {
         for(String name : listenersMap.keySet()){
             try {
@@ -225,6 +330,10 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify last turn.
+     */
     public void notify_lastTurn() {
         for(String name : listenersMap.keySet()){
             try {
@@ -235,6 +344,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    /**
+     * Notify message sent.
+     *
+     * @param message the message
+     */
     public void notify_messageSent(Message message) {
         for(String name: listenersMap.keySet()){
             try {
@@ -244,6 +358,12 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
 }
+
+    /**
+     * Notify private message sent.
+     *
+     * @param message the message
+     */
     public void notify_privateMessageSent(PrivateMessage message) {
         for(String name: listenersMap.keySet()){
             try {
@@ -253,6 +373,13 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify public chat log.
+     *
+     * @param requesterName the requester name
+     * @param allMessages   the all messages
+     */
     public void notify_publicChatLog(String requesterName, List<Message> allMessages) {
         for(String name: listenersMap.keySet()){
             try {
@@ -262,6 +389,14 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    /**
+     * Notify private chat log.
+     *
+     * @param yourName    your name
+     * @param otherName   the other name
+     * @param privateChat the private chat
+     */
     public void notify_privateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) {
         for(String name: listenersMap.keySet()){
             try {
@@ -272,6 +407,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    /**
+     * Notify game generic error.
+     *
+     * @param s the s
+     */
     public void notify_gameGenericError(String s){
         for(String name : listenersMap.keySet()){
             try {
@@ -282,6 +422,11 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
+    /**
+     * Notify winners.
+     *
+     * @param list the list
+     */
     public void notify_winners(List<Player> list) {
         for(String name : listenersMap.keySet()){
             try {

@@ -39,6 +39,13 @@ public class GUIApplication extends Application {
     private Parent createContent(){
         return new StackPane(new Text("Hello world!"));
     }
+
+    /**
+     * Start.
+     *
+     * @param stage the stage
+     * @throws Exception the exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
