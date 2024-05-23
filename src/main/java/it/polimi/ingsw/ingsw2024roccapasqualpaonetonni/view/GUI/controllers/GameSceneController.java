@@ -99,6 +99,7 @@ public class GameSceneController extends GenericController{
 
     @FXML
     private Pane playerBoard;
+    private int goal = 0;
 
     private ExecutorService executor;
     private Client client;
@@ -270,17 +271,7 @@ public class GameSceneController extends GenericController{
 
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
-        TranslateTransition jump = new TranslateTransition(Duration.millis(500), startingCard1);
-        jump.setByY(-20);
-        jump.setAutoReverse(true);
-        jump.setCycleCount(2);
-        jump.play();
-/*
-        BoxBlur blur = new BoxBlur();
-        blur.setWidth(5);
-        blur.setHeight(5);
-        blur.setIterations(3);
-        startingCard1.setEffect(blur);*/
+        jump(startingCard1);
     }
 
     public void handleBoardClick(MouseEvent mouseEvent) {
@@ -409,7 +400,12 @@ public class GameSceneController extends GenericController{
     }
 
     public void chosenGoal() {
-
+        if(client.getMyTurn()){
+            switch (goal){
+                case 1->secretObjectiveImage2.setVisible(false);
+                case 2->secretObjectiveImage1.setVisible(false);
+            }
+        }
     }
 
     public void myRunningTurnChoseObjective() {
@@ -417,7 +413,7 @@ public class GameSceneController extends GenericController{
         glow(secretObjectiveImage2);
     }
     public void glow(ImageView image){
-        // Effetto di illuminazione
+        // blue shadow
         DropShadow borderGlow = new DropShadow();
         borderGlow.setOffsetY(0f);
         borderGlow.setOffsetX(0f);
@@ -426,14 +422,18 @@ public class GameSceneController extends GenericController{
         borderGlow.setHeight(30);
         image.setEffect(borderGlow);
     }
-
-    public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
-        secretObjectiveImage1.setEffect(null);
-        TranslateTransition jump = new TranslateTransition(Duration.millis(500), secretObjectiveImage2);
+    public void jump(ImageView image){
+        TranslateTransition jump = new TranslateTransition(Duration.millis(500), image);
         jump.setByY(-20);
         jump.setAutoReverse(true);
         jump.setCycleCount(2);
         jump.play();
+    }
+
+    public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
+        secretObjectiveImage1.setEffect(null);
+        jump(secretObjectiveImage2);
+        goal = 2;
         executor.submit(()->{
             try {
                 client.receiveInput("/choseGoal 2");
@@ -445,17 +445,8 @@ public class GameSceneController extends GenericController{
 
     public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
         secretObjectiveImage2.setEffect(null);
-        // jumping card
-        TranslateTransition jump = new TranslateTransition(Duration.millis(500), secretObjectiveImage1);
-        jump.setByY(-20);
-        jump.setAutoReverse(true);
-        jump.setCycleCount(2);
-        jump.play();
-        /*
-        MotionBlur motionBlur = new MotionBlur();
-        motionBlur.setRadius(15);
-        motionBlur.setAngle(45);
-        secretObjectiveImage1.setEffect(motionBlur);*/
+        jump(secretObjectiveImage1);
+        goal = 1;
         executor.submit(()->{
             try {
                 client.receiveInput("/choseGoal 1");
