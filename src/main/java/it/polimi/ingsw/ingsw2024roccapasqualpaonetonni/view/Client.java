@@ -21,6 +21,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
 import org.fusesource.jansi.Ansi;
 import javafx.application.Application;
 
+import java.io.Console;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -68,7 +69,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      * Instantiates a new Client.
      *
      * @param connectionType the connection type
-     * @param viewType       the view type
      * @throws IOException the io exception
      */
     public Client(EnumConnectionType connectionType) throws IOException {
@@ -92,10 +92,15 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         new ScannerTUI(this);
         MainStaticMethod.clearCMD();
         view.joinLobby();
-
-        this.pongThread.start();
     }
 
+    /**
+     * Instantiates a new Client.
+     *
+     * @param application the GUI application
+     * @param connectionType the connection type
+     * @throws IOException the io exception
+     */
     public Client(GUIApplication application, EnumConnectionType connectionType) throws IOException {
         this.myGameId = 0;
         this.myNickname = null;
@@ -116,8 +121,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         new ScannerGUI();
         MainStaticMethod.clearCMD();
         view.joinLobby();
-
-        this.pongThread.start();
     }
 
     /**
@@ -342,7 +345,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                             builder.append(parole[i]).append(" ");
                         }
                         String msg = builder.toString();
-                        server.sendPrivateMessage(msg,myNickname,parole[1]);
+                        server.sendPrivateMessage(msg, myNickname, parole[1]);
                     }catch(IndexOutOfBoundsException e){
                         view.invalidMessage("Invalid format");
                     }
@@ -445,6 +448,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void youJoinedGame(int gameId) {
         myGameId = gameId;
         view.show_youJoinedGame(gameId);
+        this.pongThread.start();
     }
 
     /**
@@ -738,7 +742,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.displayChat(m.toStringTUI());
         }
         else {
-            view.displayChat(m.toStringGUI());
+            view.displayChat(m.toStringGUI(), "Pub");
         }
     }
 
@@ -754,7 +758,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             view.displayChat(m.toStringTUI());
         }
         else {
-            view.displayChat(m.toStringGUI());
+            view.displayChat(m.toStringGUI(), "Priv");
         }
     }
 
@@ -771,11 +775,17 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             for(Message m: allMessages) {
                 if (view instanceof TUI) {
                     chat.append(m.toStringTUI());
-                } else {
+                }
+                else {
                     chat.append(m.toStringGUI());
                 }
             }
-            view.displayChat(chat.toString());
+            if (view instanceof TUI) {
+                view.displayChat(chat.toString());
+            }
+            else {
+                view.displayChat(chat.toString(), "Pub");
+            }
         }
         else {
             view.displayChat("No messages available");
@@ -801,7 +811,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                     chat.append(m.toStringGUI());
                 }
             }
-            view.displayChat(chat.toString());
+            if (view instanceof TUI) {
+                view.displayChat(chat.toString());
+            }
+            else {
+                view.displayChat(chat.toString(), "Priv");
+            }
         }
         else {
             view.displayChat("No available messages with: " + otherName);

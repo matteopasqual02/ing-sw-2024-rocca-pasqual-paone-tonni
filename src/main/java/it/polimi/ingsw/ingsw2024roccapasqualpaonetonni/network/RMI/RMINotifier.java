@@ -475,7 +475,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     @Override
     public void sendPrivateMessage(PrivateMessage message) throws IOException {
         try {
-            if(listener.getNickname().equals(message.getReceiver())){
+            if(listener.getNickname().equals(message.getReceiver()) || listener.getNickname().equals(message.getSender())){
                 listener.newPrivateMessage(message);
             }
         } catch (RemoteException e) {
@@ -513,7 +513,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
     public void sendPrivateChatLog(String yourName, String otherName, List<PrivateMessage> privateChat) throws IOException {
         try {
             if(listener.getNickname().equals(yourName)){
-                listener.privateChatLog(otherName,privateChat);
+                listener.privateChatLog(otherName, privateChat);
             }
         } catch (RemoteException e) {
             throw new RuntimeException(e);

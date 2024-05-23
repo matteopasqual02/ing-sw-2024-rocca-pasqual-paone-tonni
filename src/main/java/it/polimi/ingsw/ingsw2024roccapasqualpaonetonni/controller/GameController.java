@@ -90,7 +90,7 @@ public class GameController implements GameControllerInterface {
         private void addClient(String client) {
             synchronized (clientsRunning) {
                 clientsRunning.add(client);
-                ConsolePrinter.consolePrinter("added listener " + client);
+                //ConsolePrinter.consolePrinter("added listener " + client);
             }
         }
 
@@ -136,7 +136,7 @@ public class GameController implements GameControllerInterface {
 
                 synchronized (clientsRunning) {
                     for (String client : clientsRunning) {
-                        ConsolePrinter.consolePrinter("safe " + client);
+                        //ConsolePrinter.consolePrinter("safe " + client);
                         clients.remove(client);
                     }
                 }
@@ -145,7 +145,7 @@ public class GameController implements GameControllerInterface {
                 for (String client : clients) {
                     try {
                         model.ping(client);
-                        ConsolePrinter.consolePrinter("pinging " + client);
+                        //ConsolePrinter.consolePrinter("pinging " + client);
                     }
                     catch (Exception ignored) {}
                 }
@@ -158,13 +158,13 @@ public class GameController implements GameControllerInterface {
 
                 synchronized (clientsRunning) {
                     for (String client : clientsRunning) {
-                        ConsolePrinter.consolePrinter("safe " + client);
+                        //ConsolePrinter.consolePrinter("safe " + client);
                         clients.remove(client);
                     }
                 }
 
                 for (String deadClient : clients) {
-                    ConsolePrinter.consolePrinter("dead client " + deadClient);
+                    //ConsolePrinter.consolePrinter("dead client " + deadClient);
                     if(!model.getPlayersDisconnected().stream().map(Player::getNickname).toList().contains(deadClient)){
                         disconnectPlayer(deadClient);
                         ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
