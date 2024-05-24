@@ -216,4 +216,26 @@ public class GUIApplication extends Application {
     public void myRunningTurnPlaceCard() {
         gameSceneController.myRunningTurnPlaceCard();
     }
+
+    public void myRunningTurnDrawCard() {
+    }
+
+    public void notMyTurn() {
+        gameSceneController.notMyTurn();
+    }
+
+    public void chatBeforeStart() {
+    }
+
+    public void show_status(String s) {
+    }
+
+    public void show_statusLast(String string) {
+    }
+
+    public void show_generic(String msg) {
+    }
+
+    public void invalidAction(String s) {
+    }
 }

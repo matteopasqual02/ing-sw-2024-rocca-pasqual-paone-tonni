@@ -4,9 +4,13 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
+import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
@@ -250,6 +254,7 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnPlaceStarting() {
+        disable(false);
         glow(startingCard1);
     }
 
@@ -485,6 +490,7 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnPlaceCard() {
+        disable(false);
         glow(myHandImage1);
         glow(myHandImage2);
         glow(myHandImage3);
@@ -509,5 +515,31 @@ public class GameSceneController extends GenericController{
         myHandImage1.setEffect(null);
         jump(myHandImage3);
         hand = 3;
+    }
+
+    public void notMyTurn() {
+        disable(true);
+        Label label = new Label("This is not your turn");
+        label.setStyle("-fx-background-color: lightblue; -fx-padding: 20; -fx-border-color: black; -fx-border-width: 2px;");
+        StackPane labelContainer = new StackPane(label);
+        labelContainer.setAlignment(Pos.CENTER);
+        gridPane.getChildren().add(labelContainer);
+        PauseTransition message = new PauseTransition(Duration.seconds(3));
+        message.setOnFinished(event->gridPane.getChildren().remove(labelContainer));
+        message.play();
+    }
+    public void disable(Boolean truefalse){
+        myHandImage1.setDisable(truefalse);
+        myHandImage2.setDisable(truefalse);
+        myHandImage3.setDisable(truefalse);
+        secretObjectiveImage1.setDisable(truefalse);
+        secretObjectiveImage2.setDisable(truefalse);
+        startCardVbox.setDisable(truefalse);
+        resourceCard1.setDisable(truefalse);
+        resourceCard2.setDisable(truefalse);
+        resourceCard3.setDisable(truefalse);
+        goldCard1.setDisable(truefalse);
+        goldCard2.setDisable(truefalse);
+        goldCard3.setDisable(truefalse);
     }
 }

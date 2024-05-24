@@ -113,7 +113,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnDrawCard() {
-
+        runLater(()->application.myRunningTurnDrawCard());
     }
 
     /**
@@ -121,7 +121,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void notMyTurn() {
-
+        runLater(()->application.notMyTurn());
     }
 
     /**
@@ -144,7 +144,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void notMyTurnChat() {
-
+        runLater(()->application.chatBeforeStart());
     }
 
     /**
@@ -154,12 +154,12 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void show_status(String s) {
-
+        runLater(()->application.show_status(s));
     }
 
     @Override
     public void show_statusLast(String string) {
-
+        runLater(()->application.show_statusLast(string));
     }
 
     /**
@@ -175,7 +175,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void show_generic(String msg) {
-
+        runLater(()->application.show_generic(msg));
     }
 
     /**
@@ -193,7 +193,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void invalidMessage(String s) {
-
+        runLater(()->application.invalidAction(s));
     }
 
     /**
