@@ -91,7 +91,7 @@ public interface GameListener extends Remote {
     void nameAlreadyInGame() throws RemoteException;
 
     /**
-     * Are you ready.
+     * Are you ready
      *
      * @throws RemoteException the remote exception
      */

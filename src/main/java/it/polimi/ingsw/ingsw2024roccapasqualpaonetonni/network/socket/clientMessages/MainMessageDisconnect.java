@@ -15,10 +15,6 @@ public class MainMessageDisconnect extends ClientGenericMessage{
      * The ID to disconnect.
      */
     int idToDisconnect;
-    /**
-     * The Listener.
-     */
-    GameListener listener;
 
     /**
      * Instantiates a new Main message disconnect.
@@ -30,7 +26,6 @@ public class MainMessageDisconnect extends ClientGenericMessage{
         this.nickname = nickname;
         this.isForMainController = true;
         this.idToDisconnect = idToDisconnect;
-        this.listener = listener;
     }
 
     /**

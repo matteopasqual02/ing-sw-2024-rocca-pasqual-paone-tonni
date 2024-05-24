@@ -15,23 +15,17 @@ public class MainMessageJoinGameById extends ClientGenericMessage{
      * The ID to connect.
      */
     private final int idToConnect;
-    /**
-     * The Listener.
-     */
-    private final GameListener listener;
 
     /**
      * Instantiates a new Main message join game by id.
      *
      * @param nickname    the nickname
      * @param idToConnect the id to connect
-     * @param listener    the listener
      */
-    public MainMessageJoinGameById(String nickname, int idToConnect, GameListener listener){
+    public MainMessageJoinGameById(String nickname, int idToConnect){
         this.nickname = nickname;
         this.isForMainController = true;
         this.idToConnect = idToConnect;
-        this.listener = listener;
     }
 
     /**

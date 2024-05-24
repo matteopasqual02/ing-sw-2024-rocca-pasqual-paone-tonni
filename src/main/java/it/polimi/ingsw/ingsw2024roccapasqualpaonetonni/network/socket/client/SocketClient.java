@@ -35,28 +35,22 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     private transient ObjectOutputStream outputStream;
     /**
-     * The Nickname.
-     */
-    private String nickname;
-    /**
      * The Client.
      */
     private final Client client;
     /**
-     * The Server request handler.
+     * The Lock.
      */
-    private GameListener serverRequestHandler;
-
-    //private final SocketNotifier socketNotifier;
+    private final Object lock;
 
     /**
      * Instantiates a new Socket client.
      *
      * @param client the client
-     * @throws IOException the io exception
      */
-    public SocketClient(Client client) throws IOException {
+    public SocketClient(Client client) {
         this.client = client;
+        lock = new Object();
         connect();
         this.start();
     }
@@ -71,7 +65,6 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
                 message = (ServerGenericMessage) inputStream.readObject();
                 message.launchMessage(client);
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
                 consolePrinter("[SOCKET] Connection Lost!");
                 System.exit(-1);
             }
@@ -139,7 +132,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      * @throws IOException the io exception
      */
     private void messageDone() throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.flush();
             outputStream.reset();
         }
@@ -172,7 +165,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void pong(String me) throws IOException, NotBoundException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessagePong(me));
         }
         messageDone();
@@ -190,12 +183,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MainMessageCreateGame(name, maxNumPlayers));
         }
         messageDone();
 
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageAddToPingPong(name));
         }
         messageDone();
@@ -212,12 +205,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException {
-        synchronized (outputStream) {
-            outputStream.writeObject(new MainMessageJoinFirstAvailable(name, me));
+        synchronized (lock) {
+            outputStream.writeObject(new MainMessageJoinFirstAvailable(name));
             messageDone();
         }
 
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageAddToPingPong(name));
             messageDone();
         }
@@ -235,12 +228,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        synchronized (outputStream) {
-            outputStream.writeObject(new MainMessageJoinGameById(name, idGame, me));
+        synchronized (lock) {
+            outputStream.writeObject(new MainMessageJoinGameById(name, idGame));
             messageDone();
         }
 
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageAddToPingPong(name));
             messageDone();
         }
@@ -257,12 +250,12 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException {
-        synchronized (outputStream) {
-            outputStream.writeObject(new MainMessageReconnect(name, idGame, me));
+        synchronized (lock) {
+            outputStream.writeObject(new MainMessageReconnect(name, idGame));
             messageDone();
         }
 
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageAddToPingPong(name));
             messageDone();
         }
@@ -278,7 +271,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void leave(String name, int idGame) throws IOException, NotBoundException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MainMessageDisconnect(name, idGame));
             messageDone();
         }
@@ -293,7 +286,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void ready(String nickname) throws IOException, NotBoundException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessagePlayerReady(nickname));
             messageDone();
         }
@@ -311,7 +304,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageAddCard(nickname, cardToAdd, cardOnBoard, cornerToAttach, flip));
             messageDone();
         }
@@ -326,7 +319,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void addStartingCard(String nickname, Boolean flip) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageAddStarting(nickname, flip));
             messageDone();
         }
@@ -341,7 +334,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void choosePlayerGoal(String nickname, int choice) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageObjectiveChosen(nickname, choice));
             messageDone();
         }
@@ -355,7 +348,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void drawResourceFromDeck(String nickname) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageDrawResources(nickname));
             messageDone();
         }
@@ -369,7 +362,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void drawGoldFromDeck(String nickname) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageDrawGold(nickname));
             messageDone();
         }
@@ -384,7 +377,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void drawFromBoard(String nickname, int position) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageDrawFromBoard(nickname, position));
             messageDone();
         }
@@ -399,7 +392,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void sendMessage(String txt, String nickname) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageSendMessage(txt, nickname));
             messageDone();
         }
@@ -410,13 +403,13 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      *
      * @param txt              the txt
      * @param nicknameSender   the nickname sender
-     * @param nicknameReciever the nickname reciever
+     * @param nicknameReceiver the nickname receiver
      * @throws IOException the io exception
      */
     @Override
-    public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException {
-        synchronized (outputStream) {
-            outputStream.writeObject(new MessageSendPrivateMessage(nicknameSender, nicknameReciever, txt));
+    public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReceiver) throws IOException {
+        synchronized (lock) {
+            outputStream.writeObject(new MessageSendPrivateMessage(nicknameSender, nicknameReceiver, txt));
             messageDone();
         }
     }
@@ -429,7 +422,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void getPublicChatLog(String requesterName) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageGetPublicChatLog(requesterName));
             messageDone();
         }
@@ -444,7 +437,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void getPrivateChatLog(String yourName, String otherName) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageGetPrivateChatLog(yourName, otherName));
             messageDone();
         }
@@ -458,7 +451,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      */
     @Override
     public void setMaxNUm(int num) throws IOException {
-        synchronized (outputStream) {
+        synchronized (lock) {
             outputStream.writeObject(new MessageMaxNum(num));
             messageDone();
         }

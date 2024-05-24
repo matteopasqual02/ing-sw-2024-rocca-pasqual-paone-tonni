@@ -15,23 +15,17 @@ public class MainMessageReconnect extends ClientGenericMessage{
      * The ID to connect.
      */
     private final int idToConnect;
-    /**
-     * The Listener.
-     */
-    private final GameListener listener;
 
     /**
      * Instantiates a new Main message reconnect.
      *
      * @param nickname    the nickname
      * @param idToConnect the id to connect
-     * @param listener    the listener
      */
-    public MainMessageReconnect(String nickname, int idToConnect, GameListener listener){
+    public MainMessageReconnect(String nickname, int idToConnect){
         this.nickname = nickname;
         this.isForMainController = true;
         this.idToConnect = idToConnect;
-        this.listener = listener;
     }
 
     /**

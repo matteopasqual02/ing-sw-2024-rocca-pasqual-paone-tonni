@@ -15,7 +15,7 @@ public class ServerMessageChatPublicLog extends ServerGenericMessage{
      */
     private String requesterName;
     /**
-     * The All messages.
+     * All messages.
      */
     private List<Message> allMessages;
 

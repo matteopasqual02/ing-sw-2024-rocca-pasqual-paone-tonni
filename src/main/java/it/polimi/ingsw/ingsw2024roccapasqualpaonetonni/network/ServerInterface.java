@@ -17,7 +17,7 @@ public interface ServerInterface extends Remote{
      *
      * @param name          the name
      * @param maxNumPlayers the max num players
-     * @param me            the me
+     * @param me            me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -39,7 +39,7 @@ public interface ServerInterface extends Remote{
      *
      * @param name   the name
      * @param idGame the id game
-     * @param me     the me
+     * @param me     me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -50,7 +50,7 @@ public interface ServerInterface extends Remote{
      *
      * @param name   the name
      * @param idGame the id game
-     * @param me     the me
+     * @param me     me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
@@ -171,7 +171,7 @@ public interface ServerInterface extends Remote{
     /**
      * Gets private chat log.
      *
-     * @param yourName  the your name
+     * @param yourName  your name
      * @param otherName the other name
      * @throws IOException the io exception
      */
@@ -180,7 +180,7 @@ public interface ServerInterface extends Remote{
     /**
      * Pong.
      *
-     * @param me the me
+     * @param me me
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
