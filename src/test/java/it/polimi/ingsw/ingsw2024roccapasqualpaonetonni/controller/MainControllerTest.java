@@ -104,13 +104,9 @@ class MainControllerTest {
         mainController.clearSingleton();
 
 
-        mainController.createGameController("p1",4,
+        mainController.createGameController("p1",2,
                 new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
         mainController.joinFirstAvailableGame("p2",
-                new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
-        mainController.joinFirstAvailableGame("p3",
-                new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
-        mainController.joinFirstAvailableGame("p4",
                 new RMINotifier(new Client(EnumConnectionType.RMI, EnumViewType.GUI)));
 
         int idGame = mainController.getRunningGames().getFirst().getGameID();
