@@ -415,6 +415,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public ServerInterface getServerInterface(){
         return server;
     }
+    public boolean getMyTurn(){return myTurn;}
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 
@@ -486,7 +487,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void allGame(GameImmutable gameImmutable) {
         currentImmutable=gameImmutable;
-        view.show_All(gameImmutable,myNickname);
+        view.show_All(gameImmutable,myNickname,EnumUpdates.ALL);
         myTurn = myNickname.equals(currentImmutable.getPlayers().peek().getNickname());
         if(myTurn){
             view.myRunningTurnPlaceStarting();
@@ -526,7 +527,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void startAdded(Player p) {
         currentImmutable.refreshPlayer(p);
-        view.show_All(currentImmutable,myNickname);
+        view.show_All(currentImmutable,myNickname,EnumUpdates.START);
         if(myTurn){
             view.myRunningTurnChooseObjective();
         }
@@ -543,7 +544,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void cardAdded(Player p) {
         currentImmutable.refreshPlayer(p);
-        view.show_All(currentImmutable,myNickname);
+        view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD);
         if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }
@@ -560,7 +561,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     @Override
     public void personalGoalChosen(Player p) {
         currentImmutable.refreshPlayer(p);
-        view.show_All(currentImmutable,myNickname);
+        view.show_All(currentImmutable,myNickname,EnumUpdates.OBJECTIVE);
         if(myTurn){
             view.myRunningTurnPlaceCard();
         }
@@ -591,7 +592,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
-            view.show_All(currentImmutable,myNickname);
+            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK);
         }
 
     }
@@ -607,7 +608,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
-            view.show_All(currentImmutable,myNickname);
+            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK);
         }
     }
 
@@ -624,7 +625,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
             currentImmutable.setBoardDeck(b);
-            view.show_All(currentImmutable,myNickname);
+            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK);
         }
     }
 

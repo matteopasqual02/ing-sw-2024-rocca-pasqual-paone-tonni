@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -197,4 +198,22 @@ public class GUIApplication extends Application {
         }
     }
 
+    public void show_startCard(GameImmutable gameImmutable, String nickname) {
+        gameSceneController.startCard(gameImmutable,nickname);
+    }
+
+    public void show_board(GameImmutable gameImmutable, String nickname) {
+    }
+
+    public void show_objective(GameImmutable gameImmutable, String nickname) {
+        gameSceneController.chosenGoal();
+    }
+
+    public void myRunningTurnChoseObjective() {
+        gameSceneController.myRunningTurnChoseObjective();
+    }
+
+    public void myRunningTurnPlaceCard() {
+        gameSceneController.myRunningTurnPlaceCard();
+    }
 }

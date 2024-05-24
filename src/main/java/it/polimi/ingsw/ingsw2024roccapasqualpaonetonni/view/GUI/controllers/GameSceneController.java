@@ -4,30 +4,34 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GameSceneController extends GenericController{
     @FXML
     private ImageView resourceCard1;
+    @FXML
+    private GridPane gridPane;
 
     @FXML
     private ImageView resourceCard2;
@@ -67,6 +71,8 @@ public class GameSceneController extends GenericController{
 
     @FXML
     private ImageView startingCard1;
+    @FXML
+    private VBox startCardVbox;
 
     @FXML
     private ScrollPane scrollPane;
@@ -93,7 +99,9 @@ public class GameSceneController extends GenericController{
     private VBox otherPlayersBox;
 
     @FXML
-    private AnchorPane playerBoard;
+    private Pane playerBoard;
+    private int goal = 0;
+    private int hand = 4;
 
     private ExecutorService executor;
     private Client client;
@@ -115,7 +123,7 @@ public class GameSceneController extends GenericController{
         //setting hand
         if(player==null)return;
 
-        playerBoard = new AnchorPane();
+        //playerBoard = new AnchorPane();
 
         cardId = player.getHand().get(0).getIdCard();
         myHandImage1.setImage(new Image(createPath(cardId)));
@@ -242,14 +250,7 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnPlaceStarting() {
-        // Effetto di illuminazione
-        DropShadow borderGlow = new DropShadow();
-        borderGlow.setOffsetY(0f);
-        borderGlow.setOffsetX(0f);
-        borderGlow.setColor(Color.BLUE);
-        borderGlow.setWidth(30);
-        borderGlow.setHeight(30);
-        startingCard1.setEffect(borderGlow);
+        glow(startingCard1);
     }
 
     public void displayChatPublic(String message) {
@@ -274,21 +275,13 @@ public class GameSceneController extends GenericController{
 
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
-        BoxBlur blur = new BoxBlur();
-        blur.setWidth(5);
-        blur.setHeight(5);
-        blur.setIterations(3);
-        startingCard1.setEffect(blur);
+        jump(startingCard1);
     }
 
     public void handleBoardClick(MouseEvent mouseEvent) {
-        double x = mouseEvent.getX();
+        /*double x = mouseEvent.getX();
         double y = mouseEvent.getY();
-        placeCardOnBoard(x, y);
-    }
-
-    public void placeCardOnBoard(double x, double y){
-        //we have to handle the case in which it is flipped
+        placeCardOnBoard(x, y);*/
         executor.submit(()->{
             try {
                 client.receiveInput("/addStarting");
@@ -296,7 +289,24 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
-        playerBoard.getChildren().add(startingCard1);
+    }
+
+    public void placeCardOnBoard(double x, double y){
+        //we have to handle the case in which it is flipped
+        Label label = new Label("prova");
+        playerBoard.getChildren().add(label);
+        AnchorPane.setTopAnchor(label, 10.0);
+        AnchorPane.setLeftAnchor(label, 10.0);
+        //playerBoard.getChildren().add(startingCard1);
+        executor.submit(()->{
+            try {
+                client.receiveInput("/addStarting");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        //we change the board here while everything elese change through the show_all fuction like in the TUI
+
     }
 
     public void handleSend(ActionEvent actionEvent) {
@@ -399,5 +409,105 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public void startCard(GameImmutable gameImmutable, String nickname) {
+        //i have to check if its my turn because everyone gets these updates but only the player in turn has to update its gui
+        if(client.getMyTurn()){
+            gridPane.getChildren().remove(startCardVbox);
+            startingCard1.setEffect(null);
+            playerBoard.getChildren().add(startingCard1);
+        }
+    }
+
+    public void chosenGoal() {
+        if(client.getMyTurn()){
+            switch (goal){
+                case 1->{
+                    secretObjectiveImage2.setVisible(false);
+                    secretObjectiveImage1.setEffect(null);
+                }
+                case 2->{
+                    secretObjectiveImage1.setVisible(false);
+                    secretObjectiveImage2.setEffect(null);
+                }
+            }
+        }
+    }
+
+    public void myRunningTurnChoseObjective() {
+        glow(secretObjectiveImage1);
+        glow(secretObjectiveImage2);
+    }
+    public void glow(ImageView image){
+        // blue shadow
+        DropShadow borderGlow = new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.BLUE);
+        borderGlow.setWidth(30);
+        borderGlow.setHeight(30);
+        image.setEffect(borderGlow);
+    }
+    public void jump(ImageView image){
+        TranslateTransition jump = new TranslateTransition(Duration.millis(500), image);
+        jump.setByY(-20);
+        jump.setAutoReverse(true);
+        jump.setCycleCount(2);
+        jump.play();
+    }
+
+    public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
+        secretObjectiveImage1.setEffect(null);
+        jump(secretObjectiveImage2);
+        goal = 2;
+        executor.submit(()->{
+            try {
+                client.receiveInput("/choseGoal 2");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
+        secretObjectiveImage2.setEffect(null);
+        jump(secretObjectiveImage1);
+        goal = 1;
+        executor.submit(()->{
+            try {
+                client.receiveInput("/choseGoal 1");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
+    public void myRunningTurnPlaceCard() {
+        glow(myHandImage1);
+        glow(myHandImage2);
+        glow(myHandImage3);
+    }
+
+    public void handleHand1Clicked(MouseEvent mouseEvent) {
+        myHandImage2.setEffect(null);
+        myHandImage3.setEffect(null);
+        jump(myHandImage1);
+        hand = 1;
+    }
+
+    public void handleHand2Clicked(MouseEvent mouseEvent) {
+        myHandImage1.setEffect(null);
+        myHandImage3.setEffect(null);
+        jump(myHandImage2);
+        hand = 2;
+    }
+
+    public void handleHand3Clicked(MouseEvent mouseEvent) {
+        myHandImage2.setEffect(null);
+        myHandImage1.setEffect(null);
+        jump(myHandImage3);
+        hand = 3;
     }
 }

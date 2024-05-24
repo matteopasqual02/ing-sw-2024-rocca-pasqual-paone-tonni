@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumUpdates;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 import org.fusesource.jansi.Ansi;
 
@@ -33,7 +34,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      */
 //------------------PREPARATION
     @Override
-    public void show_All(GameImmutable gameImmutable, String nickname) {
+    public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type) {
         if(gameImmutable==null){
             invalidMessage("Game immutable is null");
             return;

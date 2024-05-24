@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumUpdates;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 import javafx.application.Platform;
 
@@ -10,7 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 public class GUI extends UnicastRemoteObject implements ViewUpdate {
-    private transient GUIApplication application;
+    private final transient GUIApplication application;
     /**
      * this method is used to pass a runnable function to the UI thread that will handle the changes to the gui.
      */
@@ -34,8 +35,22 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      * @param nickname      the nickname
      */
     @Override
-    public void show_All(GameImmutable gameImmutable, String nickname) {runLater((()->application.show_all(gameImmutable,nickname)));
+    public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type) {
+        runLater((()->{
+            switch (type){
+                case ALL -> application.show_all(gameImmutable,nickname);
+                case START -> application.show_startCard(gameImmutable,nickname);
+                case BOARD -> application.show_board(gameImmutable,nickname);
+                case OBJECTIVE -> application.show_objective(gameImmutable,nickname);
+            }
+
+        }));
     }
+/*
+    @Override
+    public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type) {
+        runLater((()->application.show_all(gameImmutable,nickname)));
+    }*/
 
     /**
      * Show max num players set.
@@ -168,7 +183,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnPlaceCard() {
-
+        runLater(()->application.myRunningTurnPlaceCard());
     }
 
     /**
@@ -186,7 +201,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnChooseObjective() {
-
+        runLater(()->application.myRunningTurnChoseObjective());
     }
 
     /**
