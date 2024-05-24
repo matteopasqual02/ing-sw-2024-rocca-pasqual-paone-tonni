@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class GameSceneController extends GenericController{
     @FXML
@@ -254,6 +255,7 @@ public class GameSceneController extends GenericController{
     public void displayChatPublic(String message) {
         if (!isPrivateChat) {
             Text text = new Text(message);
+            System.out.println(message);
             text.setWrappingWidth(scrollPane.getWidth() - 20); // Adjust width to fit scroll pane
             messageContainer.getChildren().add(text);
             scrollPane.layout();
@@ -263,6 +265,7 @@ public class GameSceneController extends GenericController{
     public void displayChatPrivate(String message) {
         if (isPrivateChat) {
             Text text = new Text(message);
+            System.out.println(message);
             text.setWrappingWidth(scrollPane.getWidth() - 20); // Adjust width to fit scroll pane
             messageContainer.getChildren().add(text);
             scrollPane.layout();
@@ -297,33 +300,49 @@ public class GameSceneController extends GenericController{
     }
 
     public void handleSend(ActionEvent actionEvent) {
-        executor.submit(() -> {
-            String message = messageInput.getText().trim();
-            messageInput.clear();
-            if (!message.isEmpty()) {
-                if (isPrivateChat) {
-                    String receiver = (String) receiverPrivateMessages.getSelectionModel().getSelectedItem();
-                    if (!receiver.isEmpty()) {
+        String message = messageInput.getText().trim();
+        messageInput.clear();
+        if (!message.isEmpty()) {
+            if (isPrivateChat) {
+                String receiver = (String) receiverPrivateMessages.getSelectionModel().getSelectedItem();
+                if (!receiver.isEmpty()) {
+                    executor.submit(() -> {
                         try {
                             client.receiveInput("/chatPrivate " + receiver + " " + message);
                         } catch (IOException | NotBoundException e) {
                             throw new RuntimeException(e);
                         }
-                        messageContainer.getChildren().clear();
+                        /*
+                        try {
+                            TimeUnit.SECONDS.sleep(2);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                         handleSeePrivateChat(actionEvent);
-                    }
+
+                         */
+                    });
                 }
-                else {
+            }
+            else {
+                executor.submit(() -> {
                     try {
                         client.receiveInput("/chat " + message);
                     } catch (IOException | NotBoundException e) {
                         throw new RuntimeException(e);
                     }
-                    messageContainer.getChildren().clear();
+                    /*
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     handleSeePublicChat(actionEvent);
-                }
+
+                     */
+                });
             }
-        });
+        }
     }
 
 

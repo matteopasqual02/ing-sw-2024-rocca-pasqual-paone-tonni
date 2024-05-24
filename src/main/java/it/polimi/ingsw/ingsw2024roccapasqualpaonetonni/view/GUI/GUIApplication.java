@@ -187,14 +187,12 @@ public class GUIApplication extends Application {
 
     public void displayChat(String message, String type) {
         if (gameSceneController != null) {
-            ConsolePrinter.consolePrinter("here");
             switch (type) {
                 case "Pub":
                     gameSceneController.displayChatPublic(message);
                 case "Priv":
                     gameSceneController.displayChatPrivate(message);
                 case null, default:
-
             }
         }
     }

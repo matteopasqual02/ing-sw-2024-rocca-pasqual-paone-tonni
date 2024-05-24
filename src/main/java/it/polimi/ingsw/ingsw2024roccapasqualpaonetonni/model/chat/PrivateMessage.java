@@ -67,16 +67,16 @@ public class PrivateMessage implements Serializable {
     public void setText(String text) {this.text = text;}
 
     /**
-     * Get sender string.
+     * Get sender nickname.
      *
-     * @return the string
+     * @return the nickname of the sender
      */
     public String getSender(){return sender;}
 
     /**
-     * Get receiver string.
+     * Get receiver nickname.
      *
-     * @return the string
+     * @return the nickname of the receiver
      */
     public String getReceiver(){return receiver;}
 

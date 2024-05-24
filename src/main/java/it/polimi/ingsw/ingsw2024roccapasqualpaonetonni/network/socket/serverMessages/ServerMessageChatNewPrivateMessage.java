@@ -31,7 +31,7 @@ public class ServerMessageChatNewPrivateMessage extends ServerGenericMessage{
     @Override
     public void launchMessage(GameListener listener) {
         try {
-            if(listener.getNickname().equals(message.getReceiver())){
+            if(listener.getNickname().equals(message.getReceiver()) || listener.getNickname().equals(message.getSender())){
                 listener.newPrivateMessage(message);
             }
         } catch (RemoteException e) {

@@ -7,6 +7,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
@@ -477,6 +478,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         try {
             if(listener.getNickname().equals(message.getReceiver()) || listener.getNickname().equals(message.getSender())){
                 listener.newPrivateMessage(message);
+                ConsolePrinter.consolePrinter(listener.getNickname());
             }
         } catch (RemoteException e) {
             throw new RuntimeException(e);
