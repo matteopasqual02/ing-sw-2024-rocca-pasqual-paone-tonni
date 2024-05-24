@@ -132,8 +132,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
         catch (InterruptedException ignored){
 
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -213,10 +211,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * @param gameId the game id
      * @param max    the max
      * @throws IOException            the io exception
-     * @throws ClassNotFoundException the class not found exception
      */
     @Override
-    public void sendMaxNumPlayersSet(int gameId, int max) throws IOException, ClassNotFoundException {
+    public void sendMaxNumPlayersSet(int gameId, int max) throws IOException {
         synchronized (outputStream) {
             outputStream.writeObject(new ServerMessageMaxNum(max));
             messageDone();

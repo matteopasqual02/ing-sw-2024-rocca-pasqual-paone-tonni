@@ -13,10 +13,6 @@ public class GUI implements ViewUpdate {
     /**
      * Join lobby.
      */
-/*private GUIApplication application;
-    public GUI(GUIApplication application){
-        this.application = application;
-    }*/
     @Override
     public void joinLobby() {
 

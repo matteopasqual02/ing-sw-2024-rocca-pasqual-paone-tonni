@@ -13,11 +13,11 @@ public class ServerMessageChatPublicLog extends ServerGenericMessage{
     /**
      * The Requester name.
      */
-    private String requesterName;
+    private final String requesterName;
     /**
      * All messages.
      */
-    private List<Message> allMessages;
+    private final List<Message> allMessages;
 
     /**
      * Instantiates a new Server message chat public log.

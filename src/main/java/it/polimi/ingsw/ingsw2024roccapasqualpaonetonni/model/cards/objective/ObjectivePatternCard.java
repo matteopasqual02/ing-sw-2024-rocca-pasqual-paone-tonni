@@ -59,10 +59,10 @@ public class ObjectivePatternCard extends ObjectiveCard {
         Ansi.Color background = Ansi.Color.WHITE;
 
         int[] countTypes = new int[4];
-        for(int i=0; i<pattern.length; i++) {
-            for(int j=0; j<pattern[i].length; j++) {
-                if(pattern[i][j]!=null) {
-                    countTypes[pattern[i][j].getId()]++;
+        for (Seed[] seeds : pattern) {
+            for (Seed seed : seeds) {
+                if (seed != null) {
+                    countTypes[seed.getId()]++;
                 }
             }
         }
@@ -76,34 +76,34 @@ public class ObjectivePatternCard extends ObjectiveCard {
         background = Seed.getById(index).getByAnsi();
 
         int line =0;
-        for(int i =0;i< pattern.length;i++){
-            int count =0;
-            for(int j=0;j< pattern[i].length;j++){
-                if(pattern[i][j]!=null){count++;}
+        for (Seed[] seeds : pattern) {
+            int count = 0;
+            for (Seed seed : seeds) {
+                if (seed != null) {
+                    count++;
+                }
             }
-            if(count!=0){
+            if (count != 0) {
                 sb.append(ansi().fg(background).bg(background).a("  "));
-                for(int j=0;j< pattern[i].length;j++){
-                    if(pattern[i][j]==null){
+                for (Seed seed : seeds) {
+                    if (seed == null) {
                         sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(background).a(" "));
-                    }else {
+                    } else {
                         sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" "));
-                        sb.append(ansi().fg(pattern[i][j].getByAnsi()).bg(Ansi.Color.DEFAULT).a(pattern[i][j].name().substring(0,1)));
+                        sb.append(ansi().fg(seed.getByAnsi()).bg(Ansi.Color.DEFAULT).a(seed.name().substring(0, 1)));
                         sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" "));
                     }
                 }
                 sb.append(ansi().fg(background).bg(background).a("  "));
-                if(line == 0){
+                if (line == 0) {
                     sb.append(ansi().fg(background).bg(background).a("       "));
-                }
-                else if(line == 1){
+                } else if (line == 1) {
                     sb.append(ansi().fg(background).bg(background).a("  "));
                     sb.append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
                     sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(points));
                     sb.append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
                     sb.append(ansi().fg(background).bg(background).a("  "));
-                }
-                else if(line == 2){
+                } else if (line == 2) {
                     sb.append(ansi().fg(background).bg(background).a("       "));
                 }
                 sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a("\n"));
@@ -128,10 +128,10 @@ public class ObjectivePatternCard extends ObjectiveCard {
         }
 
         int[] countTypes = new int[4];
-        for(int i=0; i<pattern.length; i++) {
-            for(int j=0; j<pattern[i].length; j++) {
-                if(pattern[i][j]!=null) {
-                    countTypes[pattern[i][j].getId()]++;
+        for (Seed[] value : pattern) {
+            for (Seed seed : value) {
+                if (seed != null) {
+                    countTypes[seed.getId()]++;
                 }
             }
         }
@@ -145,34 +145,34 @@ public class ObjectivePatternCard extends ObjectiveCard {
         background = Seed.getById(index).getByAnsi();
 
         int currentLine =0;
-        for(int i =0;i< pattern.length;i++){
-            int count =0;
-            for(int j=0;j< pattern[i].length;j++){
-                if(pattern[i][j]!=null){count++;}
+        for (Seed[] seeds : pattern) {
+            int count = 0;
+            for (Seed seed : seeds) {
+                if (seed != null) {
+                    count++;
+                }
             }
-            if(count!=0){
+            if (count != 0) {
                 sb[currentLine].append(ansi().fg(background).bg(background).a("  "));
-                for(int j=0;j< pattern[i].length;j++){
-                    if(pattern[i][j]==null){
+                for (Seed seed : seeds) {
+                    if (seed == null) {
                         sb[currentLine].append(ansi().fg(Ansi.Color.DEFAULT).bg(background).a(" "));
-                    }else {
+                    } else {
                         sb[currentLine].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" "));
-                        sb[currentLine].append(ansi().fg(pattern[i][j].getByAnsi()).bg(Ansi.Color.DEFAULT).a(pattern[i][j].name().substring(0,1)));
+                        sb[currentLine].append(ansi().fg(seed.getByAnsi()).bg(Ansi.Color.DEFAULT).a(seed.name().substring(0, 1)));
                         sb[currentLine].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(" "));
                     }
                 }
                 sb[currentLine].append(ansi().fg(background).bg(background).a("  "));
-                if(currentLine == 0){
+                if (currentLine == 0) {
                     sb[0].append(ansi().fg(background).bg(background).a("       "));
-                }
-                else if(currentLine == 1){
+                } else if (currentLine == 1) {
                     sb[1].append(ansi().fg(background).bg(background).a("  "));
                     sb[1].append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
                     sb[1].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(points));
                     sb[1].append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
                     sb[1].append(ansi().fg(background).bg(background).a("  "));
-                }
-                else {
+                } else {
                     sb[2].append(ansi().fg(background).bg(background).a("       "));
                 }
                 sb[currentLine].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(""));

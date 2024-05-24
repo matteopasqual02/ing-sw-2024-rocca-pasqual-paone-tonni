@@ -13,7 +13,7 @@ public class MessageSendMessage extends ClientGenericMessage{
     /**
      * The Txt.
      */
-    private String txt;
+    private final String txt;
 
     /**
      * Instantiates a new Message send message.

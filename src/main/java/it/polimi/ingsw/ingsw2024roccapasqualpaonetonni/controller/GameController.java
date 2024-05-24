@@ -368,7 +368,7 @@ public class GameController implements GameControllerInterface {
             try {
                 cardsMap = JSONUtils.createCardsFromJson(path);
             } catch (IOException e) {
-                e.printStackTrace();
+                ConsolePrinter.consolePrinter("[ERROR]: path doesn't contain cards");
             }
         }
 
@@ -393,33 +393,14 @@ public class GameController implements GameControllerInterface {
         //set the BoardDeck
         try {
             boardDeck.setObjectiveCards(decks.drawFirstObjective(), 0);
-        } catch (DeckEmptyException e) {
-            e.printStackTrace();
-        }
-        try {
             boardDeck.setObjectiveCards(decks.drawFirstObjective(), 1);
-        } catch (DeckEmptyException e) {
-            e.printStackTrace();
-        }
-        try {
             boardDeck.setResourceCards(decks.drawFirstResource(), 0);
-        } catch (DeckEmptyException e) {
-            e.printStackTrace();
-        }
-        try {
             boardDeck.setResourceCards(decks.drawFirstResource(), 1);
-        } catch (DeckEmptyException e) {
-            e.printStackTrace();
-        }
-        try {
             boardDeck.setGoldCards(decks.drawFirstGold(), 0);
-        } catch (DeckEmptyException e) {
-            e.printStackTrace();
-        }
-        try {
             boardDeck.setGoldCards(decks.drawFirstGold(), 1);
+
         } catch (DeckEmptyException e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: set the BoardDeck");
         }
 
         model.setGameDrawableDeck(decks);
@@ -447,28 +428,13 @@ public class GameController implements GameControllerInterface {
         for (Player player : getAllPlayer()) {
             try {
                 player.drawStarting(model.getGameDrawableDeck());
-            } catch (DeckEmptyException e) {
-                e.printStackTrace();
-            }
-            try {
                 player.drawGoals(model.getGameDrawableDeck());
-            } catch (DeckEmptyException e) {
-                e.printStackTrace();
-            }
-            try {
                 player.drawResourcesFromDeck(model.getGameDrawableDeck());
-            } catch (DeckEmptyException e) {
-                e.printStackTrace();
-            }
-            try {
                 player.drawResourcesFromDeck(model.getGameDrawableDeck());
-            } catch (DeckEmptyException e) {
-                e.printStackTrace();
-            }
-            try {
                 player.drawGoldFromDeck(model.getGameDrawableDeck());
+
             } catch (DeckEmptyException e) {
-                e.printStackTrace();
+                ConsolePrinter.consolePrinter("[ERROR]: turn zero failed");
             }
         }
 
@@ -704,9 +670,7 @@ public class GameController implements GameControllerInterface {
      */
     @Override
     public void sendMessage(String txt, String nickname) {
-        Runnable runnable = () -> {
-            model.sendMessage(txt, nickname);
-        };
+        Runnable runnable = () -> model.sendMessage(txt, nickname);
         executorService.submit(runnable);
     }
 
@@ -719,9 +683,7 @@ public class GameController implements GameControllerInterface {
      */
     @Override
     public void sendPrivateMessage(String senderName, String receiverName, String txt) {
-        Runnable runnable = () -> {
-            model.sendPrivateMessage(senderName, receiverName, txt);
-        };
+        Runnable runnable = () -> model.sendPrivateMessage(senderName, receiverName, txt);
         executorService.submit(runnable);
     }
 
@@ -733,9 +695,7 @@ public class GameController implements GameControllerInterface {
      */
     @Override
     public void getPublicChatLog(String requesterName) throws RemoteException {
-        Runnable runnable = () -> {
-            model.getPublicChatLog(requesterName);
-        };
+        Runnable runnable = () -> model.getPublicChatLog(requesterName);
         executorService.submit(runnable);
     }
 
@@ -748,9 +708,7 @@ public class GameController implements GameControllerInterface {
      */
     @Override
     public void getPrivateChatLog(String yourName, String otherName) throws RemoteException {
-        Runnable runnable = () -> {
-            model.getPrivateChatLog(yourName, otherName);
-        };
+        Runnable runnable = () -> model.getPrivateChatLog(yourName, otherName);
         executorService.submit(runnable);
     }
 

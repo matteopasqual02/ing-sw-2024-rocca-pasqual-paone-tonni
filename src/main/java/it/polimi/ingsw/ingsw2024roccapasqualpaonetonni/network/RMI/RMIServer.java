@@ -38,7 +38,6 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
      *
      * @return the rmi server
      */
-//server section
     public static RMIServer bind(){
         try{
             server = new RMIServer();

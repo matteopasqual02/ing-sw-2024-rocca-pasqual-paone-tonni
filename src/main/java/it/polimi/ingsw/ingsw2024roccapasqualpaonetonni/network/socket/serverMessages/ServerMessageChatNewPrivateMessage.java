@@ -12,7 +12,7 @@ public class ServerMessageChatNewPrivateMessage extends ServerGenericMessage{
     /**
      * The Message.
      */
-    private PrivateMessage message;
+    private final PrivateMessage message;
 
     /**
      * Instantiates a new Server message chat new private message.
