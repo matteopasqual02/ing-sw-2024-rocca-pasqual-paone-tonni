@@ -70,7 +70,6 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
      * @throws RemoteException the remote exception
      */
     public void test() throws RemoteException {
-        ;
     }
 
     /**

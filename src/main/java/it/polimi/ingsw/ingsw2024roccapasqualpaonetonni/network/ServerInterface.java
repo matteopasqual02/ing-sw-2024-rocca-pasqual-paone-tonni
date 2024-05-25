@@ -22,7 +22,7 @@ public interface ServerInterface extends Remote{
      * @throws NotBoundException the not bound exception
      */
 //--------------------------GAME CREATION PHASE
-    public void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException;
+    void createGame(String name, int maxNumPlayers, GameListener me) throws IOException, NotBoundException;
 
     /**
      * Join first available.
@@ -32,7 +32,7 @@ public interface ServerInterface extends Remote{
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
-    public void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
+    void joinFirstAvailable(String name, GameListener me) throws IOException, NotBoundException;
 
     /**
      * Join game by id.
@@ -43,7 +43,7 @@ public interface ServerInterface extends Remote{
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
-    public void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
+    void joinGameByID(String name, int idGame, GameListener me) throws IOException, NotBoundException;
 
     /**
      * Reconnect.
@@ -54,7 +54,7 @@ public interface ServerInterface extends Remote{
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
-    public void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException;
+    void reconnect(String name, int idGame, GameListener me) throws IOException, NotBoundException;
 
     /**
      * Leave.
@@ -64,7 +64,7 @@ public interface ServerInterface extends Remote{
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
-    public void leave(String nick, int idGame) throws IOException, NotBoundException;
+    void leave(String nick, int idGame) throws IOException, NotBoundException;
 
     /**
      * Ready.
@@ -74,7 +74,7 @@ public interface ServerInterface extends Remote{
      * @throws NotBoundException the not bound exception
      */
 //--------------------------READY PHASE
-    public void ready(String nickname) throws IOException, NotBoundException;
+    void ready(String nickname) throws IOException, NotBoundException;
 
     /**
      * Sets max n um.
@@ -83,7 +83,7 @@ public interface ServerInterface extends Remote{
      * @throws IOException the io exception
      */
 //--------------------------GAME FLOW PHASE
-    public void setMaxNUm(int num) throws IOException;
+    void setMaxNUm(int num) throws IOException;
 
     /**
      * Add card.
@@ -95,7 +95,7 @@ public interface ServerInterface extends Remote{
      * @param flip           the flip
      * @throws IOException the io exception
      */
-    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException;
+    void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException;
 
     /**
      * Add starting card.
@@ -104,7 +104,7 @@ public interface ServerInterface extends Remote{
      * @param flip     the flip
      * @throws IOException the io exception
      */
-    public void addStartingCard(String nickname, Boolean flip) throws IOException;
+    void addStartingCard(String nickname, Boolean flip) throws IOException;
 
     /**
      * Choose player goal.
@@ -113,7 +113,7 @@ public interface ServerInterface extends Remote{
      * @param choice   the choice
      * @throws IOException the io exception
      */
-    public void choosePlayerGoal(String nickname, int choice) throws IOException;
+    void choosePlayerGoal(String nickname, int choice) throws IOException;
 
     /**
      * Draw resource from deck.
@@ -121,7 +121,7 @@ public interface ServerInterface extends Remote{
      * @param nickname the nickname
      * @throws IOException the io exception
      */
-    public void drawResourceFromDeck(String nickname) throws IOException;
+    void drawResourceFromDeck(String nickname) throws IOException;
 
     /**
      * Draw gold from deck.
@@ -129,7 +129,7 @@ public interface ServerInterface extends Remote{
      * @param nickname the nickname
      * @throws IOException the io exception
      */
-    public void drawGoldFromDeck(String nickname) throws IOException;
+    void drawGoldFromDeck(String nickname) throws IOException;
 
     /**
      * Draw from board.
@@ -138,7 +138,7 @@ public interface ServerInterface extends Remote{
      * @param position the position
      * @throws IOException the io exception
      */
-    public void drawFromBoard(String nickname, int position) throws IOException;
+    void drawFromBoard(String nickname, int position) throws IOException;
 
     /**
      * Send message.
@@ -148,7 +148,7 @@ public interface ServerInterface extends Remote{
      * @throws IOException the io exception
      */
 //--------------------------CHAT
-    public void sendMessage(String txt, String nickname) throws IOException;
+    void sendMessage(String txt, String nickname) throws IOException;
 
     /**
      * Send private message.
@@ -158,7 +158,7 @@ public interface ServerInterface extends Remote{
      * @param nicknameReciever the nickname reciever
      * @throws IOException the io exception
      */
-    public void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException;
+    void sendPrivateMessage(String txt, String nicknameSender, String nicknameReciever) throws IOException;
 
     /**
      * Gets public chat log.
@@ -166,7 +166,7 @@ public interface ServerInterface extends Remote{
      * @param requesterName the requester name
      * @throws IOException the io exception
      */
-    public void getPublicChatLog(String requesterName) throws IOException;
+    void getPublicChatLog(String requesterName) throws IOException;
 
     /**
      * Gets private chat log.
@@ -175,7 +175,7 @@ public interface ServerInterface extends Remote{
      * @param otherName the other name
      * @throws IOException the io exception
      */
-    public void getPrivateChatLog(String yourName, String otherName) throws IOException;
+    void getPrivateChatLog(String yourName, String otherName) throws IOException;
 
     /**
      * Pong.
@@ -184,5 +184,5 @@ public interface ServerInterface extends Remote{
      * @throws IOException       the io exception
      * @throws NotBoundException the not bound exception
      */
-    public void pong(String me) throws IOException, NotBoundException;
+    void pong(String me) throws IOException, NotBoundException;
 }
