@@ -17,6 +17,7 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable;
+    exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective;
     exports it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network;

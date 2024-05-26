@@ -27,6 +27,6 @@ public enum GameStatus {
     /**
      * Waiting reconnection game status.
      */
-    WAITING_RECONNECTION;
+    WAITING_RECONNECTION
 
 }

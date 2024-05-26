@@ -91,7 +91,7 @@ public interface GameListener extends Remote {
     void nameAlreadyInGame() throws RemoteException;
 
     /**
-     * Are you ready.
+     * Are you ready
      *
      * @throws RemoteException the remote exception
      */
@@ -277,5 +277,5 @@ public interface GameListener extends Remote {
      * @param list the list
      * @throws RemoteException the remote exception
      */
-    void winners(List<Player> list)throws RemoteException;;
+    void winners(List<Player> list)throws RemoteException;
 }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events;
+package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 
@@ -10,7 +10,7 @@ import java.rmi.NotBoundException;
 /**
  * The type Scanner tui.
  */
-public class ScannerTUI extends Thread implements ScannerInterface{
+public class ScannerTUI extends Thread {
     /**
      * The Client.
      */
@@ -18,7 +18,7 @@ public class ScannerTUI extends Thread implements ScannerInterface{
     /**
      * The Buffered reader.
      */
-    BufferedReader bufferedReader;
+    private final BufferedReader bufferedReader;
 
     /**
      * Instantiates a new Scanner tui.

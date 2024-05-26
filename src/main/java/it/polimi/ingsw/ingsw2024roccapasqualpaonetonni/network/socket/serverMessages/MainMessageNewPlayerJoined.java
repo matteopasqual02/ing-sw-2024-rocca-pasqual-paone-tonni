@@ -11,7 +11,7 @@ public class MainMessageNewPlayerJoined extends ServerGenericMessage {
     /**
      * The Name.
      */
-    String name;
+    private final String name;
 
     /**
      * Instantiates a new Main message new player joined.

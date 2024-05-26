@@ -13,11 +13,11 @@ public class MessageSendPrivateMessage extends ClientGenericMessage{
     /**
      * The Reciever name.
      */
-    private String recieverName;
+    private final String recieverName;
     /**
      * The Txt.
      */
-    private String txt;
+    private final String txt;
 
     /**
      * Instantiates a new Message send private message.

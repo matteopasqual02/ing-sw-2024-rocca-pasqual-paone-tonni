@@ -12,7 +12,7 @@ public class ServerMessageNewMessage extends ServerGenericMessage{
     /**
      * The Message.
      */
-    Message message;
+    private final Message message;
 
     /**
      * Instantiates a new Server message new message.

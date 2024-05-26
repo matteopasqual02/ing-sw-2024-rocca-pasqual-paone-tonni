@@ -38,7 +38,6 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
      *
      * @return the rmi server
      */
-//server section
     public static RMIServer bind(){
         try{
             server = new RMIServer();
@@ -71,7 +70,6 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
      * @throws RemoteException the remote exception
      */
     public void test() throws RemoteException {
-        ;
     }
 
     /**
@@ -129,7 +127,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
             //remoteControllerUniCasted needs to be an exportable object
             remoteControllerUniCasted = (GameControllerInterface) UnicastRemoteObject.exportObject(remoteController,0);
         }catch (RemoteException e){
-            e.printStackTrace();
+            return remoteController;
         }
         ConsolePrinter.consolePrinter("[RMI] \"" + nickname + "\" has created and joined a new game");
         return remoteControllerUniCasted;
@@ -146,7 +144,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     @Override
     public GameControllerInterface joinFirstAvailableGame(String nickname, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController = server.mainController.joinFirstAvailableGame(nickname, notifier);
-        GameControllerInterface remoteControllerUniCasted = null;
+        GameControllerInterface remoteControllerUniCasted;
 
         if(remoteController != null){
             ConsolePrinter.consolePrinter("[RMI] \"" + nickname + "\" has joined game " + remoteController.getGameId());
@@ -176,7 +174,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     @Override
     public GameControllerInterface joinGameByID(String nickname, int idToConnect, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController = server.mainController.joinGameByID(nickname, idToConnect, notifier);
-        GameControllerInterface remoteControllerUniCasted  = null;
+        GameControllerInterface remoteControllerUniCasted;
         if(remoteController != null){
             ConsolePrinter.consolePrinter("[RMI] " + nickname + " has joined the game chosen");
             try{
@@ -205,8 +203,9 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     @Override
     public GameControllerInterface reconnect(String nickname, int idToReconnect, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController  = server.mainController.reconnect(nickname, idToReconnect, notifier);
-        GameControllerInterface remoteControllerUniCasted  = null;
+        GameControllerInterface remoteControllerUniCasted;
 
+        if(remoteController==null) return null;
 
         ConsolePrinter.consolePrinter("[RMI] " + nickname + " has re-joined the game" + idToReconnect);
         try{
@@ -229,7 +228,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     @Override
     public GameControllerInterface leaveGame(String nickname, int idToDisconnect)throws RemoteException {
         GameControllerInterface remoteController  = server.mainController.leaveGame(nickname, idToDisconnect);
-        GameControllerInterface remoteControllerUniCasted  = null;
+        GameControllerInterface remoteControllerUniCasted;
 
         ConsolePrinter.consolePrinter("[RMI] " + nickname + " has leaved the game");
         try{
