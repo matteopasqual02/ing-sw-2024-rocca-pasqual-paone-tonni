@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ServerMessageChatPrivateLog extends ServerGenericMessage{
     /**
-     * The Your name.
+     * Your name.
      */
     private final String yourName;
     /**
@@ -26,7 +26,7 @@ public class ServerMessageChatPrivateLog extends ServerGenericMessage{
     /**
      * Instantiates a new Server message chat private log.
      *
-     * @param yourName    the your name
+     * @param yourName    your name
      * @param otherName   the other name
      * @param privateChat the private chat
      */

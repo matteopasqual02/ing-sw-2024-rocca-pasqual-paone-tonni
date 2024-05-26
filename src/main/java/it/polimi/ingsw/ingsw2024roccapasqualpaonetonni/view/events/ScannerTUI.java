@@ -18,7 +18,7 @@ public class ScannerTUI extends Thread implements ScannerInterface{
     /**
      * The Buffered reader.
      */
-    BufferedReader bufferedReader;
+    private final BufferedReader bufferedReader;
 
     /**
      * Instantiates a new Scanner tui.

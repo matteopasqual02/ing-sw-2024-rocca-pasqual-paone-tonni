@@ -1,13 +1,10 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * The interface Game controller interface.

@@ -3,7 +3,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.clientMes
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.MainControllerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
 
@@ -15,23 +14,17 @@ public class MainMessageReconnect extends ClientGenericMessage{
      * The ID to connect.
      */
     private final int idToConnect;
-    /**
-     * The Listener.
-     */
-    private final GameListener listener;
 
     /**
      * Instantiates a new Main message reconnect.
      *
      * @param nickname    the nickname
      * @param idToConnect the id to connect
-     * @param listener    the listener
      */
-    public MainMessageReconnect(String nickname, int idToConnect, GameListener listener){
+    public MainMessageReconnect(String nickname, int idToConnect){
         this.nickname = nickname;
         this.isForMainController = true;
         this.idToConnect = idToConnect;
-        this.listener = listener;
     }
 
     /**

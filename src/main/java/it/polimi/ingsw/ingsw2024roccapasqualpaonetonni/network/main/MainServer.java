@@ -44,6 +44,9 @@ public class MainServer {
 
     }
 
+    /**
+     * Test.
+     */
     /*only test*/
     public static void test() {
         System.setProperty("java.rmi.server.hostname", DefaultNetworkValues.Remote_ip_address);

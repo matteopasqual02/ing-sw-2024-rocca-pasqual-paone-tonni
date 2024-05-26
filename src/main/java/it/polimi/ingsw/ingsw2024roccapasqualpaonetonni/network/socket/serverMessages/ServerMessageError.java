@@ -11,7 +11,7 @@ public class ServerMessageError extends ServerGenericMessage{
     /**
      * The String.
      */
-    String string;
+    private final String string;
 
     /**
      * Instantiates a new Server message error.

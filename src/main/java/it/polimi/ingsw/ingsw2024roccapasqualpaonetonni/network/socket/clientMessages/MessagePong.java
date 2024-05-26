@@ -18,7 +18,7 @@ public class MessagePong extends ClientGenericMessage{
     /**
      * Instantiates a new Message pong.
      *
-     * @param me the me
+     * @param me me
      */
     public MessagePong(String me) {
         this.client = me;

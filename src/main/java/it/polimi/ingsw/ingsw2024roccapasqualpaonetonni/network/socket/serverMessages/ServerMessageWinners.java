@@ -13,7 +13,7 @@ public class ServerMessageWinners extends ServerGenericMessage{
     /**
      * The Players.
      */
-    List<Player> players;
+    private final List<Player> players;
 
     /**
      * Instantiates a new Server message winners.

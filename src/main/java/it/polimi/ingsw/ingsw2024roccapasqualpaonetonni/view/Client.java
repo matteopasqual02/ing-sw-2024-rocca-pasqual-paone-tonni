@@ -13,6 +13,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.RMI.RMIServerStub
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ServerInterface;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMethod;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
@@ -30,7 +31,9 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.fusesource.jansi.Ansi.ansi;
-
+/**
+ * The type Client.
+ */
 public class Client extends UnicastRemoteObject implements GameListener, Runnable {
     /**
      * The Server.
@@ -69,6 +72,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      * Instantiates a new Client.
      *
      * @param connectionType the connection type
+     * @param viewType       the view type
      * @throws IOException the io exception
      */
     public Client(EnumConnectionType connectionType) throws IOException {
@@ -122,6 +126,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         MainStaticMethod.clearCMD();
         view.joinLobby();
     }
+
 
     /**
      * Run.
@@ -214,7 +219,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "Y","y" -> {
-                if(state==null){
+                if(state==null || state.equals(GameStatus.PREPARATION)){
                     view.notMyTurnChat();
                     server.ready(myNickname);
                 }
@@ -378,6 +383,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 server.leave(myNickname, myGameId);
                 currentImmutable=null;
                 state=null;
+                view.show_generic("You have left game " + myGameId);
                 view.joinLobby();
             }
             case null, default -> view.invalidMessage("invalid command");
@@ -387,14 +393,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
     //------------------------------------- SET GET ------------------------------------------------------------------------------
 
-    /**
-     * Sets my nickname.
-     *
-     * @param myNickname my nickname
-     */
-    public void setMyNickname(String myNickname) {
-        this.myNickname = myNickname;
-    }
 
     /**
      * Gets nickname.
@@ -486,15 +484,19 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void allGame(GameImmutable gameImmutable) {
+        if(gameImmutable.getStatus()==GameStatus.PREPARATION){
+            view.show_areYouReady();
+            return;
+        }
         currentImmutable=gameImmutable;
         view.show_All(gameImmutable,myNickname,EnumUpdates.ALL);
-        myTurn = myNickname.equals(currentImmutable.getPlayers().peek().getNickname());
-        if(myTurn){
-            view.myRunningTurnPlaceStarting();
+        Player player = currentImmutable.getPlayers().peek();
+        if(player==null){
+            view.show_generic("error try to restart all");
+            return;
         }
-        else{
-            view.notMyTurn();
-        }
+        myTurn = myNickname.equals(player.getNickname());
+        switchShowTurn(player);
     }
 
     /**
@@ -506,13 +508,31 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     public void nextTurn(String nickname) {
         myTurn = myNickname.equals(nickname);
         if(currentImmutable==null){return;}
+        Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();
+        switchShowTurn(player);
+    }
+
+    /**
+     * switch to Show Turn
+     *
+     * @param player the player
+     */
+    private void switchShowTurn(Player player) {
         if(myTurn){
-            if(currentImmutable.getPlayers().stream().filter(player -> nickname.equals(player.getNickname())).toList().getFirst().getGoal()==null){
+            if (player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
                 view.myRunningTurnPlaceStarting();
+                return;
             }
-            else {
+            if(player.getGoal()==null){
+                view.myRunningTurnChooseObjective();
+                return;
+            }
+            if(player.getHand().size() == DefaultModelValues.Default_Hand_Dimension){
                 view.myRunningTurnPlaceCard();
+                return;
             }
+            view.myRunningTurnDrawCard();
+
         }
         else {
             view.notMyTurn();
@@ -656,6 +676,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void fullGame() {
+
     }
 
     /**
@@ -663,6 +684,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void nameAlreadyInGame() {
+
     }
 
     /**
@@ -672,6 +694,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void playerRemoved(String p) {
+
     }
 
     /**

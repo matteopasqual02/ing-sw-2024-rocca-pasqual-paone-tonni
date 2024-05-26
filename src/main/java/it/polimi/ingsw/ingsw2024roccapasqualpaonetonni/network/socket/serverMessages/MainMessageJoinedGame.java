@@ -11,7 +11,7 @@ public class MainMessageJoinedGame extends ServerGenericMessage{
     /**
      * The Game id.
      */
-    int gameId;
+    private final int gameId;
 
     /**
      * Instantiates a new Main message joined game.
