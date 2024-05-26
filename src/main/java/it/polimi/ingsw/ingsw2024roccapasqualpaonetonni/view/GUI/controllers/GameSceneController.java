@@ -7,6 +7,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -583,5 +584,9 @@ public class GameSceneController extends GenericController{
         resourceCard2.setEffect(null);
         resourceCard3.setEffect(null);
         otherPlayersBox.setEffect(null);
+    }
+
+    public void handleSeeInfoBox(MouseEvent event) {
+        Platform.runLater(()->{application.infoBox();});
     }
 }

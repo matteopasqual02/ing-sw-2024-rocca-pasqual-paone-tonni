@@ -229,6 +229,7 @@ public class GUIApplication extends Application {
         });
         alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
         alert.showAndWait();
+        gameSceneController.stopGlowInfo();
     }
     public void setAlert(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
