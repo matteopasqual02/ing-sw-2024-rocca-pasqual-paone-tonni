@@ -14,9 +14,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -112,7 +113,7 @@ public class GUIApplication extends Application {
     }
     public void show_noAvailableGame(){
         //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
-        infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
+        setAlert("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
     public void show_all(GameImmutable gameImmutable, String nickname){
         ConsolePrinter.consolePrinter("Game started");
@@ -124,7 +125,6 @@ public class GUIApplication extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         gameSceneController = loader.getController();
 
         gameSceneController.setParameters(executor, client,this);
@@ -136,8 +136,101 @@ public class GUIApplication extends Application {
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
+        infoBox();
     }
-    public void infoBox(String message, String title, String header, Alert.AlertType alertType, String fxml){
+    public void infoBox(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Istruzioni");
+        alert.setHeaderText("Istruzioni di gioco:");
+ /*       VBox box = new VBox();
+        HBox hBox1 = new HBox();
+        box.setSpacing(50);
+        Text infoStart = new Text("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
+        ImageView image = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/083.png")));
+        image.setFitWidth(50);
+        image.setPreserveRatio(true);
+        hBox1.getChildren().addAll(infoStart,image);
+        Text infoPlace = new Text("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
+        Text infoDraw = new Text("pesca una carta, resource o gold, o dal mazzo o dalle carte presenti sul tavolo");
+        Text infoOther = new Text("Per osservare le board degli altri giocatori premere see board");
+        box.getChildren().addAll(hBox1,infoPlace,infoDraw,infoOther);
+        ScrollPane page = new ScrollPane(box);
+        alert.getDialogPane().setContent(page);
+        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
+*/
+        VBox page = new VBox();
+        page.setSpacing(10);
+        Text info = new Text("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
+        info.setWrappingWidth(300);
+        ImageView image = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/083.png")));
+        image.setFitWidth(100);
+        image.setPreserveRatio(true);
+        final Label pageIndex = new Label("1");
+        HBox hBox1 = new HBox();
+        HBox hBox2 = new HBox();
+        hBox1.getChildren().addAll(info,image);
+        Button next = new Button("Avanti →");
+        Button prev = new Button("← Indietro");
+        hBox2.getChildren().addAll(prev,next,pageIndex);
+        page.getChildren().addAll(hBox1,hBox2);
+        //alert.getButtonTypes().remove(ButtonType.OK);
+        //alert.getButtonTypes().add(ButtonType.CLOSE);
+        alert.getDialogPane().setContent(page);
+        gameSceneController.glowInfo("start");
+/*
+        GridPane dialogPane = (GridPane) alert.getDialogPane().lookup(".header-panel");
+        dialogPane.getColumnConstraints().forEach(constraint -> constraint.setHgrow(Priority.NEVER));
+*/
+        //alert.setOnCloseRequest(event -> alert.close());
+
+        next.setOnAction(e -> {
+            if ("1".equals(pageIndex.getText())) {
+                info.setText("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
+                image.setImage(new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/053.png"))).getImage());
+                pageIndex.setText("2");
+                gameSceneController.stopGlowInfo();
+                gameSceneController.glowInfo("hand");
+            } else if("2".equals(pageIndex.getText())){
+                info.setText("Pesca una carta, resource o gold, o dal mazzo o dalle carte presenti sul tavolo");
+                pageIndex.setText("3");
+                gameSceneController.stopGlowInfo();
+                gameSceneController.glowInfo("deck");
+            }else{
+                info.setText("Per osservare le board degli altri giocatori premere see board");
+                pageIndex.setText("4");
+                gameSceneController.stopGlowInfo();
+                gameSceneController.glowInfo("others");
+                /*next.setText("fine");
+                next.setOnMouseClicked((MouseEvent event) ->{alert.close();});*/
+            }
+        });
+        prev.setOnAction(e -> {
+            if ("1".equals(pageIndex.getText())) {
+                info.setText("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
+                pageIndex.setText("1");
+                gameSceneController.stopGlowInfo();
+                gameSceneController.glowInfo("start");
+            } else if("2".equals(pageIndex.getText())){
+                info.setText("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
+                pageIndex.setText("1");
+                gameSceneController.stopGlowInfo();
+                gameSceneController.glowInfo("start");
+            } else if("3".equals(pageIndex.getText())){
+                info.setText("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
+                pageIndex.setText("2");
+                gameSceneController.stopGlowInfo();
+                gameSceneController.glowInfo("hand");
+            } else {
+                info.setText("pesca una carta, resource o gold, o dal mazzo o dalle carte presenti sul tavolo");
+                pageIndex.setText("3");
+                gameSceneController.stopGlowInfo();
+                gameSceneController.glowInfo("deck");
+            }
+        });
+        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
+        alert.showAndWait();
+    }
+    public void setAlert(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(header);

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
@@ -541,5 +542,46 @@ public class GameSceneController extends GenericController{
         goldCard1.setDisable(truefalse);
         goldCard2.setDisable(truefalse);
         goldCard3.setDisable(truefalse);
+    }
+
+    public void glowInfo(String obj) {
+        switch (obj){
+            case "start"->glow(startingCard1);
+            case "hand"->{
+                glow(myHandImage1);
+                glow(myHandImage2);
+                glow(myHandImage3);
+            }
+            case "deck"->{
+                glow(goldCard1);
+                glow(goldCard3);
+                glow(goldCard2);
+                glow(resourceCard1);
+                glow(resourceCard2);
+                glow(resourceCard3);
+            }
+            case "others"->{
+                DropShadow borderGlow = new DropShadow();
+                borderGlow.setOffsetY(0f);
+                borderGlow.setOffsetX(0f);
+                borderGlow.setColor(Color.BLUE);
+                borderGlow.setWidth(30);
+                borderGlow.setHeight(30);
+                otherPlayersBox.setEffect(borderGlow);
+            }
+        }
+    }
+    public void stopGlowInfo() {
+        startingCard1.setEffect(null);
+        myHandImage1.setEffect(null);
+        myHandImage2.setEffect(null);
+        myHandImage3.setEffect(null);
+        goldCard1.setEffect(null);
+        goldCard2.setEffect(null);
+        goldCard3.setEffect(null);
+        resourceCard1.setEffect(null);
+        resourceCard2.setEffect(null);
+        resourceCard3.setEffect(null);
+        otherPlayersBox.setEffect(null);
     }
 }
