@@ -17,12 +17,9 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerGUI;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.events.ScannerTUI;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.ScannerTUI;
 import org.fusesource.jansi.Ansi;
-import javafx.application.Application;
 
-import java.io.Console;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -72,7 +69,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      * Instantiates a new Client.
      *
      * @param connectionType the connection type
-     * @param viewType       the view type
      * @throws IOException the io exception
      */
     public Client(EnumConnectionType connectionType) throws IOException {
@@ -89,6 +85,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
             case SOCKET -> {
                 server = new SocketClient(this);
                 new Thread(this).start();
+            }
+            case null, default -> {
+                return;
             }
         }
 
@@ -120,9 +119,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 server = new SocketClient(this);
                 new Thread(this).start();
             }
+            case null, default -> {
+                return;
+            }
         }
         view = new GUI(application);
-        new ScannerGUI();
         MainStaticMethod.clearCMD();
         view.joinLobby();
     }
