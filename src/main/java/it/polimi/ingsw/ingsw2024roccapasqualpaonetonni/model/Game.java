@@ -120,6 +120,14 @@ public class Game implements Serializable {
         }
     }
 
+
+    /**
+     * Notify all game.
+     */
+    public void notifyAllGame() {
+        gameListenersHandler.notify_All(this);
+    }
+
     /**
      * Get game id int.
      *
@@ -227,7 +235,7 @@ public class Game implements Serializable {
             }
 
             gameListenersHandler.notify_reconnectPlayer(nickname);
-            gameListenersHandler.notify_All(this);
+
         }
         else {
             gameListenersHandler.notify_reconnectionImpossible(nickname);
@@ -564,4 +572,5 @@ public class Game implements Serializable {
     public void ping(String client) throws Exception{
         gameListenersHandler.notify_ping(client);
     }
+
 }

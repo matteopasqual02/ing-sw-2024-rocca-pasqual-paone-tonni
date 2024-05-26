@@ -35,7 +35,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     public void notify_All(Game game) {
         for(String name: listenersMap.keySet()){
             try {
-                int i=0;
                 listenersMap.get(name).sendAll(new GameImmutable(game));
             }
             catch(Exception e){
