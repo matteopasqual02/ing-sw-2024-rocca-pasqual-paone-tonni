@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Game;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerValues;
 
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class MyTimer extends Thread{
     @Override
     public void run(){
         while (true){
+            ConsolePrinter.consolePrinter("");
             if(running){
-                model.getGameListenersHandler().notify_gameGenericError("Timer Started: "+time+" seconds");
+                ConsolePrinter.consolePrinter("Timer Started: "+time+" seconds");
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
