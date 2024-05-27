@@ -51,6 +51,8 @@ public class GameController implements GameControllerInterface {
      */
     private transient final PingPongThread pingPongThread;
 
+    MyTimer timer;
+
     /**
      * Instantiates a new Game controller.
      *
@@ -65,6 +67,8 @@ public class GameController implements GameControllerInterface {
         this.executorService = Executors.newSingleThreadExecutor();
         this.pingPongThread = new PingPongThread();
         this.pingPongThread.start();
+        this.timer = new MyTimer(model);
+        this.timer.start();
     }
 
 //---------------------------------SERVER SECTION
@@ -333,6 +337,7 @@ public class GameController implements GameControllerInterface {
      * @param nickname the nickname
      */
     public synchronized void reconnectPlayer(String nickname) {
+        timer.stopMyTimer();
         model.reconnectPlayer(nickname);
         if (GameStatus.WAITING_RECONNECTION == getGame().getGameStatus() && model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
             model.setStatus(model.getLastStatus());
@@ -350,13 +355,17 @@ public class GameController implements GameControllerInterface {
     public synchronized void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
         // if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
+        if (model.getPlayerNum() == 0) {
+            MainController.getInstance().removeGame(this);
+            return;
+        }
         if (model.getPlayerNum() == 1) {
             model.setLastStatus();
             model.setStatus(GameStatus.WAITING_RECONNECTION);
+
+            timer.startMyTimer();
         }
-        else if (model.getPlayerNum() == 0) {
-            MainController.getInstance().removeGame(this);
-        }
+
     }
 
 //---------------------------------TABLE AND INIT SECTION

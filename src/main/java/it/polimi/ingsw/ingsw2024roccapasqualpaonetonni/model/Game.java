@@ -572,5 +572,8 @@ public class Game implements Serializable {
     public void ping(String client) throws Exception{
         gameListenersHandler.notify_ping(client);
     }
+    public GameListenersHandler getGameListenersHandler() {
+        return gameListenersHandler;
+    }
 
 }
