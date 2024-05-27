@@ -117,7 +117,7 @@ public class GUIApplication extends Application {
     public void show_all(GameImmutable gameImmutable, String nickname){
         ConsolePrinter.consolePrinter("Game started");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
         Parent newRoot = null;
         try {
             newRoot = loader.load();

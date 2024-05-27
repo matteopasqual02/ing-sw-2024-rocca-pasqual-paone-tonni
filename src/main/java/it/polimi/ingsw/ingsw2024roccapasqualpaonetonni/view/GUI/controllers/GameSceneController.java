@@ -8,17 +8,11 @@ import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
-import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -27,54 +21,106 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class GameSceneController extends GenericController{
-    @FXML
-    private ImageView resourceCard1;
-    @FXML
-    private GridPane gridPane;
 
     @FXML
-    private ImageView resourceCard2;
+    public Pane pane;
+
+    // player board
+    @FXML
+    public ScrollPane personalBoard;
 
     @FXML
-    private ImageView resourceCard3;
+    public Pane board;
+
+    // cards section
+    @FXML
+    public HBox cardsHBox;
 
     @FXML
-    private ImageView goldCard1;
+    public VBox myHand;
 
     @FXML
-    private ImageView goldCard2;
+    public HBox handCards;
 
     @FXML
-    private ImageView goldCard3;
+    public ImageView myHandImage1;
 
     @FXML
-    private ImageView myHandImage1;
+    public ImageView myHandImage2;
 
     @FXML
-    private ImageView myHandImage2;
+    public ImageView myHandImage3;
 
     @FXML
-    private ImageView myHandImage3;
+    public Button flipHandCard;
 
     @FXML
-    private ImageView commonObjectiveImage1;
+    public VBox secretObjective;
 
     @FXML
-    private ImageView commonObjectiveImage2;
+    public ImageView mySecretObjective1;
 
     @FXML
-    private ImageView secretObjectiveImage1;
+    public ImageView mySecretObjective2;
 
     @FXML
-    private ImageView secretObjectiveImage2;
+    public VBox startingVBox;
 
     @FXML
-    private ImageView startingCard1;
+    public VBox startingCardVBox;
+
+    @FXML
+    public ImageView myStartingCard;
+
+    @FXML
+    public Button flipStartingButton;
+
+    @FXML
+    public HBox boardCards;
+
+    @FXML
+    public ImageView boardCard1;
+
+    @FXML
+    public ImageView boardCard2;
+
+    @FXML
+    public ImageView boardCard3;
+
+    @FXML
+    public ImageView boardCard4;
+
+    @FXML
+    public HBox decks;
+
+    @FXML
+    public ImageView deckResourcesCard;
+
+    @FXML
+    public ImageView deckGoldCard;
+
+    @FXML
+    public HBox commonObjectives;
+
+    @FXML
+    public ImageView commonObjectiveCard1;
+
+    @FXML
+    public ImageView commonObjectiveCard2;
+
+    @FXML
+    public VBox otherPlayersVBox;
+
+    // chat section
+    @FXML
+    public VBox chatVBox;
+
+    @FXML
+    private ComboBox receiverPrivateMessages;
+
     @FXML
     private VBox startCardVbox;
 
@@ -96,84 +142,99 @@ public class GameSceneController extends GenericController{
     @FXML
     private Button privateChatButton;
 
-    @FXML
-    private ComboBox receiverPrivateMessages;
-
-    @FXML
-    private VBox otherPlayersBox;
-
-    @FXML
-    private Pane playerBoard;
     private int goal = 0;
     private int hand = 4;
+    private final Object jumpLock = new Object();
+    private ImageView selectedCard = null;
+    private boolean flippedStarting = false;
+    private boolean flippedHand1 = false;
+    private boolean flippedHand2 = false;
+    private boolean flippedHand3 = false;
 
     private ExecutorService executor;
     private Client client;
     private GUIApplication application;
     private boolean isPrivateChat = false;
+    private Player player;
+    private String myNickname;
 
     public void setParameters(ExecutorService executor, Client client,GUIApplication application){
         this.executor = executor;
         this.client = client;
         this.application = application;
     }
+
     public void setScene(GameImmutable gameImmutable, String nickname){
         int cardId;
-        Player player = gameImmutable.getPlayers().stream()
+        this.player = gameImmutable.getPlayers().stream()
                 .filter(p -> p.getNickname().equals(nickname))
                 .findFirst()
                 .orElse(null);
 
         //setting hand
-        if(player==null)return;
+        if(player==null) return;
 
-        //playerBoard = new AnchorPane();
+        board.setDisable(true);
 
         cardId = player.getHand().get(0).getIdCard();
         myHandImage1.setImage(new Image(createPath(cardId)));
+        myHandImage1.setDisable(true);
         cardId = player.getHand().get(1).getIdCard();
         myHandImage2.setImage(new Image(createPath(cardId)));
+        myHandImage2.setDisable(true);
         cardId = player.getHand().get(2).getIdCard();
         myHandImage3.setImage(new Image(createPath(cardId)));
+        myHandImage3.setDisable(true);
 
         //setting secret objectives
         cardId = player.getObjectiveBeforeChoice()[0].getIdCard();
-        secretObjectiveImage1.setImage(new Image(createPath(cardId)));
+        mySecretObjective1.setImage(new Image(createPath(cardId)));
+        mySecretObjective1.setDisable(true);
         cardId = player.getObjectiveBeforeChoice()[1].getIdCard();
-        secretObjectiveImage2.setImage(new Image(createPath(cardId)));
+        mySecretObjective2.setImage(new Image(createPath(cardId)));
+        mySecretObjective2.setDisable(true);
 
         //setting starting cards
         cardId = player.getStartingCard().getIdCard();
-        startingCard1.setImage(new Image(createPath(cardId)));
+        myStartingCard.setImage(new Image(createPath(cardId)));
+        myStartingCard.setDisable(true);
 
         //setting common objectives
 
         cardId = gameImmutable.getBoardDeck().getCommonObjective(0).getIdCard();
-        commonObjectiveImage1.setImage(new Image(createPath(cardId)));
+        commonObjectiveCard1.setImage(new Image(createPath(cardId)));
+        commonObjectiveCard1.setDisable(true);
 
         cardId = gameImmutable.getBoardDeck().getCommonObjective(1).getIdCard();
-        commonObjectiveImage2.setImage(new Image(createPath(cardId)));
+        commonObjectiveCard2.setImage(new Image(createPath(cardId)));
+        commonObjectiveCard2.setDisable(true);
 
         //setting resource cards
         if(!gameImmutable.getDrawableDeck().getDecks().get("resources").isEmpty()){
             cardId = gameImmutable.getDrawableDeck().getDecks().get("resources").peek().getIdCard();
         }
-        resourceCard1.setImage(new Image(createBackPath(cardId)));
+        deckResourcesCard.setImage(new Image(createBackPath(cardId)));
+        deckResourcesCard.setDisable(true);
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
-        resourceCard2.setImage(new Image(createPath(cardId)));
+        boardCard1.setImage(new Image(createPath(cardId)));
+        boardCard1.setDisable(true);
         cardId = gameImmutable.getBoardDeck().getCard(2).getIdCard();
-        resourceCard3.setImage(new Image(createPath(cardId)));
+        boardCard2.setImage(new Image(createPath(cardId)));
+        boardCard2.setDisable(true);
 
         //setting gold cards
 
         if(!gameImmutable.getDrawableDeck().getDecks().get("gold").isEmpty()){
             cardId = gameImmutable.getDrawableDeck().getDecks().get("gold").peek().getIdCard();
         }
-        goldCard1.setImage(new Image(createBackPath(cardId)));
+        deckGoldCard.setImage(new Image(createBackPath(cardId)));
+        deckGoldCard.setDisable(true);
         cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
-        goldCard2.setImage(new Image(createPath(cardId)));
+        boardCard3.setImage(new Image(createPath(cardId)));
+        boardCard3.setDisable(true);
         cardId = gameImmutable.getBoardDeck().getCard(4).getIdCard();
-        goldCard3.setImage(new Image(createPath(cardId)));
+        boardCard4.setImage(new Image(createPath(cardId)));
+        boardCard4.setDisable(true);
 
         for(Player p: gameImmutable.getPlayers()){
             if(!p.getNickname().equals(nickname)){
@@ -184,7 +245,7 @@ public class GameSceneController extends GenericController{
                     color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
                 } else if (p.getColorPlayer() == 3) {
                     color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
-                } else if (p.getColorPlayer() == 4) {
+                } else {
                     color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
                 }
                 color.setFitHeight(50);
@@ -211,12 +272,12 @@ public class GameSceneController extends GenericController{
                 String printPoints = "Points: " + p.getCurrentPoints();
                 Label points = new Label(printPoints);
                 Button button = new Button("See board");
-                VBox vBox1 = new VBox(name,color);
+                VBox vBox1 = new VBox(name, color);
                 HBox hbox1 = new HBox(hand1,hand2,hand3);
                 VBox vBox2 = new VBox(hbox1,points,button);
                 HBox hbox2 = new HBox(vBox1,vBox2);
 
-                otherPlayersBox.getChildren().add(hbox2);
+                otherPlayersVBox.getChildren().add(hbox2);
 
                 receiverPrivateMessages.getItems().add(p.getNickname());
             }
@@ -255,9 +316,199 @@ public class GameSceneController extends GenericController{
 
     public void myRunningTurnPlaceStarting() {
         disable(false);
-        glow(startingCard1);
+        glow(myStartingCard);
     }
 
+    @FXML
+    public void handleStartingCardClicked(){
+        synchronized (jumpLock) {
+            int res = jump(myStartingCard);
+        }
+        this.selectedCard = myStartingCard;
+        board.setDisable(false);
+    }
+
+    @FXML
+    public void handleFlipStarting() {
+        int cardId = this.player.getStartingCard().getIdCard();
+        if (!flippedStarting) {
+            myStartingCard.setImage(new Image(createBackPath(cardId)));
+            flippedStarting = true;
+            selectedCard = myStartingCard;
+        }
+        else {
+            myStartingCard.setImage(new Image(createPath(cardId)));
+            flippedStarting = false;
+            selectedCard = myStartingCard;
+        }
+    }
+
+    public void handleBoardClick(MouseEvent mouseEvent) {
+        String flipped;
+        if (selectedCard != null) {
+            board.setDisable(true);
+            double x = mouseEvent.getX();
+            double y = mouseEvent.getY();
+            if (this.selectedCard == myStartingCard) {
+                if (flippedStarting) {
+                    flipped = " true";
+                } else {
+                    flipped = "";
+                }
+                executor.submit(() -> {
+                    try {
+                        client.receiveInput("/addStarting" + flipped);
+                    } catch (IOException | NotBoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                cardsHBox.getChildren().remove(startingVBox);
+            }
+        }
+    }
+
+    public void placeCardOnBoard(ImageView card, double x, double y){
+        //we have to handle the case in which it is flipped
+        ImageView newCard = new ImageView(card.getImage());
+        newCard.setFitHeight(30);
+        newCard.setFitWidth(30);
+        newCard.setLayoutX(x);
+        newCard.setLayoutY(y);
+        board.getChildren().add(newCard);
+        card.setVisible(false);
+    }
+
+    public void startCard(GameImmutable gameImmutable, String nickname) {
+        // i have to check if it's my turn because everyone gets these updates but only the player in turn has to update its gui
+        if(nickname.equals(myNickname)) {
+            placeCardOnBoard(myStartingCard, board.getWidth() / 2 - 50, board.getHeight() / 2 - 70);
+            cardsHBox.getChildren().remove(startingCardVBox);
+        }
+    }
+
+    public void chosenGoal() {
+        if(client.getMyTurn()){
+            switch (goal){
+                case 1->{
+                    secretObjective.getChildren().remove(mySecretObjective2);
+                    mySecretObjective1.setEffect(null);
+                }
+                case 2->{
+                    secretObjective.getChildren().remove(mySecretObjective1);
+                    mySecretObjective2.setEffect(null);
+                }
+            }
+        }
+    }
+
+    public void myRunningTurnChoseObjective() {
+        glow(mySecretObjective1);
+        glow(mySecretObjective2);
+    }
+
+    public void glow(ImageView image){
+        // blue shadow
+        DropShadow borderGlow = new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.BLUE);
+        borderGlow.setWidth(30);
+        borderGlow.setHeight(30);
+        image.setEffect(borderGlow);
+    }
+
+    public int jump(ImageView image){
+        synchronized (jumpLock) {
+            TranslateTransition jump = new TranslateTransition(Duration.millis(500), image);
+            jump.setByY(-20);
+            jump.setAutoReverse(true);
+            jump.setCycleCount(2);
+            jump.play();
+            return 1;
+        }
+    }
+
+    public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
+        mySecretObjective1.setEffect(null);
+        jump(mySecretObjective2);
+        goal = 2;
+        executor.submit(()->{
+            try {
+                client.receiveInput("/choseGoal 2");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
+        mySecretObjective2.setEffect(null);
+        jump(mySecretObjective1);
+        goal = 1;
+        executor.submit(()->{
+            try {
+                client.receiveInput("/choseGoal 1");
+            } catch (IOException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
+    public void myRunningTurnPlaceCard() {
+        disable(false);
+        glow(myHandImage1);
+        glow(myHandImage2);
+        glow(myHandImage3);
+    }
+
+    public void handleHandCardClicked(MouseEvent mouseEvent) {
+        ImageView card = (ImageView) mouseEvent.getSource();
+        for (int i = 0; i < handCards.getChildren().size(); i++) {
+            if (handCards.getChildren().get(i) != card) {
+                handCards.getChildren().get(i).setEffect(null);}
+            else {
+                hand = i + 1;
+            }
+        }
+        jump(card);
+        selectedCard = card;
+        board.setDisable(false);
+    }
+
+    public void handleFlipHandCard() {
+
+    }
+
+    public void notMyTurn() {
+        disable(true);
+        Label label = new Label("Not your turn");
+        label.setStyle("-fx-background-color: lightblue; -fx-padding: 20; -fx-border-color: black; -fx-border-width: 2px;");
+        StackPane labelContainer = new StackPane(label);
+        labelContainer.setAlignment(Pos.CENTER);
+        pane.getChildren().add(labelContainer);
+        PauseTransition message = new PauseTransition(Duration.seconds(3));
+        message.setOnFinished(event->pane.getChildren().remove(labelContainer));
+        message.play();
+    }
+
+    public void disable(Boolean truefalse){
+        myHandImage1.setDisable(truefalse);
+        myHandImage2.setDisable(truefalse);
+        myHandImage3.setDisable(truefalse);
+        mySecretObjective1.setDisable(truefalse);
+        mySecretObjective2.setDisable(truefalse);
+        startingCardVBox.setDisable(truefalse);
+        deckResourcesCard.setDisable(truefalse);
+        boardCard1.setDisable(truefalse);
+        boardCard2.setDisable(truefalse);
+        deckGoldCard.setDisable(truefalse);
+        boardCard3.setDisable(truefalse);
+        boardCard4.setDisable(truefalse);
+    }
+
+
+    // chat
     public void displayChatPublic(String message) {
         if (!isPrivateChat) {
             Text text = new Text(message);
@@ -278,42 +529,6 @@ public class GameSceneController extends GenericController{
         }
     }
 
-    @FXML
-    public void handleStartingCardClicked(MouseEvent event){
-        jump(startingCard1);
-    }
-
-    public void handleBoardClick(MouseEvent mouseEvent) {
-        /*double x = mouseEvent.getX();
-        double y = mouseEvent.getY();
-        placeCardOnBoard(x, y);*/
-        executor.submit(()->{
-            try {
-                client.receiveInput("/addStarting");
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    public void placeCardOnBoard(double x, double y){
-        //we have to handle the case in which it is flipped
-        Label label = new Label("prova");
-        playerBoard.getChildren().add(label);
-        AnchorPane.setTopAnchor(label, 10.0);
-        AnchorPane.setLeftAnchor(label, 10.0);
-        //playerBoard.getChildren().add(startingCard1);
-        executor.submit(()->{
-            try {
-                client.receiveInput("/addStarting");
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        //we change the board here while everything elese change through the show_all fuction like in the TUI
-
-    }
-
     public void handleSend(ActionEvent actionEvent) {
         String message = messageInput.getText().trim();
         messageInput.clear();
@@ -327,15 +542,6 @@ public class GameSceneController extends GenericController{
                         } catch (IOException | NotBoundException e) {
                             throw new RuntimeException(e);
                         }
-                        /*
-                        try {
-                            TimeUnit.SECONDS.sleep(2);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                        handleSeePrivateChat(actionEvent);
-
-                         */
                     });
                 }
             }
@@ -346,20 +552,10 @@ public class GameSceneController extends GenericController{
                     } catch (IOException | NotBoundException e) {
                         throw new RuntimeException(e);
                     }
-                    /*
-                    try {
-                        TimeUnit.SECONDS.sleep(2);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    handleSeePublicChat(actionEvent);
-
-                     */
                 });
             }
         }
     }
-
 
     @FXML
     public void handleSeePublicChat(ActionEvent actionEvent) {
@@ -369,7 +565,6 @@ public class GameSceneController extends GenericController{
         publicChatButton.setDisable(true);
         privateChatButton.setDisable(false);
         messageContainer.getChildren().removeAll(messageContainer.getChildren());
-
         executor.submit(()->{
             try {
                 client.receiveInput("/seeChat");
@@ -414,132 +609,5 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    public void startCard(GameImmutable gameImmutable, String nickname) {
-        //i have to check if its my turn because everyone gets these updates but only the player in turn has to update its gui
-        if(client.getMyTurn()){
-            gridPane.getChildren().remove(startCardVbox);
-            startingCard1.setEffect(null);
-            playerBoard.getChildren().add(startingCard1);
-        }
-    }
-
-    public void chosenGoal() {
-        if(client.getMyTurn()){
-            switch (goal){
-                case 1->{
-                    secretObjectiveImage2.setVisible(false);
-                    secretObjectiveImage1.setEffect(null);
-                }
-                case 2->{
-                    secretObjectiveImage1.setVisible(false);
-                    secretObjectiveImage2.setEffect(null);
-                }
-            }
-        }
-    }
-
-    public void myRunningTurnChoseObjective() {
-        glow(secretObjectiveImage1);
-        glow(secretObjectiveImage2);
-    }
-    public void glow(ImageView image){
-        // blue shadow
-        DropShadow borderGlow = new DropShadow();
-        borderGlow.setOffsetY(0f);
-        borderGlow.setOffsetX(0f);
-        borderGlow.setColor(Color.BLUE);
-        borderGlow.setWidth(30);
-        borderGlow.setHeight(30);
-        image.setEffect(borderGlow);
-    }
-    public void jump(ImageView image){
-        TranslateTransition jump = new TranslateTransition(Duration.millis(500), image);
-        jump.setByY(-20);
-        jump.setAutoReverse(true);
-        jump.setCycleCount(2);
-        jump.play();
-    }
-
-    public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
-        secretObjectiveImage1.setEffect(null);
-        jump(secretObjectiveImage2);
-        goal = 2;
-        executor.submit(()->{
-            try {
-                client.receiveInput("/choseGoal 2");
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
-        secretObjectiveImage2.setEffect(null);
-        jump(secretObjectiveImage1);
-        goal = 1;
-        executor.submit(()->{
-            try {
-                client.receiveInput("/choseGoal 1");
-            } catch (IOException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-    }
-
-    public void myRunningTurnPlaceCard() {
-        disable(false);
-        glow(myHandImage1);
-        glow(myHandImage2);
-        glow(myHandImage3);
-    }
-
-    public void handleHand1Clicked(MouseEvent mouseEvent) {
-        myHandImage2.setEffect(null);
-        myHandImage3.setEffect(null);
-        jump(myHandImage1);
-        hand = 1;
-    }
-
-    public void handleHand2Clicked(MouseEvent mouseEvent) {
-        myHandImage1.setEffect(null);
-        myHandImage3.setEffect(null);
-        jump(myHandImage2);
-        hand = 2;
-    }
-
-    public void handleHand3Clicked(MouseEvent mouseEvent) {
-        myHandImage2.setEffect(null);
-        myHandImage1.setEffect(null);
-        jump(myHandImage3);
-        hand = 3;
-    }
-
-    public void notMyTurn() {
-        disable(true);
-        Label label = new Label("This is not your turn");
-        label.setStyle("-fx-background-color: lightblue; -fx-padding: 20; -fx-border-color: black; -fx-border-width: 2px;");
-        StackPane labelContainer = new StackPane(label);
-        labelContainer.setAlignment(Pos.CENTER);
-        gridPane.getChildren().add(labelContainer);
-        PauseTransition message = new PauseTransition(Duration.seconds(3));
-        message.setOnFinished(event->gridPane.getChildren().remove(labelContainer));
-        message.play();
-    }
-    public void disable(Boolean truefalse){
-        myHandImage1.setDisable(truefalse);
-        myHandImage2.setDisable(truefalse);
-        myHandImage3.setDisable(truefalse);
-        secretObjectiveImage1.setDisable(truefalse);
-        secretObjectiveImage2.setDisable(truefalse);
-        startCardVbox.setDisable(truefalse);
-        resourceCard1.setDisable(truefalse);
-        resourceCard2.setDisable(truefalse);
-        resourceCard3.setDisable(truefalse);
-        goldCard1.setDisable(truefalse);
-        goldCard2.setDisable(truefalse);
-        goldCard3.setDisable(truefalse);
     }
 }

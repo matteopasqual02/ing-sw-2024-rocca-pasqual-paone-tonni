@@ -9,139 +9,100 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
 <?language java?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1048.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ScrollPane fx:id="PersonalBoard" prefHeight="426.0" prefWidth="625.0">
-         <content>
-            <Pane prefHeight="200.0" prefWidth="200.0" />
-         </content>
-      </ScrollPane>
-      <HBox layoutY="440.0" prefHeight="152.0" prefWidth="681.0">
-         <children>
-            <VBox prefHeight="152.0" prefWidth="364.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My Hand" textAlignment="CENTER" wrappingWidth="367.13671875" />
-                  <HBox prefHeight="83.0" prefWidth="306.0">
-                     <children>
-                        <ImageView fitHeight="88.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="88.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="88.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="589.0" minWidth="1048.0" prefHeight="589.0" prefWidth="1048.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
+   <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="625.0">
+      <Pane fx:id="board" prefHeight="200.0" prefWidth="200.0" />
+   </ScrollPane>
+   <HBox fx:id="cardsHBox" layoutY="440.0" prefHeight="152.0" prefWidth="681.0">
+      <VBox fx:id="myHand" prefHeight="152.0" prefWidth="364.0">
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My Hand" textAlignment="CENTER" wrappingWidth="367.13671875" />
+         <HBox fx:id="handCards" prefHeight="83.0" prefWidth="306.0">
+            <ImageView fx:id="myHandImage1" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="myHandImage2" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="myHandImage3" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </ImageView>
+         </HBox>
+         <Button fx:id="flipHandCard" onMouseClicked="#handleFlipHandCard" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+      </VBox>
+      <VBox prefHeight="152.0" prefWidth="127.0">
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Objective" textAlignment="CENTER" wrappingWidth="101.13671875" />
+         <VBox fx:id="secretObjective" prefHeight="102.0" prefWidth="100.0">
+            <ImageView fx:id="mySecretObjective1" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard1Clicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="mySecretObjective2" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard2Clicked" pickOnBounds="true" preserveRatio="true" />
+         </VBox>
+      </VBox>
+      <VBox fx:id="startingVBox" prefHeight="152.0" prefWidth="126.0">
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Card" textAlignment="CENTER" wrappingWidth="101.13671875" />
+         <VBox fx:id="startingCardVBox" prefHeight="136.0" prefWidth="122.0">
+            <ImageView fx:id="myStartingCard" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleStartingCardClicked" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="flipStartingButton" onMouseClicked="#handleFlipStarting" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+         </VBox>
+      </VBox>
+   </HBox>
+   <HBox layoutX="623.0" layoutY="5.0" prefHeight="589.0" prefWidth="429.0">
+      <VBox prefHeight="589.0" prefWidth="203.0">
+         <VBox prefHeight="198.0" prefWidth="228.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Board" textAlignment="CENTER" wrappingWidth="203.13671875" />
+            <HBox fx:id="boardCards" prefHeight="68.0" prefWidth="204.0">
+               <ImageView fx:id="boardCard1" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard2" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+            </HBox>
+            <HBox prefHeight="68.0" prefWidth="204.0">
+               <ImageView fx:id="boardCard3" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard4" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+            </HBox>
+         </VBox>
+         <VBox prefHeight="117.0" prefWidth="209.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Decks" textAlignment="CENTER" wrappingWidth="204.13671875" />
+            <HBox fx:id="decks" prefHeight="100.0" prefWidth="200.0">
+               <ImageView fx:id="deckResourcesCard" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="deckGoldCard" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+            </HBox>
+         </VBox>
+         <VBox prefHeight="150.0" prefWidth="102.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Common Objective" textAlignment="CENTER" wrappingWidth="208.13671875" />
+            <HBox fx:id="commonObjectives" prefHeight="100.0" prefWidth="200.0">
+               <ImageView fx:id="commonObjectiveCard1" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="commonObjectiveCard2" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+            </HBox>
+         </VBox>
+      </VBox>
+      <VBox prefHeight="589.0" prefWidth="217.0">
+         <VBox fx:id="otherPlayersVBox" prefHeight="626.0" prefWidth="201.0" />
+         <VBox fx:id="chatVBox" prefHeight="589.0" prefWidth="346.0">
+            <VBox prefHeight="270.0" prefWidth="182.0" spacing="3.0">
+               <HBox prefHeight="27.0" prefWidth="197.0">
+                  <Button fx:id="publicChatButton" disable="true" mnemonicParsing="false" onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="100.5" text="Public Chat" />
+                  <Button fx:id="privateChatButton" disable="false" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="100.5" text="Private Chat" />
+               </HBox>
+               <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0">
+                  <VBox fx:id="messageContainer" prefHeight="232.0" prefWidth="185.0" spacing="2.0" />
+               </ScrollPane>
+               <VBox>
+                  <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
+                     <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat" prefWidth="100.5" promptText="Select Player" />
                   </HBox>
-               </children>
+                  <VBox prefHeight="62.0" prefWidth="187.0">
+                     <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="201.0" wrapText="true" />
+                     <Button onAction="#handleSend" prefHeight="12.0" prefWidth="201.0" text="Send" />
+                  </VBox>
+               </VBox>
             </VBox>
-            <VBox prefHeight="152.0" prefWidth="127.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Objective" textAlignment="CENTER" wrappingWidth="101.13671875" />
-                  <VBox prefHeight="102.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fitHeight="68.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="68.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="152.0" prefWidth="126.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Card" textAlignment="CENTER" wrappingWidth="101.13671875" />
-                  <VBox prefHeight="136.0" prefWidth="122.0">
-                     <children>
-                        <ImageView fitHeight="68.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="68.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <HBox layoutX="623.0" layoutY="5.0" prefHeight="589.0" prefWidth="429.0">
-         <children>
-            <VBox prefHeight="589.0" prefWidth="244.0">
-               <children>
-                  <VBox prefHeight="198.0" prefWidth="228.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Board" textAlignment="CENTER" wrappingWidth="203.13671875" />
-                        <HBox prefHeight="68.0" prefWidth="204.0">
-                           <children>
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="68.0" prefWidth="204.0">
-                           <children>
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="117.0" prefWidth="209.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Decks" textAlignment="CENTER" wrappingWidth="204.13671875" />
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="150.0" prefWidth="102.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Common Objective" textAlignment="CENTER" wrappingWidth="208.13671875" />
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="589.0" prefWidth="217.0">
-               <children>
-                  <VBox prefHeight="626.0" prefWidth="201.0" />
-                  <VBox prefHeight="589.0" prefWidth="346.0">
-                     <children>
-                        <VBox prefHeight="270.0" prefWidth="195.0" spacing="3.0">
-                           <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Button fx:id="publicChatButton" disable="true" mnemonicParsing="false" onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="300.0" text="Public Chat" />
-                                    <Button fx:id="privateChatButton" disable="false" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="300.0" text="Private Chat" />
-                                 </children>
-                              </HBox>
-                              <ScrollPane fx:id="scrollPane" prefHeight="190.0" prefWidth="200.0">
-                                 <content>
-                                    <VBox fx:id="messageContainer" prefHeight="200.0" prefWidth="178.0" spacing="2.0" />
-                                 </content>
-                              </ScrollPane>
-                              <VBox>
-                                 <children>
-                                    <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
-                                       <children>
-                                          <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat" promptText="Select Player" />
-                                       </children>
-                                    </HBox>
-                                    <VBox>
-                                       <children>
-                                          <TextArea fx:id="messageInput" prefRowCount="2" wrapText="true" />
-                                          <Button onAction="#handleSend" prefHeight="12.0" prefWidth="43.0" text="Send" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </children>
+         </VBox>
+      </VBox>
+   </HBox>
 </Pane>
