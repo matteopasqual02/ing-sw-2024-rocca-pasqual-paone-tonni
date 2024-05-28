@@ -128,6 +128,40 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         view.joinLobby();
     }
 
+    public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
+        this.myGameId = 0;
+        this.myNickname = null;
+        this.server = null;
+        this.currentImmutable=null;
+
+        switch (connectionType){
+            case RMI -> {
+                server = new RMIServerStub();
+                new Thread(this).start();
+            }
+            case SOCKET -> {
+                server = new SocketClient(this);
+                new Thread(this).start();
+            }
+            case null, default -> {
+                return;
+            }
+        }
+
+        switch (viewType){
+            case TUI ->{
+                view = new TUI();
+                new ScannerTUI(this);
+                MainStaticMethod.clearCMD();
+            }
+            case GUI ->{
+                view = new GUI(this);
+                MainStaticMethod.clearCMD();
+            }
+        }
+
+        view.joinLobby();
+    }
 
     /**
      * Run.

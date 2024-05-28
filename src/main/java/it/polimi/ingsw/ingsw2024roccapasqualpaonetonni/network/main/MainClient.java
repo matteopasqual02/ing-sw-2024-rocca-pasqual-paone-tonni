@@ -67,7 +67,7 @@ public class MainClient {
             );
             inputString = new Scanner(System.in).nextLine();
 
-            switch (inputString){
+            /*switch (inputString){
                 case "ts" -> {
                     selection = true;
                     selConnection = EnumConnectionType.SOCKET;
@@ -97,6 +97,42 @@ public class MainClient {
                     ConsolePrinter.consolePrinter("[MAIN] Starting the game manager!");
 
                     Application.launch(GUIApplication.class, selConnection.toString());
+                }
+                case null, default -> {
+                    selection = false;
+                    selConnection = null;
+                    selView = null;
+                    ConsolePrinter.consolePrinter("[MAIN] Not valid option");
+                }
+            }*/
+            switch (inputString){
+                case "ts" -> {
+                    selection = true;
+                    selConnection = EnumConnectionType.SOCKET;
+                    selView = EnumViewType.TUI;
+                    ConsolePrinter.consolePrinter("[MAIN] Starting the game manager!");
+                    new Client(selConnection,selView);
+                }
+                case "tr" -> {
+                    selection = true;
+                    selConnection = EnumConnectionType.RMI;
+                    selView = EnumViewType.TUI;
+                    ConsolePrinter.consolePrinter("[MAIN] Starting the game manager!");
+                    new Client(selConnection,selView);
+                }
+                case "gs" -> {
+                    selection = true;
+                    selConnection = EnumConnectionType.SOCKET;
+                    selView = EnumViewType.GUI;
+                    ConsolePrinter.consolePrinter("[MAIN] Starting the game manager!");
+                    new Client(selConnection,selView);
+                }
+                case "gr" -> {
+                    selection = true;
+                    selConnection = EnumConnectionType.RMI;
+                    selView = EnumViewType.GUI;
+                    ConsolePrinter.consolePrinter("[MAIN] Starting the game manager!");
+                    new Client(selConnection,selView);
                 }
                 case null, default -> {
                     selection = false;

@@ -2,8 +2,10 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumUpdates;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
+import javafx.application.Application;
 import javafx.application.Platform;
 
 import java.rmi.RemoteException;
@@ -18,6 +20,20 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
     public GUI(GUIApplication application) throws RemoteException {
         super();
         this.application = application;
+    }
+    public GUI(Client client) throws RemoteException {
+        super();
+        new Thread(() -> Application.launch(GUIApplication.class)).start();
+
+        while (GUIApplication.getInstance() == null) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        this.application = GUIApplication.getInstance();
+        application.setClient(client);
     }
     public void runLater(Runnable runnable){
         Platform.runLater(runnable);

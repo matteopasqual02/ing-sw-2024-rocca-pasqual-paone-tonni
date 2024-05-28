@@ -25,6 +25,7 @@ import java.util.concurrent.Executors;
 
 public class GUIApplication extends Application {
     private Client client;
+    private static GUIApplication instance;
     private Stage stage;
     private Parent root;
     Parent rootScore = null;
@@ -47,7 +48,7 @@ public class GUIApplication extends Application {
      * @param stage the stage
      * @throws Exception the exception
      */
-    @Override
+   /* @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
@@ -65,6 +66,29 @@ public class GUIApplication extends Application {
         //stage.setFullScreen(true);
         stage.show();
 
+    }*/
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        instance = this;
+        //client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
+
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
+        root = loader.load();
+        LobbyController controller = loader.getController();
+        controller.setParameters(executor, client,this);
+
+        stage.setMinWidth(1048);
+        stage.setMinHeight(589);
+        stage.setScene(new Scene(root, 300, 200));
+        stage.setTitle("Codex Naturalis");
+        //stage.setFullScreen(true);
+        stage.show();
+
+    }
+    public static GUIApplication getInstance() {
+        return instance;
     }
     public void joinLobby(){
         ConsolePrinter.consolePrinter("joinLobby");
@@ -350,5 +374,9 @@ public class GUIApplication extends Application {
         scoreBoardStage.setMinHeight(640);
         scoreBoardStage.setScene(new Scene(rootScore, 300, 200));
         scoreBoardStage.show();
+    }
+
+    public void setClient(Client client) {
+        this.client=client;
     }
 }
