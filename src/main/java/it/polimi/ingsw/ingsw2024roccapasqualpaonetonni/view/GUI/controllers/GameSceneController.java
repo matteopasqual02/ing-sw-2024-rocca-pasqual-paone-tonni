@@ -387,8 +387,8 @@ public class GameSceneController extends GenericController{
     public void placeCardOnBoard(ImageView card, double x, double y){
         //we have to handle the case in which it is flipped
         ImageView newCard = new ImageView(card.getImage());
-        newCard.setFitHeight(30);
-        newCard.setFitWidth(30);
+        newCard.setFitHeight(card.getFitHeight());
+        newCard.setFitWidth(card.getFitWidth());
         newCard.setLayoutX(x);
         newCard.setLayoutY(y);
         board.getChildren().add(newCard);
@@ -401,8 +401,8 @@ public class GameSceneController extends GenericController{
         ConsolePrinter.consolePrinter(myNickname);
         if(nickname.equals(myNickname)) {
             ConsolePrinter.consolePrinter("starting");
-            placeCardOnBoard(myStartingCard, board.getWidth() / 2, board.getHeight() / 2);
-            myStartingCard.setFitWidth(myStartingCard.getFitWidth() * 2);
+            placeCardOnBoard(myStartingCard, board.getWidth() / 2 - myStartingCard.getFitWidth()/2, board.getHeight() / 2 - myStartingCard.getFitHeight()/2);
+            //myStartingCard.setFitWidth(myStartingCard.getFitWidth() * 2);
             cardsHBox.getChildren().remove(startingCardVBox);
         }
     }
