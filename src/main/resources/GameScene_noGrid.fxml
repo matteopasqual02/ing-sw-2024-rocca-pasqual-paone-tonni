@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?language java?>
-
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="589.0" minWidth="1048.0" prefHeight="589.0" prefWidth="1048.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1048.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
    <ScrollPane fx:id="personalBoard" onMouseClicked="#handleBoardClick" prefHeight="426.0" prefWidth="625.0">
-      <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="416.0" prefWidth="614.0" />
    </ScrollPane>
    <HBox fx:id="cardsHBox" layoutY="440.0" prefHeight="152.0" prefWidth="681.0">
       <VBox fx:id="myHand" prefHeight="152.0" prefWidth="364.0">
@@ -113,4 +113,4 @@
          </VBox>
       </VBox>
    </HBox>
-</Pane>
+</AnchorPane>
