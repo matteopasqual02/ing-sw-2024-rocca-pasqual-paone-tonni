@@ -27,6 +27,7 @@ public class GUIApplication extends Application {
     private Client client;
     private Stage stage;
     private Parent root;
+    Parent rootScore = null;
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
@@ -135,7 +136,6 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.show();
         infoBox();
-        scoreBoardController.setStartingPawns(gameImmutable,nickname);
     }
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -346,10 +346,9 @@ public class GUIApplication extends Application {
         }
         scoreBoardController = loader.getController();
         scoreBoardController.setParameters(executor, client,this);
-
-        stage.setMinWidth(325);
-        stage.setMinHeight(640);
-        stage.setScene(new Scene(rootScore, 300, 200));
-        stage.show();
+        scoreBoardStage.setMinWidth(325);
+        scoreBoardStage.setMinHeight(640);
+        scoreBoardStage.setScene(new Scene(rootScore, 300, 200));
+        scoreBoardStage.show();
     }
 }
