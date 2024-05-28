@@ -329,7 +329,6 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnPlaceStarting() {
-        disable(false);
         myStartingCard.setDisable(false);
         glow(myStartingCard);
     }
