@@ -33,7 +33,6 @@ public class StartingCard extends PlayingCard {
         this.center= Arrays.copyOf(c,4);
         this.cornersBack= Arrays.copyOf(cb,4);
         this.isFlipped=false;
-
     }
 
     /**
