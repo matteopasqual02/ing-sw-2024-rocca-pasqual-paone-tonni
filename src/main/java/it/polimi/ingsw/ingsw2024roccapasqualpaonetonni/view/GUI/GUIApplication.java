@@ -5,10 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmut
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumConnectionType;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GenericController;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.LobbyController;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +30,7 @@ public class GUIApplication extends Application {
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
+    private ScoreBoardController scoreBoardController = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
@@ -137,6 +135,7 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.show();
         infoBox();
+        scoreBoardController.setStartingPawns(gameImmutable,nickname);
     }
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -332,5 +331,25 @@ public class GUIApplication extends Application {
     }
 
     public void invalidAction(String s) {
+    }
+
+    public void seeScoreBoard() {
+        Stage scoreBoardStage = new Stage();
+        scoreBoardStage.setTitle("Score Board");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreBoard.fxml"));
+        Parent rootScore = null;
+        try {
+            rootScore = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        scoreBoardController = loader.getController();
+        scoreBoardController.setParameters(executor, client,this);
+
+        stage.setMinWidth(325);
+        stage.setMinHeight(640);
+        stage.setScene(new Scene(rootScore, 300, 200));
+        stage.show();
     }
 }

@@ -84,7 +84,12 @@
       <VBox prefHeight="589.0" prefWidth="217.0">
          <VBox fx:id="otherPlayersVBox" prefHeight="626.0" prefWidth="201.0">
             <children>
-               <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" text="Info" />
+               <HBox prefHeight="37.0" prefWidth="201.0">
+                  <children>
+                     <Button mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" text="ScoreBoard" />
+                     <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" text="Info" />
+                  </children>
+               </HBox>
             </children></VBox>
          <VBox fx:id="chatVBox" prefHeight="589.0" prefWidth="346.0">
             <VBox prefHeight="270.0" prefWidth="182.0" spacing="3.0">

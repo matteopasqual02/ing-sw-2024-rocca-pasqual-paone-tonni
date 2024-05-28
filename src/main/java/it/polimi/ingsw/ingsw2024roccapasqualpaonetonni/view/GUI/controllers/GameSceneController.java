@@ -699,4 +699,9 @@ public class GameSceneController extends GenericController{
             }
         });
     }
+
+    @FXML
+    public void handleSeeScoreBoard(MouseEvent event) {
+        Platform.runLater(()->application.seeScoreBoard());
+    }
 }
