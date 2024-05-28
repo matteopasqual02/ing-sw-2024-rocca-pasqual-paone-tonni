@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Corner;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -380,18 +383,87 @@ public class GameSceneController extends GenericController{
                 });
                 cardsHBox.getChildren().remove(startingVBox);
             }
+            else if(selectedCard!=null){
+                PlayingCard card = player.getHand().get(hand);
+                int corner = -1;
+                if(x<= selectedCard.getFitWidth()*0.25){
+                    if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(1)!=null){
+                        corner = 1;
+                    }
+                    else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(4)!=null){
+                        corner = 4;
+                    }
+                }
+                else if(x>= selectedCard.getFitWidth()*0.75){
+                    if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(2)!=null){
+                        corner = 2;
+                    }
+                    else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(3)!=null){
+                        corner = 3;
+                    }
+                }
+                executor.submit(() -> {
+                    try {
+                        client.receiveInput("/addCard %d %d %d %s" + hand + );
+                    } catch (IOException | NotBoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
         }
     }
+
 
     public void placeCardOnBoard(ImageView card, double x, double y){
         //we have to handle the case in which it is flipped
         ImageView newCard = new ImageView(card.getImage());
-        newCard.setFitHeight(30);
-        newCard.setFitWidth(30);
+        newCard.setFitHeight(card.getFitHeight());
+        newCard.setFitWidth(card.getFitWidth());
         newCard.setLayoutX(x);
         newCard.setLayoutY(y);
+        newCard.setId(String.valueOf(handIDs[hand-1]));
+        newCard.setOnMouseClicked(this::boardCardClick);
         board.getChildren().add(newCard);
         card.setVisible(false);
+    }
+
+    private void boardCardClick(MouseEvent mouseEvent) {
+        String flipped;
+        if (selectedCard != null) {
+            board.setDisable(true);
+            double x = mouseEvent.getX();
+            double y = mouseEvent.getY();
+            if (flippedStarting) {
+                flipped = " true";
+            } else {
+                flipped = "";
+            }
+            int corner = -1;
+            PlayingCard card = player.getHand().get(hand);
+            if(x<= selectedCard.getFitWidth()*0.25){
+                if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(1)!=null){
+                    corner = 1;
+                }
+                else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(4)!=null){
+                    corner = 4;
+                }
+            }
+            else if(x>= selectedCard.getFitWidth()*0.75){
+                if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(2)!=null){
+                    corner = 2;
+                }
+                else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(3)!=null){
+                    corner = 3;
+                }
+            }
+            executor.submit(() -> {
+                try {
+                    client.receiveInput("/addCard %d %d %d %s" + hand + );
+                } catch (IOException | NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
     }
 
     public void startCard(GameImmutable gameImmutable, String nickname) {
@@ -400,8 +472,8 @@ public class GameSceneController extends GenericController{
         ConsolePrinter.consolePrinter(myNickname);
         if(nickname.equals(myNickname)) {
             ConsolePrinter.consolePrinter("starting");
-            placeCardOnBoard(myStartingCard, board.getWidth() / 2, board.getHeight() / 2);
-            myStartingCard.setFitWidth(myStartingCard.getFitWidth() * 2);
+            placeCardOnBoard(myStartingCard, board.getWidth() / 2 - myStartingCard.getFitWidth()/2, board.getHeight() / 2 - myStartingCard.getFitHeight()/2);
+            //myStartingCard.setFitWidth(myStartingCard.getFitWidth() * 2);
             cardsHBox.getChildren().remove(startingCardVBox);
         }
     }
