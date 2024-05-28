@@ -15,10 +15,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMe
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.ScannerTUI;
-import org.fusesource.jansi.Ansi;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -26,8 +24,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Objects;
-
-import static org.fusesource.jansi.Ansi.ansi;
 /**
  * The type Client.
  */
@@ -64,6 +60,10 @@ public class Client extends UnicastRemoteObject implements GameListener{
      * Player is in a game.
      */
     private Boolean inGame;
+    /**
+     * Pong Thread.
+     */
+    private transient final PingPongThreadClient pongThread;
 
     /**
      * Instantiates a new Client.
@@ -81,7 +81,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         this.inGame = false;
         this.myTurn = false;
 
-        new PingPongThreadClient();
+        this.pongThread = new PingPongThreadClient();
 
         switch (connectionType){
             case RMI -> {

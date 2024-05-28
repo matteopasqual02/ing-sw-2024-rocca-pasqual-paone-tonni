@@ -8,17 +8,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumViewType;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumViewType;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
-import javafx.application.Application;
-import org.fusesource.jansi.AnsiConsole;
-
-
-import static org.fusesource.jansi.Ansi.ansi;
 
 public class MainClient {
 
