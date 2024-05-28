@@ -69,65 +69,9 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      * Instantiates a new Client.
      *
      * @param connectionType the connection type
+     * @param viewType the view type
      * @throws IOException the io exception
      */
-    public Client(EnumConnectionType connectionType) throws IOException {
-        this.myGameId = 0;
-        this.myNickname = null;
-        this.server = null;
-        this.currentImmutable=null;
-
-        switch (connectionType){
-            case RMI -> {
-                server = new RMIServerStub();
-                new Thread(this).start();
-            }
-            case SOCKET -> {
-                server = new SocketClient(this);
-                new Thread(this).start();
-            }
-            case null, default -> {
-                return;
-            }
-        }
-
-        view = new TUI();
-        new ScannerTUI(this);
-        MainStaticMethod.clearCMD();
-        view.joinLobby();
-    }
-
-    /**
-     * Instantiates a new Client.
-     *
-     * @param application the GUI application
-     * @param connectionType the connection type
-     * @throws IOException the io exception
-     */
-    public Client(GUIApplication application, EnumConnectionType connectionType) throws IOException {
-        this.myGameId = 0;
-        this.myNickname = null;
-        this.server = null;
-        this.currentImmutable=null;
-
-        switch (connectionType){
-            case RMI -> {
-                server = new RMIServerStub();
-                new Thread(this).start();
-            }
-            case SOCKET -> {
-                server = new SocketClient(this);
-                new Thread(this).start();
-            }
-            case null, default -> {
-                return;
-            }
-        }
-        view = new GUI(application);
-        MainStaticMethod.clearCMD();
-        view.joinLobby();
-    }
-
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
         this.myNickname = null;

@@ -17,10 +17,6 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
     /**
      * this method is used to pass a runnable function to the UI thread that will handle the changes to the gui.
      */
-    public GUI(GUIApplication application) throws RemoteException {
-        super();
-        this.application = application;
-    }
     public GUI(Client client) throws RemoteException {
         super();
         new Thread(() -> Application.launch(GUIApplication.class)).start();

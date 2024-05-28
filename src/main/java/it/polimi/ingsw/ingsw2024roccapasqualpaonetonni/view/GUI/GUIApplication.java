@@ -48,32 +48,11 @@ public class GUIApplication extends Application {
      * @param stage the stage
      * @throws Exception the exception
      */
-   /* @Override
-    public void start(Stage stage) throws Exception {
-        this.stage = stage;
-        client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
-
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        root = loader.load();
-        LobbyController controller = loader.getController();
-        controller.setParameters(executor, client,this);
-
-        stage.setMinWidth(1048);
-        stage.setMinHeight(589);
-        stage.setScene(new Scene(root, 300, 200));
-        stage.setTitle("Codex Naturalis");
-        //stage.setFullScreen(true);
-        stage.show();
-
-    }*/
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         instance = this;
-        //client = new Client(this,Objects.requireNonNull(EnumConnectionType.valueOf(getParameters().getRaw().get(0))));
 
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
         root = loader.load();
         LobbyController controller = loader.getController();
