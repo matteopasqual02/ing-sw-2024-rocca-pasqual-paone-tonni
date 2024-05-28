@@ -6,66 +6,82 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 
 public class ScoreBoardController extends GenericController{
     @FXML
     private ImageView image0;
+    @FXML
+    private AnchorPane anchor;
     private ExecutorService executor;
     private Client client;
     private GUIApplication application;
+    private HashMap<Integer,ImageView> positionMap; //it holds the number and the variable so we dont have to call each variable separatly
+    private HashMap<Integer,Integer> playerPosition;
 
     public void setParameters(ExecutorService executor, Client client, GUIApplication application){
         this.executor = executor;
         this.client = client;
         this.application = application;
+        positionMap = new HashMap<>();
+        playerPosition = new HashMap<>();
+        positionMap.put(0,image0);
     }
 
-    public void setStartingPawns(GameImmutable gameImmutable, String nickname) {
-        for(Player p: gameImmutable.getPlayers()){
-                if(p.getColorPlayer() == 1){
-                    image0 = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
+    public void setStartingPawns(GameImmutable gameImmutable) {
+        for(Player p: gameImmutable.getPlayers()) {
+            if (playerPosition != null && playerPosition.containsKey(0)) {
+                ImageView newImage;
+                if (p.getColorPlayer() == 1) {
+                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
+                    anchor.getChildren().add(newImage);
+                    newImage.setX(image0.getX() - image0.getX() / 3);
+                    newImage.setY(image0.getY() - image0.getY() / 3);
                 } else if (p.getColorPlayer() == 2) {
-                    image0 = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
+                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
+                    anchor.getChildren().add(newImage);
+                    newImage.setX(image0.getX() - image0.getX() / 3);
+                    newImage.setY(image0.getY() + image0.getY() / 3);
                 } else if (p.getColorPlayer() == 3) {
-                    image0 = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
+                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
+                    anchor.getChildren().add(newImage);
+                    newImage.setX(image0.getX() + image0.getX() / 3);
+                    newImage.setY(image0.getY() - image0.getY() / 3);
                 } else {
-                    image0 = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
+                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
+                    anchor.getChildren().add(newImage);
+                    newImage.setX(image0.getX() + image0.getX() / 3);
+                    newImage.setY(image0.getY() + image0.getY() / 3);
                 }
-                image0.setFitHeight(50);
-                image0.setFitWidth(50);
-                Label name = new Label(p.getNickname());
-/*
-                ImageView hand1 = new ImageView();
-                ImageView hand2 = new ImageView();
-                ImageView hand3 = new ImageView();
-                cardId = p.getHand().get(0).getIdCard();
-                hand1.setImage(new Image(createBackPath(cardId)));
-                cardId = p.getHand().get(1).getIdCard();
-                hand2.setImage(new Image(createBackPath(cardId)));
-                cardId = p.getHand().get(2).getIdCard();
-                hand3.setImage(new Image(createBackPath(cardId)));
-
-                hand1.setFitHeight(30);
-                hand1.setFitWidth(30);
-                hand2.setFitHeight(30);
-                hand2.setFitWidth(30);
-                hand3.setFitHeight(30);
-                hand3.setFitWidth(30);
-
-                String printPoints = "Points: " + p.getCurrentPoints();
-                Label points = new Label(printPoints);
-                Button button = new Button("See board");
-                VBox vBox1 = new VBox(name, color);
-                HBox hbox1 = new HBox(hand1,hand2,hand3);
-                VBox vBox2 = new VBox(hbox1,points,button);
-                HBox hbox2 = new HBox(vBox1,vBox2);
-
-                otherPlayersVBox.getChildren().add(hbox2);
-
-                receiverPrivateMessages.getItems().add(p.getNickname());*/
+                newImage.setFitWidth(image0.getFitWidth());
+                newImage.setFitHeight(image0.getFitHeight());
+            } else {
+                if (p.getColorPlayer() == 1) {
+                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png"))));
+                    image0.setX(image0.getX() - image0.getX() / 3);
+                    image0.setY(image0.getY() - image0.getY() / 3);
+                } else if (p.getColorPlayer() == 2) {
+                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png"))));
+                    image0.setX(image0.getX() - image0.getX() / 3);
+                    image0.setY(image0.getY() + image0.getY() / 3);
+                } else if (p.getColorPlayer() == 3) {
+                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png"))));
+                    image0.setX(image0.getX() + image0.getX() / 3);
+                    image0.setY(image0.getY() - image0.getY() / 3);
+                } else {
+                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png"))));
+                    image0.setX(image0.getX() + image0.getX() / 3);
+                    image0.setY(image0.getY() + image0.getY() / 3);
+                }
+                /*image0.setFitHeight(50);
+                image0.setFitWidth(50);*/
             }
+            playerPosition.put(0, p.getColorPlayer());
+        }
     }
 }

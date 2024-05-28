@@ -297,6 +297,9 @@ public class GameSceneController extends GenericController{
                 otherPlayersVBox.getChildren().add(hbox2);
 
                 receiverPrivateMessages.getItems().add(p.getNickname());
+
+                // score board
+                Platform.runLater(()->application.setScoreBoard());
             }
         }
     }
