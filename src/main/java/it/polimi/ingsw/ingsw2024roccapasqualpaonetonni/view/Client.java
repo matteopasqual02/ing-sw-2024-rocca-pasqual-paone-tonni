@@ -29,7 +29,7 @@ import java.util.Objects;
 /**
  * The type Client.
  */
-public class Client extends UnicastRemoteObject implements GameListener,Runnable {
+public class Client extends UnicastRemoteObject implements GameListener{
     /**
      * The Server.
      */
@@ -84,11 +84,9 @@ public class Client extends UnicastRemoteObject implements GameListener,Runnable
         switch (connectionType){
             case RMI -> {
                 server = new RMIServerStub();
-                new Thread(this).start();
             }
             case SOCKET -> {
                 server = new SocketClient(this);
-                new Thread(this).start();
             }
         }
 
@@ -783,15 +781,11 @@ public class Client extends UnicastRemoteObject implements GameListener,Runnable
         }
     }
 
-    @Override
-    public void run() {
 
-    }
-
+    //--------------------------PING PONG
     /**
      * The type Ping pong thread client.
      */
-//--------------------------PIN PONG
     private class PingPongThreadClient extends Thread {
         /**
          * The Pinged.

@@ -152,7 +152,7 @@ public class GameController implements GameControllerInterface {
                 for (String client : clients) {
                     try {
                         model.ping(client);
-                        ConsolePrinter.consolePrinter("Re pinging " + client);
+                        //ConsolePrinter.consolePrinter("Re pinging " + client);
                     }
                     catch (Exception ignored) {}
                 }
@@ -165,7 +165,7 @@ public class GameController implements GameControllerInterface {
 
                 synchronized (clientsRunning) {
                     for (String client : clientsRunning) {
-                        ConsolePrinter.consolePrinter("safe " + client);
+                        //ConsolePrinter.consolePrinter("safe " + client);
                         clients.remove(client);
                     }
                 }
