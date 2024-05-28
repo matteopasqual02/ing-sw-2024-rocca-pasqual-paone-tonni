@@ -29,7 +29,7 @@ import java.util.Objects;
 /**
  * The type Client.
  */
-public class Client extends UnicastRemoteObject implements GameListener, Runnable {
+public class Client extends UnicastRemoteObject implements GameListener,Runnable {
     /**
      * The Server.
      */
@@ -49,19 +49,19 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     /**
      * The State.
      */
-    private GameStatus state = null;
+    private GameStatus state;
     /**
      * My turn.
      */
-    private Boolean myTurn = false;
+    private Boolean myTurn;
     /**
      * The Current immutable.
      */
     private GameImmutable currentImmutable;
     /**
-     * The Pong thread.
+     * Player is in a game.
      */
-    private transient final PingPongThreadClient pongThread = new PingPongThreadClient();
+    private Boolean inGame;
 
     /**
      * Instantiates a new Client.
@@ -74,7 +74,12 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         this.myGameId = 0;
         this.myNickname = null;
         this.server = null;
-        this.currentImmutable=null;
+        this.currentImmutable = null;
+        this.state = null;
+        this.inGame = false;
+        this.myTurn = false;
+
+        new PingPongThreadClient();
 
         switch (connectionType){
             case RMI -> {
@@ -100,16 +105,6 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         MainStaticMethod.clearCMD();
         view.joinLobby();
 
-        //this.pongThread.start();
-    }
-
-
-    /**
-     * Run.
-     */
-    @Override
-    public void run() {
-
     }
 
     /**
@@ -128,7 +123,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
         switch (parole[0]) {
             case "/new" -> {
-                if(state==null && parole.length==3){
+                if(!inGame && parole.length==3){
+                    inGame =true;
                     try{
                         int maxNumPlayers= Integer.parseInt(parole[1]);
                         if (maxNumPlayers<2 || maxNumPlayers>4){
@@ -148,7 +144,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/join" -> {
-                if(state==null && parole.length==2){
+                if(!inGame && parole.length==2){
+                    inGame =true;
                     try{
                         myNickname = parole[1];
                         server.joinFirstAvailable(myNickname, this);
@@ -163,7 +160,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/joinById","/joinbyid" -> {
-                if(state==null && parole.length==3){
+                if(!inGame && parole.length==3){
+                    inGame =true;
                     try{
                         myNickname = parole[1];
                         int gameId= Integer.parseInt(parole[2]);
@@ -178,7 +176,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/reconnect" -> {
-                if(state==null && parole.length==3){
+                if(!inGame && parole.length==3){
+                    inGame =true;
                     try{
                         myNickname = parole[1];
                         int gameId= Integer.parseInt(parole[2]);
@@ -355,6 +354,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/leave" -> {
+                inGame =false;
                 server.leave(myNickname, myGameId);
                 currentImmutable=null;
                 state=null;
@@ -420,6 +420,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void noAvailableGame() {
+        inGame =false;
         view.show_noAvailableGame();
         view.joinLobby();
     }
@@ -780,6 +781,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         else {
             view.displayChat("There is no private chat with: " + otherName);
         }
+    }
+
+    @Override
+    public void run() {
+
     }
 
     /**

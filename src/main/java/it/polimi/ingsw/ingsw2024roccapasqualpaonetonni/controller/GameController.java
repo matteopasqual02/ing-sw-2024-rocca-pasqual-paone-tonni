@@ -51,7 +51,10 @@ public class GameController implements GameControllerInterface {
      */
     private transient final PingPongThread pingPongThread;
 
-    MyTimer timer;
+    /**
+     * The Timer.
+     */
+    TimerReconnection timer;
 
     /**
      * Instantiates a new Game controller.
@@ -67,7 +70,7 @@ public class GameController implements GameControllerInterface {
         this.executorService = Executors.newSingleThreadExecutor();
         this.pingPongThread = new PingPongThread();
         this.pingPongThread.start();
-        this.timer = new MyTimer(model);
+        this.timer = new TimerReconnection(model);
         this.timer.start();
     }
 
@@ -140,7 +143,7 @@ public class GameController implements GameControllerInterface {
 
                 synchronized (clientsRunning) {
                     for (String client : clientsRunning) {
-                        ConsolePrinter.consolePrinter("safe " + client);
+                        //ConsolePrinter.consolePrinter("safe " + client);
                         clients.remove(client);
                     }
                 }
@@ -149,7 +152,7 @@ public class GameController implements GameControllerInterface {
                 for (String client : clients) {
                     try {
                         model.ping(client);
-                        ConsolePrinter.consolePrinter("pinging " + client);
+                        ConsolePrinter.consolePrinter("Re pinging " + client);
                     }
                     catch (Exception ignored) {}
                 }

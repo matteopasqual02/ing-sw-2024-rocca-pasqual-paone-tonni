@@ -9,12 +9,20 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerVa
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTimer extends Thread{
+/**
+ * The type Timer reconnection.
+ */
+public class TimerReconnection extends Thread{
     private Boolean running;
     private final Game model;
     private int time;
 
-    public MyTimer(Game model){
+    /**
+     * Instantiates a new Timer reconnection.
+     *
+     * @param model the model
+     */
+    public TimerReconnection(Game model){
         time=0;
         running=false;
         this.model=model;
@@ -24,13 +32,14 @@ public class MyTimer extends Thread{
     @Override
     public void run(){
         while (true){
-            ConsolePrinter.consolePrinter("");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             if(running){
-                ConsolePrinter.consolePrinter("Timer Started: "+time+" seconds");
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                if(time%100==0){
+                    ConsolePrinter.consolePrinter("Timer Started in game "+model.getGameId()+": "+time/100+"/"+DefaultControllerValues.timeReconnection/100);
                 }
                 time++;
                 if(time>= DefaultControllerValues.timeReconnection){
@@ -45,12 +54,18 @@ public class MyTimer extends Thread{
 
     }
 
+    /**
+     * Start my timer.
+     */
     public void startMyTimer() {
         model.getGameListenersHandler().notify_gameGenericError("Timer Started: "+DefaultControllerValues.timeReconnection+" seconds");
         time=0;
         running = true;
     }
 
+    /**
+     * Stop my timer.
+     */
     public void stopMyTimer() {
         model.getGameListenersHandler().notify_gameGenericError("timer stopped");
         running=false;
