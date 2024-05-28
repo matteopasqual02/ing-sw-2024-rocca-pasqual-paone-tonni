@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutorService;
 public class GameSceneController extends GenericController{
 
     @FXML
-    public Pane pane;
+    private Pane pane;
 
     // player board
     @FXML
@@ -152,7 +152,7 @@ public class GameSceneController extends GenericController{
     private Button privateChatButton;
 
     private int goal = 0;
-    private int hand = 4;
+    private int hand = -1;
     private final Object jumpLock = new Object();
     private ImageView selectedCard = null;
     private boolean flippedStarting = false;
@@ -383,33 +383,6 @@ public class GameSceneController extends GenericController{
                 });
                 cardsHBox.getChildren().remove(startingVBox);
             }
-            else if(selectedCard!=null){
-                PlayingCard card = player.getHand().get(hand);
-                int corner = -1;
-                if(x<= selectedCard.getFitWidth()*0.25){
-                    if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(1)!=null){
-                        corner = 1;
-                    }
-                    else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(4)!=null){
-                        corner = 4;
-                    }
-                }
-                else if(x>= selectedCard.getFitWidth()*0.75){
-                    if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(2)!=null){
-                        corner = 2;
-                    }
-                    else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(3)!=null){
-                        corner = 3;
-                    }
-                }
-                executor.submit(() -> {
-                    try {
-                        client.receiveInput("/addCard %d %d %d %s" + hand + );
-                    } catch (IOException | NotBoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
         }
     }
 
@@ -428,37 +401,39 @@ public class GameSceneController extends GenericController{
     }
 
     private void boardCardClick(MouseEvent mouseEvent) {
+        ImageView card = (ImageView) mouseEvent.getSource();
         String flipped;
+        int corner = -1;
         if (selectedCard != null) {
             board.setDisable(true);
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
-            if (flippedStarting) {
+            if (flippedHand[hand - 1]) {
                 flipped = " true";
             } else {
                 flipped = "";
             }
-            int corner = -1;
-            PlayingCard card = player.getHand().get(hand);
-            if(x<= selectedCard.getFitWidth()*0.25){
-                if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(1)!=null){
+
+            if(x<= card.getFitWidth()*0.25){
+                if(y<=card.getFitHeight()*0.44){
                     corner = 1;
                 }
-                else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(4)!=null){
+                else if(y>=card.getFitHeight()*0.56){
                     corner = 4;
                 }
             }
-            else if(x>= selectedCard.getFitWidth()*0.75){
-                if(y<=selectedCard.getFitHeight()*0.44 && card.getCorner(2)!=null){
+            else if(x>= card.getFitWidth()*0.75){
+                if(y<=card.getFitHeight()*0.44){
                     corner = 2;
                 }
-                else if(y>=selectedCard.getFitHeight()*0.56 && card.getCorner(3)!=null){
+                else if(y>=card.getFitHeight()*0.56){
                     corner = 3;
                 }
             }
+            int finalCorner = corner;
             executor.submit(() -> {
                 try {
-                    client.receiveInput("/addCard %d %d %d %s" + hand + );
+                    client.receiveInput("/addCard %d %s %d %s" + hand + card.getId() + finalCorner + flipped);
                 } catch (IOException | NotBoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -468,12 +443,8 @@ public class GameSceneController extends GenericController{
 
     public void startCard(GameImmutable gameImmutable, String nickname) {
         // I have to check if it's my turn because everyone gets these updates but only the player in turn has to update its gui
-        ConsolePrinter.consolePrinter(nickname);
-        ConsolePrinter.consolePrinter(myNickname);
         if(nickname.equals(myNickname)) {
-            ConsolePrinter.consolePrinter("starting");
-            placeCardOnBoard(myStartingCard, board.getWidth() / 2 - myStartingCard.getFitWidth()/2, board.getHeight() / 2 - myStartingCard.getFitHeight()/2);
-            //myStartingCard.setFitWidth(myStartingCard.getFitWidth() * 2);
+            placeCardOnBoard(myStartingCard, board.getWidth() / 2, board.getHeight() / 2);
             cardsHBox.getChildren().remove(startingCardVBox);
         }
     }
