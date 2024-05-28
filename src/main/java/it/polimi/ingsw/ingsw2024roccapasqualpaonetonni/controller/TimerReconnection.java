@@ -13,7 +13,6 @@ import java.util.List;
  * The type Timer reconnection.
  */
 public class TimerReconnection extends Thread{
-    private Boolean running;
     private final Game model;
     private int time;
 
@@ -24,7 +23,6 @@ public class TimerReconnection extends Thread{
      */
     public TimerReconnection(Game model){
         time=0;
-        running=false;
         this.model=model;
     }
 
@@ -35,40 +33,21 @@ public class TimerReconnection extends Thread{
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("Time stopped");
             }
-            if(running){
-                if(time%100==0){
-                    ConsolePrinter.consolePrinter("Timer Started in game "+model.getGameId()+": "+time/100+"/"+DefaultControllerValues.timeReconnection/100);
-                }
-                time++;
-                if(time>= DefaultControllerValues.timeReconnection){
-                    model.setStatus(GameStatus.ENDED);
-                    List<Player> players = new ArrayList<>(model.getPlayers());
-                    model.getGameListenersHandler().notify_gameGenericError("Out of time");
-                    model.getGameListenersHandler().notify_winners(players);
-                    break;
-                }
+            if(time%100==0){
+                ConsolePrinter.consolePrinter("Timer Started in game "+model.getGameId()+": "+time/100+"/"+DefaultControllerValues.timeReconnection/100);
             }
+            time++;
+            if(time>= DefaultControllerValues.timeReconnection){
+                model.setStatus(GameStatus.ENDED);
+                List<Player> players = new ArrayList<>(model.getPlayers());
+                model.getGameListenersHandler().notify_gameGenericError("Out of time");
+                model.getGameListenersHandler().notify_winners(players);
+                break;
+            }
+
         }
 
-    }
-
-    /**
-     * Start my timer.
-     */
-    public void startMyTimer() {
-        model.getGameListenersHandler().notify_gameGenericError("Timer Started: "+DefaultControllerValues.timeReconnection+" seconds");
-        time=0;
-        running = true;
-    }
-
-    /**
-     * Stop my timer.
-     */
-    public void stopMyTimer() {
-        model.getGameListenersHandler().notify_gameGenericError("timer stopped");
-        running=false;
-        time=0;
     }
 }
