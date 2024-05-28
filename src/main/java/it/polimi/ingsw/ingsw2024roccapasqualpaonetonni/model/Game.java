@@ -589,4 +589,13 @@ public class Game implements Serializable {
         gameListenersHandler.notify_ping(client);
     }
 
+    /**
+     * Gets game listeners handler.
+     *
+     * @return the game listeners handler
+     */
+    public GameListenersHandler getGameListenersHandler() {
+        return gameListenersHandler;
+    }
+
 }
