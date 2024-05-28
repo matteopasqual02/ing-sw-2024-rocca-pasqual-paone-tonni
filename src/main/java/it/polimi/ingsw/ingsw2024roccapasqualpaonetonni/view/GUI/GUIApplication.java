@@ -293,10 +293,10 @@ public class GUIApplication extends Application {
 
     public void show_startCard(GameImmutable gameImmutable, String nickname) {
         gameSceneController.startCard(gameImmutable,nickname);
-        ConsolePrinter.consolePrinter("show_starting");
     }
 
     public void show_board(GameImmutable gameImmutable, String nickname) {
+        gameSceneController.updateBoard(gameImmutable, nickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname) {

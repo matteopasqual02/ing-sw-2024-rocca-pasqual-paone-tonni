@@ -158,6 +158,7 @@ public class GameSceneController extends GenericController{
     private boolean flippedStarting = false;
     private boolean flippedHand[] = {false, false, false};
     private int handIDs[] = new int[3];
+    private double coords[] = {0, 0};
 
     private static final double JUMP_HEIGHT = 20.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
@@ -415,19 +416,25 @@ public class GameSceneController extends GenericController{
             }
 
             if(x<= card.getFitWidth()*0.25){
+                coords[0] = card.getLayoutX() - card.getFitWidth()*0.75;
                 if(y<=card.getFitHeight()*0.44){
                     corner = 1;
+                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
                 }
                 else if(y>=card.getFitHeight()*0.56){
                     corner = 4;
+                    coords[1] = card.getLayoutY() + card.getFitHeight()*0.54;
                 }
             }
             else if(x>= card.getFitWidth()*0.75){
+                coords[0] = card.getLayoutX() + card.getFitWidth()*0.75;
                 if(y<=card.getFitHeight()*0.44){
                     corner = 2;
+                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
                 }
                 else if(y>=card.getFitHeight()*0.56){
                     corner = 3;
+                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
                 }
             }
             int finalCorner = corner;
@@ -444,7 +451,8 @@ public class GameSceneController extends GenericController{
     public void startCard(GameImmutable gameImmutable, String nickname) {
         // I have to check if it's my turn because everyone gets these updates but only the player in turn has to update its gui
         if(nickname.equals(myNickname)) {
-            placeCardOnBoard(myStartingCard, board.getWidth() / 2, board.getHeight() / 2);
+            ImageView card = (ImageView) handCards.getChildren().get(hand - 1);
+            placeCardOnBoard(card, board.getWidth() / 2, board.getHeight() / 2);
             cardsHBox.getChildren().remove(startingCardVBox);
         }
     }
@@ -464,6 +472,12 @@ public class GameSceneController extends GenericController{
                     mySecretObjective2.setFitWidth(132.0);
                 }
             }
+        }
+    }
+
+    public void updateBoard(GameImmutable gameImmutable, String nickname) {
+        if (nickname.equals(myNickname)) {
+            placeCardOnBoard(selectedCard, coords[0], coords[1]);
         }
     }
 
