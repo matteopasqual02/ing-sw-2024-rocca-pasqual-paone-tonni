@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,12 +10,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import javafx.geometry.Insets?>
 <?language java?>
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="589.0" minWidth="1048.0" prefHeight="589.0" prefWidth="1048.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
-   <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="625.0" onMouseClicked="#handleBoardClick">
-      <Pane fx:id="board" prefHeight="200.0" prefWidth="200.0" onMouseClicked="#handleBoardClick"/>
+   <ScrollPane fx:id="personalBoard" onMouseClicked="#handleBoardClick" prefHeight="426.0" prefWidth="625.0">
+      <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="200.0" prefWidth="200.0" />
    </ScrollPane>
    <HBox fx:id="cardsHBox" layoutY="440.0" prefHeight="152.0" prefWidth="681.0">
       <VBox fx:id="myHand" prefHeight="152.0" prefWidth="364.0">
@@ -36,7 +36,7 @@
                </HBox.margin>
             </ImageView>
          </HBox>
-         <Button fx:id="flipHandCard" onMouseClicked="#handleFlipHandCard" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+         <Button fx:id="flipHandCard" mnemonicParsing="false" onMouseClicked="#handleFlipHandCard" prefHeight="25.0" prefWidth="132.0" text="Flip" />
       </VBox>
       <VBox fx:id="secretObjectiveVBox" prefHeight="152.0" prefWidth="127.0">
          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Objective" textAlignment="CENTER" wrappingWidth="101.13671875" />
@@ -49,7 +49,7 @@
          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Card" textAlignment="CENTER" wrappingWidth="101.13671875" />
          <VBox fx:id="startingCardVBox" prefHeight="136.0" prefWidth="122.0">
             <ImageView fx:id="myStartingCard" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleStartingCardClicked" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="flipStartingButton" onMouseClicked="#handleFlipStarting" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+            <Button fx:id="flipStartingButton" mnemonicParsing="false" onMouseClicked="#handleFlipStarting" prefHeight="25.0" prefWidth="132.0" text="Flip" />
          </VBox>
       </VBox>
    </HBox>
@@ -82,7 +82,15 @@
          </VBox>
       </VBox>
       <VBox prefHeight="589.0" prefWidth="217.0">
-         <VBox fx:id="otherPlayersVBox" prefHeight="626.0" prefWidth="201.0" />
+         <VBox fx:id="otherPlayersVBox" prefHeight="626.0" prefWidth="201.0">
+            <children>
+               <HBox prefHeight="37.0" prefWidth="201.0">
+                  <children>
+                     <Button mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" text="ScoreBoard" />
+                     <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" text="Info" />
+                  </children>
+               </HBox>
+            </children></VBox>
          <VBox fx:id="chatVBox" prefHeight="589.0" prefWidth="346.0">
             <VBox prefHeight="270.0" prefWidth="182.0" spacing="3.0">
                <HBox prefHeight="27.0" prefWidth="197.0">

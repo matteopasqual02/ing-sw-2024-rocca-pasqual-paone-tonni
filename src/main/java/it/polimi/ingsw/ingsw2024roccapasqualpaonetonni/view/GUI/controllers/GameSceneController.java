@@ -7,6 +7,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -555,6 +556,45 @@ public class GameSceneController extends GenericController{
 
     }
 
+    public void glowInfo(String obj) {
+        switch (obj){
+            case "start"->glow(myStartingCard);
+            case "hand"->{
+                glow(myHandImage1);
+                glow(myHandImage2);
+                glow(myHandImage3);
+            }
+            case "deck"->{
+                glow(deckGoldCard);
+                glow(deckResourcesCard);
+            }
+            case "others"->{
+                DropShadow borderGlow = new DropShadow();
+                borderGlow.setOffsetY(0f);
+                borderGlow.setOffsetX(0f);
+                borderGlow.setColor(Color.BLUE);
+                borderGlow.setWidth(30);
+                borderGlow.setHeight(30);
+                otherPlayersVBox.setEffect(borderGlow);
+            }
+        }
+    }
+    public void stopGlowInfo() {
+        myStartingCard.setEffect(null);
+        myHandImage1.setEffect(null);
+        myHandImage2.setEffect(null);
+        myHandImage3.setEffect(null);
+        deckGoldCard.setEffect(null);
+        deckResourcesCard.setEffect(null);
+        otherPlayersVBox.setEffect(null);
+    }
+
+    public void handleSeeInfoBox(MouseEvent event) {
+        Platform.runLater(()->{application.infoBox();});
+    }
+
+
+
     //--------------------------------------------CHAT
 
     public void displayChatPublic(String message) {
@@ -657,5 +697,10 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    @FXML
+    public void handleSeeScoreBoard(MouseEvent event) {
+        Platform.runLater(()->application.seeScoreBoard());
     }
 }
