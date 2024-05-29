@@ -70,8 +70,8 @@ public class GameController implements GameControllerInterface {
         this.executorService = Executors.newSingleThreadExecutor();
         this.pingPongThread = new PingPongThread();
         this.pingPongThread.start();
-        this.timer = new TimerReconnection(model);
-        this.timer.start();
+        this.timer=null;
+
     }
 
 //---------------------------------SERVER SECTION
@@ -340,7 +340,10 @@ public class GameController implements GameControllerInterface {
      * @param nickname the nickname
      */
     public synchronized void reconnectPlayer(String nickname) {
-        timer.stopMyTimer();
+        if(timer!=null){
+            timer.interrupt();
+            timer=null;
+        }
         model.reconnectPlayer(nickname);
         if (GameStatus.WAITING_RECONNECTION == getGame().getGameStatus() && model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
             model.setStatus(model.getLastStatus());
@@ -366,7 +369,10 @@ public class GameController implements GameControllerInterface {
             model.setLastStatus();
             model.setStatus(GameStatus.WAITING_RECONNECTION);
 
-            timer.startMyTimer();
+            if(timer==null) {
+                timer = new TimerReconnection(model);
+                timer.start();
+            }
         }
 
     }
