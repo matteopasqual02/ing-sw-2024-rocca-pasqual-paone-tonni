@@ -155,8 +155,10 @@ public class GameSceneController extends GenericController{
     private final Object jumpLock = new Object();
     private ImageView selectedCard = null;
     private boolean flippedStarting = false;
+    private int startingID = -1;
     private boolean flippedHand[] = {false, false, false};
-    private int handIDs[] = new int[3];
+    private int handIDs[] = {-1, -1, -1};
+    private double coords[] = {0, 0};
 
     private static final double JUMP_HEIGHT = 20.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
@@ -213,6 +215,7 @@ public class GameSceneController extends GenericController{
         cardId = player.getStartingCard().getIdCard();
         myStartingCard.setImage(new Image(createPath(cardId)));
         myStartingCard.setDisable(true);
+        startingID = cardId;
 
         //setting common objectives
 
@@ -345,7 +348,7 @@ public class GameSceneController extends GenericController{
         if (myStartingCard.getUserData() == null || !(boolean) myStartingCard.getUserData()) {
             jump(card);
         }
-        this.selectedCard = myStartingCard;
+        selectedCard = myStartingCard;
         glow(board);
         board.setDisable(false);
     }
@@ -361,30 +364,22 @@ public class GameSceneController extends GenericController{
             myStartingCard.setImage(new Image(createPath(cardId)));
             flippedStarting = false;
         }
+        selectedCard = myStartingCard;
     }
 
     public void handleBoardClick(MouseEvent mouseEvent) {
         String flipped;
         board.setEffect(null);
-        if (selectedCard != null) {
-            board.setDisable(true);
-            double x = mouseEvent.getX();
-            double y = mouseEvent.getY();
-            if (this.selectedCard == myStartingCard) {
-                if (flippedStarting) {
-                    flipped = " true";
-                } else {
-                    flipped = "";
+        if (selectedCard == myStartingCard) {
+            board.setOnMouseClicked(event -> {});
+            flipped = flippedStarting ? " true" : "";
+            executor.submit(() -> {
+                try {
+                    client.receiveInput("/addStarting" + flipped);
+                } catch (IOException | NotBoundException e) {
+                    throw new RuntimeException(e);
                 }
-                executor.submit(() -> {
-                    try {
-                        client.receiveInput("/addStarting" + flipped);
-                    } catch (IOException | NotBoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                cardsHBox.getChildren().remove(startingVBox);
-            }
+            });
         }
     }
 
@@ -396,46 +391,68 @@ public class GameSceneController extends GenericController{
         newCard.setFitWidth(card.getFitWidth());
         newCard.setLayoutX(x);
         newCard.setLayoutY(y);
-        newCard.setId(String.valueOf(handIDs[hand-1]));
-        newCard.setOnMouseClicked(this::boardCardClick);
+        if (card.equals(myStartingCard)) {
+            newCard.setId(String.valueOf(startingID));
+            cardsHBox.getChildren().remove(startingVBox);
+        }
+        else {
+            if (hand > 0 && handIDs[hand - 1] >= 0) {
+                newCard.setId(String.valueOf(handIDs[hand - 1]));
+            }
+            handIDs[hand - 1] = -1;
+            hand = - 1;
+        }
+        newCard.setOnMouseClicked(event -> {
+            handleBoardCardClick(event);
+            });
         board.getChildren().add(newCard);
+        newCard.setDisable(false);
         card.setVisible(false);
     }
 
-    private void boardCardClick(MouseEvent mouseEvent) {
+    private void handleBoardCardClick(MouseEvent mouseEvent) {
         ImageView card = (ImageView) mouseEvent.getSource();
         String flipped;
+        flipHandCard.setDisable(true);
         int corner = -1;
         if (selectedCard != null) {
-            board.setDisable(true);
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
-            if (flippedHand[hand - 1]) {
-                flipped = " true";
-            } else {
-                flipped = "";
-            }
 
-            if(x<= card.getFitWidth()*0.25){
-                if(y<=card.getFitHeight()*0.44){
+            double cardWidth = card.getFitWidth();
+            double cardHeight = card.getFitHeight();
+            flipped = flippedHand[hand - 1] ? "true" : "";
+
+            if(x<= cardWidth*0.25){
+                coords[0] = card.getLayoutX() - card.getFitWidth()*0.75;
+                if(y<=cardHeight*0.44){
                     corner = 1;
+                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
                 }
-                else if(y>=card.getFitHeight()*0.56){
+                else if(y>=cardHeight*0.56){
                     corner = 4;
+                    coords[1] = card.getLayoutY() + card.getFitHeight()*0.54;
                 }
             }
-            else if(x>= card.getFitWidth()*0.75){
-                if(y<=card.getFitHeight()*0.44){
+            else if(x>= cardWidth*0.75){
+                coords[0] = card.getLayoutX() + card.getFitWidth()*0.75;
+                if(y<=cardHeight*0.44){
                     corner = 2;
+                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
                 }
-                else if(y>=card.getFitHeight()*0.56){
+                else if(y>=cardHeight*0.56){
                     corner = 3;
+                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
                 }
             }
             int finalCorner = corner;
+
+            String input = String.format("/addCard %d %s %d %s", hand, card.getId(), finalCorner, flipped);
+            ConsolePrinter.consolePrinter(input);
+
             executor.submit(() -> {
                 try {
-                    client.receiveInput("/addCard %d %s %d %s" + hand + card.getId() + finalCorner + flipped);
+                    client.receiveInput(input);
                 } catch (IOException | NotBoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -444,34 +461,47 @@ public class GameSceneController extends GenericController{
     }
 
     public void startCard(GameImmutable gameImmutable, String nickname) {
-        // I have to check if it's my turn because everyone gets these updates but only the player in turn has to update its gui
-        if(nickname.equals(myNickname)) {
-            placeCardOnBoard(myStartingCard, board.getWidth() / 2, board.getHeight() / 2);
-            cardsHBox.getChildren().remove(startingCardVBox);
-        }
+        placeCardOnBoard(selectedCard, personalBoard.getWidth() / 2, personalBoard.getHeight() / 2);
+        selectedCard = null;
     }
 
     public void chosenGoal() {
-        if(client.getMyTurn()){
-            secretObjectiveVBox.setPrefWidth(132.0);
-            switch (goal){
-                case 1->{
-                    secretObjective.getChildren().remove(mySecretObjective2);
-                    mySecretObjective1.setEffect(null);
-                    mySecretObjective1.setFitWidth(132.0);
-                }
-                case 2->{
-                    secretObjective.getChildren().remove(mySecretObjective1);
-                    mySecretObjective2.setEffect(null);
-                    mySecretObjective2.setFitWidth(132.0);
-                }
+        secretObjectiveVBox.setPrefWidth(132.0);
+        switch (goal){
+            case 1->{
+                secretObjective.getChildren().remove(mySecretObjective2);
+                mySecretObjective1.setEffect(null);
+                mySecretObjective1.setFitWidth(132.0);
+            }
+            case 2->{
+                secretObjective.getChildren().remove(mySecretObjective1);
+                mySecretObjective2.setEffect(null);
+                mySecretObjective2.setFitWidth(132.0);
             }
         }
     }
 
+    public void updateBoard(GameImmutable gameImmutable, String nickname) {
+        placeCardOnBoard(selectedCard, coords[0], coords[1]);
+        selectedCard = null;
+    }
+
     public void myRunningTurnChoseObjective() {
+        mySecretObjective1.setDisable(false);
+        mySecretObjective2.setDisable(false);
         glow(mySecretObjective1);
         glow(mySecretObjective2);
+    }
+
+    public void glow(ImageView image){
+        // blue shadow
+        DropShadow borderGlow = new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.BLUE);
+        borderGlow.setWidth(30);
+        borderGlow.setHeight(30);
+        image.setEffect(borderGlow);
     }
 
     public void glow(Node node){
@@ -507,6 +537,8 @@ public class GameSceneController extends GenericController{
 
     public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
         mySecretObjective1.setEffect(null);
+        mySecretObjective1.setDisable(true);
+        mySecretObjective2.setDisable(true);
         jump(mySecretObjective2);
         goal = 2;
         executor.submit(()->{
@@ -520,6 +552,8 @@ public class GameSceneController extends GenericController{
 
     public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
         mySecretObjective2.setEffect(null);
+        mySecretObjective2.setDisable(true);
+        mySecretObjective1.setDisable(true);
         jump(mySecretObjective1);
         goal = 1;
         executor.submit(()->{
@@ -529,31 +563,34 @@ public class GameSceneController extends GenericController{
                 throw new RuntimeException(e);
             }
         });
+        mySecretObjective2.setDisable(true);
     }
 
     public void myRunningTurnPlaceCard() {
-        disable(false);
         glow(myHandImage1);
         glow(myHandImage2);
         glow(myHandImage3);
+        myHandImage1.setDisable(false);
+        myHandImage2.setDisable(false);
+        myHandImage3.setDisable(false);
     }
 
     public void handleHandCardClicked(MouseEvent mouseEvent) {
-        ImageView card = (ImageView) mouseEvent.getSource();
+        // ImageView card = (ImageView) mouseEvent.getSource();
+        Node card = (Node) mouseEvent.getSource();
         for (int i = 0; i < handCards.getChildren().size(); i++) {
-            if (handCards.getChildren().get(i) != card) {
+            if (!handCards.getChildren().get(i).equals(card)) {
                 handCards.getChildren().get(i).setEffect(null);}
             else {
                 hand = i + 1;
-                glow((ImageView) handCards.getChildren().get(i));
+                // glow((ImageView) handCards.getChildren().get(i));
+                glow(card);
             }
         }
-        Node node = (Node) mouseEvent.getSource();
-        if (node.getUserData() == null || !(boolean) node.getUserData()) {
-            jump(node);
+        if (card.getUserData() == null || !(boolean) card.getUserData()) {
+            jump(card);
         }
-        selectedCard = card;
-        board.setDisable(false);
+        selectedCard = (ImageView) card;
         flipHandCard.setDisable(false);
     }
 
@@ -595,10 +632,6 @@ public class GameSceneController extends GenericController{
         deckGoldCard.setDisable(truefalse);
         boardCard3.setDisable(truefalse);
         boardCard4.setDisable(truefalse);
-    }
-
-    public void showCorners() {
-
     }
 
     public void glowInfo(String obj) {

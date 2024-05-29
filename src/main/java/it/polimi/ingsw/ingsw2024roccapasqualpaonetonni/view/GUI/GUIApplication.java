@@ -118,7 +118,7 @@ public class GUIApplication extends Application {
         //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
         setAlert("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
-    public void show_all(GameImmutable gameImmutable, String nickname){
+    public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
         ConsolePrinter.consolePrinter("Game started");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
@@ -144,8 +144,8 @@ public class GUIApplication extends Application {
     }
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Istruzioni");
-        alert.setHeaderText("Istruzioni di gioco:");
+        alert.setTitle("Info");
+        alert.setHeaderText("How to play the game:");
  /*       VBox box = new VBox();
         HBox hBox1 = new HBox();
         box.setSpacing(50);
@@ -164,7 +164,7 @@ public class GUIApplication extends Application {
 */
         VBox page = new VBox();
         page.setSpacing(10);
-        Text info = new Text("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
+        Text info = new Text("When it's your turn, place a card of the type \"Starting\" in the middle of the board");
         info.setWrappingWidth(300);
         ImageView image = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/083.png")));
         image.setFitWidth(100);
@@ -173,8 +173,8 @@ public class GUIApplication extends Application {
         HBox hBox1 = new HBox();
         HBox hBox2 = new HBox();
         hBox1.getChildren().addAll(info,image);
-        Button next = new Button("Avanti →");
-        Button prev = new Button("← Indietro");
+        Button next = new Button("Next →");
+        Button prev = new Button("← Go Back");
         hBox2.getChildren().addAll(prev,next,pageIndex);
         page.getChildren().addAll(hBox1,hBox2);
         //alert.getButtonTypes().remove(ButtonType.OK);
@@ -189,18 +189,18 @@ public class GUIApplication extends Application {
 
         next.setOnAction(e -> {
             if ("1".equals(pageIndex.getText())) {
-                info.setText("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
+                info.setText("Chose one of the cards in your hand and click the corner of the card on the board where you want to attach it");
                 image.setImage(new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/053.png"))).getImage());
                 pageIndex.setText("2");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("hand");
             } else if("2".equals(pageIndex.getText())){
-                info.setText("Pesca una carta, resource o gold, o dal mazzo o dalle carte presenti sul tavolo");
+                info.setText("Draw a card, \"Resource\" or \"Gold\", from the decks or from the cards on the drawable board");
                 pageIndex.setText("3");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("deck");
             }else{
-                info.setText("Per osservare le board degli altri giocatori premere see board");
+                info.setText("Click on the button \"See Board\" next to a player to see his playing board");
                 pageIndex.setText("4");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("others");
@@ -296,16 +296,22 @@ public class GUIApplication extends Application {
         }
     }
 
-    public void show_startCard(GameImmutable gameImmutable, String nickname) {
-        gameSceneController.startCard(gameImmutable,nickname);
-        ConsolePrinter.consolePrinter("show_starting");
+    public void show_startCard(GameImmutable gameImmutable, String nickname, boolean myTurn) {
+        if (myTurn) {
+            gameSceneController.startCard(gameImmutable, nickname);
+        }
     }
 
-    public void show_board(GameImmutable gameImmutable, String nickname) {
+    public void show_board(GameImmutable gameImmutable, String nickname, boolean myTurn) {
+        if (myTurn) {
+            gameSceneController.updateBoard(gameImmutable, nickname);
+        }
     }
 
-    public void show_objective(GameImmutable gameImmutable, String nickname) {
-        gameSceneController.chosenGoal();
+    public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {
+        if (myTurn) {
+            gameSceneController.chosenGoal();
+        }
     }
 
     public void myRunningTurnChoseObjective() {

@@ -469,7 +469,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             return;
         }
         currentImmutable=gameImmutable;
-        view.show_All(gameImmutable,myNickname,EnumUpdates.ALL);
+        view.show_All(gameImmutable,myNickname,EnumUpdates.ALL, myTurn);
         Player player = currentImmutable.getPlayers().peek();
         if(player==null){
             view.show_generic("error try to restart all");
@@ -527,7 +527,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
     @Override
     public void startAdded(Player p) {
         currentImmutable.refreshPlayer(p);
-        view.show_All(currentImmutable,myNickname,EnumUpdates.START);
+        view.show_All(currentImmutable,myNickname,EnumUpdates.START, myTurn);
         if(myTurn){
             view.myRunningTurnChooseObjective();
         }
@@ -543,8 +543,9 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void cardAdded(Player p) {
+        ConsolePrinter.consolePrinter("listener");
         currentImmutable.refreshPlayer(p);
-        view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD);
+        view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn);
         if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }
@@ -561,7 +562,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
     @Override
     public void personalGoalChosen(Player p) {
         currentImmutable.refreshPlayer(p);
-        view.show_All(currentImmutable,myNickname,EnumUpdates.OBJECTIVE);
+        view.show_All(currentImmutable,myNickname,EnumUpdates.OBJECTIVE, myTurn);
         if(myTurn){
             view.myRunningTurnPlaceCard();
         }
@@ -592,7 +593,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
-            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK);
+            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK, myTurn);
         }
 
     }
@@ -608,7 +609,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
-            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK);
+            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK, myTurn);
         }
     }
 
@@ -625,7 +626,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
             currentImmutable.setBoardDeck(b);
-            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK);
+            view.show_All(currentImmutable,myNickname,EnumUpdates.BOARDDECK, myTurn);
         }
     }
 
