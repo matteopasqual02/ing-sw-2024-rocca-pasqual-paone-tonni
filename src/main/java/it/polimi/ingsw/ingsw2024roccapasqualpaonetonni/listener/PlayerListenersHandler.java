@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.BoardDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.io.IOException;
@@ -127,6 +128,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
      * @param p the p
      */
     public void notify_addToBoard(Player p) {
+        ConsolePrinter.consolePrinter("notifier");
         for(String name : listenersMap.keySet()){
             try {
                 listenersMap.get(name).sendCardAdded(p);

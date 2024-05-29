@@ -14,6 +14,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerVa
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 
+import java.io.Console;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -473,6 +474,7 @@ public class GameController implements GameControllerInterface {
             if (flip) {
                 cardToAdd.flip();
             }
+            ConsolePrinter.consolePrinter("controller");
             boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
             if (GameStatus.RUNNING == model.getGameStatus()) {
                 checkPoints20Points();
