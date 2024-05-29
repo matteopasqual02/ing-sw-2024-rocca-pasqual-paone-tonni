@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
 public class LobbyController extends GenericController {

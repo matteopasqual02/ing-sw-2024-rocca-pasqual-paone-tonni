@@ -53,6 +53,11 @@ public class GameController implements GameControllerInterface {
     private transient final PingPongThread pingPongThread;
 
     /**
+     * The Timer.
+     */
+    TimerReconnection timer;
+
+    /**
      * Instantiates a new Game controller.
      *
      * @param id the id
@@ -66,6 +71,8 @@ public class GameController implements GameControllerInterface {
         this.executorService = Executors.newSingleThreadExecutor();
         this.pingPongThread = new PingPongThread();
         this.pingPongThread.start();
+        this.timer=null;
+
     }
 
 //---------------------------------SERVER SECTION
@@ -146,7 +153,7 @@ public class GameController implements GameControllerInterface {
                 for (String client : clients) {
                     try {
                         model.ping(client);
-                        //ConsolePrinter.consolePrinter("pinging " + client);
+                        //ConsolePrinter.consolePrinter("Re pinging " + client);
                     }
                     catch (Exception ignored) {}
                 }
@@ -334,6 +341,10 @@ public class GameController implements GameControllerInterface {
      * @param nickname the nickname
      */
     public synchronized void reconnectPlayer(String nickname) {
+        if(timer!=null){
+            timer.interrupt();
+            timer=null;
+        }
         model.reconnectPlayer(nickname);
         if (GameStatus.WAITING_RECONNECTION == getGame().getGameStatus() && model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() > 1) {
             model.setStatus(model.getLastStatus());
@@ -351,13 +362,20 @@ public class GameController implements GameControllerInterface {
     public synchronized void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
         // if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
+        if (model.getPlayerNum() == 0) {
+            MainController.getInstance().removeGame(this);
+            return;
+        }
         if (model.getPlayerNum() == 1) {
             model.setLastStatus();
             model.setStatus(GameStatus.WAITING_RECONNECTION);
+
+            if(timer==null) {
+                timer = new TimerReconnection(model);
+                timer.start();
+            }
         }
-        else if (model.getPlayerNum() == 0) {
-            MainController.getInstance().removeGame(this);
-        }
+
     }
 
 //---------------------------------TABLE AND INIT SECTION

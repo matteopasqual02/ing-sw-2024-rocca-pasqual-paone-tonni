@@ -15,10 +15,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMe
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.client.SocketClient;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUI;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.ScannerTUI;
-import org.fusesource.jansi.Ansi;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI.TUI;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -26,12 +24,10 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Objects;
-
-import static org.fusesource.jansi.Ansi.ansi;
 /**
  * The type Client.
  */
-public class Client extends UnicastRemoteObject implements GameListener, Runnable {
+public class Client extends UnicastRemoteObject implements GameListener{
     /**
      * The Server.
      */
@@ -51,91 +47,69 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
     /**
      * The State.
      */
-    private GameStatus state = null;
+    private GameStatus state;
     /**
      * My turn.
      */
-    private Boolean myTurn = false;
+    private Boolean myTurn;
     /**
      * The Current immutable.
      */
     private GameImmutable currentImmutable;
     /**
-     * The Pong thread.
+     * Player is in a game.
      */
-    private transient final PingPongThreadClient pongThread = new PingPongThreadClient();
+    private Boolean inGame;
+    /**
+     * Pong Thread.
+     */
+    private transient final PingPongThreadClient pongThread;
 
     /**
      * Instantiates a new Client.
      *
      * @param connectionType the connection type
+     * @param viewType the view type
      * @throws IOException the io exception
      */
-    public Client(EnumConnectionType connectionType) throws IOException {
+    public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {
         this.myGameId = 0;
         this.myNickname = null;
         this.server = null;
-        this.currentImmutable=null;
+        this.currentImmutable = null;
+        this.state = null;
+        this.inGame = false;
+        this.myTurn = false;
+
+        this.pongThread = new PingPongThreadClient();
 
         switch (connectionType){
             case RMI -> {
                 server = new RMIServerStub();
-                new Thread(this).start();
             }
             case SOCKET -> {
                 server = new SocketClient(this);
-                new Thread(this).start();
             }
             case null, default -> {
                 return;
             }
         }
 
-        view = new TUI();
-        new ScannerTUI(this);
-        MainStaticMethod.clearCMD();
-        view.joinLobby();
-    }
-
-    /**
-     * Instantiates a new Client.
-     *
-     * @param application the GUI application
-     * @param connectionType the connection type
-     * @throws IOException the io exception
-     */
-    public Client(GUIApplication application, EnumConnectionType connectionType) throws IOException {
-        this.myGameId = 0;
-        this.myNickname = null;
-        this.server = null;
-        this.currentImmutable=null;
-
-        switch (connectionType){
-            case RMI -> {
-                server = new RMIServerStub();
-                new Thread(this).start();
+        switch (viewType){
+            case TUI ->{
+                view = new TUI();
+                new ScannerTUI(this);
+                MainStaticMethod.clearCMD();
             }
-            case SOCKET -> {
-                server = new SocketClient(this);
-                new Thread(this).start();
-            }
-            case null, default -> {
-                return;
+            case GUI ->{
+                view = new GUI(this);
+                MainStaticMethod.clearCMD();
             }
         }
-        view = new GUI(application);
-        MainStaticMethod.clearCMD();
+
         view.joinLobby();
     }
 
-
-    /**
-     * Run.
-     */
-    @Override
-    public void run() {
-
-    }
 
     /**
      * Receive input.
@@ -153,7 +127,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
 
         switch (parole[0]) {
             case "/new" -> {
-                if(state==null && parole.length==3){
+                if(!inGame && parole.length==3){
+                    inGame =true;
                     try{
                         int maxNumPlayers= Integer.parseInt(parole[1]);
                         if (maxNumPlayers<2 || maxNumPlayers>4){
@@ -173,7 +148,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/join" -> {
-                if(state==null && parole.length==2){
+                if(!inGame && parole.length==2){
+                    inGame =true;
                     try{
                         myNickname = parole[1];
                         server.joinFirstAvailable(myNickname, this);
@@ -188,7 +164,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/joinById","/joinbyid" -> {
-                if(state==null && parole.length==3){
+                if(!inGame && parole.length==3){
+                    inGame =true;
                     try{
                         myNickname = parole[1];
                         int gameId= Integer.parseInt(parole[2]);
@@ -203,8 +180,8 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/reconnect" -> {
-                ConsolePrinter.consolePrinter(Ansi.ansi(parole.length));
-                if(state==null && parole.length==3){
+                if(!inGame && parole.length==3){
+                    inGame =true;
                     try{
                         myNickname = parole[1];
                         int gameId= Integer.parseInt(parole[2]);
@@ -381,6 +358,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
                 }
             }
             case "/leave" -> {
+                inGame =false;
                 server.leave(myNickname, myGameId);
                 currentImmutable=null;
                 state=null;
@@ -456,6 +434,7 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
      */
     @Override
     public void noAvailableGame() {
+        inGame =false;
         view.show_noAvailableGame();
         view.joinLobby();
     }
@@ -849,10 +828,11 @@ public class Client extends UnicastRemoteObject implements GameListener, Runnabl
         }
     }
 
+
+    //--------------------------PING PONG
     /**
      * The type Ping pong thread client.
      */
-//--------------------------PIN PONG
     private class PingPongThreadClient extends Thread {
         /**
          * The Pinged.
