@@ -7,8 +7,6 @@ module it.polimi.ingsw.ingsw2024roccapasqualpaonetonni {
     requires org.fusesource.jansi;
     requires java.rmi;
 
-    opens it.polimi.ingsw.ingsw2024roccapasqualpaonetonni to javafx.fxml;
-
     opens it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI to javafx.fxml;
 
     //I had to add this last one to make mainServer work
