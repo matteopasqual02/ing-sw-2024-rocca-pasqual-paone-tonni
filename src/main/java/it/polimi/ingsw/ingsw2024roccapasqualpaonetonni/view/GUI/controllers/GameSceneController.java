@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.animation.PauseTransition;
@@ -35,96 +36,96 @@ public class GameSceneController extends GenericController{
 
     // player board
     @FXML
-    public ScrollPane personalBoard;
+    private ScrollPane personalBoard;
 
     @FXML
-    public Pane board;
+    private Pane board;
 
     // cards section
     @FXML
-    public HBox cardsHBox;
+    private HBox cardsHBox;
 
     @FXML
-    public VBox myHand;
+    private VBox myHand;
 
     @FXML
-    public HBox handCards;
+    private HBox handCards;
 
     @FXML
-    public ImageView myHandImage1;
+    private ImageView myHandImage1;
 
     @FXML
-    public ImageView myHandImage2;
+    private ImageView myHandImage2;
 
     @FXML
-    public ImageView myHandImage3;
+    private ImageView myHandImage3;
 
     @FXML
-    public Button flipHandCard;
+    private Button flipHandCard;
 
     @FXML
-    public VBox secretObjectiveVBox;
+    private VBox secretObjectiveVBox;
 
     @FXML
-    public VBox secretObjective;
+    private VBox secretObjective;
 
     @FXML
-    public ImageView mySecretObjective1;
+    private ImageView mySecretObjective1;
 
     @FXML
-    public ImageView mySecretObjective2;
+    private ImageView mySecretObjective2;
 
     @FXML
-    public VBox startingVBox;
+    private VBox startingVBox;
 
     @FXML
-    public VBox startingCardVBox;
+    private VBox startingCardVBox;
 
     @FXML
-    public ImageView myStartingCard;
+    private ImageView myStartingCard;
 
     @FXML
-    public Button flipStartingButton;
+    private Button flipStartingButton;
 
     @FXML
-    public HBox boardCards;
+    private VBox boardCards;
 
     @FXML
-    public ImageView boardCard1;
+    private ImageView boardCard1;
 
     @FXML
-    public ImageView boardCard2;
+    private ImageView boardCard2;
 
     @FXML
-    public ImageView boardCard3;
+    private ImageView boardCard3;
 
     @FXML
-    public ImageView boardCard4;
+    private ImageView boardCard4;
 
     @FXML
-    public HBox decks;
+    private HBox decks;
 
     @FXML
-    public ImageView deckResourcesCard;
+    private ImageView deckResourcesCard;
 
     @FXML
-    public ImageView deckGoldCard;
+    private ImageView deckGoldCard;
 
     @FXML
-    public HBox commonObjectives;
+    private HBox commonObjectives;
 
     @FXML
-    public ImageView commonObjectiveCard1;
+    private ImageView commonObjectiveCard1;
 
     @FXML
-    public ImageView commonObjectiveCard2;
+    private ImageView commonObjectiveCard2;
 
     @FXML
-    public VBox otherPlayersVBox;
+    private VBox otherPlayersVBox;
 
     // chat section
     @FXML
-    public VBox chatVBox;
+    private VBox chatVBox;
 
     @FXML
     private ComboBox receiverPrivateMessages;
@@ -159,6 +160,9 @@ public class GameSceneController extends GenericController{
     private boolean flippedHand[] = {false, false, false};
     private int handIDs[] = {-1, -1, -1};
     private double coords[] = {0, 0};
+    private int toReplace = -1;
+    private ImageView toReplaceIV = null;
+    private int boardIDs[] = {-1, -1, -1, -1};
 
     private static final double JUMP_HEIGHT = 20.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
@@ -236,9 +240,11 @@ public class GameSceneController extends GenericController{
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
         boardCard1.setImage(new Image(createPath(cardId)));
         boardCard1.setDisable(true);
+        boardIDs[0] = cardId;
         cardId = gameImmutable.getBoardDeck().getCard(2).getIdCard();
         boardCard2.setImage(new Image(createPath(cardId)));
         boardCard2.setDisable(true);
+        boardIDs[1] = cardId;
 
         //setting gold cards
 
@@ -250,9 +256,11 @@ public class GameSceneController extends GenericController{
         cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
         boardCard3.setImage(new Image(createPath(cardId)));
         boardCard3.setDisable(true);
+        boardIDs[2] = cardId;
         cardId = gameImmutable.getBoardDeck().getCard(4).getIdCard();
         boardCard4.setImage(new Image(createPath(cardId)));
         boardCard4.setDisable(true);
+        boardIDs[3] = cardId;
 
         flipHandCard.setDisable(true);
 
@@ -602,6 +610,88 @@ public class GameSceneController extends GenericController{
             flippedHand[hand - 1] = false;
         }
         selectedCard.setImage(img);
+    }
+
+    public void myRunningTurnDrawCard() {
+        glow(boardCard1);
+        glow(boardCard2);
+        glow(boardCard3);
+        glow(boardCard4);
+        glow(deckResourcesCard);
+        glow(deckGoldCard);
+        boardCard1.setDisable(false);
+        boardCard2.setDisable(false);
+        boardCard3.setDisable(false);
+        boardCard4.setDisable(false);
+        deckResourcesCard.setDisable(false);
+        deckGoldCard.setDisable(false);
+    }
+
+    public void handleDrawableCardClicked(MouseEvent mouseEvent) {
+        ImageView img = (ImageView) mouseEvent.getSource();
+        for (int i = 0; i < boardCards.getChildren().size(); i++) {
+            if (boardCards.getChildren().get(i) instanceof HBox) {
+                HBox cards = (HBox) boardCards.getChildren().get(i);
+                for (int j = 0; j < cards.getChildren().size(); j++) {
+                    ImageView card = (ImageView) cards.getChildren().get(j);
+                    if (!card.equals(img)) {
+                        card.setEffect(null);
+                        card.setDisable(true);
+                    } else {
+                        toReplace = i * 2 + j;
+                        toReplaceIV = img;
+                        img.setVisible(false);
+                        img.setEffect(null);
+                        img.setDisable(true);
+                    }
+                }
+            }
+        }
+        try {
+            client.receiveInput("/drawBoard " + String.valueOf(toReplace + 1));
+        } catch (IOException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateDrawableBoard(GameImmutable gameImmutable, String nickname) {
+        int cardId;
+        cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
+        boardCard1.setImage(new Image(createPath(cardId)));
+        boardCard1.setDisable(true);
+        boardIDs[0] = cardId;
+        boardCard1.setVisible(true);
+        cardId = gameImmutable.getBoardDeck().getCard(2).getIdCard();
+        boardCard2.setImage(new Image(createPath(cardId)));
+        boardCard2.setDisable(true);
+        boardIDs[1] = cardId;
+        boardCard2.setVisible(true);
+        cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
+        boardCard1.setImage(new Image(createPath(cardId)));
+        boardCard1.setDisable(true);
+        boardIDs[2] = cardId;
+        boardCard3.setVisible(true);
+        cardId = gameImmutable.getBoardDeck().getCard(4).getIdCard();
+        boardCard2.setImage(new Image(createPath(cardId)));
+        boardCard2.setDisable(true);
+        boardIDs[3] = cardId;
+        boardCard4.setVisible(true);
+    }
+
+    public void updateHand() {
+        for (int i = 0; i < handCards.getChildren().size(); i++) {
+            if (handIDs[i] == -1) {
+                ImageView handCard = (ImageView) handCards.getChildren().get(i);
+                handCard.setImage(toReplaceIV.getImage());
+                handCard.setDisable(true);
+                handCard.setVisible(true);
+                jump(handCard);
+                handIDs[i] = boardIDs[toReplace];
+                toReplace = -1;
+                toReplaceIV = null;
+            }
+        }
+
     }
 
     public void notMyTurn() {

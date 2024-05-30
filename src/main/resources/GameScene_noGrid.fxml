@@ -56,15 +56,15 @@
    </HBox>
    <HBox layoutX="623.0" layoutY="5.0" prefHeight="589.0" prefWidth="429.0">
       <VBox prefHeight="589.0" prefWidth="203.0">
-         <VBox prefHeight="198.0" prefWidth="228.0">
+         <VBox fx:id="boardCards" prefHeight="198.0" prefWidth="228.0">
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Board" textAlignment="CENTER" wrappingWidth="203.13671875" />
-            <HBox fx:id="boardCards" prefHeight="68.0" prefWidth="204.0">
-               <ImageView fx:id="boardCard1" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fx:id="boardCard2" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox prefHeight="68.0" prefWidth="204.0">
+               <ImageView fx:id="boardCard1" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard2" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
             </HBox>
             <HBox prefHeight="68.0" prefWidth="204.0">
-               <ImageView fx:id="boardCard3" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fx:id="boardCard4" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard3" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard4" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
             </HBox>
          </VBox>
          <VBox prefHeight="117.0" prefWidth="209.0">

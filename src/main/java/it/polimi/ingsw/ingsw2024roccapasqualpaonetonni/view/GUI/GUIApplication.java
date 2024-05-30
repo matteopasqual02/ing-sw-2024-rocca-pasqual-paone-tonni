@@ -321,6 +321,7 @@ public class GUIApplication extends Application {
     }
 
     public void myRunningTurnDrawCard() {
+        gameSceneController.myRunningTurnDrawCard();
     }
 
     public void notMyTurn() {
@@ -363,5 +364,12 @@ public class GUIApplication extends Application {
 
     public void setClient(Client client) {
         this.client=client;
+    }
+
+    public void show_boardDeck(GameImmutable gameImmutable, String nickname, boolean myTurn) {
+        gameSceneController.updateDrawableBoard(gameImmutable, nickname);
+        if (myTurn) {
+            gameSceneController.updateHand();
+        }
     }
 }
