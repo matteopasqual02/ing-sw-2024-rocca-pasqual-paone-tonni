@@ -391,6 +391,7 @@ public class GameSceneController extends GenericController{
 
     public void placeCardOnBoard(ImageView card, double x, double y){
         //we have to handle the case in which it is flipped
+        ConsolePrinter.consolePrinter(String.valueOf(card));
         ImageView newCard = new ImageView(card.getImage());
         newCard.setFitHeight(card.getFitHeight());
         newCard.setFitWidth(card.getFitWidth());
@@ -407,9 +408,7 @@ public class GameSceneController extends GenericController{
             handIDs[hand - 1] = -1;
             hand = - 1;
         }
-        newCard.setOnMouseClicked(event -> {
-            handleBoardCardClick(event);
-            });
+        newCard.setOnMouseClicked(this::handleBoardCardClick);
         board.getChildren().add(newCard);
         newCard.setDisable(false);
         card.setVisible(false);
@@ -417,6 +416,7 @@ public class GameSceneController extends GenericController{
 
     private void handleBoardCardClick(MouseEvent mouseEvent) {
         ImageView card = (ImageView) mouseEvent.getSource();
+        handCards.setDisable(true);
         String flipped;
         flipHandCard.setDisable(true);
         int corner = -1;
@@ -487,6 +487,7 @@ public class GameSceneController extends GenericController{
     }
 
     public void updateBoard(GameImmutable gameImmutable, String nickname) {
+        ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
         placeCardOnBoard(selectedCard, coords[0], coords[1]);
         selectedCard = null;
     }
@@ -575,6 +576,7 @@ public class GameSceneController extends GenericController{
         glow(myHandImage1);
         glow(myHandImage2);
         glow(myHandImage3);
+        handCards.setDisable(false);
         myHandImage1.setDisable(false);
         myHandImage2.setDisable(false);
         myHandImage3.setDisable(false);
@@ -596,6 +598,7 @@ public class GameSceneController extends GenericController{
             jump(card);
         }
         selectedCard = (ImageView) card;
+        ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
         flipHandCard.setDisable(false);
     }
 
