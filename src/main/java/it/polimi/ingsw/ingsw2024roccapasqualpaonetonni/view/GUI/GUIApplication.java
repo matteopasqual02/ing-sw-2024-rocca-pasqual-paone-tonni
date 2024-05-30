@@ -382,6 +382,8 @@ public class GUIApplication extends Application {
         scoreBoardController.setParameters(executor, client,this);
         scoreBoardStage.setMinWidth(325);
         scoreBoardStage.setMinHeight(640);
+        scoreBoardStage.setFullScreen(false);
+        scoreBoardStage.setResizable(false);
         scoreBoardStage.setScene(new Scene(rootScore, 300, 200));
     }
 }
