@@ -306,6 +306,7 @@ public class GUIApplication extends Application {
         if (myTurn) {
             gameSceneController.updateBoard(gameImmutable, nickname);
         }
+        scoreBoardController.updateScoreBoard(gameImmutable,nickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {

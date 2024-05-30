@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
 public class ScoreBoardController extends GenericController{
@@ -78,52 +79,15 @@ public class ScoreBoardController extends GenericController{
 
     @FXML
     private AnchorPane anchor;
-    private ExecutorService executor;
-    private Client client;
-    private GUIApplication application;
     private HashMap<Integer,ImageView> positionMap;
-            /*=Map.of(
-            0,image0,
-            1,image1,
-            2,image2,
-            3,image3,
-            4,image4,
-            5,image5,
-            6,image6,
-            7,image7,
-            8,image8,
-            9,image9,
-            10,image10,
-            11,image11,
-            12,image12,
-            13,image13,
-            14,image14,
-            15,image15,
-            16,image16,
-            17,image17,
-            18,image18,
-            19,image19,
-            20,image20,
-            21,image21,
-            22,image22,
-            23,image23,
-            24,image24,
-            25,image25,
-            26,image26,
-            27,image27,
-            28,image28,
-            29,image29
-            );*/ //it holds the number and the variable so we dont have to call each variable separatly
-    private HashMap<Integer,Integer> playerPosition;
+    private HashMap<Integer,ImageView> playerImage;
     private int x=0;
     private int y=0;
 
     public void setParameters(ExecutorService executor, Client client, GUIApplication application){
-        this.executor = executor;
-        this.client = client;
-        this.application = application;
         positionMap = new HashMap<>();
-        playerPosition = new HashMap<>();
+        playerImage = new HashMap<>();
+
         positionMap.put(0,image0);
         positionMap.put(1, image1);
         positionMap.put(2, image2);
@@ -156,59 +120,7 @@ public class ScoreBoardController extends GenericController{
         positionMap.put(29, image29);
     }
 
-    /*public void setStartingPawns(GameImmutable gameImmutable) {
-        for(Player p: gameImmutable.getPlayers()) {
-            if (playerPosition != null && playerPosition.containsKey(0)) {
-                ImageView newImage;
-                if (p.getColorPlayer() == 1) {
-                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
-                    anchor.getChildren().add(newImage);
-                    newImage.setLayoutX(image0.getLayoutX() - 5);
-                    newImage.setLayoutY(image0.getLayoutY() - 5);
-                } else if (p.getColorPlayer() == 2) {
-                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
-                    anchor.getChildren().add(newImage);
-                    newImage.setLayoutX(image0.getLayoutX() - 5);
-                    newImage.setLayoutY(image0.getLayoutY() + 5);
-                } else if (p.getColorPlayer() == 3) {
-                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
-                    anchor.getChildren().add(newImage);
-                    newImage.setLayoutX(image0.getLayoutX() + 5);
-                    newImage.setLayoutY(image0.getLayoutY() - 5);
-                } else {
-                    newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
-                    anchor.getChildren().add(newImage);
-                    newImage.setLayoutX(image0.getLayoutX() + 5);
-                    newImage.setLayoutY(image0.getLayoutY() + 5);
-                }
-                newImage.setFitWidth(image0.getFitWidth());
-                newImage.setFitHeight(image0.getFitHeight());
-                newImage.setPreserveRatio(true);
-            } /*else {
-                if (p.getColorPlayer() == 1) {
-                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png"))));
-                    image0.setLayoutX(image0.getLayoutX() - 5);
-                    image0.setLayoutY(image0.getLayoutY() - 5);
-                } else if (p.getColorPlayer() == 2) {
-                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png"))));
-                    image0.setLayoutX(image0.getLayoutX() - 5);
-                    image0.setLayoutY(image0.getLayoutY() + 5);
-                } else if (p.getColorPlayer() == 3) {
-                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png"))));
-                    image0.setLayoutX(image0.getLayoutX() + 5);
-                    image0.setLayoutY(image0.getLayoutY() - 5);
-                } else {
-                    image0.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png"))));
-                    image0.setLayoutX(image0.getLayoutX() + 5);
-                    image0.setLayoutY(image0.getLayoutY() + 5);
-                }
-                /*image0.setFitHeight(50);
-                image0.setFitWidth(50);*//*
-            }*//*
-            playerPosition.put(0, p.getColorPlayer());
-        }
-    }*/
-    public void setStartingPawns(GameImmutable gameImmutable) {
+   /* public void setStartingPawns(GameImmutable gameImmutable) {
         for(Player p: gameImmutable.getPlayers()) {
             ImageView newImage;
             ImageView reference;
@@ -236,6 +148,99 @@ public class ScoreBoardController extends GenericController{
             newImage.setFitWidth(reference.getFitWidth());
             newImage.setFitHeight(reference.getFitHeight());
             newImage.setPreserveRatio(true);
+            playerPosition.put(0,p.getColorPlayer());
         }
+    }*/
+    public void setStartingPawns(GameImmutable gameImmutable) {
+        ImageView reference;
+        for(Player p: gameImmutable.getPlayers()){
+            if (p.getColorPlayer() == 1) {
+                playerImage.put(1,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png"))));
+                x=-5;
+                y=-5;
+            } else if (p.getColorPlayer() == 2) {
+                playerImage.put(2,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png"))));
+                x=-5;
+                y=5;
+            } else if (p.getColorPlayer() == 3) {
+                playerImage.put(3,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png"))));
+                x=5;
+                y=-5;
+            } else {
+                playerImage.put(4,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png"))));
+                x=5;
+                y=5;
+            }
+            reference = positionMap.get(p.getCurrentPoints());
+            anchor.getChildren().add(playerImage.get(p.getColorPlayer()));
+            playerImage.get(p.getColorPlayer()).setLayoutX(reference.getLayoutX() + x);
+            playerImage.get(p.getColorPlayer()).setLayoutY(reference.getLayoutY() + y);
+            playerImage.get(p.getColorPlayer()).setFitWidth(reference.getFitWidth());
+            playerImage.get(p.getColorPlayer()).setFitHeight(reference.getFitHeight());
+            playerImage.get(p.getColorPlayer()).setPreserveRatio(true);
+        }
+    }
+    public void updateScoreBoard(GameImmutable gameImmutable,String nickname){
+        int color;
+        for(Player p: gameImmutable.getPlayers()){
+            color = p.getColorPlayer();
+            ImageView toRemove = playerImage.get(color);
+            anchor.getChildren().remove(toRemove);
+            if (color == 1) {
+                playerImage.put(1,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png"))));
+                x=-5;
+                y=-5;
+            } else if (color == 2) {
+                playerImage.put(2,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png"))));
+                x=-5;
+                y=5;
+            } else if (color == 3) {
+                playerImage.put(3,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png"))));
+                x=5;
+                y=-5;
+            } else {
+                playerImage.put(4,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png"))));
+                x=5;
+                y=5;
+            }
+            ImageView reference = positionMap.get(p.getCurrentPoints());
+            anchor.getChildren().add(playerImage.get(color));
+            playerImage.get(color).setLayoutX(reference.getLayoutX() + x);
+            playerImage.get(color).setLayoutY(reference.getLayoutY() + y);
+            playerImage.get(color).setFitWidth(reference.getFitWidth());
+            playerImage.get(color).setFitHeight(reference.getFitHeight());
+            playerImage.get(color).setPreserveRatio(true);
+        }
+        /* what we should do if we know the player in turn
+        Optional<Player> playerOptional = gameImmutable.getPlayers().stream().filter(player -> player.getNickname().equals(nickname)).findAny();
+        int color = playerOptional.map(Player::getColorPlayer).orElse(0);
+        ImageView toRemove = playerImage.get(color);
+        anchor.getChildren().remove(toRemove);
+        if (color == 1) {
+            playerImage.put(1,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png"))));
+            x=-5;
+            y=-5;
+        } else if (color == 2) {
+            playerImage.put(2,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png"))));
+            x=-5;
+            y=5;
+        } else if (color == 3) {
+            playerImage.put(3,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png"))));
+            x=5;
+            y=-5;
+        } else {
+            playerImage.put(4,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png"))));
+            x=5;
+            y=5;
+        }
+        ImageView reference = positionMap.get(playerOptional.map(Player::getCurrentPoints).orElse(0));
+        anchor.getChildren().add(playerImage.get(color));
+        playerImage.get(color).setLayoutX(reference.getLayoutX() + x);
+        playerImage.get(color).setLayoutY(reference.getLayoutY() + y);
+        playerImage.get(color).setFitWidth(reference.getFitWidth());
+        playerImage.get(color).setFitHeight(reference.getFitHeight());
+        playerImage.get(color).setPreserveRatio(true);
+        //playerPosition.put(playerOptional.map(Player::getCurrentPoints).orElse(0),color);
+*/
     }
 }
