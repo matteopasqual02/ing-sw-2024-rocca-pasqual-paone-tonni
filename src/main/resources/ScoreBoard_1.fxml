@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<?import javafx.scene.layout.StackPane?>
+<StackPane fx:id="stack" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.ScoreBoardController">
+   <children>
+      <Pane fx:id="pane" prefHeight="400.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="380.0" fitWidth="200.0" layoutX="5.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Codex_image/SCORE/plateau.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="image0" fitHeight="21.0" fitWidth="24.0" layoutX="44.0" layoutY="352.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image1" fitHeight="21.0" fitWidth="24.0" layoutX="93.0" layoutY="351.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image2" fitHeight="21.0" fitWidth="24.0" layoutX="136.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image3" fitHeight="21.0" fitWidth="24.0" layoutX="155.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image4" fitHeight="21.0" fitWidth="24.0" layoutX="113.0" layoutY="309.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image5" fitHeight="21.0" fitWidth="24.0" layoutX="66.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image6" fitHeight="21.0" fitWidth="24.0" layoutX="20.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image7" fitHeight="21.0" fitWidth="24.0" layoutX="20.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image8" fitHeight="21.0" fitWidth="24.0" layoutX="66.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image9" fitHeight="21.0" fitWidth="24.0" layoutX="113.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image10" fitHeight="21.0" fitWidth="24.0" layoutX="158.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image11" fitHeight="21.0" fitWidth="24.0" layoutX="151.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image12" fitHeight="21.0" fitWidth="24.0" layoutX="98.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image13" fitHeight="21.0" fitWidth="24.0" layoutX="62.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image14" fitHeight="21.0" fitWidth="24.0" layoutX="25.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image15" fitHeight="21.0" fitWidth="24.0" layoutX="13.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image16" fitHeight="21.0" fitWidth="24.0" layoutX="61.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image17" fitHeight="21.0" fitWidth="24.0" layoutX="113.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image18" fitHeight="21.0" fitWidth="24.0" layoutX="155.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image19" fitHeight="21.0" fitWidth="24.0" layoutX="155.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image20" fitHeight="21.0" fitWidth="24.0" layoutX="85.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image21" fitHeight="21.0" fitWidth="24.0" layoutX="17.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image22" fitHeight="21.0" fitWidth="24.0" layoutX="16.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image23" fitHeight="21.0" fitWidth="24.0" layoutX="18.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image24" fitHeight="21.0" fitWidth="24.0" layoutX="43.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image25" fitHeight="21.0" fitWidth="24.0" layoutX="86.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image26" fitHeight="21.0" fitWidth="24.0" layoutX="121.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image27" fitHeight="21.0" fitWidth="24.0" layoutX="155.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image28" fitHeight="21.0" fitWidth="24.0" layoutX="155.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image29" fitHeight="21.0" fitWidth="24.0" layoutX="87.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+   </children>
+</StackPane>

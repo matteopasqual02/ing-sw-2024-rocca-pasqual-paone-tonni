@@ -27,6 +27,7 @@ public class GUIApplication extends Application {
     private Client client;
     private static GUIApplication instance;
     private Stage stage;
+    private Stage scoreBoardStage;
     private Parent root;
     Parent rootScore = null;
     private StackPane joinedGameRoot;
@@ -139,6 +140,7 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.show();
         infoBox();
+        scoreBoardController.setStartingPawns(gameImmutable);
     }
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -304,6 +306,7 @@ public class GUIApplication extends Application {
         if (myTurn) {
             gameSceneController.updateBoard(gameImmutable, nickname);
         }
+        scoreBoardController.updateScoreBoard(gameImmutable,nickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {
@@ -344,7 +347,7 @@ public class GUIApplication extends Application {
     }
 
     public void seeScoreBoard() {
-        Stage scoreBoardStage = new Stage();
+        /*Stage scoreBoardStage = new Stage();
         scoreBoardStage.setTitle("Score Board");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreBoard.fxml"));
@@ -358,12 +361,32 @@ public class GUIApplication extends Application {
         scoreBoardController.setParameters(executor, client,this);
         scoreBoardStage.setMinWidth(325);
         scoreBoardStage.setMinHeight(640);
-        scoreBoardStage.setScene(new Scene(rootScore, 300, 200));
+        scoreBoardStage.setScene(new Scene(rootScore, 300, 200));*/
         scoreBoardStage.show();
     }
 
     public void setClient(Client client) {
         this.client=client;
+    }
+
+    public void setScoreBoard() {
+        scoreBoardStage = new Stage();
+        scoreBoardStage.setTitle("Score Board");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreBoard.fxml"));
+        Parent rootScore = null;
+        try {
+            rootScore = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        scoreBoardController = loader.getController();
+        scoreBoardController.setParameters(executor, client,this);
+        scoreBoardStage.setMinWidth(325);
+        scoreBoardStage.setMinHeight(640);
+        scoreBoardStage.setFullScreen(false);
+        scoreBoardStage.setResizable(false);
+        scoreBoardStage.setScene(new Scene(rootScore, 300, 200));
     }
 
     public void show_boardDeck(GameImmutable gameImmutable, String nickname, boolean myTurn) {
