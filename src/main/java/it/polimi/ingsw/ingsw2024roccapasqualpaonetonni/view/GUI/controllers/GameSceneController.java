@@ -727,7 +727,7 @@ public class GameSceneController extends GenericController{
         }
     }
 
-    public void updateBoardDeck(GameImmutable gameImmutable, boolean) {
+    public void updateBoardDeck(GameImmutable gameImmutable) {
         updateDecks(gameImmutable);
         updateDrawableBoard(gameImmutable);
     }
