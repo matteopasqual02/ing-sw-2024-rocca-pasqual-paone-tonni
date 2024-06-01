@@ -302,11 +302,12 @@ public class GUIApplication extends Application {
         }
     }
 
-    public void show_board(GameImmutable gameImmutable, String nickname, boolean myTurn) {
+    public void show_board(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
             gameSceneController.updateBoard(gameImmutable, nickname);
         }
-        scoreBoardController.updateScoreBoard(gameImmutable,nickname);
+        scoreBoardController.updateScoreBoard(gameImmutable);
+        gameSceneController.updateOtherPlayers(gameImmutable,playerChangedNickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {

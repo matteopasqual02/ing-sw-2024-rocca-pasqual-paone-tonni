@@ -963,4 +963,24 @@ public class GameSceneController extends GenericController{
     public void handleSeeScoreBoard(MouseEvent event) {
         Platform.runLater(()->application.seeScoreBoard());
     }
+
+    public void updateOtherPlayers(GameImmutable gameImmutable, String playerChangedNickname) {
+        Player p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst().orElse(null);
+        String currPoints = "error";
+        if(p != null){
+             currPoints = "Points " + p.getCurrentPoints();
+        }
+        for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
+            HBox hBox1 = (HBox) otherPlayersVBox.getChildren().get(i);
+            VBox vBox1 = (VBox) hBox1.getChildren().get(0);
+            Label name = (Label) vBox1.getChildren().get(0);
+            if(name.getText().equals(playerChangedNickname)){
+                VBox vBox2 = (VBox) hBox1.getChildren().get(1);
+                Label points = (Label) vBox2.getChildren().get(1);
+                points.setText(currPoints);
+                //i=gameImmutable.getPlayers().size()+1; //stops the for cycle
+            }
+        }
+
+    }
 }

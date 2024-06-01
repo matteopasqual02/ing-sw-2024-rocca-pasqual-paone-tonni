@@ -119,38 +119,6 @@ public class ScoreBoardController extends GenericController{
         positionMap.put(28, image28);
         positionMap.put(29, image29);
     }
-
-   /* public void setStartingPawns(GameImmutable gameImmutable) {
-        for(Player p: gameImmutable.getPlayers()) {
-            ImageView newImage;
-            ImageView reference;
-            if (p.getColorPlayer() == 1) {
-                newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
-                x=-5;
-                y=-5;
-            } else if (p.getColorPlayer() == 2) {
-                newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
-                x=-5;
-                y=5;
-            } else if (p.getColorPlayer() == 3) {
-                newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
-                x=5;
-                y=-5;
-            } else {
-                newImage = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
-                x=5;
-                y=5;
-            }
-            reference = positionMap.get(p.getCurrentPoints());
-            anchor.getChildren().add(newImage);
-            newImage.setLayoutX(reference.getLayoutX() + x);
-            newImage.setLayoutY(reference.getLayoutY() + y);
-            newImage.setFitWidth(reference.getFitWidth());
-            newImage.setFitHeight(reference.getFitHeight());
-            newImage.setPreserveRatio(true);
-            playerPosition.put(0,p.getColorPlayer());
-        }
-    }*/
     public void setStartingPawns(GameImmutable gameImmutable) {
         ImageView reference;
         for(Player p: gameImmutable.getPlayers()){
@@ -180,7 +148,7 @@ public class ScoreBoardController extends GenericController{
             playerImage.get(p.getColorPlayer()).setPreserveRatio(true);
         }
     }
-    public void updateScoreBoard(GameImmutable gameImmutable,String nickname){
+    public void updateScoreBoard(GameImmutable gameImmutable){
         int color;
         for(Player p: gameImmutable.getPlayers()){
             color = p.getColorPlayer();

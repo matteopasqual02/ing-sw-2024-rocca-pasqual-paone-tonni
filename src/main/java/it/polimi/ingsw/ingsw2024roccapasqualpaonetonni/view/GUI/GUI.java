@@ -47,12 +47,12 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      * @param nickname      the nickname
      */
     @Override
-    public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type, boolean myTurn) {
+    public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type, boolean myTurn, String playerChangedNickname) {
         runLater((()->{
             switch (type){
                 case ALL -> application.show_all(gameImmutable,nickname,myTurn);
                 case START -> application.show_startCard(gameImmutable,nickname,myTurn);
-                case BOARD -> application.show_board(gameImmutable,nickname,myTurn);
+                case BOARD -> application.show_board(gameImmutable,nickname,myTurn,playerChangedNickname);
                 case OBJECTIVE -> application.show_objective(gameImmutable,nickname,myTurn);
                 case BOARDDECK -> application.show_boardDeck(gameImmutable, nickname, myTurn);
             }

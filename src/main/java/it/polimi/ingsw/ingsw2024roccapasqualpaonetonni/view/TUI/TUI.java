@@ -34,7 +34,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      */
 //------------------PREPARATION
     @Override
-    public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type, boolean myTurn) {
+    public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type, boolean myTurn, String playerChangedNickname) {
         if(gameImmutable==null){
             invalidMessage("Game immutable is null", myTurn);
             return;
