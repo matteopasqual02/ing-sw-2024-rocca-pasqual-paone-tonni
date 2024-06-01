@@ -120,7 +120,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     public synchronized void receiveInput(String input) throws IOException, NotBoundException {
         if(input == null){
-            view.invalidMessage("empty input");
+            view.invalidMessage("empty input", myTurn);
             return;
         }
         String[] parole = input.split(" ");
@@ -132,19 +132,19 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     try{
                         int maxNumPlayers= Integer.parseInt(parole[1]);
                         if (maxNumPlayers<2 || maxNumPlayers>4){
-                            view.invalidMessage("Invalid number of players");
+                            view.invalidMessage("Invalid number of players", myTurn);
                             return;
                         }
                         myNickname = parole[2];
                         server.createGame(myNickname, maxNumPlayers, this);
                     }
                     catch (IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid number format");
+                        view.invalidMessage("Invalid number format", myTurn);
                     }
 
                 }
                 else {
-                    view.invalidMessage("Command not complete");
+                    view.invalidMessage("Command not complete", myTurn);
                 }
             }
             case "/join" -> {
@@ -155,12 +155,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         server.joinFirstAvailable(myNickname, this);
                     }
                     catch(IndexOutOfBoundsException e){
-                        view.invalidMessage("Invalid format");
+                        view.invalidMessage("Invalid format", myTurn);
                     }
 
                 }
                 else {
-                    view.invalidMessage("Command not complete");
+                    view.invalidMessage("Command not complete", myTurn);
                 }
             }
             case "/joinById","/joinbyid" -> {
@@ -172,11 +172,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         server.joinGameByID(myNickname,gameId,this);
                     }
                     catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid number format");
+                        view.invalidMessage("Invalid number format", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("Command not complete");
+                    view.invalidMessage("Command not complete", myTurn);
                 }
             }
             case "/reconnect" -> {
@@ -188,12 +188,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         server.reconnect(myNickname,gameId,this);
                     }
                     catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid number format");
+                        view.invalidMessage("Invalid number format", myTurn);
                     }
 
                 }
                 else {
-                    view.invalidMessage("Command not complete");
+                    view.invalidMessage("Command not complete", myTurn);
                 }
             }
             case "Y","y" -> {
@@ -202,7 +202,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.ready(myNickname);
                 }
                 else {
-                    view.invalidMessage("You cannot be ready now (or you are already ready)");
+                    view.invalidMessage("You cannot be ready now (or you are already ready)", myTurn);
                 }
             }
             case "/addStarting","/addstarting" -> {
@@ -215,30 +215,30 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         server.addStartingCard(myNickname, Objects.equals(parole[1], "true"));
                     }
                     catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Wrong format");
+                        view.invalidMessage("Wrong format", myTurn);
                     }
 
                 }
                 else {
-                    view.invalidMessage("Not my turn (or game is waiting)");
+                    view.invalidMessage("Not my turn (or game is waiting)", myTurn);
                 }
             }
             case "/choseGoal","/chosegoal" -> {
                 if(state==GameStatus.RUNNING  && myTurn!=null && myTurn && parole.length==2){
                     Player me = currentImmutable.getPlayers().stream().filter(player -> myNickname.equals(player.getNickname())).toList().getFirst();
                     if(me.getGoal()!=null){
-                        view.invalidMessage("Goal already chosen");
+                        view.invalidMessage("Goal already chosen", myTurn);
                     }
                     try {
                         int pos = Integer.parseInt(parole[1]);
                         server.choosePlayerGoal(myNickname,pos-1);
                     }
                     catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid Format");
+                        view.invalidMessage("Invalid Format", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("Command not complete");
+                    view.invalidMessage("Command not complete", myTurn);
                 }
             }
             case "/addCard", "/addcard" -> {
@@ -267,11 +267,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         }
                     }
                     catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid number format");
+                        view.invalidMessage("Invalid number format", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("Command not complete or not your turn");
+                    view.invalidMessage("Command not complete or not your turn", myTurn);
                 }
             }
             case "/drawGold","/drawgold" -> {
@@ -279,7 +279,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.drawGoldFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase");
+                    view.invalidMessage("Not your Turn or last phase", myTurn);
                 }
             }
             case "/drawResources","/drawresources"  -> {
@@ -287,7 +287,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.drawResourceFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase");
+                    view.invalidMessage("Not your Turn or last phase", myTurn);
                 }
             }
             case "/drawBoard","/drawboard" -> {
@@ -296,11 +296,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         int pos = Integer.parseInt(parole[1]);
                         server.drawFromBoard(myNickname,pos);
                     }catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid number format");
+                        view.invalidMessage("Invalid number format", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase or command not complete");
+                    view.invalidMessage("Not your Turn or last phase or command not complete", myTurn);
                 }
             }
             case "/chat" -> {
@@ -313,11 +313,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         String msg = builder.toString();
                         server.sendMessage(msg,myNickname);
                     }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage("Invalid format");
+                        view.invalidMessage("Invalid format", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("The game is waiting");
+                    view.invalidMessage("The game is waiting", myTurn);
                 }
             }
             case "/chatPrivate","/chatprivate" -> {
@@ -330,11 +330,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         String msg = builder.toString();
                         server.sendPrivateMessage(msg, myNickname, parole[1]);
                     }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage("Invalid format");
+                        view.invalidMessage("Invalid format", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("The game is waiting or receiver missing");
+                    view.invalidMessage("The game is waiting or receiver missing", myTurn);
                 }
             }
             case "/seeChat", "/seechat" -> {
@@ -342,7 +342,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.getPublicChatLog(myNickname);
                 }
                 else {
-                    view.invalidMessage("The game is waiting");
+                    view.invalidMessage("The game is waiting", myTurn);
                 }
             }
             case "/seeChatPrivate" ,"/seechatprivate"-> {
@@ -350,11 +350,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     try{
                         server.getPrivateChatLog(myNickname, parole[1]);
                     }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage("Invalid format");
+                        view.invalidMessage("Invalid format", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("The game is waiting or private chatter missing");
+                    view.invalidMessage("The game is waiting or private chatter missing", myTurn);
                 }
             }
             case "/leave" -> {
@@ -365,7 +365,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 view.show_generic("You have left game " + myGameId);
                 view.joinLobby();
             }
-            case null, default -> view.invalidMessage("invalid command");
+            case null, default -> view.invalidMessage("invalid command", myTurn);
 
         }
     }
@@ -543,7 +543,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void cardAdded(Player p) {
-        ConsolePrinter.consolePrinter("listener");
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn);
         if(myTurn && state!=GameStatus.LAST_TURN){
@@ -638,7 +637,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void genericError(String s) throws RemoteException {
-        view.invalidMessage(s);
+        view.invalidMessage(s, myTurn);
     }
 
     /**

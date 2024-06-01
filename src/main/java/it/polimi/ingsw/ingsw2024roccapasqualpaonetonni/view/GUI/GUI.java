@@ -200,8 +200,8 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      * @param s the s
      */
     @Override
-    public void invalidMessage(String s) {
-        runLater(()->application.invalidAction(s));
+    public void invalidMessage(String s, boolean myTurn) {
+        runLater(()->application.invalidAction(s, myTurn));
     }
 
     /**

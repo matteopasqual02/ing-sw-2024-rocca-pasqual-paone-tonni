@@ -280,7 +280,6 @@ public class Player implements Serializable {
             return false;
         }
         try {
-            ConsolePrinter.consolePrinter("player");
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
             playerListenersHandler.notify_addToBoard(this);
         }

@@ -65,7 +65,7 @@ public interface ViewUpdate {
      *
      * @param s the s
      */
-    void invalidMessage(String s);
+    void invalidMessage(String s, boolean myTurn);
 
     /**
      * My running turn choose objective.

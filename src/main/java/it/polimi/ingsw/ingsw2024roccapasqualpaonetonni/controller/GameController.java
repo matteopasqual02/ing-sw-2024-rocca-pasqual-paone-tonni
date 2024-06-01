@@ -492,7 +492,6 @@ public class GameController implements GameControllerInterface {
             if (flip) {
                 cardToAdd.flip();
             }
-            ConsolePrinter.consolePrinter("controller");
             boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
             if (GameStatus.RUNNING == model.getGameStatus()) {
                 checkPoints20Points();

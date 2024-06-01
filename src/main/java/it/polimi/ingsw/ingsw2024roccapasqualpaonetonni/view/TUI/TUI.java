@@ -36,7 +36,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     @Override
     public void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type, boolean myTurn) {
         if(gameImmutable==null){
-            invalidMessage("Game immutable is null");
+            invalidMessage("Game immutable is null", myTurn);
             return;
         }
         ConsolePrinter.consolePrinter(gameImmutable.toString(nickname));
@@ -305,7 +305,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      * @param s the s
      */
     @Override
-    public void invalidMessage(String s) {
+    public void invalidMessage(String s, boolean myTurn) {
         ConsolePrinter.consolePrinter("[ERROR] " + s );
     }
 

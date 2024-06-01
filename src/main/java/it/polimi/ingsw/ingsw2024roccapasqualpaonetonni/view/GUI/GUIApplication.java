@@ -343,7 +343,15 @@ public class GUIApplication extends Application {
     public void show_generic(String msg) {
     }
 
-    public void invalidAction(String s) {
+    public void invalidAction(String s, boolean myTurn) {
+        if (myTurn) {
+            switch (s) {
+                case "Conditions not met":
+                    gameSceneController.cardNotPlaced("Conditions not met, chose another card!");
+                case "Card Invalid Place":
+                    gameSceneController.cardNotPlaced("Invalid place chosen, try again!");
+            }
+        }
     }
 
     public void seeScoreBoard() {
@@ -390,9 +398,9 @@ public class GUIApplication extends Application {
     }
 
     public void show_boardDeck(GameImmutable gameImmutable, String nickname, boolean myTurn) {
-        gameSceneController.updateDrawableBoard(gameImmutable, nickname);
         if (myTurn) {
             gameSceneController.updateHand();
         }
+        gameSceneController.updateBoardDeck(gameImmutable);
     }
 }
