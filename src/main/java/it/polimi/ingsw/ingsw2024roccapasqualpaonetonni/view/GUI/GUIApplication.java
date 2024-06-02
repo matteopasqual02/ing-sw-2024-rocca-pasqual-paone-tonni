@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -28,12 +29,14 @@ public class GUIApplication extends Application {
     private static GUIApplication instance;
     private Stage stage;
     private Stage scoreBoardStage;
+    private Stage otherBoardsStage;
     private Parent root;
     Parent rootScore = null;
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
     private ScoreBoardController scoreBoardController = null;
+    private OtherBoardsController otherBoardsController = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
@@ -141,6 +144,7 @@ public class GUIApplication extends Application {
         stage.show();
         infoBox();
         scoreBoardController.setStartingPawns(gameImmutable);
+        otherBoardsController.setBoards(gameImmutable,nickname);
     }
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -306,8 +310,11 @@ public class GUIApplication extends Application {
         if (myTurn) {
             gameSceneController.updateBoard(gameImmutable, nickname);
         }
+        else {
+            otherBoardsController.updateOtherBoards(gameImmutable,playerChangedNickname);
+        }
         scoreBoardController.updateScoreBoard(gameImmutable);
-        gameSceneController.updateOtherPlayers(gameImmutable,playerChangedNickname);
+        gameSceneController.updateOtherPlayersPoints(gameImmutable,playerChangedNickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {
@@ -373,6 +380,9 @@ public class GUIApplication extends Application {
         scoreBoardStage.setScene(new Scene(rootScore, 300, 200));*/
         scoreBoardStage.show();
     }
+    public void seeOtherBoards(){
+        otherBoardsStage.show();
+    }
 
     public void setClient(Client client) {
         this.client=client;
@@ -404,5 +414,25 @@ public class GUIApplication extends Application {
         }
         gameSceneController.updateOtherPlayersHand(gameImmutable,playerChangedNickname);
         gameSceneController.updateBoardDeck(gameImmutable);
+    }
+
+    public void setOtherPlayerBoard() {
+        otherBoardsStage = new Stage();
+        otherBoardsStage.setTitle("Other Boards");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/OtherBoards.fxml"));
+        Parent rootOtherBoards = null;
+        try {
+            rootOtherBoards = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        otherBoardsController = loader.getController();
+        otherBoardsController.setParameters(executor, client,this);
+        otherBoardsStage.setMinWidth(325);
+        otherBoardsStage.setMinHeight(640);
+        otherBoardsStage.setFullScreen(false);
+        otherBoardsStage.setResizable(false);
+        otherBoardsStage.setScene(new Scene(rootOtherBoards, 300, 200));
     }
 }

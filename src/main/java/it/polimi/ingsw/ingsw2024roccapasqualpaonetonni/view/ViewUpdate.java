@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 import java.util.List;
@@ -142,5 +143,6 @@ public interface ViewUpdate {
     void show_generic(String msg);
 
 
+    //void giveCurrentPlayerBoard(PlayerBoard playerBoard);
 }
 

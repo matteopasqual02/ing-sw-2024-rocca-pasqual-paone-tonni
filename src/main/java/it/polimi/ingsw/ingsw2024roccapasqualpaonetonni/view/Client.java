@@ -827,6 +827,10 @@ public class Client extends UnicastRemoteObject implements GameListener{
         }
     }
 
+    /*public void getPlayerBoardForGUI(String name) {
+        view.giveCurrentPlayerBoard(currentImmutable.getPlayers().stream().filter(player -> player.getNickname().equals(name)).findFirst().map(Player::getBoard).orElse(null));
+    }*/
+
 
     //--------------------------PING PONG
     /**

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?language java?>
 
@@ -59,19 +60,19 @@
          <VBox fx:id="boardCards" prefHeight="198.0" prefWidth="228.0">
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Board" textAlignment="CENTER" wrappingWidth="203.13671875" />
             <HBox prefHeight="68.0" prefWidth="204.0">
-               <ImageView fx:id="boardCard1" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fx:id="boardCard2" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard1" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard2" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true" />
             </HBox>
             <HBox prefHeight="68.0" prefWidth="204.0">
-               <ImageView fx:id="boardCard3" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fx:id="boardCard4" onMouseClicked="#handleDrawableCardClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard3" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="boardCard4" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true" />
             </HBox>
          </VBox>
          <VBox prefHeight="117.0" prefWidth="209.0">
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Decks" textAlignment="CENTER" wrappingWidth="204.13671875" />
             <HBox fx:id="decks" prefHeight="100.0" prefWidth="200.0">
-               <ImageView fx:id="deckResourcesCard" onMouseClicked="#handleResourceDeckClicked" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fx:id="deckGoldCard" fitHeight="76.0" onMouseClicked="#handleGoldDeckClicked" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="deckResourcesCard" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleResourceDeckClicked" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fx:id="deckGoldCard" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleGoldDeckClicked" pickOnBounds="true" preserveRatio="true" />
             </HBox>
          </VBox>
          <VBox prefHeight="150.0" prefWidth="102.0">
@@ -85,8 +86,13 @@
       <VBox prefHeight="589.0" prefWidth="217.0">
          <VBox fx:id="otherPlayersVBox" prefHeight="626.0" prefWidth="201.0">
             <HBox prefHeight="37.0" prefWidth="201.0">
-               <Button mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" text="ScoreBoard"/>
-               <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" text="Info"/>
+               <Button mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" text="ScoreBoard" />
+               <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" text="Info" />
+               <Button mnemonicParsing="false" onMouseClicked="#handleSeeOtherPlayersBoards" text="SeeOtherBoards">
+                  <font>
+                     <Font size="10.0" />
+                  </font>
+               </Button>
             </HBox>
          </VBox>
          <VBox prefHeight="589.0" prefWidth="346.0">

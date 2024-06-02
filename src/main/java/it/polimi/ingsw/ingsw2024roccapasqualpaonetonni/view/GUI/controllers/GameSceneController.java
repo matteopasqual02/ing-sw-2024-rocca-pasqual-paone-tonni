@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
@@ -31,7 +32,6 @@ import java.rmi.NotBoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
-import java.util.stream.IntStream;
 
 public class GameSceneController extends GenericController{
 
@@ -295,6 +295,7 @@ public class GameSceneController extends GenericController{
                 String printPoints = "Points: " + p.getCurrentPoints();
                 Label points = new Label(printPoints);
                 Button button = new Button("See board");
+                //button.setOnMouseClicked(event -> handleSeeOtherPlayerBoardClicked(event, p.getNickname()));
                 VBox vBox1 = new VBox(name, color);
                 HBox hbox1 = new HBox(hand1,hand2,hand3);
                 VBox vBox2 = new VBox(hbox1,points,button);
@@ -306,6 +307,7 @@ public class GameSceneController extends GenericController{
 
                 // score board
                 Platform.runLater(()->application.setScoreBoard());
+                Platform.runLater(()->application.setOtherPlayerBoard());
             }
         }
     }
@@ -967,7 +969,7 @@ public class GameSceneController extends GenericController{
         Platform.runLater(()->application.seeScoreBoard());
     }
 
-    public void updateOtherPlayers(GameImmutable gameImmutable, String playerChangedNickname) {
+    public void updateOtherPlayersPoints(GameImmutable gameImmutable, String playerChangedNickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
         String currPoints = "error";
         if(p.isPresent()){
@@ -1011,5 +1013,10 @@ public class GameSceneController extends GenericController{
                 }
             }
         }
+    }
+
+    @FXML
+    public void handleSeeOtherPlayersBoards(MouseEvent mouseEvent) {
+        Platform.runLater(()->application.seeOtherBoards());
     }
 }
