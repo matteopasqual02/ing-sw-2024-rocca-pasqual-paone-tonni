@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -27,6 +28,8 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.IntStream;
 
@@ -965,10 +968,10 @@ public class GameSceneController extends GenericController{
     }
 
     public void updateOtherPlayers(GameImmutable gameImmutable, String playerChangedNickname) {
-        Player p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst().orElse(null);
+        Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
         String currPoints = "error";
-        if(p != null){
-             currPoints = "Points " + p.getCurrentPoints();
+        if(p.isPresent()){
+             currPoints = "Points " + p.get().getCurrentPoints();
         }
         for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
             HBox hBox1 = (HBox) otherPlayersVBox.getChildren().get(i);
@@ -982,5 +985,31 @@ public class GameSceneController extends GenericController{
             }
         }
 
+    }
+
+    public void updateOtherPlayersHand(GameImmutable gameImmutable, String playerChangedNickname) {
+        Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
+        if(p.isPresent())
+        {
+            List<PlayingCard> hand = p.get().getHand();
+            for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
+                HBox hBox2 = (HBox) otherPlayersVBox.getChildren().get(i);
+                VBox vBox1 = (VBox) hBox2.getChildren().get(0);
+                Label name = (Label) vBox1.getChildren().get(0);
+                if(name.getText().equals(playerChangedNickname)){
+                    VBox vBox2 = (VBox) hBox2.getChildren().get(1);
+                    HBox hBox1 = (HBox) vBox2.getChildren().get(0);
+                    ImageView hand1 = (ImageView) hBox1.getChildren().get(0);
+                    ImageView hand2 = (ImageView) hBox1.getChildren().get(1);
+                    ImageView hand3 = (ImageView) hBox1.getChildren().get(2);
+                    int cardId = p.get().getHand().get(0).getIdCard();
+                    hand1.setImage(new Image(createBackPath(cardId)));
+                    cardId = p.get().getHand().get(1).getIdCard();
+                    hand2.setImage(new Image(createBackPath(cardId)));
+                    cardId = p.get().getHand().get(2).getIdCard();
+                    hand3.setImage(new Image(createBackPath(cardId)));
+                }
+            }
+        }
     }
 }

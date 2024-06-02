@@ -398,10 +398,11 @@ public class GUIApplication extends Application {
         scoreBoardStage.setScene(new Scene(rootScore, 300, 200));
     }
 
-    public void show_boardDeck(GameImmutable gameImmutable, String nickname, boolean myTurn) {
+    public void show_boardDeck(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
             gameSceneController.updateHand();
         }
+        gameSceneController.updateOtherPlayersHand(gameImmutable,playerChangedNickname);
         gameSceneController.updateBoardDeck(gameImmutable);
     }
 }
