@@ -3,6 +3,12 @@
     -fx-background-size: cover;
 }
 
+.background-complete {
+    -fx-background-image: url("../images/Background_image/background_complete.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: 50% 50X;
+}
+
 .background-red{
     -fx-background-image: url("../images/background_Image/red.jpeg");
     -fx-background-size: cover;

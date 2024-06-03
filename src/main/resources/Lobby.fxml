@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1048.0" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.LobbyController">
-
-   <!-- AnchorPane for buttons -->
-   <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1048.0">
-
-      <!-- Top-left button -->
-      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNewGameButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_CreateGame.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-
-      <!-- Top-right button -->
-      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleJoinGameButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_JoinGame.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-
-      <!-- Bottom-left button -->
-      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleJoinGameIDButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_JoinId.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
-
-      <!-- Bottom-right button -->
-      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleReconnectButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_Reconnect.css" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-   </AnchorPane>
+<StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="1152.0" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.LobbyController">
+   <children>
+   
+      <!-- AnchorPane for buttons -->
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1048.0" >
+      <children>
+      
+            <!-- Top-left button -->
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNewGameButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_CreateGame.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      
+            <!-- Top-right button -->
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleJoinGameButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_JoinGame.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      
+            <!-- Bottom-left button -->
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleJoinGameIDButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_JoinId.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+      
+            <!-- Bottom-right button -->
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleReconnectButtonClick" prefHeight="100.0" prefWidth="313.0" stylesheets="@CSSStyle/button_Reconnect.css" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      </children>
+      </AnchorPane>
+   </children>
 </StackPane>
