@@ -12,24 +12,24 @@
 <AnchorPane prefHeight="589.0" prefWidth="1084.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
    <children>
       <!-- SplitPane principale diviso verticalmente -->
-      <SplitPane dividerPositions="0.84" layoutX="0.0" layoutY="0.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.9" layoutX="0.0" layoutY="0.0" orientation="VERTICAL" prefHeight="589.0" prefWidth="1049.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <!-- Parte superiore del SplitPane principale -->
-            <VBox prefHeight="300.0" prefWidth="800.0">
+            <VBox prefHeight="500.0" prefWidth="800.0">
                <children>
                   <!-- SplitPane secondario diviso orizzontalmente -->
-                  <SplitPane disable="true" dividerPositions="0.7" orientation="HORIZONTAL" prefHeight="1000.0" prefWidth="1000.0">
+                  <SplitPane dividerPositions="0.75" orientation="HORIZONTAL" prefHeight="1000.0" prefWidth="1000.0">
                      <items>
-                        <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="625.0">
+                        <ScrollPane fx:id="personalBoard" prefHeight="399.0" prefWidth="772.0">
                            <content>
-                              <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="1000.0" prefWidth="1000.0" />
+                              <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="3000.0" prefWidth="3000.0" style="-fx-background-color: red;" />
                            </content>
                         </ScrollPane>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <HBox prefHeight="589.0" prefWidth="429.0">
                                  <children>
-                                    <VBox prefHeight="589.0" prefWidth="203.0">
+                                    <VBox prefHeight="589.0" prefWidth="203.0" style="-fx-background-color: lightyellow;">
                                        <children>
                                           <VBox fx:id="boardCards" prefHeight="198.0" prefWidth="228.0">
                                              <children>
@@ -99,9 +99,9 @@
             <VBox prefHeight="300.0" prefWidth="800.0">
                <children>
                   <!-- SplitPane secondario diviso orizzontalmente -->
-                  <SplitPane dividerPositions="0.7" orientation="HORIZONTAL">
+                  <SplitPane dividerPositions="0.75" orientation="HORIZONTAL">
                      <items>
-                        <HBox fx:id="cardsHBox" prefHeight="152.0" prefWidth="681.0">
+                        <HBox fx:id="cardsHBox" alignment="CENTER" prefHeight="300.0" prefWidth="681.0" style="-fx-background-color: lightyellow;">
                            <children>
                               <VBox fx:id="myHand" prefHeight="152.0" prefWidth="364.0">
                                  <children>
