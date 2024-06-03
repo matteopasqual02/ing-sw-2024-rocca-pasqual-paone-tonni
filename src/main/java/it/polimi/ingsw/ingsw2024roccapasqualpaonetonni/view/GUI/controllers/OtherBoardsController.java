@@ -29,9 +29,9 @@ public class OtherBoardsController extends GenericController{
         switch (num){
             case 2->{
                 ScrollPane scrollPane = new ScrollPane();
-                scrollPane.setPrefSize(600,400);
+                scrollPane.setPrefSize(800,600);
                 VBox vBox = new VBox(name1,new ScrollPane(new Pane()));
-                vBox.setPrefSize(600,400);
+                vBox.setPrefSize(800,600);
                 hBox.getChildren().add(vBox);
             }
             case 3->{
@@ -73,8 +73,8 @@ public class OtherBoardsController extends GenericController{
         ConsolePrinter.consolePrinter(String.valueOf(x));
         ConsolePrinter.consolePrinter(String.valueOf(y));
         ImageView newCard = new ImageView(card.getImage());
-        newCard.setFitHeight(card.getFitHeight());
-        newCard.setFitWidth(card.getFitWidth());
+        newCard.setFitHeight(132.0);
+        newCard.setFitWidth(132.0);
         newCard.setLayoutX(x);
         newCard.setLayoutY(y);
         board.getChildren().add(newCard);
