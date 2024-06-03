@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GameSceneFinal"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="589.0" prefWidth="1084.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <!-- SplitPane principale diviso verticalmente -->
+      <SplitPane dividerPositions="0.84" layoutX="0.0" layoutY="0.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <!-- Parte superiore del SplitPane principale -->
+            <VBox prefHeight="300.0" prefWidth="800.0">
+               <children>
+                  <!-- SplitPane secondario diviso orizzontalmente -->
+                  <SplitPane disable="true" dividerPositions="0.7" orientation="HORIZONTAL" prefHeight="1000.0" prefWidth="1000.0">
+                     <items>
+                        <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="625.0">
+                           <content>
+                              <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="1000.0" prefWidth="1000.0" />
+                           </content>
+                        </ScrollPane>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <!-- Rettangolo in alto a destra -->
+                              <Pane prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: lightgreen;" />
+                              <Pane prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: yellow;" />
+                           </children>
+                        </HBox>
+                     </items>
+                  </SplitPane>
+               </children>
+            </VBox>
+            <!-- Parte inferiore del SplitPane principale -->
+            <VBox prefHeight="300.0" prefWidth="800.0">
+               <children>
+                  <!-- SplitPane secondario diviso orizzontalmente -->
+                  <SplitPane dividerPositions="0.7" orientation="HORIZONTAL">
+                     <items>
+                        <!-- Rettangolo in basso a sinistra -->
+                        <Pane disable="true" prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: lightyellow;" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <!-- Quadrato piccolo in basso a destra -->
+                              <Pane prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: lightcoral;" />
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+               </children>
+            </VBox>
+         </items>
+      </SplitPane>
+   </children>
 </AnchorPane>
