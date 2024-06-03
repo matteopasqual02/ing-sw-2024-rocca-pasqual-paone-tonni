@@ -252,15 +252,38 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         int card2 = Integer.parseInt(parole[2]);
                         PlayingCard[][] board = me.getBoard().getBoardMatrix();
                         int pos = Integer.parseInt(parole[3]);
+                        /*if(parole.length>5){
+                            double coord0 = Double.parseDouble(parole[4]);
+                            double coord1 = Double.parseDouble(parole[5]);
+                        }*/
 
                         for (PlayingCard[] playingCards : board) {
                             for (PlayingCard playingCard : playingCards) {
                                 if (playingCard != null && playingCard.getIdCard() == card2){
-                                    if(parole.length==4){
+                                    /*if(parole.length==4){
                                         server.addCard(myNickname, c1, playingCard, pos , false);
                                         return;
                                     }
                                     server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[4], "true"));
+                                    return;*/
+                                    if(parole.length==6){
+                                        double coord0 = Double.parseDouble(parole[4].replace(',','.'));
+                                        double coord1 = Double.parseDouble(parole[5].replace(',','.'));
+                                        server.addCard(myNickname, c1, playingCard, pos, coord0, coord1,false);
+                                        return;
+                                    }
+                                    else if(parole.length==7){
+                                        double coord0 = Double.parseDouble(parole[4].replace(',','.'));
+                                        double coord1 = Double.parseDouble(parole[5].replace(',','.'));
+                                        server.addCard(myNickname, c1, playingCard, pos , coord0, coord1, Objects.equals(parole[6], "true"));
+
+                                    }
+                                    else if(parole.length==4){
+                                        server.addCard(myNickname, c1, playingCard, pos , 0.0, 0.0, false);
+                                    }
+                                    else {
+                                        server.addCard(myNickname, c1, playingCard, pos , 0.0, 0.0, Objects.equals(parole[4], "true"));
+                                    }
                                     return;
                                 }
                             }
@@ -542,9 +565,10 @@ public class Client extends UnicastRemoteObject implements GameListener{
      * @param p the p
      */
     @Override
-    public void cardAdded(Player p) {
+    public void cardAdded(Player p, Double coord0, Double coord1,int cardID) {
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn,p.getNickname());
+        view.show_board(coord0,coord1,cardID,p.getNickname());
         if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }

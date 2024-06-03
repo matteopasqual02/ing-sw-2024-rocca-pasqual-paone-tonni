@@ -310,9 +310,6 @@ public class GUIApplication extends Application {
         if (myTurn) {
             gameSceneController.updateBoard(gameImmutable, nickname);
         }
-        else {
-            otherBoardsController.updateOtherBoards(gameImmutable,playerChangedNickname);
-        }
         scoreBoardController.updateScoreBoard(gameImmutable);
         gameSceneController.updateOtherPlayersPoints(gameImmutable,playerChangedNickname);
     }
@@ -429,10 +426,14 @@ public class GUIApplication extends Application {
         }
         otherBoardsController = loader.getController();
         otherBoardsController.setParameters(executor, client,this);
-        otherBoardsStage.setMinWidth(325);
-        otherBoardsStage.setMinHeight(640);
+        otherBoardsStage.setMinWidth(600);
+        otherBoardsStage.setMinHeight(400);
         otherBoardsStage.setFullScreen(false);
         otherBoardsStage.setResizable(false);
         otherBoardsStage.setScene(new Scene(rootOtherBoards, 300, 200));
+    }
+
+    public void show_otherPlayerBoard(int cardID, Double coord0, Double coord1, String playerChangedNickname) {
+        otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname);
     }
 }

@@ -27,6 +27,8 @@ public class MessageAddCard extends ClientGenericMessage{
      * The Corner.
      */
     private final int corner;
+    private final double coord0;
+    private final double coord1;
 
     /**
      * Instantiates a new Message add card.
@@ -37,13 +39,15 @@ public class MessageAddCard extends ClientGenericMessage{
      * @param corner      the corner
      * @param flip        the flip
      */
-    public MessageAddCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int corner, Boolean flip){
+    public MessageAddCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int corner, Double coord0, Double coord1, Boolean flip){
         this.flip=flip;
         this.cardOnBoard=cardOnBoard;
         this.cardToAdd=cardToAdd;
         this.corner=corner;
         this.isForMainController = false;
         this.nickname = nickname;
+        this.coord0=coord0;
+        this.coord1=coord1;
     }
 
 
@@ -68,6 +72,6 @@ public class MessageAddCard extends ClientGenericMessage{
      */
     @Override
     public void launchMessage(GameControllerInterface gameControllerInterface) throws RemoteException {
-        gameControllerInterface.addCard(nickname,cardToAdd,cardOnBoard,corner,flip);
+        gameControllerInterface.addCard(nickname,cardToAdd,cardOnBoard,corner,coord0,coord1,flip);
     }
 }

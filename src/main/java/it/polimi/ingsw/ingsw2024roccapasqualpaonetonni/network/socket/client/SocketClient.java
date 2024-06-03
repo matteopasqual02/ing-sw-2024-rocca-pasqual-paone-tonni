@@ -303,9 +303,9 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
      * @throws IOException the io exception
      */
     @Override
-    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException {
+    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1, Boolean flip) throws IOException {
         synchronized (lock) {
-            outputStream.writeObject(new MessageAddCard(nickname, cardToAdd, cardOnBoard, cornerToAttach, flip));
+            outputStream.writeObject(new MessageAddCard(nickname, cardToAdd, cardOnBoard, cornerToAttach, coord0,coord1,flip));
             messageDone();
         }
     }

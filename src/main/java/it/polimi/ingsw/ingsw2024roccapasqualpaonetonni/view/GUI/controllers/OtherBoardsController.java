@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -27,7 +28,10 @@ public class OtherBoardsController extends GenericController{
         Label name1 = new Label(gameImmutable.getPlayers().stream().filter(player -> !player.getNickname().equals(myNickame)).findFirst().map(Player::getNickname).orElse("error"));
         switch (num){
             case 2->{
+                ScrollPane scrollPane = new ScrollPane();
+                scrollPane.setPrefSize(600,400);
                 VBox vBox = new VBox(name1,new ScrollPane(new Pane()));
+                vBox.setPrefSize(600,400);
                 hBox.getChildren().add(vBox);
             }
             case 3->{
@@ -51,18 +55,45 @@ public class OtherBoardsController extends GenericController{
         anchorPane.getChildren().add(hBox);
     }
 
-    public void updateOtherBoards(GameImmutable gameImmutable, String playerChangedNickname) {
-        Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
-        if(p.isPresent())
-        {
-            PlayerBoard playerBoard = p.get().getBoard();
-            for(int i=0; i<hBox.getChildren().size();i++){
-                VBox vBox = (VBox) hBox.getChildren().get(i);
-                Label name = (Label) vBox.getChildren().get(0);
-                if(name.getText().equals(playerChangedNickname)){
-
-                }
+    public void updateOtherBoards(int cardId,Double coord0,Double coord1,String playerChangedNickname) {
+        for(int i=0; i<hBox.getChildren().size();i++){
+            VBox vBox = (VBox) hBox.getChildren().get(i);
+            Label name = (Label) vBox.getChildren().get(0);
+            if(name.getText().equals(playerChangedNickname)){
+                ScrollPane scrollPane = (ScrollPane) vBox.getChildren().get(1);
+                Pane pane = (Pane) scrollPane.getContent();
+                ImageView card = new ImageView();
+                card.setImage(new Image(createPath(cardId)));
+                placeCardOnBoard(card,coord0,coord1,pane);
             }
         }
     }
+    public void placeCardOnBoard(ImageView card, double x, double y,Pane board){
+        //we have to handle the case in which it is flipped
+        ConsolePrinter.consolePrinter(String.valueOf(x));
+        ConsolePrinter.consolePrinter(String.valueOf(y));
+        ImageView newCard = new ImageView(card.getImage());
+        newCard.setFitHeight(card.getFitHeight());
+        newCard.setFitWidth(card.getFitWidth());
+        newCard.setLayoutX(x);
+        newCard.setLayoutY(y);
+        board.getChildren().add(newCard);
+        newCard.setDisable(false);
+    }
+    private String createPath(int cardId) {
+        String path;
+        if(cardId<10){
+            path = "/images/Codex_image/CODEX_cards_front/00" + cardId +".png";
+        }
+        else if(cardId<100)
+        {
+            path = "/images/Codex_image/CODEX_cards_front/0" + cardId +".png";
+        }
+        else {
+            path = "/images/Codex_image/CODEX_cards_front/" + cardId +".png";
+        }
+        return String.valueOf(getClass().getResource(path));
+    }
+
 }
+

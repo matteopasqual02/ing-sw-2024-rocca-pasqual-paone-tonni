@@ -42,6 +42,11 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         ConsolePrinter.consolePrinter(gameImmutable.toString(nickname));
     }
 
+    @Override
+    public void show_board(Double coord0, Double coord1, int cardID, String playerChangedNickname) {
+
+    }
+
     /**
      * Show max num players set.
      *

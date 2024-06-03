@@ -127,11 +127,11 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
      *
      * @param p the p
      */
-    public void notify_addToBoard(Player p) {
+    public void notify_addToBoard(Player p, Double coord0, Double coord1,int cardID) {
         ConsolePrinter.consolePrinter("notifier");
         for(String name : listenersMap.keySet()){
             try {
-                listenersMap.get(name).sendCardAdded(p);
+                listenersMap.get(name).sendCardAdded(p,coord0,coord1,cardID);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

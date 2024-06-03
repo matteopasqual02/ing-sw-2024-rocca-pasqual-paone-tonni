@@ -95,7 +95,7 @@ public interface ServerInterface extends Remote{
      * @param flip           the flip
      * @throws IOException the io exception
      */
-    void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws IOException;
+    void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1, Boolean flip) throws IOException;
 
     /**
      * Add starting card.

@@ -11,14 +11,20 @@ public class ServerMessageCardAdded extends ServerGenericMessage{
      * The Player.
      */
     private final Player player;
+    private final Double coord0;
+    private final Double coord1;
+    private final int cardID;
 
     /**
      * Instantiates a new Server message card added.
      *
      * @param player the player
      */
-    public ServerMessageCardAdded( Player player){
+    public ServerMessageCardAdded( Player player, Double coord0, Double coord1,int cardID){
         this.player=player;
+        this.coord0=coord0;
+        this.coord1=coord1;
+        this.cardID=cardID;
     }
 
     /**
@@ -29,7 +35,7 @@ public class ServerMessageCardAdded extends ServerGenericMessage{
     @Override
     public void launchMessage(GameListener listener) {
         try {
-            listener.cardAdded(player);
+            listener.cardAdded(player,coord0,coord1,cardID);
         }
         catch(Exception e){
             e.printStackTrace();

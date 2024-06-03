@@ -360,9 +360,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
      * @param p the p
      */
     @Override
-    public void sendCardAdded(Player p) {
+    public void sendCardAdded(Player p, Double coord0, Double coord1,int cardID) {
         try {
-            listener.cardAdded(p);
+            listener.cardAdded(p,coord0,coord1,cardID);
         }
         catch (RemoteException e) {
             throw new RuntimeException(e);

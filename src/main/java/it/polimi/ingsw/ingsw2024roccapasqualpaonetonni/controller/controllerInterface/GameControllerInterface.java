@@ -67,7 +67,7 @@ public interface GameControllerInterface extends Remote {
      * @param flip           the flip
      * @throws RemoteException the remote exception
      */
-    void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException;
+    void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1, Boolean flip) throws RemoteException;
 
     /**
      * Add starting card.
