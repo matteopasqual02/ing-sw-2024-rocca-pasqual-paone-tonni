@@ -263,23 +263,29 @@ public class GUIApplication extends Application {
 
         controller.setParameters(executor, client,this);
 
-        //Stage stage = (Stage) root.getScene().getWindow();
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
-        Scene scene = new Scene(newRoot,currWidth,currHeight);
+        //Scene scene = new Scene(newRoot,currWidth,currHeight);
+        Scene scene = new Scene(newRoot);
         stage.setScene(scene);
-        stage.setTitle("Codex Naturalis");
-        stage.show();
+        stage.setWidth(currWidth);
+        stage.setHeight(currHeight);
+        stage.setScene(scene);
+        stage.setMinWidth(1048);
+        stage.setMinHeight(589);
     }
     public void changeSceneWithNoController(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent newRoot = loader.load();
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
-        Scene scene = new Scene(newRoot,currWidth,currHeight);
+        Scene scene = new Scene(newRoot);
+        //Scene scene = new Scene(newRoot,currWidth,currHeight);
         stage.setScene(scene);
-        stage.setTitle("Codex Naturalis");
-        stage.show();
+        stage.setWidth(currWidth);
+        stage.setHeight(currHeight);
+        stage.setMinWidth(1048);
+        stage.setMinHeight(589);
     }
 
     public void myRunningTurnPlaceStarting() {
