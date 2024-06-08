@@ -440,6 +440,7 @@ public class GUIApplication extends Application {
     }
 
     public void show_otherPlayerBoard(int cardID, Double coord0, Double coord1, String playerChangedNickname) {
-        otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname);
+        //forse bidogna mettere platform.runLater su tutti i metodi che vanno a modificare la gui perche cosi siamo sicuri che sono fartti dall'UI thread
+        Platform.runLater(()->otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname));
     }
 }
