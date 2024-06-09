@@ -858,6 +858,9 @@ public class GameSceneController extends GenericController{
         Platform.runLater(()->{application.infoBox();});
     }
 
+    public void handleSeeRuleBook(MouseEvent event) {
+        Platform.runLater(()->{application.ruleBook();});
+    }
 
 
     //--------------------------------------------CHAT

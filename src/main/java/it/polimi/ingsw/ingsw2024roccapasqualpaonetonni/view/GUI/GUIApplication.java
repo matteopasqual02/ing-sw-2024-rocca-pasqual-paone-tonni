@@ -8,15 +8,14 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -181,8 +180,17 @@ public class GUIApplication extends Application {
         hBox1.getChildren().addAll(info,image);
         Button next = new Button("Next →");
         Button prev = new Button("← Go Back");
-        hBox2.getChildren().addAll(prev,next,pageIndex);
-        page.getChildren().addAll(hBox1,hBox2);
+        prev.setVisible(false);
+
+        HBox buttonContainer = new HBox(10);
+        buttonContainer.setPadding(new Insets(10));
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        buttonContainer.getChildren().addAll(prev, spacer, next);
+
+        //hBox2.getChildren().addAll(prev,next,pageIndex);
+        page.getChildren().addAll(hBox1,buttonContainer);
         //alert.getButtonTypes().remove(ButtonType.OK);
         //alert.getButtonTypes().add(ButtonType.CLOSE);
         alert.getDialogPane().setContent(page);
@@ -195,21 +203,24 @@ public class GUIApplication extends Application {
 
         next.setOnAction(e -> {
             if ("1".equals(pageIndex.getText())) {
-                info.setText("Chose one of the cards in your hand and click the corner of the card on the board where you want to attach it");
+                info.setText("Choose one of the cards in your hand and click the corner of the card on the board where you want to attach it");
                 image.setImage(new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/053.png"))).getImage());
                 pageIndex.setText("2");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("hand");
+                prev.setVisible(true);
             } else if("2".equals(pageIndex.getText())){
                 info.setText("Draw a card, \"Resource\" or \"Gold\", from the decks or from the cards on the drawable board");
                 pageIndex.setText("3");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("deck");
+                next.setVisible(true);
             }else{
-                info.setText("Click on the button \"See Board\" next to a player to see his playing board");
+                info.setText("Click on the button \"See Other Board\" next to a player to see the other players' board");
                 pageIndex.setText("4");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("others");
+                next.setVisible(false);
                 /*next.setText("fine");
                 next.setOnMouseClicked((MouseEvent event) ->{alert.close();});*/
             }
@@ -225,6 +236,7 @@ public class GUIApplication extends Application {
                 pageIndex.setText("1");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("start");
+                prev.setVisible(false);
             } else if("3".equals(pageIndex.getText())){
                 info.setText("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
                 pageIndex.setText("2");
@@ -235,6 +247,7 @@ public class GUIApplication extends Application {
                 pageIndex.setText("3");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("deck");
+                next.setVisible(true);
             }
         });
         alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
@@ -446,5 +459,9 @@ public class GUIApplication extends Application {
 
     public void show_otherPlayerBoard(int cardID, Double coord0, Double coord1, String playerChangedNickname) {
         otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname);
+    }
+
+    public void ruleBook() {
+
     }
 }
