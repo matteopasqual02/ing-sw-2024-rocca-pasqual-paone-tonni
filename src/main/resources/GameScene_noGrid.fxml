@@ -115,6 +115,7 @@
             <HBox prefHeight="37.0" prefWidth="201.0">
                <Button mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" text="ScoreBoard"/>
                <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" text="Info"/>
+               <Button mnemonicParsing="false" onMouseClicked="#handleSeeRuleBook" text="RuleBook"/>
                <Button mnemonicParsing="false" onMouseClicked="#handleSeeOtherPlayersBoards"
                        text="SeeOtherBoards">
                   <font>
