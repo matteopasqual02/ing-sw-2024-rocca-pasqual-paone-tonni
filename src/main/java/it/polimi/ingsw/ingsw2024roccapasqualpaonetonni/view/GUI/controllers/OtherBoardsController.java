@@ -71,7 +71,7 @@ public class OtherBoardsController extends GenericController{
                     Pane pane = (Pane) scrollPane.getContent();
                     ImageView card = new ImageView();
                     card.setImage(new Image(createPath(cardId)));
-                    placeCardOnBoard(card,pane.getWidth()/2,pane.getHeight()/2,pane);
+                    placeCardOnBoard(card,scrollPane.getWidth()/2,scrollPane.getHeight()/2,pane);
                 }
             }
         }
@@ -87,7 +87,7 @@ public class OtherBoardsController extends GenericController{
                 Pane pane = (Pane) scrollPane.getContent();
                 ImageView card = new ImageView();
                 card.setImage(new Image(createPath(cardId)));
-                placeCardOnBoard(card,coord0*pane.getWidth(),coord1*pane.getHeight(),pane);
+                placeCardOnBoard(card,coord0*scrollPane.getWidth(),coord1*scrollPane.getHeight(),pane);
             }
         }
     }
@@ -96,8 +96,8 @@ public class OtherBoardsController extends GenericController{
         ConsolePrinter.consolePrinter(String.valueOf(x));
         ConsolePrinter.consolePrinter(String.valueOf(y));
         ImageView newCard = new ImageView(card.getImage());
-        newCard.setFitHeight(66.2);
-        newCard.setFitWidth(99.3);
+        newCard.setFitHeight(88);
+        newCard.setFitWidth(132);
         newCard.setLayoutX(x);
         newCard.setLayoutY(y);
         board.getChildren().add(newCard);
