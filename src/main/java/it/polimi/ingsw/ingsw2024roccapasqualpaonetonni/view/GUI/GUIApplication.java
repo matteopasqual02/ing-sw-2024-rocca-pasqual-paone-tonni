@@ -81,11 +81,13 @@ public class GUIApplication extends Application {
         ConsolePrinter.consolePrinter(message);
     }
     public void show_areYouReady(){
-        try {
-            changeScene("/AreYouReady.fxml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Platform.runLater(()-> {
+            try {
+                changeScene("/AreYouReady.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         String message = String.format("everyone entered, press y to begin");
         ConsolePrinter.consolePrinter(message);
     }
