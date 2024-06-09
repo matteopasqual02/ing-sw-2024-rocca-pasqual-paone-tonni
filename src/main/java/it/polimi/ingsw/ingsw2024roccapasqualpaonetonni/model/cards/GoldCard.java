@@ -45,6 +45,7 @@ public class GoldCard extends PlayingCard {
     @Override
     public int[] checkRequirements(int[] available_seeds) {
         int[] result = new int[2];
+        result[0] = 0;
         for (int i = 0; i < placeCondition.length; i++) {
             if (placeCondition[i] > available_seeds[i]) {
                 result[1] = i;

@@ -509,6 +509,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void nextTurn(String nickname) {
+        ConsolePrinter.consolePrinter("New turn: " + nickname);
         myTurn = myNickname.equals(nickname);
         if(currentImmutable==null){return;}
         Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();

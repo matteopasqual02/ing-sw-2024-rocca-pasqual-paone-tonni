@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Seed;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 
 import java.util.Arrays;
 
@@ -109,6 +110,7 @@ public abstract class PlayingCard extends Card {
      * @return the int [ ]
      */
     public int[] checkRequirements(int[] seedCount) {
+        ConsolePrinter.consolePrinter("Playing card");
         return new int[] {1,0};
     }
 

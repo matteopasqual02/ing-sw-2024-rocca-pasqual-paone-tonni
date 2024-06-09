@@ -343,12 +343,17 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnPlaceStarting() {
+        startingCardVBox.setDisable(false);
+        ConsolePrinter.consolePrinter(String.valueOf(myStartingCard));
         myStartingCard.setDisable(false);
+        flipStartingButton.setVisible(true);
+        flipStartingButton.setDisable(false);
         glow(myStartingCard);
     }
 
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
+        ConsolePrinter.consolePrinter("starting clicked");
         Node card = (Node) event.getSource();
         if (myStartingCard.getUserData() == null || !(boolean) myStartingCard.getUserData()) {
             jump(card);
@@ -375,6 +380,7 @@ public class GameSceneController extends GenericController{
     public void handleBoardClick(MouseEvent mouseEvent) {
         String flipped;
         board.setEffect(null);
+        flipHandCard.setDisable(true);
         if (selectedCard == myStartingCard) {
             board.setOnMouseClicked(event -> {});
             flipped = flippedStarting ? " true" : "";
@@ -430,30 +436,30 @@ public class GameSceneController extends GenericController{
             flipped = flippedHand[hand - 1] ? "true" : "";
 
             if(x<= cardWidth*0.25){
-                coords[0] = card.getLayoutX() - card.getFitWidth()*0.75;
+                coords[0] = (double) Math.round((card.getLayoutX() - card.getFitWidth() * 0.75) * 1000) / 1000;
                 if(y<=cardHeight*0.44){
                     corner = 1;
-                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
+                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.54) * 1000) / 1000;
                 }
                 else if(y>=cardHeight*0.56){
                     corner = 4;
-                    coords[1] = card.getLayoutY() + card.getFitHeight()*0.54;
+                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.54) * 1000) / 1000;;
                 }
             }
             else if(x>= cardWidth*0.75){
-                coords[0] = card.getLayoutX() + card.getFitWidth()*0.75;
+                coords[0] = (double) Math.round((card.getLayoutX() + card.getFitWidth() * 0.75) * 1000) / 1000;
                 if(y<=cardHeight*0.44){
                     corner = 2;
-                    coords[1] = card.getLayoutY() - card.getFitHeight()*0.54;
+                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.54) * 1000) / 1000;
                 }
                 else if(y>=cardHeight*0.56){
                     corner = 3;
-                    coords[1] = card.getLayoutY() + card.getFitHeight()*0.54;
+                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.54) * 1000) / 1000;
                 }
             }
             int finalCorner = corner;
 
-            String input = String.format("/addCard %d %s %d %f %f %s", hand, card.getId(), finalCorner, coords[0],coords[1],flipped);
+            String input = String.format("/addCard %d %s %d %s", hand, card.getId(), finalCorner,flipped);
             ConsolePrinter.consolePrinter(input);
 
             executor.submit(() -> {
@@ -514,25 +520,17 @@ public class GameSceneController extends GenericController{
         glow(mySecretObjective2);
     }
 
-    private void glow(ImageView image){
-        // blue shadow
-        DropShadow borderGlow = new DropShadow();
-        borderGlow.setOffsetY(0f);
-        borderGlow.setOffsetX(0f);
-        borderGlow.setColor(Color.BLUE);
-        borderGlow.setWidth(30);
-        borderGlow.setHeight(30);
-        image.setEffect(borderGlow);
-    }
-
     private void glow(Node node){
         // blue shadow
         DropShadow borderGlow = new DropShadow();
+        borderGlow.setBlurType(javafx.scene.effect.BlurType.GAUSSIAN);
+        borderGlow.setColor(Color.rgb(36, 160, 237, 0.8));
+        borderGlow.setRadius(10);
+        borderGlow.setSpread(0.5);
         borderGlow.setOffsetY(0f);
         borderGlow.setOffsetX(0f);
-        borderGlow.setColor(Color.BLUE);
-        borderGlow.setWidth(30);
-        borderGlow.setHeight(30);
+        // borderGlow.setWidth(30);
+        // borderGlow.setHeight(30);
         node.setEffect(borderGlow);
     }
 
@@ -652,8 +650,8 @@ public class GameSceneController extends GenericController{
         for (int i = 0; i < boardCards.getChildren().size(); i++) {
             if (boardCards.getChildren().get(i) instanceof HBox cards) {
                 for (int j = 0; j < cards.getChildren().size(); j++) {
-                    glow(boardCards.getChildren().get(i));
-                    boardCards.getChildren().get(i).setDisable(false);
+                    glow(cards.getChildren().get(j));
+                    cards.getChildren().get(j).setDisable(false);
                 }
             }
         }
@@ -666,6 +664,7 @@ public class GameSceneController extends GenericController{
 
     public void handleDrawableCardClicked(MouseEvent mouseEvent) {
         toReplaceIV = (ImageView) mouseEvent.getSource();
+        jump(toReplaceIV);
 
         disableDecks();
 
@@ -682,7 +681,10 @@ public class GameSceneController extends GenericController{
             }
         }
         try {
-            client.receiveInput("/drawBoard " + String.valueOf(toReplace + 1));
+            ConsolePrinter.consolePrinter(String.valueOf(toReplace));
+            String msg = "/drawBoard " + String.valueOf(toReplace + 1);
+            ConsolePrinter.consolePrinter(msg);
+            client.receiveInput(msg);
         } catch (IOException | NotBoundException e) {
             throw new RuntimeException(e);
         }
@@ -690,6 +692,7 @@ public class GameSceneController extends GenericController{
 
     public void handleResourceDeckClicked() {
         toReplaceIV = deckResourcesCard;
+        jump(toReplaceIV);
 
         for (int i = 0; i < decks.getChildren().size(); i++) {
             ImageView card = (ImageView) decks.getChildren().get(i);
@@ -712,6 +715,7 @@ public class GameSceneController extends GenericController{
 
     public void handleGoldDeckClicked() {
         toReplaceIV = deckGoldCard;
+        jump(toReplaceIV);
 
         for (int i = 0; i < decks.getChildren().size(); i++) {
             ImageView card = (ImageView) decks.getChildren().get(i);
@@ -767,13 +771,13 @@ public class GameSceneController extends GenericController{
         boardIDs[1] = cardId;
         boardCard2.setVisible(true);
         cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
-        boardCard1.setImage(new Image(createPath(cardId)));
-        boardCard1.setDisable(true);
+        boardCard3.setImage(new Image(createPath(cardId)));
+        boardCard3.setDisable(true);
         boardIDs[2] = cardId;
         boardCard3.setVisible(true);
         cardId = gameImmutable.getBoardDeck().getCard(4).getIdCard();
-        boardCard2.setImage(new Image(createPath(cardId)));
-        boardCard2.setDisable(true);
+        boardCard4.setImage(new Image(createPath(cardId)));
+        boardCard4.setDisable(true);
         boardIDs[3] = cardId;
         boardCard4.setVisible(true);
     }
@@ -785,6 +789,7 @@ public class GameSceneController extends GenericController{
                 handCard.setImage(toReplaceIV.getImage());
                 handCard.setDisable(true);
                 handCard.setVisible(true);
+                handCard.setEffect(null);
                 jump(handCard);
                 handIDs[i] = boardIDs[toReplace];
                 toReplace = -1;

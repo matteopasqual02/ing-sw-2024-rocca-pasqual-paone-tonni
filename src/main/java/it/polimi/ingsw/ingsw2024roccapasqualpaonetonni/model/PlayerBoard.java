@@ -160,12 +160,13 @@ public class PlayerBoard implements Serializable {
         }
         if (checkSpotAvailable(place_cord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
+            ConsolePrinter.consolePrinter("Player board " + String.valueOf(tmp[0]));
             if (card_to_add.isFlipped() || tmp[0] == 1) {
                 addCardToBoard(place_cord, card_to_add, seedCount);
             }
             else {
-                ConsolePrinter.consolePrinter("no seed");
-                throw new ConditionsNotMetException("Not enough seed type" + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
+                ConsolePrinter.consolePrinter("Not enough seed type " + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
+                throw new ConditionsNotMetException("Not enough seed type " + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
             }
         }
         else {

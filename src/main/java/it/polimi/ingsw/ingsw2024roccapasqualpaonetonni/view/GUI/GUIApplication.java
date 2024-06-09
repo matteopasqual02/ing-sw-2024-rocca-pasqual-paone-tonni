@@ -184,7 +184,6 @@ public class GUIApplication extends Application {
         //alert.getButtonTypes().remove(ButtonType.OK);
         //alert.getButtonTypes().add(ButtonType.CLOSE);
         alert.getDialogPane().setContent(page);
-        gameSceneController.glowInfo("start");
 /*
         GridPane dialogPane = (GridPane) alert.getDialogPane().lookup(".header-panel");
         dialogPane.getColumnConstraints().forEach(constraint -> constraint.setHgrow(Priority.NEVER));
@@ -350,6 +349,7 @@ public class GUIApplication extends Application {
 
     public void invalidAction(String s, boolean myTurn) {
         if (myTurn) {
+            ConsolePrinter.consolePrinter("Invalid action: " + s);
             switch (s) {
                 case "Conditions not met":
                     gameSceneController.cardNotPlaced("Conditions not met, chose another card!");
