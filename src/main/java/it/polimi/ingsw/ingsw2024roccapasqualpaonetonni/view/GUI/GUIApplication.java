@@ -95,7 +95,7 @@ public class GUIApplication extends Application {
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
         ConsolePrinter.consolePrinter(message);
-        joinedGameController.addNewLabel(message,joinedGameRoot);
+        Platform.runLater(()-> joinedGameController.addNewLabel(message,joinedGameRoot));
     }
 
     //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
@@ -144,9 +144,9 @@ public class GUIApplication extends Application {
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
-        infoBox();
-        scoreBoardController.setStartingPawns(gameImmutable);
-        otherBoardsController.setBoards(gameImmutable,nickname);
+        Platform.runLater(this::infoBox);
+        Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
+        Platform.runLater(()->otherBoardsController.setBoards(gameImmutable,nickname));
     }
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -445,7 +445,6 @@ public class GUIApplication extends Application {
     }
 
     public void show_otherPlayerBoard(int cardID, Double coord0, Double coord1, String playerChangedNickname) {
-        //forse bidogna mettere platform.runLater su tutti i metodi che vanno a modificare la gui perche cosi siamo sicuri che sono fartti dall'UI thread
-        Platform.runLater(()->otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname));
+        otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname);
     }
 }
