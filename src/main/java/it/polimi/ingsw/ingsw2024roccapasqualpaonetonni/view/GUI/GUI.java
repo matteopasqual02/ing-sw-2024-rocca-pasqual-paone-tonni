@@ -51,7 +51,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater((()->{
             switch (type){
                 case ALL -> application.show_all(gameImmutable,nickname,myTurn);
-                case START -> application.show_startCard(gameImmutable,nickname,myTurn);
+                case START -> application.show_startCard(gameImmutable,nickname,myTurn,playerChangedNickname);
                 case BOARD -> application.show_board(gameImmutable,nickname,myTurn,playerChangedNickname);
                 case OBJECTIVE -> application.show_objective(gameImmutable,nickname,myTurn);
                 case BOARDDECK -> application.show_boardDeck(gameImmutable, nickname, myTurn,playerChangedNickname);

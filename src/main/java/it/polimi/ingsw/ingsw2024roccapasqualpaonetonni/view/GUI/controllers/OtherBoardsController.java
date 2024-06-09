@@ -55,6 +55,24 @@ public class OtherBoardsController extends GenericController{
         anchorPane.getChildren().add(hBox);
     }
 
+    public void insertStartCard(GameImmutable gameImmutable,String playerChangedNickname){
+        int cardId = gameImmutable.getPlayers().stream().filter(player -> player.getNickname().equals(playerChangedNickname)).findFirst().map(player -> player.getStartingCard().getIdCard()).orElse(-1);
+        if (cardId != -1) {
+            for(int i=0; i<hBox.getChildren().size();i++){
+                VBox vBox = (VBox) hBox.getChildren().get(i);
+                Label name = (Label) vBox.getChildren().get(0);
+                if(name.getText().equals(playerChangedNickname)){
+                    ScrollPane scrollPane = (ScrollPane) vBox.getChildren().get(1);
+                    Pane pane = (Pane) scrollPane.getContent();
+                    ImageView card = new ImageView();
+                    card.setImage(new Image(createPath(cardId)));
+                    placeCardOnBoard(card,pane.getWidth()/2,pane.getHeight()/2,pane);
+                }
+            }
+        }
+
+    }
+
     public void updateOtherBoards(int cardId,Double coord0,Double coord1,String playerChangedNickname) {
         for(int i=0; i<hBox.getChildren().size();i++){
             VBox vBox = (VBox) hBox.getChildren().get(i);
