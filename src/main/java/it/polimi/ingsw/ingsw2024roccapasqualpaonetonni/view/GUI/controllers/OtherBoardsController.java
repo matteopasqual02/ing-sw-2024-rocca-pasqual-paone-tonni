@@ -11,10 +11,7 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +25,19 @@ public class OtherBoardsController extends GenericController{
         Label name1 = new Label(gameImmutable.getPlayers().stream().filter(player -> !player.getNickname().equals(myNickame)).findFirst().map(Player::getNickname).orElse("error"));
         switch (num){
             case 2->{
-                ScrollPane scrollPane = new ScrollPane();
+                ScrollPane scrollPane = new ScrollPane(new Pane());
                 scrollPane.setPrefSize(800,600);
-                VBox vBox = new VBox(name1,new ScrollPane(new Pane()));
+                VBox vBox = new VBox(name1,scrollPane);
                 vBox.setPrefSize(800,600);
+                VBox.setVgrow(scrollPane, Priority.ALWAYS);
+                VBox.setVgrow(vBox, Priority.ALWAYS);
+                HBox.setHgrow(vBox, Priority.ALWAYS);
                 hBox.getChildren().add(vBox);
+
+                AnchorPane.setTopAnchor(hBox, 0.0);
+                AnchorPane.setBottomAnchor(hBox, 0.0);
+                AnchorPane.setLeftAnchor(hBox, 0.0);
+                AnchorPane.setRightAnchor(hBox, 0.0);
             }
             case 3->{
                 Label name2 = new Label(gameImmutable.getPlayers().stream().filter(player -> !player.getNickname().equals(myNickame)).skip(1).findFirst().map(Player::getNickname).orElse("error"));
@@ -55,6 +60,24 @@ public class OtherBoardsController extends GenericController{
         anchorPane.getChildren().add(hBox);
     }
 
+    public void insertStartCard(GameImmutable gameImmutable,String playerChangedNickname){
+        int cardId = gameImmutable.getPlayers().stream().filter(player -> player.getNickname().equals(playerChangedNickname)).findFirst().map(player -> player.getStartingCard().getIdCard()).orElse(-1);
+        if (cardId != -1) {
+            for(int i=0; i<hBox.getChildren().size();i++){
+                VBox vBox = (VBox) hBox.getChildren().get(i);
+                Label name = (Label) vBox.getChildren().get(0);
+                if(name.getText().equals(playerChangedNickname)){
+                    ScrollPane scrollPane = (ScrollPane) vBox.getChildren().get(1);
+                    Pane pane = (Pane) scrollPane.getContent();
+                    ImageView card = new ImageView();
+                    card.setImage(new Image(createPath(cardId)));
+                    placeCardOnBoard(card,scrollPane.getWidth()/2,scrollPane.getHeight()/2,pane);
+                }
+            }
+        }
+
+    }
+
     public void updateOtherBoards(int cardId,Double coord0,Double coord1,String playerChangedNickname) {
         for(int i=0; i<hBox.getChildren().size();i++){
             VBox vBox = (VBox) hBox.getChildren().get(i);
@@ -64,7 +87,7 @@ public class OtherBoardsController extends GenericController{
                 Pane pane = (Pane) scrollPane.getContent();
                 ImageView card = new ImageView();
                 card.setImage(new Image(createPath(cardId)));
-                placeCardOnBoard(card,coord0,coord1,pane);
+                placeCardOnBoard(card,coord0*scrollPane.getWidth(),coord1*scrollPane.getHeight(),pane);
             }
         }
     }
@@ -73,8 +96,8 @@ public class OtherBoardsController extends GenericController{
         ConsolePrinter.consolePrinter(String.valueOf(x));
         ConsolePrinter.consolePrinter(String.valueOf(y));
         ImageView newCard = new ImageView(card.getImage());
-        newCard.setFitHeight(132.0);
-        newCard.setFitWidth(132.0);
+        newCard.setFitHeight(88);
+        newCard.setFitWidth(132);
         newCard.setLayoutX(x);
         newCard.setLayoutY(y);
         board.getChildren().add(newCard);

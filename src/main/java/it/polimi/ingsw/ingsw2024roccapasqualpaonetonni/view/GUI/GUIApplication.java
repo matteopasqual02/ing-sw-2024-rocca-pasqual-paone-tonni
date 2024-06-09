@@ -8,15 +8,15 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -81,11 +81,13 @@ public class GUIApplication extends Application {
         ConsolePrinter.consolePrinter(message);
     }
     public void show_areYouReady(){
-        try {
-            changeScene("/AreYouReady.fxml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Platform.runLater(()-> {
+            try {
+                changeScene("/AreYouReady.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         String message = String.format("everyone entered, press y to begin");
         ConsolePrinter.consolePrinter(message);
     }
@@ -93,7 +95,7 @@ public class GUIApplication extends Application {
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
         ConsolePrinter.consolePrinter(message);
-        joinedGameController.addNewLabel(message,joinedGameRoot);
+        Platform.runLater(()-> joinedGameController.addNewLabel(message,joinedGameRoot));
     }
 
     //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
@@ -142,9 +144,9 @@ public class GUIApplication extends Application {
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
-        infoBox();
-        scoreBoardController.setStartingPawns(gameImmutable);
-        otherBoardsController.setBoards(gameImmutable,nickname);
+        Platform.runLater(this::infoBox);
+        Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
+        Platform.runLater(()->otherBoardsController.setBoards(gameImmutable,nickname));
     }
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -179,8 +181,17 @@ public class GUIApplication extends Application {
         hBox1.getChildren().addAll(info,image);
         Button next = new Button("Next →");
         Button prev = new Button("← Go Back");
-        hBox2.getChildren().addAll(prev,next,pageIndex);
-        page.getChildren().addAll(hBox1,hBox2);
+        prev.setVisible(false);
+
+        HBox buttonContainer = new HBox(10);
+        buttonContainer.setPadding(new Insets(10));
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        buttonContainer.getChildren().addAll(prev, spacer, next);
+
+        //hBox2.getChildren().addAll(prev,next,pageIndex);
+        page.getChildren().addAll(hBox1,buttonContainer);
         //alert.getButtonTypes().remove(ButtonType.OK);
         //alert.getButtonTypes().add(ButtonType.CLOSE);
         alert.getDialogPane().setContent(page);
@@ -192,46 +203,65 @@ public class GUIApplication extends Application {
 
         next.setOnAction(e -> {
             if ("1".equals(pageIndex.getText())) {
-                info.setText("Chose one of the cards in your hand and click the corner of the card on the board where you want to attach it");
+                info.setText("Choose one of the cards in your hand and click the corner of the card on the board where you want to attach it");
                 image.setImage(new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/053.png"))).getImage());
                 pageIndex.setText("2");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("hand");
+                prev.setVisible(true);
             } else if("2".equals(pageIndex.getText())){
                 info.setText("Draw a card, \"Resource\" or \"Gold\", from the decks or from the cards on the drawable board");
                 pageIndex.setText("3");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("deck");
-            }else{
-                info.setText("Click on the button \"See Board\" next to a player to see his playing board");
+                next.setVisible(true);
+            } else if("3".equals(pageIndex.getText())){
+                info.setText("Click on the button \"RuleBook\" to see the official game rules, and click on the button \"InfoBox\" to look back at these rules");
                 pageIndex.setText("4");
+                gameSceneController.glowInfo("others");
+            } else if("4".equals(pageIndex.getText())){
+                info.setText("Click on the button \"ScoreBoard\" to see every player's position in the score board");
+                pageIndex.setText("5");
+                gameSceneController.glowInfo("others");
+            }else{
+                info.setText("Click on the button \"See Other Board\" to see the other players' board");
+                pageIndex.setText("6");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("others");
-                /*next.setText("fine");
-                next.setOnMouseClicked((MouseEvent event) ->{alert.close();});*/
+                next.setVisible(false);
             }
         });
         prev.setOnAction(e -> {
             if ("1".equals(pageIndex.getText())) {
-                info.setText("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
+                info.setText("When it's your turn, place a card of the type \"Starting\" in the middle of the board");
                 pageIndex.setText("1");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("start");
             } else if("2".equals(pageIndex.getText())){
-                info.setText("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
+                info.setText("When it's your turn, place a card of the type \"Starting\" in the middle of the board");
                 pageIndex.setText("1");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("start");
+                prev.setVisible(false);
             } else if("3".equals(pageIndex.getText())){
-                info.setText("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
+                info.setText("Choose one of the cards in your hand and click the corner of the card on the board where you want to attach it");
                 pageIndex.setText("2");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("hand");
-            } else {
-                info.setText("pesca una carta, resource o gold, o dal mazzo o dalle carte presenti sul tavolo");
+            } else if("4".equals(pageIndex.getText())){
+                info.setText("Draw a card, \"Resource\" or \"Gold\", from the decks or from the cards on the drawable board");
                 pageIndex.setText("3");
                 gameSceneController.stopGlowInfo();
                 gameSceneController.glowInfo("deck");
+            } else if("5".equals(pageIndex.getText())){
+                info.setText("Click on the button \"RuleBook\" to see the official game rules, and click on the button \"InfoBox\" to look back at these rules");
+                pageIndex.setText("4");
+                gameSceneController.stopGlowInfo();
+            } else if("6".equals(pageIndex.getText())){
+                info.setText("Click on the button \"ScoreBoard\" to see every player's position in the score board");
+                pageIndex.setText("5");
+                gameSceneController.stopGlowInfo();
+                next.setVisible(true);
             }
         });
         alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
@@ -262,23 +292,29 @@ public class GUIApplication extends Application {
 
         controller.setParameters(executor, client,this);
 
-        //Stage stage = (Stage) root.getScene().getWindow();
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
-        Scene scene = new Scene(newRoot,currWidth,currHeight);
+        //Scene scene = new Scene(newRoot,currWidth,currHeight);
+        Scene scene = new Scene(newRoot);
         stage.setScene(scene);
-        stage.setTitle("Codex Naturalis");
-        stage.show();
+        stage.setWidth(currWidth);
+        stage.setHeight(currHeight);
+        stage.setScene(scene);
+        stage.setMinWidth(1048);
+        stage.setMinHeight(589);
     }
     public void changeSceneWithNoController(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent newRoot = loader.load();
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
-        Scene scene = new Scene(newRoot,currWidth,currHeight);
+        Scene scene = new Scene(newRoot);
+        //Scene scene = new Scene(newRoot,currWidth,currHeight);
         stage.setScene(scene);
-        stage.setTitle("Codex Naturalis");
-        stage.show();
+        stage.setWidth(currWidth);
+        stage.setHeight(currHeight);
+        stage.setMinWidth(1048);
+        stage.setMinHeight(589);
     }
 
     public void myRunningTurnPlaceStarting() {
@@ -299,9 +335,12 @@ public class GUIApplication extends Application {
         }
     }
 
-    public void show_startCard(GameImmutable gameImmutable, String nickname, boolean myTurn) {
+    public void show_startCard(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
             gameSceneController.startCard(gameImmutable, nickname);
+        }
+        else {
+            otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
         }
     }
 
@@ -435,5 +474,115 @@ public class GUIApplication extends Application {
 
     public void show_otherPlayerBoard(int cardID, Double coord0, Double coord1, String playerChangedNickname) {
         otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname);
+    }
+
+    public void ruleBook() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.setHeaderText("Rulebook:");
+        VBox page = new VBox();
+        page.setSpacing(10);
+        ImageView pageImage = new ImageView();
+        pageImage.setFitHeight(433.25);
+        pageImage.setFitWidth(433.25);
+        pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/01.png"))));
+        final Label pageIndex = new Label("1");
+        HBox hBox1 = new HBox();
+        HBox hBox2 = new HBox();
+        hBox1.getChildren().add(pageImage);
+        Button next = new Button("Next →");
+        Button prev = new Button("← Go Back");
+        prev.setVisible(false);
+        HBox buttonContainer = new HBox(10);
+        buttonContainer.setPadding(new Insets(10));
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        buttonContainer.getChildren().addAll(prev, spacer, next);
+
+        page.getChildren().addAll(hBox1,buttonContainer);
+        alert.getDialogPane().setContent(page);
+
+        next.setOnAction(e -> {
+            if ("1".equals(pageIndex.getText())) {
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/02.png"))));
+                pageIndex.setText("2");
+                prev.setVisible(true);
+            } else if("2".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/03.png"))));
+                pageIndex.setText("3");
+                next.setVisible(true);
+            }else if("3".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/04.png"))));
+                pageIndex.setText("4");
+            }else if("4".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/05.png"))));
+                pageIndex.setText("5");
+            }else if("5".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/06.png"))));
+                pageIndex.setText("6");
+            }else if("6".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/07.png"))));
+                pageIndex.setText("7");
+            }else if("7".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/08.png"))));
+                pageIndex.setText("8");
+            }else if("8".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/09.png"))));
+                pageIndex.setText("9");
+            }else if("9".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/10.png"))));
+                pageIndex.setText("10");
+            }else if("10".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/11.png"))));
+                pageIndex.setText("11");
+            }else if("11".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/12.png"))));
+                pageIndex.setText("12");
+                next.setVisible(false);
+            }
+        });
+        prev.setOnAction(e -> {
+            if ("1".equals(pageIndex.getText())) {
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/01.png"))));
+                pageIndex.setText("1");
+            } else if("2".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/01.png"))));
+                pageIndex.setText("1");
+                prev.setVisible(false);
+            } else if("3".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/02.png"))));
+                pageIndex.setText("2");
+            } else if("4".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/03.png"))));
+                pageIndex.setText("3");
+            } else if("5".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/04.png"))));
+                pageIndex.setText("4");
+            } else if("6".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/05.png"))));
+                pageIndex.setText("5");
+            } else if("7".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/06.png"))));
+                pageIndex.setText("6");
+            } else if("8".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/07.png"))));
+                pageIndex.setText("7");
+            } else if("9".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/08.png"))));
+                pageIndex.setText("8");
+            } else if("10".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/09.png"))));
+                pageIndex.setText("9");
+            } else if("11".equals(pageIndex.getText())){
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/10.png"))));
+                pageIndex.setText("10");
+            } else {
+                pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/11.png"))));
+                pageIndex.setText("11");
+                next.setVisible(true);
+            }
+        });
+        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
+        alert.showAndWait();
     }
 }

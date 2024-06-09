@@ -51,7 +51,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater((()->{
             switch (type){
                 case ALL -> application.show_all(gameImmutable,nickname,myTurn);
-                case START -> application.show_startCard(gameImmutable,nickname,myTurn);
+                case START -> application.show_startCard(gameImmutable,nickname,myTurn,playerChangedNickname);
                 case BOARD -> application.show_board(gameImmutable,nickname,myTurn,playerChangedNickname);
                 case OBJECTIVE -> application.show_objective(gameImmutable,nickname,myTurn);
                 case BOARDDECK -> application.show_boardDeck(gameImmutable, nickname, myTurn,playerChangedNickname);
@@ -62,7 +62,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void show_board(Double coord0, Double coord1, int cardID, String playerChangedNickname) {
-        application.show_otherPlayerBoard(cardID,coord0,coord1,playerChangedNickname);
+        runLater(()->application.show_otherPlayerBoard(cardID,coord0,coord1,playerChangedNickname));
     }
 
     /**
