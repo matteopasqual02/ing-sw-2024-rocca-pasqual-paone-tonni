@@ -125,7 +125,7 @@ class GameControllerTest {
         assertEquals(cardPlaced,cardOnBoard);
 
         //assert correct second placing
-        gameController.addCard(nick,cardToAdd,startingCard,1,false);
+        gameController.addCard(nick,cardToAdd,startingCard,1,0.0,0.0,false);
         gameController.drawGoldFromDeck(nick);
 
         //to check the correct draw
@@ -180,7 +180,7 @@ class GameControllerTest {
         assertEquals(cardPlaced,cardOnBoard);
 
         //assert correct second placing
-        gameController.addCard(nick,cardToAdd,startingCard,1,false);
+        gameController.addCard(nick,cardToAdd,startingCard,1,0.0,0.0,false);
         gameController.drawFromBoard(nick,1);
 
         //to check the correct draw
@@ -235,7 +235,7 @@ class GameControllerTest {
         assertEquals(cardPlaced,cardOnBoard);
 
         //assert correct second placing
-        gameController.addCard(nick,cardToAdd,startingCard,1,false);
+        gameController.addCard(nick,cardToAdd,startingCard,1,0.0,0.0,false);
         gameController.drawResourceFromDeck(nick);
 
         //to check the correct draw
