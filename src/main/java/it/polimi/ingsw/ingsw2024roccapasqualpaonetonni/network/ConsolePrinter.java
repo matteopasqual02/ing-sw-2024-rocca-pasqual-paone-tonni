@@ -12,7 +12,7 @@ public class ConsolePrinter {
      * @param message the message
      */
     public static void consolePrinter(Ansi message){
-        new Thread(()->System.out.println(message)).start();
+        System.out.println(message);
     }
 
     /**
@@ -21,7 +21,7 @@ public class ConsolePrinter {
      * @param message the message
      */
     public static void consolePrinter(String message){
-        new Thread(()->System.out.println(message)).start();
+        System.out.println(message);
     }
 
     /**
@@ -30,7 +30,7 @@ public class ConsolePrinter {
      * @param message the message
      */
     public static void consolePrinter(StringBuilder message){
-        new Thread(()->System.out.println(message)).start();
+        System.out.println(message);
     }
 
 }
