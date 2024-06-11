@@ -65,16 +65,17 @@ It is also suggested to enable the UTF-8 characters support in the terminal, as 
 <img src="github/assets/UTF-8_tutorial.jpg" />
 
 #### Server
+be shure to be in ing-sw-2024-rocca-pasqual-paone-tonni directory
 The server can be run with the following command in a terminal window
  ```
-java -jar CodexNaturalis_Server.jar
+java -jar Deliverables\Game\server.jar
  ```
 
 #### Client
+be shure to be in ing-sw-2024-rocca-pasqual-paone-tonni directory
 The client can be run with the following command in a terminal window
-##### For the GUI:
  ```
-java -jar CodexNaturalis.jar
+java -jar Deliverables\Game\client.jar
  ```
 
 ## Team
