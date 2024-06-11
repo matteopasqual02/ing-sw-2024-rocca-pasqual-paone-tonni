@@ -22,96 +22,11 @@
 
 <AnchorPane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1048.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
    <children>
-      <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="625.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="0.0">
          <content>
-            <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="1000.0" prefWidth="1000.0" />
+            <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="750.0" prefWidth="1000.0" />
          </content>
       </ScrollPane>
-      <AnchorPane layoutY="419.0" prefHeight="170.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <HBox fx:id="cardsHBox" prefHeight="152.0" prefWidth="681.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox fx:id="myHand" prefHeight="152.0" prefWidth="364.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My Hand" textAlignment="CENTER" wrappingWidth="367.13671875" />
-                        <HBox fx:id="handCards" prefHeight="83.0" prefWidth="306.0">
-                           <children>
-                              <ImageView fx:id="myHandImage1" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="myHandImage2" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="myHandImage3" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                        <Button fx:id="flipHandCard" mnemonicParsing="false" onMouseClicked="#handleFlipHandCard" prefHeight="25.0" prefWidth="132.0" text="Flip" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="secretObjectiveVBox" prefHeight="152.0" prefWidth="127.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Objective" textAlignment="CENTER" wrappingWidth="101.13671875" />
-                        <VBox fx:id="secretObjective" prefHeight="102.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fx:id="mySecretObjective1" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard1Clicked" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="mySecretObjective2" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard2Clicked" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="startingVBox" prefHeight="152.0" prefWidth="126.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Card" textAlignment="CENTER" wrappingWidth="101.13671875" />
-                        <VBox fx:id="startingCardVBox" prefHeight="136.0" prefWidth="122.0">
-                           <children>
-                              <ImageView fx:id="myStartingCard" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleStartingCardClicked" pickOnBounds="true" preserveRatio="true" />
-                              <Button fx:id="flipStartingButton" mnemonicParsing="false" onMouseClicked="#handleFlipStarting" prefHeight="25.0" prefWidth="132.0" text="Flip" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <VBox prefHeight="176.0" prefWidth="339.0" spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <HBox prefHeight="27.0" prefWidth="197.0">
-                     <children>
-                        <Button fx:id="publicChatButton" disable="true" mnemonicParsing="false" onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="100.5" text="Public Chat" />
-                        <Button fx:id="privateChatButton" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="100.5" text="Private Chat" />
-                     </children>
-                  </HBox>
-                  <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0">
-                     <content>
-                        <VBox fx:id="messageContainer" prefHeight="232.0" prefWidth="185.0" spacing="2.0" />
-                     </content>
-                  </ScrollPane>
-                  <VBox>
-                     <children>
-                        <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
-                           <children>
-                              <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat" prefWidth="100.5" promptText="Select Player" />
-                           </children>
-                        </HBox>
-                        <VBox prefHeight="62.0" prefWidth="187.0">
-                           <children>
-                              <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="201.0" wrapText="true" />
-                              <Button onAction="#handleSend" prefHeight="12.0" prefWidth="201.0" text="Send" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
       <HBox layoutX="623.0" layoutY="5.0" prefHeight="589.0" prefWidth="493.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="589.0" prefWidth="203.0">
@@ -155,6 +70,9 @@
                      </children>
                   </VBox>
                </children>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
             </VBox>
             <VBox prefHeight="589.0" prefWidth="217.0">
                <children>
@@ -179,5 +97,96 @@
             </VBox>
          </children>
       </HBox>
+      <AnchorPane layoutY="419.0" prefHeight="170.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <HBox fx:id="cardsHBox" alignment="CENTER" prefHeight="176.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox fx:id="myHand" alignment="CENTER" prefHeight="152.0" prefWidth="364.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My Hand" textAlignment="CENTER" wrappingWidth="367.13671875" />
+                        <HBox fx:id="handCards" prefHeight="83.0" prefWidth="306.0">
+                           <children>
+                              <ImageView fx:id="myHandImage1" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="myHandImage2" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="myHandImage3" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <Button fx:id="flipHandCard" mnemonicParsing="false" onMouseClicked="#handleFlipHandCard" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox fx:id="secretObjectiveVBox" alignment="CENTER" prefHeight="152.0" prefWidth="127.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Secret Objective" textAlignment="CENTER" wrappingWidth="101.13671875" />
+                        <VBox fx:id="secretObjective" prefHeight="102.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fx:id="mySecretObjective1" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard1Clicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="mySecretObjective2" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard2Clicked" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox fx:id="startingVBox" alignment="CENTER" prefHeight="152.0" prefWidth="126.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Card" textAlignment="CENTER" wrappingWidth="101.13671875" />
+                        <VBox fx:id="startingCardVBox" prefHeight="136.0" prefWidth="122.0">
+                           <children>
+                              <ImageView fx:id="myStartingCard" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleStartingCardClicked" pickOnBounds="true" preserveRatio="true" />
+                              <Button fx:id="flipStartingButton" mnemonicParsing="false" onMouseClicked="#handleFlipStarting" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox prefHeight="176.0" prefWidth="520.0" spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox prefHeight="27.0" prefWidth="197.0">
+                     <children>
+                        <Button fx:id="publicChatButton" disable="true" mnemonicParsing="false" onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="100.5" text="Public Chat" />
+                        <Button fx:id="privateChatButton" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="100.5" text="Private Chat" />
+                     </children>
+                  </HBox>
+                  <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0">
+                     <content>
+                        <VBox fx:id="messageContainer" prefHeight="232.0" prefWidth="185.0" spacing="2.0" />
+                     </content>
+                  </ScrollPane>
+                  <VBox>
+                     <children>
+                        <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
+                           <children>
+                              <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat" prefWidth="100.5" promptText="Select Player" />
+                           </children>
+                        </HBox>
+                        <VBox prefHeight="62.0" prefWidth="187.0">
+                           <children>
+                              <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="201.0" wrapText="true" />
+                              <Button onAction="#handleSend" prefHeight="12.0" prefWidth="201.0" text="Send" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
