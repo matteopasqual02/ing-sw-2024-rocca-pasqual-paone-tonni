@@ -407,15 +407,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
         return myNickname;
     }
 
-    /**
-     * Get server interface server interface.
-     *
-     * @return the server interface
-     */
-    public ServerInterface getServerInterface(){
-        return server;
-    }
-    public boolean getMyTurn(){return myTurn;}
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 
@@ -477,6 +468,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void areYouReady() {
+        MainStaticMethod.clearCMD();
         view.show_areYouReady();
     }
 
@@ -487,6 +479,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void allGame(GameImmutable gameImmutable) {
+        MainStaticMethod.clearCMD();
         if(gameImmutable.getStatus()==GameStatus.PREPARATION){
             view.show_areYouReady();
             return;
@@ -550,6 +543,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void startAdded(Player p) {
+        MainStaticMethod.clearCMD();
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.START, myTurn,p.getNickname());
         if(myTurn){
@@ -567,6 +561,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void cardAdded(Player p, Double coord0, Double coord1,int cardID) {
+        MainStaticMethod.clearCMD();
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn,p.getNickname());
         view.show_board(coord0,coord1,cardID,p.getNickname());
@@ -585,6 +580,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void personalGoalChosen(Player p) {
+        MainStaticMethod.clearCMD();
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.OBJECTIVE, myTurn,p.getNickname());
         if(myTurn){
@@ -614,6 +610,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void resourceDrawn(Player p, DrawableDeck d) {
+        MainStaticMethod.clearCMD();
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
@@ -630,6 +627,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void goldDrawn(Player p, DrawableDeck d) {
+        MainStaticMethod.clearCMD();
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
@@ -646,6 +644,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
+        MainStaticMethod.clearCMD();
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
@@ -672,6 +671,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void winners(List<Player> list) {
+        MainStaticMethod.clearCMD();
         view.winners(list,myNickname);
     }
 

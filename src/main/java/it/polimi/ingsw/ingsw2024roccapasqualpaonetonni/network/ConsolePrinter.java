@@ -11,7 +11,7 @@ public class ConsolePrinter {
      *
      * @param message the message
      */
-    public static void consolePrinter(Ansi message){
+    public synchronized static void consolePrinter(Ansi message){
         System.out.println(message);
     }
 
@@ -20,7 +20,7 @@ public class ConsolePrinter {
      *
      * @param message the message
      */
-    public static void consolePrinter(String message){
+    public synchronized static void consolePrinter(String message){
         System.out.println(message);
     }
 
@@ -29,7 +29,7 @@ public class ConsolePrinter {
      *
      * @param message the message
      */
-    public static void consolePrinter(StringBuilder message){
+    public synchronized static void consolePrinter(StringBuilder message){
         System.out.println(message);
     }
 
