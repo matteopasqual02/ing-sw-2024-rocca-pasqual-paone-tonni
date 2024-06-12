@@ -29,11 +29,13 @@ public class TimerReconnection extends Thread{
     @SuppressWarnings("BusyWait")
     @Override
     public void run(){
-        while (true){
+        boolean interrupt=false;
+        while (!this.isInterrupted() && !interrupt){
             try {
-                Thread.sleep(100);
+                Thread.sleep(150);
             } catch (InterruptedException e) {
                 ConsolePrinter.consolePrinter("Time stopped");
+                interrupt=true;
             }
             if(time%100==0){
                 ConsolePrinter.consolePrinter("Timer Started in game "+model.getGameId()+": "+time/100+"/"+DefaultControllerValues.timeReconnection/100);
@@ -48,6 +50,8 @@ public class TimerReconnection extends Thread{
             }
 
         }
+
+        ConsolePrinter.consolePrinter("Time stopped");
 
     }
 }

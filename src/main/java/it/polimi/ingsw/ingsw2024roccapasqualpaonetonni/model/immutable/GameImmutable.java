@@ -225,9 +225,9 @@ public class GameImmutable implements Serializable {
             }
         }
         stringBuilder.append("\nMY HAND:\n");
-        stringBuilder.append("\tHAND 1\t\t\tHAND 2\t\t\tHAND 3\t\t\t\tPRIVATE GOAL");
+        stringBuilder.append("\tHAND 1\t\tHAND 2\t\tHAND 3\t\t\tPRIVATE GOAL");
         if(player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
-            stringBuilder.append("\t\t\t\t\t\t\t\tSTARTING\n");
+            stringBuilder.append("\t\t\t\t\t\tSTARTING\n");
         }
         else {
             stringBuilder.append("\n");
@@ -257,7 +257,7 @@ public class GameImmutable implements Serializable {
         stringBuilder.append(player.getBoard().toString());
 
         stringBuilder.append("\nCOMMON DECKS:\n");
-        stringBuilder.append("\tBOARD 1\t\t\tBOARD 2\t\t\tBOARD 3\t\t\tBOARD 4\t\t\t\t\tRESOURCES\t\tGOLD\t\t\t\tCOMMON OBJECTIVES\n");
+        stringBuilder.append("\tBOARD 1\t\tBOARD 2\t\tBOARD 3\t\tBOARD 4\t\t\tRESOURCES\t\tGOLD\t\tCOMMON OBJECTIVES\n");
         for(int k=0;k<3;k++) {
             for (int i = 1; i < 5; i++) {
                 stringBuilder.append(boardDeck.getCard(i).toString(false,k)).append("\t");

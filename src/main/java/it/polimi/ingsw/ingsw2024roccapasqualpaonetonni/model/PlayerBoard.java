@@ -418,7 +418,7 @@ public class PlayerBoard implements Serializable {
                     Seed seed = board[i][j].getSeed();
                     Ansi.Color color;
                     if(seed==Seed.EMPTY){
-                        color = Ansi.Color.WHITE;
+                        color = Ansi.Color.YELLOW;
                     }
                     else {
                         color = seed.getByAnsi();
