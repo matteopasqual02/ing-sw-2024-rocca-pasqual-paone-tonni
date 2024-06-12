@@ -125,8 +125,8 @@ public class GUIApplication extends Application {
     }
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
         ConsolePrinter.consolePrinter("Game started");
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
         Parent newRoot = null;
         try {
             newRoot = loader.load();
@@ -143,6 +143,7 @@ public class GUIApplication extends Application {
         Scene scene = new Scene(newRoot,currWidth,currHeight);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
+        stage.setFullScreen(true);
         stage.show();
         Platform.runLater(this::infoBox);
         Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));

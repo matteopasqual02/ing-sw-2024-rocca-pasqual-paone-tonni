@@ -43,6 +43,16 @@
     -fx-background-size: cover;
 }
 
+.button_text_small {
+    -fx-background-image: url("../images/Button_image/button_text_small.png");
+    -fx-background-size: cover;
+}
+
+.button_text_gold {
+    -fx-background-image: url("../images/Button_image/button_text_gold.png");
+    -fx-background-size: cover;
+}
+
 .button_ready {
     -fx-background-image: url("../images/Button_image/button_ready.png");
     -fx-background-size: cover;
