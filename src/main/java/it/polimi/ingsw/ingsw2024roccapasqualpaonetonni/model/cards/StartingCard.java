@@ -163,7 +163,7 @@ public class StartingCard extends PlayingCard {
                 sb.append(ansi().fg(cornersBack[0].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(cornersBack[0].getSeed().name().substring(0, 1)));
                 sb.append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
             }
-            sb.append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(background).a("         "));
+            sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             if (cornersBack[1] == null || cornersBack[1].getSeed() == null) {
                 sb.append(ansi().fg(background).bg(background).a("   "));
             } else {
@@ -303,7 +303,7 @@ public class StartingCard extends PlayingCard {
                 sb[0].append(ansi().fg(cornersBack[0].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(cornersBack[0].getSeed().name().substring(0, 1)));
                 sb[0].append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
             }
-            sb[0].append(ansi().cursor(0,0).fg(Ansi.Color.DEFAULT).bg(background).a("         "));
+            sb[0].append(ansi().fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             if (cornersBack[1] == null || cornersBack[1].getSeed() == null) {
                 sb[0].append(ansi().fg(background).bg(background).a("   "));
             } else {

@@ -115,7 +115,7 @@ public class ResourceCard extends PlayingCard {
             }
             sb.append(ansi().fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             if (corners[2] == null || corners[2].getSeed() == null) {
-                sb.append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
+                sb.append(ansi().fg(background).bg(background).a("   "));
             } else {
                 sb.append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
                 sb.append(ansi().fg(corners[2].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[2].getSeed().name().substring(0, 1)));
@@ -198,7 +198,7 @@ public class ResourceCard extends PlayingCard {
             }
             sb[2].append(ansi().fg(Ansi.Color.DEFAULT).bg(background).a("         "));
             if (corners[2] == null || corners[2].getSeed() == null) {
-                sb[2].append(ansi().cursor(0,0).fg(background).bg(background).a("   "));
+                sb[2].append(ansi().fg(background).bg(background).a("   "));
             } else {
                 sb[2].append(ansi().fg(background).bg(Ansi.Color.DEFAULT).a(" "));
                 sb[2].append(ansi().fg(corners[2].getSeed().getByAnsi()).bg(Ansi.Color.DEFAULT).a(corners[2].getSeed().name().substring(0, 1)));

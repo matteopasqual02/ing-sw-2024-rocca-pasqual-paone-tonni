@@ -180,6 +180,7 @@ public class ObjectivePatternCard extends ObjectiveCard {
             }
         }
 
+        sb[line].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(""));
         return sb[line].toString();
     }
 

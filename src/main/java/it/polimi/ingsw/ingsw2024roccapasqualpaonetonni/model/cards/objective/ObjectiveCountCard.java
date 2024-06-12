@@ -173,6 +173,7 @@ public class ObjectiveCountCard extends ObjectiveCard {
         }
         sb[2].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(""));
 
+        sb[line].append(ansi().fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(""));
         return sb[line].toString();
     }
 }
