@@ -78,8 +78,8 @@ public class OtherBoardsController extends GenericController{
 
     }
 
-    public void updateOtherBoards(int cardId,Double coord0,Double coord1,String playerChangedNickname) {
-        for(int i=0; i<hBox.getChildren().size();i++){
+    public void updateOtherBoards(int cardId,String playerChangedNickname) {
+        /*for(int i=0; i<hBox.getChildren().size();i++){
             VBox vBox = (VBox) hBox.getChildren().get(i);
             Label name = (Label) vBox.getChildren().get(0);
             if(name.getText().equals(playerChangedNickname)){
@@ -89,7 +89,7 @@ public class OtherBoardsController extends GenericController{
                 card.setImage(new Image(createPath(cardId)));
                 placeCardOnBoard(card,coord0*scrollPane.getWidth(),coord1*scrollPane.getHeight(),pane);
             }
-        }
+        }*/
     }
     public void placeCardOnBoard(ImageView card, double x, double y,Pane board){
         //we have to handle the case in which it is flipped

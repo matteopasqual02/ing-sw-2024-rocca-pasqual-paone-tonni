@@ -61,8 +61,8 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
     }
 
     @Override
-    public void show_board(Double coord0, Double coord1, int cardID, String playerChangedNickname) {
-        runLater(()->application.show_otherPlayerBoard(cardID,coord0,coord1,playerChangedNickname));
+    public void show_board(int cardID, String playerChangedNickname) {
+        runLater(()->application.show_otherPlayerBoard(cardID,playerChangedNickname));
     }
 
     /**

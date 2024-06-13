@@ -271,7 +271,7 @@ public class Player implements Serializable {
      * @param cornerToAttach the corner to attach
      * @return the boolean
      */
-    public boolean addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1) {
+    public boolean addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
             removeFromHand(cardToAdd);
         }
@@ -281,7 +281,7 @@ public class Player implements Serializable {
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
-            playerListenersHandler.notify_addToBoard(this,coord0,coord1,cardToAdd.getIdCard());
+            playerListenersHandler.notify_addToBoard(this,cardToAdd.getIdCard());
         }
         catch(InvalidPlaceException e) {
             hand.add(cardToAdd);

@@ -125,8 +125,8 @@ public class GUIApplication extends Application {
     }
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
         ConsolePrinter.consolePrinter("Game started");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
         Parent newRoot = null;
         try {
             newRoot = loader.load();
@@ -475,8 +475,8 @@ public class GUIApplication extends Application {
         otherBoardsStage.setScene(new Scene(rootOtherBoards, 300, 200));
     }
 
-    public void show_otherPlayerBoard(int cardID, Double coord0, Double coord1, String playerChangedNickname) {
-        otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname);
+    public void show_otherPlayerBoard(int cardID, String playerChangedNickname) {
+        otherBoardsController.updateOtherBoards(cardID,playerChangedNickname);
     }
 
     public void ruleBook() {

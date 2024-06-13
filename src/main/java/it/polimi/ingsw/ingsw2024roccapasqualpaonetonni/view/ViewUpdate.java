@@ -22,7 +22,7 @@ public interface ViewUpdate {
      * @param nickname      the nickname
      */
     void show_All(GameImmutable gameImmutable, String nickname, EnumUpdates type, boolean myTurn, String playerChangedNickname);
-    void show_board(Double coord0, Double coord1,int cardID,String playerChangedNickname);
+    void show_board(int cardID,String playerChangedNickname);
     /**
      * Show max num players set.
      *

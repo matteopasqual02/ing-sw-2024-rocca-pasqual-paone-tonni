@@ -180,7 +180,7 @@ public interface NotifierInterface extends Remote {
      * @param p the p
      * @throws IOException the io exception
      */
-    void sendCardAdded(Player p, Double coord0, Double coord1,int cardID) throws IOException;
+    void sendCardAdded(Player p,int cardID) throws IOException;
 
     /**
      * Send personal goal chosen.

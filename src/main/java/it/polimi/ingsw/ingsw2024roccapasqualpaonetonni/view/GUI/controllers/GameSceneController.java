@@ -459,7 +459,7 @@ public class GameSceneController extends GenericController{
             }
             int finalCorner = corner;
 
-            String input = String.format("/addCard %d %s %d %f %f %s", hand, card.getId(), finalCorner,coords[0]/personalBoard.getWidth(),coords[1]/personalBoard.getHeight(),flipped);
+            String input = String.format("/addCard %d %s %d %s", hand, card.getId(), finalCorner,flipped);
             ConsolePrinter.consolePrinter(input);
 
             executor.submit(() -> {

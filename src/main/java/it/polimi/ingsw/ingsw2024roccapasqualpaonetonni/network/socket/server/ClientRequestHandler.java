@@ -425,9 +425,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * @throws IOException the io exception
      */
     @Override
-    public void sendCardAdded(Player p, Double coord0, Double coord1,int cardID) throws IOException {
+    public void sendCardAdded(Player p,int cardID) throws IOException {
         synchronized (outputStream) {
-            outputStream.writeObject(new ServerMessageCardAdded(p,coord0,coord1,cardID));
+            outputStream.writeObject(new ServerMessageCardAdded(p,cardID));
             messageDone();
         }
     }

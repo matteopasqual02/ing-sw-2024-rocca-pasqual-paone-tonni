@@ -472,7 +472,7 @@ public class GameController implements GameControllerInterface {
      * @param flip           the flip
      */
     @Override
-    public synchronized void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1, Boolean flip) {
+    public synchronized void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
         Runnable runnable = () -> {
             if (!getCurrentPlayer().getNickname().equals(nickname)) {
                 model.gameError("Not your turn");
@@ -492,7 +492,7 @@ public class GameController implements GameControllerInterface {
             if (flip) {
                 cardToAdd.flip();
             }
-            boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach,coord0,coord1);
+            boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
             if (GameStatus.RUNNING == model.getGameStatus()) {
                 checkPoints20Points();
             }

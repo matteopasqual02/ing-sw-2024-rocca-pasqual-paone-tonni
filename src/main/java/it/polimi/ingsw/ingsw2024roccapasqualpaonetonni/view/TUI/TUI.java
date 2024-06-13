@@ -43,7 +43,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }
 
     @Override
-    public void show_board(Double coord0, Double coord1, int cardID, String playerChangedNickname) {
+    public void show_board(int cardID, String playerChangedNickname) {
 
     }
 
