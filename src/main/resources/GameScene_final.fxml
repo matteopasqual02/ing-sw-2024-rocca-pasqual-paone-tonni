@@ -22,9 +22,9 @@
 
 <AnchorPane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="background-wood" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
    <children>
-      <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="10.0">
+      <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="10.0">
          <content>
-            <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="778.0" prefWidth="1305.0" style="-fx-background-color: beige;" stylesheets="@CSSStyle/firstPage.css" />
+            <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="778.0" prefWidth="1305.0" style="-fx-background-color: beige;" />
          </content>
       </ScrollPane>
       <HBox layoutX="623.0" layoutY="5.0" prefHeight="600.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -35,7 +35,7 @@
                      <children>
                         <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Common Deck">
                            <font>
-                              <Font name="System Bold Italic" size="23.0" />
+                              <Font size="23.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="20.0" />
@@ -74,7 +74,7 @@
                      <children>
                         <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Decks">
                            <font>
-                              <Font name="System Bold Italic" size="23.0" />
+                              <Font size="23.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="20.0" top="20.0" />
@@ -98,7 +98,7 @@
                      <children>
                         <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Common Objective">
                            <font>
-                              <Font name="System Bold Italic" size="23.0" />
+                              <Font size="23.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="20.0" top="20.0" />
@@ -123,11 +123,26 @@
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" prefHeight="47.0" prefWidth="153.0" style="-fx-background-color: lightblue;" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="ScoreBoard" />
-                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" prefHeight="47.0" prefWidth="153.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="Info" />
-                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeRuleBook" prefHeight="47.0" prefWidth="153.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="RuleBook" />
-                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeOtherPlayersBoards" prefHeight="47.0" prefWidth="153.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="SeeOtherBoards" />
+                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" prefHeight="47.0" prefWidth="153.0" style="-fx-background-color: lightblue;" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="ScoreBoard">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin></Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" prefHeight="47.0" prefWidth="153.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="Info">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin></Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeRuleBook" prefHeight="47.0" prefWidth="153.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="RuleBook">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin></Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeOtherPlayersBoards" prefHeight="47.0" prefWidth="153.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="SeeOtherBoards">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin></Button>
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </VBox>
                      </children>
                   </VBox>
@@ -139,7 +154,7 @@
             <Insets top="10.0" />
          </padding>
       </HBox>
-      <AnchorPane layoutY="419.0" prefHeight="170.0" prefWidth="1048.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <AnchorPane layoutY="419.0" prefHeight="190.0" prefWidth="1048.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
             <HBox fx:id="cardsHBox" alignment="CENTER_LEFT" prefHeight="176.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -147,8 +162,11 @@
                      <children>
                         <TextField alignment="CENTER" editable="false" prefHeight="50.0" prefWidth="426.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="My Hand">
                            <font>
-                              <Font name="System Bold Italic" size="23.0" />
+                              <Font size="23.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </TextField>
                         <HBox fx:id="handCards" prefHeight="83.0" prefWidth="306.0">
                            <children>
@@ -169,7 +187,7 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <Button fx:id="flipHandCard" mnemonicParsing="false" onMouseClicked="#handleFlipHandCard" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+                        <Button fx:id="flipHandCard" mnemonicParsing="false" onMouseClicked="#handleFlipHandCard" prefHeight="60.0" prefWidth="140.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="Flip" />
                      </children>
                      <HBox.margin>
                         <Insets right="20.0" />
@@ -179,8 +197,11 @@
                      <children>
                         <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="204.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Secret Objective">
                            <font>
-                              <Font name="System Bold Italic" size="23.0" />
+                              <Font size="23.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </TextField>
                         <HBox prefHeight="83.0" prefWidth="306.0">
                            <children>
@@ -197,13 +218,16 @@
                      <children>
                         <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="204.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Starting Card">
                            <font>
-                              <Font name="System Bold Italic" size="23.0" />
+                              <Font size="23.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </TextField>
                         <VBox fx:id="startingCardVBox" alignment="CENTER" prefHeight="136.0" prefWidth="122.0">
                            <children>
                               <ImageView fx:id="myStartingCard" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleStartingCardClicked" pickOnBounds="true" preserveRatio="true" />
-                              <Button fx:id="flipStartingButton" mnemonicParsing="false" onMouseClicked="#handleFlipStarting" prefHeight="25.0" prefWidth="132.0" text="Flip" />
+                              <Button fx:id="flipStartingButton" mnemonicParsing="false" onMouseClicked="#handleFlipStarting" prefHeight="60.0" prefWidth="140.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="Flip" />
                            </children>
                         </VBox>
                      </children>
@@ -218,7 +242,7 @@
                         <Button fx:id="privateChatButton" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="100.5" text="Private Chat" />
                      </children>
                   </HBox>
-                  <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0">
+                  <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0" style="-fx-background-color: ;" stylesheets="@CSSStyle/allButton.css">
                      <content>
                         <VBox fx:id="messageContainer" prefHeight="232.0" prefWidth="185.0" spacing="2.0" />
                      </content>
@@ -232,7 +256,7 @@
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="62.0" prefWidth="187.0">
                            <children>
-                              <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="201.0" wrapText="true" />
+                              <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="201.0" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" wrapText="true" />
                               <Button onAction="#handleSend" prefHeight="12.0" prefWidth="201.0" text="Send" />
                            </children>
                         </VBox>
