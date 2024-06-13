@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -508,9 +509,95 @@ public class GameSceneController extends GenericController{
         alert.showAndWait();
     }
 
-    public void updateBoard(GameImmutable gameImmutable, String nickname) {
+    /*public void updateBoard(GameImmutable gameImmutable, String nickname) {
         placeCardOnBoard(selectedCard, coords[0], coords[1]);
         selectedCard = null;
+    }*/
+    public void updateBoard(GameImmutable gameImmutable, String nickname) {
+        PlayerBoard board = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getBoard();
+        StartingCard start = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getStartingCard();
+        placeStartCardOnBoardFromMatrix(start,personalBoard.getWidth()/2,personalBoard.getHeight()/2);
+        selectedCard = null;
+    }
+    void placeStartCardOnBoardFromMatrix(PlayingCard start,double x,double y) {
+        board.getChildren().removeAll();
+        ImageView startCard = new ImageView();
+        startCard.setImage(new Image(createPath(start.getIdCard())));
+        startCard.setFitWidth(myStartingCard.getFitWidth());
+        startCard.setFitHeight(myStartingCard.getFitHeight());
+        startCard.setLayoutX(x);
+        startCard.setLayoutY(y);
+        startCard.setId(String.valueOf(startingID));
+        startCard.setOnMouseClicked(this::handleBoardCardClick);
+        cardsHBox.getChildren().remove(startingVBox);
+        board.getChildren().add(startCard);
+
+        for(int i=1;i<=4;i++){
+            if(start.getCorner(i)!=null && start.getCorner(i).getCardAttached()!=null){
+                double xoffset=0;
+                double yoffset=0;
+                switch (i){
+                    case 1 ->{
+                        xoffset = - (startCard.getFitWidth()*0.75);
+                        yoffset = - (startCard.getFitHeight()*0.54);
+                    }
+                    case 2 ->{
+                        xoffset =startCard.getFitWidth()*0.75;
+                        yoffset = - (startCard.getFitHeight()*0.54);
+                    }
+                    case 3 ->{
+                        xoffset =  (startCard.getFitWidth()*0.75);
+                        yoffset =  (startCard.getFitHeight()*0.54);
+                    }
+                    case 4 ->{
+                        xoffset = - (startCard.getFitWidth()*0.75);
+                        yoffset = (startCard.getFitHeight()*0.54);
+                    }
+                }
+                placeCardOnBoardFromMatrix(start.getCorner(i).getCardAttached(),xoffset,yoffset);
+            }
+        }
+    }
+    void placeCardOnBoardFromMatrix(PlayingCard card,double x,double y){
+        ImageView cardImage = new ImageView();
+        cardImage.setImage(new Image(createPath(card.getIdCard())));
+        cardImage.setLayoutX(x);
+        cardImage.setLayoutY(y);
+        cardImage.setFitWidth(myHandImage3.getFitWidth());
+        cardImage.setFitHeight(myHandImage3.getFitHeight());
+        cardImage.setOnMouseClicked(this::handleBoardCardClick);
+        board.getChildren().add(cardImage);
+        if (hand > 0 && handIDs[hand - 1] >= 0) {
+            cardImage.setId(String.valueOf(handIDs[hand - 1]));
+        }
+        handIDs[hand - 1] = -1;
+        hand = - 1;
+        cardImage.setDisable(false);
+        for(int i=1;i<=4;i++){
+            if(card.getCorner(i)!=null && card.getCorner(i).getCardAttached()!=null){
+                double xoffset=0;
+                double yoffset=0;
+                switch (i){
+                    case 1 ->{
+                        xoffset = - (cardImage.getFitWidth()*0.75);
+                        yoffset = - (cardImage.getFitHeight()*0.54);
+                    }
+                    case 2 ->{
+                        xoffset =cardImage.getFitWidth()*0.75;
+                        yoffset = - (cardImage.getFitHeight()*0.54);
+                    }
+                    case 3 ->{
+                        xoffset =  (cardImage.getFitWidth()*0.75);
+                        yoffset =  (cardImage.getFitHeight()*0.54);
+                    }
+                    case 4 ->{
+                        xoffset = - (cardImage.getFitWidth()*0.75);
+                        yoffset = (cardImage.getFitHeight()*0.54);
+                    }
+                }
+                placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),xoffset,yoffset);
+            }
+        }
     }
 
     public void myRunningTurnChoseObjective() {

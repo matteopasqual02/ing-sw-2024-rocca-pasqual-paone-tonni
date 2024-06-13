@@ -38,6 +38,29 @@ class PlayerBoardTest {
 
     }
     @Test
+    void addCornerTest() throws InvalidPlaceException, ConditionsNotMetException {
+        //starting card placed in the middle
+        StartingCard cardToAdd = getStartingCard(GREEN);
+
+        //resource card to be added on it
+        Corner c1 = new Corner(1,EMPTY);
+        Corner c2 = new Corner(2,GREEN);
+        Corner c3 = new Corner(3,GREEN);
+        Corner c4 = new Corner(4,EMPTY);
+        Corner[] cc ={c1,c2,c3,c4};
+        ResourceCard card_to_add = new ResourceCard(10,GREEN,cc,1);
+
+        //putting starting card in the middle
+        Player owner=new Player("a",1);
+        PlayerBoard board1 = new PlayerBoard(owner);
+        board1.addStartingCard(cardToAdd);
+
+        board1.addCard(card_to_add,cardToAdd,1,owner.getCountSeed());
+        assertEquals(cardToAdd.getCorner(1).getCardAttached(),card_to_add);
+
+
+    }
+    @Test
     void addStartingCardNotNullTest(){
         StartingCard cardToAdd = getStartingCard(GREEN);
 

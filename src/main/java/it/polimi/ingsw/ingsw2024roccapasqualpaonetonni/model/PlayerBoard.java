@@ -162,6 +162,7 @@ public class PlayerBoard implements Serializable {
             int[] tmp = card_to_add.checkRequirements(seedCount);
             ConsolePrinter.consolePrinter("Player board " + String.valueOf(tmp[0]));
             if (card_to_add.isFlipped() || tmp[0] == 1) {
+                card_on_board.getCorner(corner).setCardAttached(card_to_add);
                 addCardToBoard(place_cord, card_to_add, seedCount);
             }
             else {

@@ -340,7 +340,8 @@ public class GUIApplication extends Application {
 
     public void show_startCard(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
-            gameSceneController.startCard(gameImmutable, nickname);
+            //gameSceneController.startCard(gameImmutable, nickname);
+            gameSceneController.updateBoard(gameImmutable, nickname);
         }
         else {
             otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
