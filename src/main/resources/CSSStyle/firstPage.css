@@ -39,6 +39,13 @@
     -fx-background-size: cover;
 }
 
+.background-board {
+    -fx-background-image: url("../images/background_Image/board_sfondo.jpg");
+    -fx-background-size: cover;
+}
+
+
+
 
 .text_background_white {
     -fx-background-color: white;

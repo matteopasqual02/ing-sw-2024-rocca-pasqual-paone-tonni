@@ -143,7 +143,9 @@ public class GUIApplication extends Application {
         Scene scene = new Scene(newRoot,currWidth,currHeight);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
-        stage.setFullScreen(true);
+        stage.setMinWidth(1400);
+        stage.setMinHeight(800);
+        //stage.setFullScreen(true);
         stage.show();
         Platform.runLater(this::infoBox);
         Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
