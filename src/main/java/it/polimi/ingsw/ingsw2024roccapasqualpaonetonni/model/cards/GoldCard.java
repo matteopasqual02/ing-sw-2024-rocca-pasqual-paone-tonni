@@ -34,7 +34,12 @@ public class GoldCard extends PlayingCard {
         super(id,seed,c,points);
         pointCondition=cond;
         this.placeCondition= Arrays.copyOf(p,4);
+        this.cornersBack =new Corner[4];
+        for(int i=0;i<4;i++){
+            cornersBack[i]=new Corner(i,Seed.EMPTY);
+        }
     }
+
 
     /**
      * Check requirements int [ ].

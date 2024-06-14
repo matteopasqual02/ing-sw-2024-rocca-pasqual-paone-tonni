@@ -12,6 +12,7 @@ import static org.fusesource.jansi.Ansi.ansi;
  * The type Resource card.
  */
 public class ResourceCard extends PlayingCard {
+
     /**
      * Instantiates a new Resource card.
      *
@@ -22,6 +23,10 @@ public class ResourceCard extends PlayingCard {
      */
     public ResourceCard(int id, Seed seed, Corner[] c, int points){
         super(id,seed,c,points);
+        cornersBack=new Corner[4];
+        for(int i=0;i<4;i++){
+            cornersBack[i]=new Corner(i,Seed.EMPTY);
+        }
     }
 
     /**

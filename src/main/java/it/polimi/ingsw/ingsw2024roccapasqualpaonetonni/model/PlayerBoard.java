@@ -161,6 +161,7 @@ public class PlayerBoard implements Serializable {
         if (checkSpotAvailable(place_cord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
             ConsolePrinter.consolePrinter("Player board " + String.valueOf(tmp[0]));
+
             if (card_to_add.isFlipped() || tmp[0] == 1) {
 
                 for(int i=0;i<board.length;i++){

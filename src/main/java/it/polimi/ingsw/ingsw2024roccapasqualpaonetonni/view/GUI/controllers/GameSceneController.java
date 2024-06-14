@@ -509,12 +509,7 @@ public class GameSceneController extends GenericController{
         alert.showAndWait();
     }
 
-    /*public void updateBoard(GameImmutable gameImmutable, String nickname) {
-        placeCardOnBoard(selectedCard, coords[0], coords[1]);
-        selectedCard = null;
-    }*/
     public void updateBoard(GameImmutable gameImmutable, String nickname) {
-        PlayerBoard board = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getBoard();
         StartingCard start = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getStartingCard();
         placeStartCardOnBoardFromMatrix(start,personalBoard.getWidth()/2,personalBoard.getHeight()/2);
         selectedCard = null;
@@ -554,7 +549,7 @@ public class GameSceneController extends GenericController{
                         yoffset = (startCard.getFitHeight()*0.54);
                     }
                 }
-                placeCardOnBoardFromMatrix(start.getCorner(i).getCardAttached(),xoffset,yoffset);
+                placeCardOnBoardFromMatrix(start.getCorner(i).getCardAttached(),x+xoffset,y+yoffset);
             }
         }
     }
@@ -595,7 +590,7 @@ public class GameSceneController extends GenericController{
                         yoffset = (cardImage.getFitHeight()*0.54);
                     }
                 }
-                placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),xoffset,yoffset);
+                placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),x+xoffset,y+yoffset);
             }
         }
     }
