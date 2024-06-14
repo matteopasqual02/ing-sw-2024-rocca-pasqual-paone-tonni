@@ -203,14 +203,6 @@ public class Game implements Serializable {
         return playersDisconnected;
     }
 
-    public synchronized void removePlayer(Player p){
-        players.remove(p);
-        if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
-            status[0] = GameStatus.ENDED;
-        }
-        //here before calling this method the client should call removeListener to remove itself from the listeners list, or the server should
-        gameListenersHandler.notify_removePlayer(p.getNickname());
-    }
 
     /**
      * Reconnect player.
