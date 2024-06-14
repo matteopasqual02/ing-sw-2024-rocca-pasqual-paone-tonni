@@ -395,33 +395,6 @@ public class GameSceneController extends GenericController{
         }
     }
 
-
-    public void placeCardOnBoard(ImageView card, double x, double y){
-        //we have to handle the case in which it is flipped
-        ConsolePrinter.consolePrinter(String.valueOf(x));
-        ConsolePrinter.consolePrinter(String.valueOf(y));
-        ImageView newCard = new ImageView(card.getImage());
-        newCard.setFitHeight(card.getFitHeight());
-        newCard.setFitWidth(card.getFitWidth());
-        newCard.setLayoutX(x);
-        newCard.setLayoutY(y);
-        if (card.equals(myStartingCard)) {
-            newCard.setId(String.valueOf(startingID));
-            cardsHBox.getChildren().remove(startingVBox);
-        }
-        else {
-            if (hand > 0 && handIDs[hand - 1] >= 0) {
-                newCard.setId(String.valueOf(handIDs[hand - 1]));
-            }
-            handIDs[hand - 1] = -1;
-            hand = - 1;
-        }
-        newCard.setOnMouseClicked(this::handleBoardCardClick);
-        board.getChildren().add(newCard);
-        newCard.setDisable(false);
-        card.setVisible(false);
-    }
-
     private void handleBoardCardClick(MouseEvent mouseEvent) {
         ImageView card = (ImageView) mouseEvent.getSource();
         handCards.setDisable(true);
@@ -473,10 +446,37 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /*
+    public void placeCardOnBoard(ImageView card, double x, double y){
+        //we have to handle the case in which it is flipped
+        ConsolePrinter.consolePrinter(String.valueOf(x));
+        ConsolePrinter.consolePrinter(String.valueOf(y));
+        ImageView newCard = new ImageView(card.getImage());
+        newCard.setFitHeight(card.getFitHeight());
+        newCard.setFitWidth(card.getFitWidth());
+        newCard.setLayoutX(x);
+        newCard.setLayoutY(y);
+        if (card.equals(myStartingCard)) {
+            newCard.setId(String.valueOf(startingID));
+            cardsHBox.getChildren().remove(startingVBox);
+        }
+        else {
+            if (hand > 0 && handIDs[hand - 1] >= 0) {
+                newCard.setId(String.valueOf(handIDs[hand - 1]));
+            }
+            handIDs[hand - 1] = -1;
+            hand = - 1;
+        }
+        newCard.setOnMouseClicked(this::handleBoardCardClick);
+        board.getChildren().add(newCard);
+        newCard.setDisable(false);
+        card.setVisible(false);
+    }
     public void startCard(GameImmutable gameImmutable, String nickname) {
         placeCardOnBoard(selectedCard, personalBoard.getWidth() / 2, personalBoard.getHeight() / 2);
         selectedCard = null;
     }
+    */
 
     public void chosenGoal() {
         secretObjectiveVBox.setPrefWidth(132.0);
@@ -514,10 +514,15 @@ public class GameSceneController extends GenericController{
         placeStartCardOnBoardFromMatrix(start,personalBoard.getWidth()/2,personalBoard.getHeight()/2);
         selectedCard = null;
     }
-    void placeStartCardOnBoardFromMatrix(PlayingCard start,double x,double y) {
+    private void placeStartCardOnBoardFromMatrix(PlayingCard start,double x,double y) {
         board.getChildren().removeAll();
         ImageView startCard = new ImageView();
-        startCard.setImage(new Image(createPath(start.getIdCard())));
+        if(start.isFlipped()){
+            startCard.setImage(new Image(createBackPath(start.getIdCard())));
+        }
+        else {
+            startCard.setImage(new Image(createPath(start.getIdCard())));
+        }
         startCard.setFitWidth(myStartingCard.getFitWidth());
         startCard.setFitHeight(myStartingCard.getFitHeight());
         startCard.setLayoutX(x);
@@ -527,35 +532,16 @@ public class GameSceneController extends GenericController{
         cardsHBox.getChildren().remove(startingVBox);
         board.getChildren().add(startCard);
 
-        for(int i=1;i<=4;i++){
-            if(start.getCorner(i)!=null && start.getCorner(i).getCardAttached()!=null){
-                double xoffset=0;
-                double yoffset=0;
-                switch (i){
-                    case 1 ->{
-                        xoffset = - (startCard.getFitWidth()*0.75);
-                        yoffset = - (startCard.getFitHeight()*0.54);
-                    }
-                    case 2 ->{
-                        xoffset =startCard.getFitWidth()*0.75;
-                        yoffset = - (startCard.getFitHeight()*0.54);
-                    }
-                    case 3 ->{
-                        xoffset =  (startCard.getFitWidth()*0.75);
-                        yoffset =  (startCard.getFitHeight()*0.54);
-                    }
-                    case 4 ->{
-                        xoffset = - (startCard.getFitWidth()*0.75);
-                        yoffset = (startCard.getFitHeight()*0.54);
-                    }
-                }
-                placeCardOnBoardFromMatrix(start.getCorner(i).getCardAttached(),x+xoffset,y+yoffset);
-            }
-        }
+        cardOffset(start, x, y, startCard);
     }
-    void placeCardOnBoardFromMatrix(PlayingCard card,double x,double y){
+    private void placeCardOnBoardFromMatrix(PlayingCard card,double x,double y){
         ImageView cardImage = new ImageView();
-        cardImage.setImage(new Image(createPath(card.getIdCard())));
+        if(card.isFlipped()){
+            cardImage.setImage(new Image(createBackPath(card.getIdCard())));
+        }
+        else {
+            cardImage.setImage(new Image(createPath(card.getIdCard())));
+        }
         cardImage.setLayoutX(x);
         cardImage.setLayoutY(y);
         cardImage.setFitWidth(myHandImage3.getFitWidth());
@@ -568,6 +554,10 @@ public class GameSceneController extends GenericController{
         handIDs[hand - 1] = -1;
         hand = - 1;
         cardImage.setDisable(false);
+        cardOffset(card, x, y, cardImage);
+    }
+
+    private void cardOffset(PlayingCard card, double x, double y, ImageView cardImage) {
         for(int i=1;i<=4;i++){
             if(card.getCorner(i)!=null && card.getCorner(i).getCardAttached()!=null){
                 double xoffset=0;
@@ -601,6 +591,30 @@ public class GameSceneController extends GenericController{
         glow(mySecretObjective1);
         glow(mySecretObjective2);
     }
+    public void myRunningTurnPlaceCard() {
+        glow(myHandImage1);
+        glow(myHandImage2);
+        glow(myHandImage3);
+        handCards.setDisable(false);
+        myHandImage1.setDisable(false);
+        myHandImage2.setDisable(false);
+        myHandImage3.setDisable(false);
+    }
+    public void myRunningTurnDrawCard() {
+        for (int i = 0; i < boardCards.getChildren().size(); i++) {
+            if (boardCards.getChildren().get(i) instanceof HBox cards) {
+                for (int j = 0; j < cards.getChildren().size(); j++) {
+                    glow(cards.getChildren().get(j));
+                    cards.getChildren().get(j).setDisable(false);
+                }
+            }
+        }
+
+        for (int i = 0; i < decks.getChildren().size(); i++) {
+            glow(decks.getChildren().get(i));
+            decks.getChildren().get(i).setDisable(false);
+        }
+    }
 
     private void glow(Node node){
         // blue shadow
@@ -611,11 +625,8 @@ public class GameSceneController extends GenericController{
         borderGlow.setSpread(0.5);
         borderGlow.setOffsetY(0f);
         borderGlow.setOffsetX(0f);
-        // borderGlow.setWidth(30);
-        // borderGlow.setHeight(30);
         node.setEffect(borderGlow);
     }
-
     private void jump(Node node){
         node.setUserData(true);
         node.setDisable(true);
@@ -625,7 +636,6 @@ public class GameSceneController extends GenericController{
         jumpUp.setOnFinished(e -> dropCard(node));
         jumpUp.play();
     }
-
     private void dropCard(Node node) {
         TranslateTransition dropDown = new TranslateTransition(ANIMATION_DURATION, node);
         dropDown.setByY(JUMP_HEIGHT);
@@ -650,7 +660,6 @@ public class GameSceneController extends GenericController{
             }
         });
     }
-
     public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
         mySecretObjective2.setEffect(null);
         mySecretObjective2.setDisable(true);
@@ -666,17 +675,6 @@ public class GameSceneController extends GenericController{
         });
         mySecretObjective2.setDisable(true);
     }
-
-    public void myRunningTurnPlaceCard() {
-        glow(myHandImage1);
-        glow(myHandImage2);
-        glow(myHandImage3);
-        handCards.setDisable(false);
-        myHandImage1.setDisable(false);
-        myHandImage2.setDisable(false);
-        myHandImage3.setDisable(false);
-    }
-
     public void handleHandCardClicked(MouseEvent mouseEvent) {
         // ImageView card = (ImageView) mouseEvent.getSource();
         Node card = (Node) mouseEvent.getSource();
@@ -696,7 +694,6 @@ public class GameSceneController extends GenericController{
         ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
         flipHandCard.setDisable(false);
     }
-
     public void handleFlipHandCard() {
         Image img;
         if (!flippedHand[hand - 1]) {
@@ -720,27 +717,10 @@ public class GameSceneController extends GenericController{
             }
         }
     }
-
     private void disableDecks() {
         for (int i = 0; i < decks.getChildren().size(); i++) {
             decks.getChildren().get(i).setEffect(null);
             decks.getChildren().get(i).setDisable(true);
-        }
-    }
-
-    public void myRunningTurnDrawCard() {
-        for (int i = 0; i < boardCards.getChildren().size(); i++) {
-            if (boardCards.getChildren().get(i) instanceof HBox cards) {
-                for (int j = 0; j < cards.getChildren().size(); j++) {
-                    glow(cards.getChildren().get(j));
-                    cards.getChildren().get(j).setDisable(false);
-                }
-            }
-        }
-
-        for (int i = 0; i < decks.getChildren().size(); i++) {
-            glow(decks.getChildren().get(i));
-            decks.getChildren().get(i).setDisable(false);
         }
     }
 
@@ -771,7 +751,6 @@ public class GameSceneController extends GenericController{
             throw new RuntimeException(e);
         }
     }
-
     public void handleResourceDeckClicked() {
         toReplaceIV = deckResourcesCard;
         jump(toReplaceIV);
@@ -794,7 +773,6 @@ public class GameSceneController extends GenericController{
             throw new RuntimeException(e);
         }
     }
-
     public void handleGoldDeckClicked() {
         toReplaceIV = deckGoldCard;
         jump(toReplaceIV);
@@ -817,7 +795,6 @@ public class GameSceneController extends GenericController{
             throw new RuntimeException(e);
         }
     }
-
     public void updateBoardDeck(GameImmutable gameImmutable) {
         updateDecks(gameImmutable);
         updateDrawableBoard(gameImmutable);
@@ -839,7 +816,6 @@ public class GameSceneController extends GenericController{
 
 
     }
-
     private void updateDrawableBoard(GameImmutable gameImmutable) {
         int cardId;
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
@@ -907,7 +883,6 @@ public class GameSceneController extends GenericController{
         boardCard3.setDisable(truefalse);
         boardCard4.setDisable(truefalse);
     }
-
     public void glowInfo(String obj) {
         switch (obj){
             case "start"->glow(myStartingCard);
@@ -944,7 +919,6 @@ public class GameSceneController extends GenericController{
     public void handleSeeInfoBox(MouseEvent event) {
         Platform.runLater(()->{application.infoBox();});
     }
-
     public void handleSeeRuleBook(MouseEvent event) {
         Platform.runLater(()->{application.ruleBook();});
     }
@@ -961,7 +935,6 @@ public class GameSceneController extends GenericController{
             scrollPane.layout();
         }
     }
-
     public void displayChatPrivate(String message) {
         if (isPrivateChat) {
             Text text = new Text(message);
@@ -971,7 +944,6 @@ public class GameSceneController extends GenericController{
             scrollPane.layout();
         }
     }
-
     public void handleSend(ActionEvent actionEvent) {
         String message = messageInput.getText().trim();
         messageInput.clear();
@@ -999,7 +971,6 @@ public class GameSceneController extends GenericController{
             }
         }
     }
-
     @FXML
     public void handleSeePublicChat(ActionEvent actionEvent) {
         isPrivateChat = false;
@@ -1016,7 +987,6 @@ public class GameSceneController extends GenericController{
             }
         });
     }
-
     @FXML
     public void handleSeePrivateChat(ActionEvent actionEvent) {
         isPrivateChat = true;
@@ -1037,7 +1007,6 @@ public class GameSceneController extends GenericController{
             }
         });
     }
-
     @FXML
     public void handleSelectPlayerChat(ActionEvent actionEvent) {
         isPrivateChat = true;
@@ -1053,11 +1022,12 @@ public class GameSceneController extends GenericController{
             }
         });
     }
-
     @FXML
     public void handleSeeScoreBoard(MouseEvent event) {
         Platform.runLater(()->application.seeScoreBoard());
     }
+
+    //--------------------------------------------POINTS
 
     public void updateOtherPlayersPoints(GameImmutable gameImmutable, String playerChangedNickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
@@ -1078,7 +1048,6 @@ public class GameSceneController extends GenericController{
         }
 
     }
-
     public void updateOtherPlayersHand(GameImmutable gameImmutable, String playerChangedNickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
         if(p.isPresent())
@@ -1104,7 +1073,6 @@ public class GameSceneController extends GenericController{
             }
         }
     }
-
     @FXML
     public void handleSeeOtherPlayersBoards(MouseEvent mouseEvent) {
         Platform.runLater(()->application.seeOtherBoards());
