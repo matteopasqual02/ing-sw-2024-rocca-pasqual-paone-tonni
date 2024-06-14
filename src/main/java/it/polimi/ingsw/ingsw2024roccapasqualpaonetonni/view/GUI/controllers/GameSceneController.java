@@ -550,10 +550,11 @@ public class GameSceneController extends GenericController{
         board.getChildren().add(cardImage);
         if (hand > 0 && handIDs[hand - 1] >= 0) {
             cardImage.setId(String.valueOf(handIDs[hand - 1]));
+            handIDs[hand - 1] = -1;
+            hand = - 1;
         }
-        handIDs[hand - 1] = -1;
-        hand = - 1;
         cardImage.setDisable(false);
+
         cardOffset(card, x, y, cardImage);
     }
 
