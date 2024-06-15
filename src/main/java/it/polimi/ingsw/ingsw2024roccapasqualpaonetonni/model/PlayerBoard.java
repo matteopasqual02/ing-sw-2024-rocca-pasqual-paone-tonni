@@ -158,21 +158,37 @@ public class PlayerBoard implements Serializable {
             place_cord[0] = prev_cord[0] + 1;
             place_cord[1] = prev_cord[1] - 1;
         }
+
         if (checkSpotAvailable(place_cord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
             ConsolePrinter.consolePrinter("Player board " + String.valueOf(tmp[0]));
 
             if (card_to_add.isFlipped() || tmp[0] == 1) {
 
+                addCardToBoard(place_cord, card_to_add, seedCount);
+
                 for(int i=0;i<board.length;i++){
                     for(int j=0;j<board[i].length;j++){
-                        if(board[i][j]!=null && board[i][j].getIdCard()==card_on_board.getIdCard()){
-                            board[i][j].getCorner(corner).setCardAttached(card_to_add);
+                        if(board[i][j]!=null && board[i][j].getIdCard()==card_to_add.getIdCard()){
+
+                            if(i-1>0 && j-1>=0 && board[i-1][j-1]!=null){
+                                board[i-1][j-1].getCorner(3).setCardAttached(card_to_add);
+                            }
+                            if(i+1< board.length && j-1>=0 && board[i+1][j-1]!=null){
+                                board[i+1][j-1].getCorner(2).setCardAttached(card_to_add);
+                            }
+                            if(i-1>0 && j+1< board[i].length && board[i-1][j+1]!=null){
+                                board[i-1][j+1].getCorner(3).setCardAttached(card_to_add);
+                            }
+                            if(i+1< board.length && j+1< board[i].length  && board[i+1][j+1]!=null){
+                                board[i+1][j+1].getCorner(1).setCardAttached(card_to_add);
+                            }
+
                         }
                     }
                 }
 
-                addCardToBoard(place_cord, card_to_add, seedCount);
+
             }
             else {
                 ConsolePrinter.consolePrinter("Not enough seed type " + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
