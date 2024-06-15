@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -271,6 +270,7 @@ public class GUIApplication extends Application {
         alert.showAndWait();
         gameSceneController.stopGlowInfo();
     }
+
     public void setAlert(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -382,6 +382,9 @@ public class GUIApplication extends Application {
     }
 
     public void show_status(String s) {
+        if (gameSceneController != null) {
+            gameSceneController.statusInfo(s);
+        }
     }
 
     public void show_statusLast(String string) {
@@ -394,10 +397,42 @@ public class GUIApplication extends Application {
         if (myTurn) {
             ConsolePrinter.consolePrinter("Invalid action: " + s);
             switch (s) {
+                case "Goal invalid Action":
+                    gameSceneController.objectiveNotSelected("Error in objective selection, chose another card!");
+                    break;
+                case "Starting Card invalid Action: Card Already Added":
+                    gameSceneController.startAlreadyAdded("Starting card already added");
+                    break;
                 case "Conditions not met":
                     gameSceneController.cardNotPlaced("Conditions not met, chose another card!");
+                    break;
                 case "Card Invalid Place":
                     gameSceneController.cardNotPlaced("Invalid place chosen, try again!");
+                    break;
+                case "Card not in Hand":
+                    gameSceneController.cardNotPlaced("Error in the card selection, try again!");
+                    break;
+                case "Not your turn":
+                    gameSceneController.notMyTurn();
+                    break;
+                case "You cannot add two Cards in a turn":
+                    gameSceneController.cardAlreadyAdded(s);
+                    break;
+                case "You cannot add a Card in this phase", "You cannot add a Starting Card in this phase",
+                     "You cannot choose the Objective Card in this phase",
+                     "You cannot draw a Resource Card in this phase", "You cannot draw before a card is placed",
+                     "You cannot draw a Gold Card in this phase", "You cannot draw from Common Board in this phase":
+                    gameSceneController.wrongPhase(s);
+                    break;
+                case "Resource deck is empty":
+                    gameSceneController.noResourcesDeck(s + ", try drawing somewhere else");
+                    break;
+                case "Gold deck is empty":
+                    gameSceneController.noGoldDeck(s + ", try drawing somewhere else");
+                    break;
+                case "This position is empty":
+                    gameSceneController.noBoardCard(s + ", try drawing somewhere else");
+                    break;
             }
         }
     }

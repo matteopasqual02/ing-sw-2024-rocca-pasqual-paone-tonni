@@ -424,8 +424,7 @@ public class Game implements Serializable {
         return p.getCurrentPoints()
                 + p.getGoal().pointCard(p.getBoard())
                 + gameBoardDeck.getCommonObjective(0).pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard())
-                ;
+                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard());
     }
 
     /**
@@ -443,7 +442,7 @@ public class Game implements Serializable {
             else if(p_point > max) {
                 winner.clear();
                 winner.add(cplayer);
-                max= p_point;
+                max = p_point;
             }
         }
     }

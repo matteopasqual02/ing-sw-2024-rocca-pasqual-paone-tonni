@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
@@ -347,7 +346,7 @@ public class GameSceneController extends GenericController{
 
     public void myRunningTurnPlaceStarting() {
         startingCardVBox.setDisable(false);
-        ConsolePrinter.consolePrinter(String.valueOf(myStartingCard));
+        //ConsolePrinter.consolePrinter(String.valueOf(myStartingCard));
         myStartingCard.setDisable(false);
         flipStartingButton.setVisible(true);
         flipStartingButton.setDisable(false);
@@ -417,22 +416,22 @@ public class GameSceneController extends GenericController{
                 coords[0] = (double) Math.round((card.getLayoutX() - card.getFitWidth() * 0.75) * 1000) / 1000;
                 if(y<=cardHeight*0.44){
                     corner = 1;
-                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.54) * 1000) / 1000;
+                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.56) * 1000) / 1000;
                 }
                 else if(y>=cardHeight*0.56){
                     corner = 4;
-                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.54) * 1000) / 1000;;
+                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.56) * 1000) / 1000;;
                 }
             }
             else if(x>= cardWidth*0.75){
                 coords[0] = (double) Math.round((card.getLayoutX() + card.getFitWidth() * 0.75) * 1000) / 1000;
                 if(y<=cardHeight*0.44){
                     corner = 2;
-                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.54) * 1000) / 1000;
+                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.56) * 1000) / 1000;
                 }
                 else if(y>=cardHeight*0.56){
                     corner = 3;
-                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.54) * 1000) / 1000;
+                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.56) * 1000) / 1000;
                 }
             }
 
@@ -506,12 +505,55 @@ public class GameSceneController extends GenericController{
         myRunningTurnPlaceCard();
     }
 
+    public void objectiveNotSelected(String s) {
+        infoBox(s);
+        myRunningTurnChoseObjective();
+    }
+
+    public void startAlreadyAdded(String s) {
+        infoBox(s);
+    }
+
+    public void cardAlreadyAdded(String s) {
+        infoBox(s);
+    }
+
+    public void wrongPhase(String s) {
+        infoBox(s);
+    }
+
+    public void noResourcesDeck(String s) {
+        infoBox(s);
+        decks.getChildren().remove(deckResourcesCard);
+        myRunningTurnDrawCard();
+    }
+
+    public void noGoldDeck(String s) {
+        infoBox(s);
+        decks.getChildren().remove(deckGoldCard);
+        myRunningTurnDrawCard();
+    }
+
+    public void noBoardCard(String s) {
+        infoBox(s);
+        myRunningTurnDrawCard();
+    }
+
     private void infoBox(String message) {
-        System.out.println("infoBox called with message: " + message);
+        // System.out.println("infoBox called with message: " + message);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("ERROR");
         alert.setHeaderText("Invalid Action");
         alert.setContentText(message);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+    }
+
+    public void statusInfo(String status) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("THE STATUS HAS CHANGED");
+        alert.setHeaderText("New Status:");
+        alert.setContentText(status);
         alert.getButtonTypes().setAll(ButtonType.OK);
         alert.showAndWait();
     }
@@ -570,19 +612,19 @@ public class GameSceneController extends GenericController{
                 switch (i){
                     case 1 ->{
                         xoffset = - (cardImage.getFitWidth()*0.75);
-                        yoffset = - (cardImage.getFitHeight()*0.54);
+                        yoffset = - (cardImage.getFitHeight()*0.56);
                     }
                     case 2 ->{
-                        xoffset =cardImage.getFitWidth()*0.75;
-                        yoffset = - (cardImage.getFitHeight()*0.54);
+                        xoffset = (cardImage.getFitWidth()*0.75);
+                        yoffset = - (cardImage.getFitHeight()*0.56);
                     }
                     case 3 ->{
-                        xoffset =  (cardImage.getFitWidth()*0.75);
-                        yoffset =  (cardImage.getFitHeight()*0.54);
+                        xoffset = (cardImage.getFitWidth()*0.75);
+                        yoffset = (cardImage.getFitHeight()*0.56);
                     }
                     case 4 ->{
                         xoffset = - (cardImage.getFitWidth()*0.75);
-                        yoffset = (cardImage.getFitHeight()*0.54);
+                        yoffset = (cardImage.getFitHeight()*0.56);
                     }
                 }
                 placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),x+xoffset,y+yoffset);
@@ -596,15 +638,18 @@ public class GameSceneController extends GenericController{
         glow(mySecretObjective1);
         glow(mySecretObjective2);
     }
+
     public void myRunningTurnPlaceCard() {
-        glow(myHandImage1);
-        glow(myHandImage2);
-        glow(myHandImage3);
+        ImageView card;
+        for (int i = 0; i < handCards.getChildren().size(); i++) {
+            card = (ImageView) handCards.getChildren().get(i);
+            glow(card);
+            card.setVisible(true);
+            card.setDisable(false);
+        }
         handCards.setDisable(false);
-        myHandImage1.setDisable(false);
-        myHandImage2.setDisable(false);
-        myHandImage3.setDisable(false);
     }
+
     public void myRunningTurnDrawCard() {
         for (int i = 0; i < boardCards.getChildren().size(); i++) {
             if (boardCards.getChildren().get(i) instanceof HBox cards) {
@@ -632,6 +677,7 @@ public class GameSceneController extends GenericController{
         borderGlow.setOffsetX(0f);
         node.setEffect(borderGlow);
     }
+
     private void jump(Node node){
         node.setUserData(true);
         node.setDisable(true);
@@ -641,6 +687,7 @@ public class GameSceneController extends GenericController{
         jumpUp.setOnFinished(e -> dropCard(node));
         jumpUp.play();
     }
+
     private void dropCard(Node node) {
         TranslateTransition dropDown = new TranslateTransition(ANIMATION_DURATION, node);
         dropDown.setByY(JUMP_HEIGHT);
@@ -665,6 +712,7 @@ public class GameSceneController extends GenericController{
             }
         });
     }
+
     public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
         mySecretObjective2.setEffect(null);
         mySecretObjective2.setDisable(true);
@@ -680,6 +728,7 @@ public class GameSceneController extends GenericController{
         });
         mySecretObjective2.setDisable(true);
     }
+
     public void handleHandCardClicked(MouseEvent mouseEvent) {
         // ImageView card = (ImageView) mouseEvent.getSource();
         Node card = (Node) mouseEvent.getSource();
@@ -699,6 +748,7 @@ public class GameSceneController extends GenericController{
         ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
         flipHandCard.setDisable(false);
     }
+
     public void handleFlipHandCard() {
         Image img;
         if (!flippedHand[hand - 1]) {
@@ -722,6 +772,7 @@ public class GameSceneController extends GenericController{
             }
         }
     }
+
     private void disableDecks() {
         for (int i = 0; i < decks.getChildren().size(); i++) {
             decks.getChildren().get(i).setEffect(null);
@@ -758,6 +809,7 @@ public class GameSceneController extends GenericController{
             throw new RuntimeException(e);
         }
     }
+
     public void handleResourceDeckClicked() {
         toReplaceIV = deckResourcesCard;
         jump(toReplaceIV);
@@ -782,6 +834,7 @@ public class GameSceneController extends GenericController{
             throw new RuntimeException(e);
         }
     }
+
     public void handleGoldDeckClicked() {
         toReplaceIV = deckGoldCard;
         jump(toReplaceIV);
@@ -806,6 +859,7 @@ public class GameSceneController extends GenericController{
             throw new RuntimeException(e);
         }
     }
+
     public void updateBoardDeck(GameImmutable gameImmutable) {
         updateDecks(gameImmutable);
         updateDrawableBoard(gameImmutable);
@@ -824,9 +878,8 @@ public class GameSceneController extends GenericController{
             deckGoldCard.setImage(new Image(createBackPath(cardId)));
             deckIDs[1] = cardId;
         }
-
-
     }
+
     private void updateDrawableBoard(GameImmutable gameImmutable) {
         int cardId;
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
