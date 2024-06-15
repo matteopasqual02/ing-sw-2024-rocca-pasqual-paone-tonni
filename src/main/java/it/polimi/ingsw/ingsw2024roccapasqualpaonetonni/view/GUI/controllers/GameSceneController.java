@@ -918,7 +918,6 @@ public class GameSceneController extends GenericController{
         handIDs[hand - 1] = drawedID;
         toReplace = -1;
         toReplaceIV = null;
-        handIDs[hand - 1] = -1;
         hand = - 1;
     }
 

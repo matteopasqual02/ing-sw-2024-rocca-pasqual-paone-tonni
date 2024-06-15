@@ -178,7 +178,7 @@ public class PlayerBoard implements Serializable {
                                 board[i+1][j-1].getCorner(2).setCardAttached(card_to_add);
                             }
                             if(i-1>0 && j+1< board[i].length && board[i-1][j+1]!=null){
-                                board[i-1][j+1].getCorner(3).setCardAttached(card_to_add);
+                                board[i-1][j+1].getCorner(4).setCardAttached(card_to_add);
                             }
                             if(i+1< board.length && j+1< board[i].length  && board[i+1][j+1]!=null){
                                 board[i+1][j+1].getCorner(1).setCardAttached(card_to_add);
