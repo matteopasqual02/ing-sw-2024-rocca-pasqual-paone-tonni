@@ -160,6 +160,8 @@ public class GameSceneController extends GenericController{
     private int toReplace = -1;
     private ImageView toReplaceIV = null;
     private final int[] boardIDs = {-1, -1, -1, -1};
+    private int drawedID = -1;
+    private final double[] CARD_SIZE = {88.0, 132.0};
 
     private static final double JUMP_HEIGHT = 20.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
@@ -349,6 +351,7 @@ public class GameSceneController extends GenericController{
         myStartingCard.setDisable(false);
         flipStartingButton.setVisible(true);
         flipStartingButton.setDisable(false);
+        glow(flipStartingButton);
         glow(myStartingCard);
     }
 
@@ -356,6 +359,7 @@ public class GameSceneController extends GenericController{
     public void handleStartingCardClicked(MouseEvent event){
         ConsolePrinter.consolePrinter("starting clicked");
         Node card = (Node) event.getSource();
+        glow(card);
         if (myStartingCard.getUserData() == null || !(boolean) myStartingCard.getUserData()) {
             jump(card);
         }
@@ -431,18 +435,21 @@ public class GameSceneController extends GenericController{
                     coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.54) * 1000) / 1000;
                 }
             }
+
             int finalCorner = corner;
+            if (finalCorner != -1) {
+                selectedCard.setVisible(false);
+                String input = String.format("/addCard %d %s %d %s", hand, card.getId(), finalCorner,flipped);
+                ConsolePrinter.consolePrinter(input);
 
-            String input = String.format("/addCard %d %s %d %s", hand, card.getId(), finalCorner,flipped);
-            ConsolePrinter.consolePrinter(input);
-
-            executor.submit(() -> {
-                try {
-                    client.receiveInput(input);
-                } catch (IOException | NotBoundException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+                executor.submit(() -> {
+                    try {
+                        client.receiveInput(input);
+                    } catch (IOException | NotBoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
         }
     }
 
@@ -514,6 +521,7 @@ public class GameSceneController extends GenericController{
         placeStartCardOnBoardFromMatrix(start,personalBoard.getWidth()/2,personalBoard.getHeight()/2);
         selectedCard = null;
     }
+
     private void placeStartCardOnBoardFromMatrix(PlayingCard start,double x,double y) {
         board.getChildren().removeAll();
         ImageView startCard = new ImageView();
@@ -534,7 +542,8 @@ public class GameSceneController extends GenericController{
 
         cardOffset(start, x, y, startCard);
     }
-    private void placeCardOnBoardFromMatrix(PlayingCard card,double x,double y){
+
+    private void placeCardOnBoardFromMatrix(PlayingCard card, double x, double y){
         ImageView cardImage = new ImageView();
         if(card.isFlipped()){
             cardImage.setImage(new Image(createBackPath(card.getIdCard())));
@@ -544,15 +553,11 @@ public class GameSceneController extends GenericController{
         }
         cardImage.setLayoutX(x);
         cardImage.setLayoutY(y);
+        cardImage.setId(String.valueOf(card.getIdCard()));
         cardImage.setFitWidth(myHandImage3.getFitWidth());
         cardImage.setFitHeight(myHandImage3.getFitHeight());
         cardImage.setOnMouseClicked(this::handleBoardCardClick);
         board.getChildren().add(cardImage);
-        if (hand > 0 && handIDs[hand - 1] >= 0) {
-            cardImage.setId(String.valueOf(handIDs[hand - 1]));
-        }
-        handIDs[hand - 1] = -1;
-        hand = - 1;
         cardImage.setDisable(false);
         cardOffset(card, x, y, cardImage);
     }
@@ -742,8 +747,10 @@ public class GameSceneController extends GenericController{
                 }
             }
         }
+
+        drawedID = boardIDs[toReplace];
         try {
-            ConsolePrinter.consolePrinter(String.valueOf(toReplace));
+            //ConsolePrinter.consolePrinter(String.valueOf(toReplace));
             String msg = "/drawBoard " + String.valueOf(toReplace + 1);
             ConsolePrinter.consolePrinter(msg);
             client.receiveInput(msg);
@@ -763,7 +770,9 @@ public class GameSceneController extends GenericController{
                 toReplace = i;
             }
         }
-        toReplaceIV.setImage(new Image(createPath(deckIDs[toReplace])));
+
+        drawedID = deckIDs[toReplace];
+        toReplaceIV.setImage(new Image(createPath(drawedID)));
 
         disableBoardCards();
 
@@ -785,7 +794,9 @@ public class GameSceneController extends GenericController{
                 toReplace = i;
             }
         }
-        toReplaceIV.setImage(new Image(createPath(deckIDs[toReplace])));
+
+        drawedID = deckIDs[toReplace];
+        toReplaceIV.setImage(new Image(createPath(drawedID)));
 
         disableBoardCards();
 
@@ -841,20 +852,36 @@ public class GameSceneController extends GenericController{
     }
 
     public void updateHand() {
-        for (int i = 0; i < handCards.getChildren().size(); i++) {
-            if (handIDs[i] == -1) {
-                ImageView handCard = (ImageView) handCards.getChildren().get(i);
-                handCard.setImage(toReplaceIV.getImage());
-                handCard.setDisable(true);
-                handCard.setVisible(true);
-                handCard.setEffect(null);
-                jump(handCard);
-                handIDs[i] = boardIDs[toReplace];
-                toReplace = -1;
-                toReplaceIV = null;
-            }
-        }
+        shiftHand();
+        ImageView handCard = (ImageView) handCards.getChildren().get(hand - 1);
+        handCard.setImage(toReplaceIV.getImage());
+        handCard.setFitHeight(CARD_SIZE[0]);
+        handCard.setFitWidth(CARD_SIZE[1]);
+        handCard.setDisable(true);
+        handCard.setVisible(true);
+        handCard.setEffect(null);
+        handCard.setOnMouseClicked(this::handleHandCardClicked);
+        jump(handCard);
+        handIDs[hand - 1] = drawedID;
+        toReplace = -1;
+        toReplaceIV = null;
+        handIDs[hand - 1] = -1;
+        hand = - 1;
+    }
 
+    private void shiftHand() {
+        ImageView card, next;
+        for (int i = hand - 1; i < handCards.getChildren().size() - 1; i++) {
+            card = (ImageView) handCards.getChildren().get(i);
+            card.setEffect(null);
+            next = (ImageView) handCards.getChildren().get(i + 1);
+            card.setImage(next.getImage());
+            next.setVisible(false);
+            card.setVisible(true);
+            handIDs[i] = handIDs[i + 1];
+            flippedHand[i] = flippedHand[i + 1];
+            hand += 1;
+        }
     }
 
     public void notMyTurn() {

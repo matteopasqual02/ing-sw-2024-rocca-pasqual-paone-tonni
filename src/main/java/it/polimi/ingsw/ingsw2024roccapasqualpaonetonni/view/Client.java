@@ -291,16 +291,27 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 }
             }
             case "/drawBoard","/drawboard" -> {
-                if(state==GameStatus.RUNNING && myTurn!=null && parole.length==2){
-                    try{
-                        int pos = Integer.parseInt(parole[1]);
-                        server.drawFromBoard(myNickname,pos);
-                    }catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid number format", myTurn);
+                if (myTurn != null) {
+                    if (state == GameStatus.RUNNING) {
+                        if (parole.length == 2) {
+                            try{
+                                int pos = Integer.parseInt(parole[1]);
+                                server.drawFromBoard(myNickname,pos);
+                            }catch(IndexOutOfBoundsException | NumberFormatException e){
+                                view.invalidMessage("Invalid number format", myTurn);
+                            }
+                        }
+                        else {
+                            view.invalidMessage("Invalid command", myTurn);
+                        }
+                    }
+                    else {
+                        ConsolePrinter.consolePrinter("Phase: " + state.toString());
+                        view.invalidMessage("Last phase, can't draw", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase or command not complete", myTurn);
+                    view.invalidMessage("Not your turn", myTurn);
                 }
             }
             case "/chat" -> {
@@ -491,6 +502,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         if(currentImmutable==null){return;}
         Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();
         switchShowTurn(player);
+        ConsolePrinter.consolePrinter(state.toString());
     }
 
     /**
@@ -547,6 +559,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn,p.getNickname());
         view.show_board(cardID,p.getNickname());
+        ConsolePrinter.consolePrinter(state.toString());
         if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }

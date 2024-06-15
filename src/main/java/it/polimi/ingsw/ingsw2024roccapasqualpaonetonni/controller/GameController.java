@@ -655,27 +655,31 @@ public class GameController implements GameControllerInterface {
             if (!getCurrentPlayer().getNickname().equals(nickname)) {
                 // listener invalid action
                 model.gameError("Not your turn");
+                ConsolePrinter.consolePrinter("Not your turn");
                 return;
             }
             if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
                 // listener you cannot draw in this phase
                 model.gameError("You cannot draw from Common Board in this phase");
+                ConsolePrinter.consolePrinter("You cannot draw from Common Board in this phase");
                 return;
             }
             if (getCurrentPlayer().getHand().size() >= DefaultModelValues.Default_Hand_Dimension) {
                 // listener you cannot draw in this phase
                 model.gameError("You cannot draw before a card is placed");
+                ConsolePrinter.consolePrinter("You cannot draw before a card is placed");
                 return;
             }
             if (decksAreAllEmpty()) {
                 model.setStatus(GameStatus.WAITING_LAST_TURN);
-
-            } else {
+            }
+            else {
                 try {
                     getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
                     model.nextPlayer();
                 } catch (NoCardException e) {
                     model.gameError("This position is empty");
+                    ConsolePrinter.consolePrinter("This position is empty");
                 }
             }
         };
