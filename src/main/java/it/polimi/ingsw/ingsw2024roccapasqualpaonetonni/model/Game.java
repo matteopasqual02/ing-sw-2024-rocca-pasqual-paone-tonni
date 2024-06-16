@@ -6,6 +6,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.io.Serializable;
@@ -39,7 +40,7 @@ public class Game implements Serializable {
     /**
      * The Winner.
      */
-    private final Queue<Player> winner;
+    private final List<Player> winner;
     /**
      * The First player.
      */
@@ -383,7 +384,7 @@ public class Game implements Serializable {
         if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
             checkWinner();
             setStatus(GameStatus.ENDED);
-            gameListenersHandler.notify_winners(getWinners().stream().toList());
+            gameListenersHandler.notify_winners(getWinners());
             return;
         }
         if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
@@ -421,19 +422,20 @@ public class Game implements Serializable {
      */
 //---------------------------------POINT SECTION
     public int checkPlayerTotalPoint(Player p){
-        return p.getCurrentPoints()
-                + p.getGoal().pointCard(p.getBoard())
+        p.increasePoints(p.getGoal().pointCard(p.getBoard())
                 + gameBoardDeck.getCommonObjective(0).pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard());
+                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard()));
+        return p.getCurrentPoints();
     }
 
     /**
      * Check winner.
      */
     public void checkWinner(){
+        /*
        int max=0;
         for (Player cplayer : players ){
-            int p_point = checkPlayerTotalPoint(cplayer);
+            int p_point = checkPlayerTotalPoint(cplayer); //attenzione, ora checkPlayerTotalPoint aggiorna i currentPoint
             //2 players with equal point
             if(p_point == max){
                 winner.add(cplayer);
@@ -445,6 +447,13 @@ public class Game implements Serializable {
                 max = p_point;
             }
         }
+        */
+        for (Player p : players) {
+            checkPlayerTotalPoint(p);
+        }
+
+        winner.addAll(players);
+        winner.sort((p1, p2) -> Integer.compare(p2.getCurrentPoints(), p1.getCurrentPoints()));
     }
 
     /**
@@ -452,7 +461,7 @@ public class Game implements Serializable {
      *
      * @return the queue
      */
-    public Queue<Player> getWinners(){
+    public List<Player> getWinners(){
         return winner;
     }
 

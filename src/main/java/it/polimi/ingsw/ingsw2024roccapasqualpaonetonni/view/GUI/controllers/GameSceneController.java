@@ -601,8 +601,8 @@ public class GameSceneController extends GenericController{
         cardImage.setLayoutX(x);
         cardImage.setLayoutY(y);
         cardImage.setId(String.valueOf(card.getIdCard()));
-        cardImage.setFitWidth(myHandImage3.getFitWidth());
-        cardImage.setFitHeight(myHandImage3.getFitHeight());
+        cardImage.setFitWidth(CARD_SIZE[1]);
+        cardImage.setFitHeight(CARD_SIZE[0]);
         cardImage.setOnMouseClicked(this::handleBoardCardClick);
         board.getChildren().add(cardImage);
         cardImage.setDisable(false);
@@ -656,6 +656,8 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnDrawCard() {
+        toReplace = -1;
+        toReplaceIV = null;
         for (int i = 0; i < boardCards.getChildren().size(); i++) {
             if (boardCards.getChildren().get(i) instanceof HBox cards) {
                 for (int j = 0; j < cards.getChildren().size(); j++) {
@@ -912,7 +914,9 @@ public class GameSceneController extends GenericController{
     public void updateHand() {
         shiftHand();
         ImageView handCard = (ImageView) handCards.getChildren().get(hand - 1);
-        handCard.setImage(toReplaceIV.getImage());
+        if (toReplaceIV != null) {
+            handCard.setImage(toReplaceIV.getImage());
+        }
         handCard.setFitHeight(CARD_SIZE[0]);
         handCard.setFitWidth(CARD_SIZE[1]);
         handCard.setDisable(true);

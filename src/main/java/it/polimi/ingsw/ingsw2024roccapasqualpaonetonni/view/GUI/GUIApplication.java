@@ -34,6 +34,7 @@ public class GUIApplication extends Application {
     private Parent root;
     Parent rootScore = null;
     private StackPane joinedGameRoot;
+    private AnchorPane winnersRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
     private ScoreBoardController scoreBoardController = null;
@@ -520,17 +521,20 @@ public class GUIApplication extends Application {
 
     public void winner(List<Player> list) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
-        Parent newRoot = null;
         try {
-            newRoot = loader.load();
-            ConsolePrinter.consolePrinter("Loaded");
+            winnersRoot = loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         winnersController = loader.getController();
-
         winnersController.showWinners(list);
+
+        double currWidth = stage.getWidth();
+        double currHeight = stage.getHeight();
+        Scene scene = new Scene(winnersRoot, currWidth, currHeight);
+        stage.setScene(scene);
+        stage.setTitle("Codex Naturalis");
+        stage.show();
     }
 
     public void ruleBook() {

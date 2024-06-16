@@ -347,6 +347,17 @@ public class RMIServerStub implements ServerInterface {
     }
 
     /**
+     *
+     * @param myNickname nickname of the caller
+     * @param otherPlayer nickname of the owner of the board to show
+     * @throws IOException the io exception
+     */
+    @Override
+    public void getOtherBoard(String myNickname, String otherPlayer) throws IOException {
+        gameController.getOtherBoard(myNickname, otherPlayer);
+    }
+
+    /**
      * Sets max n um.
      *
      * @param num the num

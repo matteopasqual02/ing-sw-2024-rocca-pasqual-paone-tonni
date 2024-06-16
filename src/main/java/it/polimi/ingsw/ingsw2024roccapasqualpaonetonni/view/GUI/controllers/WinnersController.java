@@ -32,7 +32,7 @@ public class WinnersController {
         ImageView imageView = new ImageView();
         String path = getNumber(i);
         if (path != null) {
-            imageView.setImage(new Image(path));
+            imageView.setImage(new Image(String.valueOf(getClass().getResource(path))));
         }
         imageView.setFitWidth(77);
         hbox.getChildren().add(imageView);
