@@ -444,20 +444,6 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
     }
 
     /**
-     *
-     * @param myNickname nickname of the caller
-     * @param otherPlayer nickname of the owner of the board to show
-     * @throws IOException
-     */
-    @Override
-    public void getOtherBoard(String myNickname, String otherPlayer) throws IOException {
-        synchronized (lock) {
-            outputStream.writeObject(new MessageGetOtherBoard(myNickname, otherPlayer));
-            messageDone();
-        }
-    }
-
-    /**
      * Sets max n um.
      *
      * @param num the num
