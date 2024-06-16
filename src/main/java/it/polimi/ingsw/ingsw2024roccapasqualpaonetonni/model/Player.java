@@ -217,7 +217,6 @@ public class Player implements Serializable {
     public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
         hand.add(b.draw(position));
         playerListenersHandler.notify_drawFromBoard(this,b,b.getDrawableDeck());
-
     }
 
     /**
