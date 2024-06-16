@@ -376,18 +376,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 view.show_generic("You have left game " + myGameId);
                 view.joinLobby();
             }
-            case "/seeBoard" -> {
-                if(parole.length==2){
-                    try{
-                        server.getOtherBoard(myNickname, parole[1]);
-                    }catch(IndexOutOfBoundsException e){
-                        view.invalidMessage("Invalid format", myTurn);
-                    }
-                }
-                else {
-                    view.invalidMessage("Invalid argument", myTurn);
-                }
-            }
             case null, default -> view.invalidMessage("Invalid command", myTurn);
         }
     }

@@ -149,14 +149,6 @@ public interface GameControllerInterface extends Remote {
     void getPrivateChatLog(String yourName, String otherName) throws RemoteException;
 
     /**
-     *
-     * @param myName nickname of the caller
-     * @param otherName nickname of the owner of the board to show
-     * @throws RemoteException the remote exception
-     */
-    void getOtherBoard(String myName, String otherName) throws RemoteException;
-
-    /**
      * Gets game id.
      *
      * @return the game id

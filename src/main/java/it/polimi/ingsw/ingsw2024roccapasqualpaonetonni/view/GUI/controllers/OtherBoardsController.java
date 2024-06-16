@@ -95,81 +95,6 @@ public class OtherBoardsController extends GenericController{
         }*/
     }
 
-    public void updateBoard(GameImmutable gameImmutable, String nickname) {
-        StartingCard start = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getStartingCard();
-        placeStartCardOnBoardFromMatrix(start,personalBoard.getWidth()/2,personalBoard.getHeight()/2);
-        selectedCard = null;
-    }
-
-    private void placeStartCardOnBoardFromMatrix(PlayingCard start,double x,double y) {
-        board.getChildren().removeAll();
-        ImageView startCard = new ImageView();
-        if(start.isFlipped()){
-            startCard.setImage(new Image(createBackPath(start.getIdCard())));
-        }
-        else {
-            startCard.setImage(new Image(createPath(start.getIdCard())));
-        }
-        cardImage.setFitWidth(CARD_SIZE[1]);
-        cardImage.setFitHeight(CARD_SIZE[0]);
-        startCard.setLayoutX(x);
-        startCard.setLayoutY(y);
-        startCard.setId(String.valueOf(startingID));
-        startCard.setOnMouseClicked(this::handleBoardCardClick);
-        cardsHBox.getChildren().remove(startingVBox);
-        board.getChildren().add(startCard);
-
-        cardOffset(start, x, y, startCard);
-    }
-
-    private void placeCardOnBoardFromMatrix(PlayingCard card, double x, double y){
-        ImageView cardImage = new ImageView();
-        if(card.isFlipped()){
-            cardImage.setImage(new Image(createBackPath(card.getIdCard())));
-        }
-        else {
-            cardImage.setImage(new Image(createPath(card.getIdCard())));
-        }
-        cardImage.setLayoutX(x);
-        cardImage.setLayoutY(y);
-        cardImage.setId(String.valueOf(card.getIdCard()));
-        cardImage.setFitWidth(myHandImage3.getFitWidth());
-        cardImage.setFitHeight(myHandImage3.getFitHeight());
-        cardImage.setOnMouseClicked(this::handleBoardCardClick);
-        board.getChildren().add(cardImage);
-        cardImage.setDisable(false);
-        cardOffset(card, x, y, cardImage);
-    }
-
-    private void cardOffset(PlayingCard card, double x, double y, ImageView cardImage) {
-        for(int i=1;i<=4;i++){
-            if(card.getCorner(i)!=null && card.getCorner(i).getCardAttached()!=null){
-                double xoffset=0;
-                double yoffset=0;
-                switch (i){
-                    case 1 ->{
-                        xoffset = - (cardImage.getFitWidth()*0.75);
-                        yoffset = - (cardImage.getFitHeight()*0.56);
-                    }
-                    case 2 ->{
-                        xoffset = (cardImage.getFitWidth()*0.75);
-                        yoffset = - (cardImage.getFitHeight()*0.56);
-                    }
-                    case 3 ->{
-                        xoffset = (cardImage.getFitWidth()*0.75);
-                        yoffset = (cardImage.getFitHeight()*0.56);
-                    }
-                    case 4 ->{
-                        xoffset = - (cardImage.getFitWidth()*0.75);
-                        yoffset = (cardImage.getFitHeight()*0.56);
-                    }
-                }
-                placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),x+xoffset,y+yoffset);
-            }
-        }
-    }
-
-
     public void placeCardOnBoard(ImageView card, double x, double y,Pane board){
         //we have to handle the case in which it is flipped
         ConsolePrinter.consolePrinter(String.valueOf(x));
@@ -182,6 +107,7 @@ public class OtherBoardsController extends GenericController{
         board.getChildren().add(newCard);
         newCard.setDisable(false);
     }
+
     private String createPath(int cardId) {
         String path;
         if(cardId<10){

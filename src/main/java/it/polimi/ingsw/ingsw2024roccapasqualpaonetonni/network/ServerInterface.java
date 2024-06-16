@@ -178,14 +178,6 @@ public interface ServerInterface extends Remote{
     void getPrivateChatLog(String yourName, String otherName) throws IOException;
 
     /**
-     *
-     * @param myNickname nickname of the caller
-     * @param otherPlayer nickname of the owner of the board to show
-     * @throws IOException the io exception
-     */
-    void getOtherBoard(String myNickname, String otherPlayer) throws IOException;
-
-    /**
      * Pong.
      *
      * @param me me
