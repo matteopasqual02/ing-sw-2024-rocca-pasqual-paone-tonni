@@ -292,7 +292,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             }
             case "/drawBoard","/drawboard" -> {
                 if (myTurn != null) {
-                    if (state == GameStatus.RUNNING) {
+                    if (state == GameStatus.RUNNING || state == GameStatus.WAITING_LAST_TURN) {
                         if (parole.length == 2) {
                             try{
                                 int pos = Integer.parseInt(parole[1]);
@@ -524,8 +524,9 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 view.myRunningTurnPlaceCard();
                 return;
             }
-            view.myRunningTurnDrawCard();
-
+            if (state!=GameStatus.LAST_TURN) {
+                view.myRunningTurnDrawCard();
+            }
         }
         else {
             view.notMyTurn();

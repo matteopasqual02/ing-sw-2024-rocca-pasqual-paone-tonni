@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -20,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,6 +38,7 @@ public class GUIApplication extends Application {
     private GameSceneController gameSceneController = null;
     private ScoreBoardController scoreBoardController = null;
     private OtherBoardsController otherBoardsController = null;
+    private WinnersController winnersController = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
@@ -513,6 +516,21 @@ public class GUIApplication extends Application {
 
     public void show_otherPlayerBoard(int cardID, String playerChangedNickname) {
         otherBoardsController.updateOtherBoards(cardID,playerChangedNickname);
+    }
+
+    public void winner(List<Player> list) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
+        Parent newRoot = null;
+        try {
+            newRoot = loader.load();
+            ConsolePrinter.consolePrinter("Loaded");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        winnersController = loader.getController();
+
+        winnersController.showWinners(list);
     }
 
     public void ruleBook() {

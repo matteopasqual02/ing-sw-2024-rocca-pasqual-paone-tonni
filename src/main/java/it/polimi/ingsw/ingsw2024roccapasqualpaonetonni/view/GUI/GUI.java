@@ -183,7 +183,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void winners(List<Player> list, String nick) {
-
+        runLater(()->application.winner(list));
     }
 
     @Override

@@ -553,6 +553,11 @@ public class GameSceneController extends GenericController{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("THE STATUS HAS CHANGED");
         alert.setHeaderText("New Status:");
+        if (status.equals("LAST_TURN")) {
+            status = status + "\nWhen it'll be your turn, you will place the last card" +
+                    "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
+                    "and a the winner will be found";
+        }
         alert.setContentText(status);
         alert.getButtonTypes().setAll(ButtonType.OK);
         alert.showAndWait();
