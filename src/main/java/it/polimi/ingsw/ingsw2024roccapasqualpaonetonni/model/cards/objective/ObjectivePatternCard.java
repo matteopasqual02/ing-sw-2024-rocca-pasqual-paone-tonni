@@ -56,7 +56,7 @@ public class ObjectivePatternCard extends ObjectiveCard {
      */
     public String toString () {
         StringBuilder sb = new StringBuilder();
-        Ansi.Color background = Ansi.Color.WHITE;
+        Ansi.Color background;
 
         int[] countTypes = new int[4];
         for (Seed[] seeds : pattern) {
@@ -122,7 +122,7 @@ public class ObjectivePatternCard extends ObjectiveCard {
      */
     public String toString (int line) {
         StringBuilder[] sb = new StringBuilder[3];
-        Ansi.Color background = Ansi.Color.WHITE;
+        Ansi.Color background;
         for (int i = 0; i < sb.length; i++) {
             sb[i] = new StringBuilder();
         }

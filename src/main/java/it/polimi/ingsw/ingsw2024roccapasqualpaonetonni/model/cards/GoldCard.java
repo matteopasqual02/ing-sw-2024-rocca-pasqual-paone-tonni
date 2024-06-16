@@ -49,8 +49,7 @@ public class GoldCard extends PlayingCard {
      */
     @Override
     public int[] checkRequirements(int[] available_seeds) {
-        int[] result = new int[2];
-        result[0] = 0;
+        int[] result = {0, 0};
         for (int i = 0; i < placeCondition.length; i++) {
             if (placeCondition[i] > available_seeds[i]) {
                 result[1] = i;
@@ -197,7 +196,7 @@ public class GoldCard extends PlayingCard {
                             k++;
                         }
                     }
-                    for(j=k; k<6; k++) {
+                    for(; k<6; k++) {
                         sb.append(ansi().fg(background).bg(background).a(" "));
                     }
                 }
@@ -214,7 +213,7 @@ public class GoldCard extends PlayingCard {
                             count++;
                         }
                     }
-                    for(j=k; k<6; k++) {
+                    for(; k<6; k++) {
                         sb.append(ansi().fg(background).bg(background).a(" "));
                     }
                 }
@@ -227,7 +226,7 @@ public class GoldCard extends PlayingCard {
                             k++;
                         }
                     }
-                    for(j=k; k<6; k++) {
+                    for(; k<6; k++) {
                         sb.append(ansi().fg(background).bg(background).a(" "));
                     }
                     sb.append(ansi().fg(background).bg(background).a(" "));
@@ -333,7 +332,7 @@ public class GoldCard extends PlayingCard {
                             k++;
                         }
                     }
-                    for(j=k; k<6; k++) {
+                    for(; k<6; k++) {
                         sb[2].append(ansi().fg(background).bg(background).a(" "));
                     }
                 }
@@ -350,7 +349,7 @@ public class GoldCard extends PlayingCard {
                             count++;
                         }
                     }
-                    for(j=k; k<6; k++) {
+                    for(; k<6; k++) {
                         sb[2].append(ansi().fg(background).bg(background).a(" "));
                     }
                 }
@@ -363,7 +362,7 @@ public class GoldCard extends PlayingCard {
                             k++;
                         }
                     }
-                    for(j=k; k<6; k++) {
+                    for(; k<6; k++) {
                         sb[2].append(ansi().fg(background).bg(background).a(" "));
                     }
                     sb[2].append(ansi().fg(background).bg(background).a(" "));

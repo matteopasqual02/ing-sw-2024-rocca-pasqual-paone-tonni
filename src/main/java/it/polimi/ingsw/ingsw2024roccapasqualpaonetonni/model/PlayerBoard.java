@@ -8,8 +8,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.InvalidPl
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import org.fusesource.jansi.Ansi;
-
-import java.io.Console;
 import java.io.Serializable;
 
 import static org.fusesource.jansi.Ansi.ansi;
@@ -161,7 +159,7 @@ public class PlayerBoard implements Serializable {
 
         if (checkSpotAvailable(place_cord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
-            ConsolePrinter.consolePrinter("Player board " + String.valueOf(tmp[0]));
+            ConsolePrinter.consolePrinter("Player board " + tmp[0]);
 
             if (card_to_add.isFlipped() || tmp[0] == 1) {
 

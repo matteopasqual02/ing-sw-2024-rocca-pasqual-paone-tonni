@@ -37,7 +37,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void joinLobby() {
-        runLater(()->application.joinLobby());
+        runLater(application::joinLobby);
     }
 
     /**
@@ -100,7 +100,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void show_noAvailableGame() {
-        runLater(()->application.show_noAvailableGame());
+        runLater(application::show_noAvailableGame);
     }
 
     /**
@@ -118,7 +118,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void show_areYouReady() {
-        runLater(()->application.show_areYouReady());
+        runLater(application::show_areYouReady);
     }
 
     /**
@@ -126,7 +126,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnDrawCard() {
-        runLater(()->application.myRunningTurnDrawCard());
+        runLater(application::myRunningTurnDrawCard);
     }
 
     /**
@@ -134,7 +134,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void notMyTurn() {
-        runLater(()->application.notMyTurn());
+        runLater(application::notMyTurn);
     }
 
     /**
@@ -157,7 +157,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void notMyTurnChat() {
-        runLater(()->application.chatBeforeStart());
+        runLater(application::chatBeforeStart);
     }
 
     /**
@@ -196,7 +196,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnPlaceCard() {
-        runLater(()->application.myRunningTurnPlaceCard());
+        runLater(application::myRunningTurnPlaceCard);
     }
 
     /**
@@ -214,7 +214,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnChooseObjective() {
-        runLater(()->application.myRunningTurnChoseObjective());
+        runLater(application::myRunningTurnChoseObjective);
     }
 
     /**
@@ -222,6 +222,6 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void myRunningTurnPlaceStarting() {
-        runLater(()->application.myRunningTurnPlaceStarting());
+        runLater(application::myRunningTurnPlaceStarting);
     }
 }

@@ -33,10 +33,6 @@ public class RMIServerStub implements ServerInterface {
      * The Registry.
      */
     private Registry registry;
-    /**
-     * The Notifier.
-     */
-    private RMINotifier notifier;
 
     /**
      * Instantiates a new Rmi server stub.

@@ -3,7 +3,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -24,7 +23,7 @@ public class AreYouReadyController extends GenericController{
         this.application = application;
     }
     @FXML
-    public void handleButtonClick(ActionEvent event){
+    public void handleButtonClick(){
         Platform.runLater(()->{
                     try {
                         application.changeSceneWithNoController("/WaitingForOthers.fxml");

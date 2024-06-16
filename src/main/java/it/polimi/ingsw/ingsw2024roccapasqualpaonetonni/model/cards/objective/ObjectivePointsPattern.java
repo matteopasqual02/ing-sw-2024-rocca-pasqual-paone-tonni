@@ -76,7 +76,6 @@ public class ObjectivePointsPattern implements ObjectivePointsStrategy{
                     if( board[i+k][j+w]==null ){
                         return false;
                     }
-                    int kk;
                     if( !pattern[k][w].equals(board[i+k][j+w].getSeed()) ){
                         return false;
                     }

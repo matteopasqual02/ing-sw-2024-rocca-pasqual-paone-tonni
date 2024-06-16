@@ -14,7 +14,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerVa
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 
-import java.io.Console;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.*;

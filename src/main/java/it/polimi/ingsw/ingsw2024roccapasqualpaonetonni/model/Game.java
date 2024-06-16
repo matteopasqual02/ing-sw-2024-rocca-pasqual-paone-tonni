@@ -6,7 +6,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.io.Serializable;
@@ -418,14 +417,12 @@ public class Game implements Serializable {
      * Check player total point int.
      *
      * @param p the p
-     * @return the int
      */
 //---------------------------------POINT SECTION
-    public int checkPlayerTotalPoint(Player p){
+    public void checkPlayerTotalPoint(Player p){
         p.increasePoints(p.getGoal().pointCard(p.getBoard())
                 + gameBoardDeck.getCommonObjective(0).pointCard(p.getBoard())
                 + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard()));
-        return p.getCurrentPoints();
     }
 
     /**

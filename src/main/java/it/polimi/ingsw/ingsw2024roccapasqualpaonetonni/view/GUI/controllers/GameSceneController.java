@@ -10,7 +10,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -29,7 +28,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
@@ -48,9 +46,6 @@ public class GameSceneController extends GenericController{
     // cards section
     @FXML
     private HBox cardsHBox;
-
-    @FXML
-    private VBox myHand;
 
     @FXML
     private HBox handCards;
@@ -148,14 +143,12 @@ public class GameSceneController extends GenericController{
 
     private int goal = 0;
     private int hand = -1;
-    private final Object jumpLock = new Object();
     private ImageView selectedCard = null;
     private boolean flippedStarting = false;
     private int startingID = -1;
     private final boolean[] flippedHand = {false, false, false};
     private final int[] handIDs = {-1, -1, -1};
     private final int[] deckIDs = {-1, -1};
-    private final double[] coords = {0, 0};
     private int toReplace = -1;
     private ImageView toReplaceIV = null;
     private final int[] boardIDs = {-1, -1, -1, -1};
@@ -263,7 +256,7 @@ public class GameSceneController extends GenericController{
 
         for(Player p: gameImmutable.getPlayers()){
             if(!p.getNickname().equals(nickname)){
-                ImageView color = null;
+                ImageView color;
                 if(p.getColorPlayer() == 1){
                     color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
                 } else if (p.getColorPlayer() == 2) {
@@ -381,7 +374,7 @@ public class GameSceneController extends GenericController{
         selectedCard = myStartingCard;
     }
 
-    public void handleBoardClick(MouseEvent mouseEvent) {
+    public void handleBoardClick() {
         String flipped;
         board.setEffect(null);
         flipHandCard.setDisable(true);
@@ -413,25 +406,19 @@ public class GameSceneController extends GenericController{
             flipped = flippedHand[hand - 1] ? "true" : "";
 
             if(x<= cardWidth*0.25){
-                coords[0] = (double) Math.round((card.getLayoutX() - card.getFitWidth() * 0.75) * 1000) / 1000;
                 if(y<=cardHeight*0.44){
                     corner = 1;
-                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.56) * 1000) / 1000;
                 }
                 else if(y>=cardHeight*0.56){
                     corner = 4;
-                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.56) * 1000) / 1000;;
                 }
             }
             else if(x>= cardWidth*0.75){
-                coords[0] = (double) Math.round((card.getLayoutX() + card.getFitWidth() * 0.75) * 1000) / 1000;
                 if(y<=cardHeight*0.44){
                     corner = 2;
-                    coords[1] = (double) Math.round((card.getLayoutY() - card.getFitHeight()*0.56) * 1000) / 1000;
                 }
                 else if(y>=cardHeight*0.56){
                     corner = 3;
-                    coords[1] = (double) Math.round((card.getLayoutY() + card.getFitHeight()*0.56) * 1000) / 1000;
                 }
             }
 
@@ -688,7 +675,6 @@ public class GameSceneController extends GenericController{
     private void jump(Node node){
         node.setUserData(true);
         node.setDisable(true);
-        double currentY = node.getLayoutY();
         TranslateTransition jumpUp = new TranslateTransition(ANIMATION_DURATION, node);
         jumpUp.setByY(-20);
         jumpUp.setOnFinished(e -> dropCard(node));
@@ -705,7 +691,7 @@ public class GameSceneController extends GenericController{
         dropDown.play();
     }
 
-    public void handleObjectiveCard2Clicked(MouseEvent mouseEvent) {
+    public void handleObjectiveCard2Clicked() {
         mySecretObjective1.setEffect(null);
         mySecretObjective1.setDisable(true);
         mySecretObjective2.setDisable(true);
@@ -720,7 +706,7 @@ public class GameSceneController extends GenericController{
         });
     }
 
-    public void handleObjectiveCard1Clicked(MouseEvent mouseEvent) {
+    public void handleObjectiveCard1Clicked() {
         mySecretObjective2.setEffect(null);
         mySecretObjective2.setDisable(true);
         mySecretObjective1.setDisable(true);
@@ -809,7 +795,7 @@ public class GameSceneController extends GenericController{
         drawedID = boardIDs[toReplace];
         try {
             //ConsolePrinter.consolePrinter(String.valueOf(toReplace));
-            String msg = "/drawBoard " + String.valueOf(toReplace + 1);
+            String msg = "/drawBoard " + (toReplace + 1);
             ConsolePrinter.consolePrinter(msg);
             client.receiveInput(msg);
         } catch (IOException | NotBoundException e) {
@@ -1004,11 +990,11 @@ public class GameSceneController extends GenericController{
         otherPlayersVBox.setEffect(null);
     }
 
-    public void handleSeeInfoBox(MouseEvent event) {
-        Platform.runLater(()->{application.infoBox();});
+    public void handleSeeInfoBox() {
+        Platform.runLater(()-> application.infoBox());
     }
-    public void handleSeeRuleBook(MouseEvent event) {
-        Platform.runLater(()->{application.ruleBook();});
+    public void handleSeeRuleBook() {
+        Platform.runLater(()-> application.ruleBook());
     }
 
 
@@ -1032,7 +1018,7 @@ public class GameSceneController extends GenericController{
             scrollPane.layout();
         }
     }
-    public void handleSend(ActionEvent actionEvent) {
+    public void handleSend() {
         String message = messageInput.getText().trim();
         messageInput.clear();
         if (!message.isEmpty()) {
@@ -1060,7 +1046,7 @@ public class GameSceneController extends GenericController{
         }
     }
     @FXML
-    public void handleSeePublicChat(ActionEvent actionEvent) {
+    public void handleSeePublicChat() {
         isPrivateChat = false;
         receiverContainer.setVisible(false);
         receiverContainer.setManaged(false);
@@ -1076,7 +1062,7 @@ public class GameSceneController extends GenericController{
         });
     }
     @FXML
-    public void handleSeePrivateChat(ActionEvent actionEvent) {
+    public void handleSeePrivateChat() {
         isPrivateChat = true;
         receiverContainer.setVisible(true);
         receiverContainer.setManaged(true);
@@ -1096,7 +1082,7 @@ public class GameSceneController extends GenericController{
         });
     }
     @FXML
-    public void handleSelectPlayerChat(ActionEvent actionEvent) {
+    public void handleSelectPlayerChat() {
         isPrivateChat = true;
         messageContainer.getChildren().removeAll(messageContainer.getChildren());
         String selectedPlayer = (String) receiverPrivateMessages.getSelectionModel().getSelectedItem();
@@ -1111,7 +1097,7 @@ public class GameSceneController extends GenericController{
         });
     }
     @FXML
-    public void handleSeeScoreBoard(MouseEvent event) {
+    public void handleSeeScoreBoard() {
         Platform.runLater(()->application.seeScoreBoard());
     }
 
@@ -1140,7 +1126,6 @@ public class GameSceneController extends GenericController{
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
         if(p.isPresent())
         {
-            List<PlayingCard> hand = p.get().getHand();
             for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
                 HBox hBox2 = (HBox) otherPlayersVBox.getChildren().get(i);
                 VBox vBox1 = (VBox) hBox2.getChildren().get(0);
@@ -1162,7 +1147,7 @@ public class GameSceneController extends GenericController{
         }
     }
     @FXML
-    public void handleSeeOtherPlayersBoards(MouseEvent mouseEvent) {
+    public void handleSeeOtherPlayersBoards() {
         Platform.runLater(()->application.seeOtherBoards());
     }
 }

@@ -122,7 +122,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
     @Override
     public GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, NotifierInterface notifier) throws RemoteException {
         GameControllerInterface remoteController = server.mainController.createGameController(nickname, numMaxOfPlayer, notifier);
-        GameControllerInterface remoteControllerUniCasted = null;
+        GameControllerInterface remoteControllerUniCasted;
         try{
             //remoteControllerUniCasted needs to be an exportable object
             remoteControllerUniCasted = (GameControllerInterface) UnicastRemoteObject.exportObject(remoteController,0);

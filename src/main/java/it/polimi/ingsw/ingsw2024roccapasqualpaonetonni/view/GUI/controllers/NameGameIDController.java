@@ -2,7 +2,6 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -27,7 +26,7 @@ public class NameGameIDController extends GenericController {
         this.client = client;
     }
     @FXML
-    public void handleButtonClick(ActionEvent event){
+    public void handleButtonClick(){
 
         String name = string1.getText();
         try{

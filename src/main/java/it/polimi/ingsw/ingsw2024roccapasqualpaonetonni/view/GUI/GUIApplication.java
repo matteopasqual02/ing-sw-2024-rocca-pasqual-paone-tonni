@@ -31,23 +31,16 @@ public class GUIApplication extends Application {
     private Stage stage;
     private Stage scoreBoardStage;
     private Stage otherBoardsStage;
-    private Parent root;
-    Parent rootScore = null;
     private StackPane joinedGameRoot;
-    private AnchorPane winnersRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
     private ScoreBoardController scoreBoardController = null;
     private OtherBoardsController otherBoardsController = null;
-    private WinnersController winnersController = null;
     //private int i=0; //used to change the position in which the joined message arrives for each player
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
      */
     private final ExecutorService executor = Executors.newCachedThreadPool();
-    private Parent createContent(){
-        return new StackPane(new Text("Hello world!"));
-    }
 
     /**
      * Start.
@@ -61,7 +54,7 @@ public class GUIApplication extends Application {
         instance = this;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        root = loader.load();
+        Parent root = loader.load();
         LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
 
@@ -91,7 +84,7 @@ public class GUIApplication extends Application {
                 throw new RuntimeException(e);
             }
         });
-        String message = String.format("everyone entered, press y to begin");
+        String message = "everyone entered, press y to begin";
         ConsolePrinter.consolePrinter(message);
     }
 
@@ -105,8 +98,6 @@ public class GUIApplication extends Application {
     //when I need to dynamically change the file we need to keep a reference to the controller.
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
-        //Parent newRoot = null;
-        //StackPane newRoot = null;
         try {
             joinedGameRoot = loader.load();
         } catch (IOException e) {
@@ -130,7 +121,7 @@ public class GUIApplication extends Application {
         ConsolePrinter.consolePrinter("Game started");
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
-        Parent newRoot = null;
+        Parent newRoot;
         try {
             newRoot = loader.load();
         } catch (IOException e) {
@@ -158,22 +149,6 @@ public class GUIApplication extends Application {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");
         alert.setHeaderText("How to play the game:");
- /*       VBox box = new VBox();
-        HBox hBox1 = new HBox();
-        box.setSpacing(50);
-        Text infoStart = new Text("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
-        ImageView image = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/083.png")));
-        image.setFitWidth(50);
-        image.setPreserveRatio(true);
-        hBox1.getChildren().addAll(infoStart,image);
-        Text infoPlace = new Text("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
-        Text infoDraw = new Text("pesca una carta, resource o gold, o dal mazzo o dalle carte presenti sul tavolo");
-        Text infoOther = new Text("Per osservare le board degli altri giocatori premere see board");
-        box.getChildren().addAll(hBox1,infoPlace,infoDraw,infoOther);
-        ScrollPane page = new ScrollPane(box);
-        alert.getDialogPane().setContent(page);
-        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
-*/
         VBox page = new VBox();
         page.setSpacing(10);
         Text info = new Text("When it's your turn, place a card of the type \"Starting\" in the middle of the board");
@@ -183,7 +158,6 @@ public class GUIApplication extends Application {
         image.setPreserveRatio(true);
         final Label pageIndex = new Label("1");
         HBox hBox1 = new HBox();
-        HBox hBox2 = new HBox();
         hBox1.getChildren().addAll(info,image);
         Button next = new Button("Next →");
         Button prev = new Button("← Go Back");
@@ -472,7 +446,7 @@ public class GUIApplication extends Application {
         scoreBoardStage.setTitle("Score Board");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreBoard.fxml"));
-        Parent rootScore = null;
+        Parent rootScore;
         try {
             rootScore = loader.load();
         } catch (IOException e) {
@@ -500,7 +474,7 @@ public class GUIApplication extends Application {
         otherBoardsStage.setTitle("Other Boards");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/OtherBoards.fxml"));
-        Parent rootOtherBoards = null;
+        Parent rootOtherBoards;
         try {
             rootOtherBoards = loader.load();
         } catch (IOException e) {
@@ -521,12 +495,13 @@ public class GUIApplication extends Application {
 
     public void winner(List<Player> list) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
+        AnchorPane winnersRoot;
         try {
             winnersRoot = loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        winnersController = loader.getController();
+        WinnersController winnersController = loader.getController();
         winnersController.showWinners(list);
 
         double currWidth = stage.getWidth();
@@ -549,7 +524,6 @@ public class GUIApplication extends Application {
         pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/01.png"))));
         final Label pageIndex = new Label("1");
         HBox hBox1 = new HBox();
-        HBox hBox2 = new HBox();
         hBox1.getChildren().add(pageImage);
         Button next = new Button("Next →");
         Button prev = new Button("← Go Back");

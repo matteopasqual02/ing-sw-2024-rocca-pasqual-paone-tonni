@@ -84,12 +84,8 @@ public class Client extends UnicastRemoteObject implements GameListener{
         this.pongThread = new PingPongThreadClient();
 
         switch (connectionType){
-            case RMI -> {
-                server = new RMIServerStub();
-            }
-            case SOCKET -> {
-                server = new SocketClient(this);
-            }
+            case RMI -> server = new RMIServerStub();
+            case SOCKET -> server = new SocketClient(this);
             case null, default -> {
                 return;
             }
@@ -220,7 +216,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
 
                 }
                 else {
-                    view.invalidMessage("Not my turn (or game is waiting)", myTurn);
+                    view.invalidMessage("Not my turn (or game is waiting)", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/choseGoal","/chosegoal" -> {
@@ -238,7 +234,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     }
                 }
                 else {
-                    view.invalidMessage("Command not complete", myTurn);
+                    view.invalidMessage("Command not complete", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/addCard", "/addcard" -> {
@@ -271,7 +267,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     }
                 }
                 else {
-                    view.invalidMessage("Command not complete or not your turn", myTurn);
+                    view.invalidMessage("Command not complete or not your turn", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/drawGold","/drawgold" -> {
@@ -279,7 +275,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.drawGoldFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase", myTurn);
+                    view.invalidMessage("Not your Turn or last phase", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/drawResources","/drawresources"  -> {
@@ -287,7 +283,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.drawResourceFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase", myTurn);
+                    view.invalidMessage("Not your Turn or last phase", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/drawBoard","/drawboard" -> {
@@ -311,7 +307,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     }
                 }
                 else {
-                    view.invalidMessage("Not your turn", myTurn);
+                    view.invalidMessage("Not your turn", false);
                 }
             }
             case "/chat" -> {
@@ -402,7 +398,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
     public ServerInterface getServerInterface(){
         return server;
     }
-    public boolean getMyTurn(){return myTurn;}
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 
@@ -851,7 +846,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
     /**
      * The type Ping pong thread client.
      */
-    private class PingPongThreadClient extends Thread {
+    private static class PingPongThreadClient extends Thread {
         /**
          * The Pinged.
          */
