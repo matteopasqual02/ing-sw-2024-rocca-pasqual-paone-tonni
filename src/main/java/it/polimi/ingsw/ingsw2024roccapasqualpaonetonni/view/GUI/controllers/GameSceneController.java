@@ -11,6 +11,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -18,11 +19,10 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -292,9 +292,15 @@ public class GameSceneController extends GenericController{
                 hand3.setFitHeight(30);
                 hand3.setFitWidth(30);
 
-                String printPoints = "Points: " + p.getCurrentPoints();
+                String printPoints = "POINTS: " + p.getCurrentPoints();
                 Label points = new Label(printPoints);
-                Button button = new Button("See board");
+                points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+                points.setTextFill(Color.BROWN);
+
+                //String seedCount = "SEEDCOUNT: GREEN "+p.getCountSeed(). + "BLUE: " + + "PURPLE " + "RED " + ""
+
+                Button button = new Button("SEE BOARD");
+                button.setStyle("-fx-background-color: lightgray;-fx-font-family: Arial; -fx-font-size: 10; -fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
                 //button.setOnMouseClicked(event -> handleSeeOtherPlayerBoardClicked(event, p.getNickname()));
                 button.setId(p.getNickname());
                 button.setOnMouseClicked(this::handleSeeOtherPlayersBoards);
@@ -302,6 +308,21 @@ public class GameSceneController extends GenericController{
                 HBox hbox1 = new HBox(hand1,hand2,hand3);
                 VBox vBox2 = new VBox(hbox1,points);
                 HBox hbox2 = new HBox(vBox1,vBox2, button);
+                //button.setPadding(new Insets(5,5,5,5));
+
+                hbox2.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
+                hbox1.setPadding(new Insets(5,5,5,5));
+                vBox1.setPadding(new Insets(5,5,5,5));
+                vBox2.setPadding(new Insets(5,5,5,5));
+                hbox2.setPadding(new Insets(5,5,5,5));
+                hbox2.setSpacing(10);
+                /*BorderStroke borderStroke = new BorderStroke(
+                        Color.BLACK,
+                        BorderStrokeStyle.SOLID,
+                        new CornerRadii(1),
+                        new BorderWidths(2)
+                );
+                hbox2.setBorder(new Border(borderStroke));*/
 
                 otherPlayersVBox.getChildren().add(hbox2);
 
@@ -309,6 +330,67 @@ public class GameSceneController extends GenericController{
 
                 // score board
                 Platform.runLater(()->application.setScoreBoard());
+            }
+            else {
+                ImageView color;
+                if(p.getColorPlayer() == 1){
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
+                } else if (p.getColorPlayer() == 2) {
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
+                } else if (p.getColorPlayer() == 3) {
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
+                } else {
+                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
+                }
+                color.setFitHeight(50);
+                color.setFitWidth(50);
+                Label name = new Label(p.getNickname() + "(YOU)");
+
+                ImageView hand1 = new ImageView();
+                ImageView hand2 = new ImageView();
+                ImageView hand3 = new ImageView();
+                cardId = p.getHand().get(0).getIdCard();
+                hand1.setImage(new Image(createBackPath(cardId)));
+                cardId = p.getHand().get(1).getIdCard();
+                hand2.setImage(new Image(createBackPath(cardId)));
+                cardId = p.getHand().get(2).getIdCard();
+                hand3.setImage(new Image(createBackPath(cardId)));
+
+                hand1.setFitHeight(30);
+                hand1.setFitWidth(30);
+                hand2.setFitHeight(30);
+                hand2.setFitWidth(30);
+                hand3.setFitHeight(30);
+                hand3.setFitWidth(30);
+
+                String printPoints = "POINTS: " + p.getCurrentPoints();
+                Label points = new Label(printPoints);
+                points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+                points.setTextFill(Color.BROWN);
+
+                //String seedCount = "SEEDCOUNT: GREEN "+p.getCountSeed(). + "BLUE: " + + "PURPLE " + "RED " + ""
+
+                VBox vBox1 = new VBox(name, color);
+                HBox hbox1 = new HBox(hand1,hand2,hand3);
+                VBox vBox2 = new VBox(hbox1,points);
+                HBox hbox2 = new HBox(vBox1,vBox2);
+                //button.setPadding(new Insets(5,5,5,5));
+
+                hbox2.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
+                hbox1.setPadding(new Insets(5,5,5,5));
+                vBox1.setPadding(new Insets(5,5,5,5));
+                vBox2.setPadding(new Insets(5,5,5,5));
+                hbox2.setPadding(new Insets(5,5,5,5));
+                hbox2.setSpacing(10);
+                /*BorderStroke borderStroke = new BorderStroke(
+                        Color.BLACK,
+                        BorderStrokeStyle.SOLID,
+                        new CornerRadii(1),
+                        new BorderWidths(2)
+                );
+                hbox2.setBorder(new Border(borderStroke));*/
+
+                otherPlayersVBox.getChildren().add(hbox2);
             }
         }
         Platform.runLater(()->application.setOtherPlayerBoard());
@@ -1129,7 +1211,7 @@ public class GameSceneController extends GenericController{
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
         String currPoints = "error";
         if(p.isPresent()){
-             currPoints = "Points " + p.get().getCurrentPoints();
+             currPoints = "POINTS " + p.get().getCurrentPoints();
         }
         for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
             HBox hBox1 = (HBox) otherPlayersVBox.getChildren().get(i);
