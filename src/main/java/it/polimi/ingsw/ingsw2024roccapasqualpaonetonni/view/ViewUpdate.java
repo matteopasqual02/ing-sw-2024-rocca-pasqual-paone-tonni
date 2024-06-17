@@ -94,6 +94,13 @@ public interface ViewUpdate {
     void notMyTurn();
 
     /**
+     *
+     * @param gameImmutable
+     * @param nickname of the owner of the board to update
+     */
+    void updateOtherBoard(GameImmutable gameImmutable, String nickname);
+
+    /**
      * Display chat.
      *
      * @param s the string message

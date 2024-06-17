@@ -302,7 +302,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         }
                     }
                     else {
-                        ConsolePrinter.consolePrinter("Phase: " + state.toString());
+                        //ConsolePrinter.consolePrinter("Phase: " + state.toString());
                         view.invalidMessage("Last phase, can't draw", myTurn);
                     }
                 }
@@ -491,12 +491,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void nextTurn(String nickname) {
-        ConsolePrinter.consolePrinter("New turn: " + nickname);
+        //ConsolePrinter.consolePrinter("New turn: " + nickname);
         myTurn = myNickname.equals(nickname);
         if(currentImmutable==null){return;}
         Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();
         switchShowTurn(player);
-        ConsolePrinter.consolePrinter(state.toString());
+        //ConsolePrinter.consolePrinter(state.toString());
     }
 
     /**
@@ -541,6 +541,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         }
         else{
             view.notMyTurn();
+            view.updateOtherBoard(currentImmutable, p.getNickname());
         }
     }
 
@@ -553,13 +554,15 @@ public class Client extends UnicastRemoteObject implements GameListener{
     public void cardAdded(Player p,int cardID) {
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn,p.getNickname());
-        view.show_board(cardID,p.getNickname());
-        ConsolePrinter.consolePrinter(state.toString());
+        //view.show_board(cardID,p.getNickname());
+        //ConsolePrinter.consolePrinter(state.toString());
         if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }
         else{
             view.notMyTurn();
+            //ConsolePrinter.consolePrinter("Client updating board for " + p.getNickname());
+            view.updateOtherBoard(currentImmutable, p.getNickname());
         }
     }
 

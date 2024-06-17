@@ -219,6 +219,16 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }
 
     /**
+     *
+     * @param gameImmutable
+     * @param nickname of the owner of the board to update
+     */
+    @Override
+    public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
+
+    }
+
+    /**
      * My running turn place card.
      */
     @Override

@@ -70,11 +70,11 @@ public class GUIApplication extends Application {
         return instance;
     }
     public void joinLobby(){
-        ConsolePrinter.consolePrinter("joinLobby");
+        //ConsolePrinter.consolePrinter("joinLobby");
     }
     public void show_createdGame(int gameID){
         String message = String.format("Game created, with GameID: %d", gameID);
-        ConsolePrinter.consolePrinter(message);
+        //ConsolePrinter.consolePrinter(message);
     }
     public void show_areYouReady(){
         Platform.runLater(()-> {
@@ -85,12 +85,12 @@ public class GUIApplication extends Application {
             }
         });
         String message = "everyone entered, press y to begin";
-        ConsolePrinter.consolePrinter(message);
+        //ConsolePrinter.consolePrinter(message);
     }
 
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
-        ConsolePrinter.consolePrinter(message);
+        //ConsolePrinter.consolePrinter(message);
         Platform.runLater(()-> joinedGameController.addNewLabel(message,joinedGameRoot));
     }
 
@@ -111,14 +111,14 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.show();
         String message = String.format("Joined game: %d", gameID);
-        ConsolePrinter.consolePrinter(message);
+        //ConsolePrinter.consolePrinter(message);
     }
     public void show_noAvailableGame(){
         //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
         setAlert("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
-        ConsolePrinter.consolePrinter("Game started");
+        //ConsolePrinter.consolePrinter("Game started");
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
         Parent newRoot;
@@ -143,8 +143,9 @@ public class GUIApplication extends Application {
         stage.show();
         Platform.runLater(this::infoBox);
         Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
-        Platform.runLater(()->otherBoardsController.setBoards(gameImmutable,nickname));
+        //Platform.runLater(()->otherBoardsController.setBoards(gameImmutable, nickname));
     }
+
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");
@@ -322,7 +323,7 @@ public class GUIApplication extends Application {
             gameSceneController.updateBoard(gameImmutable, nickname);
         }
         else {
-            otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
+            //otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
         }
     }
 
@@ -356,6 +357,11 @@ public class GUIApplication extends Application {
         gameSceneController.notMyTurn();
     }
 
+    public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
+        //ConsolePrinter.consolePrinter("GUIApplication updating board for " + nickname);
+        otherBoardsController.updateOtherBoard(gameImmutable, nickname);
+    }
+
     public void chatBeforeStart() {
     }
 
@@ -373,7 +379,7 @@ public class GUIApplication extends Application {
 
     public void invalidAction(String s, boolean myTurn) {
         if (myTurn) {
-            ConsolePrinter.consolePrinter("Invalid action: " + s);
+            //ConsolePrinter.consolePrinter("Invalid action: " + s);
             switch (s) {
                 case "Goal invalid Action":
                     gameSceneController.objectiveNotSelected("Error in objective selection, chose another card!");
@@ -433,7 +439,9 @@ public class GUIApplication extends Application {
         scoreBoardStage.setScene(new Scene(rootScore, 300, 200));*/
         scoreBoardStage.show();
     }
-    public void seeOtherBoards(){
+
+    public void seeOtherBoards(String nickname){
+        otherBoardsController.showBoard(nickname);
         otherBoardsStage.show();
     }
 
@@ -473,7 +481,7 @@ public class GUIApplication extends Application {
         otherBoardsStage = new Stage();
         otherBoardsStage.setTitle("Other Boards");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/OtherBoards.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/OtherBoards_2.fxml"));
         Parent rootOtherBoards;
         try {
             rootOtherBoards = loader.load();
@@ -482,16 +490,18 @@ public class GUIApplication extends Application {
         }
         otherBoardsController = loader.getController();
         otherBoardsController.setParameters(executor, client,this);
-        otherBoardsStage.setMinWidth(600);
-        otherBoardsStage.setMinHeight(400);
+        otherBoardsStage.setMinWidth(1048);
+        otherBoardsStage.setMinHeight(589);
         otherBoardsStage.setFullScreen(false);
         otherBoardsStage.setResizable(false);
         otherBoardsStage.setScene(new Scene(rootOtherBoards, 300, 200));
     }
 
+    /*
     public void show_otherPlayerBoard(int cardID, String playerChangedNickname) {
         otherBoardsController.updateOtherBoards(cardID,playerChangedNickname);
     }
+    */
 
     public void winner(List<Player> list) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));

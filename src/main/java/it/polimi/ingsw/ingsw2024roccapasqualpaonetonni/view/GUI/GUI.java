@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumUpdates;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
@@ -62,7 +63,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     @Override
     public void show_board(int cardID, String playerChangedNickname) {
-        runLater(()->application.show_otherPlayerBoard(cardID,playerChangedNickname));
+        //runLater(()->application.show_otherPlayerBoard(cardID,playerChangedNickname));
     }
 
     /**
@@ -135,6 +136,12 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
     @Override
     public void notMyTurn() {
         runLater(application::notMyTurn);
+    }
+
+    @Override
+    public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
+        //ConsolePrinter.consolePrinter("GUI updating board for " + nickname);
+        runLater(() -> application.updateOtherBoard(gameImmutable, nickname));
     }
 
     /**

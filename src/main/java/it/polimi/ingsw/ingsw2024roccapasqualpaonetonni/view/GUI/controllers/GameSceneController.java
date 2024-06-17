@@ -154,6 +154,7 @@ public class GameSceneController extends GenericController{
     private final int[] boardIDs = {-1, -1, -1, -1};
     private int drawedID = -1;
     private final double[] CARD_SIZE = {88.0, 132.0};
+    private final double[] BOARD_SIZE = {1500.0, 2000.0};
 
     private static final double JUMP_HEIGHT = 20.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
@@ -181,6 +182,10 @@ public class GameSceneController extends GenericController{
         if(player==null) return;
 
         board.setDisable(true);
+        board.setPrefHeight(BOARD_SIZE[0]);
+        board.setPrefWidth(BOARD_SIZE[1]);
+        personalBoard.setHvalue(0.5);
+        personalBoard.setVvalue(0.5);
 
         cardId = player.getHand().get(0).getIdCard();
         myHandImage1.setImage(new Image(createPath(cardId)));
@@ -291,10 +296,12 @@ public class GameSceneController extends GenericController{
                 Label points = new Label(printPoints);
                 Button button = new Button("See board");
                 //button.setOnMouseClicked(event -> handleSeeOtherPlayerBoardClicked(event, p.getNickname()));
+                button.setId(p.getNickname());
+                button.setOnMouseClicked(this::handleSeeOtherPlayersBoards);
                 VBox vBox1 = new VBox(name, color);
                 HBox hbox1 = new HBox(hand1,hand2,hand3);
-                VBox vBox2 = new VBox(hbox1,points,button);
-                HBox hbox2 = new HBox(vBox1,vBox2);
+                VBox vBox2 = new VBox(hbox1,points);
+                HBox hbox2 = new HBox(vBox1,vBox2, button);
 
                 otherPlayersVBox.getChildren().add(hbox2);
 
@@ -302,9 +309,23 @@ public class GameSceneController extends GenericController{
 
                 // score board
                 Platform.runLater(()->application.setScoreBoard());
-                Platform.runLater(()->application.setOtherPlayerBoard());
             }
         }
+        Platform.runLater(()->application.setOtherPlayerBoard());
+        //centerBoard();
+    }
+
+    private void centerBoard() {
+        double scrollPaneWidth = personalBoard.getViewportBounds().getWidth();
+        double scrollPaneHeight = personalBoard.getViewportBounds().getHeight();
+        double contentWidth = board.getLayoutBounds().getWidth();
+        double contentHeight = board.getLayoutBounds().getHeight();
+
+        double offsetX = (scrollPaneWidth - contentWidth) / 2;
+        double offsetY = (scrollPaneHeight - contentHeight) / 2;
+
+        board.setLayoutX(Math.max(offsetX, 0));
+        board.setLayoutY(Math.max(offsetY, 0));
     }
 
     private String createBackPath(int cardId) {
@@ -349,7 +370,7 @@ public class GameSceneController extends GenericController{
 
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
-        ConsolePrinter.consolePrinter("starting clicked");
+        //ConsolePrinter.consolePrinter("starting clicked");
         Node card = (Node) event.getSource();
         glow(card);
         if (myStartingCard.getUserData() == null || !(boolean) myStartingCard.getUserData()) {
@@ -426,7 +447,7 @@ public class GameSceneController extends GenericController{
             if (finalCorner != -1) {
                 selectedCard.setVisible(false);
                 String input = String.format("/addCard %d %s %d %s", hand, card.getId(), finalCorner,flipped);
-                ConsolePrinter.consolePrinter(input);
+                //ConsolePrinter.consolePrinter(input);
 
                 executor.submit(() -> {
                     try {
@@ -487,72 +508,9 @@ public class GameSceneController extends GenericController{
         }
     }
 
-    public void cardNotPlaced(String s) {
-        infoBox(s);
-        myRunningTurnPlaceCard();
-    }
-
-    public void objectiveNotSelected(String s) {
-        infoBox(s);
-        myRunningTurnChoseObjective();
-    }
-
-    public void startAlreadyAdded(String s) {
-        infoBox(s);
-    }
-
-    public void cardAlreadyAdded(String s) {
-        infoBox(s);
-    }
-
-    public void wrongPhase(String s) {
-        infoBox(s);
-    }
-
-    public void noResourcesDeck(String s) {
-        infoBox(s);
-        decks.getChildren().remove(deckResourcesCard);
-        myRunningTurnDrawCard();
-    }
-
-    public void noGoldDeck(String s) {
-        infoBox(s);
-        decks.getChildren().remove(deckGoldCard);
-        myRunningTurnDrawCard();
-    }
-
-    public void noBoardCard(String s) {
-        infoBox(s);
-        myRunningTurnDrawCard();
-    }
-
-    private void infoBox(String message) {
-        // System.out.println("infoBox called with message: " + message);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("ERROR");
-        alert.setHeaderText("Invalid Action");
-        alert.setContentText(message);
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
-    }
-
-    public void statusInfo(String status) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("THE STATUS HAS CHANGED");
-        alert.setHeaderText("New Status:");
-        if (status.equals("LAST_TURN")) {
-            status = status + "\nWhen it'll be your turn, you will place the last card" +
-                    "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
-                    "and a the winner will be found";
-        }
-        alert.setContentText(status);
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
-    }
-
     public void updateBoard(GameImmutable gameImmutable, String nickname) {
         StartingCard start = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getStartingCard();
-        placeStartCardOnBoardFromMatrix(start,personalBoard.getWidth()/2,personalBoard.getHeight()/2);
+        placeStartCardOnBoardFromMatrix(start,BOARD_SIZE[1]/2 - CARD_SIZE[1]/2,BOARD_SIZE[0]/2 - CARD_SIZE[0]/2);
         selectedCard = null;
     }
 
@@ -565,8 +523,8 @@ public class GameSceneController extends GenericController{
         else {
             startCard.setImage(new Image(createPath(start.getIdCard())));
         }
-        startCard.setFitWidth(myStartingCard.getFitWidth());
-        startCard.setFitHeight(myStartingCard.getFitHeight());
+        startCard.setFitWidth(CARD_SIZE[1]);
+        startCard.setFitHeight(CARD_SIZE[0]);
         startCard.setLayoutX(x);
         startCard.setLayoutY(y);
         startCard.setId(String.valueOf(startingID));
@@ -738,7 +696,7 @@ public class GameSceneController extends GenericController{
             jump(card);
         }
         selectedCard = (ImageView) card;
-        ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
+        //ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
         flipHandCard.setDisable(false);
     }
 
@@ -796,7 +754,7 @@ public class GameSceneController extends GenericController{
         try {
             //ConsolePrinter.consolePrinter(String.valueOf(toReplace));
             String msg = "/drawBoard " + (toReplace + 1);
-            ConsolePrinter.consolePrinter(msg);
+            //ConsolePrinter.consolePrinter(msg);
             client.receiveInput(msg);
         } catch (IOException | NotBoundException e) {
             throw new RuntimeException(e);
@@ -931,6 +889,69 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    public void cardNotPlaced(String s) {
+        infoBox(s);
+        myRunningTurnPlaceCard();
+    }
+
+    public void objectiveNotSelected(String s) {
+        infoBox(s);
+        myRunningTurnChoseObjective();
+    }
+
+    public void startAlreadyAdded(String s) {
+        infoBox(s);
+    }
+
+    public void cardAlreadyAdded(String s) {
+        infoBox(s);
+    }
+
+    public void wrongPhase(String s) {
+        infoBox(s);
+    }
+
+    public void noResourcesDeck(String s) {
+        infoBox(s);
+        decks.getChildren().remove(deckResourcesCard);
+        myRunningTurnDrawCard();
+    }
+
+    public void noGoldDeck(String s) {
+        infoBox(s);
+        decks.getChildren().remove(deckGoldCard);
+        myRunningTurnDrawCard();
+    }
+
+    public void noBoardCard(String s) {
+        infoBox(s);
+        myRunningTurnDrawCard();
+    }
+
+    private void infoBox(String message) {
+        // System.out.println("infoBox called with message: " + message);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ERROR");
+        alert.setHeaderText("Invalid Action");
+        alert.setContentText(message);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+    }
+
+    public void statusInfo(String status) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("THE STATUS HAS CHANGED");
+        alert.setHeaderText("New Status:");
+        if (status.equals("LAST_TURN")) {
+            status = status + "\nWhen it'll be your turn, you will place the last card" +
+                    "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
+                    "and a the winner will be found";
+        }
+        alert.setContentText(status);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+    }
+
     public void notMyTurn() {
         disable(true);
         Label label = new Label("Not your turn");
@@ -957,6 +978,7 @@ public class GameSceneController extends GenericController{
         boardCard3.setDisable(truefalse);
         boardCard4.setDisable(truefalse);
     }
+
     public void glowInfo(String obj) {
         switch (obj){
             case "start"->glow(myStartingCard);
@@ -1146,8 +1168,11 @@ public class GameSceneController extends GenericController{
             }
         }
     }
+
     @FXML
-    public void handleSeeOtherPlayersBoards() {
-        Platform.runLater(()->application.seeOtherBoards());
+    public void handleSeeOtherPlayersBoards(MouseEvent event) {
+        Button button = (Button) event.getSource();
+        String nickname = button.getId();
+        Platform.runLater(()->application.seeOtherBoards(nickname));
     }
 }
