@@ -1218,7 +1218,7 @@ public class GameSceneController extends GenericController{
             HBox hBox1 = (HBox) otherPlayersVBox.getChildren().get(i);
             VBox vBox1 = (VBox) hBox1.getChildren().get(0);
             Label name = (Label) vBox1.getChildren().get(0);
-            if(name.getText().equals(playerChangedNickname)){
+            if(name.getText().equals(playerChangedNickname) || name.getText().equals(playerChangedNickname+"(YOU)")){
                 VBox vBox2 = (VBox) hBox1.getChildren().get(1);
                 Label points = (Label) vBox2.getChildren().get(1);
                 points.setText(currPoints);
