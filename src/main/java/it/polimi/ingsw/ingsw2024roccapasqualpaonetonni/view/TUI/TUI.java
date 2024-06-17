@@ -299,7 +299,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
             stringBuilder.append(position)
                     .append("\tNick: ").append(list.get(i).getNickname())
                     .append("\tPoints ").append(list.get(i).getCurrentPoints())
-                    .append("\nPoints ");
+                    .append("\n");
         }
 
         if(win){
