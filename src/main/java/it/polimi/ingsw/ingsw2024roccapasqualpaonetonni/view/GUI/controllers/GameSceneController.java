@@ -951,6 +951,7 @@ public class GameSceneController extends GenericController{
         handCard.setOnMouseClicked(this::handleHandCardClicked);
         jump(handCard);
         handIDs[hand - 1] = drawedID;
+        flippedHand[hand - 1] = false;
         toReplace = -1;
         toReplaceIV = null;
         hand = - 1;

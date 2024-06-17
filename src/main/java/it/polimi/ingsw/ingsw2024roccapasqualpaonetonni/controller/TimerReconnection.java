@@ -42,6 +42,13 @@ public class TimerReconnection extends Thread{
             if(time>= DefaultControllerValues.timeReconnection){
                 model.setStatus(GameStatus.ENDED);
                 List<Player> players = new ArrayList<>(model.getPlayers());
+                if (players.getFirst().getCurrentPoints()==0){
+                    players.getFirst().increasePoints(1);
+                }
+                for(Player p : model.getPlayersDisconnected()){
+                    p.resetPoints();
+                    players.add(p);
+                }
                 model.getGameListenersHandler().notify_gameGenericError("Out of time");
                 model.getGameListenersHandler().notify_winners(players);
                 break;

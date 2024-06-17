@@ -305,6 +305,13 @@ public class Player implements Serializable {
     }
 
     /**
+     * Reset points.
+     */
+    public void resetPoints() {
+        currentPoints = 0;
+    }
+
+    /**
      * Update seed count.
      *
      * @param change the change
