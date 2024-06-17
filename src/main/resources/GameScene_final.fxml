@@ -30,92 +30,109 @@
       <HBox layoutX="623.0" layoutY="5.0" prefHeight="600.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="589.0" prefWidth="203.0">
-               <children>
-                  <VBox fx:id="boardCards" alignment="CENTER" prefHeight="198.0" prefWidth="228.0">
-                     <children>
-                        <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Common Deck">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <HBox prefHeight="68.0" prefWidth="204.0">
-                           <children>
-                              <ImageView fx:id="boardCard1" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin></ImageView>
-                              <ImageView fx:id="boardCard2" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </HBox>
-                        <HBox prefHeight="68.0" prefWidth="204.0">
-                           <children>
-                              <ImageView fx:id="boardCard3" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets right="10.0" top="10.0" />
-                                 </HBox.margin></ImageView>
-                              <ImageView fx:id="boardCard4" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets top="10.0" />
-                                 </HBox.margin></ImageView>
-                           </children>
-                        </HBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets bottom="20.0" top="10.0" />
-                     </opaqueInsets>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="101.0" prefWidth="238.0">
-                     <children>
-                        <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Decks">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="20.0" top="20.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <HBox fx:id="decks" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fx:id="deckResourcesCard" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleResourceDeckClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin></ImageView>
-                              <ImageView fx:id="deckGoldCard" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleGoldDeckClicked" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </HBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets bottom="20.0" />
-                     </opaqueInsets>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="150.0" prefWidth="102.0">
-                     <children>
-                        <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Common Objective">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="20.0" top="20.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fx:id="commonObjectiveCard1" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="commonObjectiveCard2" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets right="20.0"/>
                </HBox.margin>
+               <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;"
+                          styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Common Deck">
+                  <font>
+                     <Font size="23.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="20.0"/>
+                  </VBox.margin>
+               </TextField>
+               <VBox fx:id="boardCards" alignment="CENTER" prefHeight="198.0" prefWidth="228.0">
+                  <opaqueInsets>
+                     <Insets bottom="20.0" top="10.0"/>
+                  </opaqueInsets>
+                  <HBox prefHeight="68.0" prefWidth="204.0">
+                     <children>
+                        <ImageView fx:id="boardCard1" fitHeight="76.0" fitWidth="114.0"
+                                   onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true"
+                                   preserveRatio="true">
+                           <HBox.margin>
+                              <Insets right="10.0"/>
+                           </HBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="boardCard2" fitHeight="76.0" fitWidth="114.0"
+                                   onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true"
+                                   preserveRatio="true"/>
+                     </children>
+                     <opaqueInsets>
+                        <Insets/>
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="68.0" prefWidth="204.0">
+                     <children>
+                        <ImageView fx:id="boardCard3" fitHeight="76.0" fitWidth="114.0"
+                                   onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true"
+                                   preserveRatio="true">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0"/>
+                           </HBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="boardCard4" fitHeight="76.0" fitWidth="114.0"
+                                   onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true"
+                                   preserveRatio="true">
+                           <HBox.margin>
+                              <Insets top="10.0"/>
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </VBox>
+               <VBox alignment="CENTER" prefHeight="101.0" prefWidth="238.0">
+                  <children>
+                     <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;"
+                                styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Decks">
+                        <font>
+                           <Font size="23.0"/>
+                        </font>
+                        <VBox.margin>
+                           <Insets bottom="20.0" top="20.0"/>
+                        </VBox.margin>
+                     </TextField>
+                     <HBox fx:id="decks" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <children>
+                           <ImageView fx:id="deckResourcesCard" fitHeight="76.0" fitWidth="114.0"
+                                      onMouseClicked="#handleResourceDeckClicked" pickOnBounds="true"
+                                      preserveRatio="true">
+                              <HBox.margin>
+                                 <Insets right="10.0"/>
+                              </HBox.margin>
+                           </ImageView>
+                           <ImageView fx:id="deckGoldCard" fitHeight="76.0" fitWidth="114.0"
+                                      onMouseClicked="#handleGoldDeckClicked" pickOnBounds="true" preserveRatio="true"/>
+                        </children>
+                     </HBox>
+                  </children>
+                  <opaqueInsets>
+                     <Insets bottom="20.0"/>
+                  </opaqueInsets>
+               </VBox>
+               <VBox alignment="CENTER" prefHeight="150.0" prefWidth="102.0">
+                  <children>
+                     <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;"
+                                styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css"
+                                text="Common Objective">
+                        <font>
+                           <Font size="23.0"/>
+                        </font>
+                        <VBox.margin>
+                           <Insets bottom="20.0" top="20.0"/>
+                        </VBox.margin>
+                     </TextField>
+                     <HBox prefHeight="100.0" prefWidth="200.0">
+                        <children>
+                           <ImageView fx:id="commonObjectiveCard1" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true"
+                                      preserveRatio="true"/>
+                           <ImageView fx:id="commonObjectiveCard2" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true"
+                                      preserveRatio="true"/>
+                        </children>
+                     </HBox>
+                  </children>
+               </VBox>
             </VBox>
             <VBox prefHeight="590.0" prefWidth="293.0">
                <children>
