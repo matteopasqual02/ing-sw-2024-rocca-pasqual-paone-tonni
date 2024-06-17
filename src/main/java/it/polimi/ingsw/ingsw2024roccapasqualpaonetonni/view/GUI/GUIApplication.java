@@ -325,6 +325,7 @@ public class GUIApplication extends Application {
         else {
             //otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
         }
+        gameSceneController.updatePlayersSeedCount(gameImmutable,playerChangedNickname);
     }
 
     public void show_board(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
@@ -333,6 +334,7 @@ public class GUIApplication extends Application {
         }
         scoreBoardController.updateScoreBoard(gameImmutable);
         gameSceneController.updateOtherPlayersPoints(gameImmutable,playerChangedNickname);
+        gameSceneController.updatePlayersSeedCount(gameImmutable,playerChangedNickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {

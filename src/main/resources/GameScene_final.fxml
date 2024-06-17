@@ -152,10 +152,6 @@
                                  <VBox.margin>
                                     <Insets bottom="5.0" />
                                  </VBox.margin></Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#handleSeeOtherPlayersBoards" prefHeight="47.0" prefWidth="153.0" styleClass="button_text_small" stylesheets="@CSSStyle/allButton.css" text="SeeOtherBoards">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin></Button>
                            </children>
                            <VBox.margin>
                               <Insets />

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
@@ -274,6 +275,8 @@ public class GameSceneController extends GenericController{
                 color.setFitHeight(50);
                 color.setFitWidth(50);
                 Label name = new Label(p.getNickname());
+                name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+                name.setTextFill(Color.BROWN);
 
                 ImageView hand1 = new ImageView();
                 ImageView hand2 = new ImageView();
@@ -297,34 +300,40 @@ public class GameSceneController extends GenericController{
                 points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
                 points.setTextFill(Color.BROWN);
 
-                //String seedCount = "SEEDCOUNT: GREEN "+p.getCountSeed(). + "BLUE: " + + "PURPLE " + "RED " + ""
+                String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
+                String seedCount2 =  " PURPLE " +p.getCountSeed()[3]+ " FEATHER " +p.getCountSeed()[4]+ " POTION " +p.getCountSeed()[5]+ " SCROLL "+p.getCountSeed()[6];
+                Label seedCountLabelPart1 = new Label(seedCount1);
+                Label seedCountLabelPart2 = new Label(seedCount2);
+                seedCountLabelPart1.setFont(Font.font("Arial", FontWeight.BOLD, 9));
+                seedCountLabelPart1.setTextFill(Color.BROWN);
+                seedCountLabelPart2.setFont(Font.font("Arial", FontWeight.BOLD, 9));
+                seedCountLabelPart2.setTextFill(Color.BROWN);
 
                 Button button = new Button("SEE BOARD");
-                button.setStyle("-fx-background-color: lightgray;-fx-font-family: Arial; -fx-font-size: 10; -fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
+                button.setStyle("-fx-background-color: #D3B48E;-fx-font-family: Arial;-fx-font-weight: bold; -fx-font-size: 10; -fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
                 //button.setOnMouseClicked(event -> handleSeeOtherPlayerBoardClicked(event, p.getNickname()));
                 button.setId(p.getNickname());
                 button.setOnMouseClicked(this::handleSeeOtherPlayersBoards);
-                VBox vBox1 = new VBox(name, color);
-                HBox hbox1 = new HBox(hand1,hand2,hand3);
-                VBox vBox2 = new VBox(hbox1,points);
-                HBox hbox2 = new HBox(vBox1,vBox2, button);
+                /*VBox vBox1 = new VBox(name, color);
+                HBox hbox1 = new HBox(hand1,hand2,hand3,button);
+                VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
+                HBox hbox2 = new HBox(vBox1,vBox2);*/
+                HBox hbox1 = new HBox(hand1,hand2,hand3,button);
+                VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
+                HBox hbox2 = new HBox(color,vBox2);
+                VBox vBox3 = new VBox(name,hbox2);
                 //button.setPadding(new Insets(5,5,5,5));
 
-                hbox2.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
+                vBox3.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
                 hbox1.setPadding(new Insets(5,5,5,5));
-                vBox1.setPadding(new Insets(5,5,5,5));
+                hbox1.setSpacing(8);
+                vBox3.setPadding(new Insets(5,5,5,5));
                 vBox2.setPadding(new Insets(5,5,5,5));
                 hbox2.setPadding(new Insets(5,5,5,5));
                 hbox2.setSpacing(10);
-                /*BorderStroke borderStroke = new BorderStroke(
-                        Color.BLACK,
-                        BorderStrokeStyle.SOLID,
-                        new CornerRadii(1),
-                        new BorderWidths(2)
-                );
-                hbox2.setBorder(new Border(borderStroke));*/
 
-                otherPlayersVBox.getChildren().add(hbox2);
+                //otherPlayersVBox.getChildren().add(hbox2);
+                otherPlayersVBox.getChildren().add(vBox3);
 
                 receiverPrivateMessages.getItems().add(p.getNickname());
 
@@ -344,7 +353,9 @@ public class GameSceneController extends GenericController{
                 }
                 color.setFitHeight(50);
                 color.setFitWidth(50);
-                Label name = new Label(p.getNickname() + "(YOU)");
+                Label name = new Label(p.getNickname() + " (YOU)");
+                name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+                name.setTextFill(Color.BROWN);
 
                 ImageView hand1 = new ImageView();
                 ImageView hand2 = new ImageView();
@@ -368,29 +379,33 @@ public class GameSceneController extends GenericController{
                 points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
                 points.setTextFill(Color.BROWN);
 
-                //String seedCount = "SEEDCOUNT: GREEN "+p.getCountSeed(). + "BLUE: " + + "PURPLE " + "RED " + ""
+                String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE: " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
+                String seedCount2 =  " PURPLE " +p.getCountSeed()[3]+ " FEATHER " +p.getCountSeed()[4]+ " POTION " +p.getCountSeed()[5]+ " SCROLL "+p.getCountSeed()[6];
+                Label seedCountLabelPart1 = new Label(seedCount1);
+                Label seedCountLabelPart2 = new Label(seedCount2);
+                seedCountLabelPart1.setFont(Font.font("Arial", FontWeight.BOLD, 9));
+                seedCountLabelPart1.setTextFill(Color.BROWN);
+                seedCountLabelPart2.setFont(Font.font("Arial", FontWeight.BOLD, 9));
+                seedCountLabelPart2.setTextFill(Color.BROWN);
 
-                VBox vBox1 = new VBox(name, color);
+                /*VBox vBox1 = new VBox(name, color);
                 HBox hbox1 = new HBox(hand1,hand2,hand3);
-                VBox vBox2 = new VBox(hbox1,points);
-                HBox hbox2 = new HBox(vBox1,vBox2);
-                //button.setPadding(new Insets(5,5,5,5));
+                VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
+                HBox hbox2 = new HBox(vBox1,vBox2);*/
 
-                hbox2.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
+                HBox hbox1 = new HBox(hand1,hand2,hand3);
+                VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
+                HBox hbox2 = new HBox(color,vBox2);
+                VBox vBox3 = new VBox(name,hbox2);
+
+                vBox3.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
                 hbox1.setPadding(new Insets(5,5,5,5));
-                vBox1.setPadding(new Insets(5,5,5,5));
+                vBox3.setPadding(new Insets(5,5,5,5));
                 vBox2.setPadding(new Insets(5,5,5,5));
                 hbox2.setPadding(new Insets(5,5,5,5));
                 hbox2.setSpacing(10);
-                /*BorderStroke borderStroke = new BorderStroke(
-                        Color.BLACK,
-                        BorderStrokeStyle.SOLID,
-                        new CornerRadii(1),
-                        new BorderWidths(2)
-                );
-                hbox2.setBorder(new Border(borderStroke));*/
 
-                otherPlayersVBox.getChildren().add(hbox2);
+                otherPlayersVBox.getChildren().add(vBox3);
             }
         }
         Platform.runLater(()->application.setOtherPlayerBoard());
@@ -1215,6 +1230,18 @@ public class GameSceneController extends GenericController{
              currPoints = "POINTS " + p.get().getCurrentPoints();
         }
         for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
+            VBox vBox3 = (VBox) otherPlayersVBox.getChildren().get(i);
+            Label name = (Label) vBox3.getChildren().get(0);
+            if(name.getText().equals(playerChangedNickname) || name.getText().equals(playerChangedNickname+" (YOU)")){
+                HBox hBox2 = (HBox) vBox3.getChildren().get(1);
+                VBox vBox2 = (VBox) hBox2.getChildren().get(1);
+                Label points = (Label) vBox2.getChildren().get(1);
+                points.setText(currPoints);
+                //i=gameImmutable.getPlayers().size()+1; //stops the for cycle
+            }
+        }
+        /*
+        for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
             HBox hBox1 = (HBox) otherPlayersVBox.getChildren().get(i);
             VBox vBox1 = (VBox) hBox1.getChildren().get(0);
             Label name = (Label) vBox1.getChildren().get(0);
@@ -1224,7 +1251,7 @@ public class GameSceneController extends GenericController{
                 points.setText(currPoints);
                 //i=gameImmutable.getPlayers().size()+1; //stops the for cycle
             }
-        }
+        }*/
 
     }
     public void updateOtherPlayersHand(GameImmutable gameImmutable, String playerChangedNickname) {
@@ -1232,10 +1259,10 @@ public class GameSceneController extends GenericController{
         if(p.isPresent())
         {
             for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
-                HBox hBox2 = (HBox) otherPlayersVBox.getChildren().get(i);
-                VBox vBox1 = (VBox) hBox2.getChildren().get(0);
-                Label name = (Label) vBox1.getChildren().get(0);
+                VBox vBox3 = (VBox) otherPlayersVBox.getChildren().get(i);
+                Label name = (Label) vBox3.getChildren().get(0);
                 if(name.getText().equals(playerChangedNickname)){
+                    HBox hBox2 = (HBox) vBox3.getChildren().get(1);
                     VBox vBox2 = (VBox) hBox2.getChildren().get(1);
                     HBox hBox1 = (HBox) vBox2.getChildren().get(0);
                     ImageView hand1 = (ImageView) hBox1.getChildren().get(0);
@@ -1257,5 +1284,24 @@ public class GameSceneController extends GenericController{
         Button button = (Button) event.getSource();
         String nickname = button.getId();
         Platform.runLater(()->application.seeOtherBoards(nickname));
+    }
+
+    public void updatePlayersSeedCount(GameImmutable gameImmutable, String playerChangedNickname) {
+        Player p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).toList().getFirst();
+        String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE: " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
+        String seedCount2 =  " PURPLE " +p.getCountSeed()[3]+ " FEATHER " +p.getCountSeed()[4]+ " POTION " +p.getCountSeed()[5]+ " SCROLL "+p.getCountSeed()[6];
+        for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
+            VBox vBox3 = (VBox) otherPlayersVBox.getChildren().get(i);
+            Label name = (Label) vBox3.getChildren().get(0);
+            if(name.getText().equals(playerChangedNickname) || name.getText().equals(playerChangedNickname+" (YOU)")){
+                HBox hBox2 = (HBox) vBox3.getChildren().get(1);
+                VBox vBox2 = (VBox) hBox2.getChildren().get(1);
+                Label seedCountLabel1 = (Label) vBox2.getChildren().get(2);
+                Label seedCountLabel2 = (Label) vBox2.getChildren().get(3);
+                seedCountLabel1.setText(seedCount1);
+                seedCountLabel2.setText(seedCount2);
+                //i=gameImmutable.getPlayers().size()+1; //stops the for cycle
+            }
+        }
     }
 }
