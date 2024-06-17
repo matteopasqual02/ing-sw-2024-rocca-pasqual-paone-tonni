@@ -24,7 +24,7 @@
    <children>
       <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="10.0">
          <content>
-            <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="778.0" prefWidth="1305.0" style="-fx-background-color: beige;" />
+            <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="778.0" prefWidth="1305.0" style="-fx-background-color: beige" />
          </content>
       </ScrollPane>
       <HBox layoutX="623.0" layoutY="5.0" prefHeight="600.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -158,7 +158,7 @@
          <children>
             <HBox fx:id="cardsHBox" alignment="CENTER_LEFT" prefHeight="176.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox fx:id="myHand" alignment="TOP_CENTER" prefHeight="152.0" prefWidth="364.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="152.0" prefWidth="364.0">
                      <children>
                         <TextField alignment="CENTER" editable="false" prefHeight="50.0" prefWidth="426.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="My Hand">
                            <font>
@@ -193,7 +193,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox fx:id="secretObjectiveVBox" alignment="TOP_CENTER" prefHeight="276.0" prefWidth="204.0">
+                  <VBox fx:id="secretObjectiveVBox" prefHeight="196.0" prefWidth="205.0">
                      <children>
                         <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="204.0" style="-fx: 5;" styleClass="button_text_gold" stylesheets="@CSSStyle/allButton.css" text="Secret Objective">
                            <font>
@@ -203,12 +203,12 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </TextField>
-                        <HBox prefHeight="83.0" prefWidth="306.0">
+                        <VBox fx:id="secretObjective" alignment="CENTER" prefHeight="102.0" prefWidth="100.0">
                            <children>
                               <ImageView fx:id="mySecretObjective1" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard1Clicked" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="mySecretObjective2" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard2Clicked" pickOnBounds="true" preserveRatio="true" />
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
                      <HBox.margin>
                         <Insets right="20.0" />
@@ -242,7 +242,7 @@
                         <Button fx:id="privateChatButton" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="100.5" text="Private Chat" />
                      </children>
                   </HBox>
-                  <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0" style="-fx-background-color: ;" stylesheets="@CSSStyle/allButton.css">
+                  <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0" style="-fx-background-color:beige " stylesheets="@CSSStyle/allButton.css">
                      <content>
                         <VBox fx:id="messageContainer" prefHeight="232.0" prefWidth="185.0" spacing="2.0" />
                      </content>
