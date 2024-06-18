@@ -66,7 +66,7 @@ public class GameController implements GameControllerInterface {
         super();
         this.model = new Game(id);
         this.random = new Random();
-        this.path = DefaultControllerValues.jsonPath;
+        this.path = DefaultControllerValues.jsonPathFromResources;
         this.executorService = Executors.newSingleThreadExecutor();
         this.pingPongThread = new PingPongThread();
         this.pingPongThread.start();
@@ -387,17 +387,6 @@ public class GameController implements GameControllerInterface {
         while (cardsMap == null) {
             try {
                 cardsMap = JSONUtils.createCardsFromJson(path);
-
-            } catch (IOException e) {
-                ConsolePrinter.consolePrinter("[ERROR]: path doesn't contain cards. Path: "+path);
-            }
-
-            if(cardsMap!=null) {
-                break;
-            }
-
-            try {
-                cardsMap = JSONUtils.createCardsFromJson("../../"+ path);
 
             } catch (IOException e) {
                 ConsolePrinter.consolePrinter("[ERROR]: path doesn't contain cards. Path: "+path);
