@@ -376,7 +376,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         }
     }
 
-    //------------------------------------- SET GET ------------------------------------------------------------------------------
+    //-------------------------------------  GET ------------------------------------------------------------------------------
 
 
     /**
@@ -388,15 +388,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
     @Override
     public String getNickname() throws RemoteException {
         return myNickname;
-    }
-
-    /**
-     * Get server interface server interface.
-     *
-     * @return the server interface
-     */
-    public ServerInterface getServerInterface(){
-        return server;
     }
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
@@ -849,10 +840,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
         }
     }
 
-    /*public void getPlayerBoardForGUI(String name) {
-        view.giveCurrentPlayerBoard(currentImmutable.getPlayers().stream().filter(player -> player.getNickname().equals(name)).findFirst().map(Player::getBoard).orElse(null));
-    }*/
-
 
     //--------------------------PING PONG
     /**
@@ -882,16 +869,18 @@ public class Client extends UnicastRemoteObject implements GameListener{
          */
         @Override
         public void run() {
-            while (true) {
+            while (!this.isInterrupted()) {
                 try {
-                    Thread.sleep(20000);
+                    Thread.sleep(40000);
                 }
                 catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ConsolePrinter.consolePrinter("ping pong crashed");
                 }
                 synchronized (lock) {
                     if (!pinged) {
-                        ConsolePrinter.consolePrinter("server dead");
+                        ConsolePrinter.consolePrinter("server dead game interrupt");
+                        this.interrupt();
+                        System.exit(0);
                     } else {
                         pinged = false;
                     }
