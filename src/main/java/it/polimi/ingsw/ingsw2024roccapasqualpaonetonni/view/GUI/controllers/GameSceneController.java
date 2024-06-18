@@ -261,7 +261,7 @@ public class GameSceneController extends GenericController{
         flipHandCard.setDisable(true);
 
         for(Player p: gameImmutable.getPlayers()){
-            if(!p.getNickname().equals(nickname)){
+
                 ImageView color;
                 if(p.getColorPlayer() == 1){
                     color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
@@ -272,11 +272,8 @@ public class GameSceneController extends GenericController{
                 } else {
                     color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
                 }
-                color.setFitHeight(50);
-                color.setFitWidth(50);
-                Label name = new Label(p.getNickname());
-                name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
-                name.setTextFill(Color.BROWN);
+                color.setFitHeight(40);
+                color.setFitWidth(40);
 
                 ImageView hand1 = new ImageView();
                 ImageView hand2 = new ImageView();
@@ -300,15 +297,55 @@ public class GameSceneController extends GenericController{
                 points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
                 points.setTextFill(Color.BROWN);
 
-                String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
+                /*String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
                 String seedCount2 =  " PURPLE " +p.getCountSeed()[3]+ " FEATHER " +p.getCountSeed()[4]+ " POTION " +p.getCountSeed()[5]+ " SCROLL "+p.getCountSeed()[6];
+
+                Label label1 = new Label("SEEDCOUNT: ");
+                label1.setFont(Font.font("Arial", FontWeight.BOLD, 9));
+                label1.setTextFill(Color.BROWN);*/
+                ImageView green = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/green.png")));
+                Label greenCount = new Label(" "+String.valueOf(p.getCountSeed()[0])+ " ");
+                green.setFitHeight(20);
+                green.setFitWidth(20);
+
+                ImageView blue = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/blue.png")));
+                Label blueCount = new Label(" "+String.valueOf(p.getCountSeed()[1])+ " ");
+                blue.setFitHeight(20);
+                blue.setFitWidth(20);
+
+                ImageView red = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/red.png")));
+                Label redCount = new Label(" "+String.valueOf(p.getCountSeed()[2])+ " ");
+                red.setFitHeight(20);
+                red.setFitWidth(20);
+
+                ImageView purple = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/purple.png")));
+                Label purpleCount = new Label(" "+String.valueOf(p.getCountSeed()[3])+ " ");
+                purple.setFitHeight(20);
+                purple.setFitWidth(20);
+
+                ImageView feather = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/feather.png")));
+                Label featherCount = new Label(" "+String.valueOf(p.getCountSeed()[4])+ " ");
+                feather.setFitHeight(20);
+                feather.setFitWidth(20);
+
+                ImageView potion = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/potion.png")));
+                Label potionCount = new Label(" "+String.valueOf(p.getCountSeed()[5])+ " ");
+                potion.setFitHeight(20);
+                potion.setFitWidth(20);
+
+                ImageView scroll = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/scroll.png")));
+                Label scrollCount = new Label(" "+String.valueOf(p.getCountSeed()[6])+ " ");
+                scroll.setFitHeight(20);
+                scroll.setFitWidth(20);
+
+                HBox seedCountBox1 = new HBox(green,greenCount,blue,blueCount,red,redCount,purple,purpleCount,feather,featherCount,potion,potionCount,scroll,scrollCount);/*
                 Label seedCountLabelPart1 = new Label(seedCount1);
                 Label seedCountLabelPart2 = new Label(seedCount2);
                 seedCountLabelPart1.setFont(Font.font("Arial", FontWeight.BOLD, 9));
                 seedCountLabelPart1.setTextFill(Color.BROWN);
                 seedCountLabelPart2.setFont(Font.font("Arial", FontWeight.BOLD, 9));
                 seedCountLabelPart2.setTextFill(Color.BROWN);
-
+*/
                 Button button = new Button("SEE BOARD");
                 button.setStyle("-fx-background-color: #D3B48E;-fx-font-family: Arial;-fx-font-weight: bold; -fx-font-size: 10; -fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
                 //button.setOnMouseClicked(event -> handleSeeOtherPlayerBoardClicked(event, p.getNickname()));
@@ -318,10 +355,15 @@ public class GameSceneController extends GenericController{
                 HBox hbox1 = new HBox(hand1,hand2,hand3,button);
                 VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
                 HBox hbox2 = new HBox(vBox1,vBox2);*/
+            if(!p.getNickname().equals(nickname)){
+                Label name = new Label(p.getNickname());
+                name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+                name.setTextFill(Color.BROWN);
+
                 HBox hbox1 = new HBox(hand1,hand2,hand3,button);
-                VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
+                VBox vBox2 = new VBox(hbox1,points);
                 HBox hbox2 = new HBox(color,vBox2);
-                VBox vBox3 = new VBox(name,hbox2);
+                VBox vBox3 = new VBox(name,hbox2,seedCountBox1);
                 //button.setPadding(new Insets(5,5,5,5));
 
                 vBox3.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
@@ -341,6 +383,7 @@ public class GameSceneController extends GenericController{
                 Platform.runLater(()->application.setScoreBoard());
             }
             else {
+                /*
                 ImageView color;
                 if(p.getColorPlayer() == 1){
                     color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
@@ -353,9 +396,6 @@ public class GameSceneController extends GenericController{
                 }
                 color.setFitHeight(50);
                 color.setFitWidth(50);
-                Label name = new Label(p.getNickname() + " (YOU)");
-                name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
-                name.setTextFill(Color.BROWN);
 
                 ImageView hand1 = new ImageView();
                 ImageView hand2 = new ImageView();
@@ -393,10 +433,14 @@ public class GameSceneController extends GenericController{
                 VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
                 HBox hbox2 = new HBox(vBox1,vBox2);*/
 
+                Label name = new Label(p.getNickname() + " (YOU)");
+                name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+                name.setTextFill(Color.BROWN);
+
                 HBox hbox1 = new HBox(hand1,hand2,hand3);
-                VBox vBox2 = new VBox(hbox1,points,seedCountLabelPart1,seedCountLabelPart2);
+                VBox vBox2 = new VBox(hbox1,points);
                 HBox hbox2 = new HBox(color,vBox2);
-                VBox vBox3 = new VBox(name,hbox2);
+                VBox vBox3 = new VBox(name,hbox2,seedCountBox1);
 
                 vBox3.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
                 hbox1.setPadding(new Insets(5,5,5,5));
@@ -1240,19 +1284,6 @@ public class GameSceneController extends GenericController{
                 //i=gameImmutable.getPlayers().size()+1; //stops the for cycle
             }
         }
-        /*
-        for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
-            HBox hBox1 = (HBox) otherPlayersVBox.getChildren().get(i);
-            VBox vBox1 = (VBox) hBox1.getChildren().get(0);
-            Label name = (Label) vBox1.getChildren().get(0);
-            if(name.getText().equals(playerChangedNickname) || name.getText().equals(playerChangedNickname+"(YOU)")){
-                VBox vBox2 = (VBox) hBox1.getChildren().get(1);
-                Label points = (Label) vBox2.getChildren().get(1);
-                points.setText(currPoints);
-                //i=gameImmutable.getPlayers().size()+1; //stops the for cycle
-            }
-        }*/
-
     }
     public void updateOtherPlayersHand(GameImmutable gameImmutable, String playerChangedNickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
@@ -1288,18 +1319,30 @@ public class GameSceneController extends GenericController{
 
     public void updatePlayersSeedCount(GameImmutable gameImmutable, String playerChangedNickname) {
         Player p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).toList().getFirst();
-        String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE: " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
-        String seedCount2 =  " PURPLE " +p.getCountSeed()[3]+ " FEATHER " +p.getCountSeed()[4]+ " POTION " +p.getCountSeed()[5]+ " SCROLL "+p.getCountSeed()[6];
+        /*String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE: " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
+        String seedCount2 =  " PURPLE " +p.getCountSeed()[3]+ " FEATHER " +p.getCountSeed()[4]+ " POTION " +p.getCountSeed()[5]+ " SCROLL "+p.getCountSeed()[6];*/
         for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
             VBox vBox3 = (VBox) otherPlayersVBox.getChildren().get(i);
             Label name = (Label) vBox3.getChildren().get(0);
             if(name.getText().equals(playerChangedNickname) || name.getText().equals(playerChangedNickname+" (YOU)")){
-                HBox hBox2 = (HBox) vBox3.getChildren().get(1);
-                VBox vBox2 = (VBox) hBox2.getChildren().get(1);
-                Label seedCountLabel1 = (Label) vBox2.getChildren().get(2);
-                Label seedCountLabel2 = (Label) vBox2.getChildren().get(3);
-                seedCountLabel1.setText(seedCount1);
-                seedCountLabel2.setText(seedCount2);
+                /*HBox hBox2 = (HBox) vBox3.getChildren().get(1);
+                VBox vBox2 = (VBox) hBox2.getChildren().get(1);*/
+                HBox seedCountBox1 = (HBox) vBox3.getChildren().get(2);
+                //HBox seedCountBox2 = (HBox) vBox2.getChildren().get(3);
+                Label greenCount = (Label) seedCountBox1.getChildren().get(1);
+                greenCount.setText(" "+ String.valueOf(p.getCountSeed()[0])+ " ");
+                Label blueCount = (Label) seedCountBox1.getChildren().get(3);
+                blueCount.setText(" "+String.valueOf(p.getCountSeed()[1])+ " ");
+                Label redCount = (Label) seedCountBox1.getChildren().get(5);
+                redCount.setText(" "+String.valueOf(p.getCountSeed()[2])+ " ");
+                Label purpleCount = (Label) seedCountBox1.getChildren().get(7);
+                purpleCount.setText(" "+String.valueOf(p.getCountSeed()[3])+ " ");
+                Label featherCount = (Label) seedCountBox1.getChildren().get(9);
+                featherCount.setText(" "+String.valueOf(p.getCountSeed()[4])+ " ");
+                Label potionCount = (Label) seedCountBox1.getChildren().get(11);
+                potionCount.setText(" "+String.valueOf(p.getCountSeed()[5])+ " ");
+                Label scrollCount = (Label) seedCountBox1.getChildren().get(13);
+                scrollCount.setText(" "+String.valueOf(p.getCountSeed()[6])+ " ");
                 //i=gameImmutable.getPlayers().size()+1; //stops the for cycle
             }
         }
