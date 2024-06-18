@@ -8,6 +8,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
@@ -108,6 +109,8 @@ public class OtherBoardsController extends GenericController{
     }
 
     private void cardOffset(Pane board, PlayingCard card, double x, double y, ImageView cardImage) {
+        double updatedX = x;
+        double updatedY = y;
         for(int i=1;i<=4;i++){
             if(card.getCorner(i)!=null && card.getCorner(i).getCardAttached()!=null){
                 double xoffset=0;
@@ -130,6 +133,38 @@ public class OtherBoardsController extends GenericController{
                         yoffset = (cardImage.getFitHeight()*0.56);
                     }
                 }
+
+                double newX = updatedX;
+                double newY = updatedY;
+                if (updatedX + xoffset < 0) {
+                    BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
+                    board.setPrefWidth(BOARD_SIZE[1]);
+                    for (Node child : board.getChildren()) {
+                        child.setLayoutX(child.getLayoutX() + CARD_SIZE[1]);
+                    }
+                    newX = updatedX + CARD_SIZE[1];
+                }
+                else if (updatedX + CARD_SIZE[1] > board.getPrefWidth()) {
+                    BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
+                    board.setPrefWidth(BOARD_SIZE[1]);
+                }
+                if (updatedY + yoffset < 0) {
+                    BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
+                    board.setPrefHeight(BOARD_SIZE[0]);
+                    for (Node child : board.getChildren()) {
+                        child.setLayoutY(child.getLayoutY() + CARD_SIZE[0]);
+                    }
+                    newY = updatedY + CARD_SIZE[0];
+                }
+                else if (updatedY + CARD_SIZE[0] > board.getPrefHeight()) {
+                    BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
+                    board.setPrefHeight(BOARD_SIZE[0]);
+                }
+
+                updatedX = newX;
+                updatedY = newY;
+                board.applyCss();
+                board.layout();
                 placeCardOnBoardFromMatrix(board, card.getCorner(i).getCardAttached(),x+xoffset,y+yoffset);
             }
         }
