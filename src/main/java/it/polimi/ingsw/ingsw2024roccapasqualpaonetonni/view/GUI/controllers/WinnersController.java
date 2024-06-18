@@ -16,10 +16,16 @@ public class WinnersController {
 
 
     public void showWinners(List<Player> rankings){
-        int i = 1;
+        int count = 1;
+        int position = 1;
+        int points = rankings.getFirst().getCurrentPoints();
         for (Player player : rankings){
-            addPosition(i, player.getNickname(), player.getCurrentPoints());
-            i++;
+            if (player.getCurrentPoints() < points) {
+                position = count;
+                points = player.getCurrentPoints();
+            }
+            addPosition(position, player.getNickname(), player.getCurrentPoints());
+            count++;
         }
     }
 

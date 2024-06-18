@@ -156,6 +156,7 @@ public class GameSceneController extends GenericController{
     private int drawedID = -1;
     private final double[] CARD_SIZE = {88.0, 132.0};
     private final double[] BOARD_SIZE = {1500.0, 2000.0};
+    private final double[] displacement = {0.0, 0.0};
 
     private static final double JUMP_HEIGHT = 20.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
@@ -544,38 +545,6 @@ public class GameSceneController extends GenericController{
         }
     }
 
-    /*
-    public void placeCardOnBoard(ImageView card, double x, double y){
-        //we have to handle the case in which it is flipped
-        ConsolePrinter.consolePrinter(String.valueOf(x));
-        ConsolePrinter.consolePrinter(String.valueOf(y));
-        ImageView newCard = new ImageView(card.getImage());
-        newCard.setFitHeight(card.getFitHeight());
-        newCard.setFitWidth(card.getFitWidth());
-        newCard.setLayoutX(x);
-        newCard.setLayoutY(y);
-        if (card.equals(myStartingCard)) {
-            newCard.setId(String.valueOf(startingID));
-            cardsHBox.getChildren().remove(startingVBox);
-        }
-        else {
-            if (hand > 0 && handIDs[hand - 1] >= 0) {
-                newCard.setId(String.valueOf(handIDs[hand - 1]));
-            }
-            handIDs[hand - 1] = -1;
-            hand = - 1;
-        }
-        newCard.setOnMouseClicked(this::handleBoardCardClick);
-        board.getChildren().add(newCard);
-        newCard.setDisable(false);
-        card.setVisible(false);
-    }
-    public void startCard(GameImmutable gameImmutable, String nickname) {
-        placeCardOnBoard(selectedCard, personalBoard.getWidth() / 2, personalBoard.getHeight() / 2);
-        selectedCard = null;
-    }
-    */
-
     public void chosenGoal() {
         secretObjectiveVBox.setPrefWidth(132.0);
         switch (goal){
@@ -593,6 +562,9 @@ public class GameSceneController extends GenericController{
     }
 
     public void updateBoard(GameImmutable gameImmutable, String nickname) {
+        board.getChildren().clear();
+        board.applyCss();
+        board.layout();
         StartingCard start = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getStartingCard();
         placeStartCardOnBoardFromMatrix(start,BOARD_SIZE[1]/2 - CARD_SIZE[1]/2,BOARD_SIZE[0]/2 - CARD_SIZE[0]/2);
         selectedCard = null;
@@ -627,8 +599,10 @@ public class GameSceneController extends GenericController{
         else {
             cardImage.setImage(new Image(createPath(card.getIdCard())));
         }
+
         cardImage.setLayoutX(x);
         cardImage.setLayoutY(y);
+
         cardImage.setId(String.valueOf(card.getIdCard()));
         cardImage.setFitWidth(CARD_SIZE[1]);
         cardImage.setFitHeight(CARD_SIZE[0]);
@@ -639,6 +613,8 @@ public class GameSceneController extends GenericController{
     }
 
     private void cardOffset(PlayingCard card, double x, double y, ImageView cardImage) {
+        double updatedX = x;
+        double updatedY = y;
         for(int i=1;i<=4;i++){
             if(card.getCorner(i)!=null && card.getCorner(i).getCardAttached()!=null){
                 double xoffset=0;
@@ -661,7 +637,40 @@ public class GameSceneController extends GenericController{
                         yoffset = (cardImage.getFitHeight()*0.56);
                     }
                 }
-                placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),x+xoffset,y+yoffset);
+
+                double newX = updatedX;
+                double newY = updatedY;
+                if (updatedX + xoffset < 0) {
+                    BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
+                    board.setPrefWidth(BOARD_SIZE[1]);
+                    for (Node child : board.getChildren()) {
+                        child.setLayoutX(child.getLayoutX() + CARD_SIZE[1]);
+                    }
+                    newX = updatedX + CARD_SIZE[1];
+                }
+                else if (updatedX + CARD_SIZE[1] > board.getPrefWidth()) {
+                    BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
+                    board.setPrefWidth(BOARD_SIZE[1]);
+                }
+                if (updatedY + yoffset < 0) {
+                    BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
+                    board.setPrefHeight(BOARD_SIZE[0]);
+                    for (Node child : board.getChildren()) {
+                        child.setLayoutY(child.getLayoutY() + CARD_SIZE[0]);
+                    }
+                    newY = updatedY + CARD_SIZE[0];
+                }
+                else if (updatedY + CARD_SIZE[0] > board.getPrefHeight()) {
+                    BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
+                    board.setPrefHeight(BOARD_SIZE[0]);
+                }
+
+                updatedX = newX;
+                updatedY = newY;
+                board.applyCss();
+                board.layout();
+
+                placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),updatedX+xoffset,updatedY+yoffset);
             }
         }
     }
