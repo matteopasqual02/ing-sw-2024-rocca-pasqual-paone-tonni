@@ -387,8 +387,20 @@ public class GameController implements GameControllerInterface {
         while (cardsMap == null) {
             try {
                 cardsMap = JSONUtils.createCardsFromJson(path);
+
             } catch (IOException e) {
-                ConsolePrinter.consolePrinter("[ERROR]: path doesn't contain cards");
+                ConsolePrinter.consolePrinter("[ERROR]: path doesn't contain cards. Path: "+path);
+            }
+
+            if(cardsMap!=null) {
+                break;
+            }
+
+            try {
+                cardsMap = JSONUtils.createCardsFromJson("../../"+ path);
+
+            } catch (IOException e) {
+                ConsolePrinter.consolePrinter("[ERROR]: path doesn't contain cards. Path: "+path);
             }
         }
 
