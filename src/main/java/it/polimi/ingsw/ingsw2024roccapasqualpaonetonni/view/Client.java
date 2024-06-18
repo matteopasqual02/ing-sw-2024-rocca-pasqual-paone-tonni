@@ -867,6 +867,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         /**
          * Run.
          */
+        @SuppressWarnings("BusyWait")
         @Override
         public void run() {
             while (!this.isInterrupted()) {
