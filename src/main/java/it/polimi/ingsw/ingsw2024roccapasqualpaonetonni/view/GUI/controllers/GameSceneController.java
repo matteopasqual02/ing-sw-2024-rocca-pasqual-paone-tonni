@@ -1276,7 +1276,6 @@ public class GameSceneController extends GenericController{
     public void handleSeeOtherPlayersBoards(MouseEvent event) {
         Button button = (Button) event.getSource();
         String nickname = button.getId();
-        ConsolePrinter.consolePrinter(nickname);
         Platform.runLater(()->application.seeOtherBoards(nickname));
     }
 
