@@ -1067,7 +1067,6 @@ public class GameSceneController extends GenericController{
 
     public void myTurn() {
         turnLabel.setText("Your turn");
-        turnLabel.setStyle("-fx-background-color: lightblue; -fx-padding: 20; -fx-border-color: black; -fx-border-width: 2px;");
     }
 
     private void disable(Boolean truefalse){
