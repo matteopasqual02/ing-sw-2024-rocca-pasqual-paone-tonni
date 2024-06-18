@@ -91,7 +91,7 @@ public class GUIApplication extends Application {
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
         //ConsolePrinter.consolePrinter(message);
-        Platform.runLater(()-> joinedGameController.addNewLabel(message,joinedGameRoot));
+        Platform.runLater(()-> joinedGameController.addNewLabel(message));
     }
 
     //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
@@ -110,6 +110,7 @@ public class GUIApplication extends Application {
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
         stage.show();
+        joinedGameController.setUpController(joinedGameRoot);
         String message = String.format("Joined game: %d", gameID);
         //ConsolePrinter.consolePrinter(message);
     }
