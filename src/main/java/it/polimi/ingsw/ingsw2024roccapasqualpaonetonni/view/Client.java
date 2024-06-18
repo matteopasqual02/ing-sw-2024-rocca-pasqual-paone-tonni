@@ -84,12 +84,8 @@ public class Client extends UnicastRemoteObject implements GameListener{
         this.pongThread = new PingPongThreadClient();
 
         switch (connectionType){
-            case RMI -> {
-                server = new RMIServerStub();
-            }
-            case SOCKET -> {
-                server = new SocketClient(this);
-            }
+            case RMI -> server = new RMIServerStub();
+            case SOCKET -> server = new SocketClient(this);
             case null, default -> {
                 return;
             }
@@ -220,7 +216,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
 
                 }
                 else {
-                    view.invalidMessage("Not my turn (or game is waiting)", myTurn);
+                    view.invalidMessage("Not my turn (or game is waiting)", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/choseGoal","/chosegoal" -> {
@@ -238,7 +234,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     }
                 }
                 else {
-                    view.invalidMessage("Command not complete", myTurn);
+                    view.invalidMessage("Command not complete", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/addCard", "/addcard" -> {
@@ -252,38 +248,15 @@ public class Client extends UnicastRemoteObject implements GameListener{
                         int card2 = Integer.parseInt(parole[2]);
                         PlayingCard[][] board = me.getBoard().getBoardMatrix();
                         int pos = Integer.parseInt(parole[3]);
-                        /*if(parole.length>5){
-                            double coord0 = Double.parseDouble(parole[4]);
-                            double coord1 = Double.parseDouble(parole[5]);
-                        }*/
 
                         for (PlayingCard[] playingCards : board) {
                             for (PlayingCard playingCard : playingCards) {
                                 if (playingCard != null && playingCard.getIdCard() == card2){
-                                    /*if(parole.length==4){
+                                    if(parole.length==4){
                                         server.addCard(myNickname, c1, playingCard, pos , false);
                                         return;
                                     }
                                     server.addCard(myNickname, c1, playingCard, pos , Objects.equals(parole[4], "true"));
-                                    return;*/
-                                    if(parole.length==6){
-                                        double coord0 = Double.parseDouble(parole[4].replace(',','.'));
-                                        double coord1 = Double.parseDouble(parole[5].replace(',','.'));
-                                        server.addCard(myNickname, c1, playingCard, pos, coord0, coord1,false);
-                                        return;
-                                    }
-                                    else if(parole.length==7){
-                                        double coord0 = Double.parseDouble(parole[4].replace(',','.'));
-                                        double coord1 = Double.parseDouble(parole[5].replace(',','.'));
-                                        server.addCard(myNickname, c1, playingCard, pos , coord0, coord1, Objects.equals(parole[6], "true"));
-
-                                    }
-                                    else if(parole.length==4){
-                                        server.addCard(myNickname, c1, playingCard, pos , 0.0, 0.0, false);
-                                    }
-                                    else {
-                                        server.addCard(myNickname, c1, playingCard, pos , 0.0, 0.0, Objects.equals(parole[4], "true"));
-                                    }
                                     return;
                                 }
                             }
@@ -294,7 +267,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     }
                 }
                 else {
-                    view.invalidMessage("Command not complete or not your turn", myTurn);
+                    view.invalidMessage("Command not complete or not your turn", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/drawGold","/drawgold" -> {
@@ -302,7 +275,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.drawGoldFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase", myTurn);
+                    view.invalidMessage("Not your Turn or last phase", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/drawResources","/drawresources"  -> {
@@ -310,20 +283,31 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     server.drawResourceFromDeck(myNickname);
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase", myTurn);
+                    view.invalidMessage("Not your Turn or last phase", Boolean.TRUE.equals(myTurn));
                 }
             }
             case "/drawBoard","/drawboard" -> {
-                if(state==GameStatus.RUNNING && myTurn!=null && parole.length==2){
-                    try{
-                        int pos = Integer.parseInt(parole[1]);
-                        server.drawFromBoard(myNickname,pos);
-                    }catch(IndexOutOfBoundsException | NumberFormatException e){
-                        view.invalidMessage("Invalid number format", myTurn);
+                if (myTurn != null) {
+                    if (state == GameStatus.RUNNING || state == GameStatus.WAITING_LAST_TURN) {
+                        if (parole.length == 2) {
+                            try{
+                                int pos = Integer.parseInt(parole[1]);
+                                server.drawFromBoard(myNickname,pos);
+                            }catch(IndexOutOfBoundsException | NumberFormatException e){
+                                view.invalidMessage("Invalid number format", myTurn);
+                            }
+                        }
+                        else {
+                            view.invalidMessage("Invalid command", myTurn);
+                        }
+                    }
+                    else {
+                        //ConsolePrinter.consolePrinter("Phase: " + state.toString());
+                        view.invalidMessage("Last phase, can't draw", myTurn);
                     }
                 }
                 else {
-                    view.invalidMessage("Not your Turn or last phase or command not complete", myTurn);
+                    view.invalidMessage("Not your turn", false);
                 }
             }
             case "/chat" -> {
@@ -388,8 +372,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 view.show_generic("You have left game " + myGameId);
                 view.joinLobby();
             }
-            case null, default -> view.invalidMessage("invalid command", myTurn);
-
+            case null, default -> view.invalidMessage("Invalid command", myTurn);
         }
     }
 
@@ -407,6 +390,14 @@ public class Client extends UnicastRemoteObject implements GameListener{
         return myNickname;
     }
 
+    /**
+     * Get server interface server interface.
+     *
+     * @return the server interface
+     */
+    public ServerInterface getServerInterface(){
+        return server;
+    }
 
     //-------------------------------------OVERRIDE SECTION -----------------------------------------------------------------------
 
@@ -502,11 +493,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void nextTurn(String nickname) {
-        ConsolePrinter.consolePrinter("New turn: " + nickname);
+        //ConsolePrinter.consolePrinter("New turn: " + nickname);
         myTurn = myNickname.equals(nickname);
         if(currentImmutable==null){return;}
         Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();
         switchShowTurn(player);
+        //ConsolePrinter.consolePrinter(state.toString());
     }
 
     /**
@@ -528,8 +520,9 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 view.myRunningTurnPlaceCard();
                 return;
             }
-            view.myRunningTurnDrawCard();
-
+            if (state!=GameStatus.LAST_TURN) {
+                view.myRunningTurnDrawCard();
+            }
         }
         else {
             view.notMyTurn();
@@ -551,6 +544,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         }
         else{
             view.notMyTurn();
+            view.updateOtherBoard(currentImmutable, p.getNickname());
         }
     }
 
@@ -560,16 +554,19 @@ public class Client extends UnicastRemoteObject implements GameListener{
      * @param p the p
      */
     @Override
-    public void cardAdded(Player p, Double coord0, Double coord1,int cardID) {
+    public void cardAdded(Player p,int cardID) {
         MainStaticMethod.clearCMD();
         currentImmutable.refreshPlayer(p);
         view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn,p.getNickname());
-        view.show_board(coord0,coord1,cardID,p.getNickname());
+        //view.show_board(cardID,p.getNickname());
+        //ConsolePrinter.consolePrinter(state.toString());
         if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }
         else{
             view.notMyTurn();
+            //ConsolePrinter.consolePrinter("Client updating board for " + p.getNickname());
+            view.updateOtherBoard(currentImmutable, p.getNickname());
         }
     }
 
@@ -861,7 +858,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
     /**
      * The type Ping pong thread client.
      */
-    private class PingPongThreadClient extends Thread {
+    private static class PingPongThreadClient extends Thread {
         /**
          * The Pinged.
          */

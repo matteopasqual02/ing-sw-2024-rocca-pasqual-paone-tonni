@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.TUI;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main.MainStaticMethod;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumUpdates;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.ViewUpdate;
 import org.fusesource.jansi.Ansi;
@@ -43,7 +44,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }
 
     @Override
-    public void show_board(Double coord0, Double coord1, int cardID, String playerChangedNickname) {
+    public void show_board(int cardID, String playerChangedNickname) {
 
     }
 
@@ -219,6 +220,16 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }
 
     /**
+     *
+     * @param gameImmutable
+     * @param nickname of the owner of the board to update
+     */
+    @Override
+    public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
+
+    }
+
+    /**
      * My running turn place card.
      */
     @Override
@@ -265,15 +276,40 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      */
     @Override
     public void winners(List<Player> list, String nick) {
-        if(list.stream().filter(player -> player.getNickname().equals(nick)).toList().isEmpty()){
+        MainStaticMethod.clearCMD();
+        StringBuilder stringBuilder = new StringBuilder();
+        boolean win = false;
+
+        stringBuilder.append(ansi().cursor(1,0));
+        stringBuilder.append("RESULTS \n");
+        for(int i=0;i< list.size();i++){
+            int position;
+            if(i==0 || list.get(i).getCurrentPoints() == list.get(i).getCurrentPoints()){
+                position=i+1;
+            }
+            else {
+                position=i;
+            }
+            if(list.get(i).getNickname().equals(nick) && position==1){
+                win=true;
+            }
+            if(list.get(i).getNickname().equals(nick) && position==1){
+                win=false;
+            }
+            stringBuilder.append(position)
+                    .append("\tNick: ").append(list.get(i).getNickname())
+                    .append("\tPoints ").append(list.get(i).getCurrentPoints())
+                    .append("\n");
+        }
+
+        if(win){
             gameOver();
         }
         else {
             winner();
         }
 
-        ConsolePrinter.consolePrinter("WINNERS: \n");
-        list.forEach(player -> ConsolePrinter.consolePrinter(player.getNickname()));
+        ConsolePrinter.consolePrinter(stringBuilder);
 
     }
 
@@ -319,7 +355,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      */
 //------------------PRINTER
     private void title(){
-        System.out.println(ansi().fg(42).a("""
+        ConsolePrinter.consolePrinter(ansi().fg(42).a("""
                 
                  ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗    ███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗
                 ██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝    ████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝
@@ -335,7 +371,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      * Game over.
      */
     private void gameOver(){
-        System.out.println(ansi().fg(42).a("""
+        ConsolePrinter.consolePrinter(ansi().fg(42).a("""
                 
                  ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗\s
                 ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
@@ -351,7 +387,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      * Winner.
      */
     private void winner(){
-        System.out.println(ansi().fg(42).a("""
+        ConsolePrinter.consolePrinter(ansi().fg(42).a("""
                                 
                 ██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗
                 ██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗

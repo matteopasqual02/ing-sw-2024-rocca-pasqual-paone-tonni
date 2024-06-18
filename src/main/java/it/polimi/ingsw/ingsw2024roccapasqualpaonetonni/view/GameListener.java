@@ -216,7 +216,7 @@ public interface GameListener extends Remote {
      * @param p the p
      * @throws RemoteException the remote exception
      */
-    void cardAdded(Player p, Double coord0, Double coord1,int cardID) throws RemoteException;
+    void cardAdded(Player p,int cardID) throws RemoteException;
 
     /**
      * Personal goal chosen.

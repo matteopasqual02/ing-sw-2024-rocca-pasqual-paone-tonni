@@ -18,7 +18,7 @@
             style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
    <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="625.0">
-      <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="1000.0" prefWidth="1000.0"/>
+      <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="1500.0" prefWidth="2000.0"/>
    </ScrollPane>
    <HBox fx:id="cardsHBox" layoutY="440.0" prefHeight="152.0" prefWidth="681.0">
       <VBox fx:id="myHand" prefHeight="152.0" prefWidth="364.0">

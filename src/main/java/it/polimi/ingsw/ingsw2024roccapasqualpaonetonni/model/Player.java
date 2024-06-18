@@ -5,7 +5,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.*;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.io.Serializable;
@@ -217,7 +216,6 @@ public class Player implements Serializable {
     public void drawFromBoard(int position, BoardDeck b) throws NoCardException {
         hand.add(b.draw(position));
         playerListenersHandler.notify_drawFromBoard(this,b,b.getDrawableDeck());
-
     }
 
     /**
@@ -271,7 +269,7 @@ public class Player implements Serializable {
      * @param cornerToAttach the corner to attach
      * @return the boolean
      */
-    public boolean addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1) {
+    public boolean addToBoard(PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach) {
         try {
             removeFromHand(cardToAdd);
         }
@@ -281,7 +279,7 @@ public class Player implements Serializable {
         }
         try {
             board.addCard(cardToAdd, cardOnBoard, cornerToAttach, countSeed);
-            playerListenersHandler.notify_addToBoard(this,coord0,coord1,cardToAdd.getIdCard());
+            playerListenersHandler.notify_addToBoard(this,cardToAdd.getIdCard());
         }
         catch(InvalidPlaceException e) {
             hand.add(cardToAdd);
@@ -304,6 +302,13 @@ public class Player implements Serializable {
      */
     public void increasePoints(int newPoints) {
         currentPoints = currentPoints + newPoints;
+    }
+
+    /**
+     * Reset points.
+     */
+    public void resetPoints() {
+        currentPoints = 0;
     }
 
     /**

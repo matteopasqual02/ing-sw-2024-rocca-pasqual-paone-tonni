@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI;
 
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,8 +31,6 @@ public class GUIApplication extends Application {
     private Stage stage;
     private Stage scoreBoardStage;
     private Stage otherBoardsStage;
-    private Parent root;
-    Parent rootScore = null;
     private StackPane joinedGameRoot;
     private JoinedGameController joinedGameController = null;
     private GameSceneController gameSceneController = null;
@@ -42,9 +41,6 @@ public class GUIApplication extends Application {
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
      */
     private final ExecutorService executor = Executors.newCachedThreadPool();
-    private Parent createContent(){
-        return new StackPane(new Text("Hello world!"));
-    }
 
     /**
      * Start.
@@ -58,7 +54,7 @@ public class GUIApplication extends Application {
         instance = this;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        root = loader.load();
+        Parent root = loader.load();
         LobbyController controller = loader.getController();
         controller.setParameters(executor, client,this);
 
@@ -74,11 +70,11 @@ public class GUIApplication extends Application {
         return instance;
     }
     public void joinLobby(){
-        ConsolePrinter.consolePrinter("joinLobby");
+        //ConsolePrinter.consolePrinter("joinLobby");
     }
     public void show_createdGame(int gameID){
         String message = String.format("Game created, with GameID: %d", gameID);
-        ConsolePrinter.consolePrinter(message);
+        //ConsolePrinter.consolePrinter(message);
     }
     public void show_areYouReady(){
         Platform.runLater(()-> {
@@ -88,13 +84,13 @@ public class GUIApplication extends Application {
                 throw new RuntimeException(e);
             }
         });
-        String message = String.format("everyone entered, press y to begin");
-        ConsolePrinter.consolePrinter(message);
+        String message = "everyone entered, press y to begin";
+        //ConsolePrinter.consolePrinter(message);
     }
 
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
-        ConsolePrinter.consolePrinter(message);
+        //ConsolePrinter.consolePrinter(message);
         Platform.runLater(()-> joinedGameController.addNewLabel(message,joinedGameRoot));
     }
 
@@ -102,8 +98,6 @@ public class GUIApplication extends Application {
     //when I need to dynamically change the file we need to keep a reference to the controller.
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
-        //Parent newRoot = null;
-        //StackPane newRoot = null;
         try {
             joinedGameRoot = loader.load();
         } catch (IOException e) {
@@ -117,17 +111,17 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.show();
         String message = String.format("Joined game: %d", gameID);
-        ConsolePrinter.consolePrinter(message);
+        //ConsolePrinter.consolePrinter(message);
     }
     public void show_noAvailableGame(){
         //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
         setAlert("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
-        ConsolePrinter.consolePrinter("Game started");
+        //ConsolePrinter.consolePrinter("Game started");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
-        Parent newRoot = null;
+        Parent newRoot;
         try {
             newRoot = loader.load();
         } catch (IOException e) {
@@ -143,32 +137,19 @@ public class GUIApplication extends Application {
         Scene scene = new Scene(newRoot,currWidth,currHeight);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
-        stage.setFullScreen(true);
+        stage.setMinWidth(1400);
+        stage.setMinHeight(800);
+        //stage.setFullScreen(true);
         stage.show();
         Platform.runLater(this::infoBox);
         Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
-        Platform.runLater(()->otherBoardsController.setBoards(gameImmutable,nickname));
+        //Platform.runLater(()->otherBoardsController.setBoards(gameImmutable, nickname));
     }
+
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");
         alert.setHeaderText("How to play the game:");
- /*       VBox box = new VBox();
-        HBox hBox1 = new HBox();
-        box.setSpacing(50);
-        Text infoStart = new Text("Quando sarà il tuo turno piazza una carta di tipo starting al centro della board");
-        ImageView image = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_cards_back/083.png")));
-        image.setFitWidth(50);
-        image.setPreserveRatio(true);
-        hBox1.getChildren().addAll(infoStart,image);
-        Text infoPlace = new Text("Scegli una delle carte nella tua mano e clicca la posizione sulla board in cui vorresti inserirla");
-        Text infoDraw = new Text("pesca una carta, resource o gold, o dal mazzo o dalle carte presenti sul tavolo");
-        Text infoOther = new Text("Per osservare le board degli altri giocatori premere see board");
-        box.getChildren().addAll(hBox1,infoPlace,infoDraw,infoOther);
-        ScrollPane page = new ScrollPane(box);
-        alert.getDialogPane().setContent(page);
-        alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
-*/
         VBox page = new VBox();
         page.setSpacing(10);
         Text info = new Text("When it's your turn, place a card of the type \"Starting\" in the middle of the board");
@@ -178,7 +159,6 @@ public class GUIApplication extends Application {
         image.setPreserveRatio(true);
         final Label pageIndex = new Label("1");
         HBox hBox1 = new HBox();
-        HBox hBox2 = new HBox();
         hBox1.getChildren().addAll(info,image);
         Button next = new Button("Next →");
         Button prev = new Button("← Go Back");
@@ -269,6 +249,7 @@ public class GUIApplication extends Application {
         alert.showAndWait();
         gameSceneController.stopGlowInfo();
     }
+
     public void setAlert(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -338,11 +319,13 @@ public class GUIApplication extends Application {
 
     public void show_startCard(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
-            gameSceneController.startCard(gameImmutable, nickname);
+            //gameSceneController.startCard(gameImmutable, nickname);
+            gameSceneController.updateBoard(gameImmutable, nickname);
         }
         else {
-            otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
+            //otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
         }
+        gameSceneController.updatePlayersSeedCount(gameImmutable,playerChangedNickname);
     }
 
     public void show_board(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
@@ -351,6 +334,7 @@ public class GUIApplication extends Application {
         }
         scoreBoardController.updateScoreBoard(gameImmutable);
         gameSceneController.updateOtherPlayersPoints(gameImmutable,playerChangedNickname);
+        gameSceneController.updatePlayersSeedCount(gameImmutable,playerChangedNickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {
@@ -375,10 +359,18 @@ public class GUIApplication extends Application {
         gameSceneController.notMyTurn();
     }
 
+    public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
+        //ConsolePrinter.consolePrinter("GUIApplication updating board for " + nickname);
+        otherBoardsController.updateOtherBoard(gameImmutable, nickname);
+    }
+
     public void chatBeforeStart() {
     }
 
     public void show_status(String s) {
+        if (gameSceneController != null) {
+            gameSceneController.statusInfo(s);
+        }
     }
 
     public void show_statusLast(String string) {
@@ -389,12 +381,44 @@ public class GUIApplication extends Application {
 
     public void invalidAction(String s, boolean myTurn) {
         if (myTurn) {
-            ConsolePrinter.consolePrinter("Invalid action: " + s);
+            //ConsolePrinter.consolePrinter("Invalid action: " + s);
             switch (s) {
+                case "Goal invalid Action":
+                    gameSceneController.objectiveNotSelected("Error in objective selection, chose another card!");
+                    break;
+                case "Starting Card invalid Action: Card Already Added":
+                    gameSceneController.startAlreadyAdded("Starting card already added");
+                    break;
                 case "Conditions not met":
                     gameSceneController.cardNotPlaced("Conditions not met, chose another card!");
+                    break;
                 case "Card Invalid Place":
                     gameSceneController.cardNotPlaced("Invalid place chosen, try again!");
+                    break;
+                case "Card not in Hand":
+                    gameSceneController.cardNotPlaced("Error in the card selection, try again!");
+                    break;
+                case "Not your turn":
+                    gameSceneController.notMyTurn();
+                    break;
+                case "You cannot add two Cards in a turn":
+                    gameSceneController.cardAlreadyAdded(s);
+                    break;
+                case "You cannot add a Card in this phase", "You cannot add a Starting Card in this phase",
+                     "You cannot choose the Objective Card in this phase",
+                     "You cannot draw a Resource Card in this phase", "You cannot draw before a card is placed",
+                     "You cannot draw a Gold Card in this phase", "You cannot draw from Common Board in this phase":
+                    gameSceneController.wrongPhase(s);
+                    break;
+                case "Resource deck is empty":
+                    gameSceneController.noResourcesDeck(s + ", try drawing somewhere else");
+                    break;
+                case "Gold deck is empty":
+                    gameSceneController.noGoldDeck(s + ", try drawing somewhere else");
+                    break;
+                case "This position is empty":
+                    gameSceneController.noBoardCard(s + ", try drawing somewhere else");
+                    break;
             }
         }
     }
@@ -417,7 +441,9 @@ public class GUIApplication extends Application {
         scoreBoardStage.setScene(new Scene(rootScore, 300, 200));*/
         scoreBoardStage.show();
     }
-    public void seeOtherBoards(){
+
+    public void seeOtherBoards(String nickname){
+        otherBoardsController.showBoard(nickname);
         otherBoardsStage.show();
     }
 
@@ -430,7 +456,7 @@ public class GUIApplication extends Application {
         scoreBoardStage.setTitle("Score Board");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreBoard.fxml"));
-        Parent rootScore = null;
+        Parent rootScore;
         try {
             rootScore = loader.load();
         } catch (IOException e) {
@@ -457,8 +483,8 @@ public class GUIApplication extends Application {
         otherBoardsStage = new Stage();
         otherBoardsStage.setTitle("Other Boards");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/OtherBoards.fxml"));
-        Parent rootOtherBoards = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/OtherBoards_2.fxml"));
+        Parent rootOtherBoards;
         try {
             rootOtherBoards = loader.load();
         } catch (IOException e) {
@@ -466,15 +492,36 @@ public class GUIApplication extends Application {
         }
         otherBoardsController = loader.getController();
         otherBoardsController.setParameters(executor, client,this);
-        otherBoardsStage.setMinWidth(600);
-        otherBoardsStage.setMinHeight(400);
+        otherBoardsStage.setMinWidth(1048);
+        otherBoardsStage.setMinHeight(589);
         otherBoardsStage.setFullScreen(false);
         otherBoardsStage.setResizable(false);
         otherBoardsStage.setScene(new Scene(rootOtherBoards, 300, 200));
     }
 
-    public void show_otherPlayerBoard(int cardID, Double coord0, Double coord1, String playerChangedNickname) {
-        otherBoardsController.updateOtherBoards(cardID,coord0,coord1,playerChangedNickname);
+    /*
+    public void show_otherPlayerBoard(int cardID, String playerChangedNickname) {
+        otherBoardsController.updateOtherBoards(cardID,playerChangedNickname);
+    }
+    */
+
+    public void winner(List<Player> list) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
+        AnchorPane winnersRoot;
+        try {
+            winnersRoot = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        WinnersController winnersController = loader.getController();
+        winnersController.showWinners(list);
+
+        double currWidth = stage.getWidth();
+        double currHeight = stage.getHeight();
+        Scene scene = new Scene(winnersRoot, currWidth, currHeight);
+        stage.setScene(scene);
+        stage.setTitle("Codex Naturalis");
+        stage.show();
     }
 
     public void ruleBook() {
@@ -489,7 +536,6 @@ public class GUIApplication extends Application {
         pageImage.setImage(new Image(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_Rulebook/01.png"))));
         final Label pageIndex = new Label("1");
         HBox hBox1 = new HBox();
-        HBox hBox2 = new HBox();
         hBox1.getChildren().add(pageImage);
         Button next = new Button("Next →");
         Button prev = new Button("← Go Back");

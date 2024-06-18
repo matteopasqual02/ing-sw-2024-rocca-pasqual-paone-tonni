@@ -14,7 +14,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultControllerVa
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.DefaultModelValues;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils;
 
-import java.io.Console;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -472,7 +471,7 @@ public class GameController implements GameControllerInterface {
      * @param flip           the flip
      */
     @Override
-    public synchronized void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1, Boolean flip) {
+    public synchronized void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) {
         Runnable runnable = () -> {
             if (!getCurrentPlayer().getNickname().equals(nickname)) {
                 model.gameError("Not your turn");
@@ -480,19 +479,19 @@ public class GameController implements GameControllerInterface {
                 return;
             }
             if (getCurrentPlayer().getHand().size() < DefaultModelValues.Default_Hand_Dimension) {
-                model.gameError("You cannot add two cards in a turn");
+                model.gameError("You cannot add two Cards in a turn");
                 // listener invalid action
                 return;
             }
             if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
                 // listener you cannot draw in this phase
-                model.gameError("You cannot add a Card in this Phase");
+                model.gameError("You cannot add a Card in this phase");
                 return;
             }
             if (flip) {
                 cardToAdd.flip();
             }
-            boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach,coord0,coord1);
+            boolean done = getCurrentPlayer().addToBoard(cardToAdd, cardOnBoard, cornerToAttach);
             if (GameStatus.RUNNING == model.getGameStatus()) {
                 checkPoints20Points();
             }
@@ -519,7 +518,7 @@ public class GameController implements GameControllerInterface {
             }
             if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN) || model.getGameStatus().equals(GameStatus.LAST_TURN))) {
                 // listener you cannot draw in this phase
-                model.gameError("You cannot add a Starting Card in this Phase");
+                model.gameError("You cannot add a Starting Card in this phase");
                 return;
             }
             if (flip) {
@@ -546,7 +545,7 @@ public class GameController implements GameControllerInterface {
             }
             if (!(model.getGameStatus().equals(GameStatus.RUNNING))) {
                 // listener you cannot draw in this phase
-                model.gameError("You cannot choose the Objective Card in this Phase");
+                model.gameError("You cannot choose the Objective Card in this phase");
                 return;
             }
             getCurrentPlayer().chooseGoal(choice);
@@ -655,27 +654,32 @@ public class GameController implements GameControllerInterface {
             if (!getCurrentPlayer().getNickname().equals(nickname)) {
                 // listener invalid action
                 model.gameError("Not your turn");
+                //ConsolePrinter.consolePrinter("Not your turn");
                 return;
             }
             if (!(model.getGameStatus().equals(GameStatus.RUNNING) || model.getGameStatus().equals(GameStatus.WAITING_LAST_TURN))) {
                 // listener you cannot draw in this phase
                 model.gameError("You cannot draw from Common Board in this phase");
+                //ConsolePrinter.consolePrinter("You cannot draw from Common Board in this phase");
                 return;
             }
             if (getCurrentPlayer().getHand().size() >= DefaultModelValues.Default_Hand_Dimension) {
                 // listener you cannot draw in this phase
                 model.gameError("You cannot draw before a card is placed");
+                //ConsolePrinter.consolePrinter("You cannot draw before a card is placed");
                 return;
             }
             if (decksAreAllEmpty()) {
                 model.setStatus(GameStatus.WAITING_LAST_TURN);
-
-            } else {
+                model.nextPlayer();
+            }
+            else {
                 try {
                     getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
                     model.nextPlayer();
                 } catch (NoCardException e) {
                     model.gameError("This position is empty");
+                    //ConsolePrinter.consolePrinter("This position is empty");
                 }
             }
         };

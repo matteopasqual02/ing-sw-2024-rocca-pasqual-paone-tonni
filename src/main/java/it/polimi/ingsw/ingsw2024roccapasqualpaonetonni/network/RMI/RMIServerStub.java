@@ -33,10 +33,6 @@ public class RMIServerStub implements ServerInterface {
      * The Registry.
      */
     private Registry registry;
-    /**
-     * The Notifier.
-     */
-    private RMINotifier notifier;
 
     /**
      * Instantiates a new Rmi server stub.
@@ -236,8 +232,8 @@ public class RMIServerStub implements ServerInterface {
      * @throws RemoteException the remote exception
      */
     @Override
-    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Double coord0, Double coord1, Boolean flip) throws RemoteException {
-        gameController.addCard(nickname,cardToAdd,cardOnBoard,cornerToAttach,coord0,coord1,flip);
+    public void addCard(String nickname, PlayingCard cardToAdd, PlayingCard cardOnBoard, int cornerToAttach, Boolean flip) throws RemoteException {
+        gameController.addCard(nickname,cardToAdd,cardOnBoard,cornerToAttach,flip);
     }
 
     /**

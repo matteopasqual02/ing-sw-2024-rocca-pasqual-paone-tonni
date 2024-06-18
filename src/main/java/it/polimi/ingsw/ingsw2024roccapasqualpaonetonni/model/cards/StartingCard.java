@@ -15,10 +15,6 @@ public class StartingCard extends PlayingCard {
      * The Center.
      */
     private final Boolean[] center;
-    /**
-     * The Corners back.
-     */
-    private final Corner[] cornersBack;
 
     /**
      * Instantiates a new Starting card.
@@ -43,23 +39,6 @@ public class StartingCard extends PlayingCard {
     public Boolean[] getCenter() {
         return center;
     }
-
-    /**
-     * Get corner.
-     *
-     * @param pos the pos
-     * @return the corner
-     */
-    @Override
-    public Corner getCorner(int pos){
-        if (isFlipped) {
-            return cornersBack[pos - 1];
-        }
-        else {
-            return corners[pos - 1];
-        }
-    }
-
 
     /**
      * To string string.

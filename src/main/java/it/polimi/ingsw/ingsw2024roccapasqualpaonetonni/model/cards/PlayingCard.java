@@ -26,6 +26,10 @@ public abstract class PlayingCard extends Card {
      */
     protected Corner[] corners;
     /**
+     * The Corners back.
+     */
+    protected Corner[] cornersBack;
+    /**
      * The Coordinates.
      */
     protected int[] coordinates;
@@ -63,15 +67,22 @@ public abstract class PlayingCard extends Card {
         return isFlipped;
     }
 
+
+
     /**
-     * Gets corner.
+     * Get corner.
+     * since the convention we are using is that the corners start from one, the attribute need to be decremented
      *
      * @param pos the pos
      * @return the corner
      */
-// since the convention we are using is that the corners start from one, the attribute need to be decremented
-    public Corner getCorner(int pos) {
-        return corners[pos - 1];
+    public Corner getCorner(int pos){
+        if (isFlipped) {
+            return cornersBack[pos - 1];
+        }
+        else {
+            return corners[pos - 1];
+        }
     }
 
     /**

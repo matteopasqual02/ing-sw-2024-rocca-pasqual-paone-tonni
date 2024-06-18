@@ -61,7 +61,6 @@ public class CardFactory {
      */
     private static ResourceCard createResourceCard(int id, Map<String, JsonElement> attributes) {
         // Extract attributes specific to ResourcesCard and create the card
-        Gson gson = new Gson();
         JsonArray jArray;
 
         String color = attributes.get("color").getAsString();
@@ -232,7 +231,6 @@ public class CardFactory {
      */
     private static ObjectivePatternCard createObjectivePatternCard(int id, Map<String, JsonElement> attributes) {
         // Extract attributes specific to ObjectiveCard and create the card
-        Gson gson = new Gson();
         JsonArray jArray;
 
         int points = attributes.get("points").getAsInt();

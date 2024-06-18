@@ -39,7 +39,7 @@ public class Game implements Serializable {
     /**
      * The Winner.
      */
-    private final Queue<Player> winner;
+    private final List<Player> winner;
     /**
      * The First player.
      */
@@ -203,14 +203,6 @@ public class Game implements Serializable {
         return playersDisconnected;
     }
 
-    public synchronized void removePlayer(Player p){
-        players.remove(p);
-        if(status[0].equals(GameStatus.RUNNING) || status[0].equals(GameStatus.LAST_TURN)){
-            status[0] = GameStatus.ENDED;
-        }
-        //here before calling this method the client should call removeListener to remove itself from the listeners list, or the server should
-        gameListenersHandler.notify_removePlayer(p.getNickname());
-    }
 
     /**
      * Reconnect player.
@@ -391,7 +383,7 @@ public class Game implements Serializable {
         if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
             checkWinner();
             setStatus(GameStatus.ENDED);
-            gameListenersHandler.notify_winners(getWinners().stream().toList());
+            gameListenersHandler.notify_winners(getWinners());
             return;
         }
         if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
@@ -425,24 +417,22 @@ public class Game implements Serializable {
      * Check player total point int.
      *
      * @param p the p
-     * @return the int
      */
 //---------------------------------POINT SECTION
-    public int checkPlayerTotalPoint(Player p){
-        return p.getCurrentPoints()
-                + p.getGoal().pointCard(p.getBoard())
+    public void checkPlayerTotalPoint(Player p){
+        p.increasePoints(p.getGoal().pointCard(p.getBoard())
                 + gameBoardDeck.getCommonObjective(0).pointCard(p.getBoard())
-                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard())
-                ;
+                + gameBoardDeck.getCommonObjective(1).pointCard(p.getBoard()));
     }
 
     /**
      * Check winner.
      */
     public void checkWinner(){
+        /*
        int max=0;
         for (Player cplayer : players ){
-            int p_point = checkPlayerTotalPoint(cplayer);
+            int p_point = checkPlayerTotalPoint(cplayer); //attenzione, ora checkPlayerTotalPoint aggiorna i currentPoint
             //2 players with equal point
             if(p_point == max){
                 winner.add(cplayer);
@@ -451,9 +441,16 @@ public class Game implements Serializable {
             else if(p_point > max) {
                 winner.clear();
                 winner.add(cplayer);
-                max= p_point;
+                max = p_point;
             }
         }
+        */
+        for (Player p : players) {
+            checkPlayerTotalPoint(p);
+        }
+
+        winner.addAll(players);
+        winner.sort((p1, p2) -> Integer.compare(p2.getCurrentPoints(), p1.getCurrentPoints()));
     }
 
     /**
@@ -461,7 +458,7 @@ public class Game implements Serializable {
      *
      * @return the queue
      */
-    public Queue<Player> getWinners(){
+    public List<Player> getWinners(){
         return winner;
     }
 

@@ -51,7 +51,7 @@ public class NameNumberController extends GenericController {
     }*/
 
     @FXML
-    public void handleButtonClick(ActionEvent event) {
+    public void handleButtonClick() {
         executor.submit(()->{
             try {
                 client.receiveInput("/new "+num + " "+ string1.getText());
