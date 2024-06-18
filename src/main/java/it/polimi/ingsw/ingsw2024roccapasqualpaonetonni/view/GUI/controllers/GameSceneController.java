@@ -37,6 +37,9 @@ public class GameSceneController extends GenericController{
     @FXML
     private Pane pane;
 
+    @FXML
+    private Label turnLabel;
+
     // player board
     @FXML
     private ScrollPane personalBoard;
@@ -1051,14 +1054,20 @@ public class GameSceneController extends GenericController{
 
     public void notMyTurn() {
         disable(true);
-        Label label = new Label("Not your turn");
-        label.setStyle("-fx-background-color: lightblue; -fx-padding: 20; -fx-border-color: black; -fx-border-width: 2px;");
+        turnLabel.setText("Not your turn");
+        /*
         StackPane labelContainer = new StackPane(label);
         labelContainer.setAlignment(Pos.CENTER);
         pane.getChildren().add(labelContainer);
         PauseTransition message = new PauseTransition(Duration.seconds(3));
         message.setOnFinished(event->pane.getChildren().remove(labelContainer));
         message.play();
+        */
+    }
+
+    public void myTurn() {
+        turnLabel.setText("Your turn");
+        turnLabel.setStyle("-fx-background-color: lightblue; -fx-padding: 20; -fx-border-color: black; -fx-border-width: 2px;");
     }
 
     private void disable(Boolean truefalse){
@@ -1268,6 +1277,7 @@ public class GameSceneController extends GenericController{
     public void handleSeeOtherPlayersBoards(MouseEvent event) {
         Button button = (Button) event.getSource();
         String nickname = button.getId();
+        ConsolePrinter.consolePrinter(nickname);
         Platform.runLater(()->application.seeOtherBoards(nickname));
     }
 

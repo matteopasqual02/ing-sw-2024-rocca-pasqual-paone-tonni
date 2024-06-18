@@ -203,6 +203,12 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }
 
     /**
+     * Not needed, but here for overriding
+     */
+    @Override
+    public void myTurn() {}
+
+    /**
      * Not my turn chat.
      */
     @Override

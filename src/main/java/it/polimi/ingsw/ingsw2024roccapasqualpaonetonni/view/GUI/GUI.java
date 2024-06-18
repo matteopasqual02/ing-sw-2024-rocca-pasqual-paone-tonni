@@ -138,6 +138,14 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater(application::notMyTurn);
     }
 
+    /**
+     * My turn.
+     */
+    @Override
+    public void myTurn() {
+        runLater(application::myTurn);
+    }
+
     @Override
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
         //ConsolePrinter.consolePrinter("GUI updating board for " + nickname);

@@ -94,6 +94,11 @@ public interface ViewUpdate {
     void notMyTurn();
 
     /**
+     * My turn
+     */
+    void myTurn();
+
+    /**
      *
      * @param gameImmutable
      * @param nickname of the owner of the board to update

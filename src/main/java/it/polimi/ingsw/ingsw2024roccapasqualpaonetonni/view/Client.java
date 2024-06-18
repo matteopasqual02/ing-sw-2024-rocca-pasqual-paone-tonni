@@ -499,6 +499,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     private void switchShowTurn(Player player) {
         if(myTurn){
+            view.myTurn();
             if (player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
                 view.myRunningTurnPlaceStarting();
                 return;

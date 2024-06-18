@@ -356,7 +356,15 @@ public class GUIApplication extends Application {
     }
 
     public void notMyTurn() {
-        gameSceneController.notMyTurn();
+        if (gameSceneController != null) {
+            gameSceneController.notMyTurn();
+        }
+    }
+
+    public void myTurn() {
+        if (gameSceneController != null) {
+            gameSceneController.myTurn();
+        }
     }
 
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
@@ -443,8 +451,10 @@ public class GUIApplication extends Application {
     }
 
     public void seeOtherBoards(String nickname){
-        otherBoardsController.showBoard(nickname);
+        boolean result = otherBoardsController.showBoard(nickname);
+        if (result) {
         otherBoardsStage.show();
+        }
     }
 
     public void setClient(Client client) {

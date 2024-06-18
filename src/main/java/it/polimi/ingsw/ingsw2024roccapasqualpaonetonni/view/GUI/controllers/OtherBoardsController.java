@@ -40,16 +40,17 @@ public class OtherBoardsController extends GenericController{
     private final double[] BOARD_SIZE = {1500.0, 2000.0};
     private final Map<String, Pane> boardsDict = new HashMap<>();
 
-    public void showBoard(String nickname) {
+    public boolean showBoard(String nickname) {
         Pane board = boardsDict.get(nickname);
         if (board == null) {
-            return;
+            return false;
         }
         nicknameLabel.setText(nickname);
         boardPane = board;
         scrollPane.setContent(boardPane);
         scrollPane.setHvalue(0.5);
         scrollPane.setVvalue(0.5);
+        return true;
     }
 
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
