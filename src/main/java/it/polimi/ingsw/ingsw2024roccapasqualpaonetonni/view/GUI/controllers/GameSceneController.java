@@ -389,6 +389,7 @@ public class GameSceneController extends GenericController{
 
                 vBox3.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
                 hbox1.setPadding(new Insets(5,5,5,5));
+                hbox1.setSpacing(8);
                 vBox3.setPadding(new Insets(5,5,5,5));
                 vBox2.setPadding(new Insets(5,5,5,5));
                 hbox2.setPadding(new Insets(5,5,5,5));
@@ -400,20 +401,6 @@ public class GameSceneController extends GenericController{
         // score board
         Platform.runLater(()->application.setScoreBoard());
         Platform.runLater(()->application.setOtherPlayerBoard());
-        //centerBoard();
-    }
-
-    private void centerBoard() {
-        double scrollPaneWidth = personalBoard.getViewportBounds().getWidth();
-        double scrollPaneHeight = personalBoard.getViewportBounds().getHeight();
-        double contentWidth = board.getLayoutBounds().getWidth();
-        double contentHeight = board.getLayoutBounds().getHeight();
-
-        double offsetX = (scrollPaneWidth - contentWidth) / 2;
-        double offsetY = (scrollPaneHeight - contentHeight) / 2;
-
-        board.setLayoutX(Math.max(offsetX, 0));
-        board.setLayoutY(Math.max(offsetY, 0));
     }
 
     private String createBackPath(int cardId) {

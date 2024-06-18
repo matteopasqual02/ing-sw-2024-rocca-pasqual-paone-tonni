@@ -40,8 +40,9 @@
 }
 
 .background-board {
-    -fx-background-image: url("../images/background_Image/board_sfondo.jpg");
-    -fx-background-size: cover;
+    -fx-background-image: url("../images/background_Image/board_sfondo.jpeg");
+    -fx-background-size: auto;
+    -fx-background-repeat: repeat;
 }
 
 .background-buttons {
