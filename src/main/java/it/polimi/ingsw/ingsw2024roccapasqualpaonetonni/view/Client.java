@@ -370,7 +370,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 currentImmutable=null;
                 state=null;
                 view.show_generic("You have left game " + myGameId);
-                view.joinLobby();
+                System.exit(0);
             }
             case null, default -> view.invalidMessage("Invalid command", myTurn);
         }
