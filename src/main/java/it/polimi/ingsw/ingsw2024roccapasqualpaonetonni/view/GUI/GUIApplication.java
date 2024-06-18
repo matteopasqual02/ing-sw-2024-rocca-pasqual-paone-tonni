@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -62,6 +63,12 @@ public class GUIApplication extends Application {
         stage.setMinHeight(589);
         stage.setScene(new Scene(root, 300, 200));
         stage.setTitle("Codex Naturalis");
+
+        stage.setOnCloseRequest(event -> {
+            System.out.println("Stage is closing");
+            System.exit(0);
+        });
+
         //stage.setFullScreen(true);
         stage.show();
 
@@ -109,6 +116,16 @@ public class GUIApplication extends Application {
         Scene scene = new Scene(joinedGameRoot,currWidth,currHeight);
         stage.setScene(scene);
         stage.setTitle("Codex Naturalis");
+        stage.setOnCloseRequest(event -> {
+            executor.submit(()->{
+                try {
+                    client.receiveInput("/leave");
+                } catch (IOException | NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            System.exit(0);
+        });
         stage.show();
         joinedGameController.setUpController(joinedGameRoot);
         String message = String.format("Joined game: %d", gameID);
