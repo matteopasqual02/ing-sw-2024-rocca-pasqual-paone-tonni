@@ -12,11 +12,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="511.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField alignment="CENTER" editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Waiting for all players to connect...">
-               <font>
-                  <Font name="System Bold" size="27.0" />
-               </font>
-            </TextField>
+            <TextField alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 40px; -fx-font-weight: BOLD" editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Waiting for all players to connect..." />
          </children>
       </HBox>
    </children>

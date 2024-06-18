@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -13,7 +10,7 @@
          <children>
             <TextField alignment="CENTER" editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Waiting for other players to join...">
                <font>
-                  <Font name="System Bold" size="27.0" />
+                  <Font name="Times new Roman" size="27.0" />
                </font>
             </TextField>
          </children>

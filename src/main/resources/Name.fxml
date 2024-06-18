@@ -10,7 +10,7 @@
    <children>
       <HBox alignment="CENTER" layoutX="412.0" prefHeight="100.0" prefWidth="1048.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="string1" alignment="CENTER" prefHeight="77.0" prefWidth="500.0" promptText="Insert your nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
+            <TextField fx:id="string1" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 32px;" alignment="CENTER" prefHeight="77.0" prefWidth="500.0" promptText="Insert your nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutY="413.0" prefHeight="187.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">

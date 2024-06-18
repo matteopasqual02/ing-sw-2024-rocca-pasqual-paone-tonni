@@ -45,7 +45,7 @@ public class OtherBoardsController extends GenericController{
         if (board == null) {
             return false;
         }
-        nicknameLabel.setText(nickname);
+        nicknameLabel.setText("Player: " + nickname);
         boardPane = board;
         scrollPane.setContent(boardPane);
         scrollPane.setHvalue(0.5);
@@ -57,6 +57,7 @@ public class OtherBoardsController extends GenericController{
         Pane board = boardsDict.get(nickname);
         if (board == null) {
             board = new Pane();
+            board.getStyleClass().add("background-board");
             board.setPrefHeight(BOARD_SIZE[0]);
             board.setPrefWidth(BOARD_SIZE[1]);
             board.applyCss();

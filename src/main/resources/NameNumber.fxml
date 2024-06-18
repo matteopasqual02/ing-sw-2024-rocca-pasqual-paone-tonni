@@ -21,7 +21,7 @@
                      <children>
                         <HBox alignment="TOP_CENTER" prefHeight="110.0" prefWidth="1019.0">
                            <children>
-                              <TextField fx:id="string1" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css">
+                              <TextField fx:id="string1" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 32px;" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -30,7 +30,7 @@
                         </HBox>
                         <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="string11" alignment="CENTER" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Select Number of Player">
+                              <TextField fx:id="string11" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 40px;" alignment="CENTER" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Select Number of Player">
                                  <font>
                                     <Font size="27.0" />
                                  </font>

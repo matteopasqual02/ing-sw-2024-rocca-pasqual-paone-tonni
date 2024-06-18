@@ -50,8 +50,10 @@
     -fx-background-size: cover;
 }
 
-
-
+.background-final {
+    -fx-background-image: url("../images/background_Image/sfondo_finale1.png");
+    -fx-background-size: cover;
+}
 
 .text_background_white {
     -fx-background-color: white;

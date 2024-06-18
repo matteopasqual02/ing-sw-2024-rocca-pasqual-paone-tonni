@@ -14,12 +14,12 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="150.0" prefWidth="400.0">
                      <children>
-                        <TextField fx:id="string2" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert gameID" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
+                        <TextField fx:id="string2" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 32px;" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert gameID" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="150.0" prefWidth="400.0">
                      <children>
-                        <TextField fx:id="string1" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert your nickaname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
+                        <TextField fx:id="string1" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 40px;" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert your nickaname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
                      </children>
                   </HBox>
                </children>

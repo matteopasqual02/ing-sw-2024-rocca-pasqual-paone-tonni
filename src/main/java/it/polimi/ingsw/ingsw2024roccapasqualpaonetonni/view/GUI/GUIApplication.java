@@ -373,6 +373,10 @@ public class GUIApplication extends Application {
         otherBoardsController.updateOtherBoard(gameImmutable, nickname);
     }
 
+    public void updateBackHand(GameImmutable gameImmutable, String nickname) {
+        gameSceneController.updateBackHand(gameImmutable, nickname);
+    }
+
     public void chatBeforeStart() {
     }
 

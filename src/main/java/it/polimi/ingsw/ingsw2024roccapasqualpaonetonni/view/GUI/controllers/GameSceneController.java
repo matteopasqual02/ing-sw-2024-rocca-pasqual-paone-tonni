@@ -1254,6 +1254,31 @@ public class GameSceneController extends GenericController{
                     hand2.setImage(new Image(createBackPath(cardId)));
                     cardId = p.get().getHand().get(2).getIdCard();
                     hand3.setImage(new Image(createBackPath(cardId)));
+                    hand3.setVisible(true);
+                }
+            }
+        }
+    }
+
+    public void updateBackHand(GameImmutable gameImmutable, String nickname) {
+        Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).findFirst();
+        if(p.isPresent())
+        {
+            for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
+                VBox vBox3 = (VBox) otherPlayersVBox.getChildren().get(i);
+                Label name = (Label) vBox3.getChildren().get(0);
+                if(name.getText().equals(nickname)) {
+                    HBox hBox2 = (HBox) vBox3.getChildren().get(1);
+                    VBox vBox2 = (VBox) hBox2.getChildren().get(1);
+                    HBox hBox1 = (HBox) vBox2.getChildren().get(0);
+                    ImageView hand1 = (ImageView) hBox1.getChildren().get(0);
+                    ImageView hand2 = (ImageView) hBox1.getChildren().get(1);
+                    ImageView hand3 = (ImageView) hBox1.getChildren().get(2);
+                    int cardId = p.get().getHand().get(0).getIdCard();
+                    hand1.setImage(new Image(createBackPath(cardId)));
+                    cardId = p.get().getHand().get(1).getIdCard();
+                    hand2.setImage(new Image(createBackPath(cardId)));
+                    hand3.setVisible(false);
                 }
             }
         }

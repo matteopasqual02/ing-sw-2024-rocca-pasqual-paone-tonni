@@ -168,9 +168,9 @@
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin>
-            <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="150.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Secret Objective">
+            <TextField alignment="CENTER" editable="false" prefHeight="50.0" prefWidth="150.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Secret Objective">
                <font>
-                  <Font size="23.0" />
+                  <Font name="Times New Roman" size="23.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -182,9 +182,9 @@
             </VBox>
          </VBox>
          <VBox fx:id="startingVBox" alignment="TOP_CENTER" prefHeight="276.0" prefWidth="150.0">
-            <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="150.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Starting Card">
+            <TextField alignment="CENTER" editable="false" prefHeight="50.0" prefWidth="150.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Starting Card">
                <font>
-                  <Font size="23.0" />
+                  <Font name="Times New Roman" size="23.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -228,6 +228,6 @@
       </VBox>
    </AnchorPane>
    <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <Label fx:id="turnLabel" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2px;" text="Not your turn" textAlignment="CENTER" alignment="CENTER" />
+      <Label fx:id="turnLabel" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2px; -fx-font-family: 'Times New Roman';" text="Not your turn" textAlignment="CENTER" alignment="CENTER" />
    </StackPane>
 </AnchorPane>

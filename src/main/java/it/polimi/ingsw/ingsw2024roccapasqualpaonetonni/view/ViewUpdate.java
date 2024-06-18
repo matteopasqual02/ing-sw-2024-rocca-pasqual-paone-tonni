@@ -106,6 +106,13 @@ public interface ViewUpdate {
     void updateOtherBoard(GameImmutable gameImmutable, String nickname);
 
     /**
+     *
+     * @param gameImmutable
+     * @param nickname nickname of who changed its hand
+     */
+    void updateBackHand(GameImmutable gameImmutable, String nickname);
+
+    /**
      * Display chat.
      *
      * @param s the string message
