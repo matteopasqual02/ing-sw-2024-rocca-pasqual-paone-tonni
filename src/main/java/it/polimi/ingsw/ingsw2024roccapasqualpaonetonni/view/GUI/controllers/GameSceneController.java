@@ -578,16 +578,19 @@ public class GameSceneController extends GenericController{
 
     public void chosenGoal() {
         secretObjectiveVBox.setPrefWidth(132.0);
+        secretObjective.setPrefSize(132.0,88.0);
         switch (goal){
             case 1->{
                 secretObjective.getChildren().remove(mySecretObjective2);
                 mySecretObjective1.setEffect(null);
                 mySecretObjective1.setFitWidth(132.0);
+                mySecretObjective1.setFitHeight(88.0);
             }
             case 2->{
                 secretObjective.getChildren().remove(mySecretObjective1);
                 mySecretObjective2.setEffect(null);
                 mySecretObjective2.setFitWidth(132.0);
+                mySecretObjective2.setFitHeight(88.0);
             }
         }
     }
