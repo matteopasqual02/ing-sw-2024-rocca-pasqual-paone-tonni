@@ -14,265 +14,275 @@
 <?import javafx.scene.text.Font?>
 <?language java?>
 
-<AnchorPane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="background-wood" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
-   <children>
-      <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="10.0">
-         <content>
-            <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="778.0" prefWidth="1305.0" style="-fx-background-color: beige" />
-         </content>
-      </ScrollPane>
-      <HBox layoutX="623.0" layoutY="5.0" prefHeight="600.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox prefHeight="589.0" prefWidth="203.0">
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
-               <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Common Deck">
-                  <font>
-                     <Font size="23.0" />
-                  </font>
-                  <VBox.margin>
-                     <Insets bottom="20.0" />
-                  </VBox.margin>
-               </TextField>
-               <VBox fx:id="boardCards" alignment="CENTER" prefHeight="198.0" prefWidth="228.0">
-                  <opaqueInsets>
-                     <Insets bottom="20.0" top="10.0" />
-                  </opaqueInsets>
-                  <HBox prefHeight="68.0" prefWidth="204.0">
-                     <children>
-                        <ImageView fx:id="boardCard1" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <ImageView fx:id="boardCard2" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <HBox prefHeight="68.0" prefWidth="204.0">
-                     <children>
-                        <ImageView fx:id="boardCard3" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets right="10.0" top="10.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <ImageView fx:id="boardCard4" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </ImageView>
-                     </children>
-                  </HBox>
-               </VBox>
-               <VBox alignment="CENTER" prefHeight="101.0" prefWidth="238.0">
-                  <children>
-                     <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Decks">
-                        <font>
-                           <Font size="23.0" />
-                        </font>
-                        <VBox.margin>
-                           <Insets bottom="20.0" top="20.0" />
-                        </VBox.margin>
-                     </TextField>
-                     <HBox fx:id="decks" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                        <children>
-                           <ImageView fx:id="deckResourcesCard" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleResourceDeckClicked" pickOnBounds="true" preserveRatio="true">
-                              <HBox.margin>
-                                 <Insets right="10.0" />
-                              </HBox.margin>
-                           </ImageView>
-                           <ImageView fx:id="deckGoldCard" fitHeight="76.0" fitWidth="114.0" onMouseClicked="#handleGoldDeckClicked" pickOnBounds="true" preserveRatio="true" />
-                        </children>
-                     </HBox>
-                  </children>
-                  <opaqueInsets>
-                     <Insets bottom="20.0" />
-                  </opaqueInsets>
-               </VBox>
-               <VBox alignment="CENTER" prefHeight="150.0" prefWidth="102.0">
-                  <children>
-                     <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Common Objective">
-                        <font>
-                           <Font size="23.0" />
-                        </font>
-                        <VBox.margin>
-                           <Insets bottom="20.0" top="20.0" />
-                        </VBox.margin>
-                     </TextField>
-                     <HBox prefHeight="100.0" prefWidth="200.0">
-                        <children>
-                           <ImageView fx:id="commonObjectiveCard1" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                           <ImageView fx:id="commonObjectiveCard2" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
-                        </children>
-                     </HBox>
-                  </children>
-               </VBox>
-            </VBox>
-            <VBox prefHeight="590.0" prefWidth="293.0">
-               <children>
-                  <VBox fx:id="otherPlayersVBox" prefHeight="626.0" prefWidth="201.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Button minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: lightblue;" styleClass="button_infoRuleBookScore" stylesheets="@CSSStyle/allButton.css" text="ScoreBoard" textFill="#591616">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="Times New Roman Bold" size="14.0" />
-                                 </font></Button>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleSeeInfoBox" prefHeight="30.0" prefWidth="150.0" styleClass="button_infoRuleBookScore" stylesheets="@CSSStyle/allButton.css" text="Info" textFill="#591212">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="16.0" />
-                                       </font>
-                                    </Button>
-                                    <Button minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#handleSeeRuleBook" prefHeight="30.0" prefWidth="150.0" styleClass="button_infoRuleBookScore" stylesheets="@CSSStyle/allButton.css" text="RuleBook" textFill="#5e1717">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="15.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="589.0" prefWidth="346.0" />
-               </children>
-            </VBox>
-         </children>
-         <padding>
-            <Insets top="10.0" />
-         </padding>
-      </HBox>
-      <AnchorPane layoutY="419.0" prefHeight="190.0" prefWidth="1048.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-         <children>
-            <HBox fx:id="cardsHBox" alignment="CENTER_LEFT" prefHeight="176.0" prefWidth="1048.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="152.0" prefWidth="350.0" spacing="5.0">
-                     <children>
-                        <TextField alignment="CENTER" editable="false" prefHeight="50.0" prefWidth="350.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="My Hand">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <HBox fx:id="handCards" prefHeight="83.0" prefWidth="306.0">
-                           <children>
-                              <ImageView fx:id="myHandImage1" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="myHandImage2" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="myHandImage3" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                        <Button fx:id="flipHandCard" mnemonicParsing="false" onMouseClicked="#handleFlipHandCard" prefHeight="34.0" prefWidth="151.0" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Flip" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox fx:id="secretObjectiveVBox" prefHeight="196.0" prefWidth="150.0">
-                     <children>
-                        <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="150.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Secret Objective">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <VBox fx:id="secretObjective" alignment="CENTER" prefHeight="102.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fx:id="mySecretObjective1" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard1Clicked" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="mySecretObjective2" fitHeight="68.0" fitWidth="102.0" onMouseClicked="#handleObjectiveCard2Clicked" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox fx:id="startingVBox" alignment="TOP_CENTER" prefHeight="276.0" prefWidth="150.0">
-                     <children>
-                        <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="150.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Starting Card">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <VBox fx:id="startingCardVBox" alignment="CENTER" prefHeight="136.0" prefWidth="122.0" spacing="5.0">
-                           <children>
-                              <ImageView fx:id="myStartingCard" fitHeight="88.0" fitWidth="132.0" onMouseClicked="#handleStartingCardClicked" pickOnBounds="true" preserveRatio="true" />
-                              <Button fx:id="flipStartingButton" mnemonicParsing="false" onMouseClicked="#handleFlipStarting" prefHeight="35.0" prefWidth="154.0" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Flip" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
+<AnchorPane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0"
+            styleClass="background-wood" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
+   <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" AnchorPane.bottomAnchor="210.0"
+               AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="10.0">
+      <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="778.0" prefWidth="1305.0"
+            style="-fx-background-color: beige"/>
+   </ScrollPane>
+   <HBox layoutX="623.0" layoutY="5.0" prefHeight="600.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0"
+         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <padding>
+         <Insets top="10.0"/>
+      </padding>
+      <VBox prefHeight="589.0" prefWidth="203.0">
+         <HBox.margin>
+            <Insets right="20.0"/>
+         </HBox.margin>
+         <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;"
+                    styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Common Deck">
+            <font>
+               <Font size="23.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="20.0"/>
+            </VBox.margin>
+         </TextField>
+         <VBox fx:id="boardCards" alignment="CENTER" prefHeight="198.0" prefWidth="228.0">
+            <opaqueInsets>
+               <Insets bottom="20.0" top="10.0"/>
+            </opaqueInsets>
+            <HBox prefHeight="68.0" prefWidth="204.0">
+               <opaqueInsets>
+                  <Insets/>
+               </opaqueInsets>
+               <ImageView fx:id="boardCard1" fitHeight="76.0" fitWidth="114.0"
+                          onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets right="10.0"/>
+                  </HBox.margin>
+               </ImageView>
+               <ImageView fx:id="boardCard2" fitHeight="76.0" fitWidth="114.0"
+                          onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true"/>
             </HBox>
-            <VBox prefHeight="197.0" prefWidth="294.0" spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="197.0">
-                     <children>
-                        <Button fx:id="publicChatButton" disable="true" mnemonicParsing="false" onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="100.5" styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" text="Public Chat" textFill="#591616e8">
-                           <font>
-                              <Font name="Times New Roman" size="10.0" />
-                           </font></Button>
-                        <Button fx:id="privateChatButton" mnemonicParsing="false" onAction="#handleSeePrivateChat" prefHeight="26.0" prefWidth="100.5" styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" text="Private Chat" textFill="#591616e5">
-                           <font>
-                              <Font name="Times New Roman Bold" size="10.0" />
-                           </font></Button>
-                     </children>
-                  </HBox>
-                  <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0" style="-fx-background-color:beige " stylesheets="@CSSStyle/allButton.css">
-                     <content>
-                        <VBox fx:id="messageContainer" prefHeight="232.0" prefWidth="185.0" spacing="2.0" />
-                     </content>
-                  </ScrollPane>
-                  <VBox>
-                     <children>
-                        <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
-                           <children>
-                              <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat" prefWidth="100.5" promptText="Select Player" styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" />
-                           </children>
-                        </HBox>
-                        <VBox alignment="CENTER" prefHeight="62.0" prefWidth="187.0" spacing="5.0">
-                           <children>
-                              <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="180.0" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" wrapText="true" />
-                              <Button minHeight="-Infinity" onAction="#handleSend" prefHeight="30.0" prefWidth="201.0" styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" text="Send" textFill="#591616">
-                                 <font>
-                                    <Font name="Times New Roman Bold" size="11.0" />
-                                 </font></Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
+            <HBox prefHeight="68.0" prefWidth="204.0">
+               <ImageView fx:id="boardCard3" fitHeight="76.0" fitWidth="114.0"
+                          onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets right="10.0" top="10.0"/>
+                  </HBox.margin>
+               </ImageView>
+               <ImageView fx:id="boardCard4" fitHeight="76.0" fitWidth="114.0"
+                          onMouseClicked="#handleDrawableCardClicked" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets top="10.0"/>
+                  </HBox.margin>
+               </ImageView>
+            </HBox>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="101.0" prefWidth="238.0">
+            <opaqueInsets>
+               <Insets bottom="20.0"/>
+            </opaqueInsets>
+            <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;"
+                       styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Decks">
+               <font>
+                  <Font size="23.0"/>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0"/>
+               </VBox.margin>
+            </TextField>
+            <HBox fx:id="decks" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <ImageView fx:id="deckResourcesCard" fitHeight="76.0" fitWidth="114.0"
+                          onMouseClicked="#handleResourceDeckClicked" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets right="10.0"/>
+                  </HBox.margin>
+               </ImageView>
+               <ImageView fx:id="deckGoldCard" fitHeight="76.0" fitWidth="114.0"
+                          onMouseClicked="#handleGoldDeckClicked" pickOnBounds="true" preserveRatio="true"/>
+            </HBox>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="150.0" prefWidth="102.0">
+            <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;"
+                       styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Common Objective">
+               <font>
+                  <Font size="23.0"/>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0"/>
+               </VBox.margin>
+            </TextField>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <ImageView fx:id="commonObjectiveCard1" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true"
+                          preserveRatio="true"/>
+               <ImageView fx:id="commonObjectiveCard2" fitHeight="76.0" fitWidth="114.0" pickOnBounds="true"
+                          preserveRatio="true"/>
+            </HBox>
+         </VBox>
+      </VBox>
+      <VBox prefHeight="590.0" prefWidth="293.0">
+         <VBox fx:id="otherPlayersVBox" prefHeight="626.0" prefWidth="201.0">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <VBox.margin>
+                  <Insets/>
+               </VBox.margin>
+               <Button minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#handleSeeScoreBoard"
+                       prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: lightblue;"
+                       styleClass="button_infoRuleBookScore" stylesheets="@CSSStyle/allButton.css"
+                       text="ScoreBoard" textFill="#591616">
+                  <VBox.margin>
+                     <Insets bottom="5.0"/>
+                  </VBox.margin>
+                  <font>
+                     <Font name="Times New Roman Bold" size="14.0"/>
+                  </font>
+               </Button>
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                          onMouseClicked="#handleSeeInfoBox" prefHeight="30.0" prefWidth="150.0"
+                          styleClass="button_infoRuleBookScore" stylesheets="@CSSStyle/allButton.css"
+                          text="Info" textFill="#591212">
+                     <font>
+                        <Font name="Times New Roman Bold" size="16.0"/>
+                     </font>
+                  </Button>
+                  <Button minHeight="-Infinity" mnemonicParsing="false"
+                          onMouseClicked="#handleSeeRuleBook" prefHeight="30.0" prefWidth="150.0"
+                          styleClass="button_infoRuleBookScore" stylesheets="@CSSStyle/allButton.css"
+                          text="RuleBook" textFill="#5e1717">
+                     <font>
+                        <Font name="Times New Roman Bold" size="15.0"/>
+                     </font>
+                  </Button>
+               </HBox>
             </VBox>
-         </children>
-      </AnchorPane>
-   </children>
+         </VBox>
+         <VBox prefHeight="589.0" prefWidth="346.0"/>
+      </VBox>
+   </HBox>
+   <AnchorPane layoutY="419.0" prefHeight="190.0" prefWidth="1048.0" AnchorPane.bottomAnchor="10.0"
+               AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <HBox fx:id="cardsHBox" alignment="CENTER_LEFT" prefHeight="176.0" prefWidth="1048.0"
+            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <VBox alignment="TOP_CENTER" prefHeight="152.0" prefWidth="350.0" spacing="5.0">
+            <HBox.margin>
+               <Insets right="20.0"/>
+            </HBox.margin>
+            <TextField alignment="CENTER" editable="false" prefHeight="50.0" prefWidth="350.0" style="-fx: 5;"
+                       styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="My Hand">
+               <font>
+                  <Font size="23.0"/>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0"/>
+               </VBox.margin>
+            </TextField>
+            <HBox fx:id="handCards" prefHeight="83.0" prefWidth="306.0">
+               <ImageView fx:id="myHandImage1" fitHeight="88.0" fitWidth="132.0"
+                          onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0"/>
+                  </HBox.margin>
+               </ImageView>
+               <ImageView fx:id="myHandImage2" fitHeight="88.0" fitWidth="132.0"
+                          onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0"/>
+                  </HBox.margin>
+               </ImageView>
+               <ImageView fx:id="myHandImage3" fitHeight="88.0" fitWidth="132.0"
+                          onMouseClicked="#handleHandCardClicked" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets left="5.0" right="5.0"/>
+                  </HBox.margin>
+               </ImageView>
+            </HBox>
+            <Button fx:id="flipHandCard" mnemonicParsing="false" onMouseClicked="#handleFlipHandCard"
+                    prefHeight="34.0" prefWidth="151.0" styleClass="button_text_2"
+                    stylesheets="@CSSStyle/allButton.css" text="Flip"/>
+         </VBox>
+         <VBox fx:id="secretObjectiveVBox" prefHeight="196.0" prefWidth="150.0">
+            <HBox.margin>
+               <Insets right="20.0"/>
+            </HBox.margin>
+            <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="150.0"
+                       style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css"
+                       text="Secret Objective">
+               <font>
+                  <Font size="23.0"/>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0"/>
+               </VBox.margin>
+            </TextField>
+            <VBox fx:id="secretObjective" alignment="CENTER" prefHeight="102.0" prefWidth="100.0">
+               <ImageView fx:id="mySecretObjective1" fitHeight="68.0" fitWidth="102.0"
+                          onMouseClicked="#handleObjectiveCard1Clicked" pickOnBounds="true"
+                          preserveRatio="true"/>
+               <ImageView fx:id="mySecretObjective2" fitHeight="68.0" fitWidth="102.0"
+                          onMouseClicked="#handleObjectiveCard2Clicked" pickOnBounds="true"
+                          preserveRatio="true"/>
+            </VBox>
+         </VBox>
+         <VBox fx:id="startingVBox" alignment="TOP_CENTER" prefHeight="276.0" prefWidth="150.0">
+            <TextField alignment="TOP_CENTER" editable="false" prefHeight="50.0" prefWidth="150.0"
+                       style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css"
+                       text="Starting Card">
+               <font>
+                  <Font size="23.0"/>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0"/>
+               </VBox.margin>
+            </TextField>
+            <VBox fx:id="startingCardVBox" alignment="CENTER" prefHeight="136.0" prefWidth="122.0"
+                  spacing="5.0">
+               <ImageView fx:id="myStartingCard" fitHeight="88.0" fitWidth="132.0"
+                          onMouseClicked="#handleStartingCardClicked" pickOnBounds="true"
+                          preserveRatio="true"/>
+               <Button fx:id="flipStartingButton" mnemonicParsing="false"
+                       onMouseClicked="#handleFlipStarting" prefHeight="35.0" prefWidth="154.0"
+                       styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Flip"/>
+            </VBox>
+         </VBox>
+      </HBox>
+      <VBox prefHeight="197.0" prefWidth="294.0" spacing="3.0" AnchorPane.bottomAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="197.0">
+            <Button fx:id="publicChatButton" disable="true" mnemonicParsing="false"
+                    onAction="#handleSeePublicChat" prefHeight="26.0" prefWidth="100.5"
+                    styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" text="Public Chat"
+                    textFill="#591616e8">
+               <font>
+                  <Font name="Times New Roman" size="10.0"/>
+               </font>
+            </Button>
+            <Button fx:id="privateChatButton" mnemonicParsing="false" onAction="#handleSeePrivateChat"
+                    prefHeight="26.0" prefWidth="100.5" styleClass="button_chat"
+                    stylesheets="@CSSStyle/allButton.css" text="Private Chat" textFill="#591616e5">
+               <font>
+                  <Font name="Times New Roman Bold" size="10.0"/>
+               </font>
+            </Button>
+         </HBox>
+         <ScrollPane fx:id="scrollPane" prefHeight="247.0" prefWidth="201.0" style="-fx-background-color:beige "
+                     stylesheets="@CSSStyle/allButton.css">
+            <VBox fx:id="messageContainer" prefHeight="232.0" prefWidth="185.0" spacing="2.0"/>
+         </ScrollPane>
+         <VBox>
+            <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
+               <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat"
+                         prefWidth="100.5" promptText="Select Player" styleClass="button_chat"
+                         stylesheets="@CSSStyle/allButton.css"/>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="62.0" prefWidth="187.0" spacing="5.0">
+               <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="180.0"
+                         styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css"
+                         wrapText="true"/>
+               <Button minHeight="-Infinity" onAction="#handleSend" prefHeight="30.0" prefWidth="201.0"
+                       styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" text="Send"
+                       textFill="#591616">
+                  <font>
+                     <Font name="Times New Roman Bold" size="11.0"/>
+                  </font>
+               </Button>
+            </VBox>
+         </VBox>
+      </VBox>
+   </AnchorPane>
 </AnchorPane>
