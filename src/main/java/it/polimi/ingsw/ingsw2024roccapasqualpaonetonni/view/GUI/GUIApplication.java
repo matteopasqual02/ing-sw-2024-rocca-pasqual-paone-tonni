@@ -426,6 +426,11 @@ public class GUIApplication extends Application {
     }
 
     public void show_generic(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("RECONNECTION");
+        alert.setContentText(msg);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
     }
 
     public void invalidAction(String s, boolean myTurn) {

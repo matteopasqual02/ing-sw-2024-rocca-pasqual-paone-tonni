@@ -200,20 +200,35 @@ public class GameSceneController extends GenericController{
         myHandImage2.setImage(new Image(createPath(cardId)));
         myHandImage2.setDisable(true);
         handIDs[1] = cardId;
-        cardId = player.getHand().get(2).getIdCard();
-        myHandImage3.setImage(new Image(createPath(cardId)));
-        myHandImage3.setDisable(true);
-        handIDs[2] = cardId;
+        if(player.getHand().size()==3){
+            cardId = player.getHand().get(2).getIdCard();
+            myHandImage3.setImage(new Image(createPath(cardId)));
+            myHandImage3.setDisable(true);
+            handIDs[2] = cardId;
+        }
 
         //setting secret objectives
-        cardId = player.getObjectiveBeforeChoice()[0].getIdCard();
-        mySecretObjective1.setImage(new Image(createPath(cardId)));
-        mySecretObjective1.setDisable(true);
-        cardId = player.getObjectiveBeforeChoice()[1].getIdCard();
-        mySecretObjective2.setImage(new Image(createPath(cardId)));
-        mySecretObjective2.setDisable(true);
+        if(player.getGoal()!=null){
+            secretObjective.getChildren().remove(mySecretObjective2);
+            cardId = player.getGoal().getIdCard();
+            mySecretObjective1.setImage(new Image(createPath(cardId)));
+            mySecretObjective1.setDisable(true);
+            mySecretObjective1.setFitWidth(132.0);
+            mySecretObjective1.setFitHeight(88.0);
+        }
+        else{
+            cardId = player.getObjectiveBeforeChoice()[0].getIdCard();
+            mySecretObjective1.setImage(new Image(createPath(cardId)));
+            mySecretObjective1.setDisable(true);
+            cardId = player.getObjectiveBeforeChoice()[1].getIdCard();
+            mySecretObjective2.setImage(new Image(createPath(cardId)));
+            mySecretObjective2.setDisable(true);
+        }
 
         //setting starting cards
+        if(player.getStartingCard()==null){
+            //vedi se funziona
+        }
         cardId = player.getStartingCard().getIdCard();
         myStartingCard.setImage(new Image(createPath(cardId)));
         myStartingCard.setDisable(true);
@@ -284,11 +299,13 @@ public class GameSceneController extends GenericController{
                 ImageView hand3 = new ImageView();
                 cardId = p.getHand().get(0).getIdCard();
                 hand1.setImage(new Image(createBackPath(cardId)));
-                cardId = p.getHand().get(1).getIdCard();
-                hand2.setImage(new Image(createBackPath(cardId)));
-                cardId = p.getHand().get(2).getIdCard();
-                hand3.setImage(new Image(createBackPath(cardId)));
-
+                if(p.getHand().size()>1){
+                    cardId = p.getHand().get(1).getIdCard();
+                    hand2.setImage(new Image(createBackPath(cardId)));
+                } else if (p.getHand().size()>2) {
+                    cardId = p.getHand().get(2).getIdCard();
+                    hand3.setImage(new Image(createBackPath(cardId)));
+                }
                 hand1.setFitHeight(30);
                 hand1.setFitWidth(30);
                 hand2.setFitHeight(30);
@@ -1256,11 +1273,14 @@ public class GameSceneController extends GenericController{
                     ImageView hand3 = (ImageView) hBox1.getChildren().get(2);
                     int cardId = p.get().getHand().get(0).getIdCard();
                     hand1.setImage(new Image(createBackPath(cardId)));
-                    cardId = p.get().getHand().get(1).getIdCard();
-                    hand2.setImage(new Image(createBackPath(cardId)));
-                    cardId = p.get().getHand().get(2).getIdCard();
-                    hand3.setImage(new Image(createBackPath(cardId)));
-                    hand3.setVisible(true);
+                    if(p.get().getHand().size()>1){
+                        cardId = p.get().getHand().get(1).getIdCard();
+                        hand2.setImage(new Image(createBackPath(cardId)));
+                    } else if (p.get().getHand().size()>2) {
+                        cardId = p.get().getHand().get(2).getIdCard();
+                        hand3.setImage(new Image(createBackPath(cardId)));
+                        hand3.setVisible(true);
+                    }
                 }
             }
         }
