@@ -99,7 +99,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
             }
             case GUI ->{
                 view = new GUI(this);
-                MainStaticMethod.clearCMD();
             }
         }
 
