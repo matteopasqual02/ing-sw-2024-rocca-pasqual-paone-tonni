@@ -32,6 +32,7 @@ public class WinnersController {
                 points = player.getCurrentPoints();
             }
             entry = addPosition(position, player.getNickname(), player.getCurrentPoints());
+            vbox.setSpacing(20);
             vbox.getChildren().add(entry);
             count++;
         }
@@ -64,41 +65,39 @@ public class WinnersController {
 
     private Pane addPosition(int i, String nickname, int points){
         Pane entry = new Pane();
-        double width = ranking.getWidth() * 0.9;
-        double height = ranking.getHeight() * 0.25;
-        entry.setPrefWidth(width);
-        entry.setPrefHeight(height);
+        entry.setPrefWidth(324);
+        entry.setPrefHeight(55);
 
         ImageView imageView = new ImageView();
         String path = getNumber(i);
         if (path != null) {
             imageView.setImage(new Image(String.valueOf(getClass().getResource(path))));
         }
-        imageView.setFitWidth(height*0.9);
-        imageView.setFitHeight(height*0.9);
+        imageView.setFitWidth(60);
+        imageView.setFitHeight(60);
         entry.getChildren().add(imageView);
-        imageView.setLayoutX(width*0.06);
-        imageView.setLayoutY(height*0.05);
+        imageView.setLayoutX(22);
+        imageView.setLayoutY(5);
 
         Label label = new Label(nickname);
-        label.setPrefWidth(width*0.4);
-        label.setPrefHeight(height*0.9);
+        label.setPrefWidth(130);
+        label.setPrefHeight(40);
         entry.getChildren().add(label);
-        label.setLayoutX(width*0.3);
-        label.setLayoutY(height*0.05);
+        label.setLayoutX(99);
+        label.setLayoutY(5);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
-        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");
+        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60; -fx-font-size: 30px");
 
         label = new Label(String.valueOf(points));
-        label.setPrefWidth(width*23);
-        label.setPrefHeight(height*0.9);
+        label.setPrefWidth(75);
+        label.setPrefHeight(40);
         entry.getChildren().add(label);
-        label.setLayoutX(width*0.76);
-        label.setLayoutY(height*0.05);
+        label.setLayoutX(245);
+        label.setLayoutY(5);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
-        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");
+        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60; -fx-font-size: 30px");
 
         return entry;
     }

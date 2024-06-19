@@ -566,8 +566,9 @@ public class GUIApplication extends Application {
     }
 
     public void winner(List<Player> list) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
-        GridPane winnersRoot;
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners_final.fxml"));
+        AnchorPane winnersRoot;
         try {
             winnersRoot = loader.load();
         } catch (IOException e) {
