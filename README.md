@@ -56,16 +56,28 @@ It can be downloaded from the official [_Oracle website_](https://www.oracle.com
 To launch the game, it is necessary to open the server first.
 
 ### Server
-be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni directory
-The server can be run with the following command in a terminal window
+be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni or in Game directory
+The server can be run with the following command in a terminal window.
+
+Dir: ing-sw-2024-rocca-pasqual-paone-tonni
  ```
 java -jar Deliverables\Game\server.jar
+```
+Dir: Game
+```
+java -jar server.jar
  ```
 ### Client
-be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni directory
-The client can be run with the following command in a terminal window
+be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni or in Game directory
+The client can be run with the following command in a terminal window.
+
+Dir: ing-sw-2024-rocca-pasqual-paone-tonni
  ```
-java -jar Deliverables\Game\client.jar
+java -jar Deliverables\Game\client.jar 
+```
+Dir: Game
+```
+java -jar client.jar
  ```
 
 ## Team

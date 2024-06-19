@@ -6,9 +6,7 @@ import com.google.gson.JsonObject;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.CardFactory;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -102,21 +100,30 @@ public class JSONUtils {
 
     /**
      * Read txt file string.
+     * function that reads the txt file and turns it into a String
      *
-     * @param filePath the file path
+     * @param fileName the file path
      * @return the string
      * @throws IOException the io exception
      */
-// function that reads the txt file and turns it into a String
-    private static String readTXTFile(String filePath) throws IOException {
-        // Read the contents of the TXT file
+    private static String readTXTFile(String fileName) throws IOException {
         StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
-            }
+
+        ClassLoader classLoader = JSONUtils.class.getClassLoader();
+
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+
+        if (inputStream == null) {
+            throw new IOException("File not found: " + fileName);
         }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            content.append(line).append("\n");
+        }
+
         return content.toString();
     }
 }
