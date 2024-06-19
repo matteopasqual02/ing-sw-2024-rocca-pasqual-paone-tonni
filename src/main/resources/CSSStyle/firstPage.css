@@ -41,8 +41,7 @@
 
 .background-board {
     -fx-background-image: url("../images/background_Image/board_sfondo.jpeg");
-    -fx-background-size: auto;
-    -fx-background-repeat: repeat;
+    -fx-background-size: cover;
 }
 
 .background-buttons {
@@ -51,7 +50,12 @@
 }
 
 .background-final {
-    -fx-background-image: url("../images/background_Image/sfondo_finale1.png");
+    -fx-background-image: url("../images/background_Image/sfondo_gioco.png");
+    -fx-background-size: cover;
+}
+
+.winners-scroll {
+    -fx-background-image: url("../images/background_image/scroll.png");
     -fx-background-size: cover;
 }
 

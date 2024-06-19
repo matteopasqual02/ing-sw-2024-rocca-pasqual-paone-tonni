@@ -539,7 +539,7 @@ public class GUIApplication extends Application {
 
     public void winner(List<Player> list) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
-        AnchorPane winnersRoot;
+        GridPane winnersRoot;
         try {
             winnersRoot = loader.load();
         } catch (IOException e) {
