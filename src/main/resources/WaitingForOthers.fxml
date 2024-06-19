@@ -8,12 +8,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="589.0" prefWidth="1048.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox alignment="CENTER" prefHeight="511.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <TextField alignment="CENTER" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 40px; -fx-font-weight: BOLD" editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Waiting for all players to connect..." />
-         </children>
-      </HBox>
-   </children>
+<AnchorPane prefHeight="589.0" prefWidth="1048.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <HBox alignment="CENTER" prefHeight="511.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0"
+         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TextField alignment="CENTER"
+                 style="-fx-font-family: 'Times New Roman'; -fx-font-size: 40px; -fx-font-weight: BOLD"
+                 editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text"
+                 stylesheets="@CSSStyle/allButton.css" text="Waiting for all players to connect..."/>
+   </HBox>
 </AnchorPane>

@@ -21,7 +21,7 @@ class JSONUtilsTest {
 
     @Test
     void createDeckListsResources() throws IOException {
-        String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
+        String path = "DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
 
         HashMap<String, JsonElement> attributes =new HashMap<>();
@@ -60,7 +60,7 @@ class JSONUtilsTest {
 
     @ Test
     void createDeckListsGold() throws IOException {
-        String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
+        String path = "DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
 
         HashMap<String, JsonElement> attributes =new HashMap<>();
@@ -109,7 +109,7 @@ class JSONUtilsTest {
 
     @ Test
     void createDeckListsStarting() throws IOException {
-        String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
+        String path = "DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
 
         HashMap<String, JsonElement> attributes =new HashMap<>();
@@ -161,7 +161,7 @@ class JSONUtilsTest {
 
     @ Test
     void createDeckListsObjective() throws IOException {
-        String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
+        String path = "DataBase";
         Map<String, List<Card>> cardMap = createCardsFromJson(path);
 
         HashMap<String, JsonElement> attributes =new HashMap<>();

@@ -999,19 +999,19 @@ public class GameSceneController extends GenericController{
     }
 
     public void noResourcesDeck(String s) {
-        infoBox(s);
+        //infoBox(s);
         decks.getChildren().remove(deckResourcesCard);
         myRunningTurnDrawCard();
     }
 
     public void noGoldDeck(String s) {
-        infoBox(s);
+        //infoBox(s);
         decks.getChildren().remove(deckGoldCard);
         myRunningTurnDrawCard();
     }
 
     public void noBoardCard(String s) {
-        infoBox(s);
+        //infoBox(s);
         myRunningTurnDrawCard();
     }
 
@@ -1030,9 +1030,15 @@ public class GameSceneController extends GenericController{
         alert.setTitle("THE STATUS HAS CHANGED");
         alert.setHeaderText("New Status:");
         if (status.equals("LAST_TURN")) {
-            status = status + "\nWhen it'll be your turn, you will place the last card" +
+            status = "Last Turn\nWhen it'll be your turn, you will place the last card" +
                     "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
                     "and a the winner will be found";
+        }
+        else if (status.equals("ENDED")) {
+            status = "The game has ended!\nCheck out how you did";
+        }
+        else if (status.equals("WAITING_LAST_TURN")) {
+            return;
         }
         alert.setContentText(status);
         alert.getButtonTypes().setAll(ButtonType.OK);
