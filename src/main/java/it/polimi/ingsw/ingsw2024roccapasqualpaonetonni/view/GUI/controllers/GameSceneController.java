@@ -325,12 +325,6 @@ public class GameSceneController extends GenericController{
                 points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
                 points.setTextFill(Color.BROWN);
 
-                /*String seedCount1 = "SEEDCOUNT: GREEN "+p.getCountSeed()[0] + " BLUE " +p.getCountSeed()[1]  + " RED "+p.getCountSeed()[2];
-                String seedCount2 =  " PURPLE " +p.getCountSeed()[3]+ " FEATHER " +p.getCountSeed()[4]+ " POTION " +p.getCountSeed()[5]+ " SCROLL "+p.getCountSeed()[6];
-
-                Label label1 = new Label("SEEDCOUNT: ");
-                label1.setFont(Font.font("Arial", FontWeight.BOLD, 9));
-                label1.setTextFill(Color.BROWN);*/
                 ImageView green = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/green.png")));
                 Label greenCount = new Label(" "+String.valueOf(p.getCountSeed()[0])+ " ");
                 green.setFitHeight(25);
@@ -375,6 +369,10 @@ public class GameSceneController extends GenericController{
                 button.setOnMouseClicked(this::handleSeeOtherPlayersBoards);
 
             if(!p.getNickname().equals(nickname)){
+                if(p.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]!=null){
+                    Platform.runLater(()->application.updateOtherBoard(gameImmutable,p.getNickname()));
+                }
+
                 Label name = new Label(p.getNickname());
                 name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
                 name.setTextFill(Color.BROWN);
@@ -708,7 +706,6 @@ public class GameSceneController extends GenericController{
             card.setDisable(false);
         }
         handCards.setDisable(false);
-        board.setDisable(false);
     }
 
     public void myRunningTurnDrawCard() {
@@ -809,6 +806,7 @@ public class GameSceneController extends GenericController{
         selectedCard = (ImageView) card;
         //ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
         flipHandCard.setDisable(false);
+        board.setDisable(false);
     }
 
     public void handleFlipHandCard() {
@@ -989,15 +987,17 @@ public class GameSceneController extends GenericController{
     private void shiftHand() {
         ImageView card, next;
         for (int i = hand - 1; i < handCards.getChildren().size() - 1; i++) {
-            card = (ImageView) handCards.getChildren().get(i);
-            card.setEffect(null);
-            next = (ImageView) handCards.getChildren().get(i + 1);
-            card.setImage(next.getImage());
-            next.setVisible(false);
-            card.setVisible(true);
-            handIDs[i] = handIDs[i + 1];
-            flippedHand[i] = flippedHand[i + 1];
-            hand += 1;
+            if(i<player.getHand().size()){
+                card = (ImageView) handCards.getChildren().get(i);
+                card.setEffect(null);
+                next = (ImageView) handCards.getChildren().get(i + 1);
+                card.setImage(next.getImage());
+                next.setVisible(false);
+                card.setVisible(true);
+                handIDs[i] = handIDs[i + 1];
+                flippedHand[i] = flippedHand[i + 1];
+                hand += 1;
+            }
         }
     }
 
