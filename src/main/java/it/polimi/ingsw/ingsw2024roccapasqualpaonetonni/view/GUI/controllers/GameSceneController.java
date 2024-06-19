@@ -999,19 +999,19 @@ public class GameSceneController extends GenericController{
     }
 
     public void noResourcesDeck(String s) {
-        infoBox(s);
+        //infoBox(s);
         decks.getChildren().remove(deckResourcesCard);
         myRunningTurnDrawCard();
     }
 
     public void noGoldDeck(String s) {
-        infoBox(s);
+        //infoBox(s);
         decks.getChildren().remove(deckGoldCard);
         myRunningTurnDrawCard();
     }
 
     public void noBoardCard(String s) {
-        infoBox(s);
+        //infoBox(s);
         myRunningTurnDrawCard();
     }
 

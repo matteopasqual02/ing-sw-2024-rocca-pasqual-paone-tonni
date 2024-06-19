@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -398,9 +399,27 @@ public class GUIApplication extends Application {
     }
 
     public void show_status(String s) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("THE STATUS HAS CHANGED");
+        alert.setHeaderText("New Status:");
+        if (s.equals("LAST_TURN")) {
+            s = "Last Turn\nWhen it'll be your turn, you will place the last card" +
+                    "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
+                    "and a the winner will be found";
+        }
+        else if (s.equals("ENDED")) {
+            s = "The game has ended!\nCheck out how you did";
+        }
+        else if (s.equals("WAITING_LAST_TURN")) {
+            return;
+        }
+        alert.setContentText(s);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+        /*
         if (gameSceneController != null) {
             gameSceneController.statusInfo(s);
-        }
+        }*/
     }
 
     public void show_statusLast(String string) {
@@ -414,61 +433,71 @@ public class GUIApplication extends Application {
             //ConsolePrinter.consolePrinter("Invalid action: " + s);
             switch (s) {
                 case "Goal invalid Action":
-                    gameSceneController.objectiveNotSelected("Error in objective selection, chose another card!");
+                    //gameSceneController.objectiveNotSelected("Error in objective selection, chose another card!");
+                    alertBox("Error in objective selection, chose another card!");
+                    gameSceneController.myRunningTurnChoseObjective();
                     break;
                 case "Starting Card invalid Action: Card Already Added":
-                    gameSceneController.startAlreadyAdded("Starting card already added");
+                    //gameSceneController.startAlreadyAdded("Starting card already added");
+                    alertBox("Starting card already added");
                     break;
                 case "Conditions not met":
-                    gameSceneController.cardNotPlaced("Conditions not met, chose another card!");
+                    //gameSceneController.cardNotPlaced("Conditions not met, chose another card!");
+                    alertBox("Conditions not met, chose another card!");
+                    gameSceneController.myRunningTurnPlaceCard();
                     break;
                 case "Card Invalid Place":
-                    gameSceneController.cardNotPlaced("Invalid place chosen, try again!");
+                    //gameSceneController.cardNotPlaced("Invalid place chosen, try again!");
+                    alertBox("Invalid place chosen, try again!");
+                    gameSceneController.myRunningTurnPlaceCard();
                     break;
                 case "Card not in Hand":
-                    gameSceneController.cardNotPlaced("Error in the card selection, try again!");
+                    //gameSceneController.cardNotPlaced("Error in the card selection, try again!");
+                    alertBox("Error in the card selection, try again!");
+                    gameSceneController.myRunningTurnPlaceCard();
                     break;
                 case "Not your turn":
                     gameSceneController.notMyTurn();
                     break;
                 case "You cannot add two Cards in a turn":
-                    gameSceneController.cardAlreadyAdded(s);
+                    //gameSceneController.cardAlreadyAdded(s);
+                    alertBox(s);
                     break;
                 case "You cannot add a Card in this phase", "You cannot add a Starting Card in this phase",
                      "You cannot choose the Objective Card in this phase",
                      "You cannot draw a Resource Card in this phase", "You cannot draw before a card is placed",
                      "You cannot draw a Gold Card in this phase", "You cannot draw from Common Board in this phase":
-                    gameSceneController.wrongPhase(s);
+                    //gameSceneController.wrongPhase(s);
+                    alertBox(s);
                     break;
                 case "Resource deck is empty":
+                    alertBox(s + ", try drawing somewhere else");
                     gameSceneController.noResourcesDeck(s + ", try drawing somewhere else");
                     break;
                 case "Gold deck is empty":
+                    alertBox(s + ", try drawing somewhere else");
                     gameSceneController.noGoldDeck(s + ", try drawing somewhere else");
                     break;
                 case "This position is empty":
-                    gameSceneController.noBoardCard(s + ", try drawing somewhere else");
+                    alertBox(s + ", try drawing somewhere else");
+                    //gameSceneController.noBoardCard(s + ", try drawing somewhere else");
+                    gameSceneController.myRunningTurnDrawCard();
                     break;
             }
         }
     }
 
-    public void seeScoreBoard() {
-        /*Stage scoreBoardStage = new Stage();
-        scoreBoardStage.setTitle("Score Board");
+    private void alertBox(String message) {
+        // System.out.println("infoBox called with message: " + message);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ERROR");
+        alert.setHeaderText("Invalid Action");
+        alert.setContentText(message);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+    }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreBoard.fxml"));
-        Parent rootScore = null;
-        try {
-            rootScore = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        scoreBoardController = loader.getController();
-        scoreBoardController.setParameters(executor, client,this);
-        scoreBoardStage.setMinWidth(325);
-        scoreBoardStage.setMinHeight(640);
-        scoreBoardStage.setScene(new Scene(rootScore, 300, 200));*/
+    public void seeScoreBoard() {
         scoreBoardStage.show();
     }
 
