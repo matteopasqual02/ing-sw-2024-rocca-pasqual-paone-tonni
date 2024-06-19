@@ -57,7 +57,8 @@ To launch the game, it is necessary to open the server first.
 
 ### Server
 be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni or in Game directory
-The server can be run with the following command in a terminal window
+The server can be run with the following command in a terminal window.
+
 Dir: ing-sw-2024-rocca-pasqual-paone-tonni
  ```
 java -jar Deliverables\Game\server.jar
@@ -68,7 +69,8 @@ java -jar server.jar
  ```
 ### Client
 be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni or in Game directory
-The client can be run with the following command in a terminal window
+The client can be run with the following command in a terminal window.
+
 Dir: ing-sw-2024-rocca-pasqual-paone-tonni
  ```
 java -jar Deliverables\Game\client.jar 
