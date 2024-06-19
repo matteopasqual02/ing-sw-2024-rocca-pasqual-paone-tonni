@@ -32,6 +32,7 @@ public class WinnersController {
                 points = player.getCurrentPoints();
             }
             entry = addPosition(position, player.getNickname(), player.getCurrentPoints());
+            vbox.setSpacing(20);
             vbox.getChildren().add(entry);
             count++;
         }
@@ -72,8 +73,8 @@ public class WinnersController {
         if (path != null) {
             imageView.setImage(new Image(String.valueOf(getClass().getResource(path))));
         }
-        imageView.setFitWidth(40);
-        imageView.setFitHeight(40);
+        imageView.setFitWidth(60);
+        imageView.setFitHeight(60);
         entry.getChildren().add(imageView);
         imageView.setLayoutX(22);
         imageView.setLayoutY(5);
@@ -86,7 +87,7 @@ public class WinnersController {
         label.setLayoutY(5);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
-        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");
+        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60; -fx-font-size: 30px");
 
         label = new Label(String.valueOf(points));
         label.setPrefWidth(75);
@@ -96,7 +97,7 @@ public class WinnersController {
         label.setLayoutY(5);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
-        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");
+        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60; -fx-font-size: 30px");
 
         return entry;
     }

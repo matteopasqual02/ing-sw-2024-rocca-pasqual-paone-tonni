@@ -545,11 +545,10 @@ public class Client extends UnicastRemoteObject implements GameListener{
      * @param p the p
      */
     @Override
-    public void cardAdded(Player p,int cardID) {
+    public void cardAdded(Player p, int cardID) {
         MainStaticMethod.clearCMD();
         currentImmutable.refreshPlayer(p);
-        view.show_All(currentImmutable,myNickname,EnumUpdates.BOARD, myTurn,p.getNickname());
-        view.updateBackHand(currentImmutable, p.getNickname());
+        view.show_All(currentImmutable, myNickname, EnumUpdates.BOARD, myTurn, p.getNickname());
         if(myTurn && state!=GameStatus.LAST_TURN){
             view.myRunningTurnDrawCard();
         }

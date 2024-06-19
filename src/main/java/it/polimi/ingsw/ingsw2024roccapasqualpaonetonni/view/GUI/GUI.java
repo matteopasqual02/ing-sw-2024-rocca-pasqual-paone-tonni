@@ -153,18 +153,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      */
     @Override
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
-        //ConsolePrinter.consolePrinter("GUI updating board for " + nickname);
         runLater(() -> application.updateOtherBoard(gameImmutable, nickname));
-    }
-
-    /**
-     *
-     * @param gameImmutable
-     * @param nickname nickname of who changed its hand
-     */
-    @Override
-    public void updateBackHand(GameImmutable gameImmutable, String nickname) {
-        runLater(() -> application.updateBackHand(gameImmutable, nickname));
     }
 
     /**

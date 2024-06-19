@@ -54,7 +54,7 @@ public class GameController implements GameControllerInterface {
     /**
      * The Timer.
      */
-    TimerReconnection timer;
+    private transient TimerReconnection timer;
 
     /**
      * Instantiates a new Game controller.
@@ -360,12 +360,12 @@ public class GameController implements GameControllerInterface {
      */
     public synchronized void disconnectPlayer(String nickname) {
         model.disconnectPlayer(nickname);
-        // if (model.getMaxNumberOfPlayer() - model.numberDisconnectedPlayers() == 1) {
+
         if (model.getPlayerNum() == 0) {
             MainController.getInstance().removeGame(this);
             return;
         }
-        if (model.getPlayerNum() == 1) {
+        if (model.getPlayerNum() == 1 && model.getGameStatus()!=GameStatus.ENDED) {
             model.setLastStatus();
             model.setStatus(GameStatus.WAITING_RECONNECTION);
 
