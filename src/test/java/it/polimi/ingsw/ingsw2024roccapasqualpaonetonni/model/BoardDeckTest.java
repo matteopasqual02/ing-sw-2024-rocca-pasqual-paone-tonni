@@ -17,9 +17,9 @@ import static it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.utils.JSONUtils.cr
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardDeckTest {
-    private String path = "src/main/java/it/polimi/ingsw/ingsw2024roccapasqualpaonetonni/utils/DataBase";
+    private final String path = "DataBase";
 
-    private Game model = new Game(1);
+    private final Game model = new Game(1);
 
     @Test
     void setCardCardsTest() throws IOException {
