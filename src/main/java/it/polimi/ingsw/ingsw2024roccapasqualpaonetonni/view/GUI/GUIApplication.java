@@ -137,7 +137,7 @@ public class GUIApplication extends Application {
         setAlert("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
-        //ConsolePrinter.consolePrinter("Game started");
+        ConsolePrinter.consolePrinter("Show All");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
         Parent newRoot;
@@ -162,7 +162,6 @@ public class GUIApplication extends Application {
         stage.show();
         Platform.runLater(this::infoBox);
         Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
-        //Platform.runLater(()->otherBoardsController.setBoards(gameImmutable, nickname));
     }
 
     public void infoBox(){
@@ -349,11 +348,13 @@ public class GUIApplication extends Application {
 
     public void show_board(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
+            gameSceneController.updateHand(gameImmutable, nickname);
             gameSceneController.updateBoard(gameImmutable, nickname);
         }
+        gameSceneController.updateBackHandPlace(gameImmutable, playerChangedNickname);
         scoreBoardController.updateScoreBoard(gameImmutable);
-        gameSceneController.updateOtherPlayersPoints(gameImmutable,playerChangedNickname);
-        gameSceneController.updatePlayersSeedCount(gameImmutable,playerChangedNickname);
+        gameSceneController.updateOtherPlayersPoints(gameImmutable, playerChangedNickname);
+        gameSceneController.updatePlayersSeedCount(gameImmutable, playerChangedNickname);
     }
 
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {
@@ -387,12 +388,10 @@ public class GUIApplication extends Application {
     }
 
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
-        //ConsolePrinter.consolePrinter("GUIApplication updating board for " + nickname);
+        if (otherBoardsController == null) {
+            setOtherPlayerBoard();
+        }
         otherBoardsController.updateOtherBoard(gameImmutable, nickname);
-    }
-
-    public void updateBackHand(GameImmutable gameImmutable, String nickname) {
-        gameSceneController.updateBackHand(gameImmutable, nickname);
     }
 
     public void chatBeforeStart() {
@@ -402,24 +401,25 @@ public class GUIApplication extends Application {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("THE STATUS HAS CHANGED");
         alert.setHeaderText("New Status:");
-        if (s.equals("LAST_TURN")) {
-            s = "Last Turn\nWhen it'll be your turn, you will place the last card" +
-                    "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
-                    "and a the winner will be found";
+        switch(s) {
+            case "LAST_TURN":
+                s = "Last Turn\nWhen it'll be your turn, you will place the last card" +
+                        "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
+                        "and a the winner will be found";
+                break;
+            case "ENDED":
+                s = "The game has ended!\nCheck out how you did";
+                break;
+            case "WAITING_LAST_TURN", "RUNNING":
+                return;
+            case "WAITING_RECONNECTION":
+                s = "You are the last player remaining\nWaiting for others to rejoin";
+                break;
         }
-        else if (s.equals("ENDED")) {
-            s = "The game has ended!\nCheck out how you did";
-        }
-        else if (s.equals("WAITING_LAST_TURN")) {
-            return;
-        }
+
         alert.setContentText(s);
         alert.getButtonTypes().setAll(ButtonType.OK);
         alert.showAndWait();
-        /*
-        if (gameSceneController != null) {
-            gameSceneController.statusInfo(s);
-        }*/
     }
 
     public void show_statusLast(String string) {
@@ -509,7 +509,7 @@ public class GUIApplication extends Application {
     public void seeOtherBoards(String nickname){
         boolean result = otherBoardsController.showBoard(nickname);
         if (result) {
-        otherBoardsStage.show();
+            otherBoardsStage.show();
         }
     }
 
@@ -539,9 +539,9 @@ public class GUIApplication extends Application {
 
     public void show_boardDeck(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
-            gameSceneController.updateHand();
+            gameSceneController.updateHand(gameImmutable, nickname);
         }
-        gameSceneController.updateOtherPlayersHand(gameImmutable,playerChangedNickname);
+        gameSceneController.updateBackHandDraw(gameImmutable, playerChangedNickname);
         gameSceneController.updateBoardDeck(gameImmutable);
     }
 
@@ -564,12 +564,6 @@ public class GUIApplication extends Application {
         otherBoardsStage.setResizable(false);
         otherBoardsStage.setScene(new Scene(rootOtherBoards, 300, 200));
     }
-
-    /*
-    public void show_otherPlayerBoard(int cardID, String playerChangedNickname) {
-        otherBoardsController.updateOtherBoards(cardID,playerChangedNickname);
-    }
-    */
 
     public void winner(List<Player> list) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));

@@ -43,7 +43,7 @@ public class OtherBoardsController extends GenericController{
     public boolean showBoard(String nickname) {
         Pane board = boardsDict.get(nickname);
         if (board == null) {
-            return false;
+            board = fakeBoard();
         }
         nicknameLabel.setText("Player: " + nickname);
         boardPane = board;
@@ -51,6 +51,16 @@ public class OtherBoardsController extends GenericController{
         scrollPane.setHvalue(0.5);
         scrollPane.setVvalue(0.5);
         return true;
+    }
+
+    public Pane fakeBoard() {
+        Pane board = new Pane();
+        board.getStyleClass().add("background-board");
+        board.setPrefHeight(BOARD_SIZE[0]);
+        board.setPrefWidth(BOARD_SIZE[1]);
+        board.applyCss();
+        board.layout();
+        return board;
     }
 
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
@@ -64,6 +74,7 @@ public class OtherBoardsController extends GenericController{
             board.layout();
             boardsDict.put(nickname, board);
         }
+        ConsolePrinter.consolePrinter("creating board " + nickname);
         updateBoard(gameImmutable, board, nickname);
     }
 
@@ -71,8 +82,11 @@ public class OtherBoardsController extends GenericController{
         board.getChildren().clear();
         board.applyCss();
         board.layout();
-        StartingCard start = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst().getStartingCard();
-        placeStartCardOnBoardFromMatrix(start, board, BOARD_SIZE[1]/2 - CARD_SIZE[1]/2,BOARD_SIZE[0]/2 - CARD_SIZE[0]/2);
+        Player p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).toList().getFirst();
+        StartingCard start = p.getStartingCard();
+        if(p.getBoard().getBoardMatrix()[p.getBoard().getDim_x()/2][p.getBoard().getDim_y()/2]!=null) {
+            placeStartCardOnBoardFromMatrix(start, board, BOARD_SIZE[1] / 2 - CARD_SIZE[1] / 2, BOARD_SIZE[0] / 2 - CARD_SIZE[0] / 2);
+        }
     }
 
     private void placeStartCardOnBoardFromMatrix(PlayingCard start, Pane board, double x,double y) {

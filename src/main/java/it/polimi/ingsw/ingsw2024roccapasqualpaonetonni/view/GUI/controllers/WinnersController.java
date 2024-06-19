@@ -64,36 +64,38 @@ public class WinnersController {
 
     private Pane addPosition(int i, String nickname, int points){
         Pane entry = new Pane();
-        entry.setPrefWidth(324);
-        entry.setPrefHeight(55);
+        double width = ranking.getWidth() * 0.9;
+        double height = ranking.getHeight() * 0.25;
+        entry.setPrefWidth(width);
+        entry.setPrefHeight(height);
 
         ImageView imageView = new ImageView();
         String path = getNumber(i);
         if (path != null) {
             imageView.setImage(new Image(String.valueOf(getClass().getResource(path))));
         }
-        imageView.setFitWidth(40);
-        imageView.setFitHeight(40);
+        imageView.setFitWidth(height*0.9);
+        imageView.setFitHeight(height*0.9);
         entry.getChildren().add(imageView);
-        imageView.setLayoutX(22);
-        imageView.setLayoutY(5);
+        imageView.setLayoutX(width*0.06);
+        imageView.setLayoutY(height*0.05);
 
         Label label = new Label(nickname);
-        label.setPrefWidth(130);
-        label.setPrefHeight(40);
+        label.setPrefWidth(width*0.4);
+        label.setPrefHeight(height*0.9);
         entry.getChildren().add(label);
-        label.setLayoutX(99);
-        label.setLayoutY(5);
+        label.setLayoutX(width*0.3);
+        label.setLayoutY(height*0.05);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");
 
         label = new Label(String.valueOf(points));
-        label.setPrefWidth(75);
-        label.setPrefHeight(40);
+        label.setPrefWidth(width*23);
+        label.setPrefHeight(height*0.9);
         entry.getChildren().add(label);
-        label.setLayoutX(245);
-        label.setLayoutY(5);
+        label.setLayoutX(width*0.76);
+        label.setLayoutY(height*0.05);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");

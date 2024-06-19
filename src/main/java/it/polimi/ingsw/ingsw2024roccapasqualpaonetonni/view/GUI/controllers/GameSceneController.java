@@ -1,19 +1,16 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
-import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -29,7 +26,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
@@ -153,14 +149,8 @@ public class GameSceneController extends GenericController{
     private int startingID = -1;
     private final boolean[] flippedHand = {false, false, false};
     private final int[] handIDs = {-1, -1, -1};
-    private final int[] deckIDs = {-1, -1};
-    private int toReplace = -1;
-    private ImageView toReplaceIV = null;
-    private final int[] boardIDs = {-1, -1, -1, -1};
-    private int drawedID = -1;
     private final double[] CARD_SIZE = {88.0, 132.0};
     private final double[] BOARD_SIZE = {1500.0, 2000.0};
-    private final double[] displacement = {0.0, 0.0};
 
     private static final double JUMP_HEIGHT = 20.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
@@ -249,34 +239,28 @@ public class GameSceneController extends GenericController{
         if(!gameImmutable.getDrawableDeck().getDecks().get("resources").isEmpty()){
             cardId = gameImmutable.getDrawableDeck().getDecks().get("resources").peek().getIdCard();
         }
-        deckIDs[0] = cardId;
         deckResourcesCard.setImage(new Image(createBackPath(cardId)));
         deckResourcesCard.setDisable(true);
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
         boardCard1.setImage(new Image(createPath(cardId)));
         boardCard1.setDisable(true);
-        boardIDs[0] = cardId;
         cardId = gameImmutable.getBoardDeck().getCard(2).getIdCard();
         boardCard2.setImage(new Image(createPath(cardId)));
         boardCard2.setDisable(true);
-        boardIDs[1] = cardId;
 
         //setting gold cards
 
         if(!gameImmutable.getDrawableDeck().getDecks().get("gold").isEmpty()){
             cardId = gameImmutable.getDrawableDeck().getDecks().get("gold").peek().getIdCard();
         }
-        deckIDs[1] = cardId;
         deckGoldCard.setImage(new Image(createBackPath(cardId)));
         deckGoldCard.setDisable(true);
         cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
         boardCard3.setImage(new Image(createPath(cardId)));
         boardCard3.setDisable(true);
-        boardIDs[2] = cardId;
         cardId = gameImmutable.getBoardDeck().getCard(4).getIdCard();
         boardCard4.setImage(new Image(createPath(cardId)));
         boardCard4.setDisable(true);
-        boardIDs[3] = cardId;
 
         flipHandCard.setDisable(true);
 
@@ -287,91 +271,93 @@ public class GameSceneController extends GenericController{
 
         for(Player p: gameImmutable.getPlayers()){
 
-                ImageView color;
-                if(p.getColorPlayer() == 1){
-                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
-                } else if (p.getColorPlayer() == 2) {
-                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
-                } else if (p.getColorPlayer() == 3) {
-                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
-                } else {
-                    color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
-                }
-                color.setFitHeight(40);
-                color.setFitWidth(40);
+            ImageView color;
+            if(p.getColorPlayer() == 1){
+                color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png")));
+            } else if (p.getColorPlayer() == 2) {
+                color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png")));
+            } else if (p.getColorPlayer() == 3) {
+                color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png")));
+            } else {
+                color = new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png")));
+            }
+            color.setFitHeight(40);
+            color.setFitWidth(40);
 
-                ImageView hand1 = new ImageView();
-                ImageView hand2 = new ImageView();
-                ImageView hand3 = new ImageView();
-                cardId = p.getHand().get(0).getIdCard();
-                hand1.setImage(new Image(createBackPath(cardId)));
-                if(p.getHand().size()>1){
-                    cardId = p.getHand().get(1).getIdCard();
-                    hand2.setImage(new Image(createBackPath(cardId)));
-                }
-                if (p.getHand().size()>2) {
-                    cardId = p.getHand().get(2).getIdCard();
-                    hand3.setImage(new Image(createBackPath(cardId)));
-                }
-                hand1.setFitHeight(30);
-                hand1.setFitWidth(30);
-                hand2.setFitHeight(30);
-                hand2.setFitWidth(30);
-                hand3.setFitHeight(30);
-                hand3.setFitWidth(30);
+            ImageView hand1 = new ImageView();
+            ImageView hand2 = new ImageView();
+            ImageView hand3 = new ImageView();
+            cardId = p.getHand().get(0).getIdCard();
+            hand1.setImage(new Image(createBackPath(cardId)));
+            if(p.getHand().size()>1){
+                cardId = p.getHand().get(1).getIdCard();
+                hand2.setImage(new Image(createBackPath(cardId)));
+            }
+            if (p.getHand().size()>2) {
+                cardId = p.getHand().get(2).getIdCard();
+                hand3.setImage(new Image(createBackPath(cardId)));
+            }
+            hand1.setFitHeight(30);
+            hand1.setFitWidth(30);
+            hand2.setFitHeight(30);
+            hand2.setFitWidth(30);
+            hand3.setFitHeight(30);
+            hand3.setFitWidth(30);
 
-                String printPoints = "POINTS: " + p.getCurrentPoints();
-                Label points = new Label(printPoints);
-                points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
-                points.setTextFill(Color.BROWN);
+            String printPoints = "POINTS: " + p.getCurrentPoints();
+            Label points = new Label(printPoints);
+            points.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+            points.setTextFill(Color.BROWN);
 
-                ImageView green = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/green.png")));
-                Label greenCount = new Label(" "+String.valueOf(p.getCountSeed()[0])+ " ");
-                green.setFitHeight(25);
-                green.setFitWidth(25);
+            ImageView green = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/green.png")));
+            Label greenCount = new Label(" "+String.valueOf(p.getCountSeed()[0])+ " ");
+            green.setFitHeight(25);
+            green.setFitWidth(25);
 
-                ImageView blue = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/blue.png")));
-                Label blueCount = new Label(" "+String.valueOf(p.getCountSeed()[1])+ " ");
-                blue.setFitHeight(25);
-                blue.setFitWidth(25);
+            ImageView blue = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/blue.png")));
+            Label blueCount = new Label(" "+String.valueOf(p.getCountSeed()[1])+ " ");
+            blue.setFitHeight(25);
+            blue.setFitWidth(25);
 
-                ImageView red = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/red.png")));
-                Label redCount = new Label(" "+String.valueOf(p.getCountSeed()[2])+ " ");
-                red.setFitHeight(25);
-                red.setFitWidth(25);
+            ImageView red = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/red.png")));
+            Label redCount = new Label(" "+String.valueOf(p.getCountSeed()[2])+ " ");
+            red.setFitHeight(25);
+            red.setFitWidth(25);
 
-                ImageView purple = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/purple.png")));
-                Label purpleCount = new Label(" "+String.valueOf(p.getCountSeed()[3])+ " ");
-                purple.setFitHeight(25);
-                purple.setFitWidth(25);
+            ImageView purple = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/purple.png")));
+            Label purpleCount = new Label(" "+String.valueOf(p.getCountSeed()[3])+ " ");
+            purple.setFitHeight(25);
+            purple.setFitWidth(25);
 
-                ImageView feather = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/feather.png")));
-                Label featherCount = new Label(" "+String.valueOf(p.getCountSeed()[4])+ " ");
-                feather.setFitHeight(25);
-                feather.setFitWidth(25);
+            ImageView feather = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/feather.png")));
+            Label featherCount = new Label(" "+String.valueOf(p.getCountSeed()[4])+ " ");
+            feather.setFitHeight(25);
+            feather.setFitWidth(25);
 
-                ImageView potion = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/potion.png")));
-                Label potionCount = new Label(" "+String.valueOf(p.getCountSeed()[5])+ " ");
-                potion.setFitHeight(25);
-                potion.setFitWidth(25);
+            ImageView potion = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/potion.png")));
+            Label potionCount = new Label(" "+String.valueOf(p.getCountSeed()[5])+ " ");
+            potion.setFitHeight(25);
+            potion.setFitWidth(25);
 
-                ImageView scroll = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/scroll.png")));
-                Label scrollCount = new Label(" "+String.valueOf(p.getCountSeed()[6])+ " ");
-                scroll.setFitHeight(25);
-                scroll.setFitWidth(25);
+            ImageView scroll = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/scroll.png")));
+            Label scrollCount = new Label(" "+String.valueOf(p.getCountSeed()[6])+ " ");
+            scroll.setFitHeight(25);
+            scroll.setFitWidth(25);
 
-                HBox seedCountBox1 = new HBox(green,greenCount,blue,blueCount,red,redCount,purple,purpleCount,feather,featherCount,potion,potionCount,scroll,scrollCount);
+            HBox seedCountBox1 = new HBox(green,greenCount,blue,blueCount,red,redCount,purple,purpleCount,feather,featherCount,potion,potionCount,scroll,scrollCount);
 
-                Button button = new Button("SEE BOARD");
-                button.setStyle("-fx-background-color: #D3B48E;-fx-font-family: Arial;-fx-font-weight: bold; -fx-font-size: 10; -fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
-                //button.setOnMouseClicked(event -> handleSeeOtherPlayerBoardClicked(event, p.getNickname()));
-                button.setId(p.getNickname());
-                button.setOnMouseClicked(this::handleSeeOtherPlayersBoards);
+            Button button = new Button("SEE BOARD");
+            button.setDisable(false);
+            button.setStyle("-fx-background-color: #D3B48E;-fx-font-family: Arial;-fx-font-weight: bold; -fx-font-size: 10; -fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
+            button.setId(p.getNickname());
+            button.setOnMouseClicked(this::handleSeeOtherPlayersBoards);
 
             if(!p.getNickname().equals(nickname)){
+                /*
                 if(p.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]!=null){
                     Platform.runLater(()->application.updateOtherBoard(gameImmutable,p.getNickname()));
                 }
+                */
 
                 Label name = new Label(p.getNickname());
                 name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
@@ -709,8 +695,6 @@ public class GameSceneController extends GenericController{
     }
 
     public void myRunningTurnDrawCard() {
-        toReplace = -1;
-        toReplaceIV = null;
         for (int i = 0; i < boardCards.getChildren().size(); i++) {
             if (boardCards.getChildren().get(i) instanceof HBox cards) {
                 for (int j = 0; j < cards.getChildren().size(); j++) {
@@ -841,7 +825,8 @@ public class GameSceneController extends GenericController{
     }
 
     public void handleDrawableCardClicked(MouseEvent mouseEvent) {
-        toReplaceIV = (ImageView) mouseEvent.getSource();
+        ImageView toReplaceIV = (ImageView) mouseEvent.getSource();
+        int toReplace = -1;
         jump(toReplaceIV);
 
         disableDecks();
@@ -859,11 +844,8 @@ public class GameSceneController extends GenericController{
             }
         }
 
-        drawedID = boardIDs[toReplace];
         try {
-            //ConsolePrinter.consolePrinter(String.valueOf(toReplace));
             String msg = "/drawBoard " + (toReplace + 1);
-            //ConsolePrinter.consolePrinter(msg);
             client.receiveInput(msg);
         } catch (IOException | NotBoundException e) {
             throw new RuntimeException(e);
@@ -871,20 +853,14 @@ public class GameSceneController extends GenericController{
     }
 
     public void handleResourceDeckClicked() {
-        toReplaceIV = deckResourcesCard;
+        ImageView toReplaceIV = deckResourcesCard;
         jump(toReplaceIV);
 
         for (int i = 0; i < decks.getChildren().size(); i++) {
             ImageView card = (ImageView) decks.getChildren().get(i);
             card.setEffect(null);
             card.setDisable(true);
-            if (card.equals(toReplaceIV)) {
-                toReplace = i;
-            }
         }
-
-        drawedID = deckIDs[toReplace];
-        toReplaceIV.setImage(new Image(createPath(drawedID)));
 
         disableBoardCards();
 
@@ -896,20 +872,14 @@ public class GameSceneController extends GenericController{
     }
 
     public void handleGoldDeckClicked() {
-        toReplaceIV = deckGoldCard;
+        ImageView toReplaceIV = deckResourcesCard;
         jump(toReplaceIV);
 
         for (int i = 0; i < decks.getChildren().size(); i++) {
             ImageView card = (ImageView) decks.getChildren().get(i);
             card.setEffect(null);
             card.setDisable(true);
-            if (card.equals(toReplaceIV)) {
-                toReplace = i;
-            }
         }
-
-        drawedID = deckIDs[toReplace];
-        toReplaceIV.setImage(new Image(createPath(drawedID)));
 
         disableBoardCards();
 
@@ -931,12 +901,10 @@ public class GameSceneController extends GenericController{
         if(!gameImmutable.getDrawableDeck().getDecks().get("resources").isEmpty()){
             cardId = gameImmutable.getDrawableDeck().getDecks().get("resources").peek().getIdCard();
             deckResourcesCard.setImage(new Image(createBackPath(cardId)));
-            deckIDs[0] = cardId;
         }
         if (!gameImmutable.getDrawableDeck().getDecks().get("gold").isEmpty()) {
             cardId = gameImmutable.getDrawableDeck().getDecks().get("gold").peek().getIdCard();
             deckGoldCard.setImage(new Image(createBackPath(cardId)));
-            deckIDs[1] = cardId;
         }
     }
 
@@ -945,43 +913,45 @@ public class GameSceneController extends GenericController{
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
         boardCard1.setImage(new Image(createPath(cardId)));
         boardCard1.setDisable(true);
-        boardIDs[0] = cardId;
         boardCard1.setVisible(true);
         cardId = gameImmutable.getBoardDeck().getCard(2).getIdCard();
         boardCard2.setImage(new Image(createPath(cardId)));
         boardCard2.setDisable(true);
-        boardIDs[1] = cardId;
         boardCard2.setVisible(true);
         cardId = gameImmutable.getBoardDeck().getCard(3).getIdCard();
         boardCard3.setImage(new Image(createPath(cardId)));
         boardCard3.setDisable(true);
-        boardIDs[2] = cardId;
         boardCard3.setVisible(true);
         cardId = gameImmutable.getBoardDeck().getCard(4).getIdCard();
         boardCard4.setImage(new Image(createPath(cardId)));
         boardCard4.setDisable(true);
-        boardIDs[3] = cardId;
         boardCard4.setVisible(true);
     }
 
-    public void updateHand() {
-        shiftHand();
-        ImageView handCard = (ImageView) handCards.getChildren().get(hand - 1);
-        if (toReplaceIV != null) {
-            handCard.setImage(toReplaceIV.getImage());
+    public void updateHand(GameImmutable gameImmutable, String nickname) {
+        Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).findFirst();
+        if(p.isPresent()){
+            for (int i : handIDs) {
+                i = -1;
+            }
+
+            hand = 0;
+
+            for(int i = 0; i < handCards.getChildren().size(); i++){
+                ImageView card = (ImageView) handCards.getChildren().get(i);
+                card.setVisible(false);
+                card.setEffect(null);
+            }
+
+            for(int i = 0; i < p.get().getHand().size(); i++){
+                ImageView handImg = (ImageView) handCards.getChildren().get(i);
+                int cardId = p.get().getHand().get(i).getIdCard();
+                handImg.setImage(new Image(createPath(cardId)));
+                handImg.setVisible(true);
+                handIDs[i] = cardId;
+                hand += 1;
+            }
         }
-        handCard.setFitHeight(CARD_SIZE[0]);
-        handCard.setFitWidth(CARD_SIZE[1]);
-        handCard.setDisable(true);
-        handCard.setVisible(true);
-        handCard.setEffect(null);
-        handCard.setOnMouseClicked(this::handleHandCardClicked);
-        jump(handCard);
-        handIDs[hand - 1] = drawedID;
-        flippedHand[hand - 1] = false;
-        toReplace = -1;
-        toReplaceIV = null;
-        hand = - 1;
     }
 
     private void shiftHand() {
@@ -1265,14 +1235,15 @@ public class GameSceneController extends GenericController{
             }
         }
     }
-    public void updateOtherPlayersHand(GameImmutable gameImmutable, String playerChangedNickname) {
-        Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
+
+    public void updateBackHandDraw(GameImmutable gameImmutable, String nickname) {
+        Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).findFirst();
         if(p.isPresent())
         {
             for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
                 VBox vBox3 = (VBox) otherPlayersVBox.getChildren().get(i);
                 Label name = (Label) vBox3.getChildren().get(0);
-                if(name.getText().equals(playerChangedNickname)){
+                if(name.getText().equals(nickname) || name.getText().equals(nickname + " (YOU)")){
                     HBox hBox2 = (HBox) vBox3.getChildren().get(1);
                     VBox vBox2 = (VBox) hBox2.getChildren().get(1);
                     HBox hBox1 = (HBox) vBox2.getChildren().get(0);
@@ -1284,6 +1255,7 @@ public class GameSceneController extends GenericController{
                     if(p.get().getHand().size()>1){
                         cardId = p.get().getHand().get(1).getIdCard();
                         hand2.setImage(new Image(createBackPath(cardId)));
+                        hand2.setVisible(true);
                     }
                     if (p.get().getHand().size()>2) {
                         cardId = p.get().getHand().get(2).getIdCard();
@@ -1295,14 +1267,14 @@ public class GameSceneController extends GenericController{
         }
     }
 
-    public void updateBackHand(GameImmutable gameImmutable, String nickname) {
+    public void updateBackHandPlace(GameImmutable gameImmutable, String nickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).findFirst();
         if(p.isPresent())
         {
             for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before
                 VBox vBox3 = (VBox) otherPlayersVBox.getChildren().get(i);
                 Label name = (Label) vBox3.getChildren().get(0);
-                if(name.getText().equals(nickname)) {
+                if(name.getText().equals(nickname) || name.getText().equals(nickname + " (YOU)")) {
                     HBox hBox2 = (HBox) vBox3.getChildren().get(1);
                     VBox vBox2 = (VBox) hBox2.getChildren().get(1);
                     HBox hBox1 = (HBox) vBox2.getChildren().get(0);
