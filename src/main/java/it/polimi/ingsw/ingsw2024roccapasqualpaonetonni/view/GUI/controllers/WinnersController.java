@@ -16,19 +16,23 @@ import java.util.List;
 
 public class WinnersController {
     @FXML
-    private VBox ranking;
+    private Pane ranking;
 
+    @FXML
+    private VBox vbox;
 
     public void showWinners(List<Player> rankings){
         int count = 1;
         int position = 1;
         int points = rankings.getFirst().getCurrentPoints();
+        Pane entry;
         for (Player player : rankings){
             if (player.getCurrentPoints() < points) {
                 position = count;
                 points = player.getCurrentPoints();
             }
-            addPosition(position, player.getNickname(), player.getCurrentPoints());
+            entry = addPosition(position, player.getNickname(), player.getCurrentPoints());
+            vbox.getChildren().add(entry);
             count++;
         }
     }
@@ -58,7 +62,7 @@ public class WinnersController {
     }
     */
 
-    private void addPosition(int i, String nickname, int points){
+    private Pane addPosition(int i, String nickname, int points){
         Pane entry = new Pane();
         entry.setPrefWidth(324);
         entry.setPrefHeight(55);
@@ -68,33 +72,33 @@ public class WinnersController {
         if (path != null) {
             imageView.setImage(new Image(String.valueOf(getClass().getResource(path))));
         }
-        imageView.setFitWidth(45);
-        imageView.setFitHeight(45);
+        imageView.setFitWidth(40);
+        imageView.setFitHeight(40);
         entry.getChildren().add(imageView);
         imageView.setLayoutX(22);
         imageView.setLayoutY(5);
 
         Label label = new Label(nickname);
         label.setPrefWidth(130);
-        label.setPrefHeight(45);
+        label.setPrefHeight(40);
         entry.getChildren().add(label);
         label.setLayoutX(99);
         label.setLayoutY(5);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
-        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 20");
+        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");
 
         label = new Label(String.valueOf(points));
         label.setPrefWidth(75);
-        label.setPrefHeight(45);
+        label.setPrefHeight(40);
         entry.getChildren().add(label);
         label.setLayoutX(245);
         label.setLayoutY(5);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
-        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 20");
+        label.setStyle("-fx-font-weight: bold; -fx-font-family: 'Times New Roman'; -fx-background-size: 60");
 
-        ranking.getChildren().add(entry);
+        return entry;
     }
 
     private String getNumber(int i) {

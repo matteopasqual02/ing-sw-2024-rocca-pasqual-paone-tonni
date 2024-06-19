@@ -4,16 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="589.0" prefWidth="1048.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController">
-   <children>
-      <HBox alignment="CENTER">
-         <children>
-            <TextField alignment="CENTER" editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text" stylesheets="@CSSStyle/allButton.css" text="Waiting for other players to join...">
-               <font>
-                  <Font name="Times new Roman" size="27.0" />
-               </font>
-            </TextField>
-         </children>
-      </HBox>
-   </children>
+<StackPane prefHeight="589.0" prefWidth="1048.0" styleClass="background-red" stylesheets="@CSSStyle/firstPage.css"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.JoinedGameController">
+   <HBox alignment="CENTER">
+      <TextField alignment="CENTER"
+                 style="-fx-font-family: 'Times New Roman'; -fx-font-size: 40px; -fx-font-weight: BOLD"
+                 editable="false" prefHeight="117.0" prefWidth="750.0" styleClass="button_text"
+                 stylesheets="@CSSStyle/allButton.css" text="Waiting for other players to join..."/>
+   </HBox>
 </StackPane>
