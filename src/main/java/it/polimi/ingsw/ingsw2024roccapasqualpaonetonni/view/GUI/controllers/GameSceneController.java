@@ -29,6 +29,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
@@ -279,6 +280,11 @@ public class GameSceneController extends GenericController{
 
         flipHandCard.setDisable(true);
 
+        //board reconstruction
+        if(player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]!=null){
+            updateBoard(gameImmutable,nickname);
+        }
+
         for(Player p: gameImmutable.getPlayers()){
 
                 ImageView color;
@@ -302,7 +308,8 @@ public class GameSceneController extends GenericController{
                 if(p.getHand().size()>1){
                     cardId = p.getHand().get(1).getIdCard();
                     hand2.setImage(new Image(createBackPath(cardId)));
-                } else if (p.getHand().size()>2) {
+                }
+                if (p.getHand().size()>2) {
                     cardId = p.getHand().get(2).getIdCard();
                     hand3.setImage(new Image(createBackPath(cardId)));
                 }
@@ -701,6 +708,7 @@ public class GameSceneController extends GenericController{
             card.setDisable(false);
         }
         handCards.setDisable(false);
+        board.setDisable(false);
     }
 
     public void myRunningTurnDrawCard() {
@@ -1276,7 +1284,8 @@ public class GameSceneController extends GenericController{
                     if(p.get().getHand().size()>1){
                         cardId = p.get().getHand().get(1).getIdCard();
                         hand2.setImage(new Image(createBackPath(cardId)));
-                    } else if (p.get().getHand().size()>2) {
+                    }
+                    if (p.get().getHand().size()>2) {
                         cardId = p.get().getHand().get(2).getIdCard();
                         hand3.setImage(new Image(createBackPath(cardId)));
                         hand3.setVisible(true);
