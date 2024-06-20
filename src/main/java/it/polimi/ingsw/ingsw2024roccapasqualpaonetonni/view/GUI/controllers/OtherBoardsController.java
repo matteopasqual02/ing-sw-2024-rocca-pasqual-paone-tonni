@@ -21,25 +21,57 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The type Other boards controller.
+ */
 public class OtherBoardsController extends GenericController{
 
+    /**
+     * The Nickname label.
+     */
     @FXML
     public Label nicknameLabel;
 
+    /**
+     * The Anchor pane.
+     */
     @FXML
     private AnchorPane anchorPane;
 
+    /**
+     * The Scroll pane.
+     */
     @FXML
     private ScrollPane scrollPane;
 
+    /**
+     * The Board pane.
+     */
     @FXML
     private Pane boardPane;
 
+    /**
+     * The H box.
+     */
     private final HBox hBox = new HBox();
+    /**
+     * The Card size.
+     */
     private final double[] CARD_SIZE = {88.0, 132.0};
+    /**
+     * The Board size.
+     */
     private final double[] BOARD_SIZE = {1500.0, 2000.0};
+    /**
+     * The Boards dict.
+     */
     private final Map<String, Pane> boardsDict = new HashMap<>();
 
+    /**
+     * Show board.
+     *
+     * @param nickname the nickname
+     */
     public void showBoard(String nickname) {
         Pane board = boardsDict.get(nickname);
         if (board == null) {
@@ -52,6 +84,11 @@ public class OtherBoardsController extends GenericController{
         scrollPane.setVvalue(0.5);
     }
 
+    /**
+     * Fake board pane.
+     *
+     * @return the pane
+     */
     public Pane fakeBoard() {
         Pane board = new Pane();
         board.getStyleClass().add("background-board");
@@ -62,6 +99,11 @@ public class OtherBoardsController extends GenericController{
         return board;
     }
 
+    /**
+     * Upadate all.
+     *
+     * @param gameImmutable the game immutable
+     */
     public void upadateAll(GameImmutable gameImmutable) {
         for (Player p : gameImmutable.getPlayers()) {
             String nickname = p.getNickname();
@@ -79,6 +121,12 @@ public class OtherBoardsController extends GenericController{
         }
     }
 
+    /**
+     * Update other board.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     */
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
         Pane board = boardsDict.get(nickname);
         if (board == null) {
@@ -93,6 +141,13 @@ public class OtherBoardsController extends GenericController{
         updateBoard(gameImmutable, board, nickname);
     }
 
+    /**
+     * Update board.
+     *
+     * @param gameImmutable the game immutable
+     * @param board         the board
+     * @param nickname      the nickname
+     */
     private void updateBoard(GameImmutable gameImmutable, Pane board, String nickname) {
         board.getChildren().clear();
         board.applyCss();
@@ -104,6 +159,14 @@ public class OtherBoardsController extends GenericController{
         }
     }
 
+    /**
+     * Place start card on board from matrix.
+     *
+     * @param start the start
+     * @param board the board
+     * @param x     the x
+     * @param y     the y
+     */
     private void placeStartCardOnBoardFromMatrix(PlayingCard start, Pane board, double x,double y) {
         board.getChildren().removeAll();
         ImageView startCard = new ImageView();
@@ -122,6 +185,14 @@ public class OtherBoardsController extends GenericController{
         cardOffset(board, start, x, y, startCard);
     }
 
+    /**
+     * Place card on board from matrix.
+     *
+     * @param board the board
+     * @param card  the card
+     * @param x     the x
+     * @param y     the y
+     */
     private void placeCardOnBoardFromMatrix(Pane board, PlayingCard card, double x, double y){
         ImageView cardImage = new ImageView();
         if(card.isFlipped()){
@@ -139,6 +210,15 @@ public class OtherBoardsController extends GenericController{
         cardOffset(board, card, x, y, cardImage);
     }
 
+    /**
+     * Card offset.
+     *
+     * @param board     the board
+     * @param card      the card
+     * @param x         the x
+     * @param y         the y
+     * @param cardImage the card image
+     */
     private void cardOffset(Pane board, PlayingCard card, double x, double y, ImageView cardImage) {
         double updatedX = x;
         double updatedY = y;
@@ -201,6 +281,12 @@ public class OtherBoardsController extends GenericController{
         }
     }
 
+    /**
+     * Create path string.
+     *
+     * @param cardId the card id
+     * @return the string
+     */
     private String createPath(int cardId) {
         String path;
         if(cardId<10){
@@ -216,6 +302,12 @@ public class OtherBoardsController extends GenericController{
         return String.valueOf(getClass().getResource(path));
     }
 
+    /**
+     * Create back path string.
+     *
+     * @param cardId the card id
+     * @return the string
+     */
     private String createBackPath(int cardId) {
         String path;
         if(cardId<10){

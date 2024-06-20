@@ -24,6 +24,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Objects;
+
 /**
  * The type Client.
  */
@@ -69,7 +70,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      * Instantiates a new Client.
      *
      * @param connectionType the connection type
-     * @param viewType the view type
+     * @param viewType       the view type
      * @throws IOException the io exception
      */
     public Client(EnumConnectionType connectionType, EnumViewType viewType) throws IOException {

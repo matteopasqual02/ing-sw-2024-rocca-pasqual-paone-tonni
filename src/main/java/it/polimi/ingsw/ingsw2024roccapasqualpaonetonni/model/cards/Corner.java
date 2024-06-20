@@ -17,6 +17,9 @@ public class Corner implements Serializable {
      * The Seed.
      */
     private final Seed seed;
+    /**
+     * The Card Attached.
+     */
     private PlayingCard cardAttached;
 
     /**
@@ -48,7 +51,19 @@ public class Corner implements Serializable {
     public int getPosition() {
         return position;
     }
+
+    /**
+     * Get card attached playing card.
+     *
+     * @return the playing card
+     */
     public PlayingCard getCardAttached(){return cardAttached;}
+
+    /**
+     * Set card attached.
+     *
+     * @param card the card
+     */
     public void setCardAttached(PlayingCard card){
         this.cardAttached=card;
         System.out.println(cardAttached.getIdCard());

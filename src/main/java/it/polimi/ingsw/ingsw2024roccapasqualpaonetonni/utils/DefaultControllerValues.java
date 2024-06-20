@@ -8,6 +8,7 @@ public class DefaultControllerValues {
      * The constant jsonPath.
      */
     public final static String jsonPathFromResources = "DataBase";
+
     /**
      * The constant timeReconnection.
      */

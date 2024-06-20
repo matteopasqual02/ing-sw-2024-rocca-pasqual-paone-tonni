@@ -116,7 +116,9 @@ public class GameController implements GameControllerInterface {
         /**
          * Run.
          */
+
         @Override
+        @SuppressWarnings("BusyWait")
         public void run() {
             while (true) {
                 // Send ping message to client

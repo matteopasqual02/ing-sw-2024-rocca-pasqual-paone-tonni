@@ -14,13 +14,27 @@ import javafx.scene.text.TextAlignment;
 
 import java.util.List;
 
+/**
+ * The type Winners controller.
+ */
 public class WinnersController {
+    /**
+     * The Ranking.
+     */
     @FXML
     private Pane ranking;
 
+    /**
+     * The Vbox.
+     */
     @FXML
     private VBox vbox;
 
+    /**
+     * Show winners.
+     *
+     * @param rankings the rankings
+     */
     public void showWinners(List<Player> rankings){
         int count = 1;
         int position = 1;
@@ -63,6 +77,14 @@ public class WinnersController {
     }
     */
 
+    /**
+     * Add position pane.
+     *
+     * @param i        the
+     * @param nickname the nickname
+     * @param points   the points
+     * @return the pane
+     */
     private Pane addPosition(int i, String nickname, int points){
         Pane entry = new Pane();
         entry.setPrefWidth(324);
@@ -102,18 +124,19 @@ public class WinnersController {
         return entry;
     }
 
+    /**
+     * Gets number.
+     *
+     * @param i the
+     * @return the number
+     */
     private String getNumber(int i) {
-        switch (i) {
-            case 1:
-                return "/images/Various_image/first.png";
-            case 2:
-                return "/images/Various_image/second.png";
-            case 3:
-                return "/images/Various_image/third.png";
-            case 4:
-                return "/images/Various_image/fourth.png";
-            default:
-                return null;
-        }
+        return switch (i) {
+            case 1 -> "/images/Various_image/first.png";
+            case 2 -> "/images/Various_image/second.png";
+            case 3 -> "/images/Various_image/third.png";
+            case 4 -> "/images/Various_image/fourth.png";
+            default -> null;
+        };
     }
 }

@@ -16,6 +16,12 @@ public enum EnumConnectionType {
 
     }
 
+    /**
+     * Get connection type enum connection type.
+     *
+     * @param s the s
+     * @return the enum connection type
+     */
     public EnumConnectionType getConnectionType(String s){
         switch (s){
             case "SOCKET"->{return SOCKET;}

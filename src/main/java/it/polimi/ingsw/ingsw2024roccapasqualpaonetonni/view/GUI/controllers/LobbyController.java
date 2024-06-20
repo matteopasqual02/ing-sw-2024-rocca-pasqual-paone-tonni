@@ -8,13 +8,29 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * The type Lobby controller.
+ */
 public class LobbyController extends GenericController {
+    /**
+     * The Application.
+     */
     private GUIApplication application;
 
+    /**
+     * Set parameters.
+     *
+     * @param executor    the executor
+     * @param client      the client
+     * @param application the application
+     */
     public void setParameters(ExecutorService executor, Client client,GUIApplication application){
         this.application = application;
     }
-    
+
+    /**
+     * Handle new game button click.
+     */
     @FXML
     public void handleNewGameButtonClick(){
         Platform.runLater(()-> {
@@ -26,6 +42,9 @@ public class LobbyController extends GenericController {
         });
     }
 
+    /**
+     * Handle join game button click.
+     */
     @FXML
     public void handleJoinGameButtonClick(){
         Platform.runLater(()-> {
@@ -37,6 +56,9 @@ public class LobbyController extends GenericController {
         });
     }
 
+    /**
+     * Handle join game id button click.
+     */
     @FXML
     public void handleJoinGameIDButtonClick(){
         Platform.runLater(()-> {
@@ -48,6 +70,9 @@ public class LobbyController extends GenericController {
         });
     }
 
+    /**
+     * Handle reconnect button click.
+     */
     @FXML
     public void handleReconnectButtonClick(){
         Platform.runLater(()-> {

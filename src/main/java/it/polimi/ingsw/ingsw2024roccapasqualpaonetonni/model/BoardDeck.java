@@ -13,11 +13,11 @@ import java.io.Serializable;
  */
 public class BoardDeck implements Serializable {
     /**
-     * The Cards 1.
+     * The Cards array 1.
      */
     private final PlayingCard[] cards1;
     /**
-     * The Cards 2.
+     * The Cards array 2.
      */
     private final PlayingCard[] cards2;
     /**

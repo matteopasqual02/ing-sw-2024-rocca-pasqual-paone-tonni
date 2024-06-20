@@ -26,6 +26,9 @@ public class TimerReconnection extends Thread{
         this.model=model;
     }
 
+    /**
+     * Run Timer reconnection.
+     */
     @SuppressWarnings("BusyWait")
     @Override
     public void run(){

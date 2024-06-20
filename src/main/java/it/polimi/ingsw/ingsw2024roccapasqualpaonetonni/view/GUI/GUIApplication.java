@@ -27,18 +27,51 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The type Gui application.
+ */
 public class GUIApplication extends Application {
+    /**
+     * The Client.
+     */
     private Client client;
+    /**
+     * The GUI application.
+     */
     private static GUIApplication instance;
+    /**
+     * The Stage.
+     */
     private Stage stage;
+    /**
+     * The Scoreboard.
+     */
     private Stage scoreBoardStage;
+    /**
+     * The others board.
+     */
     private Stage otherBoardsStage;
+    /**
+     * The game root.
+     */
     private StackPane joinedGameRoot;
+    /**
+     * The game controller.
+     */
     private JoinedGameController joinedGameController = null;
+    /**
+     * The game scene controller.
+     */
     private GameSceneController gameSceneController = null;
+    /**
+     * The score board controller.
+     */
     private ScoreBoardController scoreBoardController = null;
+    /**
+     * The others board controller.
+     */
     private OtherBoardsController otherBoardsController = null;
-    //private int i=0; //used to change the position in which the joined message arrives for each player
+
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
      */
@@ -74,16 +107,36 @@ public class GUIApplication extends Application {
         stage.show();
 
     }
+
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static GUIApplication getInstance() {
         return instance;
     }
+
+    /**
+     * Join lobby.
+     */
     public void joinLobby(){
         //ConsolePrinter.consolePrinter("joinLobby");
     }
+
+    /**
+     * Show created game.
+     *
+     * @param gameID the game id
+     */
     public void show_createdGame(int gameID){
         String message = String.format("Game created, with GameID: %d", gameID);
         //ConsolePrinter.consolePrinter(message);
     }
+
+    /**
+     * Show are you ready.
+     */
     public void show_areYouReady(){
         Platform.runLater(()-> {
             try {
@@ -96,14 +149,24 @@ public class GUIApplication extends Application {
         //ConsolePrinter.consolePrinter(message);
     }
 
+    /**
+     * Show added new player.
+     *
+     * @param nickname the nickname
+     */
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
         //ConsolePrinter.consolePrinter(message);
         Platform.runLater(()-> joinedGameController.addNewLabel(message));
     }
 
-    //i'm not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
-    //when I need to dynamically change the file we need to keep a reference to the controller.
+    /**
+     * Show you joined game.
+     * //Not using changeScene here because it needs a specific controller to be saved in order to update the file with incoming listeners.
+     * //when I need to dynamically change the file we need to keep a reference to the controller.
+     *
+     * @param gameID the game id
+     */
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
         try {
@@ -132,10 +195,22 @@ public class GUIApplication extends Application {
         String message = String.format("Joined game: %d", gameID);
         //ConsolePrinter.consolePrinter(message);
     }
+
+    /**
+     * Show no available game.
+     */
     public void show_noAvailableGame(){
         //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
         setAlert("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
+
+    /**
+     * Show all.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     * @param myTurn        the my turn
+     */
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
         ConsolePrinter.consolePrinter("Show All");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
@@ -165,6 +240,9 @@ public class GUIApplication extends Application {
         Platform.runLater(() -> otherBoardsController.upadateAll(gameImmutable));
     }
 
+    /**
+     * Info box.
+     */
     public void infoBox(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");
@@ -269,6 +347,15 @@ public class GUIApplication extends Application {
         gameSceneController.stopGlowInfo();
     }
 
+    /**
+     * Set alert.
+     *
+     * @param message   the message
+     * @param title     the title
+     * @param header    the header
+     * @param alertType the alert type
+     * @param fxml      the fxml
+     */
     public void setAlert(String message, String title, String header, Alert.AlertType alertType, String fxml){
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -286,6 +373,13 @@ public class GUIApplication extends Application {
             }
         });
     }
+
+    /**
+     * Change scene.
+     *
+     * @param fxmlFile the fxml file
+     * @throws IOException the io exception
+     */
     public void changeScene(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent newRoot = loader.load();
@@ -295,7 +389,6 @@ public class GUIApplication extends Application {
 
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
-        //Scene scene = new Scene(newRoot,currWidth,currHeight);
         Scene scene = new Scene(newRoot);
         stage.setScene(scene);
         stage.setWidth(currWidth);
@@ -304,13 +397,19 @@ public class GUIApplication extends Application {
         stage.setMinWidth(1048);
         stage.setMinHeight(589);
     }
+
+    /**
+     * Change scene with no controller.
+     *
+     * @param fxmlFile the fxml file
+     * @throws IOException the io exception
+     */
     public void changeSceneWithNoController(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent newRoot = loader.load();
         double currWidth = stage.getWidth();
         double currHeight = stage.getHeight();
         Scene scene = new Scene(newRoot);
-        //Scene scene = new Scene(newRoot,currWidth,currHeight);
         stage.setScene(scene);
         stage.setWidth(currWidth);
         stage.setHeight(currHeight);
@@ -318,12 +417,26 @@ public class GUIApplication extends Application {
         stage.setMinHeight(589);
     }
 
+    /**
+     * My running turn place starting.
+     */
     public void myRunningTurnPlaceStarting() {
         gameSceneController.myRunningTurnPlaceStarting();
     }
 
+    /**
+     * Display chat.
+     *
+     * @param message the message
+     */
     public void displayChat(String message){}
 
+    /**
+     * Display chat.
+     *
+     * @param message the message
+     * @param type    the type
+     */
     public void displayChat(String message, String type) {
         if (gameSceneController != null) {
             switch (type) {
@@ -336,6 +449,14 @@ public class GUIApplication extends Application {
         }
     }
 
+    /**
+     * Show start card.
+     *
+     * @param gameImmutable         the game immutable
+     * @param nickname              the nickname
+     * @param myTurn                my turn
+     * @param playerChangedNickname the player changed nickname
+     */
     public void show_startCard(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
             //gameSceneController.startCard(gameImmutable, nickname);
@@ -347,6 +468,14 @@ public class GUIApplication extends Application {
         gameSceneController.updatePlayersSeedCount(gameImmutable,playerChangedNickname);
     }
 
+    /**
+     * Show board.
+     *
+     * @param gameImmutable         the game immutable
+     * @param nickname              the nickname
+     * @param myTurn                the my turn
+     * @param playerChangedNickname the player changed nickname
+     */
     public void show_board(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
             gameSceneController.updateHand(gameImmutable, nickname);
@@ -358,36 +487,64 @@ public class GUIApplication extends Application {
         gameSceneController.updatePlayersSeedCount(gameImmutable, playerChangedNickname);
     }
 
+    /**
+     * Show objective.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     * @param myTurn        the my turn
+     */
     public void show_objective(GameImmutable gameImmutable, String nickname, boolean myTurn) {
         if (myTurn) {
             gameSceneController.chosenGoal();
         }
     }
 
+    /**
+     * My running turn chose objective.
+     */
     public void myRunningTurnChoseObjective() {
         gameSceneController.myRunningTurnChoseObjective();
     }
 
+    /**
+     * My running turn place card.
+     */
     public void myRunningTurnPlaceCard() {
         gameSceneController.myRunningTurnPlaceCard();
     }
 
+    /**
+     * My running turn draw card.
+     */
     public void myRunningTurnDrawCard() {
         gameSceneController.myRunningTurnDrawCard();
     }
 
+    /**
+     * Not my turn.
+     */
     public void notMyTurn() {
         if (gameSceneController != null) {
             gameSceneController.notMyTurn();
         }
     }
 
+    /**
+     * My turn.
+     */
     public void myTurn() {
         if (gameSceneController != null) {
             gameSceneController.myTurn();
         }
     }
 
+    /**
+     * Update other board.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     */
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
         if (otherBoardsController == null) {
             setOtherPlayerBoard();
@@ -395,9 +552,17 @@ public class GUIApplication extends Application {
         otherBoardsController.updateOtherBoard(gameImmutable, nickname);
     }
 
+    /**
+     * Chat before start.
+     */
     public void chatBeforeStart() {
     }
 
+    /**
+     * Show status.
+     *
+     * @param s the s
+     */
     public void show_status(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("THE STATUS HAS CHANGED");
@@ -423,9 +588,19 @@ public class GUIApplication extends Application {
         alert.showAndWait();
     }
 
+    /**
+     * Show status last.
+     *
+     * @param string the string
+     */
     public void show_statusLast(String string) {
     }
 
+    /**
+     * Show generic.
+     *
+     * @param msg the msg
+     */
     public void show_generic(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("RECONNECTION");
@@ -434,6 +609,12 @@ public class GUIApplication extends Application {
         alert.showAndWait();
     }
 
+    /**
+     * Invalid action.
+     *
+     * @param s      the s
+     * @param myTurn my turn
+     */
     public void invalidAction(String s, boolean myTurn) {
         if (myTurn) {
             //ConsolePrinter.consolePrinter("Invalid action: " + s);
@@ -493,6 +674,11 @@ public class GUIApplication extends Application {
         }
     }
 
+    /**
+     * Alert box.
+     *
+     * @param message the message
+     */
     private void alertBox(String message) {
         // System.out.println("infoBox called with message: " + message);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -503,19 +689,35 @@ public class GUIApplication extends Application {
         alert.showAndWait();
     }
 
+    /**
+     * See score board.
+     */
     public void seeScoreBoard() {
         scoreBoardStage.show();
     }
 
+    /**
+     * See other boards.
+     *
+     * @param nickname the nickname
+     */
     public void seeOtherBoards(String nickname){
         otherBoardsController.showBoard(nickname);
         otherBoardsStage.show();
     }
 
+    /**
+     * Sets client.
+     *
+     * @param client the client
+     */
     public void setClient(Client client) {
         this.client=client;
     }
 
+    /**
+     * Sets score board.
+     */
     public void setScoreBoard() {
         scoreBoardStage = new Stage();
         scoreBoardStage.setTitle("Score Board");
@@ -536,6 +738,14 @@ public class GUIApplication extends Application {
         scoreBoardStage.setScene(new Scene(rootScore, 300, 200));
     }
 
+    /**
+     * Show board deck.
+     *
+     * @param gameImmutable         the game immutable
+     * @param nickname              the nickname
+     * @param myTurn                the my turn
+     * @param playerChangedNickname the player changed nickname
+     */
     public void show_boardDeck(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
             gameSceneController.updateHand(gameImmutable, nickname);
@@ -544,6 +754,9 @@ public class GUIApplication extends Application {
         gameSceneController.updateBoardDeck(gameImmutable);
     }
 
+    /**
+     * Sets other player board.
+     */
     public void setOtherPlayerBoard() {
         otherBoardsStage = new Stage();
         otherBoardsStage.setTitle("Other Boards");
@@ -564,6 +777,11 @@ public class GUIApplication extends Application {
         otherBoardsStage.setScene(new Scene(rootOtherBoards, 300, 200));
     }
 
+    /**
+     * Winner.
+     *
+     * @param list the list
+     */
     public void winner(List<Player> list) {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners_final.fxml"));
@@ -584,6 +802,9 @@ public class GUIApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Rule book.
+     */
     public void ruleBook() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");

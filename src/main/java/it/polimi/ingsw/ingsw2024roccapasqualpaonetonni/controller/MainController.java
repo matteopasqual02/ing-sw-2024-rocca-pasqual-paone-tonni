@@ -31,11 +31,10 @@ public class MainController implements MainControllerInterface {
     }
 
     /**
-     * Gets instance.
+     * Gets instance. This use singleton pattern
      *
      * @return the instance
      */
-//singleton
     public synchronized static MainController getInstance() {
         if (instance == null) {
             instance = new MainController();

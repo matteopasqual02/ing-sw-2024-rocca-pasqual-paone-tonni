@@ -10,21 +10,54 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * The type Reconnect controller.
+ */
 public class ReconnectController extends GenericController {
+    /**
+     * The Button.
+     */
     @FXML
     public Button button;
+    /**
+     * The String 1.
+     */
     @FXML
     private TextField string1;
+    /**
+     * The String 2.
+     */
     @FXML
     private TextField string2;
+    /**
+     * The Executor.
+     */
     private ExecutorService executor;
+    /**
+     * The Client.
+     */
     private Client client;
+    /**
+     * The Game id.
+     */
     private int gameID;
+
+    /**
+     * Set parameters.
+     *
+     * @param executor    the executor
+     * @param client      the client
+     * @param application the application
+     */
     @Override
     public void setParameters(ExecutorService executor, Client client, GUIApplication application){
         this.executor = executor;
         this.client = client;
     }
+
+    /**
+     * Handle button click.
+     */
     @FXML
     public void handleButtonClick(){
 

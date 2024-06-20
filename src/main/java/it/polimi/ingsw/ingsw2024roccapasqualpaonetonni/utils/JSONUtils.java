@@ -16,12 +16,12 @@ public class JSONUtils {
 
     /**
      * Create cards from json map.
+     * // function that takes the json object into a map, with key the type of card and value the list of cards
      *
      * @param filePath the file path
      * @return the map
      * @throws IOException the io exception
      */
-// function that takes the json object into a map, with key the type of card and value the list of cards
     public static Map<String, List<Card>> createCardsFromJson(String filePath) throws IOException {
         // Create a map to store lists of cards for each card type
         Map<String, List<Card>> cardMap = new HashMap<>();
@@ -82,13 +82,13 @@ public class JSONUtils {
     }
 
     /**
-     * Parse txt to json json object.
+     * Parse txt to json object.
+     * // function that transforms the json in the String form into a json object
      *
      * @param filePath the file path
      * @return the json object
      * @throws IOException the io exception
      */
-// function that transforms the json in the String form into a json object
     public static JsonObject parseTxtToJson(String filePath) throws IOException {
         // Read the content of the TXT file
         String txtContent = readTXTFile(filePath);

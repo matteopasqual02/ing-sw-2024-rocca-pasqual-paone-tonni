@@ -12,19 +12,47 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * The type Name number controller.
+ */
 public class NameNumberController extends GenericController {
+    /**
+     * The Button.
+     */
     @FXML
     public Button button;
+    /**
+     * The String 1.
+     */
     @FXML
     private TextField string1;
+    /**
+     * The Executor.
+     */
     @FXML
     //private TextField string2;
     private ExecutorService executor;
+    /**
+     * The Client.
+     */
     private Client client;
+    /**
+     * The Num.
+     */
     private int num;
 
+    /**
+     * The Last clicked.
+     */
     private ToggleButton lastClicked = null;
 
+    /**
+     * Set parameters.
+     *
+     * @param executor    the executor
+     * @param client      the client
+     * @param application the application
+     */
     @Override
     public void setParameters(ExecutorService executor, Client client, GUIApplication application){
         this.executor = executor;
@@ -50,6 +78,9 @@ public class NameNumberController extends GenericController {
         });
     }*/
 
+    /**
+     * Handle button click.
+     */
     @FXML
     public void handleButtonClick() {
         executor.submit(()->{
@@ -61,6 +92,11 @@ public class NameNumberController extends GenericController {
         });
     }
 
+    /**
+     * Handle button 2 click.
+     *
+     * @param event the event
+     */
     @FXML
     public void handleButton2Click(ActionEvent event){
         num = 2;
@@ -71,6 +107,11 @@ public class NameNumberController extends GenericController {
         lastClicked.getStyleClass().add("clicked");
     }
 
+    /**
+     * Handle button 3 click.
+     *
+     * @param event the event
+     */
     @FXML
     public void handleButton3Click(ActionEvent event){
         num = 3;
@@ -81,6 +122,11 @@ public class NameNumberController extends GenericController {
         lastClicked.getStyleClass().add("clicked");
     }
 
+    /**
+     * Handle button 4 click.
+     *
+     * @param event the event
+     */
     @FXML
     public void handleButton4Click(ActionEvent event){
         num = 4;

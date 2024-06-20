@@ -29,144 +29,315 @@ import java.rmi.NotBoundException;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * The type Game scene controller.
+ */
 public class GameSceneController extends GenericController{
 
+    /**
+     * The Pane.
+     */
     @FXML
     private Pane pane;
 
+    /**
+     * The Turn label.
+     */
     @FXML
     private Label turnLabel;
 
-    // player board
+    /**
+     * The Personal board.
+     */
+
     @FXML
     private ScrollPane personalBoard;
 
+    /**
+     * The Board.
+     */
     @FXML
     private Pane board;
 
-    // cards section
+    /**
+     * The Cards h box.
+     */
+
     @FXML
     private HBox cardsHBox;
 
+    /**
+     * The Hand cards.
+     */
     @FXML
     private HBox handCards;
 
+    /**
+     * My hand image 1.
+     */
     @FXML
     private ImageView myHandImage1;
 
+    /**
+     * My hand image 2.
+     */
     @FXML
     private ImageView myHandImage2;
 
+    /**
+     * My hand image 3.
+     */
     @FXML
     private ImageView myHandImage3;
 
+    /**
+     * The Flip hand card.
+     */
     @FXML
     private Button flipHandCard;
 
+    /**
+     * The Secret objective v box.
+     */
     @FXML
     private VBox secretObjectiveVBox;
 
+    /**
+     * The Secret objective.
+     */
     @FXML
     private VBox secretObjective;
 
+    /**
+     * My secret objective 1.
+     */
     @FXML
     private ImageView mySecretObjective1;
 
+    /**
+     * My secret objective 2.
+     */
     @FXML
     private ImageView mySecretObjective2;
 
+    /**
+     * The Starting v box.
+     */
     @FXML
     private VBox startingVBox;
 
+    /**
+     * The Starting card v box.
+     */
     @FXML
     private VBox startingCardVBox;
 
+    /**
+     * My starting card.
+     */
     @FXML
     private ImageView myStartingCard;
 
+    /**
+     * The Flip starting button.
+     */
     @FXML
     private Button flipStartingButton;
 
+    /**
+     * The Board cards.
+     */
     @FXML
     private VBox boardCards;
 
+    /**
+     * The Board card 1.
+     */
     @FXML
     private ImageView boardCard1;
 
+    /**
+     * The Board card 2.
+     */
     @FXML
     private ImageView boardCard2;
 
+    /**
+     * The Board card 3.
+     */
     @FXML
     private ImageView boardCard3;
 
+    /**
+     * The Board card 4.
+     */
     @FXML
     private ImageView boardCard4;
 
+    /**
+     * The Decks.
+     */
     @FXML
     private HBox decks;
 
+    /**
+     * The Deck resources card.
+     */
     @FXML
     private ImageView deckResourcesCard;
 
+    /**
+     * The Deck gold card.
+     */
     @FXML
     private ImageView deckGoldCard;
 
+    /**
+     * The Common objective card 1.
+     */
     @FXML
     private ImageView commonObjectiveCard1;
 
+    /**
+     * The Common objective card 2.
+     */
     @FXML
     private ImageView commonObjectiveCard2;
 
+    /**
+     * The Other players v box.
+     */
     @FXML
     private VBox otherPlayersVBox;
 
-    // chat section
+    /**
+     * The Receiver private messages.
+     */
     @FXML
     private ComboBox receiverPrivateMessages;
 
+    /**
+     * The Scroll pane.
+     */
     @FXML
     private ScrollPane scrollPane;
 
+    /**
+     * The Message container.
+     */
     @FXML
     private VBox messageContainer;
 
+    /**
+     * The Message input.
+     */
     @FXML
     private TextArea messageInput;
 
+    /**
+     * The Receiver container.
+     */
     @FXML
     private HBox receiverContainer;
 
+    /**
+     * The Public chat button.
+     */
     @FXML
     private Button publicChatButton;
 
+    /**
+     * The Private chat button.
+     */
     @FXML
     private Button privateChatButton;
 
+    /**
+     * The Goal.
+     */
     private int goal = 0;
+    /**
+     * The Hand.
+     */
     private int hand = -1;
+    /**
+     * The Selected card.
+     */
     private ImageView selectedCard = null;
+    /**
+     * The Flipped starting.
+     */
     private boolean flippedStarting = false;
+    /**
+     * The Starting id.
+     */
     private int startingID = -1;
+    /**
+     * The Flipped hand.
+     */
     private final boolean[] flippedHand = {false, false, false};
+    /**
+     * The Hand i ds.
+     */
     private final int[] handIDs = {-1, -1, -1};
+    /**
+     * The Card size.
+     */
     private final double[] CARD_SIZE = {88.0, 132.0};
+    /**
+     * The Board size.
+     */
     private final double[] BOARD_SIZE = {1500.0, 2000.0};
 
+    /**
+     * The constant JUMP_HEIGHT.
+     */
     private static final double JUMP_HEIGHT = 20.0;
+    /**
+     * The constant ANIMATION_DURATION.
+     */
     private static final Duration ANIMATION_DURATION = Duration.millis(200);
 
+    /**
+     * The Executor.
+     */
     private ExecutorService executor;
+    /**
+     * The Client.
+     */
     private Client client;
+    /**
+     * The Application.
+     */
     private GUIApplication application;
+    /**
+     * The Is private chat.
+     */
     private boolean isPrivateChat = false;
+    /**
+     * The Player.
+     */
     private Player player;
 
+    /**
+     * Set parameters.
+     *
+     * @param executor    the executor
+     * @param client      the client
+     * @param application the application
+     */
     public void setParameters(ExecutorService executor, Client client,GUIApplication application){
         this.executor = executor;
         this.client = client;
         this.application = application;
     }
 
+    /**
+     * Set scene.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     */
     public void setScene(GameImmutable gameImmutable, String nickname){
         int cardId;
         this.player = gameImmutable.getPlayers().stream()
@@ -411,6 +582,12 @@ public class GameSceneController extends GenericController{
         Platform.runLater(()->application.setOtherPlayerBoard());
     }
 
+    /**
+     * Create back path string.
+     *
+     * @param cardId the card id
+     * @return the string
+     */
     private String createBackPath(int cardId) {
         String path;
         if(cardId<10){
@@ -426,6 +603,12 @@ public class GameSceneController extends GenericController{
         return String.valueOf(getClass().getResource(path));
     }
 
+    /**
+     * Create path string.
+     *
+     * @param cardId the card id
+     * @return the string
+     */
     private String createPath(int cardId) {
         String path;
         if(cardId<10){
@@ -441,6 +624,9 @@ public class GameSceneController extends GenericController{
         return String.valueOf(getClass().getResource(path));
     }
 
+    /**
+     * My running turn place starting.
+     */
     public void myRunningTurnPlaceStarting() {
         startingCardVBox.setDisable(false);
         //ConsolePrinter.consolePrinter(String.valueOf(myStartingCard));
@@ -451,6 +637,11 @@ public class GameSceneController extends GenericController{
         glow(myStartingCard);
     }
 
+    /**
+     * Handle starting card clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
         //ConsolePrinter.consolePrinter("starting clicked");
@@ -464,6 +655,9 @@ public class GameSceneController extends GenericController{
         board.setDisable(false);
     }
 
+    /**
+     * Handle flip starting.
+     */
     @FXML
     public void handleFlipStarting() {
         int cardId = this.player.getStartingCard().getIdCard();
@@ -478,6 +672,9 @@ public class GameSceneController extends GenericController{
         selectedCard = myStartingCard;
     }
 
+    /**
+     * Handle board click.
+     */
     public void handleBoardClick() {
         String flipped;
         board.setEffect(null);
@@ -495,6 +692,11 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Handle board card click.
+     *
+     * @param mouseEvent the mouse event
+     */
     private void handleBoardCardClick(MouseEvent mouseEvent) {
         ImageView card = (ImageView) mouseEvent.getSource();
         handCards.setDisable(true);
@@ -543,6 +745,9 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Chosen goal.
+     */
     public void chosenGoal() {
         secretObjectiveVBox.setPrefWidth(132.0);
         secretObjective.setPrefSize(132.0,88.0);
@@ -562,6 +767,12 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Update board.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     */
     public void updateBoard(GameImmutable gameImmutable, String nickname) {
         board.getChildren().clear();
         board.applyCss();
@@ -571,6 +782,13 @@ public class GameSceneController extends GenericController{
         selectedCard = null;
     }
 
+    /**
+     * Place start card on board from matrix.
+     *
+     * @param start the start
+     * @param x     the x
+     * @param y     the y
+     */
     private void placeStartCardOnBoardFromMatrix(PlayingCard start,double x,double y) {
         board.getChildren().removeAll();
         ImageView startCard = new ImageView();
@@ -592,6 +810,13 @@ public class GameSceneController extends GenericController{
         cardOffset(start, x, y, startCard);
     }
 
+    /**
+     * Place card on board from matrix.
+     *
+     * @param card the card
+     * @param x    the x
+     * @param y    the y
+     */
     private void placeCardOnBoardFromMatrix(PlayingCard card, double x, double y){
         ImageView cardImage = new ImageView();
         if(card.isFlipped()){
@@ -613,6 +838,14 @@ public class GameSceneController extends GenericController{
         cardOffset(card, x, y, cardImage);
     }
 
+    /**
+     * Card offset.
+     *
+     * @param card      the card
+     * @param x         the x
+     * @param y         the y
+     * @param cardImage the card image
+     */
     private void cardOffset(PlayingCard card, double x, double y, ImageView cardImage) {
         double updatedX = x;
         double updatedY = y;
@@ -676,6 +909,9 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * My running turn chose objective.
+     */
     public void myRunningTurnChoseObjective() {
         mySecretObjective1.setDisable(false);
         mySecretObjective2.setDisable(false);
@@ -683,6 +919,9 @@ public class GameSceneController extends GenericController{
         glow(mySecretObjective2);
     }
 
+    /**
+     * My running turn place card.
+     */
     public void myRunningTurnPlaceCard() {
         ImageView card;
         for (int i = 0; i < handCards.getChildren().size(); i++) {
@@ -694,6 +933,9 @@ public class GameSceneController extends GenericController{
         handCards.setDisable(false);
     }
 
+    /**
+     * My running turn draw card.
+     */
     public void myRunningTurnDrawCard() {
         for (int i = 0; i < boardCards.getChildren().size(); i++) {
             if (boardCards.getChildren().get(i) instanceof HBox cards) {
@@ -710,6 +952,11 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Glow.
+     *
+     * @param node the node
+     */
     private void glow(Node node){
         // blue shadow
         DropShadow borderGlow = new DropShadow();
@@ -722,6 +969,11 @@ public class GameSceneController extends GenericController{
         node.setEffect(borderGlow);
     }
 
+    /**
+     * Jump.
+     *
+     * @param node the node
+     */
     private void jump(Node node){
         node.setUserData(true);
         node.setDisable(true);
@@ -731,6 +983,11 @@ public class GameSceneController extends GenericController{
         jumpUp.play();
     }
 
+    /**
+     * Drop card.
+     *
+     * @param node the node
+     */
     private void dropCard(Node node) {
         TranslateTransition dropDown = new TranslateTransition(ANIMATION_DURATION, node);
         dropDown.setByY(JUMP_HEIGHT);
@@ -741,6 +998,9 @@ public class GameSceneController extends GenericController{
         dropDown.play();
     }
 
+    /**
+     * Handle objective card 2 clicked.
+     */
     public void handleObjectiveCard2Clicked() {
         mySecretObjective1.setEffect(null);
         mySecretObjective1.setDisable(true);
@@ -756,6 +1016,9 @@ public class GameSceneController extends GenericController{
         });
     }
 
+    /**
+     * Handle objective card 1 clicked.
+     */
     public void handleObjectiveCard1Clicked() {
         mySecretObjective2.setEffect(null);
         mySecretObjective2.setDisable(true);
@@ -772,6 +1035,11 @@ public class GameSceneController extends GenericController{
         mySecretObjective2.setDisable(true);
     }
 
+    /**
+     * Handle hand card clicked.
+     *
+     * @param mouseEvent the mouse event
+     */
     public void handleHandCardClicked(MouseEvent mouseEvent) {
         // ImageView card = (ImageView) mouseEvent.getSource();
         Node card = (Node) mouseEvent.getSource();
@@ -793,6 +1061,9 @@ public class GameSceneController extends GenericController{
         board.setDisable(false);
     }
 
+    /**
+     * Handle flip hand card.
+     */
     public void handleFlipHandCard() {
         Image img;
         if (!flippedHand[hand - 1]) {
@@ -806,6 +1077,9 @@ public class GameSceneController extends GenericController{
         selectedCard.setImage(img);
     }
 
+    /**
+     * Disable board cards.
+     */
     private void disableBoardCards() {
         for (int i = 0; i < boardCards.getChildren().size(); i++) {
             if (boardCards.getChildren().get(i) instanceof HBox cards) {
@@ -817,6 +1091,9 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Disable decks.
+     */
     private void disableDecks() {
         for (int i = 0; i < decks.getChildren().size(); i++) {
             decks.getChildren().get(i).setEffect(null);
@@ -824,6 +1101,11 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Handle drawable card clicked.
+     *
+     * @param mouseEvent the mouse event
+     */
     public void handleDrawableCardClicked(MouseEvent mouseEvent) {
         ImageView toReplaceIV = (ImageView) mouseEvent.getSource();
         int toReplace = -1;
@@ -852,6 +1134,9 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Handle resource deck clicked.
+     */
     public void handleResourceDeckClicked() {
         ImageView toReplaceIV = deckResourcesCard;
         jump(toReplaceIV);
@@ -871,6 +1156,9 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Handle gold deck clicked.
+     */
     public void handleGoldDeckClicked() {
         ImageView toReplaceIV = deckResourcesCard;
         jump(toReplaceIV);
@@ -890,11 +1178,21 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Update board deck.
+     *
+     * @param gameImmutable the game immutable
+     */
     public void updateBoardDeck(GameImmutable gameImmutable) {
         updateDecks(gameImmutable);
         updateDrawableBoard(gameImmutable);
     }
 
+    /**
+     * Update decks.
+     *
+     * @param gameImmutable the game immutable
+     */
     private void updateDecks(GameImmutable gameImmutable) {
         int cardId;
 
@@ -908,6 +1206,11 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Update drawable board.
+     *
+     * @param gameImmutable the game immutable
+     */
     private void updateDrawableBoard(GameImmutable gameImmutable) {
         int cardId;
         cardId = gameImmutable.getBoardDeck().getCard(1).getIdCard();
@@ -928,6 +1231,12 @@ public class GameSceneController extends GenericController{
         boardCard4.setVisible(true);
     }
 
+    /**
+     * Update hand.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     */
     public void updateHand(GameImmutable gameImmutable, String nickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).findFirst();
         if(p.isPresent()){
@@ -954,6 +1263,9 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Shift hand.
+     */
     private void shiftHand() {
         ImageView card, next;
         for (int i = hand - 1; i < handCards.getChildren().size() - 1; i++) {
@@ -971,45 +1283,90 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Card not placed.
+     *
+     * @param s the s
+     */
     public void cardNotPlaced(String s) {
         infoBox(s);
         myRunningTurnPlaceCard();
     }
 
+    /**
+     * Objective not selected.
+     *
+     * @param s the s
+     */
     public void objectiveNotSelected(String s) {
         infoBox(s);
         myRunningTurnChoseObjective();
     }
 
+    /**
+     * Start already added.
+     *
+     * @param s the s
+     */
     public void startAlreadyAdded(String s) {
         infoBox(s);
     }
 
+    /**
+     * Card already added.
+     *
+     * @param s the s
+     */
     public void cardAlreadyAdded(String s) {
         infoBox(s);
     }
 
+    /**
+     * Wrong phase.
+     *
+     * @param s the s
+     */
     public void wrongPhase(String s) {
         infoBox(s);
     }
 
+    /**
+     * No resources deck.
+     *
+     * @param s the s
+     */
     public void noResourcesDeck(String s) {
         //infoBox(s);
         decks.getChildren().remove(deckResourcesCard);
         myRunningTurnDrawCard();
     }
 
+    /**
+     * No gold deck.
+     *
+     * @param s the s
+     */
     public void noGoldDeck(String s) {
         //infoBox(s);
         decks.getChildren().remove(deckGoldCard);
         myRunningTurnDrawCard();
     }
 
+    /**
+     * No board card.
+     *
+     * @param s the s
+     */
     public void noBoardCard(String s) {
         //infoBox(s);
         myRunningTurnDrawCard();
     }
 
+    /**
+     * Info box.
+     *
+     * @param message the message
+     */
     private void infoBox(String message) {
         // System.out.println("infoBox called with message: " + message);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -1020,6 +1377,11 @@ public class GameSceneController extends GenericController{
         alert.showAndWait();
     }
 
+    /**
+     * Status info.
+     *
+     * @param status the status
+     */
     public void statusInfo(String status) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("THE STATUS HAS CHANGED");
@@ -1040,6 +1402,9 @@ public class GameSceneController extends GenericController{
         alert.showAndWait();
     }
 
+    /**
+     * Not my turn.
+     */
     public void notMyTurn() {
         disable(true);
         turnLabel.setText("Not your turn");
@@ -1053,10 +1418,18 @@ public class GameSceneController extends GenericController{
         */
     }
 
+    /**
+     * My turn.
+     */
     public void myTurn() {
         turnLabel.setText("Your turn");
     }
 
+    /**
+     * Disable.
+     *
+     * @param truefalse the truefalse
+     */
     private void disable(Boolean truefalse){
         myHandImage1.setDisable(truefalse);
         myHandImage2.setDisable(truefalse);
@@ -1072,6 +1445,11 @@ public class GameSceneController extends GenericController{
         boardCard4.setDisable(truefalse);
     }
 
+    /**
+     * Glow info.
+     *
+     * @param obj the obj
+     */
     public void glowInfo(String obj) {
         switch (obj){
             case "start"->glow(myStartingCard);
@@ -1095,6 +1473,10 @@ public class GameSceneController extends GenericController{
             }
         }
     }
+
+    /**
+     * Stop glow info.
+     */
     public void stopGlowInfo() {
         myStartingCard.setEffect(null);
         myHandImage1.setEffect(null);
@@ -1105,9 +1487,16 @@ public class GameSceneController extends GenericController{
         otherPlayersVBox.setEffect(null);
     }
 
+    /**
+     * Handle see info box.
+     */
     public void handleSeeInfoBox() {
         Platform.runLater(()-> application.infoBox());
     }
+
+    /**
+     * Handle see rule book.
+     */
     public void handleSeeRuleBook() {
         Platform.runLater(()-> application.ruleBook());
     }
@@ -1115,6 +1504,11 @@ public class GameSceneController extends GenericController{
 
     //--------------------------------------------CHAT
 
+    /**
+     * Display chat public.
+     *
+     * @param message the message
+     */
     public void displayChatPublic(String message) {
         if (!isPrivateChat) {
             Text text = new Text(message);
@@ -1124,6 +1518,12 @@ public class GameSceneController extends GenericController{
             scrollPane.layout();
         }
     }
+
+    /**
+     * Display chat private.
+     *
+     * @param message the message
+     */
     public void displayChatPrivate(String message) {
         if (isPrivateChat) {
             Text text = new Text(message);
@@ -1133,6 +1533,10 @@ public class GameSceneController extends GenericController{
             scrollPane.layout();
         }
     }
+
+    /**
+     * Handle send.
+     */
     public void handleSend() {
         String message = messageInput.getText().trim();
         messageInput.clear();
@@ -1160,6 +1564,10 @@ public class GameSceneController extends GenericController{
             }
         }
     }
+
+    /**
+     * Handle see public chat.
+     */
     @FXML
     public void handleSeePublicChat() {
         isPrivateChat = false;
@@ -1176,6 +1584,10 @@ public class GameSceneController extends GenericController{
             }
         });
     }
+
+    /**
+     * Handle see private chat.
+     */
     @FXML
     public void handleSeePrivateChat() {
         isPrivateChat = true;
@@ -1196,6 +1608,10 @@ public class GameSceneController extends GenericController{
             }
         });
     }
+
+    /**
+     * Handle select player chat.
+     */
     @FXML
     public void handleSelectPlayerChat() {
         isPrivateChat = true;
@@ -1211,6 +1627,10 @@ public class GameSceneController extends GenericController{
             }
         });
     }
+
+    /**
+     * Handle see score board.
+     */
     @FXML
     public void handleSeeScoreBoard() {
         Platform.runLater(()->application.seeScoreBoard());
@@ -1218,6 +1638,12 @@ public class GameSceneController extends GenericController{
 
     //--------------------------------------------POINTS
 
+    /**
+     * Update other players points.
+     *
+     * @param gameImmutable         the game immutable
+     * @param playerChangedNickname the player changed nickname
+     */
     public void updateOtherPlayersPoints(GameImmutable gameImmutable, String playerChangedNickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).findFirst();
         String currPoints = "error";
@@ -1236,6 +1662,12 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Update back hand draw.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     */
     public void updateBackHandDraw(GameImmutable gameImmutable, String nickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).findFirst();
         if(p.isPresent())
@@ -1267,6 +1699,12 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Update back hand place.
+     *
+     * @param gameImmutable the game immutable
+     * @param nickname      the nickname
+     */
     public void updateBackHandPlace(GameImmutable gameImmutable, String nickname) {
         Optional<Player> p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(nickname)).findFirst();
         if(p.isPresent())
@@ -1291,6 +1729,11 @@ public class GameSceneController extends GenericController{
         }
     }
 
+    /**
+     * Handle see other players boards.
+     *
+     * @param event the event
+     */
     @FXML
     public void handleSeeOtherPlayersBoards(MouseEvent event) {
         Button button = (Button) event.getSource();
@@ -1298,6 +1741,12 @@ public class GameSceneController extends GenericController{
         Platform.runLater(()->application.seeOtherBoards(nickname));
     }
 
+    /**
+     * Update players seed count.
+     *
+     * @param gameImmutable         the game immutable
+     * @param playerChangedNickname the player changed nickname
+     */
     public void updatePlayersSeedCount(GameImmutable gameImmutable, String playerChangedNickname) {
         Player p = gameImmutable.getPlayers().stream().filter(player1 -> player1.getNickname().equals(playerChangedNickname)).toList().getFirst();
         for(int i=1; i<otherPlayersVBox.getChildren().size(); i++){ //it starts from 1 because there are buttons before

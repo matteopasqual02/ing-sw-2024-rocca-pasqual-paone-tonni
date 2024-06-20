@@ -13,11 +13,22 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+/**
+ * The type Gui.
+ */
 public class GUI extends UnicastRemoteObject implements ViewUpdate {
+    /**
+     * The GUI application.
+     */
     private final transient GUIApplication application;
+
     /**
      * this method is used to pass a runnable function to the UI thread that will handle the changes to the gui.
+     *
+     * @param client the client
+     * @throws RemoteException the remote exception
      */
+    @SuppressWarnings("BusyWait")
     public GUI(Client client) throws RemoteException {
         super();
         new Thread(() -> Application.launch(GUIApplication.class)).start();
@@ -32,10 +43,19 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         this.application = GUIApplication.getInstance();
         application.setClient(client);
     }
+
+    /**
+     * Run later.
+     *
+     * @param runnable the runnable
+     */
     public void runLater(Runnable runnable){
         Platform.runLater(runnable);
     }
 
+    /**
+     * Join lobby
+     */
     @Override
     public void joinLobby() {
         runLater(application::joinLobby);
@@ -148,7 +168,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
 
     /**
      *
-     * @param gameImmutable
+     * @param gameImmutable the game immutable
      * @param nickname of the owner of the board to update
      */
     @Override
@@ -166,6 +186,12 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater(() -> application.displayChat(s));
     }
 
+    /**
+     * Display the chat
+     *
+     * @param s the whole chat
+     * @param type ìf it is public or private
+     */
     @Override
     public void displayChat(String s, String type) {
         runLater(() -> application.displayChat(s, type));
@@ -189,6 +215,11 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater(()->application.show_status(s));
     }
 
+    /**
+     * show last status.
+     *
+     * @param string last status
+     */
     @Override
     public void show_statusLast(String string) {
         runLater(()->application.show_statusLast(string));
@@ -205,6 +236,11 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater(()->application.winner(list));
     }
 
+    /**
+     * Show generic message.
+     *
+     * @param msg the message
+     */
     @Override
     public void show_generic(String msg) {
         runLater(()->application.show_generic(msg));

@@ -10,18 +10,45 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * The type Name insert controller.
+ */
 public class NameInsertController extends GenericController {
+    /**
+     * The Button.
+     */
     @FXML
     public Button button;
+    /**
+     * The String 1.
+     */
     @FXML
     private TextField string1;
+    /**
+     * The Executor.
+     */
     private ExecutorService executor;
+    /**
+     * The Client.
+     */
     private Client client;
+
+    /**
+     * Set parameters.
+     *
+     * @param executor    the executor
+     * @param client      the client
+     * @param application the application
+     */
     @Override
     public void setParameters(ExecutorService executor, Client client, GUIApplication application){
         this.executor = executor;
         this.client = client;
     }
+
+    /**
+     * Handle button click.
+     */
     @FXML
     public void handleButtonClick(){
 

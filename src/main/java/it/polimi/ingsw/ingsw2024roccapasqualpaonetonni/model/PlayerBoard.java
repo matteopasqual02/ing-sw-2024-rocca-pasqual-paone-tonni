@@ -48,13 +48,13 @@ public class PlayerBoard implements Serializable {
 
     /**
      * Add card to board.
+     * method that receives a card and the coordinates where to put it,
+     * it then checks if the coordinates are inside the matrix, and if they aren't calls a method to resize the matrix
      *
      * @param coordinates the coordinates
      * @param card        the card
      * @param seedCount   the seed count
      */
-// method that receives a card and the coordinates where to put it,
-    // it then checks if the coordinates are inside the matrix, and if they aren't calls a method to resize the matrix
     private void addCardToBoard(int[] coordinates, PlayingCard card, int[] seedCount) {
         int x = coordinates[0];
         int y = coordinates[1];
@@ -92,12 +92,12 @@ public class PlayerBoard implements Serializable {
 
     /**
      * Increase board playing card [ ] [ ].
+     * // method used to resize the matrix, by creating a new one and copying the old elements
      *
      * @param x_increase the x increase
      * @param y_increase the y increase
      * @return the playing card [ ] [ ]
      */
-// method used to resize the matrix, by creating a new one and copying the old elements
     private PlayingCard[][] increaseBoard(int x_increase, int y_increase) {
         int row_offset = 0;
         int col_offset = 0;
@@ -127,6 +127,8 @@ public class PlayerBoard implements Serializable {
 
     /**
      * Add card.
+     * // public method used to add a new card to the board
+     * // the position where to add the card is given by indicating the card and the corner where to attach it
      *
      * @param card_to_add   the card to add
      * @param card_on_board the card on board
@@ -135,8 +137,6 @@ public class PlayerBoard implements Serializable {
      * @throws InvalidPlaceException     the invalid place exception
      * @throws ConditionsNotMetException the conditions not met exception
      */
-// public method used to add a new card to the board
-    // the position where to add the card is given by indicating the card and the corner where to attach it
     public void addCard(PlayingCard card_to_add, PlayingCard card_on_board, int corner, int[] seedCount) throws InvalidPlaceException, ConditionsNotMetException{
         int[] prev_cord = card_on_board.getCoordinates();
         int[] place_cord = new int[2];
@@ -244,12 +244,12 @@ public class PlayerBoard implements Serializable {
 
     /**
      * Check spot available boolean.
+     * // checks the four spots around the position where we want to place the card
+     * // if there is a card, it checks if the corners are compatible
      *
      * @param coordinates the coordinates
      * @return the boolean
      */
-// checks the four spots around the position where we want to place the card
-    // if there is a card, it checks if the corners are compatible
     private boolean checkSpotAvailable(int[] coordinates) {
         PlayingCard cardOnBoard;
         int x = coordinates[0];

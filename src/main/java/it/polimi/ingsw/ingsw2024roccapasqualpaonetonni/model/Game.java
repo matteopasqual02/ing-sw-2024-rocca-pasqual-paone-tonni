@@ -21,9 +21,10 @@ public class Game implements Serializable {
      */
     private final int gameId;
     /**
-     * The Status.
+     * The Game Status.
+     * current and previous status needed for reconnection
      */
-    private final GameStatus[] status; //current and previous status needed for reconnection
+    private final GameStatus[] status;
     /**
      * The Max number of player.
      */
@@ -190,6 +191,11 @@ public class Game implements Serializable {
 
     }
 
+    /**
+     * No available game.
+     *
+     * @param px the px
+     */
     public void noAvailableGame(Player px) {
         gameListenersHandler.notify_noAvailableGame(px.getNickname());
     }

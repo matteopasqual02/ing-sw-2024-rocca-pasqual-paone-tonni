@@ -155,6 +155,5 @@ public interface ViewUpdate {
     void show_generic(String msg);
 
 
-    //void giveCurrentPlayerBoard(PlayerBoard playerBoard);
 }
 
