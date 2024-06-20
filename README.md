@@ -1,6 +1,6 @@
 # Software Engineering Project A.A. 2023-2024
 
-<img src="src/main/resources/images/Background_image/background_complete.jpg" width=300 px align="right" >
+<img src="src/main/resources/images/Background_image/background_complete.jpg" width=500 px align="right" >
 
 _Codex_ _Naturalis_ is the final test of **"Software Engineering"** course of **"Computer Science Engineering"** held at Politecnico di Milano (2023/2024).
 
