@@ -26,7 +26,7 @@ UML files and Communication Protocol.
 | Complete rules     |            [✅]()          |
 | Socket (TCP)       |            [✅]()          |
 | RMI                |            [✅]()          |
-| CLI                |            [✅]()          |
+| TUI                |            [✅]()          |
 | GUI                |            [✅]()          | 
 | [FA]: Multiple games     |            [✅]()          |
 | [FA]: Chat               |            [✅]()          |
@@ -46,7 +46,11 @@ UML files and Communication Protocol.
 | [JavaFX](https://openjfx.io)                             | Graphical Library     |
 
 ## Testing
-The JUnit tests cover 100% of the model classes and 91% of the lines of the model. The few non-covered lines mainly deal with methods that have not been used in tests due to their random nature. Since tests must be implemented with deterministic methods, we opted to create new '_mock_' classes that have been used exclusively for this purpose.
+The JUnit tests cover:
+
+100% of the model classes and 93% of the lines of the model. The few non-covered lines mainly deal with methods not used in tests due to their random nature. 
+
+100% of the controller classes and 66% of the lines of the controller. The few non-covered lines mainly deal with methods not used in tests due to their random nature or methods used in establishing connections and keeping connections alive. 
 
 ## Jar
 The jars are used to launch the software. A detailed guide on how to launch jar files is present in this section. 
@@ -56,26 +60,24 @@ It can be downloaded from the official [_Oracle website_](https://www.oracle.com
 To launch the game, it is necessary to open the server first.
 
 ### Server
-be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni or in Game directory
 The server can be run with the following command in a terminal window.
 
-Dir: ing-sw-2024-rocca-pasqual-paone-tonni
+From Dir: ing-sw-2024-rocca-pasqual-paone-tonni
  ```
 java -jar Deliverables\Game\server.jar
 ```
-Dir: Game
+From Dir: Game
 ```
 java -jar server.jar
  ```
 ### Client
-be sure to be in ing-sw-2024-rocca-pasqual-paone-tonni or in Game directory
 The client can be run with the following command in a terminal window.
 
-Dir: ing-sw-2024-rocca-pasqual-paone-tonni
+From Dir: ing-sw-2024-rocca-pasqual-paone-tonni
  ```
 java -jar Deliverables\Game\client.jar 
 ```
-Dir: Game
+From Dir: Game
 ```
 java -jar client.jar
  ```
