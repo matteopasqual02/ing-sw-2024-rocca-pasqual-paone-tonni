@@ -284,7 +284,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         StringBuilder stringBuilder = new StringBuilder();
         boolean win = false;
 
-        stringBuilder.append(ansi().cursor(1,0));
+        stringBuilder.append(ansi().cursor(9,0));
         stringBuilder.append("RESULTS \n");
         for(int i=0;i< list.size();i++){
             int position;
