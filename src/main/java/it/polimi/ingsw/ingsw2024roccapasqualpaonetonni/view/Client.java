@@ -99,6 +99,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             }
             case GUI ->{
                 view = new GUI(this);
+                MainStaticMethod.clearCMD();
             }
         }
 
@@ -364,8 +365,10 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 }
             }
             case "/leave" -> {
+                if(inGame){
+                    server.leave(myNickname, myGameId);
+                }
                 inGame =false;
-                server.leave(myNickname, myGameId);
                 currentImmutable=null;
                 state=null;
                 view.show_generic("You have left game " + myGameId);
