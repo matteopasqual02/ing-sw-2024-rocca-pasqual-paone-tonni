@@ -557,6 +557,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             view.myRunningTurnDrawCard();
         }
         else{
+            view.notMyTurn();
             view.updateOtherBoard(currentImmutable, p.getNickname());
         }
     }

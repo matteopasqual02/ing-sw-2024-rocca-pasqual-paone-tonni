@@ -288,7 +288,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
         stringBuilder.append("RESULTS \n");
         for(int i=0;i< list.size();i++){
             int position;
-            if(i==0 || list.get(i).getCurrentPoints() == list.get(i).getCurrentPoints()){
+            if(i==0 || list.get(i).getCurrentPoints() != list.get(i-1).getCurrentPoints()){
                 position=i+1;
             }
             else {
