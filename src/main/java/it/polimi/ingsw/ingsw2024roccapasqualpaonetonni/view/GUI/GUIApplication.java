@@ -437,13 +437,15 @@ public class GUIApplication extends Application {
      * @param message the message
      * @param type    the type
      */
-    public void displayChat(String message, String type) {
+    public void displayChat(String message, String type, Boolean age) {
         if (gameSceneController != null) {
             switch (type) {
                 case "Pub":
-                    gameSceneController.displayChatPublic(message);
+                    gameSceneController.displayChatPublic(message,age);
+                    break;
                 case "Priv":
-                    gameSceneController.displayChatPrivate(message);
+                    gameSceneController.displayChatPrivate(message,age);
+                    break;
                 case null, default:
             }
         }

@@ -759,7 +759,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             view.displayChat(m.toStringTUI());
         }
         else {
-            view.displayChat(m.toStringGUI(), "Pub");
+            view.displayChat(m.toStringGUI(), "Pub", true);
         }
     }
 
@@ -775,7 +775,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             view.displayChat(m.toStringTUI());
         }
         else {
-            view.displayChat(m.toStringGUI(), "Priv");
+            view.displayChat(m.toStringGUI(), "Priv", true);
         }
     }
 
@@ -801,7 +801,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 view.displayChat(chat.toString());
             }
             else {
-                view.displayChat(chat.toString(), "Pub");
+                view.displayChat(chat.toString(), "Pub", false);
             }
         }
         else {
@@ -832,7 +832,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 view.displayChat(chat.toString());
             }
             else {
-                view.displayChat(chat.toString(), "Priv");
+                view.displayChat(chat.toString(), "Priv", false);
             }
         }
         else {

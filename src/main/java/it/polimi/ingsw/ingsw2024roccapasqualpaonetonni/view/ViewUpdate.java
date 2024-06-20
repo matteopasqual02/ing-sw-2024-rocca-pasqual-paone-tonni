@@ -118,7 +118,7 @@ public interface ViewUpdate {
      * @param s the string message
      * @param type the type of the message
      */
-    void displayChat(String s, String type);
+    void displayChat(String s, String type, Boolean age);
 
     /**
      * Not my turn chat.

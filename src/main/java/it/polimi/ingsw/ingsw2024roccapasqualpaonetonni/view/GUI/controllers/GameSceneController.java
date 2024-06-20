@@ -7,6 +7,8 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmut
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -1503,13 +1505,12 @@ public class GameSceneController extends GenericController{
 
 
     //--------------------------------------------CHAT
-
     /**
      * Display chat public.
      *
      * @param message the message
      */
-    public void displayChatPublic(String message) {
+    public void displayChatPublic(String message, Boolean age) {
         if (!isPrivateChat) {
             Text text = new Text(message);
             System.out.println(message);
@@ -1517,14 +1518,19 @@ public class GameSceneController extends GenericController{
             messageContainer.getChildren().add(text);
             scrollPane.layout();
         }
-    }
+        String[] split1 = message.split("- ");
+        String[] split2 =split1[1].split("]");
 
+        if(age && !split2[0].equals(player.getNickname())){
+            newMessage("New message!",message);
+        }
+    }
     /**
      * Display chat private.
      *
      * @param message the message
      */
-    public void displayChatPrivate(String message) {
+    public void displayChatPrivate(String message,Boolean age) {
         if (isPrivateChat) {
             Text text = new Text(message);
             System.out.println(message);
@@ -1532,6 +1538,28 @@ public class GameSceneController extends GenericController{
             messageContainer.getChildren().add(text);
             scrollPane.layout();
         }
+
+        String[] split1 = message.split("- ");
+        String[] split2 =split1[1].split(" ");
+
+        if(age && !split2[0].equals(player.getNickname())){
+            newMessage("New private message!",message);
+        }
+    }
+
+    public void newMessage(String s1,String s2){
+        Label title = new Label(s1);
+        Label content = new Label(s2);
+        VBox messageBox = new VBox(title,content);
+        messageBox.setLayoutY(turnLabel.getLayoutY());
+        messageBox.setLayoutX(turnLabel.getLayoutX() + turnLabel.getWidth() + 10);
+        messageBox.setStyle("-fx-background-color: white; -fx-font-size:14px; -fx-border-color: black; -fx-border-width: 2px; -fx-font-family: 'Times New Roman'; -fx-alignment: center;");
+        pane.getChildren().add(messageBox);
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.seconds(3),
+                event -> pane.getChildren().remove(messageBox)
+        ));
+        timeline.play();
     }
 
     /**

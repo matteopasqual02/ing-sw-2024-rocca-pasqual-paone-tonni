@@ -336,7 +336,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
     }
 
     @Override
-    public void displayChat(String s, String type) {
+    public void displayChat(String s, String type, Boolean age) {
         ConsolePrinter.consolePrinter(
                 String.valueOf(ansi().fg(Ansi.Color.YELLOW).bg(Ansi.Color.DEFAULT).a("CHAT \n")
                         .fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT).a(s).a("\n"))
