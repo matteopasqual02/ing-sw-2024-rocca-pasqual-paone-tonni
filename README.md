@@ -8,10 +8,10 @@ _Codex_ _Naturalis_ is the final test of **"Software Engineering"** course of **
 
 **Team**:
 
-Federico Rocca
-Matteo Pasqual
-Arianna Paone
-Alberto Tonni
+Federico Rocca, 
+Matteo Pasqual, 
+Arianna Paone, 
+Alberto Tonni.
 
 **Group**: GC32
 
