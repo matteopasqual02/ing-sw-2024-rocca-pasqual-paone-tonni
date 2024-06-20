@@ -193,8 +193,8 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
      * @param type ìf it is public or private
      */
     @Override
-    public void displayChat(String s, String type) {
-        runLater(() -> application.displayChat(s, type));
+    public void displayChat(String s, String type, Boolean age) {
+        runLater(() -> application.displayChat(s, type,age));
     }
 
     /**

@@ -214,7 +214,7 @@
          </ScrollPane>
          <VBox>
             <HBox fx:id="receiverContainer" managed="false" spacing="2.0" visible="false">
-               <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat" prefWidth="100.5" promptText="Select Player" styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" />
+               <ComboBox fx:id="receiverPrivateMessages" onAction="#handleSelectPlayerChat" prefWidth="100.5" promptText="To" styleClass="button_chat" stylesheets="@CSSStyle/allButton.css" />
             </HBox>
             <VBox alignment="CENTER" prefHeight="62.0" prefWidth="187.0" spacing="5.0">
                <TextArea fx:id="messageInput" prefHeight="37.0" prefRowCount="2" prefWidth="180.0" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" wrapText="true" />
