@@ -5,6 +5,11 @@
 _Codex_ _Naturalis_ is the final test of **"Software Engineering"** course of **"Computer Science Engineering"** held at Politecnico di Milano (2023/2024).
 
 **Professor**: Gianpaolo Saverio Cugola
+**Team**:
+Federico Rocca
+Matteo Pasqual
+Arianna Paone
+Alberto Tonni
 
 **Group**: GC32
 
