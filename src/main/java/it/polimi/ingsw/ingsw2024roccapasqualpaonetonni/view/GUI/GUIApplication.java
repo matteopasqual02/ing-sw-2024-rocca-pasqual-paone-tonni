@@ -162,6 +162,7 @@ public class GUIApplication extends Application {
         stage.show();
         Platform.runLater(this::infoBox);
         Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
+        Platform.runLater(() -> otherBoardsController.upadateAll(gameImmutable));
     }
 
     public void infoBox(){
@@ -507,10 +508,8 @@ public class GUIApplication extends Application {
     }
 
     public void seeOtherBoards(String nickname){
-        boolean result = otherBoardsController.showBoard(nickname);
-        if (result) {
-            otherBoardsStage.show();
-        }
+        otherBoardsController.showBoard(nickname);
+        otherBoardsStage.show();
     }
 
     public void setClient(Client client) {

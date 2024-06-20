@@ -40,7 +40,7 @@ public class OtherBoardsController extends GenericController{
     private final double[] BOARD_SIZE = {1500.0, 2000.0};
     private final Map<String, Pane> boardsDict = new HashMap<>();
 
-    public boolean showBoard(String nickname) {
+    public void showBoard(String nickname) {
         Pane board = boardsDict.get(nickname);
         if (board == null) {
             board = fakeBoard();
@@ -50,7 +50,6 @@ public class OtherBoardsController extends GenericController{
         scrollPane.setContent(boardPane);
         scrollPane.setHvalue(0.5);
         scrollPane.setVvalue(0.5);
-        return true;
     }
 
     public Pane fakeBoard() {
@@ -61,6 +60,23 @@ public class OtherBoardsController extends GenericController{
         board.applyCss();
         board.layout();
         return board;
+    }
+
+    public void upadateAll(GameImmutable gameImmutable) {
+        for (Player p : gameImmutable.getPlayers()) {
+            String nickname = p.getNickname();
+            Pane board = boardsDict.get(nickname);
+            if (board == null) {
+                board = new Pane();
+                board.getStyleClass().add("background-board");
+                board.setPrefHeight(BOARD_SIZE[0]);
+                board.setPrefWidth(BOARD_SIZE[1]);
+                board.applyCss();
+                board.layout();
+                boardsDict.put(nickname, board);
+            }
+            updateBoard(gameImmutable, board, nickname);
+        }
     }
 
     public void updateOtherBoard(GameImmutable gameImmutable, String nickname) {
@@ -74,7 +90,6 @@ public class OtherBoardsController extends GenericController{
             board.layout();
             boardsDict.put(nickname, board);
         }
-        ConsolePrinter.consolePrinter("creating board " + nickname);
         updateBoard(gameImmutable, board, nickname);
     }
 

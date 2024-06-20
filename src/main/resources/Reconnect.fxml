@@ -13,7 +13,7 @@
          <children>
               <HBox alignment="TOP_CENTER" prefHeight="121.0" prefWidth="1024.0">
                   <children>
-                      <TextField fx:id="string1" style="-fx-font-family: 'Times New Roman'; -fx-font-size: 32px;" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="500.0" promptText="Insert your nickaname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
+                      <TextField fx:id="string1" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 32px;" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="500.0" promptText="Insert your nickaname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css" />
                   </children>
               </HBox>
               <HBox alignment="TOP_CENTER" prefHeight="147.0" prefWidth="1048.0">

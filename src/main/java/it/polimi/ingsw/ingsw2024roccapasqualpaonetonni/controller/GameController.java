@@ -350,7 +350,6 @@ public class GameController implements GameControllerInterface {
             model.resetLastStatus();
         }
         model.notifyAllGame();
-
     }
 
     /**
