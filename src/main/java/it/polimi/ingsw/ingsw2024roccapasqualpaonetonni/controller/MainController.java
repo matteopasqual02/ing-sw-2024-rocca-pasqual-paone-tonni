@@ -163,7 +163,7 @@ public class MainController implements MainControllerInterface {
             p = ris.getFirst().getAllPlayer().stream().filter(pp -> pp.getNickname().equals(nickname)).findFirst().orElse(null);
             if(p!=null){
                 ris.getFirst().killMe(nickname);
-                ris.getFirst().removeMyselfAsListener(nickname);
+                //ris.getFirst().removeMyselfAsListener(nickname);
                 ris.getFirst().disconnectPlayer(nickname);
                 return ris.getFirst();
             }

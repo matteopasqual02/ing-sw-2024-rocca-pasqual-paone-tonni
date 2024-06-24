@@ -116,6 +116,9 @@ public class Game implements Serializable {
     public void removeListener(String name) {
         synchronized (gameListenersHandler) {
             gameListenersHandler.removeListener(name);
+            for  (String nickname : gameListenersHandler.getListener().keySet()) {
+                ConsolePrinter.consolePrinter("Game has listener " + name);
+            }
             for (Player p : players) {
                 p.setPlayerListeners(gameListenersHandler.getListener());
             }
@@ -264,7 +267,7 @@ public class Game implements Serializable {
         if(p!=null){
             playersDisconnected.add(p);
             players.remove(p);
-            gameListenersHandler.removeListener(nickname);
+            removeListener(nickname);
             gameListenersHandler.notify_disconnectedPlayer(nickname);
         }
         else {
@@ -424,6 +427,7 @@ public class Game implements Serializable {
             return;
         }
         if(newCurrent!=null) {
+            ConsolePrinter.consolePrinter("Game notifying next turn after disconnect");
             gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
             return;
         }

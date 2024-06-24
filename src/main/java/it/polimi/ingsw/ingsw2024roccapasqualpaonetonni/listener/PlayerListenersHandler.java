@@ -34,13 +34,19 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
      */
     public void resetPlayerListeners(HashMap<String, NotifierInterface> gameListenersMap){
         //listenersMap=null;
-        for(String name : gameListenersMap.keySet()){
-            try {
-                addListener(name, gameListenersMap.get(name));
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
+        synchronized (listenersMap){
+            for (String name : listenersMap.keySet()){
+                ConsolePrinter.consolePrinter("PlayerListenerHandler has listener " + name);
             }
-        }
+            listenersMap.clear();
+            for(String name : gameListenersMap.keySet()){
+                try {
+                    ConsolePrinter.consolePrinter("PlayerListenerHandler adding " + name);
+                    addListener(name, gameListenersMap.get(name));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            }}
     }
 
     /**
@@ -100,6 +106,7 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
     public void notify_drawFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         for(String name : listenersMap.keySet()){
             try {
+                ConsolePrinter.consolePrinter("PlayerListenerHandler drewFromBoard " + name);
                 listenersMap.get(name).sendDrewFromBoard(p,b,d);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -128,7 +135,6 @@ public class PlayerListenersHandler extends ListenersHandler implements Serializ
      * @param p the p
      */
     public void notify_addToBoard(Player p,int cardID) {
-        ConsolePrinter.consolePrinter("notifier");
         for(String name : listenersMap.keySet()){
             try {
                 listenersMap.get(name).sendCardAdded(p,cardID);

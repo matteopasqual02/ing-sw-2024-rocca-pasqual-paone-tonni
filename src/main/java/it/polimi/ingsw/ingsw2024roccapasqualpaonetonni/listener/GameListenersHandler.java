@@ -6,6 +6,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -323,6 +324,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         for(String name : listenersMap.keySet()){
             try {
                 listenersMap.get(name).sendNextTurn(nickname);
+                ConsolePrinter.consolePrinter(name);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
