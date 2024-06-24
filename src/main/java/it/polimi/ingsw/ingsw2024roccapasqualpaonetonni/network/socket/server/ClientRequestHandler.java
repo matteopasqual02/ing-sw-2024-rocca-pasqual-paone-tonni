@@ -151,6 +151,14 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
+    @Override
+    public void sendKill(String nickname) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageKIll(nickname));
+            messageDone();
+        }
+    }
+
     /**
      * Send all.
      *

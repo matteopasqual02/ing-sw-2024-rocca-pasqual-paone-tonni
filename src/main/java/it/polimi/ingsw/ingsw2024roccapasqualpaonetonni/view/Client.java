@@ -729,6 +729,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
         view.show_generic("Player "+nickname+" has been disconnected");
     }
 
+    @Override
+    public void sendKill(String nickname) {
+        if(this.myNickname.equals(nickname)){
+            view.sendKillView();
+        }
+    }
     /**
      * Status set to last status.
      *

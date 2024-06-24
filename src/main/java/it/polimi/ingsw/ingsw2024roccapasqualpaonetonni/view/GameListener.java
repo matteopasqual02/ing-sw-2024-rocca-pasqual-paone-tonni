@@ -141,6 +141,7 @@ public interface GameListener extends Remote {
      * @throws RemoteException the remote exception
      */
     void disconnectedPlayer(String nickname) throws RemoteException;
+    void sendKill(String nickname) throws RemoteException;
 
     /**
      * Status set.

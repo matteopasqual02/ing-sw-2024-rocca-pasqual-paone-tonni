@@ -216,7 +216,7 @@ public class RMIServerStub implements ServerInterface {
         //requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         requests.leaveGame(nickname, idGame);
         gameController = null;
-        System.exit(0);
+        //System.exit(0);
     }
 
     //from here on the methods should be to show the update directly to the client, or the methods that

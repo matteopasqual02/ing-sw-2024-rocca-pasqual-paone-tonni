@@ -246,6 +246,11 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
         runLater(()->application.show_generic(msg));
     }
 
+    @Override
+    public void sendKillView() {
+        runLater(application::killGUI);
+    }
+
     /**
      * My running turn place card.
      */

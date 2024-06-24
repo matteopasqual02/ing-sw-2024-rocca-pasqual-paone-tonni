@@ -92,6 +92,15 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
+    @Override
+    public void sendKill(String nickname) {
+        try {
+            listener.sendKill(nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Send max num players set.
      *

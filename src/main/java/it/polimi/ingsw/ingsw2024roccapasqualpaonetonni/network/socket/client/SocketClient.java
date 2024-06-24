@@ -274,7 +274,7 @@ public class SocketClient extends Thread implements ServerInterface, Serializabl
         synchronized (lock) {
             outputStream.writeObject(new MainMessageDisconnect(name, idGame));
             messageDone();
-            System.exit(0);
+            //System.exit(0);
         }
     }
 

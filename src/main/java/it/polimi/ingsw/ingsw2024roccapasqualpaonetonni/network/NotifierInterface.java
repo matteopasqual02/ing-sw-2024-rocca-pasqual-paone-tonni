@@ -294,4 +294,6 @@ public interface NotifierInterface extends Remote {
      */
 //--------------------------END
     void winners(List<Player> list)throws IOException;
+
+    void sendKill(String nickname) throws IOException;
 }
