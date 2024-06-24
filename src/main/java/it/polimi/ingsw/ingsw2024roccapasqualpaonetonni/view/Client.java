@@ -470,6 +470,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             return;
         }
         currentImmutable=gameImmutable;
+        statusSet(currentImmutable.getStatus());
         view.show_All(gameImmutable,myNickname,EnumUpdates.ALL, myTurn,"no nickname");
         Player player = currentImmutable.getPlayers().peek();
         if(player==null){
