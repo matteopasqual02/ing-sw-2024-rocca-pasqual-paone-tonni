@@ -226,11 +226,11 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
      * @throws RemoteException the remote exception
      */
     @Override
-    public GameControllerInterface leaveGame(String nickname, int idToDisconnect)throws RemoteException {
+    public GameControllerInterface leaveGame(String nickname, int idToDisconnect) throws RemoteException {
         GameControllerInterface remoteController  = server.mainController.leaveGame(nickname, idToDisconnect);
         GameControllerInterface remoteControllerUniCasted;
 
-        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has leaved the game");
+        ConsolePrinter.consolePrinter("[RMI] " + nickname + " has left the game");
         try{
             remoteControllerUniCasted  = (GameControllerInterface) UnicastRemoteObject.exportObject(remoteController ,0);
         }catch (RemoteException e){

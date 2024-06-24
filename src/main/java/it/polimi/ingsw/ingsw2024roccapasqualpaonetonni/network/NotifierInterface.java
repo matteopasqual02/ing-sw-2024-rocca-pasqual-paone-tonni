@@ -140,7 +140,7 @@ public interface NotifierInterface extends Remote {
      * @param nickname the nickname
      * @throws RemoteException the remote exception
      */
-    void sendDisconnectedPlayer(String nickname) throws RemoteException;
+    void sendDisconnectedPlayer(String nickname) throws IOException;
 
     /**
      * Send status set.

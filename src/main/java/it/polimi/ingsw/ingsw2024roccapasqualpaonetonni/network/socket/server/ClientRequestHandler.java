@@ -367,8 +367,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * @param nickname the nickname
      */
     @Override
-    public void sendDisconnectedPlayer(String nickname) {
-        synchronized (outputStream) {}
+    public void sendDisconnectedPlayer(String nickname) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageDisconnectedPlayer(nickname));
+            messageDone();
+        }
     }
 
 

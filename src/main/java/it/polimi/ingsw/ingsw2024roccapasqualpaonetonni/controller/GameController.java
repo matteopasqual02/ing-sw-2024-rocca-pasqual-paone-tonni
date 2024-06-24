@@ -235,8 +235,11 @@ public class GameController implements GameControllerInterface {
      */
     @Override
     public synchronized void removeMyselfAsListener(String me) throws RemoteException {
+        /*
         Runnable runnable = () -> model.removeListener(me);
         executorService.submit(runnable);
+        */
+        model.removeListener(me);
     }
 
 //---------------------------------GAME CREATION PHASE
@@ -360,6 +363,7 @@ public class GameController implements GameControllerInterface {
      * @param nickname the nickname
      */
     public synchronized void disconnectPlayer(String nickname) {
+        Player oldCurrent = model.getCurrentPlayer();
         model.disconnectPlayer(nickname);
 
         if (model.getPlayerNum() == 0) {
@@ -375,7 +379,9 @@ public class GameController implements GameControllerInterface {
                 timer.start();
             }
         }
-
+        if (model.getPlayerNum() == 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
+            model.nextPlayerAfterDisconnect();
+        }
     }
 
 //---------------------------------TABLE AND INIT SECTION

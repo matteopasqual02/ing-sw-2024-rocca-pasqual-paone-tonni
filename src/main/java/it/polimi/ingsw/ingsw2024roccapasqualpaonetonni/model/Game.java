@@ -6,6 +6,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.GameAlreadyFullException;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.exception.PlayerAlreadyInException;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.io.Serializable;
@@ -385,6 +386,30 @@ public class Game implements Serializable {
         Player temp;
         temp = players.poll();
         players.add(temp);
+        Player newCurrent = players.peek();
+        if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
+            checkWinner();
+            setStatus(GameStatus.ENDED);
+            gameListenersHandler.notify_winners(getWinners());
+            return;
+        }
+        if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
+            setStatus(GameStatus.LAST_TURN);
+            gameListenersHandler.notify_lastTurn();
+            gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
+            return;
+        }
+        if(newCurrent!=null) {
+            gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
+            return;
+        }
+        gameListenersHandler.notify_gameGenericError("Error in Next Turn");
+    }
+
+    /**
+     * Get the next player without missing any player after disconnection
+     */
+    public void nextPlayerAfterDisconnect(){
         Player newCurrent = players.peek();
         if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
             checkWinner();

@@ -247,7 +247,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 if(!name.equals(nickname)){
                     listenersMap.get(name).sendDisconnectedPlayer(nickname);
                 }
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -264,7 +264,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 if(name.equals(nickname)){
                     listenersMap.get(name).sendDisconnectedPlayer(nickname);
                 }
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
