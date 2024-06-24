@@ -96,10 +96,15 @@ public class GUIApplication extends Application {
         stage.setScene(new Scene(root, 300, 200));
         stage.setTitle("Codex Naturalis");
 
-        stage.setOnCloseRequest(event -> {
-            System.out.println("Stage is closing");
-            System.exit(0);
-        });
+        stage.setOnCloseRequest(event ->
+            executor.submit(()->{
+                try {
+                    client.receiveInput("/leave");
+                } catch (IOException | NotBoundException e) {
+                    throw new RuntimeException(e);
+                };
+                stage.hide();}
+        ));
 
         //stage.setFullScreen(true);
         stage.show();
@@ -186,7 +191,7 @@ public class GUIApplication extends Application {
                     throw new RuntimeException(e);
                 }
             });
-            //stage.hide();
+            stage.hide();
         });
         stage.show();
         joinedGameController.setUpController(joinedGameRoot);
@@ -916,8 +921,5 @@ public class GUIApplication extends Application {
 
     public void killGUI() {
         System.exit(0);
-        //killMe.complete(null);
-        //kill=true;
-        //notify();
     }
 }

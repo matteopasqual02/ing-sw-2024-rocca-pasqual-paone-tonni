@@ -369,10 +369,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 if(inGame){
                     server.leave(myNickname, myGameId);
                 }
+                /*
                 inGame =false;
                 currentImmutable=null;
                 state=null;
-                view.show_generic("You have left game " + myGameId);
+                view.show_generic("You have left game " + myGameId);*/
             }
             case null, default -> view.invalidMessage("Invalid command", myTurn);
         }
@@ -470,6 +471,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         }
         currentImmutable=gameImmutable;
         statusSet(currentImmutable.getStatus());
+        myGameId=currentImmutable.getGameId();
         view.show_All(gameImmutable,myNickname,EnumUpdates.ALL, myTurn,"no nickname");
         Player player = currentImmutable.getPlayers().peek();
         if(player==null){
@@ -732,6 +734,10 @@ public class Client extends UnicastRemoteObject implements GameListener{
     @Override
     public void sendKill(String nickname) {
         if(this.myNickname.equals(nickname)){
+            inGame =false;
+            currentImmutable=null;
+            state=null;
+            view.show_generic("You have left game " + myGameId);
             view.sendKillView();
         }
     }

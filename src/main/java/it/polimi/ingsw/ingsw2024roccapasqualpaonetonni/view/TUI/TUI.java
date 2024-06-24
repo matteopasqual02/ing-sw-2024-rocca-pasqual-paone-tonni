@@ -11,6 +11,9 @@ import org.fusesource.jansi.Ansi;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -24,6 +27,7 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
      *
      * @throws RemoteException the remote exception
      */
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
     public TUI() throws RemoteException {
     }
 
@@ -324,7 +328,8 @@ public class TUI extends UnicastRemoteObject implements ViewUpdate  {
 
     @Override
     public void sendKillView() {
-        System.exit(0);
+        executorService.submit(()->System.exit(0));
+        executorService.shutdown();
     }
 
     /**
