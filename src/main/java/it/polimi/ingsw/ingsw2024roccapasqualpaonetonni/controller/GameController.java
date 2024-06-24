@@ -379,7 +379,7 @@ public class GameController implements GameControllerInterface {
                 timer.start();
             }
         }
-        if (model.getPlayerNum() == 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
+        if (model.getPlayerNum() > 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
             model.nextPlayerAfterDisconnect();
         }
     }
