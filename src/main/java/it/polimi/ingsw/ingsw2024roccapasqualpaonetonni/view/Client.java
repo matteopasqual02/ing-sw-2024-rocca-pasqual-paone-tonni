@@ -373,7 +373,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 currentImmutable=null;
                 state=null;
                 view.show_generic("You have left game " + myGameId);
-                System.exit(0);
             }
             case null, default -> view.invalidMessage("Invalid command", myTurn);
         }
@@ -730,6 +729,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
         view.show_generic("Player "+nickname+" has been disconnected");
     }
 
+    @Override
+    public void sendKill(String nickname) {
+        if(this.myNickname.equals(nickname)){
+            view.sendKillView();
+        }
+    }
     /**
      * Status set to last status.
      *
@@ -881,7 +886,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 }
                 synchronized (lock) {
                     if (!pinged) {
-                        ConsolePrinter.consolePrinter("server dead game interrupt");
+                        ConsolePrinter.consolePrinter("server dead game interrupted");
                         this.interrupt();
                         System.exit(0);
                     } else {

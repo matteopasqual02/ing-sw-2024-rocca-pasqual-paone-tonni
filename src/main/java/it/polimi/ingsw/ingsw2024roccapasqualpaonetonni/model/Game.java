@@ -623,4 +623,7 @@ public class Game implements Serializable {
         return gameListenersHandler;
     }
 
+    public void killMe(String nickname) {
+        gameListenersHandler.killMe(nickname);
+    }
 }

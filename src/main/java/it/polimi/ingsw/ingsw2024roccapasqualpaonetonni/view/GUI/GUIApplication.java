@@ -20,7 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.List;
@@ -76,7 +75,6 @@ public class GUIApplication extends Application {
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
      */
     private final ExecutorService executor = Executors.newCachedThreadPool();
-
     /**
      * Start.
      *
@@ -188,7 +186,7 @@ public class GUIApplication extends Application {
                     throw new RuntimeException(e);
                 }
             });
-            System.exit(0);
+            //stage.hide();
         });
         stage.show();
         joinedGameController.setUpController(joinedGameRoot);
@@ -914,5 +912,12 @@ public class GUIApplication extends Application {
         });
         alert.getDialogPane().setStyle("-fx-background-color: #F5F5DC; -fx-text-fill: #333; -fx-font-family: Serif; -fx-font-size: 16px;-fx-font-weight: bold;");
         alert.showAndWait();
+    }
+
+    public void killGUI() {
+        System.exit(0);
+        //killMe.complete(null);
+        //kill=true;
+        //notify();
     }
 }

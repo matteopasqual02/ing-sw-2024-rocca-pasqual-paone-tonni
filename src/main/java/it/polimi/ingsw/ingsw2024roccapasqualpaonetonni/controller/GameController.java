@@ -214,6 +214,11 @@ public class GameController implements GameControllerInterface {
         this.pingPongThread.addClient(client);
     }
 
+    @Override
+    public void killMe(String nickname)  throws RemoteException {
+        model.killMe(nickname);
+    }
+
 //---------------------------------LISTENERS SECTION
     /**
      * Add myself as listener.

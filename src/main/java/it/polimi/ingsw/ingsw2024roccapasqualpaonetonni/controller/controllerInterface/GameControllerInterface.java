@@ -172,4 +172,5 @@ public interface GameControllerInterface extends Remote {
      */
     void addToPingPong(String client) throws RemoteException;
 
+    void killMe(String nickname) throws RemoteException;
 }

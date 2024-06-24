@@ -434,4 +434,14 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             }
         }
     }
+
+    public void killMe(String nickname) {
+        for(String name : listenersMap.keySet()){
+            try {
+                listenersMap.get(name).sendKill(nickname);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

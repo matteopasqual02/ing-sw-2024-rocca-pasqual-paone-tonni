@@ -212,10 +212,11 @@ public class RMIServerStub implements ServerInterface {
      */
     @Override
     public void leave(String nickname, int idGame) throws IOException, NotBoundException {
-        registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
-        requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
+        //registry = LocateRegistry.getRegistry(DefaultNetworkValues.Server_Ip_address, DefaultNetworkValues.Default_RMI_port);
+        //requests = (MainControllerInterface) registry.lookup(DefaultNetworkValues.Default_servername_RMI);
         requests.leaveGame(nickname, idGame);
         gameController = null;
+        //System.exit(0);
     }
 
     //from here on the methods should be to show the update directly to the client, or the methods that
