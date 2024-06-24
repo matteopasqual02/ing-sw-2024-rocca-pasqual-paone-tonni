@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.NotifierInterface;
 
 import java.rmi.RemoteException;
@@ -47,6 +48,7 @@ public abstract class ListenersHandler {
         String toRemove = null;
         for (String name : listenersMap.keySet()) {
             if (name.equals(nickname)) {
+                ConsolePrinter.consolePrinter("ListenerHandler removing listener " + name);
                 toRemove = name;
             }
         }

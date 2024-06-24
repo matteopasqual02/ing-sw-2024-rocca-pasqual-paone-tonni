@@ -203,6 +203,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 }
             }
             case "/addStarting","/addstarting" -> {
+                ConsolePrinter.consolePrinter("Client addStarting");
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
                     try{
                         if(parole.length==1){
@@ -489,12 +490,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void nextTurn(String nickname) {
-        //ConsolePrinter.consolePrinter("New turn: " + nickname);
+        ConsolePrinter.consolePrinter("New turn: " + nickname);
         myTurn = myNickname.equals(nickname);
         if(currentImmutable==null){return;}
         Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();
         switchShowTurn(player);
-        //ConsolePrinter.consolePrinter(state.toString());
+        ConsolePrinter.consolePrinter(state.toString());
     }
 
     /**
@@ -636,6 +637,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
     @Override
     public void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         MainStaticMethod.clearCMD();
+        ConsolePrinter.consolePrinter("Client notified of drewFromBoard");
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);

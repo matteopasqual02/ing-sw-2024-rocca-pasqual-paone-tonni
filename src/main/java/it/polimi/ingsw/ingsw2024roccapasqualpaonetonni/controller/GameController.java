@@ -244,6 +244,7 @@ public class GameController implements GameControllerInterface {
         Runnable runnable = () -> model.removeListener(me);
         executorService.submit(runnable);
         */
+        ConsolePrinter.consolePrinter("GameController remove listener " + me);
         model.removeListener(me);
     }
 
@@ -384,8 +385,9 @@ public class GameController implements GameControllerInterface {
                 timer.start();
             }
         }
-        if (model.getPlayerNum() == 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
+        if (model.getPlayerNum() > 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
             model.nextPlayerAfterDisconnect();
+            ConsolePrinter.consolePrinter("GameController removed player in game");
         }
     }
 
@@ -689,6 +691,7 @@ public class GameController implements GameControllerInterface {
             else {
                 try {
                     getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
+                    ConsolePrinter.consolePrinter("GameController next player after drawing");
                     model.nextPlayer();
                 } catch (NoCardException e) {
                     model.gameError("This position is empty");
