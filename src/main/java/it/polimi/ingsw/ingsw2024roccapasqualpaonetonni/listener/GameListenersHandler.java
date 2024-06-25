@@ -161,7 +161,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 if (name.equals(player.getNickname())) {
                     listenersMap.get(name).sendNameAlreadyInGame();
                 }
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -214,7 +214,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 else{
                     listenersMap.get(name).sendReconnectedPlayer(nickname);
                 }
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -231,7 +231,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 if(name.equals(nickname)){
                     listenersMap.get(name).sendReconnectionImpossible(nickname);
                 }
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -296,7 +296,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         for(String name : listenersMap.keySet()){
             try {
                 listenersMap.get(name).sendStatusSetToLastStatus(status);
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -309,7 +309,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         for(String name : listenersMap.keySet()){
             try {
                 listenersMap.get(name).sendLastStatusReset();
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -338,7 +338,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         for(String name : listenersMap.keySet()){
             try {
                 listenersMap.get(name).sendLastTurn();
-            } catch (RemoteException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

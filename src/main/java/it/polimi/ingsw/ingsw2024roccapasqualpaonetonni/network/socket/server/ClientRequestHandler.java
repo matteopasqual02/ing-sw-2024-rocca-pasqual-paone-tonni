@@ -304,8 +304,10 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * Send full game.
      */
     @Override
-    public void sendFullGame() {
+    public void sendFullGame() throws IOException {
         synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageFullGame());
+            messageDone();
         }
     }
 
@@ -314,7 +316,8 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      */
     @Override
     public void sendNameAlreadyInGame() {
-        synchronized (outputStream) {}
+        synchronized (outputStream) {
+        }
     }
 
     /**
@@ -345,8 +348,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * Send last turn.
      */
     @Override
-    public void sendLastTurn() {
-        synchronized (outputStream) {}
+    public void sendLastTurn()  throws IOException{
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerSendLastTurn());
+            messageDone();
+        }
     }
 
     /**
@@ -355,8 +361,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * @param nickname the nickname
      */
     @Override
-    public void sendReconnectedPlayer(String nickname) {
-        synchronized (outputStream) {}
+    public void sendReconnectedPlayer(String nickname) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageReconnectedPlayer(nickname));
+            messageDone();
+        }
     }
 
     /**
@@ -365,8 +374,11 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * @param nickname the nickname
      */
     @Override
-    public void sendReconnectionImpossible(String nickname) {
-        synchronized (outputStream) {}
+    public void sendReconnectionImpossible(String nickname) throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageReconnectionImpossible(nickname));
+            messageDone();
+        }
     }
 
     /**
@@ -403,16 +415,24 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * @param status the status
      */
     @Override
-    public void sendStatusSetToLastStatus(GameStatus status) {
-        synchronized (outputStream) {}
+    public void sendStatusSetToLastStatus(GameStatus status) throws IOException {
+        synchronized (outputStream) {
+            synchronized (outputStream) {
+                outputStream.writeObject(new ServerMessageStatusSetToLastStatus(status));
+                messageDone();
+            }
+        }
     }
 
     /**
      * Send last status reset.
      */
     @Override
-    public void sendLastStatusReset() {
-        synchronized (outputStream) {}
+    public void sendLastStatusReset() throws IOException {
+        synchronized (outputStream) {
+            outputStream.writeObject(new ServerMessageLastStatusReset());
+            messageDone();
+        }
     }
 
     /**
@@ -522,7 +542,8 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      */
     @Override
     public void youWereReconnected() {
-        synchronized (outputStream) {}
+        synchronized (outputStream) {
+        }
     }
 
     /**

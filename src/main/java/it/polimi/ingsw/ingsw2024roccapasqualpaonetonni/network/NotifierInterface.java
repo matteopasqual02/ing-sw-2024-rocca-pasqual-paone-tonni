@@ -24,7 +24,7 @@ public interface NotifierInterface extends Remote {
      * @throws IOException     the io exception
      * @throws RemoteException the remote exception
      */
-    void sendAll(GameImmutable gameImmutable)throws IOException, RemoteException;
+    void sendAll(GameImmutable gameImmutable)throws IOException;
 
     /**
      * Send max num players set.
@@ -36,7 +36,7 @@ public interface NotifierInterface extends Remote {
      * @throws RemoteException        the remote exception
      */
 //--------------------------GAME
-    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException, RemoteException;
+    void sendMaxNumPlayersSet(int gameId,int max) throws IOException, ClassNotFoundException;
 
     /**
      * Send created game.
@@ -45,7 +45,7 @@ public interface NotifierInterface extends Remote {
      * @throws IOException     the io exception
      * @throws RemoteException the remote exception
      */
-    void sendCreatedGame(int gameId) throws IOException, RemoteException;
+    void sendCreatedGame(int gameId) throws IOException;
 
     /**
      * Send you joined game.
@@ -54,7 +54,7 @@ public interface NotifierInterface extends Remote {
      * @throws IOException     the io exception
      * @throws RemoteException the remote exception
      */
-    void sendYouJoinedGame(int gameId) throws IOException, RemoteException;
+    void sendYouJoinedGame(int gameId) throws IOException;
 
     /**
      * Send added new player.
@@ -63,7 +63,7 @@ public interface NotifierInterface extends Remote {
      * @throws IOException     the io exception
      * @throws RemoteException the remote exception
      */
-    void sendAddedNewPlayer(String pNickname) throws IOException, RemoteException;
+    void sendAddedNewPlayer(String pNickname) throws IOException;
 
     /**
      * Send no available game.
@@ -71,7 +71,7 @@ public interface NotifierInterface extends Remote {
      * @throws RemoteException the remote exception
      * @throws IOException     the io exception
      */
-    void sendNoAvailableGame() throws RemoteException, IOException;
+    void sendNoAvailableGame() throws IOException;
 
     /**
      * Send ask players ready.
@@ -79,21 +79,21 @@ public interface NotifierInterface extends Remote {
      * @throws RemoteException the remote exception
      * @throws IOException     the io exception
      */
-    void sendAskPlayersReady() throws RemoteException, IOException;
+    void sendAskPlayersReady() throws IOException;
 
     /**
      * Send full game.
      *
      * @throws RemoteException the remote exception
      */
-    void sendFullGame() throws RemoteException;
+    void sendFullGame() throws IOException;
 
     /**
      * Send name already in game.
      *
      * @throws RemoteException the remote exception
      */
-    void sendNameAlreadyInGame() throws RemoteException;
+    void sendNameAlreadyInGame() throws IOException;
 
     /**
      * Send player removed.
@@ -101,7 +101,7 @@ public interface NotifierInterface extends Remote {
      * @param pNickname the p nickname
      * @throws RemoteException the remote exception
      */
-    void sendPlayerRemoved(String pNickname) throws RemoteException;
+    void sendPlayerRemoved(String pNickname) throws IOException;
 
     /**
      * Send next turn.
@@ -116,7 +116,7 @@ public interface NotifierInterface extends Remote {
      *
      * @throws RemoteException the remote exception
      */
-    void sendLastTurn() throws RemoteException;
+    void sendLastTurn() throws IOException;
 
     /**
      * Send reconnected player.
@@ -124,7 +124,7 @@ public interface NotifierInterface extends Remote {
      * @param nickname the nickname
      * @throws RemoteException the remote exception
      */
-    void sendReconnectedPlayer(String nickname) throws RemoteException;
+    void sendReconnectedPlayer(String nickname) throws IOException;
 
     /**
      * Send reconnection impossible.
@@ -132,7 +132,7 @@ public interface NotifierInterface extends Remote {
      * @param nickname the nickname
      * @throws RemoteException the remote exception
      */
-    void sendReconnectionImpossible(String nickname) throws RemoteException;
+    void sendReconnectionImpossible(String nickname) throws IOException;
 
     /**
      * Send disconnected player.
@@ -156,14 +156,14 @@ public interface NotifierInterface extends Remote {
      * @param status the status
      * @throws RemoteException the remote exception
      */
-    void sendStatusSetToLastStatus(GameStatus status) throws RemoteException;
+    void sendStatusSetToLastStatus(GameStatus status) throws IOException;
 
     /**
      * Send last status reset.
      *
      * @throws RemoteException the remote exception
      */
-    void sendLastStatusReset() throws RemoteException;
+    void sendLastStatusReset() throws IOException;
 
     /**
      * Send start added.
@@ -231,7 +231,7 @@ public interface NotifierInterface extends Remote {
      *
      * @throws RemoteException the remote exception
      */
-    void youWereReconnected() throws RemoteException;
+    void youWereReconnected() throws IOException;
 
     /**
      * Send message.
