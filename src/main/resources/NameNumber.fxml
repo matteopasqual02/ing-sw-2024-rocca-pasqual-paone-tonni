@@ -71,7 +71,7 @@
             </HBox>
             <HBox alignment="BOTTOM_CENTER" prefHeight="187.0" prefWidth="1024.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="313.0" styleClass="button_create_game_enter" stylesheets="@CSSStyle/allButton.css" textAlignment="CENTER" />
+                  <Button fx:id="createButton" alignment="CENTER" contentDisplay="BOTTOM" onAction="#handleButtonClick" prefHeight="100.0" prefWidth="313.0" styleClass="button_create_game_enter" stylesheets="@CSSStyle/allButton.css" textAlignment="CENTER" />
                </children>
             </HBox>
          </children>

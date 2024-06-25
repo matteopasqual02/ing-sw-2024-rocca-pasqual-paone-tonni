@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -21,6 +22,8 @@ public class NameNumberController extends GenericController {
      */
     @FXML
     public Button button;
+    @FXML
+    public Button createButton;
     /**
      * The String 1.
      */
@@ -57,6 +60,7 @@ public class NameNumberController extends GenericController {
     public void setParameters(ExecutorService executor, Client client, GUIApplication application){
         this.executor = executor;
         this.client = client;
+        createButton.setDisable(true);
     }
 
     /*@FXML
@@ -105,6 +109,7 @@ public class NameNumberController extends GenericController {
         }
         lastClicked = (ToggleButton) event.getSource();
         lastClicked.getStyleClass().add("clicked");
+        createButton.setDisable(false);
     }
 
     /**
@@ -120,6 +125,7 @@ public class NameNumberController extends GenericController {
         }
         lastClicked = (ToggleButton) event.getSource();
         lastClicked.getStyleClass().add("clicked");
+        createButton.setDisable(false);
     }
 
     /**
@@ -135,6 +141,7 @@ public class NameNumberController extends GenericController {
         }
         lastClicked = (ToggleButton) event.getSource();
         lastClicked.getStyleClass().add("clicked");
+        createButton.setDisable(false);
     }
 
 
