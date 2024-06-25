@@ -1140,8 +1140,7 @@ public class GameSceneController extends GenericController{
      * Handle resource deck clicked.
      */
     public void handleResourceDeckClicked() {
-        ImageView toReplaceIV = deckResourcesCard;
-        jump(toReplaceIV);
+        jump(deckResourcesCard);
 
         for (int i = 0; i < decks.getChildren().size(); i++) {
             ImageView card = (ImageView) decks.getChildren().get(i);
@@ -1162,8 +1161,7 @@ public class GameSceneController extends GenericController{
      * Handle gold deck clicked.
      */
     public void handleGoldDeckClicked() {
-        ImageView toReplaceIV = deckResourcesCard;
-        jump(toReplaceIV);
+        jump(deckGoldCard);
 
         for (int i = 0; i < decks.getChildren().size(); i++) {
             ImageView card = (ImageView) decks.getChildren().get(i);
