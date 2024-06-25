@@ -301,36 +301,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
     }
 
     /**
-     * Send full game.
-     */
-    @Override
-    public void sendFullGame() throws IOException {
-        synchronized (outputStream) {
-            outputStream.writeObject(new ServerMessageFullGame());
-            messageDone();
-        }
-    }
-
-    /**
-     * Send name already in game.
-     */
-    @Override
-    public void sendNameAlreadyInGame() {
-        synchronized (outputStream) {
-        }
-    }
-
-    /**
-     * Send player removed.
-     *
-     * @param pNickname the p nickname
-     */
-    @Override
-    public void sendPlayerRemoved(String pNickname) {
-        synchronized (outputStream) {}
-    }
-
-    /**
      * Send next turn.
      *
      * @param nickname the nickname
@@ -344,16 +314,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         }
     }
 
-    /**
-     * Send last turn.
-     */
-    @Override
-    public void sendLastTurn()  throws IOException{
-        synchronized (outputStream) {
-            outputStream.writeObject(new ServerSendLastTurn());
-            messageDone();
-        }
-    }
 
     /**
      * Send reconnected player.
@@ -520,29 +480,6 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
         synchronized (outputStream) {
             outputStream.writeObject(new ServerMessageDrewBoard(p, b, d));
             messageDone();
-        }
-    }
-
-    /**
-     * Send you were removed.
-     *
-     * @param pNickname the p nickname
-     * @throws IOException the io exception
-     */
-    @Override
-    public void sendYouWereRemoved(String pNickname) throws IOException {
-        synchronized (outputStream) {
-            outputStream.writeObject(new ServerMessagePlayerRemoved(pNickname));
-            messageDone();
-        }
-    }
-
-    /**
-     * You were reconnected.
-     */
-    @Override
-    public void youWereReconnected() {
-        synchronized (outputStream) {
         }
     }
 

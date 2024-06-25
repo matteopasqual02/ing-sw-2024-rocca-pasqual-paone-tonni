@@ -133,39 +133,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
         }
     }
 
-    /**
-     * Notify game full.
-     *
-     * @param player the player
-     */
-    public void notify_gameFull(Player player) {
-        for(String name : listenersMap.keySet()) {
-            try {
-                if (name.equals(player.getNickname())) {
-                    listenersMap.get(name).sendFullGame();
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    /**
-     * Notify player already in.
-     *
-     * @param player the player
-     */
-    public void notify_playerAlreadyIn(Player player) {
-        for(String name : listenersMap.keySet()) {
-            try {
-                if (name.equals(player.getNickname())) {
-                    listenersMap.get(name).sendNameAlreadyInGame();
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     /**
      * Notify ask players ready.
@@ -181,26 +148,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     }
 
     /**
-     * Notify remove player.
-     *
-     * @param pNickname the p nickname
-     */
-    public void notify_removePlayer(String pNickname) {
-        for(String name : listenersMap.keySet()){
-            try {
-                if(name.equals(pNickname)){
-                    listenersMap.get(name).sendYouWereRemoved(pNickname);
-                }
-                else {
-                    listenersMap.get(name).sendPlayerRemoved(pNickname);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    /**
      * Notify reconnect player.
      *
      * @param nickname the nickname
@@ -208,12 +155,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
     public void notify_reconnectPlayer(String nickname) {
         for(String name : listenersMap.keySet()){
             try {
-                if(name.equals(nickname)){
-                    listenersMap.get(name).youWereReconnected();
-                }
-                else{
-                    listenersMap.get(name).sendReconnectedPlayer(nickname);
-                }
+                listenersMap.get(name).sendReconnectedPlayer(nickname);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -325,19 +267,6 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendNextTurn(nickname);
                 ConsolePrinter.consolePrinter(name);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    /**
-     * Notify last turn.
-     */
-    public void notify_lastTurn() {
-        for(String name : listenersMap.keySet()){
-            try {
-                listenersMap.get(name).sendLastTurn();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

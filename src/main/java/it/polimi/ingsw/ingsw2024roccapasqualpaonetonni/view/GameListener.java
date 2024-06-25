@@ -74,19 +74,6 @@ public interface GameListener extends Remote {
      */
     void noAvailableGame() throws RemoteException;
 
-    /**
-     * Full game.
-     *
-     * @throws RemoteException the remote exception
-     */
-    void fullGame() throws RemoteException;
-
-    /**
-     * Name already in game.
-     *
-     * @throws RemoteException the remote exception
-     */
-    void nameAlreadyInGame() throws RemoteException;
 
     /**
      * Are you ready
@@ -96,14 +83,6 @@ public interface GameListener extends Remote {
     void areYouReady() throws RemoteException;
 
     /**
-     * Player removed.
-     *
-     * @param p the p
-     * @throws RemoteException the remote exception
-     */
-    void playerRemoved(String p) throws RemoteException;
-
-    /**
      * Next turn.
      *
      * @param nickname the nickname
@@ -111,12 +90,6 @@ public interface GameListener extends Remote {
      */
     void nextTurn(String nickname) throws RemoteException;
 
-    /**
-     * Last turn.
-     *
-     * @throws RemoteException the remote exception
-     */
-    void lastTurn() throws RemoteException;
 
     /**
      * Reconnected player.

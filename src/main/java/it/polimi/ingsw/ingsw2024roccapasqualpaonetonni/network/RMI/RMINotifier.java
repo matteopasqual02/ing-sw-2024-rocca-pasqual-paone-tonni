@@ -183,47 +183,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
-    /**
-     * Send full game.
-     */
-    @Override
-    public void sendFullGame() {
-        try {
-            listener.fullGame();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    /**
-     * Send name already in game.
-     */
-    @Override
-    public void sendNameAlreadyInGame() {
-        try {
-            listener.nameAlreadyInGame();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    /**
-     * Send player removed.
-     *
-     * @param pNickname the p nickname
-     */
-    @Override
-    public void sendPlayerRemoved(String pNickname) {
-        try {
-            listener.playerRemoved(pNickname);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
 
     /**
      * Send next turn.
@@ -241,19 +200,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
 
     }
 
-    /**
-     * Send last turn.
-     */
-    @Override
-    public void sendLastTurn() {
-        try {
-            listener.lastTurn();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
 
     /**
      * Send reconnected player.
@@ -442,24 +388,6 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         }
     }
 
-
-    /**
-     * Send you were removed.
-     *
-     * @param pNickname the p nickname
-     */
-    @Override
-    public void sendYouWereRemoved(String pNickname) {
-
-    }
-
-    /**
-     * You were reconnected.
-     */
-    @Override
-    public void youWereReconnected() {
-
-    }
 
     /**
      * Send message.

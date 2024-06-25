@@ -81,27 +81,6 @@ public interface NotifierInterface extends Remote {
      */
     void sendAskPlayersReady() throws IOException;
 
-    /**
-     * Send full game.
-     *
-     * @throws RemoteException the remote exception
-     */
-    void sendFullGame() throws IOException;
-
-    /**
-     * Send name already in game.
-     *
-     * @throws RemoteException the remote exception
-     */
-    void sendNameAlreadyInGame() throws IOException;
-
-    /**
-     * Send player removed.
-     *
-     * @param pNickname the p nickname
-     * @throws RemoteException the remote exception
-     */
-    void sendPlayerRemoved(String pNickname) throws IOException;
 
     /**
      * Send next turn.
@@ -111,12 +90,7 @@ public interface NotifierInterface extends Remote {
      */
     void sendNextTurn(String nickname) throws IOException;
 
-    /**
-     * Send last turn.
-     *
-     * @throws RemoteException the remote exception
-     */
-    void sendLastTurn() throws IOException;
+
 
     /**
      * Send reconnected player.
@@ -218,20 +192,6 @@ public interface NotifierInterface extends Remote {
      */
     void sendDrewFromBoard(Player p, BoardDeck b, DrawableDeck d) throws IOException;
 
-    /**
-     * Send you were removed.
-     *
-     * @param pNickname the p nickname
-     * @throws IOException the io exception
-     */
-    void sendYouWereRemoved(String pNickname) throws IOException;
-
-    /**
-     * You were reconnected.
-     *
-     * @throws RemoteException the remote exception
-     */
-    void youWereReconnected() throws IOException;
 
     /**
      * Send message.

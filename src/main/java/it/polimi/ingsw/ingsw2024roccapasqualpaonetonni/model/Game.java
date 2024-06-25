@@ -184,12 +184,10 @@ public class Game implements Serializable {
                 gameListenersHandler.notify_addPlayer(px.getNickname(), this.gameId);
             }
             else {
-                gameListenersHandler.notify_gameFull(px);
                 throw new GameAlreadyFullException("The game is full");
             }
         }
         else {
-            gameListenersHandler.notify_playerAlreadyIn(px);
             throw new PlayerAlreadyInException("The player is already in the game");
         }
 
@@ -398,7 +396,6 @@ public class Game implements Serializable {
         }
         if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
             setStatus(GameStatus.LAST_TURN);
-            gameListenersHandler.notify_lastTurn();
             gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
             return;
         }
@@ -422,7 +419,6 @@ public class Game implements Serializable {
         }
         if (newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.WAITING_LAST_TURN)) {
             setStatus(GameStatus.LAST_TURN);
-            gameListenersHandler.notify_lastTurn();
             gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
             return;
         }

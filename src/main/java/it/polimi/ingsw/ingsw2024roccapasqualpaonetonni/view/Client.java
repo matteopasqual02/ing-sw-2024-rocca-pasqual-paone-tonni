@@ -670,40 +670,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
 
 
     /**
-     * Full game.
-     */
-    @Override
-    public void fullGame() {
-
-    }
-
-    /**
-     * Name already in game.
-     */
-    @Override
-    public void nameAlreadyInGame() {
-
-    }
-
-    /**
-     * Player removed.
-     *
-     * @param p the p
-     */
-    @Override
-    public void playerRemoved(String p) {
-
-    }
-
-    /**
-     * Last turn.
-     */
-    @Override
-    public void lastTurn() {
-
-    }
-
-    /**
      * Reconnected player.
      *
      * @param nickname the nickname
