@@ -241,11 +241,19 @@ public class Game implements Serializable {
             ArrayList<Player> copiedList = new ArrayList<>(players);
 
             boolean in = false;
-            for(int i=1; i<copiedList.size() && !in; i++){
-                if(p.getColorPlayer()<copiedList.get(i).getColorPlayer()){
-                    copiedList.add(i, p);
+            int j = 1;
+            while (j < maxNumberOfPlayer && !in) {
+                for(int i=1; i<copiedList.size() && !in; i++){
+                    if(p.getColorPlayer() + j == copiedList.get(i).getColorPlayer()){
+                        copiedList.add(i, p);
+                        in = true;
+                    }
+                }
+                if(p.getColorPlayer() + j == copiedList.getFirst().getColorPlayer()){
+                    copiedList.add(p);
                     in = true;
                 }
+                j++;
             }
             if(!in){
                 copiedList.add(p);
@@ -253,7 +261,6 @@ public class Game implements Serializable {
 
             players.clear();
             players.addAll(copiedList);
-
             for(Player pp: players){
                 pp.setPlayerListeners(gameListenersHandler.getListener());
             }
@@ -410,6 +417,7 @@ public class Game implements Serializable {
         temp = players.poll();
         players.add(temp);
         Player newCurrent = players.peek();
+
         if(newCurrent != null && firstPlayer!=null && firstPlayer.getNickname().equals(newCurrent.getNickname()) && status[0].equals(GameStatus.LAST_TURN)){
             checkWinner();
             setStatus(GameStatus.ENDED);
