@@ -58,7 +58,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             listener.ping();
         }
         catch (RemoteException e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: listener failed");
         }
     }
 
@@ -73,7 +73,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             listener.genericError(s);
         }
         catch (RemoteException e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: listener failed");
         }
     }
 
@@ -88,7 +88,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
             listener.winners(list);
         }
         catch (RemoteException e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: listener failed");
         }
     }
 

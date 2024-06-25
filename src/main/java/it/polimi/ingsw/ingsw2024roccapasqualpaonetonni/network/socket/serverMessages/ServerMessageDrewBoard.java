@@ -3,6 +3,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.BoardDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 /**
@@ -46,7 +47,7 @@ public class ServerMessageDrewBoard extends ServerGenericMessage{
             listener.drewFromBoard(player, boardDeck, drawableDeck);
         }
         catch (Exception e){
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: message failed");
         }
     }
 }

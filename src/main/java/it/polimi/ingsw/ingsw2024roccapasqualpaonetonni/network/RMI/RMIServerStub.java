@@ -99,7 +99,7 @@ public class RMIServerStub implements ServerInterface {
             gameController.pong(me);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: pin pong failed");
         }
     }
 

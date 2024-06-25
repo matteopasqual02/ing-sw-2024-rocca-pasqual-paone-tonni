@@ -51,10 +51,6 @@ public class GUIApplication extends Application {
      */
     private Stage otherBoardsStage;
     /**
-     * The game root.
-     */
-    private StackPane joinedGameRoot;
-    /**
      * The game controller.
      */
     private JoinedGameController joinedGameController = null;
@@ -172,6 +168,10 @@ public class GUIApplication extends Application {
      */
     public void show_youJoinedGame(int gameID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/JoinedGame.fxml"));
+        /**
+         * The game root.
+         */
+        StackPane joinedGameRoot;
         try {
             joinedGameRoot = loader.load();
         } catch (IOException e) {

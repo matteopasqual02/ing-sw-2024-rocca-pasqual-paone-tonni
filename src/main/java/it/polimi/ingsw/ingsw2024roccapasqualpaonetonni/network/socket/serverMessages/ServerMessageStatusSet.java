@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 import java.rmi.RemoteException;
@@ -35,7 +36,7 @@ public class ServerMessageStatusSet extends ServerGenericMessage{
             listener.statusSet(status);
         }
         catch (RemoteException e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: message failed");
         }
     }
 }

@@ -34,8 +34,7 @@ public class SocketServer extends Thread {
             consolePrinter("[READY] SOCKET SERVER");
 
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("[ERROR] STARTING SOCKET SERVER ");
+            consolePrinter("[ERROR] STARTING SOCKET SERVER ");
         }
     }
 

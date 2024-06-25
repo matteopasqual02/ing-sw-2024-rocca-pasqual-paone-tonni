@@ -37,7 +37,7 @@ public class GUI extends UnicastRemoteObject implements ViewUpdate {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                ConsolePrinter.consolePrinter("[ERROR]: load gui app failed");
             }
         }
         this.application = GUIApplication.getInstance();

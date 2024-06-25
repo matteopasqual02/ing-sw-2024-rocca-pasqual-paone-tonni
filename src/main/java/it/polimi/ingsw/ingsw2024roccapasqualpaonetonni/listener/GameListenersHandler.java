@@ -39,7 +39,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 listenersMap.get(name).sendAll(new GameImmutable(game));
             }
             catch(Exception e){
-                e.printStackTrace();
+                ConsolePrinter.consolePrinter("[ERROR]: notify all failed");
             }
         }
     }
@@ -70,7 +70,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 listenersMap.get(name).sendMaxNumPlayersSet(gameId,max);
             }
             catch(Exception e){
-                e.printStackTrace();
+                ConsolePrinter.consolePrinter("[ERROR]: listener failed");
             }
         }
     }
@@ -104,7 +104,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                         listenersMap.get(name).sendYouJoinedGame(gameId);
                     }
                     catch (Exception e){
-                        e.printStackTrace();
+                        ConsolePrinter.consolePrinter("[ERROR]: listener failed");
                     }
                 }
                 else {

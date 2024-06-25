@@ -47,8 +47,7 @@ public class RMIServer extends UnicastRemoteObject implements MainControllerInte
             ConsolePrinter.consolePrinter("[READY] RMI SERVER");
 
         }catch (RemoteException e){
-            e.printStackTrace();
-            System.err.println("[ERROR] RMI SERVER START: \n\tRMI exception: " + e);
+            ConsolePrinter.consolePrinter("[ERROR] RMI SERVER START: \n\tRMI exception: " + e);
         }
         return getInstance();
     }

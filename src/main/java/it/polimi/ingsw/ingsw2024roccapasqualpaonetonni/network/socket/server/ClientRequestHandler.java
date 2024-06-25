@@ -112,7 +112,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                             sendYouJoinedGame(gameControllerInterface.getGameId());
                         }
                         catch (Exception e) {
-                            e.printStackTrace();
+                            ConsolePrinter.consolePrinter("[ERROR]: joining game failed");
                         }
                     }
                     else if (message instanceof MainMessageJoinFirstAvailable && gameControllerInterface!=null) {
@@ -120,7 +120,7 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
                             sendYouJoinedGame(gameControllerInterface.getGameId());
                         }
                         catch (Exception e) {
-                            e.printStackTrace();
+                            ConsolePrinter.consolePrinter("[ERROR]: joining game failed");
                         }
                     }
                     else if(gameControllerInterface == null){

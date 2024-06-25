@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMessages;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 /**
@@ -34,7 +35,7 @@ public class ServerMessageCardAdded extends ServerGenericMessage{
             listener.cardAdded(player,cardID);
         }
         catch(Exception e){
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: message failed");
         }
     }
 }

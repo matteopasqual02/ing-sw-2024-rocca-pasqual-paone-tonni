@@ -882,7 +882,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
             //ConsolePrinter.consolePrinter("pinged");
         }
         catch (Exception e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: ping pong failed");
         }
     }
 

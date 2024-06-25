@@ -120,7 +120,7 @@ public class GameController implements GameControllerInterface {
         @Override
         @SuppressWarnings("BusyWait")
         public void run() {
-            while (true) {
+            while (!this.isInterrupted()) {
                 // Send ping message to client
                 synchronized (clientsRunning) {
                     clients.clear();
@@ -131,7 +131,6 @@ public class GameController implements GameControllerInterface {
                 for (String client : clients) {
                     try {
                         model.ping(client);
-                        //ConsolePrinter.consolePrinter("pinging " + client);
                     }
                     catch (Exception ignored) {}
                 }
@@ -140,7 +139,7 @@ public class GameController implements GameControllerInterface {
                 try {
                     Thread.sleep(5000); // 1 seconds
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ConsolePrinter.consolePrinter("[ERROR]: pin pong failed");
                 }
 
                 synchronized (clientsRunning) {
@@ -162,7 +161,7 @@ public class GameController implements GameControllerInterface {
                 try {
                     Thread.sleep(5000); // 1 seconds
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ConsolePrinter.consolePrinter("[ERROR]: pin pong failed");
                 }
 
                 synchronized (clientsRunning) {
@@ -262,7 +261,7 @@ public class GameController implements GameControllerInterface {
         try {
             model.addPlayer(px);
         } catch (GameAlreadyFullException | PlayerAlreadyInException e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: add player failed");
         }
         if (model.getPlayerNum() == model.getMaxNumberOfPlayer()) {
             Runnable runnable = model::askPlayersReady;

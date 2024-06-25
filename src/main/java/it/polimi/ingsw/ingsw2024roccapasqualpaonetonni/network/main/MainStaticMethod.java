@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.main;
 
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class MainStaticMethod {
                 new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: clear cmd failed");
         }
     }
 

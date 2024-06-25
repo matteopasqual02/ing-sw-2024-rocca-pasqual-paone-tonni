@@ -2,6 +2,7 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.socket.serverMes
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GameListener;
 
 /**
@@ -39,7 +40,7 @@ public class ServerMessageDrewGold extends ServerGenericMessage{
             listener.goldDrawn(player, deck);
         }
         catch(Exception e){
-            e.printStackTrace();
+            ConsolePrinter.consolePrinter("[ERROR]: message failed");
         }
     }
 }
