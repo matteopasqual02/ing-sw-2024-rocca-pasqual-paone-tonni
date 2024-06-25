@@ -37,7 +37,12 @@ public class Game implements Serializable {
     /**
      * The Players disconnected.
      */
-    private final List<Player> playersDisconnected;
+    public enum DisconnectionType {
+        LEAVE,
+        PINGPONG
+    }
+    //private final List<Player> playersDisconnected;
+    private final LinkedHashMap<Player,DisconnectionType> playersDisconnected;
     /**
      * The Winner.
      */
@@ -76,7 +81,8 @@ public class Game implements Serializable {
     public Game(int id){
         players = new LinkedList<>();
         winner = new LinkedList<>();
-        playersDisconnected = new LinkedList<>();
+        //playersDisconnected = new LinkedList<>();
+        playersDisconnected = new LinkedHashMap<>();
         firstPlayer = null;
         status = new GameStatus[2];
         status[0] = GameStatus.PREPARATION;
@@ -207,7 +213,7 @@ public class Game implements Serializable {
      *
      * @return the players disconnected
      */
-    public List<Player> getPlayersDisconnected() {
+    public LinkedHashMap<Player, DisconnectionType> getPlayersDisconnected() {
         return playersDisconnected;
     }
 
@@ -218,15 +224,20 @@ public class Game implements Serializable {
      * @param nickname the nickname
      */
     public synchronized void reconnectPlayer(String nickname) {
-        Player p = playersDisconnected.stream().filter(player -> nickname.equals(player.getNickname())).findFirst().orElse(null);
+        Player p = playersDisconnected.keySet().stream().filter(player -> nickname.equals(player.getNickname())).findFirst().orElse(null);
         if(p!=null){
-
-            for (int i=0; i<playersDisconnected.size();i++){
-                if(nickname.equals(playersDisconnected.get(i).getNickname())){
+            for(Player player: playersDisconnected.keySet()){
+                if(nickname.equals(player.getNickname())){
+                    playersDisconnected.remove(player);
+                    break;
+                }
+            }
+            /*for (int i=0; i<playersDisconnected.size();i++){
+                if(nickname.equals( playersDisconnected.get(i).getNickname())){
                     playersDisconnected.remove(playersDisconnected.get(i));
                     i=maxNumberOfPlayer;
                 }
-            }
+            }*/
             ArrayList<Player> copiedList = new ArrayList<>(players);
 
             boolean in = false;
@@ -260,10 +271,21 @@ public class Game implements Serializable {
      *
      * @param nickname the nickname
      */
+    public synchronized void addPlayerDisconnectedList(String nickname) {
+        Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
+        if(p!=null){
+            playersDisconnected.put(p,DisconnectionType.PINGPONG);
+            players.remove(p);
+            removeListener(nickname);
+        }
+    }
+    public synchronized void disconnectPlayerFromPingPong(String nickname) {
+        gameListenersHandler.notify_disconnectedPlayer(nickname);
+    }
     public synchronized void disconnectPlayer(String nickname) {
         Player p = players.stream().filter(player -> Objects.equals(player.getNickname(), nickname)).findFirst().orElse(null);
         if(p!=null){
-            playersDisconnected.add(p);
+            playersDisconnected.put(p,DisconnectionType.LEAVE);
             players.remove(p);
             removeListener(nickname);
             gameListenersHandler.notify_disconnectedPlayer(nickname);

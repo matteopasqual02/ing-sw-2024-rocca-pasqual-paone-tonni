@@ -84,7 +84,7 @@ public class MainController implements MainControllerInterface {
         List<GameController> gameList = getRunningGames();
         for (GameController i : gameList){
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
-            int playersEqualInDisconnected = i.getAllDisconnectedPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
+            int playersEqualInDisconnected = i.getAllDisconnectedPlayer().keySet().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
             int playersSize = i.getAllPlayer().size();
             int maxSize = i.getMaxNumberOfPlayer();
             if(playersSize < maxSize && playersEqualIn == 0 && playersEqualInDisconnected == 0){
@@ -111,7 +111,7 @@ public class MainController implements MainControllerInterface {
 
         for (GameController i : gameList){
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
-            int playersEqualInDisconnected = i.getAllDisconnectedPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
+            int playersEqualInDisconnected = i.getAllDisconnectedPlayer().keySet().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
             int playersSize = i.getAllPlayer().size();
             int maxSize = i.getMaxNumberOfPlayer();
             boolean gameIdEqual = (i.getGameID() == idToConnect);
@@ -139,7 +139,7 @@ public class MainController implements MainControllerInterface {
         Player player;
         List<GameController> ris = runningGames.stream().filter(gc -> (gc.getGameID() == idToReconnect)).toList();
         if(!ris.isEmpty()){
-            player = ris.getFirst().getAllDisconnectedPlayer().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null);
+            player = ris.getFirst().getAllDisconnectedPlayer().keySet().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null);
             if(player!=null){
                 ris.getFirst().addMyselfAsListener(nickname, notifier);
                 ris.getFirst().reconnectPlayer(nickname);
@@ -166,7 +166,7 @@ public class MainController implements MainControllerInterface {
             if(p!=null){
                 ris.getFirst().killMe(nickname);
                 //ris.getFirst().removeMyselfAsListener(nickname);
-                ris.getFirst().disconnectPlayer(nickname);
+                ris.getFirst().disconnectPlayer(nickname,true);
                 return ris.getFirst();
             }
         }
