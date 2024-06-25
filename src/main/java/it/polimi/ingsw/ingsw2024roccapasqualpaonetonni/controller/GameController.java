@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -173,10 +174,23 @@ public class GameController implements GameControllerInterface {
 
                 for (String deadClient : clients) {
                     //ConsolePrinter.consolePrinter("dead client " + deadClient);
-                    if(!model.getPlayersDisconnected().stream().map(Player::getNickname).toList().contains(deadClient)){
-                        disconnectPlayer(deadClient);
-                        ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
+                    if(!model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient)){
+                        model.addPlayerDisconnectedList(deadClient);
                     }
+                }
+                for (String deadClient : clients) {
+                    ConsolePrinter.consolePrinter("sending notifications");
+                    if(model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient)){
+                        Player dead = model.getPlayersDisconnected().keySet().stream().filter(player -> player.getNickname().equals(deadClient)).toList().getFirst();
+                        if(model.getPlayersDisconnected().get(dead).equals(Game.DisconnectionType.PINGPONG)){
+                            disconnectPlayer(deadClient,false);
+                            ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
+                        }
+                    }
+                    /*if(model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient) && model.getPlayersDisconnected().get().equals(Game.DisconnectionType.PINGPONG)){
+                        disconnectPlayer(deadClient,false);
+                        ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
+                    }*/
                 }
             }
         }
@@ -322,7 +336,7 @@ public class GameController implements GameControllerInterface {
      *
      * @return all disconnected players
      */
-    public List<Player> getAllDisconnectedPlayer() {
+    public LinkedHashMap<Player, Game.DisconnectionType> getAllDisconnectedPlayer() {
         return model.getPlayersDisconnected();
     }
 
@@ -367,9 +381,14 @@ public class GameController implements GameControllerInterface {
      *
      * @param nickname the nickname
      */
-    public synchronized void disconnectPlayer(String nickname) {
+    public synchronized void disconnectPlayer(String nickname, Boolean fromLeave) {
         Player oldCurrent = model.getCurrentPlayer();
-        model.disconnectPlayer(nickname);
+        if(fromLeave){
+            model.disconnectPlayer(nickname);
+        }
+        else{
+            model.disconnectPlayerFromPingPong(nickname);
+        }
 
         if (model.getPlayerNum() == 0) {
             MainController.getInstance().removeGame(this);

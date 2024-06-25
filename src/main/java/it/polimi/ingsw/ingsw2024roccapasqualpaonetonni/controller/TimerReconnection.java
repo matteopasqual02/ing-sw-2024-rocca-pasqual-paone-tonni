@@ -50,7 +50,7 @@ public class TimerReconnection extends Thread{
                 if (players.getFirst().getCurrentPoints()==0){
                     players.getFirst().increasePoints(1);
                 }
-                for(Player p : model.getPlayersDisconnected()){
+                for(Player p : model.getPlayersDisconnected().keySet()){
                     p.resetPoints();
                     players.add(p);
                 }
