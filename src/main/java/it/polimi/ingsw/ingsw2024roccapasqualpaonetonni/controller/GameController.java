@@ -172,9 +172,14 @@ public class GameController implements GameControllerInterface {
                     }
                 }
 
+                Player oldCurrent = null;
+                Boolean oldCurrentSet = false;
                 for (String deadClient : clients) {
                     //ConsolePrinter.consolePrinter("dead client " + deadClient);
                     if(!model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient)){
+                        if(!oldCurrentSet){
+                            oldCurrent=model.getCurrentPlayer();
+                        }
                         model.addPlayerDisconnectedList(deadClient);
                     }
                 }
@@ -183,7 +188,7 @@ public class GameController implements GameControllerInterface {
                     if(model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient)){
                         Player dead = model.getPlayersDisconnected().keySet().stream().filter(player -> player.getNickname().equals(deadClient)).toList().getFirst();
                         if(model.getPlayersDisconnected().get(dead).equals(Game.DisconnectionType.PINGPONG)){
-                            disconnectPlayer(deadClient,false);
+                            disconnectPlayer(deadClient,false,oldCurrent);
                             ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
                         }
                     }
@@ -192,6 +197,7 @@ public class GameController implements GameControllerInterface {
                         ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
                     }*/
                 }
+                oldCurrentSet=false;
             }
         }
     }
@@ -381,9 +387,10 @@ public class GameController implements GameControllerInterface {
      *
      * @param nickname the nickname
      */
-    public synchronized void disconnectPlayer(String nickname, Boolean fromLeave) {
-        Player oldCurrent = model.getCurrentPlayer();
+    public synchronized void disconnectPlayer(String nickname, Boolean fromLeave, Player oldCurr) {
+        //Player oldCurrent = model.getCurrentPlayer();
         if(fromLeave){
+            //oldCurrent = model.getCurrentPlayer();
             model.disconnectPlayer(nickname);
         }
         else{
@@ -403,7 +410,8 @@ public class GameController implements GameControllerInterface {
                 timer.start();
             }
         }
-        if (model.getPlayerNum() > 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
+        //if (model.getPlayerNum() > 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
+        if (model.getPlayerNum() > 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurr.equals(model.getCurrentPlayer())) {
             model.nextPlayerAfterDisconnect();
             ConsolePrinter.consolePrinter("GameController removed player in game");
         }

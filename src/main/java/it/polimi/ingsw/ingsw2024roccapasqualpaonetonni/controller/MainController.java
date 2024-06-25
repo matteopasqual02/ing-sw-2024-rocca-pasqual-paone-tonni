@@ -166,7 +166,7 @@ public class MainController implements MainControllerInterface {
             if(p!=null){
                 ris.getFirst().killMe(nickname);
                 //ris.getFirst().removeMyselfAsListener(nickname);
-                ris.getFirst().disconnectPlayer(nickname,true);
+                ris.getFirst().disconnectPlayer(nickname,true,ris.getFirst().getCurrentPlayer());
                 return ris.getFirst();
             }
         }

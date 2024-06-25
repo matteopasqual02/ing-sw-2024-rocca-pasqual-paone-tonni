@@ -21,7 +21,7 @@
                      <children>
                         <HBox alignment="TOP_CENTER" prefHeight="110.0" prefWidth="1019.0">
                            <children>
-                              <TextField fx:id="string1" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 32px;" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert yout nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css">
+                              <TextField fx:id="string1" style="-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 32px;" alignment="CENTER" prefHeight="78.0" prefWidth="500.0" promptText="Insert your nickname" styleClass="button_text_reverse" stylesheets="@CSSStyle/allButton.css">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>

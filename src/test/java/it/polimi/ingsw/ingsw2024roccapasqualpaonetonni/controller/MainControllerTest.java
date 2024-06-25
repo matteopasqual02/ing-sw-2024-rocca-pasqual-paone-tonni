@@ -122,7 +122,7 @@ class MainControllerTest {
         assertEquals(GameStatus.RUNNING,mainController.getRunningGames().getFirst().getGame().getGameStatus());
 
         assertEquals(0,
-                mainController.getRunningGames().getFirst().getGame().getPlayersDisconnected().stream()
+                mainController.getRunningGames().getFirst().getGame().getPlayersDisconnected().keySet().stream()
                         .filter(player -> player.getNickname().equals("p1")).toList().size()
         );
     }
