@@ -98,7 +98,7 @@ public class GUIApplication extends Application {
                     client.receiveInput("/leave");
                 } catch (IOException | NotBoundException e) {
                     throw new RuntimeException(e);
-                };
+                }
                 stage.hide();}
         ));
 

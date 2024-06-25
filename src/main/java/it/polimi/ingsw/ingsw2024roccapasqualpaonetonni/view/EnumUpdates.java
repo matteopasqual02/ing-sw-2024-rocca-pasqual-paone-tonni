@@ -23,5 +23,5 @@ public enum EnumUpdates {
     /**
      * All enum updates.
      */
-    ALL;
+    ALL
 }

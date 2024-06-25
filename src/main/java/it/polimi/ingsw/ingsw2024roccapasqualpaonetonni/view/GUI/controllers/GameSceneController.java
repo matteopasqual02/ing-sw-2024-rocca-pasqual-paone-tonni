@@ -483,37 +483,37 @@ public class GameSceneController extends GenericController{
             points.setTextFill(Color.BROWN);
 
             ImageView green = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/green.png")));
-            Label greenCount = new Label(" "+String.valueOf(p.getCountSeed()[0])+ " ");
+            Label greenCount = new Label(" "+ p.getCountSeed()[0] + " ");
             green.setFitHeight(25);
             green.setFitWidth(25);
 
             ImageView blue = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/blue.png")));
-            Label blueCount = new Label(" "+String.valueOf(p.getCountSeed()[1])+ " ");
+            Label blueCount = new Label(" "+ p.getCountSeed()[1] + " ");
             blue.setFitHeight(25);
             blue.setFitWidth(25);
 
             ImageView red = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/red.png")));
-            Label redCount = new Label(" "+String.valueOf(p.getCountSeed()[2])+ " ");
+            Label redCount = new Label(" "+ p.getCountSeed()[2] + " ");
             red.setFitHeight(25);
             red.setFitWidth(25);
 
             ImageView purple = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/purple.png")));
-            Label purpleCount = new Label(" "+String.valueOf(p.getCountSeed()[3])+ " ");
+            Label purpleCount = new Label(" "+ p.getCountSeed()[3] + " ");
             purple.setFitHeight(25);
             purple.setFitWidth(25);
 
             ImageView feather = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/feather.png")));
-            Label featherCount = new Label(" "+String.valueOf(p.getCountSeed()[4])+ " ");
+            Label featherCount = new Label(" "+ p.getCountSeed()[4] + " ");
             feather.setFitHeight(25);
             feather.setFitWidth(25);
 
             ImageView potion = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/potion.png")));
-            Label potionCount = new Label(" "+String.valueOf(p.getCountSeed()[5])+ " ");
+            Label potionCount = new Label(" "+ p.getCountSeed()[5] + " ");
             potion.setFitHeight(25);
             potion.setFitWidth(25);
 
             ImageView scroll = new ImageView(String.valueOf(getClass().getResource("/images/Seed_image/scroll.png")));
-            Label scrollCount = new Label(" "+String.valueOf(p.getCountSeed()[6])+ " ");
+            Label scrollCount = new Label(" "+ p.getCountSeed()[6] + " ");
             scroll.setFitHeight(25);
             scroll.setFitWidth(25);
 
