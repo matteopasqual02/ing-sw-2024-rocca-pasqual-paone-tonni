@@ -84,9 +84,10 @@ public class MainController implements MainControllerInterface {
         List<GameController> gameList = getRunningGames();
         for (GameController i : gameList){
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
+            int playersEqualInDisconnected = i.getAllDisconnectedPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
             int playersSize = i.getAllPlayer().size();
             int maxSize = i.getMaxNumberOfPlayer();
-            if(playersSize < maxSize && playersEqualIn == 0){
+            if(playersSize < maxSize && playersEqualIn == 0 && playersEqualInDisconnected == 0){
                 i.addMyselfAsListener(nickname, notifier);
                 i.addPlayer(nickname);
                 return i;
@@ -110,10 +111,11 @@ public class MainController implements MainControllerInterface {
 
         for (GameController i : gameList){
             int playersEqualIn = i.getAllPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
+            int playersEqualInDisconnected = i.getAllDisconnectedPlayer().stream().filter(p -> p.getNickname().equals(nickname)).toList().size();
             int playersSize = i.getAllPlayer().size();
             int maxSize = i.getMaxNumberOfPlayer();
             boolean gameIdEqual = (i.getGameID() == idToConnect);
-            if(playersSize < maxSize && playersEqualIn==0 && gameIdEqual){
+            if(playersSize < maxSize && playersEqualIn==0 && gameIdEqual && playersEqualInDisconnected == 0){
                 i.addMyselfAsListener(nickname, notifier);
                 i.addPlayer(nickname);
                 return  i;
