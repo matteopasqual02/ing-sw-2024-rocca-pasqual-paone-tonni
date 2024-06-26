@@ -63,7 +63,11 @@ public class MainController implements MainControllerInterface {
      */
     @Override
     public synchronized GameControllerInterface createGameController(String nickname, int numMaxOfPlayer, NotifierInterface notifier) throws RemoteException {
-        GameController g = new GameController(getRunningGames().size()+1);
+        int id = 1;
+        if(getRunningGames()!=null && !getRunningGames().isEmpty()){
+            id = getRunningGames().getLast().getGameID() + 1;
+        }
+        GameController g = new GameController(id);
         g.setMaxNumberOfPlayer(numMaxOfPlayer);
         g.addMyselfAsListener(nickname, notifier);
         g.addPlayer(nickname);

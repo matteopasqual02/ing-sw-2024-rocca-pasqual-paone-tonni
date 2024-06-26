@@ -39,7 +39,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 listenersMap.get(name).sendAll(new GameImmutable(game));
             }
             catch(Exception e){
-                ConsolePrinter.consolePrinter("[ERROR]: notify all failed");
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -70,7 +70,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 listenersMap.get(name).sendMaxNumPlayersSet(gameId,max);
             }
             catch(Exception e){
-                ConsolePrinter.consolePrinter("[ERROR]: listener failed");
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -85,7 +85,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendCreatedGame(gameId);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -104,14 +104,14 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                         listenersMap.get(name).sendYouJoinedGame(gameId);
                     }
                     catch (Exception e){
-                        ConsolePrinter.consolePrinter("[ERROR]: listener failed");
+                        ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
                     }
                 }
                 else {
                     listenersMap.get(name).sendAddedNewPlayer(pNickname);
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -128,7 +128,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                     listenersMap.get(name).sendNoAvailableGame();
                 }
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -142,7 +142,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendAskPlayersReady();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -157,7 +157,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendReconnectedPlayer(nickname);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -174,7 +174,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                     listenersMap.get(name).sendReconnectionImpossible(nickname);
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -191,7 +191,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                     listenersMap.get(name).sendDisconnectedPlayer(nickname);
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -208,7 +208,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                     listenersMap.get(name).sendDisconnectedPlayer(nickname);
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
 
         }
@@ -224,7 +224,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendStatusSet(status);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -239,7 +239,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendStatusSetToLastStatus(status);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -252,7 +252,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendLastStatusReset();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -268,7 +268,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
                 listenersMap.get(name).sendNextTurn(nickname);
                 ConsolePrinter.consolePrinter(name);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -283,7 +283,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendMessage(message);
         } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
 }
@@ -298,7 +298,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendPrivateMessage(message);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -314,7 +314,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendPublicChatLog(requesterName,allMessages);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -331,7 +331,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendPrivateChatLog(yourName,otherName,privateChat);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -346,7 +346,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).genericError(s);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -361,7 +361,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).winners(list);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
@@ -371,7 +371,7 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
             try {
                 listenersMap.get(name).sendKill(nickname);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");
             }
         }
     }
