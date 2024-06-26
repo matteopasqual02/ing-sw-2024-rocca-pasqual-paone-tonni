@@ -634,7 +634,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
     @Override
     public void drewFromBoard(Player p, BoardDeck b, DrawableDeck d) {
         MainStaticMethod.clearCMD();
-        ConsolePrinter.consolePrinter("Client notified of drewFromBoard");
+        //ConsolePrinter.consolePrinter("Client notified of drewFromBoard");
         if(currentImmutable!=null){
             currentImmutable.refreshPlayer(p);
             currentImmutable.setDrawableDeck(d);
