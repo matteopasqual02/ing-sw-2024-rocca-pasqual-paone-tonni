@@ -203,7 +203,7 @@ public class GameImmutable implements Serializable {
         Seed seedPlayer = Seed.getById(color);
 
         if(seedPlayer!=null){
-            stringBuilder.append(ansi().cursor(1,0));
+            stringBuilder.append(ansi().cursor(2,0));
             stringBuilder.append("NICKNAME:\t").append(
                     ansi().fg(seedPlayer.getByAnsi()).bg(Ansi.Color.DEFAULT).a(player.getNickname()).fg(Ansi.Color.DEFAULT).bg(Ansi.Color.DEFAULT)
             ).append("\t");
@@ -215,7 +215,7 @@ public class GameImmutable implements Serializable {
             ).append("\n");
         }
 
-        stringBuilder.append(ansi().cursor(2,0));
+        stringBuilder.append(ansi().cursor(3,0));
         stringBuilder.append("AVAILABLE SEED:\t");
         int[] countSeed = player.getCountSeed();
         for (int i = 0; i < 7; i++) {
@@ -228,9 +228,9 @@ public class GameImmutable implements Serializable {
         }
 
 
-        stringBuilder.append(ansi().cursor(3,0));
-        stringBuilder.append("MY HAND:\n");
         stringBuilder.append(ansi().cursor(4,0));
+        stringBuilder.append("MY HAND:\n");
+        stringBuilder.append(ansi().cursor(5,0));
         stringBuilder.append("\tHAND 1\t\tHAND 2\t\tHAND 3\t\t\tPRIVATE GOAL");
         if(player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
             stringBuilder.append("\t\t\t\t\t\tSTARTING\n");
@@ -239,7 +239,7 @@ public class GameImmutable implements Serializable {
             stringBuilder.append("\n");
         }
 
-        stringBuilder.append(ansi().cursor(5,0));
+        stringBuilder.append(ansi().cursor(6,0));
         for(int i=0;i<3;i++){
             int finalI = i;
             player.getHand().forEach(playingCard -> stringBuilder.append(playingCard.toString(false, finalI)).append("\t"));
@@ -260,11 +260,11 @@ public class GameImmutable implements Serializable {
             }
         }
 
-        stringBuilder.append(ansi().cursor(8,0));
+        stringBuilder.append(ansi().cursor(9,0));
         stringBuilder.append("MY BOARD:\n");
         stringBuilder.append(player.getBoard().toString());
 
-        stringBuilder.append(ansi().cursor(12+player.getBoard().getDim_x(),0));
+        stringBuilder.append(ansi().cursor(13+player.getBoard().getDim_x(),0));
         stringBuilder.append("\nCOMMON DECKS:\n");
         stringBuilder.append("\tBOARD 1\t\tBOARD 2\t\tBOARD 3\t\tBOARD 4\t\t\tRESOURCES\t\tGOLD\t\tCOMMON OBJECTIVES\n");
         for(int k=0;k<3;k++) {
