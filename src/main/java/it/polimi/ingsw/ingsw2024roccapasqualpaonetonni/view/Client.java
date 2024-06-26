@@ -369,12 +369,9 @@ public class Client extends UnicastRemoteObject implements GameListener{
             case "/leave" -> {
                 if(inGame){
                     server.leave(myNickname, myGameId);
+                }else {
+                    System.exit(0);
                 }
-                /*
-                inGame =false;
-                currentImmutable=null;
-                state=null;
-                view.show_generic("You have left game " + myGameId);*/
             }
             case null, default -> view.invalidMessage("Invalid command", myTurn);
         }
