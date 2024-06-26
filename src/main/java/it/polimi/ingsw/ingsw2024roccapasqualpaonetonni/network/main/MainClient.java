@@ -27,7 +27,7 @@ public class MainClient {
         EnumViewType selView;
 
         do {
-            ConsolePrinter.consolePrinter("[MAIN] Insert the Sever IP or leave empty for localhost");
+            ConsolePrinter.consolePrinter("[MAIN] Insert the SERVER IP (leave empty for localhost)");
             inputString = new Scanner(System.in).nextLine();
             if(!inputString.isEmpty() && MainStaticMethod.isNotValidIP(inputString)){
                 MainStaticMethod.clearCMD();
@@ -40,7 +40,7 @@ public class MainClient {
 
         MainStaticMethod.clearCMD();
         do {
-            ConsolePrinter.consolePrinter("[MAIN] Insert Your IP or leave empty for localhost ");
+            ConsolePrinter.consolePrinter("[MAIN] Insert the CLIENT IP (leave empty for localhost)");
             inputString = new Scanner(System.in).nextLine();
             if(!inputString.isEmpty() && MainStaticMethod.isNotValidIP(inputString)){
                 MainStaticMethod.clearCMD();

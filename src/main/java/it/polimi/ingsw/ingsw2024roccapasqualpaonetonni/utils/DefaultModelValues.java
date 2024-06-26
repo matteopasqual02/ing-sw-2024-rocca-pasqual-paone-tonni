@@ -22,5 +22,5 @@ public class DefaultModelValues {
     /**
      * The constant Default_LastTurn_Points.
      */
-    public final static int Default_LastTurn_Points = 10;
+    public final static int Default_LastTurn_Points = 20;
 }

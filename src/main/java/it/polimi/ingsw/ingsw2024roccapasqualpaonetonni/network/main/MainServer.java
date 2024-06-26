@@ -25,7 +25,7 @@ public class MainServer {
         //insert IP
         do{
             MainStaticMethod.clearCMD();
-            ConsolePrinter.consolePrinter("[MAIN] Insert the remote IP or leave empty and press enter for localhost;");
+            ConsolePrinter.consolePrinter("[MAIN] Insert the SERVER IP (leave empty for localhost)");
             inputRemoteIP = new Scanner(System.in).nextLine();
         }while (!inputRemoteIP.isEmpty() && MainStaticMethod.isNotValidIP(inputRemoteIP)) ;
 
@@ -44,10 +44,9 @@ public class MainServer {
 
     }
 
-    /**
+    /*
      * Test.
      */
-    /*only test*/
     public static void test() {
         System.setProperty("java.rmi.server.hostname", DefaultNetworkValues.Remote_ip_address);
         RMIServer.bind();

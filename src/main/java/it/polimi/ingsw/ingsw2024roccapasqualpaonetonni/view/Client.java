@@ -492,7 +492,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         if(currentImmutable==null){return;}
         Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();
         switchShowTurn(player);
-        ConsolePrinter.consolePrinter(state.toString());
+        //ConsolePrinter.consolePrinter(state.toString());
     }
 
     /**
