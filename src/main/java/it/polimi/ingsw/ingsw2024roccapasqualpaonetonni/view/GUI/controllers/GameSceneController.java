@@ -13,6 +13,7 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -35,7 +36,8 @@ import java.util.concurrent.ExecutorService;
  * The type Game scene controller.
  */
 public class GameSceneController extends GenericController{
-
+    @FXML
+    public Label gameId;
     /**
      * The Pane.
      */
@@ -349,6 +351,9 @@ public class GameSceneController extends GenericController{
 
         //setting hand
         if(player==null) return;
+
+        gameId.setText("GameId: "+ gameImmutable.getGameId());
+        gameId.setStyle("-fx-alignment: CENTER;");
 
         board.setDisable(true);
         board.setPrefHeight(BOARD_SIZE[0]);

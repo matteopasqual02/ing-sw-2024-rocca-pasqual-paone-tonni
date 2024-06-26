@@ -17,7 +17,7 @@
 <?language java?>
 
 <AnchorPane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="background-wood" stylesheets="@CSSStyle/firstPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.GameSceneController">
-   <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="10.0" styleClass="background-board" stylesheets="@CSSStyle/firstPage.css">
+   <ScrollPane fx:id="personalBoard" prefHeight="426.0" prefWidth="650.0" styleClass="background-board" stylesheets="@CSSStyle/firstPage.css" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="10.0">
       <Pane fx:id="board" onMouseClicked="#handleBoardClick" prefHeight="778.0" prefWidth="1305.0" styleClass="background-board" stylesheets="@CSSStyle/firstPage.css" />
    </ScrollPane>
    <HBox layoutX="623.0" layoutY="5.0" prefHeight="600.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -28,7 +28,12 @@
          <HBox.margin>
             <Insets right="20.0" />
          </HBox.margin>
-         <TextField alignment="CENTER" editable="false" prefHeight="59.0" prefWidth="460.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Common Deck">
+         <Label fx:id="gameId" contentDisplay="CENTER" prefHeight="37.0" prefWidth="239.0" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css">
+            <VBox.margin>
+               <Insets bottom="5.0" />
+            </VBox.margin>
+         </Label>
+         <TextField alignment="CENTER" editable="false" prefHeight="40.0" prefWidth="239.0" style="-fx: 5;" styleClass="button_text_2" stylesheets="@CSSStyle/allButton.css" text="Common Deck">
             <font>
                <Font size="23.0" />
             </font>
@@ -228,6 +233,6 @@
       </VBox>
    </AnchorPane>
    <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <Label fx:id="turnLabel" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2px; -fx-font-family: 'Times New Roman';" text="Not your turn" textAlignment="CENTER" alignment="CENTER" />
+      <Label fx:id="turnLabel" alignment="CENTER" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2px; -fx-font-family: 'Times New Roman';" text="Not your turn" textAlignment="CENTER" />
    </StackPane>
 </AnchorPane>
