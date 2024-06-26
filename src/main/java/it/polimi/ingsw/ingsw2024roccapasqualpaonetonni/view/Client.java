@@ -701,7 +701,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
 
     @Override
     public void sendKill(String nickname) {
-        if(this.myNickname.equals(nickname)){
+        if(nickname.equals(myNickname)){
             inGame =false;
             currentImmutable=null;
             state=null;
