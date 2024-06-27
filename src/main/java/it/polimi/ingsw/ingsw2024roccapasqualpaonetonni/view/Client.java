@@ -462,7 +462,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      * @param gameImmutable the game immutable
      */
     @Override
-    public void allGame(GameImmutable gameImmutable) {
+    public void allGame(GameImmutable gameImmutable, Boolean afterReconnection) {
         MainStaticMethod.clearCMD();
         if(gameImmutable.getStatus()==GameStatus.PREPARATION){
             view.show_areYouReady();
@@ -471,7 +471,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
         currentImmutable=gameImmutable;
         statusSet(currentImmutable.getStatus());
         myGameId=currentImmutable.getGameId();
-        view.show_All(gameImmutable,myNickname,EnumUpdates.ALL, myTurn,"no nickname");
+        if(afterReconnection){
+            view.show_All(gameImmutable,myNickname,EnumUpdates.RECONNECTION, myTurn,"no nickname");
+        }
+        else{
+            view.show_All(gameImmutable,myNickname,EnumUpdates.ALL, myTurn,"no nickname");
+        }
         Player player = currentImmutable.getPlayers().peek();
         if(player==null){
             view.show_generic("Error, try to restart all");
@@ -684,7 +689,12 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void reconnectedPlayer(String nickname) {
-        view.show_generic("Player "+nickname+" has been reconnected");
+        if(myNickname.equals(nickname)){
+            view.show_generic("You have been reconnected");
+        }
+        else{
+            view.show_generic("Player "+nickname+" has been reconnected");
+        }
     }
 
     /**

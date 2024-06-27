@@ -135,8 +135,8 @@ public class Game implements Serializable {
     /**
      * Notify all game.
      */
-    public void notifyAllGame() {
-        gameListenersHandler.notify_All(this);
+    public void notifyAllGame(Boolean afterReconnection) {
+        gameListenersHandler.notify_All(this, afterReconnection);
     }
 
     /**
@@ -464,7 +464,7 @@ public class Game implements Serializable {
      * Game ready.
      */
     public void gameReady()  {
-        gameListenersHandler.notify_All(this);
+        gameListenersHandler.notify_All(this,false);
     }
 
     /**

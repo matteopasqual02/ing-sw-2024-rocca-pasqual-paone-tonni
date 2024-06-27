@@ -24,7 +24,7 @@ public interface NotifierInterface extends Remote {
      * @throws IOException     the io exception
      * @throws RemoteException the remote exception
      */
-    void sendAll(GameImmutable gameImmutable)throws IOException;
+    void sendAll(GameImmutable gameImmutable, Boolean afterReconnection)throws IOException;
 
     /**
      * Send max num players set.

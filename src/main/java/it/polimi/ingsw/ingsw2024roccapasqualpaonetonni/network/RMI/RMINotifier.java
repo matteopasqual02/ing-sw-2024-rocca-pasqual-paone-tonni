@@ -41,9 +41,9 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
      * @param gameImmutable the game immutable
      */
     @Override
-    public void sendAll(GameImmutable gameImmutable) {
+    public void sendAll(GameImmutable gameImmutable, Boolean afterReconnection) {
         try{
-            listener.allGame(gameImmutable);
+            listener.allGame(gameImmutable, afterReconnection);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

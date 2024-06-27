@@ -13,14 +13,16 @@ public class ServerMessageNotifyAll extends ServerGenericMessage{
      * The Game immutable.
      */
     private final GameImmutable gameImmutable;
+    private final Boolean afterReconnection;
 
     /**
      * Instantiates a new Server message notify all.
      *
      * @param gameImmutable the game immutable
      */
-    public ServerMessageNotifyAll(GameImmutable gameImmutable){
+    public ServerMessageNotifyAll(GameImmutable gameImmutable, Boolean afterReconnection){
         this.gameImmutable=gameImmutable;
+        this.afterReconnection = afterReconnection;
     }
 
     /**
@@ -32,7 +34,7 @@ public class ServerMessageNotifyAll extends ServerGenericMessage{
     @Override
     public void launchMessage(GameListener listener) throws RemoteException {
         try {
-            listener.allGame(gameImmutable);
+            listener.allGame(gameImmutable,afterReconnection);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

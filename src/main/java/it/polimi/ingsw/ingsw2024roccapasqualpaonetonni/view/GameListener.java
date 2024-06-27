@@ -32,7 +32,7 @@ public interface GameListener extends Remote {
      * @param gameImmutable the game immutable
      * @throws RemoteException the remote exception
      */
-    void allGame(GameImmutable gameImmutable) throws RemoteException;
+    void allGame(GameImmutable gameImmutable, Boolean afterReconnection) throws RemoteException;
 
     /**
      * Max num players set.

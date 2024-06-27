@@ -167,9 +167,9 @@ public class ClientRequestHandler extends Thread implements NotifierInterface {
      * @throws RemoteException the remote exception
      */
     @Override
-    public void sendAll(GameImmutable gameImmutable) throws IOException, RemoteException {
+    public void sendAll(GameImmutable gameImmutable, Boolean afterReconnection) throws IOException, RemoteException {
         synchronized (outputStream) {
-            outputStream.writeObject(new ServerMessageNotifyAll(gameImmutable));
+            outputStream.writeObject(new ServerMessageNotifyAll(gameImmutable,afterReconnection));
             messageDone();
         }
     }

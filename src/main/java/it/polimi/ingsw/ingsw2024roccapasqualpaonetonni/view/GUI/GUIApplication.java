@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.EnumUpdates;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.controllers.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -216,7 +217,7 @@ public class GUIApplication extends Application {
      * @param nickname      the nickname
      * @param myTurn        the my turn
      */
-    public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn){
+    public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn, EnumUpdates type){
         ConsolePrinter.consolePrinter("Show All");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
@@ -240,7 +241,9 @@ public class GUIApplication extends Application {
         stage.setMinHeight(800);
         //stage.setFullScreen(true);
         stage.show();
-        Platform.runLater(this::infoBox);
+        if(type.equals(EnumUpdates.ALL)){
+            Platform.runLater(this::infoBox);
+        }
         Platform.runLater(()->scoreBoardController.setStartingPawns(gameImmutable));
         Platform.runLater(() -> otherBoardsController.upadateAll(gameImmutable));
     }

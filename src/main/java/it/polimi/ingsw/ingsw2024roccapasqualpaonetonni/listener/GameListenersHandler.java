@@ -33,10 +33,10 @@ public class GameListenersHandler extends ListenersHandler implements Serializab
      *
      * @param game the game
      */
-    public void notify_All(Game game) {
+    public void notify_All(Game game, Boolean afterReconnection) {
         for(String name: listenersMap.keySet()){
             try {
-                listenersMap.get(name).sendAll(new GameImmutable(game));
+                listenersMap.get(name).sendAll(new GameImmutable(game), afterReconnection);
             }
             catch(Exception e){
                 ConsolePrinter.consolePrinter("[ERROR]: player "+name+" not notified");

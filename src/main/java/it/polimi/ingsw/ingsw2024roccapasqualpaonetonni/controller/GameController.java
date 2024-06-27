@@ -379,7 +379,7 @@ public class GameController implements GameControllerInterface {
             model.setStatus(model.getLastStatus());
             model.resetLastStatus();
         }
-        model.notifyAllGame();
+        model.notifyAllGame(true);
     }
 
     /**
