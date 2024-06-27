@@ -4,6 +4,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.animation.KeyFrame;
@@ -27,7 +28,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -808,6 +811,7 @@ public class GameSceneController extends GenericController{
         board.getChildren().add(startCard);
 
         cardOffset(start, x, y, startCard);
+
     }
 
     /**
@@ -835,7 +839,19 @@ public class GameSceneController extends GenericController{
         cardImage.setOnMouseClicked(this::handleBoardCardClick);
         board.getChildren().add(cardImage);
         cardImage.setDisable(false);
-        cardOffset(card, x, y, cardImage);
+        //cardOffset(card, x, y, cardImage);
+    }
+
+    private static class OffsetCard {
+        PlayingCard card;
+        double x;
+        double y;
+
+        OffsetCard(PlayingCard card, double x, double y) {
+            this.card = card;
+            this.x = x;
+            this.y = y;
+        }
     }
 
     /**
@@ -847,64 +863,70 @@ public class GameSceneController extends GenericController{
      * @param cardImage the card image
      */
     private void cardOffset(PlayingCard card, double x, double y, ImageView cardImage) {
-        double updatedX = x;
-        double updatedY = y;
-        for(int i=1;i<=4;i++){
-            if(card.getCorner(i)!=null && card.getCorner(i).getCardAttached()!=null){
-                double xoffset=0;
-                double yoffset=0;
-                switch (i){
-                    case 1 ->{
-                        xoffset = - (cardImage.getFitWidth()*0.75);
-                        yoffset = - (cardImage.getFitHeight()*0.56);
+        Queue<OffsetCard> queue = new LinkedList<>();
+        queue.add(new OffsetCard(card, x, y));
+        while (!queue.isEmpty()) {
+            OffsetCard current = queue.poll();
+            placeCardOnBoardFromMatrix(current.card, current.x, current.y);
+            double updatedX = current.x;
+            double updatedY = current.y;
+            for (int i = 1; i <= 4; i++) {
+                if (current.card.getCorner(i) != null && current.card.getCorner(i).getCardAttached() != null) {
+                    double xoffset = 0;
+                    double yoffset = 0;
+                    switch (i) {
+                        case 1 -> {
+                            xoffset = -(cardImage.getFitWidth() * 0.75);
+                            yoffset = -(cardImage.getFitHeight() * 0.56);
+                        }
+                        case 2 -> {
+                            xoffset = (cardImage.getFitWidth() * 0.75);
+                            yoffset = -(cardImage.getFitHeight() * 0.56);
+                        }
+                        case 3 -> {
+                            xoffset = (cardImage.getFitWidth() * 0.75);
+                            yoffset = (cardImage.getFitHeight() * 0.56);
+                        }
+                        case 4 -> {
+                            xoffset = -(cardImage.getFitWidth() * 0.75);
+                            yoffset = (cardImage.getFitHeight() * 0.56);
+                        }
                     }
-                    case 2 ->{
-                        xoffset = (cardImage.getFitWidth()*0.75);
-                        yoffset = - (cardImage.getFitHeight()*0.56);
-                    }
-                    case 3 ->{
-                        xoffset = (cardImage.getFitWidth()*0.75);
-                        yoffset = (cardImage.getFitHeight()*0.56);
-                    }
-                    case 4 ->{
-                        xoffset = - (cardImage.getFitWidth()*0.75);
-                        yoffset = (cardImage.getFitHeight()*0.56);
-                    }
-                }
 
-                double newX = updatedX;
-                double newY = updatedY;
-                if (updatedX + xoffset < 0) {
-                    BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
-                    board.setPrefWidth(BOARD_SIZE[1]);
-                    for (Node child : board.getChildren()) {
-                        child.setLayoutX(child.getLayoutX() + CARD_SIZE[1]);
+                    double newX = updatedX;
+                    double newY = updatedY;
+                    if (updatedX + xoffset < 0) {
+                        BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
+                        board.setPrefWidth(BOARD_SIZE[1]);
+                        for (Node child : board.getChildren()) {
+                            child.setLayoutX(child.getLayoutX() + CARD_SIZE[1]);
+                        }
+                        newX = updatedX + CARD_SIZE[1];
+                    } else if (updatedX + CARD_SIZE[1] > board.getPrefWidth()) {
+                        BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
+                        board.setPrefWidth(BOARD_SIZE[1]);
                     }
-                    newX = updatedX + CARD_SIZE[1];
-                }
-                else if (updatedX + CARD_SIZE[1] > board.getPrefWidth()) {
-                    BOARD_SIZE[1] = board.getPrefWidth() + CARD_SIZE[1];
-                    board.setPrefWidth(BOARD_SIZE[1]);
-                }
-                if (updatedY + yoffset < 0) {
-                    BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
-                    board.setPrefHeight(BOARD_SIZE[0]);
-                    for (Node child : board.getChildren()) {
-                        child.setLayoutY(child.getLayoutY() + CARD_SIZE[0]);
+                    if (updatedY + yoffset < 0) {
+                        BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
+                        board.setPrefHeight(BOARD_SIZE[0]);
+                        for (Node child : board.getChildren()) {
+                            child.setLayoutY(child.getLayoutY() + CARD_SIZE[0]);
+                        }
+                        newY = updatedY + CARD_SIZE[0];
+                    } else if (updatedY + CARD_SIZE[0] > board.getPrefHeight()) {
+                        BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
+                        board.setPrefHeight(BOARD_SIZE[0]);
                     }
-                    newY = updatedY + CARD_SIZE[0];
-                }
-                else if (updatedY + CARD_SIZE[0] > board.getPrefHeight()) {
-                    BOARD_SIZE[0] = board.getPrefHeight() + CARD_SIZE[0];
-                    board.setPrefHeight(BOARD_SIZE[0]);
-                }
 
-                updatedX = newX;
-                updatedY = newY;
-                board.applyCss();
-                board.layout();
+                    updatedX = newX;
+                    updatedY = newY;
+                    board.applyCss();
+                    board.layout();
 
-                placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(),updatedX+xoffset,updatedY+yoffset);
+                    ConsolePrinter.consolePrinter(String.valueOf(current.card.getCorner(i).getCardAttached()));
+                    queue.add(new OffsetCard(current.card.getCorner(i).getCardAttached(), updatedX + xoffset, updatedY + yoffset));
+                    //placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(), updatedX + xoffset, updatedY + yoffset);
+                }
             }
         }
     }
