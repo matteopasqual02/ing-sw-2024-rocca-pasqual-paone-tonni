@@ -67,6 +67,8 @@ public class GUIApplication extends Application {
      */
     private OtherBoardsController otherBoardsController = null;
 
+    private String lastStatus = "";
+
     /**
      * we use a ThreadPoolExecutor to execute background tasks that call allow actions on the server
      */
@@ -574,6 +576,10 @@ public class GUIApplication extends Application {
         alert.setHeaderText("New Status:");
         switch(s) {
             case "LAST_TURN":
+                if (lastStatus.equals("WAITING_RECONNECTION")) {
+                    gameSceneController.backFromReconnection();
+                    lastStatus = s;
+                }
                 s = "Last Turn\nWhen it'll be your turn, you will place the last card" +
                         "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
                         "and a the winner will be found";
@@ -582,9 +588,15 @@ public class GUIApplication extends Application {
                 s = "The game has ended!\nCheck out how you did";
                 break;
             case "WAITING_LAST_TURN", "RUNNING":
+                if (lastStatus.equals("WAITING_RECONNECTION")) {
+                    gameSceneController.backFromReconnection();
+                    lastStatus = s;
+                }
                 return;
             case "WAITING_RECONNECTION":
+                lastStatus = s;
                 s = "You are the last player remaining\nWaiting for others to rejoin";
+                gameSceneController.showWaitingReconnection();
                 break;
         }
 
@@ -608,7 +620,7 @@ public class GUIApplication extends Application {
      */
     public void show_generic(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("RECONNECTION");
+        alert.setTitle("CONNECTION INFO");
         alert.setContentText(msg);
         alert.getButtonTypes().setAll(ButtonType.OK);
         alert.showAndWait();
