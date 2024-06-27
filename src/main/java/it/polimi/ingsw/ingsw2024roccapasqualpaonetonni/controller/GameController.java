@@ -635,6 +635,7 @@ public class GameController implements GameControllerInterface {
             }
             if (decksAreAllEmpty()) {
                 model.setStatus(GameStatus.WAITING_LAST_TURN);
+                model.nextPlayer();
             } else {
                 try {
                     getCurrentPlayer().drawResourcesFromDeck(model.getGameDrawableDeck());
