@@ -689,7 +689,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void reconnectedPlayer(String nickname) {
-        if(myNickname.equals(nickname)){
+        if(nickname.equals(myNickname)){
             view.show_generic("You have been reconnected");
         }
         else{
