@@ -415,7 +415,7 @@ public class RMINotifier extends UnicastRemoteObject implements NotifierInterfac
         try {
             if(listener.getNickname().equals(message.getReceiver()) || listener.getNickname().equals(message.getSender())){
                 listener.newPrivateMessage(message);
-                ConsolePrinter.consolePrinter(listener.getNickname());
+                //ConsolePrinter.consolePrinter(listener.getNickname());
             }
         } catch (RemoteException e) {
             throw new RuntimeException(e);

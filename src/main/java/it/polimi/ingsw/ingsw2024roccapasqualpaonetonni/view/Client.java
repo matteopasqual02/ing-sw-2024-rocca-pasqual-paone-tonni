@@ -204,7 +204,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 }
             }
             case "/addStarting","/addstarting" -> {
-                ConsolePrinter.consolePrinter("Client addStarting");
+                //ConsolePrinter.consolePrinter("Client addStarting");
                 if(state==GameStatus.RUNNING && myTurn!=null && myTurn){
                     try{
                         if(parole.length==1){
@@ -493,7 +493,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
      */
     @Override
     public void nextTurn(String nickname) {
-        ConsolePrinter.consolePrinter("New turn: " + nickname);
+        //ConsolePrinter.consolePrinter("New turn: " + nickname);
         myTurn = myNickname.equals(nickname);
         if(currentImmutable==null){return;}
         Player player = currentImmutable.getPlayers().stream().filter(player1 -> nickname.equals(player1.getNickname())).toList().getFirst();
@@ -874,11 +874,11 @@ public class Client extends UnicastRemoteObject implements GameListener{
                     Thread.sleep(40000);
                 }
                 catch (InterruptedException e) {
-                    ConsolePrinter.consolePrinter("ping pong crashed");
+                    ConsolePrinter.consolePrinter("[ERROR]: ping pong thred crashed");
                 }
                 synchronized (lock) {
                     if (!pinged) {
-                        ConsolePrinter.consolePrinter("server dead game interrupted");
+                        ConsolePrinter.consolePrinter("[ERROR]: server dead game interrupted");
                         this.interrupt();
                         System.exit(0);
                     } else {

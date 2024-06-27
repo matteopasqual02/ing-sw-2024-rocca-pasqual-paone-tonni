@@ -211,7 +211,7 @@ public class GUIApplication extends Application {
      * @param myTurn        the my turn
      */
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn, EnumUpdates type){
-        ConsolePrinter.consolePrinter("Show All");
+        //ConsolePrinter.consolePrinter("Show All");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
         Parent newRoot;
         try {

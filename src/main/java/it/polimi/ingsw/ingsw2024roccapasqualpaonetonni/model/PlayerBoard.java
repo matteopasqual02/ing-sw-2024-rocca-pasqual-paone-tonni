@@ -159,7 +159,7 @@ public class PlayerBoard implements Serializable {
 
         if (checkSpotAvailable(place_cord)) {
             int[] tmp = card_to_add.checkRequirements(seedCount);
-            ConsolePrinter.consolePrinter("Player board " + tmp[0]);
+            //ConsolePrinter.consolePrinter("Player board " + tmp[0]);
 
             if (card_to_add.isFlipped() || tmp[0] == 1) {
 
@@ -189,12 +189,12 @@ public class PlayerBoard implements Serializable {
 
             }
             else {
-                ConsolePrinter.consolePrinter("Not enough seed type " + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
+                //ConsolePrinter.consolePrinter("Not enough seed type " + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
                 throw new ConditionsNotMetException("Not enough seed type " + (Seed.getById(tmp[1]) != null ? Seed.getById(tmp[1]).getName() : null));
             }
         }
         else {
-            ConsolePrinter.consolePrinter("invalid position");
+            //ConsolePrinter.consolePrinter("invalid position");
             throw new InvalidPlaceException("The card cannot be placed in the chosen position");
         }
     }

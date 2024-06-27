@@ -123,7 +123,7 @@ public class Game implements Serializable {
         synchronized (gameListenersHandler) {
             gameListenersHandler.removeListener(name);
             for  (String nickname : gameListenersHandler.getListener().keySet()) {
-                ConsolePrinter.consolePrinter("Game has listener " + name);
+                //ConsolePrinter.consolePrinter("Game has listener " + name);
             }
             for (Player p : players) {
                 p.setPlayerListeners(gameListenersHandler.getListener());
@@ -453,7 +453,7 @@ public class Game implements Serializable {
             return;
         }
         if(newCurrent!=null) {
-            ConsolePrinter.consolePrinter("Game notifying next turn after disconnect");
+            //ConsolePrinter.consolePrinter("Game notifying next turn after disconnect");
             gameListenersHandler.notify_nextTurn(newCurrent.getNickname());
             return;
         }

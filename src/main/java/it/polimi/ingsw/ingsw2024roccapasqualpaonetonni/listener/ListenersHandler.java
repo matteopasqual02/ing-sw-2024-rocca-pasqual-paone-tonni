@@ -48,7 +48,7 @@ public abstract class ListenersHandler {
         String toRemove = null;
         for (String name : listenersMap.keySet()) {
             if (name.equals(nickname)) {
-                ConsolePrinter.consolePrinter("ListenerHandler removing listener " + name);
+                //ConsolePrinter.consolePrinter("ListenerHandler removing listener " + name);
                 toRemove = name;
             }
         }

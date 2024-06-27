@@ -184,7 +184,7 @@ public class GameController implements GameControllerInterface {
                     }
                 }
                 for (String deadClient : clients) {
-                    ConsolePrinter.consolePrinter("sending notifications");
+                    //ConsolePrinter.consolePrinter("sending notifications");
                     if(model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient)){
                         Player dead = model.getPlayersDisconnected().keySet().stream().filter(player -> player.getNickname().equals(deadClient)).toList().getFirst();
                         if(model.getPlayersDisconnected().get(dead).equals(Game.DisconnectionType.PINGPONG)){
@@ -263,7 +263,7 @@ public class GameController implements GameControllerInterface {
         Runnable runnable = () -> model.removeListener(me);
         executorService.submit(runnable);
         */
-        ConsolePrinter.consolePrinter("GameController remove listener " + me);
+        //ConsolePrinter.consolePrinter("GameController remove listener " + me);
         model.removeListener(me);
     }
 
@@ -417,7 +417,7 @@ public class GameController implements GameControllerInterface {
         //if (model.getPlayerNum() > 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurrent.equals(model.getCurrentPlayer())) {
         if (model.getPlayerNum() > 1 && model.getGameStatus()!=GameStatus.ENDED && !oldCurr.equals(model.getCurrentPlayer())) {
             model.nextPlayerAfterDisconnect();
-            ConsolePrinter.consolePrinter("GameController removed player in game");
+            //ConsolePrinter.consolePrinter("GameController removed player in game");
         }
     }
 
@@ -722,7 +722,7 @@ public class GameController implements GameControllerInterface {
             else {
                 try {
                     getCurrentPlayer().drawFromBoard(position, model.getGameBoardDeck());
-                    ConsolePrinter.consolePrinter("GameController next player after drawing");
+                    //ConsolePrinter.consolePrinter("GameController next player after drawing");
                     model.nextPlayer();
                 } catch (NoCardException e) {
                     model.gameError("This position is empty");
