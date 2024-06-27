@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.PlayerBoard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
 
 import java.util.List;

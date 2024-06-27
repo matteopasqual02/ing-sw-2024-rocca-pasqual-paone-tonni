@@ -52,31 +52,6 @@ public class WinnersController {
         }
     }
 
-    /*
-    private void addPosition(int i, String nickname, int points){
-        HBox hbox = new HBox();
-
-        ImageView imageView = new ImageView();
-        String path = getNumber(i);
-        if (path != null) {
-            imageView.setImage(new Image(String.valueOf(getClass().getResource(path))));
-        }
-        imageView.setFitWidth(77);
-        imageView.setFitHeight(77);
-        hbox.getChildren().add(imageView);
-
-        Label label = new Label(nickname);
-        label.setPrefWidth(125);
-        hbox.getChildren().add(label);
-
-        label = new Label(String.valueOf(points));
-        label.setPrefWidth(58);
-        hbox.getChildren().add(label);
-
-        ranking.getChildren().add(hbox);
-    }
-    */
-
     /**
      * Add position pane.
      *

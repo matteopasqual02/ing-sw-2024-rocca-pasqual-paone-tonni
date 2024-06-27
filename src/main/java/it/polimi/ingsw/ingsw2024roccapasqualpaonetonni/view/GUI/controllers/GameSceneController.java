@@ -4,7 +4,6 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.network.ConsolePrinter;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.Client;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.view.GUI.GUIApplication;
 import javafx.animation.KeyFrame;
@@ -13,7 +12,6 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -403,9 +401,6 @@ public class GameSceneController extends GenericController{
         }
 
         //setting starting cards
-        if(player.getStartingCard()==null){
-            //vedi se funziona
-        }
         cardId = player.getStartingCard().getIdCard();
         myStartingCard.setImage(new Image(createPath(cardId)));
         myStartingCard.setDisable(true);
@@ -539,11 +534,6 @@ public class GameSceneController extends GenericController{
             button.setOnMouseClicked(this::handleSeeOtherPlayersBoards);
 
             if(!p.getNickname().equals(nickname)){
-                /*
-                if(p.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]!=null){
-                    Platform.runLater(()->application.updateOtherBoard(gameImmutable,p.getNickname()));
-                }
-                */
 
                 Label name = new Label(p.getNickname());
                 name.setFont(Font.font("Arial", FontWeight.BOLD, 10));
@@ -553,7 +543,6 @@ public class GameSceneController extends GenericController{
                 VBox vBox2 = new VBox(hbox1,points);
                 HBox hbox2 = new HBox(color,vBox2);
                 VBox vBox3 = new VBox(name,hbox2,seedCountBox1);
-                //button.setPadding(new Insets(5,5,5,5));
 
                 vBox3.setStyle("-fx-background-color: beige; -fx-border-color: black; -fx-border-radius: 0;");
                 hbox1.setPadding(new Insets(5,5,5,5));
@@ -567,8 +556,6 @@ public class GameSceneController extends GenericController{
 
                 receiverPrivateMessages.getItems().add(p.getNickname());
 
-                // score board
-                //Platform.runLater(()->application.setScoreBoard());
             }
             else {
 
@@ -644,7 +631,6 @@ public class GameSceneController extends GenericController{
      */
     public void myRunningTurnPlaceStarting() {
         startingCardVBox.setDisable(false);
-        //ConsolePrinter.consolePrinter(String.valueOf(myStartingCard));
         myStartingCard.setDisable(false);
         flipStartingButton.setVisible(true);
         flipStartingButton.setDisable(false);
@@ -659,7 +645,6 @@ public class GameSceneController extends GenericController{
      */
     @FXML
     public void handleStartingCardClicked(MouseEvent event){
-        //ConsolePrinter.consolePrinter("starting clicked");
         Node card = (Node) event.getSource();
         glow(card);
         if (myStartingCard.getUserData() == null || !(boolean) myStartingCard.getUserData()) {
@@ -1056,7 +1041,6 @@ public class GameSceneController extends GenericController{
      * @param mouseEvent the mouse event
      */
     public void handleHandCardClicked(MouseEvent mouseEvent) {
-        // ImageView card = (ImageView) mouseEvent.getSource();
         Node card = (Node) mouseEvent.getSource();
         for (int i = 0; i < handCards.getChildren().size(); i++) {
             if (!handCards.getChildren().get(i).equals(card)) {
@@ -1071,7 +1055,6 @@ public class GameSceneController extends GenericController{
             jump(card);
         }
         selectedCard = (ImageView) card;
-        //ConsolePrinter.consolePrinter(String.valueOf(selectedCard));
         flipHandCard.setDisable(false);
         board.setDisable(false);
     }
@@ -1279,79 +1262,11 @@ public class GameSceneController extends GenericController{
     }
 
     /**
-     * Shift hand.
-     */
-    private void shiftHand() {
-        ImageView card, next;
-        for (int i = hand - 1; i < handCards.getChildren().size() - 1; i++) {
-            if(i<player.getHand().size()){
-                card = (ImageView) handCards.getChildren().get(i);
-                card.setEffect(null);
-                next = (ImageView) handCards.getChildren().get(i + 1);
-                card.setImage(next.getImage());
-                next.setVisible(false);
-                card.setVisible(true);
-                handIDs[i] = handIDs[i + 1];
-                flippedHand[i] = flippedHand[i + 1];
-                hand += 1;
-            }
-        }
-    }
-
-    /**
-     * Card not placed.
-     *
-     * @param s the s
-     */
-    public void cardNotPlaced(String s) {
-        infoBox(s);
-        myRunningTurnPlaceCard();
-    }
-
-    /**
-     * Objective not selected.
-     *
-     * @param s the s
-     */
-    public void objectiveNotSelected(String s) {
-        infoBox(s);
-        myRunningTurnChoseObjective();
-    }
-
-    /**
-     * Start already added.
-     *
-     * @param s the s
-     */
-    public void startAlreadyAdded(String s) {
-        infoBox(s);
-    }
-
-    /**
-     * Card already added.
-     *
-     * @param s the s
-     */
-    public void cardAlreadyAdded(String s) {
-        infoBox(s);
-    }
-
-    /**
-     * Wrong phase.
-     *
-     * @param s the s
-     */
-    public void wrongPhase(String s) {
-        infoBox(s);
-    }
-
-    /**
      * No resources deck.
      *
      * @param s the s
      */
     public void noResourcesDeck(String s) {
-        //infoBox(s);
         decks.getChildren().remove(deckResourcesCard);
         myRunningTurnDrawCard();
     }
@@ -1362,34 +1277,8 @@ public class GameSceneController extends GenericController{
      * @param s the s
      */
     public void noGoldDeck(String s) {
-        //infoBox(s);
         decks.getChildren().remove(deckGoldCard);
         myRunningTurnDrawCard();
-    }
-
-    /**
-     * No board card.
-     *
-     * @param s the s
-     */
-    public void noBoardCard(String s) {
-        //infoBox(s);
-        myRunningTurnDrawCard();
-    }
-
-    /**
-     * Info box.
-     *
-     * @param message the message
-     */
-    private void infoBox(String message) {
-        // System.out.println("infoBox called with message: " + message);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("ERROR");
-        alert.setHeaderText("Invalid Action");
-        alert.setContentText(message);
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
     }
 
     /**

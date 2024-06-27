@@ -105,7 +105,6 @@ public class GUIApplication extends Application {
                 stage.hide();}
         ));
 
-        //stage.setFullScreen(true);
         stage.show();
 
     }
@@ -123,7 +122,6 @@ public class GUIApplication extends Application {
      * Join lobby.
      */
     public void joinLobby(){
-        //ConsolePrinter.consolePrinter("joinLobby");
     }
 
     /**
@@ -133,7 +131,6 @@ public class GUIApplication extends Application {
      */
     public void show_createdGame(int gameID){
         String message = String.format("Game created, with GameID: %d", gameID);
-        //ConsolePrinter.consolePrinter(message);
     }
 
     /**
@@ -148,7 +145,6 @@ public class GUIApplication extends Application {
             }
         });
         String message = "everyone entered, press y to begin";
-        //ConsolePrinter.consolePrinter(message);
     }
 
     /**
@@ -158,7 +154,6 @@ public class GUIApplication extends Application {
      */
     public void show_addedNewPlayer(String nickname){
         String message = nickname + " joined this game";
-        //ConsolePrinter.consolePrinter(message);
         Platform.runLater(()-> joinedGameController.addNewLabel(message));
     }
 
@@ -199,14 +194,12 @@ public class GUIApplication extends Application {
         stage.show();
         joinedGameController.setUpController(joinedGameRoot);
         String message = String.format("Joined game: %d", gameID);
-        //ConsolePrinter.consolePrinter(message);
     }
 
     /**
      * Show no available game.
      */
     public void show_noAvailableGame(){
-        //infoBox("no games available, retry","Error","Message:", Alert.AlertType.ERROR,"/Lobby.fxml");
         setAlert("no games available, retry","Error","Message:", Alert.AlertType.ERROR, "/Lobby.fxml");
     }
 
@@ -220,7 +213,6 @@ public class GUIApplication extends Application {
     public void show_all(GameImmutable gameImmutable, String nickname, boolean myTurn, EnumUpdates type){
         ConsolePrinter.consolePrinter("Show All");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_final.fxml"));
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScene_noGrid.fxml"));
         Parent newRoot;
         try {
             newRoot = loader.load();
@@ -239,7 +231,6 @@ public class GUIApplication extends Application {
         stage.setTitle("Codex Naturalis");
         stage.setMinWidth(1400);
         stage.setMinHeight(800);
-        //stage.setFullScreen(true);
         stage.show();
         if(type.equals(EnumUpdates.ALL)){
             Platform.runLater(this::infoBox);
@@ -276,16 +267,8 @@ public class GUIApplication extends Application {
 
         buttonContainer.getChildren().addAll(prev, spacer, next);
 
-        //hBox2.getChildren().addAll(prev,next,pageIndex);
         page.getChildren().addAll(hBox1,buttonContainer);
-        //alert.getButtonTypes().remove(ButtonType.OK);
-        //alert.getButtonTypes().add(ButtonType.CLOSE);
         alert.getDialogPane().setContent(page);
-/*
-        GridPane dialogPane = (GridPane) alert.getDialogPane().lookup(".header-panel");
-        dialogPane.getColumnConstraints().forEach(constraint -> constraint.setHgrow(Priority.NEVER));
-*/
-        //alert.setOnCloseRequest(event -> alert.close());
 
         next.setOnAction(e -> {
             if ("1".equals(pageIndex.getText())) {
@@ -469,11 +452,7 @@ public class GUIApplication extends Application {
      */
     public void show_startCard(GameImmutable gameImmutable, String nickname, boolean myTurn, String playerChangedNickname) {
         if (myTurn) {
-            //gameSceneController.startCard(gameImmutable, nickname);
             gameSceneController.updateBoard(gameImmutable, nickname);
-        }
-        else {
-            //otherBoardsController.insertStartCard(gameImmutable,playerChangedNickname);
         }
         gameSceneController.updatePlayersSeedCount(gameImmutable,playerChangedNickname);
     }
@@ -637,29 +616,23 @@ public class GUIApplication extends Application {
      */
     public void invalidAction(String s, boolean myTurn) {
         if (myTurn) {
-            //ConsolePrinter.consolePrinter("Invalid action: " + s);
             switch (s) {
                 case "Goal invalid Action":
-                    //gameSceneController.objectiveNotSelected("Error in objective selection, chose another card!");
                     alertBox("Error in objective selection, chose another card!");
                     gameSceneController.myRunningTurnChoseObjective();
                     break;
                 case "Starting Card invalid Action: Card Already Added":
-                    //gameSceneController.startAlreadyAdded("Starting card already added");
                     alertBox("Starting card already added");
                     break;
                 case "Conditions not met":
-                    //gameSceneController.cardNotPlaced("Conditions not met, chose another card!");
                     alertBox("Conditions not met, chose another card!");
                     gameSceneController.myRunningTurnPlaceCard();
                     break;
                 case "Card Invalid Place":
-                    //gameSceneController.cardNotPlaced("Invalid place chosen, try again!");
                     alertBox("Invalid place chosen, try again!");
                     gameSceneController.myRunningTurnPlaceCard();
                     break;
                 case "Card not in Hand":
-                    //gameSceneController.cardNotPlaced("Error in the card selection, try again!");
                     alertBox("Error in the card selection, try again!");
                     gameSceneController.myRunningTurnPlaceCard();
                     break;
@@ -667,14 +640,12 @@ public class GUIApplication extends Application {
                     gameSceneController.notMyTurn();
                     break;
                 case "You cannot add two Cards in a turn":
-                    //gameSceneController.cardAlreadyAdded(s);
                     alertBox(s);
                     break;
                 case "You cannot add a Card in this phase", "You cannot add a Starting Card in this phase",
                      "You cannot choose the Objective Card in this phase",
                      "You cannot draw a Resource Card in this phase", "You cannot draw before a card is placed",
                      "You cannot draw a Gold Card in this phase", "You cannot draw from Common Board in this phase":
-                    //gameSceneController.wrongPhase(s);
                     alertBox(s);
                     break;
                 case "Resource deck is empty":
@@ -687,7 +658,6 @@ public class GUIApplication extends Application {
                     break;
                 case "This position is empty":
                     alertBox(s + ", try drawing somewhere else");
-                    //gameSceneController.noBoardCard(s + ", try drawing somewhere else");
                     gameSceneController.myRunningTurnDrawCard();
                     break;
             }
@@ -700,7 +670,6 @@ public class GUIApplication extends Application {
      * @param message the message
      */
     private void alertBox(String message) {
-        // System.out.println("infoBox called with message: " + message);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("ERROR");
         alert.setHeaderText("Invalid Action");
@@ -803,7 +772,6 @@ public class GUIApplication extends Application {
      * @param list the list
      */
     public void winner(List<Player> list) {
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Winners_final.fxml"));
         AnchorPane winnersRoot;
         try {

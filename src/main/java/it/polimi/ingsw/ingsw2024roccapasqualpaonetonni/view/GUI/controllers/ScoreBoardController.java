@@ -302,36 +302,5 @@ public class ScoreBoardController extends GenericController{
             playerImage.get(color).setFitHeight(reference.getFitHeight());
             playerImage.get(color).setPreserveRatio(true);
         }
-        /* what we should do if we know the player in turn
-        Optional<Player> playerOptional = gameImmutable.getPlayers().stream().filter(player -> player.getNickname().equals(nickname)).findAny();
-        int color = playerOptional.map(Player::getColorPlayer).orElse(0);
-        ImageView toRemove = playerImage.get(color);
-        anchor.getChildren().remove(toRemove);
-        if (color == 1) {
-            playerImage.put(1,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_vert.png"))));
-            x=-5;
-            y=-5;
-        } else if (color == 2) {
-            playerImage.put(2,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_bleu.png"))));
-            x=-5;
-            y=5;
-        } else if (color == 3) {
-            playerImage.put(3,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_rouge.png"))));
-            x=5;
-            y=-5;
-        } else {
-            playerImage.put(4,new ImageView(String.valueOf(getClass().getResource("/images/Codex_image/CODEX_pion_jaune.png"))));
-            x=5;
-            y=5;
-        }
-        ImageView reference = positionMap.get(playerOptional.map(Player::getCurrentPoints).orElse(0));
-        anchor.getChildren().add(playerImage.get(color));
-        playerImage.get(color).setLayoutX(reference.getLayoutX() + x);
-        playerImage.get(color).setLayoutY(reference.getLayoutY() + y);
-        playerImage.get(color).setFitWidth(reference.getFitWidth());
-        playerImage.get(color).setFitHeight(reference.getFitHeight());
-        playerImage.get(color).setPreserveRatio(true);
-        //playerPosition.put(playerOptional.map(Player::getCurrentPoints).orElse(0),color);
-*/
     }
 }

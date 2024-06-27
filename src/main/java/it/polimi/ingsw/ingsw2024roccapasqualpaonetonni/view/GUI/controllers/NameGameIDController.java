@@ -65,7 +65,7 @@ public class NameGameIDController extends GenericController {
         try{
             gameID = Integer.parseInt(string2.getText());
         }catch (NumberFormatException e){
-            //qualcosa che fa reinserire il tutto
+
         }
         executor.submit(()->{
             try {
