@@ -1263,6 +1263,7 @@ public class GameSceneController extends GenericController{
                 ImageView card = (ImageView) handCards.getChildren().get(i);
                 card.setVisible(false);
                 card.setEffect(null);
+                flippedHand[i] = false;
             }
 
             for(int i = 0; i < p.get().getHand().size(); i++){
@@ -1273,6 +1274,7 @@ public class GameSceneController extends GenericController{
                 handIDs[i] = cardId;
                 hand += 1;
             }
+
         }
     }
 
