@@ -879,7 +879,6 @@ public class Client extends UnicastRemoteObject implements GameListener{
                 synchronized (lock) {
                     if (!pinged) {
                         ConsolePrinter.consolePrinter("[ERROR]: server dead game interrupted");
-                        this.interrupt();
                         System.exit(0);
                     } else {
                         pinged = false;
