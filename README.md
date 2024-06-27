@@ -22,7 +22,7 @@ Alberto Tonni.
 UML files and Communication Protocol.
 
 - [Low Level UML](https://github.com/federock02/ing-sw-2024-rocca-pasqual-paone-tonni/blob/master/Derivables/UML/UML_basso_livello_final.pdf): the low level UML with all fields and methods; 
-- [Hight level UML](https://github.com/federock02/ing-sw-2024-rocca-pasqual-paone-tonni/blob/master/Derivables/UML/UML_alto_livello_final.pdf): high level UML with only project's skeleton;
+- [High level UML](https://github.com/federock02/ing-sw-2024-rocca-pasqual-paone-tonni/blob/master/Derivables/UML/UML_alto_livello_final.pdf): high level UML with only project's skeleton;
 - [Communication Protocol](https://github.com/federock02/ing-sw-2024-rocca-pasqual-paone-tonni/blob/master/Derivables/UML/protocollo_di_rete.pdf): the communication protocol TCP and RMI.
 
 
