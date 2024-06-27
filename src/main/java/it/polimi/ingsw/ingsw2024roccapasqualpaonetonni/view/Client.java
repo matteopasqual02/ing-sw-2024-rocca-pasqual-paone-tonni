@@ -5,6 +5,7 @@ import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.DrawableDeck;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.GameStatus;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.Player;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Message;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.PrivateMessage;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable.GameImmutable;
@@ -503,7 +504,17 @@ public class Client extends UnicastRemoteObject implements GameListener{
     private void switchShowTurn(Player player) {
         if(myTurn){
             view.myTurn();
-            if (player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
+
+            boolean staringAdded=false;
+            for (PlayingCard[] playingCards : player.getBoard().getBoardMatrix()){
+                for (PlayingCard playingCard : playingCards){
+                    if(playingCard instanceof StartingCard){
+                        staringAdded=true;
+                        break;
+                    }
+                }
+            }
+            if (!staringAdded){
                 view.myRunningTurnPlaceStarting();
                 return;
             }

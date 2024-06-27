@@ -2,7 +2,9 @@ package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.immutable;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.GoldCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.ResourceCard;
+import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.StartingCard;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.chat.Chat;
 import org.fusesource.jansi.Ansi;
 
@@ -231,12 +233,21 @@ public class GameImmutable implements Serializable {
             }
         }
 
+        boolean staringAdded=false;
+        for (PlayingCard[] playingCards : player.getBoard().getBoardMatrix()){
+            for (PlayingCard playingCard : playingCards){
+                if(playingCard instanceof StartingCard){
+                    staringAdded=true;
+                    break;
+                }
+            }
+        }
 
         stringBuilder.append(ansi().cursor(4,0));
         stringBuilder.append("MY HAND:\n");
         stringBuilder.append(ansi().cursor(5,0));
         stringBuilder.append("\tHAND 1\t\tHAND 2\t\tHAND 3\t\t\tPRIVATE GOAL");
-        if(player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
+        if(!staringAdded){
             stringBuilder.append("\t\t\t\t\t\tSTARTING\n");
         }
         else {
@@ -256,7 +267,7 @@ public class GameImmutable implements Serializable {
                 stringBuilder.append(player.getGoal().toString(finalI)).append("\t");
             }
 
-            if(player.getBoard().getBoardMatrix()[player.getBoard().getDim_x()/2][player.getBoard().getDim_y()/2]==null){
+            if(!staringAdded){
                 stringBuilder.append("\t|\t").append(player.getStartingCard().toString(false,finalI)).append("\n");
             }
             else {
