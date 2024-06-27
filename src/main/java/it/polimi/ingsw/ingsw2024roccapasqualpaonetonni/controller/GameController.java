@@ -398,6 +398,10 @@ public class GameController implements GameControllerInterface {
         }
 
         if (model.getPlayerNum() == 0) {
+            if(timer!=null){
+                timer.interrupt();
+                timer=null;
+            }
             MainController.getInstance().removeGame(this);
             return;
         }
