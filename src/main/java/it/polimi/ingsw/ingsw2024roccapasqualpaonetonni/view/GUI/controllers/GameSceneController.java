@@ -322,6 +322,14 @@ public class GameSceneController extends GenericController{
      * The Player.
      */
     private Player player;
+    /**
+     * Saves info about the label for the turn of the player
+     */
+    private String myTurn = "Not your turn";
+    /**
+     * Needed to block the cards in waiting reconnection, and unlock them after
+     */
+    private boolean handCardsDisable = false;
 
     /**
      * Set parameters.
@@ -1383,51 +1391,59 @@ public class GameSceneController extends GenericController{
     }
 
     /**
-     * Status info.
-     *
-     * @param status the status
-     */
-    public void statusInfo(String status) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("THE STATUS HAS CHANGED");
-        alert.setHeaderText("New Status:");
-        if (status.equals("LAST_TURN")) {
-            status = "Last Turn\nWhen it'll be your turn, you will place the last card" +
-                    "\nAfter the last player has done it, the points will be counted, by checking the objectives too, " +
-                    "and a the winner will be found";
-        }
-        else if (status.equals("ENDED")) {
-            status = "The game has ended!\nCheck out how you did";
-        }
-        else if (status.equals("WAITING_LAST_TURN")) {
-            return;
-        }
-        alert.setContentText(status);
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
-    }
-
-    /**
      * Not my turn.
      */
     public void notMyTurn() {
         disable(true);
-        turnLabel.setText("Not your turn");
-        /*
-        StackPane labelContainer = new StackPane(label);
-        labelContainer.setAlignment(Pos.CENTER);
-        pane.getChildren().add(labelContainer);
-        PauseTransition message = new PauseTransition(Duration.seconds(3));
-        message.setOnFinished(event->pane.getChildren().remove(labelContainer));
-        message.play();
-        */
+        myTurn = "Not your turn";
+        turnLabel.setText(myTurn);
     }
 
     /**
      * My turn.
      */
     public void myTurn() {
-        turnLabel.setText("Your turn");
+        myTurn = "Your turn";
+        turnLabel.setText(myTurn);
+    }
+
+    /**
+     * Waiting for at least two players to be in the game, prints a label
+     */
+    public void showWaitingReconnection() {
+        turnLabel.setText("Waiting reconnection");
+        if (!handCards.isDisabled()) {
+            handCardsDisable = true;
+        }
+        secretObjectiveVBox.setDisable(true);
+        if (startingVBox.getParent() != null) {
+            startingVBox.setDisable(true);
+        }
+        handCards.setDisable(true);
+        for (int i = 0; i < handCards.getChildren().size(); i++) {
+            Node n = handCards.getChildren().get(i);
+            if (n instanceof ImageView) {
+                n.setEffect(null);
+            }
+        }
+    }
+
+    public void backFromReconnection() {
+        if (handCardsDisable) {
+            handCards.setDisable(false);
+            handCardsDisable = false;
+            for (int i = 0; i < handCards.getChildren().size(); i++) {
+                Node n = handCards.getChildren().get(i);
+                if (n instanceof ImageView) {
+                    glow(n);
+                }
+            }
+        }
+        secretObjectiveVBox.setDisable(false);
+        if (startingVBox.getParent() != null) {
+            startingVBox.setDisable(false);
+        }
+        turnLabel.setText(myTurn);
     }
 
     /**

@@ -473,7 +473,7 @@ public class Client extends UnicastRemoteObject implements GameListener{
         view.show_All(gameImmutable,myNickname,EnumUpdates.ALL, myTurn,"no nickname");
         Player player = currentImmutable.getPlayers().peek();
         if(player==null){
-            view.show_generic("error try to restart all");
+            view.show_generic("Error, try to restart all");
             return;
         }
         myTurn = myNickname.equals(player.getNickname());
