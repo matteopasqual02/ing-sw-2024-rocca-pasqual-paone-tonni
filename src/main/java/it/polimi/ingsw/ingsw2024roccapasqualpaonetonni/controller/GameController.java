@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller;
 
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.controller.controllerInterface.GameControllerInterface;
-import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.listener.ListenersHandler;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.*;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.Card;
 import it.polimi.ingsw.ingsw2024roccapasqualpaonetonni.model.cards.PlayingCard;
@@ -173,13 +172,10 @@ public class GameController implements GameControllerInterface {
                 }
 
                 Player oldCurrent = null;
-                Boolean oldCurrentSet = false;
                 for (String deadClient : clients) {
                     //ConsolePrinter.consolePrinter("dead client " + deadClient);
                     if(!model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient)){
-                        if(!oldCurrentSet){
-                            oldCurrent=model.getCurrentPlayer();
-                        }
+                        oldCurrent = model.getCurrentPlayer();
                         model.addPlayerDisconnectedList(deadClient);
                     }
                 }
@@ -192,12 +188,7 @@ public class GameController implements GameControllerInterface {
                             ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
                         }
                     }
-                    /*if(model.getPlayersDisconnected().keySet().stream().map(Player::getNickname).toList().contains(deadClient) && model.getPlayersDisconnected().get().equals(Game.DisconnectionType.PINGPONG)){
-                        disconnectPlayer(deadClient,false);
-                        ConsolePrinter.consolePrinter("[DISCONNECTED] player " + deadClient);
-                    }*/
                 }
-                oldCurrentSet=false;
             }
         }
     }
@@ -259,11 +250,6 @@ public class GameController implements GameControllerInterface {
      */
     @Override
     public synchronized void removeMyselfAsListener(String me) throws RemoteException {
-        /*
-        Runnable runnable = () -> model.removeListener(me);
-        executorService.submit(runnable);
-        */
-        //ConsolePrinter.consolePrinter("GameController remove listener " + me);
         model.removeListener(me);
     }
 
