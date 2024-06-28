@@ -490,22 +490,6 @@ public class Game implements Serializable {
      * Check winner.
      */
     public void checkWinner(){
-        /*
-       int max=0;
-        for (Player cplayer : players ){
-            int p_point = checkPlayerTotalPoint(cplayer); //attenzione, ora checkPlayerTotalPoint aggiorna i currentPoint
-            //2 players with equal point
-            if(p_point == max){
-                winner.add(cplayer);
-            }
-            //winner
-            else if(p_point > max) {
-                winner.clear();
-                winner.add(cplayer);
-                max = p_point;
-            }
-        }
-        */
         for (Player p : players) {
             checkPlayerTotalPoint(p);
         }

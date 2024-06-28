@@ -923,7 +923,7 @@ public class GameSceneController extends GenericController{
                     board.applyCss();
                     board.layout();
 
-                    ConsolePrinter.consolePrinter(String.valueOf(current.card.getCorner(i).getCardAttached()));
+                    //ConsolePrinter.consolePrinter(String.valueOf(current.card.getCorner(i).getCardAttached()));
                     queue.add(new OffsetCard(current.card.getCorner(i).getCardAttached(), updatedX + xoffset, updatedY + yoffset));
                     //placeCardOnBoardFromMatrix(card.getCorner(i).getCardAttached(), updatedX + xoffset, updatedY + yoffset);
                 }
